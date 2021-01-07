@@ -1,0 +1,2260 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piped RDDs and Bayesian AB Testing &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ScaDaMaLe, Scalable Data Science and Distributed Machine Learning" href="035_LDA_CornellMovieDialogs.html" />
+    <link rel="prev" title="ScaDaMaLe, Scalable Data Science and Distributed Machine Learning" href="033_OBO_LoadExtract.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="000_ScaDaMaLe.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="001_whySpark.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="001_whySpark.html#why-apache-spark">
+   Why Apache Spark?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+   You Should All Have databricks community edition account by now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#import-course-content-now">
+   Import Course Content Now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+   Cloud-free Computing Environment (Optional but recommended)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_01_multiLingualNotebooks.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_01_multiLingualNotebooks.html#notebooks">
+   Notebooks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+   Further Reference / Homework / Recurrrent Points of Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+   Let’s continue to get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-type-hierarchy">
+   Scala Type Hierarchy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-collections">
+   Scala Collections
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+   Exercise in Functional Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#lazy-evaluation">
+   Lazy Evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_01_scalaCrashCourse.html#recursions">
+   Recursions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html#introduction-to-spark">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="005_RDDsTransformationsActionsHOMEWORK.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="005_RDDsTransformationsActionsHOMEWORK.html#homework-notebook-rdds-transformations-and-actions">
+   HOMEWORK notebook - RDDs Transformations and Actions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#piped-rdds-and-bayesian-ab-testing">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006_WordCount.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="006_WordCount.html#word-count-on-us-state-of-the-union-sou-addresses">
+   Word Count on US State of the Union (SoU) Addresses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007a_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007a_SparkSQLProgGuide_HW.html#spark-sql-programming-guide">
+   Spark Sql Programming Guide
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html#getting-started">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html#id1">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007c_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007c_SparkSQLProgGuide_HW.html#getting-started-exercise">
+   Getting Started - Exercise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html#data-sources">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html#id1">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007e_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007e_SparkSQLProgGuide_HW.html#performance-tuning">
+   Performance Tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html#distributed-sql-engine">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html#id1">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+   SQL Pivoting since Spark 2.4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#load-data">
+   Load Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#pivoting-in-sql">
+   Pivoting in SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+   Pivoting with Multiple Aggregate Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+   Pivoting with Multiple Grouping Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+   Pivoting with Multiple Pivot Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#introduction-to-spark-sql">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html#wiki-clickstream-analysis">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="030_Spark_GDELT_project.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="030_Spark_GDELT_project.html#plugging-into-gdelt-streams">
+   Plugging into GDELT Streams
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="030_Spark_GDELT_project.html#this-is-just-dipping-our-pinky-toe-in-this-ocean-of-information">
+   This is just dipping our pinky toe in this ocean of information!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="030_Spark_GDELT_project.html#download-from-gdelt-project">
+   Download from gdelt-project
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="033_OBO_LoadExtract.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="033_OBO_LoadExtract.html#old-bailey-online-data-analysis-in-apache-spark">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#parsing-the-output-from-isit1or2coins">
+   Parsing the output from
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     IsIt1or2Coins
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+   Providing case classes for input and output for easy spark communication
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="035_LDA_CornellMovieDialogs.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="035_LDA_CornellMovieDialogs.html#topic-modeling-of-movie-dialogs-with-latent-dirichlet-allocation">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../notebooks.html">
+   Content with notebooks
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/ScaDaMaLe"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/ScaDaMaLe/issues/new?title=Issue%20on%20page%20%2F000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continued-with-application-to-old-bailey-online-data">
+     Continued with Application to Old Bailey Online Data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glom">
+   glom
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#checkpointing">
+   Checkpointing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#youtry">
+     YouTry
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     YouTry
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-isit1or2coins-do">
+     What does
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+     do?
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-the-executible-isit1or2coins-into-our-spark-cluster">
+     Getting the executible
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+     into our Spark Cluster
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#moving-the-executables-to-the-worker-nodes">
+     Moving the executables to the worker nodes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-the-output-from-isit1or2coins">
+   Parsing the output from
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     IsIt1or2Coins
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+   Providing case classes for input and output for easy spark communication
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="piped-rdds-and-bayesian-ab-testing">
+<h1>Piped RDDs and Bayesian AB Testing<a class="headerlink" href="#piped-rdds-and-bayesian-ab-testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="continued-with-application-to-old-bailey-online-data">
+<h2>Continued with Application to Old Bailey Online Data<a class="headerlink" href="#continued-with-application-to-old-bailey-online-data" title="Permalink to this headline">¶</a></h2>
+<p>This is a recall/repeat of <code class="docutils literal notranslate"><span class="pre">006a_PipedRDD</span></code>. After the recall, we
+continue with applying Bayesian A/B Testing to the data extracted from
+Old Bailey Online counts of crimes and punishments.</p>
+<p>Here we will first take excerpts with minor modifications from the end
+of <strong>Chapter 12. Resilient Distributed Datasets (RDDs)</strong> of <em>Spark: The
+Definitive Guide</em>:</p>
+<ul class="simple">
+<li><p>https://learning.oreilly.com/library/view/spark-the-definitive/9781491912201/ch12.html</p></li>
+</ul>
+<p>Next, we will do Bayesian AB Testing using PipedRDDs.</p>
+<p>First, we create the toy RDDs as in <em>The Definitive Guide</em>:</p>
+<p>To create an RDD from a collection, you will need to use the parallelize
+method on a SparkContext (within a SparkSession). This turns a single
+node collection into a parallel collection. When creating this parallel
+collection, you can also explicitly state the number of partitions into
+which you would like to distribute this array. In this case, we are
+creating two partitions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="n">val</span> <span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>  <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>myCollection: Array[String] = Array(Spark, The, Definitive, Guide, :, Big, Data, Processing, Made, Simple)
+words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[114] at parallelize at command-165306931359313:3
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>\
+  <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">words</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">glom</span></code> is an interesting function that takes every partition in your
+dataset and converts them to arrays. This can be useful if you’re
+going to collect the data to the driver and want to have an array for
+each partition. However, this can cause serious stability issues
+because if you have large partitions or a large number of partitions,
+it’s simple to crash the driver.</p>
+</div></blockquote>
+<p>Let’s use <code class="docutils literal notranslate"><span class="pre">glom</span></code> to see how our <code class="docutils literal notranslate"><span class="pre">words</span></code> are distributed among the two
+partitions we used explicitly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res18: Array[Array[String]] = Array(Array(Spark, The, Definitive, Guide, :), Array(Big, Data, Processing, Made, Simple))
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s create a directory in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code> for checkpointing of RDDs in the
+sequel. The following <code class="docutils literal notranslate"><span class="pre">%fs</span> <span class="pre">mkdirs</span> <span class="pre">/path_to_dir</span></code> is a shortcut to create
+a directory in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdirs</span> <span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">ScaDaMaLe</span><span class="o">/</span><span class="n">checkpointing</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res29: Boolean = true
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/ScaDaMaLe/checkpointing&quot;</span><span class="p">)</span>
+<span class="n">words</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Now, when we reference this RDD, it will derive from the checkpoint
+instead of the source data. This can be a helpful optimization.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="from-a-local-collection">
+<h1>From a Local Collection<a class="headerlink" href="#from-a-local-collection" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="glom">
+<h1>glom<a class="headerlink" href="#glom" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="checkpointing">
+<h1>Checkpointing<a class="headerlink" href="#checkpointing" title="Permalink to this headline">¶</a></h1>
+<p>One feature not available in the DataFrame API is the concept of
+checkpointing. Checkpointing is the act of saving an RDD to disk so
+that future references to this RDD point to those intermediate
+partitions on disk rather than recomputing the RDD from its original
+source. This is similar to caching except that it’s not stored in
+memory, only disk. This can be helpful when performing iterative
+computation, similar to the use cases for caching:</p>
+<div class="section" id="youtry">
+<h2>YouTry<a class="headerlink" href="#youtry" title="Permalink to this headline">¶</a></h2>
+<p>Just some more words in <code class="docutils literal notranslate"><span class="pre">haha_words</span></code> with <code class="docutils literal notranslate"><span class="pre">\n</span></code>, the End-Of-Line (EOL)
+characters, in-place.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[134] at parallelize at command-165306931359296:1
+</pre></div>
+</div>
+</div></blockquote>
+<p>Let’s use <code class="docutils literal notranslate"><span class="pre">glom</span></code> to see how our <code class="docutils literal notranslate"><span class="pre">haha_words</span></code> are distributed among the
+partitions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res31: Array[Array[String]] =
+Array(Array(ha
+ha), Array(he
+he
+he), Array(ho
+ho
+ho
+ho))
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>The pipe method is probably one of Spark’s more interesting methods.
+With pipe, you can return an RDD created by piping elements to a
+forked external process. The resulting RDD is computed by executing
+the given process once per partition. All elements of each input
+partition are written to a process’s stdin as lines of input separated
+by a newline. The resulting partition consists of the process’s stdout
+output, with each line of stdout resulting in one element of the
+output partition. A process is invoked even for empty partitions.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The print behavior can be customized by providing two functions.</p>
+</div></blockquote>
+<p>We can use a simple example and pipe each partition to the command wc.
+Each row will be passed in as a new line, so if we perform a line count,
+we will get the number of lines, one per partition:</p>
+<p>The following produces a <code class="docutils literal notranslate"><span class="pre">PipedRDD</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wc_l_PipedRDD: org.apache.spark.rdd.RDD[String] = PipedRDD[143] at pipe at command-165306931359299:1
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we take an action via <code class="docutils literal notranslate"><span class="pre">collect</span></code> to bring the results to the Driver.</p>
+<p>NOTE: Be careful what you collect! You can always write the output to
+parquet of binary files in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code> if the returned output is large.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res32: Array[String] = Array(5, 5)
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, we got the number of lines returned by <code class="docutils literal notranslate"><span class="pre">wc</span> <span class="pre">-l</span></code> per
+partition.</p>
+</div>
+</div>
+<div class="section" id="pipe-rdds-to-system-commands">
+<h1>Pipe RDDs to System Commands<a class="headerlink" href="#pipe-rdds-to-system-commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>YouTry<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Try to make sense of the next few cells where we do NOT specifiy the
+number of partitions explicitly and let Spark decide on the number of
+partitions automatically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+<span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words</span> <span class="o">=</span> <span class="n">haha_words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD_haha_words</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[149] at parallelize at command-165306931359334:1
+wc_l_PipedRDD_haha_words: org.apache.spark.rdd.RDD[String] = PipedRDD[151] at pipe at command-165306931359334:3
+res33: Array[String] = Array(2, 3, 4)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Do you understand why the above <code class="docutils literal notranslate"><span class="pre">collect</span></code> statement returns what it
+does?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words_again</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">))</span>
+<span class="n">haha_words_again</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+<span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words_again</span> <span class="o">=</span> <span class="n">haha_words_again</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD_haha_words_again</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words_again: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[152] at parallelize at command-165306931359308:1
+wc_l_PipedRDD_haha_words_again: org.apache.spark.rdd.RDD[String] = PipedRDD[154] at pipe at command-165306931359308:3
+res34: Array[String] = Array(0, 0, 2, 0, 0, 3, 0, 4)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Did you understand why some of the results are <code class="docutils literal notranslate"><span class="pre">0</span></code> in the last <code class="docutils literal notranslate"><span class="pre">collect</span></code>
+statement?</p>
+<blockquote>
+<div><p>The previous command revealed that Spark operates on a per-partition
+basis when it comes to actually executing code. You also might have
+noticed earlier that the return signature of a map function on an RDD
+is actually <code class="docutils literal notranslate"><span class="pre">MapPartitionsRDD</span></code>.</p>
+</div></blockquote>
+<p>Or <code class="docutils literal notranslate"><span class="pre">ParallelCollectionRDD</span></code> in our case.</p>
+<blockquote>
+<div><p>This is because map is just a row-wise alias for <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code>,
+which makes it possible for you to map an individual partition
+(represented as an iterator). That’s because physically on the cluster
+we operate on each partition individually (and not a specific row). A
+simple example creates the value “1” for every partition in our data,
+and the sum of the following expression will count the number of
+partitions we have:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">part</span> <span class="o">=&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Int</span><span class="p">](</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res35: Double = 2.0
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1"># 2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Naturally, this means that we operate on a per-partition basis and
+therefore it allows us to perform an operation on that <em>entire</em>
+partition. This is valuable for performing something on an entire
+subdataset of your RDD. You can gather all values of a partition class
+or group into one partition and then operate on that entire group
+using arbitrary functions and controls. An example use case of this
+would be that you could pipe this through some custom machine learning
+algorithm and train an individual model for that company’s portion of
+the dataset. A Facebook engineer has an interesting demonstration of
+their particular implementation of the pipe operator with a similar
+use case demonstrated at <a class="reference external" href="https://spark-summit.org/east-2017/events/experiences-with-sparks-rdd-apis-for-complex-custom-applications/">Spark Summit East
+2017</a>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Other functions similar to <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> include
+<code class="docutils literal notranslate"><span class="pre">mapPartitionsWithIndex</span></code>. With this you specify a function that
+accepts an index (within the partition) and an iterator that goes
+through all items within the partition. The partition index is the
+partition number in your RDD, which identifies where each record in
+our dataset sits (and potentially allows you to debug). You might use
+this to test whether your map functions are behaving correctly:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">String</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>  <span class="n">withinPartIterator</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>    
+  <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="s2">&quot;Partition: $partitionIndex =&gt; $value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterator</span>
+                                                                            <span class="p">}</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">indexedFunc</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>indexedFunc: (partitionIndex: Int, withinPartIterator: Iterator[String])Iterator[String]
+res36: Array[String] = Array(Partition: 0 =&gt; Spark, Partition: 0 =&gt; The, Partition: 0 =&gt; Definitive, Partition: 0 =&gt; Guide, Partition: 0 =&gt; :, Partition: 1 =&gt; Big, Partition: 1 =&gt; Data, Partition: 1 =&gt; Processing, Partition: 1 =&gt; Made, Partition: 1 =&gt; Simple)
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">):</span>  
+  <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;partition: </span><span class="si">{}</span><span class="s2"> =&gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span>    <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">withinPartIterator</span><span class="p">]</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">indexedFunc</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Although <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> needs a return value to work properly, this
+next function does not. <code class="docutils literal notranslate"><span class="pre">foreachPartition</span></code> simply iterates over all
+the partitions of the data. The difference is that the function has no
+return value. This makes it great for doing something with each
+partition like writing it out to a database. In fact, this is how many
+data source connectors are written. You can create</p>
+</div></blockquote>
+<p>your</p>
+<blockquote>
+<div><p>own text file source if you want by specifying outputs to the temp
+directory with a random ID:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">foreachPartition</span> <span class="p">{</span> <span class="nb">iter</span> <span class="o">=&gt;</span>  
+  <span class="kn">import</span> <span class="nn">java.io._</span>  
+  <span class="kn">import</span> <span class="nn">scala.util.Random</span>  
+  <span class="n">val</span> <span class="n">randomFileName</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Random</span><span class="p">()</span><span class="o">.</span><span class="n">nextInt</span><span class="p">()</span>  
+  <span class="n">val</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;/tmp/random-file-$</span><span class="si">{randomFileName}</span><span class="s2">.txt&quot;</span><span class="p">))</span>  
+  <span class="k">while</span> <span class="p">(</span><span class="nb">iter</span><span class="o">.</span><span class="n">hasNext</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">pw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">iter</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>  
+  <span class="p">}</span>  
+  <span class="n">pw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>You’ll find these two files if you scan your /tmp directory.</p>
+</div></blockquote>
+<p>You need to scan for the file across all the nodes. As the file may not
+be in the Driver node’s <code class="docutils literal notranslate"><span class="pre">/tmp/</span></code> directory but in those of the executors
+that hosted the partition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">random</span><span class="o">-</span><span class="n">file</span><span class="o">-*.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="mappartitions">
+<h1>mapPartitions<a class="headerlink" href="#mappartitions" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="foreachpartition">
+<h1>foreachPartition<a class="headerlink" href="#foreachpartition" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="numerically-rigorous-bayesian-ab-testing">
+<h1>Numerically Rigorous Bayesian AB Testing<a class="headerlink" href="#numerically-rigorous-bayesian-ab-testing" title="Permalink to this headline">¶</a></h1>
+<p>This is an example of Bayesian AB Testing with computer-aided proofs for
+the posterior samples.</p>
+<p>The main learning goal for you is to use pipedRDDs to distribute, in an
+embarassingly paralle way, across all the worker nodes in the Spark
+cluster an executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code>.</p>
+<div class="section" id="what-does-isit1or2coins-do">
+<h2>What does <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> do?<a class="headerlink" href="#what-does-isit1or2coins-do" title="Permalink to this headline">¶</a></h2>
+<p>At a very high-level, to understand what <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> does, imagine
+the following simple experiment.</p>
+<p>We are given</p>
+<ul class="simple">
+<li><p>the number of heads that result from a first sequence of independent
+and identical tosses of a coin and then</p></li>
+<li><p>we are given the number of heads that result from a second sequence
+of independent and identical tosses of a coin</p></li>
+</ul>
+<p>Our decision problem is to do help shed light on whether both sequence
+of tosses came from the same coin or not (whatever the bias may be).</p>
+<p><code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> tries to help us decide if the two sequence of
+coin-tosses are based on one coin with an unknown bias or two coins with
+different biases.</p>
+<p>If you are curious about details feel free to see:</p>
+<ul class="simple">
+<li><p>Exact Bayesian A/B testing using distributed fault-tolerant Moore
+rejection sampler, Benny Avelin and Raazesh Sainudiin, Extended
+Abstract, 2 pages, 2018 <a class="reference external" href="http://lamastex.org/preprints/20180507_ABTestingViaDistributedMRS.pdf">(PDF
+104KB)</a>.</p></li>
+<li><p>which builds on: An auto-validating, trans-dimensional, universal
+rejection sampler for locally Lipschitz arithmetical expressions,
+Raazesh Sainudiin and Thomas York, <a class="reference external" href="http://interval.louisiana.edu/reliable-computing-journal/volume-18/reliable-computing-18-pp-015-054.pdf">Reliable Computing, vol.18,
+pp.15-54,
+2013</a>
+(<a class="reference external" href="http://lamastex.org/preprints/avs_rc_2013.pdf">preprint: PDF
+2612KB</a>)</p></li>
+</ul>
+<p><strong>See first about <code class="docutils literal notranslate"><span class="pre">PipedRDDs</span></code> excerpt from <em>Spark The Definitive Guide</em>
+earlier.</strong></p>
+</div>
+<div class="section" id="getting-the-executible-isit1or2coins-into-our-spark-cluster">
+<h2>Getting the executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> into our Spark Cluster<a class="headerlink" href="#getting-the-executible-isit1or2coins-into-our-spark-cluster" title="Permalink to this headline">¶</a></h2>
+<p><strong>This has already been done in the project-shard. You need not do it
+again for this executible!</strong></p>
+<p>You need to upload the C++ executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> from: -
+https://github.com/lamastex/mrs2</p>
+<p>Here, suppose you have an executible for linux x86 64 bit processor with
+all dependencies pre-compiled into one executibe.</p>
+<p>Say this executible is <code class="docutils literal notranslate"><span class="pre">IsIt10r2Coins</span></code>.</p>
+<p>This executible comes from the following dockerised build:</p>
+<ul class="simple">
+<li><p>https://github.com/lamastex/mrs2/tree/master/docker</p></li>
+<li><p>by statically compiling inside the docerised environment for mrs2:</p>
+<ul>
+<li><p>https://github.com/lamastex/mrs2/tree/master/mrs-2.0/examples/MooreRejSam/IsIt1or2Coins</p></li>
+</ul>
+</li>
+</ul>
+<p>You can replace the executible with any other executible with
+appropriate I/O to it.</p>
+<p>Then you upload the executible to databricks’ <code class="docutils literal notranslate"><span class="pre">FileStore</span></code>.</p>
+<p>Just note the path to the file and DO NOT click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Table</span></code> or other
+buttons!</p>
+<p><img alt="creenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore" src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/2020/ScaDaMaLe/screenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="s2">&quot;/FileStore/tables/IsIt1or2Coins&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>Now copy the file from <code class="docutils literal notranslate"><span class="pre">dbfs://FileStore</span></code> that you just uploaded into
+the local file system of the Driver.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/tables/IsIt1or2Coins&quot;</span><span class="p">,</span> <span class="s2">&quot;file:/tmp/IsIt1or2Coins&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res44: Boolean = true
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note it is a big static executible with all dependencies inbuilt (it
+uses GNU Scientific Library and a specialized C++ Library called C-XSC
+or C Extended for Scientific Computing to do hard-ware optimized
+rigorous numerical proofs using Interval-Extended Hessian
+Differentiation Arithmetics over Rounding-Controlled Hardware-Specified
+Machine Intervals).</p>
+<p>Just note it is over 6.5MB. Also we need to change the permissions so it
+is indeed executible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="usage-instructions-for-isit1or2coins">
+<h1>Usage instructions for IsIt1or2Coins<a class="headerlink" href="#usage-instructions-for-isit1or2coins" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">./IsIt1or2Coins</span> <span class="pre">numboxes</span> <span class="pre">numiter</span> <span class="pre">seed</span> <span class="pre">numtosses1</span> <span class="pre">heads1</span> <span class="pre">numtosses2</span> <span class="pre">heads2</span> <span class="pre">logScale</span></code></p>
+<ul class="simple">
+<li><p>numboxes = Number of boxes for Moore Rejection Sampling (Rigorous von
+Neumann Rejection Sampler) - numiter = Number of samples drawn from
+posterior distribution to estimate the model probabilities - seed = a
+random number seed - numtosses1 = number of tosses for the first coin -
+heads1 = number of heads shown up on the first coin - numtosses2 =
+number of tosses for the second coin - heads2 = number of heads shown up
+on the second coin - logscale = True/False as Int</p></li>
+</ul>
+<p>Don’t worry about the details of what the executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> is
+doing for now. Just realise that this executible takes some input on
+command-line and gives some output.</p>
+<p>Let’s make sure the executible takes input and returns output string on
+the Driver node.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can also do it like this</span>
+
+<span class="o">/</span><span class="n">dbfs</span><span class="o">/</span><span class="n">FileStore</span><span class="o">/</span><span class="n">tables</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>theSeed: 234565432
+N1: 1000
+n1: 500
+N2: 1200
+n2: 600
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
+  N1=number of first coin tosses          : 1000
+  n1=number of heads in first coin tosses : 500
+  N2=number of second coin tosses         : 1200
+  n2=number of heads in second coin tosses: 600
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor. 
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo 
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo 
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax 
+in FirstBox, after updateUmax 
+bottom of FirstBox. 
+after FirstBox, before Refine 
+Umax: -1.512624733218932E+003
+UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
+f_scale: -1.973141751817741E+003  -1.973141751817741E+003
+bottom of updateUmax 
+in AdaptPartition after updateUmax2 
+in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 48
+#No. of Boxes with proposal mass function &lt;= 1e-10 112
+#No. of Boxes with proposal mass function &gt;= 1e-6 776
+#No. of Boxes with proposal mass function &gt;= 1e-3 230
+after Refine 
+before Rej..SampleMany 
+n_samples: 100
+after Rej..SampleMany 
+rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
+RSSampleMany, integral est: 1.2113e+193
+RSSampleMany mean: 
+   Number of labels or topologies = 2
+label: 0  proportion:    0.970000000000000
+Labelled Mean:
+   0.500284830473953
+
+label: 1  proportion:    0.030000000000000
+Labelled Mean:
+   0.510581317236150
+   0.489823533395186
+
+n interval function calls: 1998
+n real function calls: 2396703
+# CPU Time (seconds). Partitioning: 0.010151  Sampling: 1.40342  Total: 1.41357
+# CPU time (secods) per estimate: 0.0141357
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="moving-the-executables-to-the-worker-nodes">
+<h2>Moving the executables to the worker nodes<a class="headerlink" href="#moving-the-executables-to-the-worker-nodes" title="Permalink to this headline">¶</a></h2>
+<p>To copy the executible from <code class="docutils literal notranslate"><span class="pre">dbfs</span></code> to the local drive of each executor
+you can use the following helper function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import scala.sys.process._
+import scala.concurrent.duration._
+// from Ivan Sadikov
+
+def copyFile(): Unit = {
+  &quot;mkdir -p /tmp/executor/bin&quot;.!!
+  &quot;cp /dbfs/FileStore/tables/IsIt1or2Coins /tmp/executor/bin/&quot;.!!
+}
+
+sc.runOnEachExecutor(copyFile, new FiniteDuration(1, HOURS))
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import scala.sys.process._
+import scala.concurrent.duration._
+copyFile: ()Unit
+res0: scala.collection.Map[String,scala.util.Try[Unit]] = Map(80 -&gt; Success(()), 77 -&gt; Success(()))
+</pre></div>
+</div>
+</div></blockquote>
+<p>Now, let us use piped RDDs via <code class="docutils literal notranslate"><span class="pre">bash</span></code> to execute the given command in
+each partition as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>input: Seq[String] = List(/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
+output: Array[String] = Array(theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.006855  Sampling: 0.714379  Total: 0.721234, # CPU time (secods) per estimate: 0.00721234, theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.005417  Sampling: 0.701866  Total: 0.707283, # CPU time (secods) per estimate: 0.00707283)
+</pre></div>
+</div>
+</div></blockquote>
+<p>In fact, you can just use <code class="docutils literal notranslate"><span class="pre">DBFS</span> <span class="pre">FUSE</span></code> to run the commands without any
+file copy in databricks-provisioned Spark clusters we are on here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+<span class="n">val</span> <span class="n">same_input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
+                     <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">same_output</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">same_input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>isIt1or2StaticExecutible: String = /dbfs/FileStore/tables/IsIt1or2Coins
+same_input: Seq[String] = List(/dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
+same_output: Array[String] = Array(theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.005987  Sampling: 0.768286  Total: 0.774273, # CPU time (secods) per estimate: 0.00774273, theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.006144  Sampling: 0.710526  Total: 0.71667, # CPU time (secods) per estimate: 0.0071667)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Thus by mixing several different executibles that are statically
+compiled for linux 64 bit machine, we can mix and match multiple
+executibles with appropriate inputs.</p>
+<p>The resulting outputs can themselves be re-processed in Spark to feed
+into toher pipedRDDs or normal RDDs or DataFrames and DataSets.</p>
+<p>Finally, we can have more than one command per partition and then use
+<code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> to send all the executible commands within the input
+partition that is to be run by the executor in which that partition
+resides as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+
+<span class="o">//</span> <span class="n">let</span> <span class="n">us</span> <span class="n">make</span> <span class="mi">2</span> <span class="n">commands</span> <span class="ow">in</span> <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="mi">2</span> <span class="nb">input</span> <span class="n">partitions</span>
+<span class="n">val</span> <span class="n">same_input_mp</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 123456789 1000 500 1200 600 1&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 123456789 1000 500 1200 600 1&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">same_output_mp</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">same_input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">Seq</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">iterator</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>isIt1or2StaticExecutible: String = /dbfs/FileStore/tables/IsIt1or2Coins
+same_input_mp: Seq[String] = List(/dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 123456789 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 123456789 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
+same_output_mp: Array[String] =
+Array(theSeed: 234565432
+N1: 1000
+n1: 500
+N2: 1200
+n2: 600
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
+  N1=number of first coin tosses          : 1000
+  n1=number of heads in first coin tosses : 500
+  N2=number of second coin tosses         : 1200
+  n2=number of heads in second coin tosses: 600
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -1.512624733218932E+003
+UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
+f_scale: -1.973141751817741E+003  -1.973141751817741E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 48
+#No. of Boxes with proposal mass function &lt;= 1e-10 112
+#No. of Boxes with proposal mass function &gt;= 1e-6 776
+#No. of Boxes with proposal mass function &gt;= 1e-3 230
+after Refine
+before Rej..SampleMany
+n_samples: 100
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
+RSSampleMany, integral est: 1.2113e+193
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.970000000000000
+Labelled Mean:
+   0.500284830473953
+
+label: 1  proportion:    0.030000000000000
+Labelled Mean:
+   0.510581317236150
+   0.489823533395186
+
+n interval function calls: 1998
+n real function calls: 2396703
+# CPU Time (seconds). Partitioning: 0.005937  Sampling: 0.713929  Total: 0.719866
+# CPU time (secods) per estimate: 0.00719866, theSeed: 234565432
+N1: 1000
+n1: 500
+N2: 1200
+n2: 600
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
+  N1=number of first coin tosses          : 1000
+  n1=number of heads in first coin tosses : 500
+  N2=number of second coin tosses         : 1200
+  n2=number of heads in second coin tosses: 600
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -1.512624733218932E+003
+UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
+f_scale: -1.973141751817741E+003  -1.973141751817741E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 48
+#No. of Boxes with proposal mass function &lt;= 1e-10 112
+#No. of Boxes with proposal mass function &gt;= 1e-6 776
+#No. of Boxes with proposal mass function &gt;= 1e-3 230
+after Refine
+before Rej..SampleMany
+n_samples: 100
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
+RSSampleMany, integral est: 1.2113e+193
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.970000000000000
+Labelled Mean:
+   0.500284830473953
+
+label: 1  proportion:    0.030000000000000
+Labelled Mean:
+   0.510581317236150
+   0.489823533395186
+
+n interval function calls: 1998
+n real function calls: 2396703
+# CPU Time (seconds). Partitioning: 0.006418  Sampling: 0.707381  Total: 0.713799
+# CPU time (secods) per estimate: 0.00713799)
+</pre></div>
+</div>
+</div></blockquote>
+<p>allCatch is a useful tool to use as a filtering function when testing if
+a command will work without error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scala.util.control.Exception.allCatch</span>
+<span class="p">(</span><span class="n">allCatch</span> <span class="n">opt</span> <span class="s2">&quot; 12 &quot;</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">toLong</span><span class="p">)</span><span class="o">.</span><span class="n">isDefined</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import scala.util.control.Exception.allCatch
+res1: Boolean = true
+</pre></div>
+</div>
+</div></blockquote>
+<p>The following should only be done after you have been introduced to
+Notebook: <code class="docutils literal notranslate"><span class="pre">033_OBO_PipedRDD_RigorousBayesianABTesting</span></code> and the Old baile
+Online Data.</p>
+<p><strong>TODO</strong>: The below needs redo with DBFS FUSE.</p>
+</div>
+</div>
+<div class="section" id="parsing-the-output-from-isit1or2coins">
+<h1>Parsing the output from <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code><a class="headerlink" href="#parsing-the-output-from-isit1or2coins" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">label</span> <span class="n">proportions</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">output</span> <span class="n">of</span> <span class="n">IsIt1or2Coins</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">This</span> <span class="n">function</span> <span class="n">takes</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">Strings</span><span class="p">,</span> <span class="n">where</span> <span class="n">each</span> <span class="n">element</span>
+ <span class="o">*</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">output</span> <span class="n">of</span> <span class="n">one</span> <span class="n">execution</span> <span class="n">of</span> <span class="n">IsIt1or2Coins</span><span class="o">.</span>
+ <span class="o">*</span> <span class="n">It</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">Array</span><span class="p">[</span><span class="n">Array</span><span class="p">[</span><span class="n">Double</span><span class="p">]],</span> <span class="n">where</span> <span class="n">the</span> <span class="n">first</span> <span class="n">index</span> <span class="n">denotes</span> <span class="n">which</span>
+ <span class="o">*</span> <span class="n">execution</span> <span class="n">it</span> <span class="n">belonged</span> <span class="n">to</span><span class="p">,</span> <span class="n">the</span> <span class="n">second</span> <span class="n">index</span> <span class="ow">is</span> <span class="n">whether</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">label0</span> <span class="ow">or</span> <span class="n">label1</span>
+ <span class="o">*</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">numExec</span> <span class="n">x</span> <span class="mi">2</span> <span class="n">array</span><span class="o">.</span>
+ <span class="o">*/</span>
+
+<span class="k">def</span> <span class="nf">getLabelProps</span><span class="p">(</span><span class="nb">input</span> <span class="p">:</span> <span class="n">Array</span><span class="p">[</span><span class="n">String</span><span class="p">]):</span><span class="n">Array</span><span class="p">[</span><span class="n">Array</span><span class="p">[</span><span class="n">Double</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nb">input</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">out</span> <span class="o">=&gt;</span> <span class="n">out</span>
+       <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">line</span> <span class="o">=&gt;</span> <span class="n">line</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;label:&quot;</span><span class="p">))</span>
+       <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtLine</span> <span class="o">=&gt;</span> <span class="n">filtLine</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">line</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">allCatch</span> <span class="n">opt</span> <span class="n">line</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">toDouble</span><span class="p">)</span><span class="o">.</span><span class="n">isDefined</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtFiltLine</span> <span class="o">=&gt;</span> <span class="n">filtFiltLine</span><span class="o">.</span><span class="n">toDouble</span><span class="p">)))</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">trial</span> <span class="o">=&gt;</span> <span class="n">trial</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">labels</span> <span class="o">=&gt;</span> <span class="n">labels</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">}</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">label</span> <span class="n">means</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">output</span> <span class="n">of</span> <span class="n">IsIt1or2Coins</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">This</span> <span class="n">function</span> <span class="n">takes</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">Strings</span><span class="p">,</span> <span class="n">where</span> <span class="n">each</span> <span class="n">element</span>
+ <span class="o">*</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">output</span> <span class="n">of</span> <span class="n">one</span> <span class="n">execution</span> <span class="n">of</span> <span class="n">IsIt1or2Coins</span><span class="o">.</span>
+ <span class="o">*</span> <span class="n">It</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">Array</span><span class="p">[</span><span class="n">Array</span><span class="p">[</span><span class="n">Double</span><span class="p">]],</span> <span class="n">where</span> <span class="n">the</span> <span class="n">first</span> <span class="n">index</span> <span class="n">denotes</span> <span class="n">which</span>
+ <span class="o">*</span> <span class="n">execution</span> <span class="n">it</span> <span class="n">belonged</span> <span class="n">to</span><span class="p">,</span> <span class="n">the</span> <span class="n">second</span> <span class="n">index</span> <span class="ow">is</span> <span class="n">whether</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">label0</span> <span class="n">Mean</span> 
+ <span class="o">*</span> <span class="ow">or</span> <span class="n">label1</span> <span class="n">Mean1</span> <span class="ow">or</span> <span class="n">label1</span> <span class="n">Mean2</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">numExec</span> <span class="n">x</span> <span class="mi">3</span> <span class="n">array</span><span class="o">.</span>
+ <span class="o">*/</span>
+
+<span class="k">def</span> <span class="nf">getLabelMeans</span><span class="p">(</span><span class="nb">input</span> <span class="p">:</span> <span class="n">Array</span><span class="p">[</span><span class="n">String</span><span class="p">]):</span><span class="n">Array</span><span class="p">[</span><span class="n">Array</span><span class="p">[</span><span class="n">Double</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">val</span> <span class="n">output_pre</span> <span class="o">=</span> <span class="nb">input</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">out</span> <span class="o">=&gt;</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">line</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">allCatch</span> <span class="n">opt</span> <span class="n">line</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">toDouble</span><span class="p">)</span><span class="o">.</span><span class="n">isDefined</span><span class="p">))</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">arr</span> <span class="o">=&gt;</span> <span class="n">arr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">num</span> <span class="o">=&gt;</span> <span class="n">num</span><span class="o">.</span><span class="n">toDouble</span><span class="p">))</span>
+  <span class="o">//</span> <span class="n">Some</span> <span class="n">runs</span> <span class="n">have</span> <span class="n">such</span> <span class="n">a</span> <span class="n">low</span> <span class="n">probability</span> <span class="k">for</span> <span class="n">a</span> <span class="n">label</span> <span class="n">that</span> <span class="n">some</span> <span class="n">end</span> <span class="n">up</span> <span class="n">being</span> <span class="n">only</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">length</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">three</span>
+  <span class="o">//</span> <span class="n">That</span> <span class="n">means</span> <span class="n">we</span> <span class="n">should</span> <span class="n">pad</span> <span class="k">with</span> <span class="n">a</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">fix</span> <span class="n">this</span>
+  <span class="n">output_pre</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">trial</span> <span class="o">=&gt;</span> <span class="k">if</span> <span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="n">Array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">trial</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">trial</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="k">else</span> <span class="n">trial</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>getLabelProps: (input: Array[String])Array[Array[Double]]
+getLabelMeans: (input: Array[String])Array[Array[Double]]
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="providing-case-classes-for-input-and-output-for-easy-spark-communication">
+<h1>Providing case classes for input and output for easy spark communication<a class="headerlink" href="#providing-case-classes-for-input-and-output-for-easy-spark-communication" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.sql.DataFrame</span>
+
+<span class="n">case</span> <span class="k">class</span> <span class="nc">OutputRow</span><span class="p">(</span><span class="n">ID</span><span class="p">:</span><span class="n">Long</span><span class="p">,</span> 
+                     <span class="n">NumTosses1</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">NumHeads1</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span>
+                     <span class="n">NumTosses2</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">NumHeads2</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span>
+                     <span class="n">Label0Prob</span><span class="p">:</span><span class="n">Double</span><span class="p">,</span>
+                     <span class="n">Label1Prob</span><span class="p">:</span><span class="n">Double</span><span class="p">,</span>
+                     <span class="n">Label0Mean0</span><span class="p">:</span><span class="n">Double</span><span class="p">,</span> <span class="n">Label0Mean1</span><span class="p">:</span><span class="n">Double</span><span class="p">,</span> 
+                     <span class="n">Label1Mean0</span><span class="p">:</span><span class="n">Double</span><span class="p">,</span> <span class="n">Label1Mean1</span><span class="p">:</span><span class="n">Double</span><span class="p">)</span>
+
+<span class="n">case</span> <span class="k">class</span> <span class="nc">InputOpts</span><span class="p">(</span><span class="n">ID</span><span class="p">:</span><span class="n">Long</span><span class="p">,</span><span class="n">NumBoxes</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">NumIter</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">Seed</span><span class="p">:</span><span class="n">Long</span><span class="p">,</span> 
+                     <span class="n">NumTosses1</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">NumHeads1</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span>
+                     <span class="n">NumTosses2</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">NumHeads2</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> 
+                     <span class="n">LogScaling</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">def</span> <span class="nf">toExecutableString</span><span class="p">:</span><span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;/tmp/IsIt1or2Coins &quot;</span><span class="o">+</span><span class="n">Array</span><span class="p">(</span><span class="n">NumBoxes</span><span class="p">,</span> <span class="n">NumIter</span><span class="p">,</span> <span class="n">Seed</span><span class="p">,</span> <span class="n">NumTosses1</span><span class="p">,</span> <span class="n">NumHeads1</span><span class="p">,</span> <span class="n">NumTosses2</span><span class="p">,</span> <span class="n">NumHeads2</span><span class="p">,</span> <span class="n">LogScaling</span><span class="p">)</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">result</span> <span class="n">of</span> <span class="n">running</span> <span class="nb">all</span> <span class="n">trials</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">array</span> <span class="n">of</span> <span class="n">InputOpts</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">This</span> <span class="n">function</span> <span class="n">takes</span> <span class="n">an</span> <span class="n">Array</span><span class="p">[</span><span class="n">InputOpts</span><span class="p">],</span> <span class="n">creates</span> <span class="n">executable</span> <span class="n">strings</span>
+ <span class="o">*</span> <span class="n">via</span> <span class="n">suckAs</span> <span class="ow">and</span> <span class="n">runs</span> <span class="nb">all</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">pipedRDD</span><span class="p">,</span> <span class="n">after</span> <span class="n">it</span> <span class="n">creates</span> <span class="n">this</span> <span class="n">it</span> <span class="n">will</span> <span class="n">parse</span> <span class="n">the</span> <span class="n">output</span>
+ <span class="o">*</span> <span class="ow">and</span> <span class="n">assemble</span> <span class="n">it</span> <span class="n">into</span> <span class="n">the</span> <span class="n">case</span> <span class="k">class</span> <span class="nc">OutputRow</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">it</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">Array</span> <span class="n">of</span> <span class="n">OutputRow</span>
+ <span class="o">*/</span>
+
+<span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">trials</span> <span class="p">:</span> <span class="n">Array</span><span class="p">[</span><span class="n">InputOpts</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">trial</span> <span class="o">=&gt;</span> <span class="n">trial</span><span class="o">.</span><span class="n">toExecutableString</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;/tmp/suckAs.sh&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">Seq</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;theSeed&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">iterator</span><span class="p">)</span> <span class="o">//</span> <span class="n">We</span> <span class="n">know</span> <span class="n">that</span> <span class="n">theSeed</span> <span class="ow">is</span> <span class="n">included</span> <span class="n">once</span> <span class="ow">in</span> <span class="n">every</span> <span class="n">output</span>
+    <span class="o">.</span><span class="n">collect</span>
+    <span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">y</span> <span class="o">=&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span> <span class="o">//</span> <span class="n">Since</span> <span class="n">each</span> <span class="n">collection</span> <span class="n">of</span> <span class="n">outputs</span> <span class="n">are</span> <span class="n">split</span> <span class="n">at</span> <span class="n">theSeed</span> <span class="n">we</span> <span class="n">need</span> <span class="n">to</span> <span class="n">remove</span> <span class="nb">all</span> <span class="n">empty</span> <span class="n">strings</span> <span class="ow">and</span> <span class="n">flatmap</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">parseOutput</span><span class="p">(</span><span class="n">trials</span><span class="p">:</span> <span class="n">Array</span><span class="p">[</span><span class="n">InputOpts</span><span class="p">],</span> <span class="n">res</span><span class="p">:</span><span class="n">Array</span><span class="p">[</span><span class="n">String</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">val</span> <span class="n">labProp</span> <span class="o">=</span> <span class="n">getLabelProps</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+  <span class="n">val</span> <span class="n">labMean</span> <span class="o">=</span> <span class="n">getLabelMeans</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">trials</span> <span class="nb">zip</span> <span class="n">labProp</span> <span class="nb">zip</span> <span class="n">labMean</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">trial</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">_1</span><span class="p">,</span><span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">_2</span><span class="p">,</span><span class="n">trial</span><span class="o">.</span><span class="n">_2</span><span class="p">))</span>
+  <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">trial</span> <span class="o">=&gt;</span> <span class="n">OutputRow</span><span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span>
+                          <span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">NumTosses1</span><span class="p">,</span><span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">NumHeads1</span><span class="p">,</span>
+                          <span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">NumTosses2</span><span class="p">,</span><span class="n">trial</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">NumHeads2</span><span class="p">,</span>
+                          <span class="n">trial</span><span class="o">.</span><span class="n">_2</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">trial</span><span class="o">.</span><span class="n">_2</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                          <span class="n">trial</span><span class="o">.</span><span class="n">_3</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">trial</span><span class="o">.</span><span class="n">_3</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                          <span class="n">trial</span><span class="o">.</span><span class="n">_3</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">trial</span><span class="o">.</span><span class="n">_3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                         <span class="p">))</span>
+<span class="p">}</span>
+
+<span class="o">/*</span> <span class="n">Returns</span> <span class="n">a</span> <span class="n">DataFrame</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Array</span><span class="p">[</span><span class="n">OutputRow</span><span class="p">]</span> <span class="k">for</span> <span class="n">ease</span> <span class="n">of</span> <span class="n">displaying</span> <span class="ow">in</span> <span class="n">Databricks</span> <span class="o">*/</span>
+
+<span class="k">def</span> <span class="nf">resultAsDF</span><span class="p">(</span><span class="n">result</span><span class="p">:</span><span class="n">Array</span><span class="p">[</span><span class="n">OutputRow</span><span class="p">]):</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.DataFrame
+defined class OutputRow
+defined class InputOpts
+execute: (trials: Array[InputOpts])Array[String]
+parseOutput: (trials: Array[InputOpts], res: Array[String])Array[OutputRow]
+resultAsDF: (result: Array[OutputRow])org.apache.spark.sql.DataFrame
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">inputOpts</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1680</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">792</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">151</span><span class="p">,</span><span class="mi">63</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">InputOpts</span><span class="p">(</span><span class="mi">1690</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1805</span><span class="p">,</span><span class="mi">526</span><span class="p">,</span><span class="mi">215</span><span class="p">,</span><span class="mi">68</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">InputOpts</span><span class="p">(</span><span class="mi">1700</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">242</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1710</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">243</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1720</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1730</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">val</span> <span class="n">res</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">inputOpts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inputOpts: Array[InputOpts] = Array(InputOpts(1680,1000,1000,100,792,245,151,63,1), InputOpts(1690,1000,1000,100,1805,526,215,68,1), InputOpts(1700,1000,1000,100,1060,242,57,26,1), InputOpts(1710,1000,1000,100,1060,243,57,26,1), InputOpts(1720,1000,1000,100,1060,245,57,26,1), InputOpts(1730,1000,1000,100,1060,245,57,26,1))
+res: Array[String] =
+Array(: 100
+N1: 1060
+n1: 242
+N2: 57
+n2: 26
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 1060
+  n1=number of heads in first coin tosses : 242
+  N2=number of second coin tosses         : 57
+  n2=number of heads in second coin tosses: 26
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -601.931931469341521
+Umax: -601.245170692618672
+UmaxMAX, Umax, f_scale_local: 1e+200 -601.245170692618672 -1.061762189291428E+003
+f_scale: -1.061762189291428E+003  -1.061762189291428E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU: 1.593739709448194E-069 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.24697e-06 IL, IU: 2.03174e+192   9.04217e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 39
+#No. of Boxes with proposal mass function &lt;= 1e-10 81
+#No. of Boxes with proposal mass function &gt;= 1e-6 821
+#No. of Boxes with proposal mass function &gt;= 1e-3 259
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 9.042166864781814E+197 1000 1000
+RSSampleMany, integral est: 2.92167e+194
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.007000000000000
+Labelled Mean:
+   0.243096412677395
+
+label: 1  proportion:    0.993000000000000
+Labelled Mean:
+   0.228657602881767
+   0.459139673624810
+
+n interval function calls: 1998
+n real function calls: 3094861
+# CPU Time (seconds). Partitioning: 0.009163  Sampling: 1.83352  Total: 1.84268
+# CPU time (secods) per estimate: 0.00184268, : 100
+N1: 792
+n1: 245
+N2: 151
+n2: 63
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 792
+  n1=number of heads in first coin tosses : 245
+  N2=number of second coin tosses         : 151
+  n2=number of heads in second coin tosses: 63
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-6.514013228080160E+005,   0.000000000000000] BoxIntegral: [-6.514013228080160E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-6.514013228080161E+005,   0.000000000000000] BoxIntegral: [-6.514013228080161E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -588.153488415822835
+Umax: -587.466809015800436
+UmaxMAX, Umax, f_scale_local: 1e+200 -587.466809015800436 -1.047983827614610E+003
+f_scale: -1.047983827614610E+003  -1.047983827614610E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU: 4.406167488191346E-062 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 6.09526e-05 IL, IU: 5.73838e+193   9.41449e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 23
+#No. of Boxes with proposal mass function &lt;= 1e-10 49
+#No. of Boxes with proposal mass function &gt;= 1e-6 882
+#No. of Boxes with proposal mass function &gt;= 1e-3 311
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 9.414489592082716E+197 1000 1000
+RSSampleMany, integral est: 3.52469e+195
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.256000000000000
+Labelled Mean:
+   0.325896565213146
+
+label: 1  proportion:    0.744000000000000
+Labelled Mean:
+   0.309291795826172
+   0.418045580655123
+
+n interval function calls: 1998
+n real function calls: 267091
+# CPU Time (seconds). Partitioning: 0.008357  Sampling: 0.157338  Total: 0.165695
+# CPU time (secods) per estimate: 0.000165695, : 100
+N1: 1060
+n1: 245
+N2: 57
+n2: 26
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 1060
+  n1=number of heads in first coin tosses : 245
+  N2=number of second coin tosses         : 57
+  n2=number of heads in second coin tosses: 26
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -604.763616530585409
+UmaxMAX, Umax, f_scale_local: 1e+200 -604.763616530585409 -1.065280635129395E+003
+f_scale: -1.065280635129395E+003  -1.065280635129395E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU: 4.160085178892135E-071 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.22862e-06 IL, IU: 1.78864e+192   8.02577e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 33
+#No. of Boxes with proposal mass function &lt;= 1e-10 73
+#No. of Boxes with proposal mass function &gt;= 1e-6 812
+#No. of Boxes with proposal mass function &gt;= 1e-3 246
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 8.025765897720203E+197 1000 1000
+RSSampleMany, integral est: 2.5871e+194
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.006000000000000
+Labelled Mean:
+   0.241308465707637
+
+label: 1  proportion:    0.994000000000000
+Labelled Mean:
+   0.231566745943815
+   0.460418597148691
+
+n interval function calls: 1998
+n real function calls: 3102223
+# CPU Time (seconds). Partitioning: 0.009115  Sampling: 1.82417  Total: 1.83329
+# CPU time (secods) per estimate: 0.00183329, : 100
+N1: 1060
+n1: 245
+N2: 57
+n2: 26
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 1060
+  n1=number of heads in first coin tosses : 245
+  N2=number of second coin tosses         : 57
+  n2=number of heads in second coin tosses: 26
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -604.763616530585409
+UmaxMAX, Umax, f_scale_local: 1e+200 -604.763616530585409 -1.065280635129395E+003
+f_scale: -1.065280635129395E+003  -1.065280635129395E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU: 4.160085178892135E-071 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.22862e-06 IL, IU: 1.78864e+192   8.02577e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 33
+#No. of Boxes with proposal mass function &lt;= 1e-10 73
+#No. of Boxes with proposal mass function &gt;= 1e-6 812
+#No. of Boxes with proposal mass function &gt;= 1e-3 246
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 8.025765897720203E+197 1000 1000
+RSSampleMany, integral est: 2.5871e+194
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.006000000000000
+Labelled Mean:
+   0.241308465707637
+
+label: 1  proportion:    0.994000000000000
+Labelled Mean:
+   0.231566745943815
+   0.460418597148691
+
+n interval function calls: 1998
+n real function calls: 3102223
+# CPU Time (seconds). Partitioning: 0.009092  Sampling: 1.83923  Total: 1.84832
+# CPU time (secods) per estimate: 0.00184832, : 100
+N1: 1060
+n1: 243
+N2: 57
+n2: 26
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 1060
+  n1=number of heads in first coin tosses : 243
+  N2=number of second coin tosses         : 57
+  n2=number of heads in second coin tosses: 26
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -602.404311091615568
+UmaxMAX, Umax, f_scale_local: 1e+200 -602.404311091615568 -1.062921329690425E+003
+f_scale: -1.062921329690425E+003  -1.062921329690425E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU: 4.633751408216663E-070 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.20682e-06 IL, IU: 1.88224e+192   8.52922e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 38
+#No. of Boxes with proposal mass function &lt;= 1e-10 81
+#No. of Boxes with proposal mass function &gt;= 1e-6 810
+#No. of Boxes with proposal mass function &gt;= 1e-3 257
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 8.529216274485751E+197 1000 1000
+RSSampleMany, integral est: 2.7859e+194
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.008000000000000
+Labelled Mean:
+   0.237163228187683
+
+label: 1  proportion:    0.992000000000000
+Labelled Mean:
+   0.229340517844150
+   0.459908808479261
+
+n interval function calls: 1998
+n real function calls: 3061553
+# CPU Time (seconds). Partitioning: 0.009239  Sampling: 1.80917  Total: 1.81841
+# CPU time (secods) per estimate: 0.00181841, : 100
+N1: 1805
+n1: 526
+N2: 215
+n2: 68
+UseLogPi: 1
+  n_boxes: 1000  n_samples: 1000  rng_seed = 100
+  N1=number of first coin tosses          : 1805
+  n1=number of heads in first coin tosses : 526
+  N2=number of second coin tosses         : 215
+  n2=number of heads in second coin tosses: 68
+Ldomain.L: 0
+Ldomain.L: 1
+end of FIsIt1or2Coins constructor.
+in FirstBox, before getBoxREInfo. k: 0
+0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.395366566354393E+006,   0.000000000000000] BoxIntegral: [-1.395366566354393E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+0 [1.000000000000000E-300,   1.000000000000000]
+in FirstBox, before getBoxREInfo. k: 1
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.395366566354393E+006,   0.000000000000000] BoxIntegral: [-1.395366566354393E+006,   0.000000000000000]
+in FirstBox, after getBoxREInfo
+1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
+Umax:    0.000000000000000
+UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
+f_scale: -460.517018598809159  -460.517018598809159
+bottom of updateUmax
+in FirstBox, after updateUmax
+bottom of FirstBox.
+after FirstBox, before Refine
+Umax: -1.213363139695285E+003
+Umax: -1.212738223821990E+003
+UmaxMAX, Umax, f_scale_local: 1e+200 -1.212738223821990E+003 -1.673255242420799E+003
+f_scale: -1.673255242420799E+003  -1.673255242420799E+003
+bottom of updateUmax
+in AdaptPartition after updateUmax2
+in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
+# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 1.75678e-06 IL, IU: 8.14842e+191   4.63827e+197
+#Using log(pi)? 1
+#No. of Boxes with proposal mass function &lt;= 1e-16 53
+#No. of Boxes with proposal mass function &lt;= 1e-10 109
+#No. of Boxes with proposal mass function &gt;= 1e-6 743
+#No. of Boxes with proposal mass function &gt;= 1e-3 170
+after Refine
+before Rej..SampleMany
+n_samples: 1000
+after Rej..SampleMany
+rs_sample IU, N, Nrs: 4.638268528941289E+197 1000 1000
+RSSampleMany, integral est: 5.14926e+193
+RSSampleMany mean:
+   Number of labels or topologies = 2
+label: 0  proportion:    0.905000000000000
+Labelled Mean:
+   0.294005930848202
+
+label: 1  proportion:    0.095000000000000
+Labelled Mean:
+   0.292069655006918
+   0.316300264841744
+
+n interval function calls: 1998
+n real function calls: 9007616
+# CPU Time (seconds). Partitioning: 0.009024  Sampling: 2.80121  Total: 2.81024
+# CPU time (secods) per estimate: 0.00281024)
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">resultAsDF</span><span class="p">(</span><span class="n">parseOutput</span><span class="p">(</span><span class="n">inputOpts</span><span class="p">,</span><span class="n">res</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_1-sds-3-x"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="033_OBO_LoadExtract.html" title="previous page">ScaDaMaLe, Scalable Data Science and Distributed Machine Learning</a>
+    <a class='right-next' id="next-link" href="035_LDA_CornellMovieDialogs.html" title="next page">ScaDaMaLe, Scalable Data Science and Distributed Machine Learning</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
