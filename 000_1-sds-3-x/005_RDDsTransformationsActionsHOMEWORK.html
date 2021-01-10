@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -817,11 +837,6 @@ We will <code class="docutils literal notranslate"><span class="pre">sc.parallel
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd0_1000000: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[26] at parallelize at command-3398110674017778:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd0_1000000</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">gives</span> <span class="n">the</span> <span class="n">first</span> <span class="mi">5</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -829,11 +844,6 @@ We will <code class="docutils literal notranslate"><span class="pre">sc.parallel
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res0: Array[Int] = Array(0, 1, 2, 3, 4)
-</pre></div>
-</div>
-</div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">takeordered(n)</span></code> returns <code class="docutils literal notranslate"><span class="pre">n</span></code> elements ordered in ascending order (by
 default) or as specified by the optional key function, as shown below.</p>
 <div class="cell docutils container">
@@ -843,11 +853,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res1: Array[Int] = Array(0, 1, 2, 3, 4)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd0_1000000</span><span class="o">.</span><span class="n">takeOrdered</span><span class="p">(</span><span class="mi">5</span><span class="p">)(</span><span class="n">Ordering</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span><span class="o">.</span><span class="n">reverse</span><span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">last</span> <span class="mi">5</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span> <span class="mi">999999</span><span class="p">,</span> <span class="mi">999998</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">999995</span>
@@ -855,11 +860,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res2: Array[Int] = Array(999999, 999998, 999997, 999996, 999995)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">HOMEWORK</span><span class="p">:</span> <span class="n">edit</span> <span class="n">the</span> <span class="n">numbers</span> <span class="n">below</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">last</span> <span class="mi">20</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">an</span> <span class="n">RDD</span> <span class="n">made</span> <span class="n">of</span> <span class="n">a</span> <span class="n">sequence</span> <span class="n">of</span> <span class="n">integers</span> <span class="kn">from</span> <span class="mi">669966</span> <span class="n">to</span> <span class="mi">969696</span>
@@ -868,11 +868,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res3: Array[Int] = Array(9, 8, 7, 6, 5)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="more-examples-of-map">
 <h2>2. More examples of <code class="docutils literal notranslate"><span class="pre">map</span></code><a class="headerlink" href="#more-examples-of-map" title="Permalink to this headline">¶</a></h2>
@@ -883,11 +878,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[28] at parallelize at command-3398110674017785:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">transform</span> <span class="n">rdd</span> <span class="n">by</span> <span class="nb">map</span> <span class="n">that</span> <span class="n">doubles</span> <span class="n">each</span> <span class="n">element</span>
@@ -895,11 +885,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res4: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[29] at map at command-3398110674017786:1
-</pre></div>
-</div>
-</div></blockquote>
 <p>To see what’s in the transformed RDD, let’s perform the actions of
 <code class="docutils literal notranslate"><span class="pre">count</span></code> and <code class="docutils literal notranslate"><span class="pre">collect</span></code> on the <code class="docutils literal notranslate"><span class="pre">rdd.map(</span> <span class="pre">x</span> <span class="pre">=&gt;</span> <span class="pre">x*2)</span></code>, the transformation of
 <code class="docutils literal notranslate"><span class="pre">rdd</span></code> by the <code class="docutils literal notranslate"><span class="pre">map</span></code> given by the closure <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=&gt;</span> <span class="pre">x*2</span></code>.</p>
@@ -910,11 +895,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res5: Long = 4
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>    <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">perform</span> <span class="n">collect</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="n">show</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span>
@@ -922,11 +902,6 @@ default) or as specified by the optional key function, as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res6: Array[Int] = Array(2, 4, 6, 8)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">HOMEWORK</span><span class="p">:</span> <span class="n">uncomment</span> <span class="n">the</span> <span class="n">last</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">cell</span> <span class="ow">and</span> <span class="n">modify</span> <span class="n">the</span> <span class="s1">&#39;&lt;Fill-In-Here&gt;&#39;</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">code</span> <span class="n">below</span> <span class="n">to</span> <span class="n">collect</span> <span class="ow">and</span> <span class="n">display</span> <span class="n">the</span> <span class="n">square</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="n">of</span> <span class="n">each</span> <span class="n">element</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span>
@@ -955,11 +930,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rddFiltered: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[32] at filter at command-3398110674017792:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rddFiltered</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>    <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">collect</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">rddFiltered</span><span class="p">;</span> <span class="n">should</span> <span class="n">be</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -967,11 +937,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res8: Array[Int] = Array(2, 4)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="more-examples-of-reduce">
 <h2>4. More examples of <code class="docutils literal notranslate"><span class="pre">reduce</span></code><a class="headerlink" href="#more-examples-of-reduce" title="Permalink to this headline">¶</a></h2>
@@ -982,11 +947,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[33] at parallelize at command-3398110674017795:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">=&gt;</span><span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">reduce</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="nb">sum</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">15</span>
@@ -994,11 +954,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res9: Int = 15
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span> <span class="n">_</span> <span class="o">+</span> <span class="n">_</span> <span class="p">)</span>    <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">same</span> <span class="nb">sum</span> <span class="k">as</span> <span class="n">above</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">15</span> <span class="p">(</span><span class="n">undescore</span> <span class="n">syntax</span><span class="p">)</span>
@@ -1006,11 +961,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res10: Int = 15
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">=&gt;</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">reduce</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="n">multiply</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">120</span>
@@ -1018,11 +968,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res11: Int = 120
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rdd0_1000000</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">))</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">create</span> <span class="n">an</span> <span class="n">RDD</span> <span class="n">of</span> <span class="n">million</span> <span class="n">integers</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">10</span><span class="o">^</span><span class="mi">6</span>
@@ -1030,11 +975,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd0_1000000: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[34] at parallelize at command-3398110674017799:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd0_1000000</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">=&gt;</span><span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="p">)</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">reduce</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="nb">sum</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">Int</span> <span class="mi">1783293664</span>
@@ -1042,11 +982,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res12: Int = 1783293664
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">the</span> <span class="n">following</span> <span class="n">correctly</span> <span class="n">returns</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">although</span> <span class="k">for</span> <span class="n">wrong</span> <span class="n">reason</span> 
@@ -1057,11 +992,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res13: Int = 0
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">reduce</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="n">multiply</span> <span class="mi">1</span><span class="o">*</span><span class="mi">2</span><span class="o">*...*</span><span class="mi">9</span><span class="o">*</span><span class="mi">10</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">correct</span> <span class="n">answer</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">3628800</span>
@@ -1070,11 +1000,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res14: Int = 3628800
-</pre></div>
-</div>
-</div></blockquote>
 <p><strong>CAUTION: Know the limits of your numeric types!</strong></p>
 <p>The minimum and maximum value of <code class="docutils literal notranslate"><span class="pre">Int</span></code> and <code class="docutils literal notranslate"><span class="pre">Long</span></code> types are as follows:</p>
 <div class="cell docutils container">
@@ -1084,11 +1009,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res15: (Int, Int) = (-2147483648,2147483647)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Long</span><span class="o">.</span><span class="n">MinValue</span><span class="p">,</span> <span class="n">Long</span><span class="o">.</span><span class="n">MaxValue</span><span class="p">)</span>
@@ -1096,11 +1016,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res16: (Long, Long) = (-9223372036854775808,9223372036854775807)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">do</span> <span class="n">reduce</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="n">to</span> <span class="n">multiply</span> <span class="mi">1</span><span class="o">*</span><span class="mi">2</span><span class="o">*...*</span><span class="mi">20</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">wrong</span> <span class="n">answer</span> <span class="k">as</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2102132736</span>
@@ -1110,11 +1025,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res17: Int = -2102132736
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">we</span> <span class="n">can</span> <span class="n">accomplish</span> <span class="n">the</span> <span class="n">multiplication</span> <span class="n">using</span> <span class="n">Long</span> <span class="n">Integer</span> <span class="n">types</span> 
@@ -1124,11 +1034,6 @@ called later). So this will take our RDD of (1,2,3,4) and return RDD of
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res18: Long = 2432902008176640000
-</pre></div>
-</div>
-</div></blockquote>
 <p>As the following products over Long Integers indicate, they are limited
 too!</p>
 <div class="cell docutils container">
@@ -1139,11 +1044,6 @@ too!</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res19: Long = -8718968878589280256
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="o">&lt;</span><span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">wrong</span> <span class="n">answer</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">(</span><span class="n">due</span> <span class="n">to</span> <span class="n">Long</span><span class="s1">&#39;s numeric limits)</span>
@@ -1152,11 +1052,6 @@ too!</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res20: Long = 0
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <hr class="docutils" />
 <div class="section" id="let-us-do-a-bunch-of-transformations-to-our-rdd-and-perform-an-action">
@@ -1182,11 +1077,6 @@ back to the driver machine.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res21: Int = 12
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="transform-the-rdd-by-distinct-to-make-another-rdd">
 <h2>6. Transform the RDD by <code class="docutils literal notranslate"><span class="pre">distinct</span></code> to make another RDD<a class="headerlink" href="#transform-the-rdd-by-distinct-to-make-another-rdd" title="Permalink to this headline">¶</a></h2>
@@ -1200,11 +1090,6 @@ RDD that only contains the distinct elements of the input RDD.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd2: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[43] at parallelize at command-3398110674017815:1
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let’s apply the <code class="docutils literal notranslate"><span class="pre">distinct</span></code> transformation to <code class="docutils literal notranslate"><span class="pre">rdd2</span></code> and have it return a
 new RDD named <code class="docutils literal notranslate"><span class="pre">rdd2Distinct</span></code> that contains the distinct elements of the
 source RDD <code class="docutils literal notranslate"><span class="pre">rdd2</span></code>.</p>
@@ -1215,11 +1100,6 @@ source RDD <code class="docutils literal notranslate"><span class="pre">rdd2</sp
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd2Distinct: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[46] at distinct at command-3398110674017817:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd2Distinct</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>    <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">collect</span> <span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="k">as</span> <span class="n">Array</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -1227,11 +1107,6 @@ source RDD <code class="docutils literal notranslate"><span class="pre">rdd2</sp
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res22: Array[Int] = Array(4, 1, 2, 3)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="more-flatmap">
 <h2>7. more flatMap<a class="headerlink" href="#more-flatmap" title="Permalink to this headline">¶</a></h2>
@@ -1242,11 +1117,6 @@ source RDD <code class="docutils literal notranslate"><span class="pre">rdd2</sp
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[47] at parallelize at command-3398110674017820:1
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let us pass the <code class="docutils literal notranslate"><span class="pre">rdd</span></code> above to a map with a closure that will take in
 each element <code class="docutils literal notranslate"><span class="pre">x</span></code> and return <code class="docutils literal notranslate"><span class="pre">Array(x,</span> <span class="pre">x+5)</span></code>. So each element of the
 mapped RDD named <code class="docutils literal notranslate"><span class="pre">rddOfArrays</span></code> is an <code class="docutils literal notranslate"><span class="pre">Array[Int]</span></code>, an array of integers.</p>
@@ -1258,11 +1128,6 @@ mapped RDD named <code class="docutils literal notranslate"><span class="pre">rd
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rddOfArrays: org.apache.spark.rdd.RDD[Array[Int]] = MapPartitionsRDD[48] at map at command-3398110674017822:2
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rddOfArrays</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">see</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">RDD</span><span class="p">[</span><span class="n">Array</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">Array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">Array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -1270,11 +1135,6 @@ mapped RDD named <code class="docutils literal notranslate"><span class="pre">rd
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res23: Array[Array[Int]] = Array(Array(1, 6), Array(2, 7), Array(3, 8))
-</pre></div>
-</div>
-</div></blockquote>
 <p>Now let’s observer what happens when we use <code class="docutils literal notranslate"><span class="pre">flatMap</span></code> to transform the
 same <code class="docutils literal notranslate"><span class="pre">rdd</span></code> and create another RDD called <code class="docutils literal notranslate"><span class="pre">rddfM</span></code>.</p>
 <p>Interestingly, <code class="docutils literal notranslate"><span class="pre">flatMap</span></code> <em>flattens</em> our <code class="docutils literal notranslate"><span class="pre">rdd</span></code> by taking each <code class="docutils literal notranslate"><span class="pre">Array</span></code> (or
@@ -1288,11 +1148,6 @@ sequence in general) and truning it into individual elements.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rddfM: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[49] at flatMap at command-3398110674017825:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rddfM</span><span class="o">.</span><span class="n">collect</span>    <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">collect</span> <span class="n">rddfM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
@@ -1300,11 +1155,6 @@ sequence in general) and truning it into individual elements.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res24: Array[Int] = Array(1, 6, 2, 7, 3, 8)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 

@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -868,11 +888,6 @@ already created for you and is available as <code class="docutils literal notran
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@5a289bf5
-</pre></div>
-</div>
-</div></blockquote>
 <p>After evaluation you should see something like this, i.e., a reference
 to the <code class="docutils literal notranslate"><span class="pre">SparkSession</span></code> you just created:</p>
 <p><code class="docutils literal notranslate"><span class="pre">res0:</span> <span class="pre">org.apache.spark.sql.SparkSession</span> <span class="pre">=</span> <span class="pre">org.apache.spark.sql.SparkSession&#64;5a289bf5</span></code></p>
@@ -931,15 +946,6 @@ in the Spark repo.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>peopleJsonLinesFromURL: Iterator[String] = &lt;iterator&gt;
-res1: String =
-{&quot;name&quot;:&quot;Michael&quot;}
-{&quot;name&quot;:&quot;Andy&quot;, &quot;age&quot;:30}
-{&quot;name&quot;:&quot;Justin&quot;, &quot;age&quot;:19}
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.json&quot;</span><span class="p">)</span>
@@ -947,11 +953,6 @@ res1: String =
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">you</span> <span class="n">can</span> <span class="n">also</span> <span class="n">read</span> <span class="n">into</span> <span class="n">df</span> <span class="n">like</span> <span class="n">this</span>
@@ -960,11 +961,6 @@ res1: String =
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -972,17 +968,6 @@ res1: String =
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-------+
-| age|   name|
-+----+-------+
-|  19| Justin|
-|  30|   Andy|
-|null|Michael|
-+----+-------+
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="untyped-dataset-operations-aka-dataframe-operations">
 <h2>Untyped Dataset Operations (aka DataFrame Operations)<a class="headerlink" href="#untyped-dataset-operations-aka-dataframe-operations" title="Permalink to this headline">¶</a></h2>
@@ -1008,15 +993,6 @@ df.printSchema()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- age: long (nullable = true)
- |-- name: string (nullable = true)
-
-import spark.implicits._
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Select</span> <span class="n">only</span> <span class="n">the</span> <span class="s2">&quot;name&quot;</span> <span class="n">column</span>
@@ -1025,17 +1001,6 @@ import spark.implicits._
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+
-|   name|
-+-------+
-| Justin|
-|   Andy|
-|Michael|
-+-------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select everybody, but increment the age by 1
@@ -1044,17 +1009,6 @@ df.select($&quot;name&quot;, $&quot;age&quot; + 1).show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+---------+
-|   name|(age + 1)|
-+-------+---------+
-| Justin|       20|
-|   Andy|       31|
-|Michael|     null|
-+-------+---------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select people older than 21
@@ -1063,15 +1017,6 @@ df.filter($&quot;age&quot; &gt; 21).show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---+----+
-|age|name|
-+---+----+
-| 30|Andy|
-+---+----+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Count</span> <span class="n">people</span> <span class="n">by</span> <span class="n">age</span>
@@ -1080,17 +1025,6 @@ df.filter($&quot;age&quot; &gt; 21).show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-----+
-| age|count|
-+----+-----+
-|  19|    1|
-|null|    1|
-|  30|    1|
-+----+-----+
-</pre></div>
-</div>
-</div></blockquote>
 <p>Find full example code at -
 https://raw.githubusercontent.com/apache/spark/master/examples/src/main/scala/org/apache/spark/examples/sql/SparkSQLExample.scala
 in the Spark repo.</p>
@@ -1123,19 +1057,6 @@ queries programmatically and returns the result as a <code class="docutils liter
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-------+
-| age|   name|
-+----+-------+
-|  19| Justin|
-|  30|   Andy|
-|null|Michael|
-+----+-------+
-
-sqlDF: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="global-temporary-view">
 <h2>Global Temporary View<a class="headerlink" href="#global-temporary-view" title="Permalink to this headline">¶</a></h2>
@@ -1162,17 +1083,6 @@ spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-------+
-| age|   name|
-+----+-------+
-|  19| Justin|
-|  30|   Andy|
-|null|Michael|
-+----+-------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Global</span> <span class="n">temporary</span> <span class="n">view</span> <span class="ow">is</span> <span class="n">cross</span><span class="o">-</span><span class="n">session</span>
@@ -1181,17 +1091,6 @@ spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-------+
-| age|   name|
-+----+-------+
-|  19| Justin|
-|  30|   Andy|
-|null|Michael|
-+----+-------+
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="creating-datasets">
 <h2>Creating Datasets<a class="headerlink" href="#creating-datasets" title="Permalink to this headline">¶</a></h2>
@@ -1215,18 +1114,6 @@ bytes back into an object.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+---+
-|name|age|
-+----+---+
-|Andy| 32|
-+----+---+
-
-defined class Person
-caseClassDS: org.apache.spark.sql.Dataset[Person] = [name: string, age: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Encoders</span> <span class="k">for</span> <span class="n">most</span> <span class="n">common</span> <span class="n">types</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">importing</span> <span class="n">spark</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="n">_</span>
@@ -1236,12 +1123,6 @@ caseClassDS: org.apache.spark.sql.Dataset[Person] = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>primitiveDS: org.apache.spark.sql.Dataset[Int] = [value: int]
-res18: Array[Int] = Array(2, 3, 4)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">DataFrames</span> <span class="n">can</span> <span class="n">be</span> <span class="n">converted</span> <span class="n">to</span> <span class="n">a</span> <span class="n">Dataset</span> <span class="n">by</span> <span class="n">providing</span> <span class="n">a</span> <span class="n">class</span><span class="o">.</span> <span class="n">Mapping</span> <span class="n">will</span> <span class="n">be</span> <span class="n">done</span> <span class="n">by</span> <span class="n">name</span>
@@ -1252,20 +1133,6 @@ res18: Array[Int] = Array(2, 3, 4)
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----+-------+
-| age|   name|
-+----+-------+
-|  19| Justin|
-|  30|   Andy|
-|null|Michael|
-+----+-------+
-
-path: String = dbfs:///datasets/spark-examples/people.json
-peopleDS: org.apache.spark.sql.Dataset[Person] = [age: bigint, name: string]
-</pre></div>
-</div>
-</div></blockquote>
 <p><strong>Dataset is not available directly in PySpark or SparkR</strong>.</p>
 </div>
 <div class="section" id="interoperating-with-rdds">
@@ -1304,15 +1171,6 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>peopleTxtLinesFromURL: Iterator[String] = &lt;iterator&gt;
-res26: String =
-Michael, 29
-Andy, 30
-Justin, 19
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1320,14 +1178,6 @@ Justin, 19
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res32: String =
-Michael, 29
-Andy, 30
-Justin, 19
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">For</span> <span class="n">implicit</span> <span class="n">conversions</span> <span class="kn">from</span> <span class="nn">RDDs</span> <span class="n">to</span> <span class="n">DataFrames</span>
@@ -1347,13 +1197,6 @@ Justin, 19
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import spark.implicits._
-defined class Person
-peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
@@ -1361,17 +1204,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+---+
-|   name|age|
-+-------+---+
-|Michael| 29|
-|   Andy| 30|
-| Justin| 19|
-+-------+---+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span>
@@ -1388,11 +1220,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>teenagersDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">teenagersDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1400,15 +1227,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+---+
-|  name|age|
-+------+---+
-|Justin| 19|
-+------+---+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">a</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">result</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">by</span> <span class="n">field</span> <span class="n">index</span>
@@ -1417,15 +1235,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------+
-|       value|
-+------------+
-|Name: Justin|
-+------------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">or</span> <span class="n">by</span> <span class="n">field</span> <span class="n">name</span>
@@ -1434,15 +1243,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------+
-|       value|
-+------------+
-|Name: Justin|
-+------------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">No</span> <span class="n">pre</span><span class="o">-</span><span class="n">defined</span> <span class="n">encoders</span> <span class="k">for</span> <span class="n">Dataset</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="p">]],</span> <span class="n">define</span> <span class="n">explicitly</span>
@@ -1451,11 +1251,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mapEncoder: org.apache.spark.sql.Encoder[Map[String,Any]] = class[value[0]: binary]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Primitive</span> <span class="n">types</span> <span class="ow">and</span> <span class="n">case</span> <span class="n">classes</span> <span class="n">can</span> <span class="n">be</span> <span class="n">also</span> <span class="n">defined</span> <span class="k">as</span>
@@ -1473,11 +1268,6 @@ peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res49: Array[Map[String,Any]] = Array(Map(name -&gt; Justin, age -&gt; 19))
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="programmatically-specifying-the-schema">
 <h3>Programmatically Specifying the Schema<a class="headerlink" href="#programmatically-specifying-the-schema" title="Permalink to this headline">¶</a></h3>
@@ -1505,13 +1295,6 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.Row
-import org.apache.spark.sql.types._
-peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/people.txt MapPartitionsRDD[1] at textFile at command-1380089306925986:6
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">schema</span> <span class="ow">is</span> <span class="n">encoded</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span>
@@ -1520,11 +1303,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>schemaString: String = name age
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Generate</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">string</span> <span class="n">of</span> <span class="n">schema</span>
@@ -1534,11 +1312,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fields: Array[org.apache.spark.sql.types.StructField] = Array(StructField(name,StringType,true), StructField(age,StringType,true))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
@@ -1546,11 +1319,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>schema: org.apache.spark.sql.types.StructType = StructType(StructField(name,StringType,true), StructField(age,StringType,true))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Convert</span> <span class="n">records</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span> <span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="n">to</span> <span class="n">Rows</span>
@@ -1561,11 +1329,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rowRDD: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[3] at map at command-1581229708952934:4
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Apply</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">to</span> <span class="n">the</span> <span class="n">RDD</span>
@@ -1574,11 +1337,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>peopleDF: org.apache.spark.sql.DataFrame = [name: string, age: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
@@ -1586,17 +1344,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+---+
-|   name|age|
-+-------+---+
-|Michael| 29|
-|   Andy| 30|
-| Justin| 19|
-+-------+---+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Creates</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span> <span class="n">using</span> <span class="n">the</span> <span class="n">DataFrame</span>
@@ -1613,11 +1360,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>results: org.apache.spark.sql.DataFrame = [name: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">show</span>
@@ -1625,17 +1367,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+
-|   name|
-+-------+
-|Michael|
-|   Andy|
-| Justin|
-+-------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">results</span> <span class="n">of</span> <span class="n">SQL</span> <span class="n">queries</span> <span class="n">are</span> <span class="n">DataFrames</span> <span class="ow">and</span> <span class="n">support</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">normal</span> <span class="n">RDD</span> <span class="n">operations</span>
@@ -1645,17 +1376,6 @@ peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/pe
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------------+
-|        value|
-+-------------+
-|Name: Michael|
-|   Name: Andy|
-| Name: Justin|
-+-------------+
-</pre></div>
-</div>
-</div></blockquote>
 <p>Find full example code at -
 https://raw.githubusercontent.com/apache/spark/master/examples/src/main/scala/org/apache/spark/examples/sql/SparkSQLExample.scala
 in the Spark repo.</p>

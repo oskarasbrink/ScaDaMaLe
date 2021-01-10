@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -973,13 +993,6 @@ specify writing mode or provide additional options to read data source.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>org.apache.spark.sql.DataFrameReader@1c18c1e7
-org.apache.spark.sql.DataFrameWriter@20187329
-df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Saving</span> <span class="n">Parquet</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">Scala</span>
@@ -996,23 +1009,6 @@ df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+------+
-|  platform|visits|
-+----------+------+
-|       SMS| 61652|
-|       SMS| 44547|
-|    Flickr|  null|
-|Newsletter|  null|
-|   Twitter|   389|
-+----------+------+
-only showing top 5 rows
-
-df_save: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">databricks</span> <span class="s1">&#39;/tmp/...&#39;</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="s1">&#39;dbfs:///tmp/...&#39;</span>
@@ -1021,7 +1017,6 @@ df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/tmp/platforms.parquet/&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">note</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">directory</span> <span class="k">with</span> <span class="n">many</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">it</span><span class="o">...</span> <span class="n">files</span> <span class="n">beginning</span> <span class="k">with</span> <span class="n">part</span> <span class="n">have</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">possibly</span> <span class="n">many</span> <span class="n">partitions</span>
@@ -1029,7 +1024,6 @@ df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading Parquet table in Python</span>
@@ -1039,20 +1033,6 @@ df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+------+
-|  platform|visits|
-+----------+------+
-|       SMS| 61652|
-|       SMS| 44547|
-|    Flickr|  null|
-|Newsletter|  null|
-|   Twitter|   389|
-+----------+------+
-only showing top 5 rows
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Saving</span> <span class="n">JSON</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">Scala</span>
@@ -1066,23 +1046,6 @@ only showing top 5 rows
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+------+
-|  platform|visits|
-+----------+------+
-|       SMS| 61652|
-|       SMS| 44547|
-|    Flickr|  null|
-|Newsletter|  null|
-|   Twitter|   389|
-+----------+------+
-only showing top 5 rows
-
-df_save: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-df: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading JSON dataset in Python</span>
@@ -1092,20 +1055,6 @@ df: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+------+
-|  platform|visits|
-+----------+------+
-|       SMS| 61652|
-|       SMS| 44547|
-|    Flickr|  null|
-|Newsletter|  null|
-|   Twitter|   389|
-+----------+------+
-only showing top 5 rows
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="manually-specifying-options">
 <h3>Manually Specifying Options<a class="headerlink" href="#manually-specifying-options" title="Permalink to this headline">¶</a></h3>
 <p>You can also manually specify the data source that will be used along
@@ -1125,44 +1074,6 @@ type can be converted into other types using this syntax.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+
-|  platform|
-+----------+
-|       SMS|
-|       SMS|
-|    Flickr|
-|Newsletter|
-|   Twitter|
-|   Twitter|
-|   Android|
-|   Android|
-|   Android|
-|Broadcastr|
-+----------+
-only showing top 10 rows
-
-+----------+
-|  platform|
-+----------+
-|       SMS|
-|       SMS|
-|    Flickr|
-|Newsletter|
-|   Twitter|
-|   Twitter|
-|   Android|
-|   Android|
-|   Android|
-|Broadcastr|
-+----------+
-only showing top 10 rows
-
-json: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
-parquet: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="run-sql-on-files-directly">
 <h3>Run SQL on files directly<a class="headerlink" href="#run-sql-on-files-directly" title="Permalink to this headline">¶</a></h3>
@@ -1176,15 +1087,6 @@ you can also query that file directly with SQL.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- platform: string (nullable = true)
- |-- visits: integer (nullable = true)
-
-df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="save-modes">
 <h3>Save Modes<a class="headerlink" href="#save-modes" title="Permalink to this headline">¶</a></h3>
@@ -1229,16 +1131,6 @@ will also have their data deleted automatically when a table is dropped.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------------+--------+-----------+---------+-----------+
-|              name|database|description|tableType|isTemporary|
-+------------------+--------+-----------+---------+-----------+
-|  sentimentlex_csv| default|       null| EXTERNAL|      false|
-|social_media_usage| default|       null|  MANAGED|      false|
-+------------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drop</span> <span class="n">table</span> <span class="k">if</span> <span class="n">exists</span> <span class="n">simple_range</span>
@@ -1257,19 +1149,6 @@ will also have their data deleted automatically when a table is dropped.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------------+--------+-----------+---------+-----------+
-|              name|database|description|tableType|isTemporary|
-+------------------+--------+-----------+---------+-----------+
-|  sentimentlex_csv| default|       null| EXTERNAL|      false|
-|      simple_range| default|       null|  MANAGED|      false|
-|social_media_usage| default|       null|  MANAGED|      false|
-+------------------+--------+-----------+---------+-----------+
-
-df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="parquet-files">
@@ -1308,6 +1187,29 @@ instances of the system.</p></li>
 </ul>
 </li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">This</span> <span class="n">allows</span> <span class="n">easy</span> <span class="n">embedding</span> <span class="n">of</span> <span class="n">publicly</span> <span class="n">available</span> <span class="n">information</span> <span class="n">into</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">notebook</span>
+<span class="o">//</span><span class="n">when</span> <span class="n">viewing</span> <span class="ow">in</span> <span class="n">git</span><span class="o">-</span><span class="n">book</span> <span class="n">just</span> <span class="n">ignore</span> <span class="n">this</span> <span class="n">block</span> <span class="o">-</span> <span class="n">you</span> <span class="n">may</span> <span class="n">have</span> <span class="n">to</span> <span class="n">manually</span> <span class="n">chase</span> <span class="n">the</span> <span class="n">URL</span> <span class="ow">in</span> <span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">)</span><span class="o">.</span>
+<span class="o">//</span><span class="n">Example</span> <span class="n">usage</span><span class="p">:</span>
+<span class="o">//</span> <span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;</span><span class="p">,</span><span class="mi">250</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">frameIt</span><span class="p">(</span> <span class="n">u</span><span class="p">:</span><span class="n">String</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span><span class="n">Int</span> <span class="p">)</span> <span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="sd">&quot;&quot;&quot;&lt;iframe </span>
+<span class="sd"> src=&quot;&quot;&quot;</span><span class="s2">&quot;+ u+&quot;&quot;&quot;&quot;</span>
+<span class="s2"> width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;</span>
+<span class="s2"> sandbox&gt;</span>
+<span class="s2">  &lt;p&gt;</span>
+<span class="s2">    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;</span>
+<span class="s2">      Fallback link for browsers that, unlikely, don&#39;t support frames</span>
+<span class="s2">    &lt;/a&gt;</span>
+<span class="s2">  &lt;/p&gt;</span>
+<span class="s2">&lt;/iframe&gt;&quot;&quot;&quot;</span>
+   <span class="p">}</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://parquet.apache.org/documentation/latest/&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="loading-data-programmatically">
 <h3>Loading Data Programmatically<a class="headerlink" href="#loading-data-programmatically" title="Permalink to this headline">¶</a></h3>
@@ -1325,32 +1227,6 @@ instances of the system.</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Name: Flickr
-Name: iPhone
-Name: YouTube
-Name: WordPress
-Name: SMS
-Name: iPhone App
-Name: Youtube
-Name: Instagram
-Name: iPhone app
-Name: Linked-In
-Name: Twitter
-Name: TOTAL
-Name: Tumblr
-Name: Newsletter
-Name: Pinterest
-Name: Android
-Name: Foursquare
-Name: Google+
-Name: Foursquare (Badge Unlock)
-Name: Facebook
-parquetFile: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
-platforms: org.apache.spark.sql.DataFrame = [platform: string]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="bucketing-sorting-and-partitioning">
@@ -1365,11 +1241,6 @@ persistent tables:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>social_media_usage_DF: org.apache.spark.sql.DataFrame = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Find full example code at -
 https://raw.githubusercontent.com/apache/spark/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala
 in the Spark repo.</p>
@@ -1395,7 +1266,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">social_media_usage_readFromParquet_DF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/tmp/social_media_usage.parquet&quot;</span><span class="p">)</span>
@@ -1403,11 +1273,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>social_media_usage_readFromParquet_DF: org.apache.spark.sql.DataFrame = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">social_media_usage_readFromParquet_DF</span><span class="o">.</span><span class="n">count</span>
@@ -1415,11 +1280,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res34: Long = 5898
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">social_media_usage_readFromParquet_DF</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span>
@@ -1427,11 +1287,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res33: Int = 1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">social_media_usage_readFromParquet_DF</span><span class="o">.</span><span class="n">printSchema</span>
@@ -1439,16 +1294,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- agency: string (nullable = true)
- |-- platform: string (nullable = true)
- |-- url: string (nullable = true)
- |-- date: string (nullable = true)
- |-- visits: integer (nullable = true)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">social_media_usage_readFromParquet_DF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;platform&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="o">.</span><span class="n">count</span>
@@ -1456,11 +1301,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res36: Long = 23
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">social_media_usage_readFromParquet_DF</span>
@@ -1478,7 +1318,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/tmp/social_media_usage_partitionedByPlatform.parquet/platform=Android&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">threre</span> <span class="n">are</span> <span class="n">part</span><span class="o">-</span><span class="mi">00000</span><span class="o">-</span> <span class="n">files</span> <span class="k">with</span> <span class="n">contents</span> <span class="n">inside</span> <span class="n">each</span> <span class="n">platform</span><span class="o">=*</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">parquet</span> <span class="n">folder</span>
@@ -1486,7 +1325,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/tmp/social_media_usage_partitionedByPlatform.parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span>
@@ -1494,11 +1332,6 @@ with `bucketBy.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res48: Int = 4
-</pre></div>
-</div>
-</div></blockquote>
 <p>We can also use a fixed number of buckets and sort by a column within
 each partition. Such finer control of the dataframe written as a parquet
 file can help with optimizing downstream operations on the dataframe.</p>
@@ -1522,20 +1355,6 @@ file can help with optimizing downstream operations on the dataframe.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------------------+--------+-----------+---------+-----------+
-|                name|database|description|tableType|isTemporary|
-+--------------------+--------+-----------+---------+-----------+
-|    sentimentlex_csv| default|       null| EXTERNAL|      false|
-|        simple_range| default|       null|  MANAGED|      false|
-|  social_media_usage| default|       null|  MANAGED|      false|
-|social_media_usag...| default|       null|  MANAGED|      false|
-|         parquetfile|    null|       null|TEMPORARY|       true|
-|           platforms|    null|       null|TEMPORARY|       true|
-+--------------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;social_media_usage_table_partitionedByPlatformBucketedByDate&quot;</span><span class="p">)</span>
@@ -1543,11 +1362,6 @@ file can help with optimizing downstream operations on the dataframe.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df: org.apache.spark.sql.DataFrame = [agency: string, url: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span>
@@ -1555,11 +1369,6 @@ file can help with optimizing downstream operations on the dataframe.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res53: Int = 10
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="partition-discovery">
 <h3>Partition Discovery<a class="headerlink" href="#partition-discovery" title="Permalink to this headline">¶</a></h3>
 <p>Table partitioning is a common optimization approach used in systems
@@ -1637,19 +1446,6 @@ Parquet files (as shown in the examples below), or</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- single: integer (nullable = true)
- |-- double: integer (nullable = true)
- |-- triple: integer (nullable = true)
- |-- key: integer (nullable = true)
-
-df1: org.apache.spark.sql.DataFrame = [single: int, double: int]
-df2: org.apache.spark.sql.DataFrame = [single: int, triple: int]
-df3: org.apache.spark.sql.DataFrame = [single: int, double: int ... 2 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span><span class="o">.</span><span class="n">show</span>
@@ -1657,24 +1453,6 @@ df3: org.apache.spark.sql.DataFrame = [single: int, double: int ... 2 more field
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+------+------+---+
-|single|double|triple|key|
-+------+------+------+---+
-|     9|  null|    27|  2|
-|    10|  null|    30|  2|
-|     4|     8|  null|  1|
-|     5|    10|  null|  1|
-|     1|     2|  null|  1|
-|     2|     4|  null|  1|
-|     6|  null|    18|  2|
-|     7|  null|    21|  2|
-|     8|  null|    24|  2|
-|     3|     6|  null|  1|
-+------+------+------+---+
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="hive-metastore-parquet-table-conversion">
 <h3>Hive metastore Parquet table conversion<a class="headerlink" href="#hive-metastore-parquet-table-conversion" title="Permalink to this headline">¶</a></h3>
@@ -1809,54 +1587,6 @@ fail.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- platform: string (nullable = true)
- |-- visits: long (nullable = true)
-
-+--------+------+
-|platform|visits|
-+--------+------+
-|Facebook|     3|
-|Facebook|    36|
-|Facebook|    47|
-|Facebook|    90|
-|Facebook|   105|
-|Facebook|   123|
-|Facebook|   119|
-|Facebook|   148|
-|Facebook|   197|
-|Facebook|   179|
-|Facebook|   200|
-|Facebook|   200|
-|Facebook|   183|
-|Facebook|   190|
-|Facebook|   227|
-|Facebook|   194|
-|Facebook|   243|
-|Facebook|   237|
-|Facebook|   234|
-|Facebook|   238|
-+--------+------+
-only showing top 20 rows
-
-+----------------+----+
-|         address|name|
-+----------------+----+
-|[Columbus, Ohio]|IWyn|
-+----------------+----+
-
-command-1267216879634442:22: warning: method json in class DataFrameReader is deprecated (since 2.2.0): Use json(Dataset[String]) instead.
-val anotherPlatforms = spark.read.json(rdd)
-                                  ^
-path: String = /tmp/platforms.json
-platforms: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
-facebook: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
-rdd: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[235] at parallelize at command-1267216879634442:21
-anotherPlatforms: org.apache.spark.sql.DataFrame = [address: struct&lt;city: string, state: string&gt;, name: string]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="hive-tables">
 <h2>Hive Tables<a class="headerlink" href="#hive-tables" title="Permalink to this headline">¶</a></h2>

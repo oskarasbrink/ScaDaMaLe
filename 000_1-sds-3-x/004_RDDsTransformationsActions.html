@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -1179,6 +1199,28 @@ one should try to cover first</p>
 </ul>
 </li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">This</span> <span class="n">allows</span> <span class="n">easy</span> <span class="n">embedding</span> <span class="n">of</span> <span class="n">publicly</span> <span class="n">available</span> <span class="n">information</span> <span class="n">into</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">notebook</span>
+<span class="o">//</span><span class="n">Example</span> <span class="n">usage</span><span class="p">:</span>
+<span class="o">//</span> <span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;</span><span class="p">,</span><span class="mi">250</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">frameIt</span><span class="p">(</span> <span class="n">u</span><span class="p">:</span><span class="n">String</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span><span class="n">Int</span> <span class="p">)</span> <span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="sd">&quot;&quot;&quot;&lt;iframe </span>
+<span class="sd"> src=&quot;&quot;&quot;</span><span class="s2">&quot;+ u+&quot;&quot;&quot;&quot;</span>
+<span class="s2"> width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;</span>
+<span class="s2"> sandbox&gt;</span>
+<span class="s2">  &lt;p&gt;</span>
+<span class="s2">    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;</span>
+<span class="s2">      Fallback link for browsers that, unlikely, don&#39;t support frames</span>
+<span class="s2">    &lt;/a&gt;</span>
+<span class="s2">  &lt;/p&gt;</span>
+<span class="s2">&lt;/iframe&gt;&quot;&quot;&quot;</span>
+   <span class="p">}</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html&quot;</span><span class="p">,</span><span class="mi">700</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="let-us-get-our-hands-dirty-in-spark-implementing-these-ideas">
 <h2>Let us get our hands dirty in Spark implementing these ideas!<a class="headerlink" href="#let-us-get-our-hands-dirty-in-spark-implementing-these-ideas" title="Permalink to this headline">¶</a></h2>
@@ -1253,11 +1295,6 @@ simply search for other Spark classes, methods, etc here</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>org.apache.spark.sql.SparkSession@4e90f6e2
-</pre></div>
-</div>
-</div></blockquote>
 <p>NOTE that since Spark 2.0 <code class="docutils literal notranslate"><span class="pre">SparkSession</span></code> is a replacement for the other
 entry points: * <code class="docutils literal notranslate"><span class="pre">SparkContext</span></code>, available in our notebook as <strong>sc</strong>. *
 <code class="docutils literal notranslate"><span class="pre">SQLContext</span></code>, or more specifically its subclass <code class="docutils literal notranslate"><span class="pre">HiveContext</span></code>, available
@@ -1270,12 +1307,6 @@ in our notebook as <strong>sqlContext</strong>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>org.apache.spark.SparkContext@14f4984
-org.apache.spark.sql.hive.HiveContext@57498b38
-</pre></div>
-</div>
-</div></blockquote>
 <p>We will be using the pre-made SparkContext <code class="docutils literal notranslate"><span class="pre">sc</span></code> when learning about
 RDDs.</p>
 <div class="section" id="create-an-rdd-using-sc-parallelize">
@@ -1290,11 +1321,6 @@ the <code class="docutils literal notranslate"><span class="pre">parallelize</sp
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at command-3398110674017707:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">x</span><span class="o">.</span>  <span class="o">//</span> <span class="n">place</span> <span class="n">the</span> <span class="n">cursor</span> <span class="n">after</span> <span class="s1">&#39;x.&#39;</span> <span class="ow">and</span> <span class="n">hit</span> <span class="n">Tab</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">methods</span> <span class="n">available</span> <span class="k">for</span> <span class="n">the</span> <span class="n">RDD</span> <span class="n">x</span> <span class="n">we</span> <span class="n">created</span>
@@ -1322,11 +1348,6 @@ program if you call <code class="docutils literal notranslate"><span class="pre"
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res2: Array[Int] = Array(1, 2, 3)
-</pre></div>
-</div>
-</div></blockquote>
 <p><em>CAUTION:</em> <code class="docutils literal notranslate"><span class="pre">collect</span></code> can crash the driver when called upon an RDD with
 massively many elements.<br />
 So, it is better to use other diplaying actions like <code class="docutils literal notranslate"><span class="pre">take</span></code> or
@@ -1343,11 +1364,6 @@ So, it is better to use other diplaying actions like <code class="docutils liter
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res3: Int = 2
-</pre></div>
-</div>
-</div></blockquote>
 <p>We can see which elements of the RDD are in which parition by calling
 <code class="docutils literal notranslate"><span class="pre">glom()</span></code> before <code class="docutils literal notranslate"><span class="pre">collect()</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">glom()</span></code> flattens elements of the same partition into an <code class="docutils literal notranslate"><span class="pre">Array</span></code>.</p>
@@ -1358,11 +1374,6 @@ So, it is better to use other diplaying actions like <code class="docutils liter
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res4: Array[Array[Int]] = Array(Array(1), Array(2, 3))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">a</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1370,11 +1381,6 @@ So, it is better to use other diplaying actions like <code class="docutils liter
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a: Array[Array[Int]] = Array(Array(1), Array(2, 3))
-</pre></div>
-</div>
-</div></blockquote>
 <p>Thus from the output above,
 <code class="docutils literal notranslate"><span class="pre">Array[Array[Int]]</span> <span class="pre">=</span> <span class="pre">Array(Array(1),</span> <span class="pre">Array(2,</span> <span class="pre">3))</span></code>, we know that <code class="docutils literal notranslate"><span class="pre">1</span></code> is
 in one partition while <code class="docutils literal notranslate"><span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code> are in another partition.</p>
@@ -1393,11 +1399,6 @@ notebook is attached to among others - see
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[3] at parallelize at command-3398110674017721:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">getNumPartitions</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">evaluate</span> <span class="n">this</span> <span class="n">cell</span>
@@ -1405,11 +1406,6 @@ notebook is attached to among others - see
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res5: Int = 4
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="o">&lt;</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">to</span> <span class="n">evaluate</span> <span class="n">this</span> <span class="n">cell</span>
@@ -1417,11 +1413,6 @@ notebook is attached to among others - see
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res6: Array[Array[Int]] = Array(Array(), Array(1), Array(2), Array(3))
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 </div>
@@ -1436,11 +1427,6 @@ the RDD.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res7: Array[Int] = Array(1, 2)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="id1">
 <h4>You Try!<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>Fill in the parenthes <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code> below in order to <code class="docutils literal notranslate"><span class="pre">take</span></code> just one element
@@ -1473,12 +1459,6 @@ called later).</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[5] at parallelize at command-3398110674017730:2
-y: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[6] at map at command-3398110674017730:3
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">collect</span> <span class="ow">and</span> <span class="nb">print</span> <span class="n">the</span> <span class="n">two</span> <span class="n">RDDs</span>
@@ -1488,12 +1468,6 @@ y: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[6] at map at comma
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>b, a, c
-(b,1), (a,1), (c,1)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <hr class="docutils" />
@@ -1515,12 +1489,6 @@ those elements of the source RDD on which the function returns <code class="docu
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[7] at parallelize at command-3398110674017734:2
-y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[8] at filter at command-3398110674017734:5
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">collect</span> <span class="ow">and</span> <span class="nb">print</span> <span class="n">the</span> <span class="n">two</span> <span class="n">RDDs</span>
@@ -1531,12 +1499,6 @@ y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[8] at filter at command-3398
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1, 2, 3
-1, 3
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <hr class="docutils" />
@@ -1560,12 +1522,6 @@ control over the order of the operations!).</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[9] at parallelize at command-3398110674017738:2
-y: Int = 10
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">collect</span> <span class="ow">and</span> <span class="nb">print</span> <span class="n">RDD</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">Int</span> <span class="n">y</span><span class="p">,</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">x</span>
@@ -1575,12 +1531,6 @@ y: Int = 10
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1, 2, 3, 4
-10
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="transform-an-rdd-by-flatmap-to-make-another-rdd">
 <h3>7. Transform an RDD by <code class="docutils literal notranslate"><span class="pre">flatMap</span></code> to make another RDD<a class="headerlink" href="#transform-an-rdd-by-flatmap-to-make-another-rdd" title="Permalink to this headline">¶</a></h3>
@@ -1601,12 +1551,6 @@ element as shown below.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[10] at parallelize at command-3398110674017742:2
-y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[11] at flatMap at command-3398110674017742:3
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">collect</span> <span class="ow">and</span> <span class="nb">print</span> <span class="n">RDDs</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">y</span>
@@ -1617,13 +1561,6 @@ y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[11] at flatMap at command-33
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1, 2, 3
-1, 100, 42, 2, 200, 42, 3, 300, 42
-res11: Array[Array[Int]] = Array(Array(1, 100, 42), Array(2, 200, 42), Array(3, 300, 42))
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="create-a-pair-rdd">
 <h3>8. Create a Pair RDD<a class="headerlink" href="#create-a-pair-rdd" title="Permalink to this headline">¶</a></h3>
@@ -1638,12 +1575,6 @@ res11: Array[Array[Int]] = Array(Array(1, 100, 42), Array(2, 200, 42), Array(3, 
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[14] at parallelize at command-3398110674017745:2
-res12: Array[String] = Array(a, b, a, a, b, b, a, a, a, b, b)
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let’s make a Pair RDD called <code class="docutils literal notranslate"><span class="pre">wordCountPairRDD</span></code> that is made of
 (key,value) pairs with key=word and value=1 in order to encode each
 occurrence of each word in the RDD <code class="docutils literal notranslate"><span class="pre">words</span></code>, as follows:</p>
@@ -1656,12 +1587,6 @@ occurrence of each word in the RDD <code class="docutils literal notranslate"><s
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wordCountPairRDD: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[15] at map at command-3398110674017747:2
-res13: Array[(String, Int)] = Array((a,1), (b,1), (a,1), (a,1), (b,1), (b,1), (a,1), (a,1), (a,1), (b,1), (b,1))
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="wide-transformations-and-shuffles">
 <h3>Wide Transformations and Shuffles<a class="headerlink" href="#wide-transformations-and-shuffles" title="Permalink to this headline">¶</a></h3>
@@ -1698,6 +1623,13 @@ they can’t fit. Then, these are sorted based on the target partition
 and written to a single file. On the reduce side, tasks read the
 relevant sorted blocks.</p>
 </div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#shuffle-operations&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="perform-some-transformations-on-a-pair-rdd">
 <h3>9. Perform some transformations on a Pair RDD<a class="headerlink" href="#perform-some-transformations-on-a-pair-rdd" title="Permalink to this headline">¶</a></h3>
@@ -1744,12 +1676,6 @@ pairs.</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wordcounts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[17] at reduceByKey at command-3398110674017750:3
-res15: Array[(String, Int)] = Array((a,6), (b,5))
-</pre></div>
-</div>
-</div></blockquote>
 <p>Now, let us do just the crucial steps and avoid collecting intermediate
 RDDs (something we should avoid for large datasets anyways, as they may
 not fit in the driver program).</p>
@@ -1765,12 +1691,6 @@ not fit in the driver program).</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[21] at parallelize at command-3398110674017752:2
-wordcounts: Array[(String, Int)] = Array((a,6), (b,5))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="id2">
 <h4>You Try!<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>You try evaluating <code class="docutils literal notranslate"><span class="pre">sortByKey()</span></code> which will make a new RDD that consists
@@ -1785,13 +1705,6 @@ of the elements of the original pair RDD that are sorted by Keys.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[17] at parallelize at command-3398110674017754:2
-wordCountPairRDD: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[18] at map at command-3398110674017754:3
-wordCountPairRDDSortedByKey: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[21] at sortByKey at command-3398110674017754:4
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wordCountPairRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span> <span class="ow">and</span> <span class="n">comprehend</span> <span class="n">code</span>
@@ -1799,11 +1712,6 @@ wordCountPairRDDSortedByKey: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledR
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res8: Array[(String, Int)] = Array((a,1), (b,1), (a,1), (a,1), (b,1), (b,1), (a,1), (a,1), (a,1), (b,1), (b,1))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wordCountPairRDDSortedByKey</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span> <span class="ow">and</span> <span class="n">comprehend</span> <span class="n">code</span>
@@ -1811,11 +1719,6 @@ wordCountPairRDDSortedByKey: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledR
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res9: Array[(String, Int)] = Array((a,1), (a,1), (a,1), (a,1), (a,1), (a,1), (b,1), (b,1), (b,1), (b,1), (b,1))
-</pre></div>
-</div>
-</div></blockquote>
 <p>The next key value transformation we will see is <code class="docutils literal notranslate"><span class="pre">groupByKey</span></code></p>
 <p>When we apply the <code class="docutils literal notranslate"><span class="pre">groupByKey</span></code> transformation to <code class="docutils literal notranslate"><span class="pre">wordCountPairRDD</span></code> we
 end up with a new RDD that contains two elements. The first element is
@@ -1838,11 +1741,6 @@ key.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wordCountPairRDDGroupByKey: org.apache.spark.rdd.RDD[(String, Iterable[Int])] = ShuffledRDD[22] at groupByKey at command-3398110674017759:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wordCountPairRDDGroupByKey</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>  <span class="o">//</span> <span class="n">Cntrl</span><span class="o">+</span><span class="n">Enter</span>
@@ -1850,11 +1748,6 @@ key.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res10: Array[(String, Iterable[Int])] = Array((a,CompactBuffer(1, 1, 1, 1, 1, 1)), (b,CompactBuffer(1, 1, 1, 1, 1)))
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="understanding-closures-where-in-the-cluster-is-your-computation-running">
@@ -1869,6 +1762,13 @@ can occur for other operations as well.</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#understanding-closures-&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">var</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">var</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -1881,14 +1781,6 @@ can occur for other operations as well.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Counter value: 0
-data: Array[Int] = Array(1, 2, 3, 4, 5)
-counter: Int = 0
-rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[24] at parallelize at command-4158380413057402:3
-</pre></div>
-</div>
-</div></blockquote>
 <p>From RDD programming guide:</p>
 <blockquote>
 <div><p>The behavior of the above code is undefined, and may not work as
@@ -1977,6 +1869,13 @@ supported in parallel. They can be used to implement counters (as in
 MapReduce) or sums. Spark natively supports accumulators of numeric
 types, and programmers can add support for new types.</p>
 </div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#accumulators&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 <blockquote>
 <div><p>A numeric accumulator can be created by calling
 SparkContext.longAccumulator() or SparkContext.doubleAccumulator() to
@@ -1996,11 +1895,6 @@ of an array:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>accum: org.apache.spark.util.LongAccumulator = LongAccumulator(id: 780, name: Some(My Accumulator), value: 0)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">accum</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -2015,11 +1909,6 @@ of an array:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res18: Long = 10
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="broadcast-variables">
 <h2>Broadcast Variables<a class="headerlink" href="#broadcast-variables" title="Permalink to this headline">¶</a></h2>
@@ -2048,16 +1937,18 @@ below shows this:</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">broadcastVar</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>broadcastVar: org.apache.spark.broadcast.Broadcast[Array[Int]] = Broadcast(27)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">broadcastVar</span><span class="o">.</span><span class="n">value</span>
@@ -2065,11 +1956,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res19: Array[Int] = Array(1, 2, 3)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">broadcastVar</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -2077,11 +1963,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res20: Int = 1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">10</span><span class="p">)</span>
@@ -2089,11 +1970,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[26] at parallelize at command-4158380413057414:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">collect</span>
@@ -2101,11 +1977,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res21: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">%</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span>
@@ -2113,11 +1984,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res22: Array[Int] = Array(1, 2, 0, 1, 2, 0, 1, 2, 0, 1)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">+</span><span class="n">broadcastVar</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span>
@@ -2125,11 +1991,6 @@ below shows this:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res23: Array[Int] = Array(3, 5, 4, 6, 8, 7, 9, 11, 10, 12)
-</pre></div>
-</div>
-</div></blockquote>
 <blockquote>
 <div><p>After the broadcast variable is created, it should be used instead of
 the value v in any functions run on the cluster so that v is not
@@ -2185,17 +2046,6 @@ executor. This example is taken from: -
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>states: scala.collection.immutable.Map[String,String] = Map(NY -&gt; New York, CA -&gt; California, FL -&gt; Florida)
-countries: scala.collection.immutable.Map[String,String] = Map(USA -&gt; United States of America, IN -&gt; India)
-broadcastStates: org.apache.spark.broadcast.Broadcast[scala.collection.immutable.Map[String,String]] = Broadcast(31)
-broadcastCountries: org.apache.spark.broadcast.Broadcast[scala.collection.immutable.Map[String,String]] = Broadcast(32)
-data: Seq[(String, String, String, String)] = List((James,Smith,USA,CA), (Michael,Rose,USA,NY), (Robert,Williams,USA,CA), (Maria,Jones,USA,FL))
-rdd: org.apache.spark.rdd.RDD[(String, String, String, String)] = ParallelCollectionRDD[29] at parallelize at command-4158380413057424:12
-rdd2: org.apache.spark.rdd.RDD[(String, String, String, String)] = MapPartitionsRDD[30] at map at command-4158380413057424:14
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">println</span><span class="p">(</span><span class="n">rdd2</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
@@ -2203,14 +2053,6 @@ rdd2: org.apache.spark.rdd.RDD[(String, String, String, String)] = MapPartitions
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(James,Smith,United States of America,California)
-(Michael,Rose,United States of America,New York)
-(Robert,Williams,United States of America,California)
-(Maria,Jones,United States of America,Florida)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="homework">
 <h3>13. HOMEWORK<a class="headerlink" href="#homework" title="Permalink to this headline">¶</a></h3>
@@ -2244,12 +2086,6 @@ guide for more details.</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import scala.math._
-x: Int = 1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.HashMap</span>
@@ -2263,13 +2099,6 @@ x: Int = 1
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import java.util.HashMap
-map: java.util.HashMap[String,Int] = {a=1, b=2, c=3, d=4, e=5}
-res26: Int = 0
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 </div>

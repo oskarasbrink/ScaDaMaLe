@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -818,11 +838,6 @@ data</a>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsFilePath: String = dbfs:/databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">diamondsFilePath</span><span class="p">)</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">looks</span> <span class="n">like</span> <span class="n">a</span> <span class="n">csv</span> <span class="n">file</span> <span class="k">as</span> <span class="n">it</span> <span class="n">should</span>
@@ -830,11 +845,6 @@ data</a>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res0: Array[String] = Array(&quot;&quot;,&quot;carat&quot;,&quot;cut&quot;,&quot;color&quot;,&quot;clarity&quot;,&quot;depth&quot;,&quot;table&quot;,&quot;price&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;, &quot;1&quot;,0.23,&quot;Ideal&quot;,&quot;E&quot;,&quot;SI2&quot;,61.5,55,326,3.95,3.98,2.43)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">diamondsRawDF</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span>    <span class="o">//</span> <span class="n">we</span> <span class="n">can</span> <span class="n">use</span> <span class="n">sqlContext</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">SparkSession</span> <span class="k">for</span> <span class="n">backwards</span> <span class="n">compatibility</span> <span class="n">to</span> <span class="mf">1.</span><span class="n">x</span>
@@ -847,11 +857,6 @@ data</a>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsRawDF: org.apache.spark.sql.DataFrame = [_c0: int, carat: double ... 9 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">There</span> <span class="n">are</span> <span class="mi">10</span> <span class="n">columns</span><span class="o">.</span>  <span class="n">We</span> <span class="n">will</span> <span class="k">try</span> <span class="n">to</span> <span class="n">predict</span> <span class="n">the</span> <span class="n">price</span> <span class="n">of</span> <span class="n">diamonds</span><span class="p">,</span> <span class="n">treating</span> <span class="n">the</span> <span class="n">other</span> <span class="mi">9</span> <span class="n">columns</span> <span class="k">as</span> <span class="n">features</span><span class="o">.</span>
@@ -860,22 +865,6 @@ data</a>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- _c0: integer (nullable = true)
- |-- carat: double (nullable = true)
- |-- cut: string (nullable = true)
- |-- color: string (nullable = true)
- |-- clarity: string (nullable = true)
- |-- depth: double (nullable = true)
- |-- table: double (nullable = true)
- |-- price: integer (nullable = true)
- |-- x: double (nullable = true)
- |-- y: double (nullable = true)
- |-- z: double (nullable = true)
-</pre></div>
-</div>
-</div></blockquote>
 <p><em>Note:</em> <code class="docutils literal notranslate"><span class="pre">(nullable</span> <span class="pre">=</span> <span class="pre">true)</span></code> simply means if the value is allowed to be
 <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 <p>Let us count the number of rows in <code class="docutils literal notranslate"><span class="pre">diamondsDF</span></code>.</p>
@@ -886,11 +875,6 @@ data</a>.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res3: Long = 53940
-</pre></div>
-</div>
-</div></blockquote>
 <p>So there are 53940 records or rows in the DataFrame.</p>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">show(n)</span></code> method to see the first <code class="docutils literal notranslate"><span class="pre">n</span></code> (default is 20) rows of
 the DataFrame, as folows:</p>
@@ -901,25 +885,6 @@ the DataFrame, as folows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-|_c0|carat|      cut|color|clarity|depth|table|price|   x|   y|   z|
-+---+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-|  1| 0.23|    Ideal|    E|    SI2| 61.5| 55.0|  326|3.95|3.98|2.43|
-|  2| 0.21|  Premium|    E|    SI1| 59.8| 61.0|  326|3.89|3.84|2.31|
-|  3| 0.23|     Good|    E|    VS1| 56.9| 65.0|  327|4.05|4.07|2.31|
-|  4| 0.29|  Premium|    I|    VS2| 62.4| 58.0|  334| 4.2|4.23|2.63|
-|  5| 0.31|     Good|    J|    SI2| 63.3| 58.0|  335|4.34|4.35|2.75|
-|  6| 0.24|Very Good|    J|   VVS2| 62.8| 57.0|  336|3.94|3.96|2.48|
-|  7| 0.24|Very Good|    I|   VVS1| 62.3| 57.0|  336|3.95|3.98|2.47|
-|  8| 0.26|Very Good|    H|    SI1| 61.9| 55.0|  337|4.07|4.11|2.53|
-|  9| 0.22|     Fair|    E|    VS2| 65.1| 61.0|  337|3.87|3.78|2.49|
-| 10| 0.23|Very Good|    H|    VS1| 59.4| 61.0|  338| 4.0|4.05|2.39|
-+---+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-only showing top 10 rows
-</pre></div>
-</div>
-</div></blockquote>
 <p>If you notice the schema of <code class="docutils literal notranslate"><span class="pre">diamondsRawDF</span></code> you will see that the
 automatic schema inference of <code class="docutils literal notranslate"><span class="pre">SqlContext.read</span></code> method has cast the
 values in the column <code class="docutils literal notranslate"><span class="pre">price</span></code> as <code class="docutils literal notranslate"><span class="pre">integer</span></code>.</p>
@@ -940,24 +905,6 @@ diamondsDF.printSchema // print schema
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- carat: double (nullable = true)
- |-- cut: string (nullable = true)
- |-- color: string (nullable = true)
- |-- clarity: string (nullable = true)
- |-- depth: double (nullable = true)
- |-- table: double (nullable = true)
- |-- price: double (nullable = true)
- |-- x: double (nullable = true)
- |-- y: double (nullable = true)
- |-- z: double (nullable = true)
-
-import org.apache.spark.sql.types.DoubleType
-diamondsDF: org.apache.spark.sql.DataFrame = [carat: double, cut: string ... 8 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diamondsDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">false</span><span class="p">)</span> <span class="o">//</span> <span class="n">notice</span> <span class="n">that</span> <span class="n">price</span> <span class="n">column</span> <span class="n">has</span> <span class="n">Double</span> <span class="n">values</span> <span class="n">that</span> <span class="n">end</span> <span class="ow">in</span> <span class="s1">&#39;.0&#39;</span> <span class="n">now</span>
@@ -965,25 +912,6 @@ diamondsDF: org.apache.spark.sql.DataFrame = [carat: double, cut: string ... 8 m
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-|carat|cut      |color|clarity|depth|table|price|x   |y   |z   |
-+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-|0.23 |Ideal    |E    |SI2    |61.5 |55.0 |326.0|3.95|3.98|2.43|
-|0.21 |Premium  |E    |SI1    |59.8 |61.0 |326.0|3.89|3.84|2.31|
-|0.23 |Good     |E    |VS1    |56.9 |65.0 |327.0|4.05|4.07|2.31|
-|0.29 |Premium  |I    |VS2    |62.4 |58.0 |334.0|4.2 |4.23|2.63|
-|0.31 |Good     |J    |SI2    |63.3 |58.0 |335.0|4.34|4.35|2.75|
-|0.24 |Very Good|J    |VVS2   |62.8 |57.0 |336.0|3.94|3.96|2.48|
-|0.24 |Very Good|I    |VVS1   |62.3 |57.0 |336.0|3.95|3.98|2.47|
-|0.26 |Very Good|H    |SI1    |61.9 |55.0 |337.0|4.07|4.11|2.53|
-|0.22 |Fair     |E    |VS2    |65.1 |61.0 |337.0|3.87|3.78|2.49|
-|0.23 |Very Good|H    |VS1    |59.4 |61.0 |338.0|4.0 |4.05|2.39|
-+-----+---------+-----+-------+-----+-----+-----+----+----+----+
-only showing top 10 rows
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">View</span> <span class="n">DataFrame</span> <span class="ow">in</span> <span class="n">databricks</span>
@@ -994,8 +922,6 @@ only showing top 10 rows
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 </div>
 <div class="section" id="step-2-understand-the-data">
 <h2>Step 2. Understand the data<a class="headerlink" href="#step-2-understand-the-data" title="Permalink to this headline">¶</a></h2>
@@ -1023,11 +949,6 @@ DataFrame called <code class="docutils literal notranslate"><span class="pre">cu
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cutsDF: org.apache.spark.sql.DataFrame = [cut: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cutsDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
@@ -1035,25 +956,6 @@ DataFrame called <code class="docutils literal notranslate"><span class="pre">cu
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------+
-|      cut|
-+---------+
-|    Ideal|
-|  Premium|
-|     Good|
-|  Premium|
-|     Good|
-|Very Good|
-|Very Good|
-|Very Good|
-|     Fair|
-|Very Good|
-+---------+
-only showing top 10 rows
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let us use <code class="docutils literal notranslate"><span class="pre">distinct</span></code> to find the distinct types of <code class="docutils literal notranslate"><span class="pre">cut</span></code>’s in the
 dataset.</p>
 <div class="cell docutils container">
@@ -1064,11 +966,6 @@ dataset.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cutsDistinctDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [cut: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cutsDistinctDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1076,19 +973,6 @@ dataset.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------+
-|      cut|
-+---------+
-|  Premium|
-|    Ideal|
-|     Good|
-|     Fair|
-|Very Good|
-+---------+
-</pre></div>
-</div>
-</div></blockquote>
 <p>Clearly, there are just 5 kinds of cuts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1099,23 +983,6 @@ dataset.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----+
-|color|
-+-----+
-|    F|
-|    E|
-|    D|
-|    J|
-|    G|
-|    I|
-|    H|
-+-----+
-
-colorsDistinctDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [color: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">View</span> <span class="n">distinct</span> <span class="n">diamond</span> <span class="n">clarities</span> <span class="ow">in</span> <span class="n">dataset</span>
@@ -1125,24 +992,6 @@ colorsDistinctDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [colo
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+
-|clarity|
-+-------+
-|   VVS2|
-|    SI1|
-|     IF|
-|     I1|
-|   VVS1|
-|    VS2|
-|    SI2|
-|    VS1|
-+-------+
-
-claritiesDistinctDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [clarity: string]
-</pre></div>
-</div>
-</div></blockquote>
 <p>We can examine the distribution of a particular feature by using
 display(),</p>
 <p><strong>You Try!</strong></p>
@@ -1164,8 +1013,6 @@ display(),</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// come on do the same for color NOW!
@@ -1195,8 +1042,6 @@ settings and can change them as you wish by dragging and dropping.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>Now let’s examine one of the continuous features as an example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1206,8 +1051,6 @@ settings and can change them as you wish by dragging and dropping.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>The above histogram of the diamonds’ carat ratings shows that carats
 have a skewed distribution: Many diamonds are small, but there are a
 number of diamonds in the dataset which are much larger.</p>
@@ -1234,8 +1077,6 @@ more…</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>Try scatter plot to see pairwise scatter plots of continuous features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1244,8 +1085,6 @@ more…</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>Note that columns of type string are not in the scatter plot!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1254,21 +1093,6 @@ more…</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- carat: double (nullable = true)
- |-- cut: string (nullable = true)
- |-- color: string (nullable = true)
- |-- clarity: string (nullable = true)
- |-- depth: double (nullable = true)
- |-- table: double (nullable = true)
- |-- price: double (nullable = true)
- |-- x: double (nullable = true)
- |-- y: double (nullable = true)
- |-- z: double (nullable = true)
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="let-us-run-through-some-basic-inteactive-sql-queries-next">
@@ -1297,11 +1121,6 @@ value is equal to <code class="docutils literal notranslate"><span class="pre">D
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsDColoredDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [carat: double, color: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diamondsDColoredDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
@@ -1309,25 +1128,6 @@ value is equal to <code class="docutils literal notranslate"><span class="pre">D
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----+-----+-----+
-|carat|color|price|
-+-----+-----+-----+
-| 0.23|    D|357.0|
-| 0.23|    D|402.0|
-| 0.26|    D|403.0|
-| 0.26|    D|403.0|
-| 0.26|    D|403.0|
-| 0.22|    D|404.0|
-|  0.3|    D|552.0|
-|  0.3|    D|552.0|
-|  0.3|    D|552.0|
-| 0.24|    D|553.0|
-+-----+-----+-----+
-only showing top 10 rows
-</pre></div>
-</div>
-</div></blockquote>
 <p>As you can see all the colors are now ‘D’. But to really confirm this we
 can do the following for fun:</p>
 <div class="cell docutils container">
@@ -1337,15 +1137,6 @@ can do the following for fun:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----+
-|color|
-+-----+
-|    D|
-+-----+
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let’s try to do the same in SQL for those who know SQL from before.</p>
 <p>First we need to see if the table is registerd (not just the DataFrame),
 and if not we ened to register our DataFrame as a temporary table.</p>
@@ -1356,18 +1147,6 @@ and if not we ened to register our DataFrame as a temporary table.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+--------------------+-----------+
-|database|           tableName|isTemporary|
-+--------+--------------------+-----------+
-| default|    sentimentlex_csv|      false|
-| default|        simple_range|      false|
-| default|  social_media_usage|      false|
-| default|social_media_usag...|      false|
-+--------+--------------------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <p>Looks like diamonds is already there (if not just execute the following
 cell).</p>
 <div class="cell docutils container">
@@ -1384,19 +1163,6 @@ cell).</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+--------------------+-----------+
-|database|           tableName|isTemporary|
-+--------+--------------------+-----------+
-| default|    sentimentlex_csv|      false|
-| default|        simple_range|      false|
-| default|  social_media_usage|      false|
-| default|social_media_usag...|      false|
-|        |            diamonds|       true|
-+--------+--------------------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">do</span> <span class="n">the</span> <span class="n">same</span> <span class="ow">in</span> <span class="n">SQL</span>
@@ -1405,8 +1171,6 @@ cell).</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>Alternatively, one could just write the SQL statement in scala to create
 a new DataFrame <code class="docutils literal notranslate"><span class="pre">diamondsDColoredDF_FromTable</span></code> from the table <code class="docutils literal notranslate"><span class="pre">diamonds</span></code>
 and display it, as follows:</p>
@@ -1417,11 +1181,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsDColoredDF_FromTable: org.apache.spark.sql.DataFrame = [carat: double, color: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">or</span> <span class="k">if</span> <span class="n">you</span> <span class="n">like</span> <span class="n">use</span> <span class="n">upper</span> <span class="n">case</span> <span class="k">for</span> <span class="n">SQL</span> <span class="n">then</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">equivalent</span>
@@ -1430,11 +1189,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsDColoredDF_FromTable: org.apache.spark.sql.DataFrame = [carat: double, color: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="kn">from</span> <span class="nn">version</span> <span class="mf">2.</span><span class="n">x</span> <span class="n">onwards</span> <span class="n">you</span> <span class="n">can</span> <span class="n">call</span> <span class="kn">from</span> <span class="nn">SparkSession</span><span class="p">,</span> <span class="n">the</span> <span class="n">pre</span><span class="o">-</span><span class="n">made</span> <span class="n">spark</span> <span class="ow">in</span> <span class="n">spark</span><span class="o">-</span><span class="n">shell</span> <span class="ow">or</span> <span class="n">databricks</span> <span class="n">notebook</span>
@@ -1443,11 +1197,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diamondsDColoredDF_FromTable: org.apache.spark.sql.DataFrame = [carat: double, color: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
@@ -1455,8 +1204,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">You</span> <span class="n">can</span> <span class="n">also</span> <span class="n">use</span> <span class="n">the</span> <span class="n">familiar</span> <span class="n">wildchard</span> <span class="n">character</span> <span class="s1">&#39;%&#39;</span> <span class="n">when</span> <span class="n">matching</span> <span class="n">Strings</span>
@@ -1465,8 +1212,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Combining</span> <span class="n">conditions</span>
@@ -1475,8 +1220,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">selecting</span> <span class="n">a</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">fields</span>
@@ -1485,8 +1228,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">renaming</span> <span class="n">a</span> <span class="n">field</span> <span class="n">using</span> <span class="k">as</span>
@@ -1495,8 +1236,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">sorting</span>
@@ -1505,8 +1244,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diamondsDF</span><span class="o">.</span><span class="n">printSchema</span> <span class="o">//</span> <span class="n">since</span> <span class="n">price</span> <span class="ow">is</span> <span class="n">double</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">DF</span> <span class="n">that</span> <span class="n">was</span> <span class="n">turned</span> <span class="n">into</span> <span class="n">table</span> <span class="n">we</span> <span class="n">can</span> <span class="n">rely</span> <span class="n">on</span> <span class="n">the</span> <span class="n">descenting</span> <span class="n">sort</span> <span class="n">on</span> <span class="n">doubles</span>
@@ -1514,21 +1251,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- carat: double (nullable = true)
- |-- cut: string (nullable = true)
- |-- color: string (nullable = true)
- |-- clarity: string (nullable = true)
- |-- depth: double (nullable = true)
- |-- table: double (nullable = true)
- |-- price: double (nullable = true)
- |-- x: double (nullable = true)
- |-- y: double (nullable = true)
- |-- z: double (nullable = true)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">sort</span> <span class="n">by</span> <span class="n">multiple</span> <span class="n">fields</span>
@@ -1537,8 +1259,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">use</span> <span class="n">this</span> <span class="n">to</span> <span class="nb">type</span> <span class="n">cast</span> <span class="n">strings</span> <span class="n">into</span> <span class="n">Int</span> <span class="n">when</span> <span class="n">the</span> <span class="n">table</span> <span class="ow">is</span> <span class="n">loaded</span> <span class="k">with</span> <span class="n">string</span><span class="o">-</span><span class="n">valued</span> <span class="n">columns</span>
@@ -1556,7 +1276,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">aggregate</span> <span class="n">functions</span>
@@ -1565,7 +1284,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">average</span> <span class="n">operator</span> <span class="ow">is</span> <span class="n">doing</span> <span class="n">an</span> <span class="n">auto</span><span class="o">-</span><span class="nb">type</span> <span class="n">conversion</span> <span class="kn">from</span> <span class="nn">int</span> <span class="n">to</span> <span class="n">double</span>
@@ -1574,7 +1292,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">aggregate</span> <span class="n">function</span> <span class="ow">and</span> <span class="n">grouping</span>
@@ -1583,7 +1300,6 @@ and display it, as follows:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 </div>
 <div class="section" id="why-do-we-need-to-know-these-interactive-sql-queries">
 <h2>Why do we need to know these interactive SQL queries?<a class="headerlink" href="#why-do-we-need-to-know-these-interactive-sql-queries" title="Permalink to this headline">¶</a></h2>

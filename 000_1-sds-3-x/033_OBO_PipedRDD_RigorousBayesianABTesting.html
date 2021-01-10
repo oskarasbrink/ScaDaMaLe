@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -864,12 +884,6 @@ creating two partitions:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>myCollection: Array[String] = Array(Spark, The, Definitive, Guide, :, Big, Data, Processing, Made, Simple)
-words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[114] at parallelize at command-165306931359313:3
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
@@ -898,11 +912,6 @@ partitions we used explicitly.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res18: Array[Array[String]] = Array(Array(Spark, The, Definitive, Guide, :), Array(Big, Data, Processing, Made, Simple))
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -920,11 +929,6 @@ a directory in <code class="docutils literal notranslate"><span class="pre">dbfs
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res29: Boolean = true
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/ScaDaMaLe/checkpointing&quot;</span><span class="p">)</span>
@@ -965,11 +969,6 @@ characters, in-place.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[134] at parallelize at command-165306931359296:1
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let’s use <code class="docutils literal notranslate"><span class="pre">glom</span></code> to see how our <code class="docutils literal notranslate"><span class="pre">haha_words</span></code> are distributed among the
 partitions</p>
 <div class="cell docutils container">
@@ -979,18 +978,6 @@ partitions</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res31: Array[Array[String]] =
-Array(Array(ha
-ha), Array(he
-he
-he), Array(ho
-ho
-ho
-ho))
-</pre></div>
-</div>
-</div></blockquote>
 <blockquote>
 <div><p>The pipe method is probably one of Spark’s more interesting methods.
 With pipe, you can return an RDD created by piping elements to a
@@ -1015,11 +1002,6 @@ we will get the number of lines, one per partition:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wc_l_PipedRDD: org.apache.spark.rdd.RDD[String] = PipedRDD[143] at pipe at command-165306931359299:1
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
@@ -1038,11 +1020,6 @@ parquet of binary files in <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res32: Array[String] = Array(5, 5)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1071,13 +1048,6 @@ partitions automatically.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[149] at parallelize at command-165306931359334:1
-wc_l_PipedRDD_haha_words: org.apache.spark.rdd.RDD[String] = PipedRDD[151] at pipe at command-165306931359334:3
-res33: Array[String] = Array(2, 3, 4)
-</pre></div>
-</div>
-</div></blockquote>
 <p>Do you understand why the above <code class="docutils literal notranslate"><span class="pre">collect</span></code> statement returns what it
 does?</p>
 <div class="cell docutils container">
@@ -1090,13 +1060,6 @@ does?</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>haha_words_again: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[152] at parallelize at command-165306931359308:1
-wc_l_PipedRDD_haha_words_again: org.apache.spark.rdd.RDD[String] = PipedRDD[154] at pipe at command-165306931359308:3
-res34: Array[String] = Array(0, 0, 2, 0, 0, 3, 0, 4)
-</pre></div>
-</div>
-</div></blockquote>
 <p>Did you understand why some of the results are <code class="docutils literal notranslate"><span class="pre">0</span></code> in the last <code class="docutils literal notranslate"><span class="pre">collect</span></code>
 statement?</p>
 <blockquote>
@@ -1123,11 +1086,6 @@ partitions we have:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res35: Double = 2.0
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
@@ -1170,12 +1128,6 @@ this to test whether your map functions are behaving correctly:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>indexedFunc: (partitionIndex: Int, withinPartIterator: Iterator[String])Iterator[String]
-res36: Array[String] = Array(Partition: 0 =&gt; Spark, Partition: 0 =&gt; The, Partition: 0 =&gt; Definitive, Partition: 0 =&gt; Guide, Partition: 0 =&gt; :, Partition: 1 =&gt; Big, Partition: 1 =&gt; Data, Partition: 1 =&gt; Processing, Partition: 1 =&gt; Made, Partition: 1 =&gt; Simple)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
@@ -1314,7 +1266,6 @@ buttons!</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <p>Now copy the file from <code class="docutils literal notranslate"><span class="pre">dbfs://FileStore</span></code> that you just uploaded into
 the local file system of the Driver.</p>
 <div class="cell docutils container">
@@ -1324,11 +1275,6 @@ the local file system of the Driver.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res44: Boolean = true
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
@@ -1386,72 +1332,6 @@ the Driver node.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>theSeed: 234565432
-N1: 1000
-n1: 500
-N2: 1200
-n2: 600
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
-  N1=number of first coin tosses          : 1000
-  n1=number of heads in first coin tosses : 500
-  N2=number of second coin tosses         : 1200
-  n2=number of heads in second coin tosses: 600
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor. 
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo 
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo 
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax 
-in FirstBox, after updateUmax 
-bottom of FirstBox. 
-after FirstBox, before Refine 
-Umax: -1.512624733218932E+003
-UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
-f_scale: -1.973141751817741E+003  -1.973141751817741E+003
-bottom of updateUmax 
-in AdaptPartition after updateUmax2 
-in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 48
-#No. of Boxes with proposal mass function &lt;= 1e-10 112
-#No. of Boxes with proposal mass function &gt;= 1e-6 776
-#No. of Boxes with proposal mass function &gt;= 1e-3 230
-after Refine 
-before Rej..SampleMany 
-n_samples: 100
-after Rej..SampleMany 
-rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
-RSSampleMany, integral est: 1.2113e+193
-RSSampleMany mean: 
-   Number of labels or topologies = 2
-label: 0  proportion:    0.970000000000000
-Labelled Mean:
-   0.500284830473953
-
-label: 1  proportion:    0.030000000000000
-Labelled Mean:
-   0.510581317236150
-   0.489823533395186
-
-n interval function calls: 1998
-n real function calls: 2396703
-# CPU Time (seconds). Partitioning: 0.010151  Sampling: 1.40342  Total: 1.41357
-# CPU time (secods) per estimate: 0.0141357
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="moving-the-executables-to-the-worker-nodes">
 <h2>Moving the executables to the worker nodes<a class="headerlink" href="#moving-the-executables-to-the-worker-nodes" title="Permalink to this headline">¶</a></h2>
 <p>To copy the executible from <code class="docutils literal notranslate"><span class="pre">dbfs</span></code> to the local drive of each executor
@@ -1472,14 +1352,6 @@ sc.runOnEachExecutor(copyFile, new FiniteDuration(1, HOURS))
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import scala.sys.process._
-import scala.concurrent.duration._
-copyFile: ()Unit
-res0: scala.collection.Map[String,scala.util.Try[Unit]] = Map(80 -&gt; Success(()), 77 -&gt; Success(()))
-</pre></div>
-</div>
-</div></blockquote>
 <p>Now, let us use piped RDDs via <code class="docutils literal notranslate"><span class="pre">bash</span></code> to execute the given command in
 each partition as follows:</p>
 <div class="cell docutils container">
@@ -1495,12 +1367,6 @@ each partition as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>input: Seq[String] = List(/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
-output: Array[String] = Array(theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.006855  Sampling: 0.714379  Total: 0.721234, # CPU time (secods) per estimate: 0.00721234, theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.005417  Sampling: 0.701866  Total: 0.707283, # CPU time (secods) per estimate: 0.00707283)
-</pre></div>
-</div>
-</div></blockquote>
 <p>In fact, you can just use <code class="docutils literal notranslate"><span class="pre">DBFS</span> <span class="pre">FUSE</span></code> to run the commands without any
 file copy in databricks-provisioned Spark clusters we are on here:</p>
 <div class="cell docutils container">
@@ -1518,13 +1384,6 @@ file copy in databricks-provisioned Spark clusters we are on here:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>isIt1or2StaticExecutible: String = /dbfs/FileStore/tables/IsIt1or2Coins
-same_input: Seq[String] = List(/dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
-same_output: Array[String] = Array(theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.005987  Sampling: 0.768286  Total: 0.774273, # CPU time (secods) per estimate: 0.00774273, theSeed: 234565432, N1: 1000, n1: 500, N2: 1200, n2: 600, UseLogPi: 1, &quot;  n_boxes: 1000  n_samples: 100  rng_seed = 234565432&quot;, &quot;  N1=number of first coin tosses          : 1000&quot;, &quot;  n1=number of heads in first coin tosses : 500&quot;, &quot;  N2=number of second coin tosses         : 1200&quot;, &quot;  n2=number of heads in second coin tosses: 600&quot;, Ldomain.L: 0, Ldomain.L: 1, &quot;end of FIsIt1or2Coins constructor. &quot;, in FirstBox, before getBoxREInfo. k: 0, 0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 0 [1.000000000000000E-300,   1.000000000000000], in FirstBox, before getBoxREInfo. k: 1, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000], &quot;in FirstBox, after getBoxREInfo &quot;, 1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000], Umax:    0.000000000000000, UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159, f_scale: -460.517018598809159  -460.517018598809159, &quot;bottom of updateUmax &quot;, &quot;in FirstBox, after updateUmax &quot;, &quot;bottom of FirstBox. &quot;, &quot;after FirstBox, before Refine &quot;, Umax: -1.512624733218932E+003, UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003, f_scale: -1.973141751817741E+003  -1.973141751817741E+003, &quot;bottom of updateUmax &quot;, &quot;in AdaptPartition after updateUmax2 &quot;, in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200, # Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197, #Using log(pi)? 1, #No. of Boxes with proposal mass function &lt;= 1e-16 48, #No. of Boxes with proposal mass function &lt;= 1e-10 112, #No. of Boxes with proposal mass function &gt;= 1e-6 776, #No. of Boxes with proposal mass function &gt;= 1e-3 230, &quot;after Refine &quot;, &quot;before Rej..SampleMany &quot;, n_samples: 100, &quot;after Rej..SampleMany &quot;, rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100, RSSampleMany, integral est: 1.2113e+193, &quot;RSSampleMany mean: &quot;, &quot;   Number of labels or topologies = 2&quot;, label: 0  proportion:    0.970000000000000, Labelled Mean:, &quot;   0.500284830473953&quot;, &quot;&quot;, label: 1  proportion:    0.030000000000000, Labelled Mean:, &quot;   0.510581317236150&quot;, &quot;   0.489823533395186&quot;, &quot;&quot;, n interval function calls: 1998, n real function calls: 2396703, # CPU Time (seconds). Partitioning: 0.006144  Sampling: 0.710526  Total: 0.71667, # CPU time (secods) per estimate: 0.0071667)
-</pre></div>
-</div>
-</div></blockquote>
 <p>Thus by mixing several different executibles that are statically
 compiled for linux 64 bit machine, we can mix and match multiple
 executibles with appropriate inputs.</p>
@@ -1554,136 +1413,6 @@ resides as follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>isIt1or2StaticExecutible: String = /dbfs/FileStore/tables/IsIt1or2Coins
-same_input_mp: Seq[String] = List(/dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 123456789 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 123456789 1000 500 1200 600 1, /dbfs/FileStore/tables/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1)
-same_output_mp: Array[String] =
-Array(theSeed: 234565432
-N1: 1000
-n1: 500
-N2: 1200
-n2: 600
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
-  N1=number of first coin tosses          : 1000
-  n1=number of heads in first coin tosses : 500
-  N2=number of second coin tosses         : 1200
-  n2=number of heads in second coin tosses: 600
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -1.512624733218932E+003
-UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
-f_scale: -1.973141751817741E+003  -1.973141751817741E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 48
-#No. of Boxes with proposal mass function &lt;= 1e-10 112
-#No. of Boxes with proposal mass function &gt;= 1e-6 776
-#No. of Boxes with proposal mass function &gt;= 1e-3 230
-after Refine
-before Rej..SampleMany
-n_samples: 100
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
-RSSampleMany, integral est: 1.2113e+193
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.970000000000000
-Labelled Mean:
-   0.500284830473953
-
-label: 1  proportion:    0.030000000000000
-Labelled Mean:
-   0.510581317236150
-   0.489823533395186
-
-n interval function calls: 1998
-n real function calls: 2396703
-# CPU Time (seconds). Partitioning: 0.005937  Sampling: 0.713929  Total: 0.719866
-# CPU time (secods) per estimate: 0.00719866, theSeed: 234565432
-N1: 1000
-n1: 500
-N2: 1200
-n2: 600
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 100  rng_seed = 234565432
-  N1=number of first coin tosses          : 1000
-  n1=number of heads in first coin tosses : 500
-  N2=number of second coin tosses         : 1200
-  n2=number of heads in second coin tosses: 600
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.519706161376072E+006,   0.000000000000000] BoxIntegral: [-1.519706161376072E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -1.512624733218932E+003
-UmaxMAX, Umax, f_scale_local: 1e+200 -1.512624733218932E+003 -1.973141751817741E+003
-f_scale: -1.973141751817741E+003  -1.973141751817741E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 4.88326e-07 IL, IU: 1.41768e+191   2.90314e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 48
-#No. of Boxes with proposal mass function &lt;= 1e-10 112
-#No. of Boxes with proposal mass function &gt;= 1e-6 776
-#No. of Boxes with proposal mass function &gt;= 1e-3 230
-after Refine
-before Rej..SampleMany
-n_samples: 100
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 2.903136091244425E+197 100 100
-RSSampleMany, integral est: 1.2113e+193
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.970000000000000
-Labelled Mean:
-   0.500284830473953
-
-label: 1  proportion:    0.030000000000000
-Labelled Mean:
-   0.510581317236150
-   0.489823533395186
-
-n interval function calls: 1998
-n real function calls: 2396703
-# CPU Time (seconds). Partitioning: 0.006418  Sampling: 0.707381  Total: 0.713799
-# CPU time (secods) per estimate: 0.00713799)
-</pre></div>
-</div>
-</div></blockquote>
 <p>allCatch is a useful tool to use as a filtering function when testing if
 a command will work without error.</p>
 <div class="cell docutils container">
@@ -1694,12 +1423,6 @@ a command will work without error.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import scala.util.control.Exception.allCatch
-res1: Boolean = true
-</pre></div>
-</div>
-</div></blockquote>
 <p>The following should only be done after you have been introduced to
 Notebook: <code class="docutils literal notranslate"><span class="pre">033_OBO_PipedRDD_RigorousBayesianABTesting</span></code> and the Old baile
 Online Data.</p>
@@ -1755,12 +1478,6 @@ Online Data.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>getLabelProps: (input: Array[String])Array[Array[Double]]
-getLabelMeans: (input: Array[String])Array[Array[Double]]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="providing-case-classes-for-input-and-output-for-easy-spark-communication">
 <h1>Providing case classes for input and output for easy spark communication<a class="headerlink" href="#providing-case-classes-for-input-and-output-for-easy-spark-communication" title="Permalink to this headline">¶</a></h1>
@@ -1825,16 +1542,6 @@ getLabelMeans: (input: Array[String])Array[Array[Double]]
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.DataFrame
-defined class OutputRow
-defined class InputOpts
-execute: (trials: Array[InputOpts])Array[String]
-parseOutput: (trials: Array[InputOpts], res: Array[String])Array[OutputRow]
-resultAsDF: (result: Array[OutputRow])org.apache.spark.sql.DataFrame
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">inputOpts</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1680</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">792</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">151</span><span class="p">,</span><span class="mi">63</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">InputOpts</span><span class="p">(</span><span class="mi">1690</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1805</span><span class="p">,</span><span class="mi">526</span><span class="p">,</span><span class="mi">215</span><span class="p">,</span><span class="mi">68</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">InputOpts</span><span class="p">(</span><span class="mi">1700</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">242</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1710</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">243</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1720</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">InputOpts</span><span class="p">(</span><span class="mi">1730</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
@@ -1843,382 +1550,6 @@ resultAsDF: (result: Array[OutputRow])org.apache.spark.sql.DataFrame
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inputOpts: Array[InputOpts] = Array(InputOpts(1680,1000,1000,100,792,245,151,63,1), InputOpts(1690,1000,1000,100,1805,526,215,68,1), InputOpts(1700,1000,1000,100,1060,242,57,26,1), InputOpts(1710,1000,1000,100,1060,243,57,26,1), InputOpts(1720,1000,1000,100,1060,245,57,26,1), InputOpts(1730,1000,1000,100,1060,245,57,26,1))
-res: Array[String] =
-Array(: 100
-N1: 1060
-n1: 242
-N2: 57
-n2: 26
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 1060
-  n1=number of heads in first coin tosses : 242
-  N2=number of second coin tosses         : 57
-  n2=number of heads in second coin tosses: 26
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -601.931931469341521
-Umax: -601.245170692618672
-UmaxMAX, Umax, f_scale_local: 1e+200 -601.245170692618672 -1.061762189291428E+003
-f_scale: -1.061762189291428E+003  -1.061762189291428E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU: 1.593739709448194E-069 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.24697e-06 IL, IU: 2.03174e+192   9.04217e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 39
-#No. of Boxes with proposal mass function &lt;= 1e-10 81
-#No. of Boxes with proposal mass function &gt;= 1e-6 821
-#No. of Boxes with proposal mass function &gt;= 1e-3 259
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 9.042166864781814E+197 1000 1000
-RSSampleMany, integral est: 2.92167e+194
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.007000000000000
-Labelled Mean:
-   0.243096412677395
-
-label: 1  proportion:    0.993000000000000
-Labelled Mean:
-   0.228657602881767
-   0.459139673624810
-
-n interval function calls: 1998
-n real function calls: 3094861
-# CPU Time (seconds). Partitioning: 0.009163  Sampling: 1.83352  Total: 1.84268
-# CPU time (secods) per estimate: 0.00184268, : 100
-N1: 792
-n1: 245
-N2: 151
-n2: 63
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 792
-  n1=number of heads in first coin tosses : 245
-  N2=number of second coin tosses         : 151
-  n2=number of heads in second coin tosses: 63
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-6.514013228080160E+005,   0.000000000000000] BoxIntegral: [-6.514013228080160E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-6.514013228080161E+005,   0.000000000000000] BoxIntegral: [-6.514013228080161E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -588.153488415822835
-Umax: -587.466809015800436
-UmaxMAX, Umax, f_scale_local: 1e+200 -587.466809015800436 -1.047983827614610E+003
-f_scale: -1.047983827614610E+003  -1.047983827614610E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU: 4.406167488191346E-062 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 6.09526e-05 IL, IU: 5.73838e+193   9.41449e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 23
-#No. of Boxes with proposal mass function &lt;= 1e-10 49
-#No. of Boxes with proposal mass function &gt;= 1e-6 882
-#No. of Boxes with proposal mass function &gt;= 1e-3 311
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 9.414489592082716E+197 1000 1000
-RSSampleMany, integral est: 3.52469e+195
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.256000000000000
-Labelled Mean:
-   0.325896565213146
-
-label: 1  proportion:    0.744000000000000
-Labelled Mean:
-   0.309291795826172
-   0.418045580655123
-
-n interval function calls: 1998
-n real function calls: 267091
-# CPU Time (seconds). Partitioning: 0.008357  Sampling: 0.157338  Total: 0.165695
-# CPU time (secods) per estimate: 0.000165695, : 100
-N1: 1060
-n1: 245
-N2: 57
-n2: 26
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 1060
-  n1=number of heads in first coin tosses : 245
-  N2=number of second coin tosses         : 57
-  n2=number of heads in second coin tosses: 26
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -604.763616530585409
-UmaxMAX, Umax, f_scale_local: 1e+200 -604.763616530585409 -1.065280635129395E+003
-f_scale: -1.065280635129395E+003  -1.065280635129395E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU: 4.160085178892135E-071 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.22862e-06 IL, IU: 1.78864e+192   8.02577e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 33
-#No. of Boxes with proposal mass function &lt;= 1e-10 73
-#No. of Boxes with proposal mass function &gt;= 1e-6 812
-#No. of Boxes with proposal mass function &gt;= 1e-3 246
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 8.025765897720203E+197 1000 1000
-RSSampleMany, integral est: 2.5871e+194
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.006000000000000
-Labelled Mean:
-   0.241308465707637
-
-label: 1  proportion:    0.994000000000000
-Labelled Mean:
-   0.231566745943815
-   0.460418597148691
-
-n interval function calls: 1998
-n real function calls: 3102223
-# CPU Time (seconds). Partitioning: 0.009115  Sampling: 1.82417  Total: 1.83329
-# CPU time (secods) per estimate: 0.00183329, : 100
-N1: 1060
-n1: 245
-N2: 57
-n2: 26
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 1060
-  n1=number of heads in first coin tosses : 245
-  N2=number of second coin tosses         : 57
-  n2=number of heads in second coin tosses: 26
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -604.763616530585409
-UmaxMAX, Umax, f_scale_local: 1e+200 -604.763616530585409 -1.065280635129395E+003
-f_scale: -1.065280635129395E+003  -1.065280635129395E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU: 4.160085178892135E-071 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.22862e-06 IL, IU: 1.78864e+192   8.02577e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 33
-#No. of Boxes with proposal mass function &lt;= 1e-10 73
-#No. of Boxes with proposal mass function &gt;= 1e-6 812
-#No. of Boxes with proposal mass function &gt;= 1e-3 246
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 8.025765897720203E+197 1000 1000
-RSSampleMany, integral est: 2.5871e+194
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.006000000000000
-Labelled Mean:
-   0.241308465707637
-
-label: 1  proportion:    0.994000000000000
-Labelled Mean:
-   0.231566745943815
-   0.460418597148691
-
-n interval function calls: 1998
-n real function calls: 3102223
-# CPU Time (seconds). Partitioning: 0.009092  Sampling: 1.83923  Total: 1.84832
-# CPU time (secods) per estimate: 0.00184832, : 100
-N1: 1060
-n1: 243
-N2: 57
-n2: 26
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 1060
-  n1=number of heads in first coin tosses : 243
-  N2=number of second coin tosses         : 57
-  n2=number of heads in second coin tosses: 26
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623054E+005,   0.000000000000000] BoxIntegral: [-7.715962646623054E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-7.715962646623055E+005,   0.000000000000000] BoxIntegral: [-7.715962646623055E+005,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -602.404311091615568
-UmaxMAX, Umax, f_scale_local: 1e+200 -602.404311091615568 -1.062921329690425E+003
-f_scale: -1.062921329690425E+003  -1.062921329690425E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU: 4.633751408216663E-070 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 2.20682e-06 IL, IU: 1.88224e+192   8.52922e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 38
-#No. of Boxes with proposal mass function &lt;= 1e-10 81
-#No. of Boxes with proposal mass function &gt;= 1e-6 810
-#No. of Boxes with proposal mass function &gt;= 1e-3 257
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 8.529216274485751E+197 1000 1000
-RSSampleMany, integral est: 2.7859e+194
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.008000000000000
-Labelled Mean:
-   0.237163228187683
-
-label: 1  proportion:    0.992000000000000
-Labelled Mean:
-   0.229340517844150
-   0.459908808479261
-
-n interval function calls: 1998
-n real function calls: 3061553
-# CPU Time (seconds). Partitioning: 0.009239  Sampling: 1.80917  Total: 1.81841
-# CPU time (secods) per estimate: 0.00181841, : 100
-N1: 1805
-n1: 526
-N2: 215
-n2: 68
-UseLogPi: 1
-  n_boxes: 1000  n_samples: 1000  rng_seed = 100
-  N1=number of first coin tosses          : 1805
-  n1=number of heads in first coin tosses : 526
-  N2=number of second coin tosses         : 215
-  n2=number of heads in second coin tosses: 68
-Ldomain.L: 0
-Ldomain.L: 1
-end of FIsIt1or2Coins constructor.
-in FirstBox, before getBoxREInfo. k: 0
-0 [1.000000000000000E-300,   1.000000000000000] RE: [-1.395366566354393E+006,   0.000000000000000] BoxIntegral: [-1.395366566354393E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-0 [1.000000000000000E-300,   1.000000000000000]
-in FirstBox, before getBoxREInfo. k: 1
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000] RE: [-1.395366566354393E+006,   0.000000000000000] BoxIntegral: [-1.395366566354393E+006,   0.000000000000000]
-in FirstBox, after getBoxREInfo
-1 [1.000000000000000E-300,   1.000000000000000] [1.000000000000000E-300,   1.000000000000000]
-Umax:    0.000000000000000
-UmaxMAX, Umax, f_scale_local: 1e+200    0.000000000000000 -460.517018598809159
-f_scale: -460.517018598809159  -460.517018598809159
-bottom of updateUmax
-in FirstBox, after updateUmax
-bottom of FirstBox.
-after FirstBox, before Refine
-Umax: -1.213363139695285E+003
-Umax: -1.212738223821990E+003
-UmaxMAX, Umax, f_scale_local: 1e+200 -1.212738223821990E+003 -1.673255242420799E+003
-f_scale: -1.673255242420799E+003  -1.673255242420799E+003
-bottom of updateUmax
-in AdaptPartition after updateUmax2
-in updateIntegral. IL, IU:    0.000000000000000 1.000000000000362E+200
-# Adaptive partitioning complete. Boxes: 1000  Lower bound on Acceptance Prob.: 1.75678e-06 IL, IU: 8.14842e+191   4.63827e+197
-#Using log(pi)? 1
-#No. of Boxes with proposal mass function &lt;= 1e-16 53
-#No. of Boxes with proposal mass function &lt;= 1e-10 109
-#No. of Boxes with proposal mass function &gt;= 1e-6 743
-#No. of Boxes with proposal mass function &gt;= 1e-3 170
-after Refine
-before Rej..SampleMany
-n_samples: 1000
-after Rej..SampleMany
-rs_sample IU, N, Nrs: 4.638268528941289E+197 1000 1000
-RSSampleMany, integral est: 5.14926e+193
-RSSampleMany mean:
-   Number of labels or topologies = 2
-label: 0  proportion:    0.905000000000000
-Labelled Mean:
-   0.294005930848202
-
-label: 1  proportion:    0.095000000000000
-Labelled Mean:
-   0.292069655006918
-   0.316300264841744
-
-n interval function calls: 1998
-n real function calls: 9007616
-# CPU Time (seconds). Partitioning: 0.009024  Sampling: 2.80121  Total: 2.81024
-# CPU time (secods) per estimate: 0.00281024)
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">resultAsDF</span><span class="p">(</span><span class="n">parseOutput</span><span class="p">(</span><span class="n">inputOpts</span><span class="p">,</span><span class="n">res</span><span class="p">)))</span>
@@ -2226,7 +1557,6 @@ n real function calls: 9007616
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 </div>
 
     <script type="text/x-thebe-config">

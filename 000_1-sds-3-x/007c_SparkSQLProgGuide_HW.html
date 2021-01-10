@@ -107,7 +107,27 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="002_00_loginToDatabricks.html">
-   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
   </a>
  </li>
  <li class="toctree-l1">
@@ -817,16 +837,6 @@ databricks’ GUI for creating <code class="docutils literal notranslate"><span 
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------------+--------+-----------+---------+-----------+
-|            name|database|description|tableType|isTemporary|
-+----------------+--------+-----------+---------+-----------+
-|sentimentlex_csv| default|       null| EXTERNAL|      false|
-|          people|    null|       null|TEMPORARY|       true|
-+----------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="nyc-social-media-usage-data">
 <h2>NYC Social Media Usage Data<a class="headerlink" href="#nyc-social-media-usage-data" title="Permalink to this headline">¶</a></h2>
 <p>This dataset is from
@@ -933,32 +943,6 @@ databricks</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+----------+--------------------+----------+------+
-|agency|  platform|                 url|      date|visits|
-+------+----------+--------------------+----------+------+
-|   OEM|       SMS|                null|2012-02-17| 61652|
-|   OEM|       SMS|                null|2012-11-09| 44547|
-|   EDC|    Flickr|http://www.flickr...|2012-05-09|  null|
-| NYCHA|Newsletter|                null|2012-05-09|  null|
-|   DHS|   Twitter|www.twitter.com/n...|2012-06-13|   389|
-|   DHS|   Twitter|www.twitter.com/n...|2012-08-02|   431|
-|   DOH|   Android|       Condom Finder|2011-08-08|  5026|
-|   DOT|   Android|         You The Man|2011-08-08|  null|
-|  MOME|   Android|      MiNY Venor app|2011-08-08|   313|
-|   DOT|Broadcastr|                null|2011-08-08|  null|
-+------+----------+--------------------+----------+------+
-only showing top 10 rows
-
-file_location: String = /FileStore/tables/social_media_usage.csv
-file_type: String = csv
-infer_schema: String = true
-first_row_is_header: String = true
-delimiter: String = ,
-socialMediaDF: org.apache.spark.sql.DataFrame = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Let</span><span class="s1">&#39;s create a view or table</span>
@@ -970,11 +954,6 @@ socialMediaDF: org.apache.spark.sql.DataFrame = [agency: string, platform: strin
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>temp_table_name: String = social_media_usage
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Let</span><span class="s1">&#39;s find out what tables are already available for loading</span>
@@ -983,17 +962,6 @@ socialMediaDF: org.apache.spark.sql.DataFrame = [agency: string, platform: strin
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------------+--------+-----------+---------+-----------+
-|              name|database|description|tableType|isTemporary|
-+------------------+--------+-----------+---------+-----------+
-|  sentimentlex_csv| default|       null| EXTERNAL|      false|
-|            people|    null|       null|TEMPORARY|       true|
-|social_media_usage|    null|       null|TEMPORARY|       true|
-+------------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <p>With this registered as a temporary view, <code class="docutils literal notranslate"><span class="pre">social_media_usage</span></code> will only
 be available to this particular notebook.</p>
 <p>If you’d like other users to be able to query this table (in the
@@ -1012,11 +980,6 @@ cell.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>permanent_table_name: String = social_media_usage
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Let</span><span class="s1">&#39;s find out what tables are already available for loading</span>
@@ -1045,17 +1008,6 @@ the table)</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------------+--------+-----------+---------+-----------+
-|              name|database|description|tableType|isTemporary|
-+------------------+--------+-----------+---------+-----------+
-|  sentimentlex_csv| default|       null| EXTERNAL|      false|
-|            people|    null|       null|TEMPORARY|       true|
-|social_media_usage|    null|       null|TEMPORARY|       true|
-+------------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;social_media_usage&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
@@ -1063,11 +1015,6 @@ the table)</p></li>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>df: org.apache.spark.sql.DataFrame = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <p>As you can see the immutable value <code class="docutils literal notranslate"><span class="pre">df</span></code> is a DataFrame and more
 specifically it is:</p>
 <blockquote>
@@ -1085,42 +1032,6 @@ actual data:</p>
 </div>
 </div>
 <blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- agency: string (nullable = true)
- |-- platform: string (nullable = true)
- |-- url: string (nullable = true)
- |-- date: string (nullable = true)
- |-- visits: integer (nullable = true)
-
-+----------+----------+--------------------+----------+------+
-|    agency|  platform|                 url|      date|visits|
-+----------+----------+--------------------+----------+------+
-|       OEM|       SMS|                null|2012-02-17| 61652|
-|       OEM|       SMS|                null|2012-11-09| 44547|
-|       EDC|    Flickr|http://www.flickr...|2012-05-09|  null|
-|     NYCHA|Newsletter|                null|2012-05-09|  null|
-|       DHS|   Twitter|www.twitter.com/n...|2012-06-13|   389|
-|       DHS|   Twitter|www.twitter.com/n...|2012-08-02|   431|
-|       DOH|   Android|       Condom Finder|2011-08-08|  5026|
-|       DOT|   Android|         You The Man|2011-08-08|  null|
-|      MOME|   Android|      MiNY Venor app|2011-08-08|   313|
-|       DOT|Broadcastr|                null|2011-08-08|  null|
-|       DPR|Broadcastr|http://beta.broad...|2011-08-08|  null|
-|     ENDHT|  Facebook|http://www.facebo...|2011-08-08|     3|
-|       VAC|  Facebook|https://www.faceb...|2011-08-08|    36|
-|    PlaNYC|  Facebook|http://www.facebo...|2011-08-08|    47|
-|      DFTA|  Facebook|http://www.facebo...|2011-08-08|    90|
-| energyNYC|  Facebook|http://www.facebo...|2011-08-08|   105|
-|      MOIA|  Facebook|http://www.facebo...|2011-08-08|   123|
-|City Store|  Facebook|http://www.facebo...|2011-08-08|   119|
-|      OCDV|  Facebook|http://www.facebo...|2011-08-08|   148|
-|       HIA|  Facebook|http://www.facebo...|2011-08-08|   197|
-+----------+----------+--------------------+----------+------+
-only showing top 20 rows
-</pre></div>
-</div>
-</div></blockquote>
-<blockquote>
 <div><p>Note that <code class="docutils literal notranslate"><span class="pre">(nullable</span> <span class="pre">=</span> <span class="pre">true)</span></code> simply means if the value is allowed to
 be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </div></blockquote>
@@ -1132,11 +1043,6 @@ be <code class="docutils literal notranslate"><span class="pre">null</span></cod
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res16: Long = 5898
-</pre></div>
-</div>
-</div></blockquote>
 <p>So there are 5899 records or rows in the DataFrame <code class="docutils literal notranslate"><span class="pre">df</span></code>. Pretty good!
 You can also select individual columns using so-called DataFrame API, as
 follows:</p>
@@ -1147,11 +1053,6 @@ follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>platforms: org.apache.spark.sql.DataFrame = [platform: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">platforms</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">rows</span>
@@ -1159,11 +1060,6 @@ follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res18: Long = 5898
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">platforms</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">show</span> <span class="n">top</span> <span class="mi">5</span> <span class="n">rows</span>
@@ -1171,20 +1067,6 @@ follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+
-|  platform|
-+----------+
-|       SMS|
-|       SMS|
-|    Flickr|
-|Newsletter|
-|   Twitter|
-+----------+
-only showing top 5 rows
-</pre></div>
-</div>
-</div></blockquote>
 <p>You can also apply <code class="docutils literal notranslate"><span class="pre">.distinct()</span></code> to extract only unique entries as
 follows:</p>
 <div class="cell docutils container">
@@ -1194,11 +1076,6 @@ follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>uniquePlatforms: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [platform: string]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uniquePlatforms</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">distinct</span> <span class="n">platforms</span>
@@ -1206,11 +1083,6 @@ follows:</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res21: Long = 23
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let’s see all the rows of the DataFrame <code class="docutils literal notranslate"><span class="pre">uniquePlatforms</span></code>.</p>
 <blockquote>
 <div><p>Note that <code class="docutils literal notranslate"><span class="pre">display(uniquePlatforms)</span></code> unlike <code class="docutils literal notranslate"><span class="pre">uniquePlatforms.show()</span></code>
@@ -1224,7 +1096,6 @@ different view, e.g. charts.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 </div>
 <div class="section" id="spark-sql-and-dataframe-api">
 <h3>Spark SQL and DataFrame API<a class="headerlink" href="#spark-sql-and-dataframe-api" title="Permalink to this headline">¶</a></h3>
@@ -1248,18 +1119,6 @@ Python or R.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+
-|platform|
-+--------+
-|  Flickr|
-|     SMS|
-| Twitter|
-+--------+
-only showing top 3 rows
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Ctrl+Enter to achieve the same result using standard SQL syntax!
@@ -1268,7 +1127,6 @@ select distinct platform from social_media_usage
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <p>Now it is time for some tips around how you use <code class="docutils literal notranslate"><span class="pre">select</span></code> and what the
 difference is between <code class="docutils literal notranslate"><span class="pre">$&quot;a&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">col(&quot;a&quot;)</span></code>, <code class="docutils literal notranslate"><span class="pre">df(&quot;a&quot;)</span></code>.</p>
 <p>As you probably have noticed by now, you can specify individual columns
@@ -1306,37 +1164,6 @@ sms.show() // Ctrl+Enter
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+--------+------+
-|agency|platform|visits|
-+------+--------+------+
-|   OEM|     SMS| 61652|
-|   OEM|     SMS| 44547|
-|   DOE|     SMS|   382|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS| 61652|
-|   DOE|     SMS|   382|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS| 61652|
-|   OEM|     SMS|  null|
-|   DOE|     SMS|  null|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS|  null|
-|   DOE|     SMS|  null|
-| NYCHA|     SMS|  null|
-|   DOE|     SMS|   382|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS| 61652|
-|   DOE|     SMS|   382|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS| 61652|
-+------+--------+------+
-only showing top 20 rows
-
-sms: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [agency: string, platform: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Again you could have written the query above using any column aliases or
 String names or even writing the query directly.</p>
 <p>For example, we can do it using String names, as follows:</p>
@@ -1349,22 +1176,6 @@ String names or even writing the query directly.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+--------+------+
-|agency|platform|visits|
-+------+--------+------+
-|   OEM|     SMS| 61652|
-|   OEM|     SMS| 44547|
-|   DOE|     SMS|   382|
-| NYCHA|     SMS|  null|
-|   OEM|     SMS| 61652|
-+------+--------+------+
-only showing top 5 rows
-
-sms: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [agency: string, platform: string ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Refer to the <a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame">DataFrame
 API</a>
 for more detailed API. In addition to simple column references and
@@ -1418,45 +1229,6 @@ fixedDF.show(false) // the false argument does not truncate the rows, so you wil
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- agency: string (nullable = true)
- |-- platform: string (nullable = true)
- |-- url: string (nullable = true)
- |-- date: string (nullable = true)
- |-- visits: integer (nullable = false)
-
-+----------+----------+---------------------------------------------------------------------------------------+----------+------+
-|agency    |platform  |url                                                                                    |date      |visits|
-+----------+----------+---------------------------------------------------------------------------------------+----------+------+
-|OEM       |SMS       |null                                                                                   |2012-02-17|61652 |
-|OEM       |SMS       |null                                                                                   |2012-11-09|44547 |
-|EDC       |Flickr    |http://www.flickr.com/nycedc                                                           |2012-05-09|0     |
-|NYCHA     |Newsletter|null                                                                                   |2012-05-09|0     |
-|DHS       |Twitter   |www.twitter.com/nycdhs                                                                 |2012-06-13|389   |
-|DHS       |Twitter   |www.twitter.com/nycdhs                                                                 |2012-08-02|431   |
-|DOH       |Android   |Condom Finder                                                                          |2011-08-08|5026  |
-|DOT       |Android   |You The Man                                                                            |2011-08-08|0     |
-|MOME      |Android   |MiNY Venor app                                                                         |2011-08-08|313   |
-|DOT       |Broadcastr|null                                                                                   |2011-08-08|0     |
-|DPR       |Broadcastr|http://beta.broadcastr.com/Echo.html?audioId=670026-4001                               |2011-08-08|0     |
-|ENDHT     |Facebook  |http://www.facebook.com/pages/NYC-Lets-End-Human-Trafficking/125730490795659?sk=wall   |2011-08-08|3     |
-|VAC       |Facebook  |https://www.facebook.com/pages/NYC-Voter-Assistance-Commission/110226709012110         |2011-08-08|36    |
-|PlaNYC    |Facebook  |http://www.facebook.com/pages/New-York-NY/PlaNYC/160454173971169?ref=ts                |2011-08-08|47    |
-|DFTA      |Facebook  |http://www.facebook.com/pages/NYC-Department-for-the-Aging/109028655823590             |2011-08-08|90    |
-|energyNYC |Facebook  |http://www.facebook.com/EnergyNYC?sk=wall                                              |2011-08-08|105   |
-|MOIA      |Facebook  |http://www.facebook.com/ihwnyc                                                         |2011-08-08|123   |
-|City Store|Facebook  |http://www.facebook.com/citystorenyc                                                   |2011-08-08|119   |
-|OCDV      |Facebook  |http://www.facebook.com/pages/NYC-Healthy-Relationship-Training-Academy/134637829901065|2011-08-08|148   |
-|HIA       |Facebook  |http://www.facebook.com/pages/New-York-City-Health-Insurance-Link/145920551598         |2011-08-08|197   |
-+----------+----------+---------------------------------------------------------------------------------------+----------+------+
-only showing top 20 rows
-
-import org.apache.spark.sql.functions.{coalesce, lit}
-fixedDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Okay, this is better, but <code class="docutils literal notranslate"><span class="pre">url</span></code>s are still inconsistent.</p>
 <p>Let’s fix this by writing our own UDF (user-defined function) to deal
 with special cases.</p>
@@ -1473,11 +1245,6 @@ type, but ignore values that do not start with <code class="docutils literal not
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cleanUrl: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$6230/869691273@375f4166,StringType,List(Some(class[value[0]: string])),None,true,true)
-</pre></div>
-</div>
-</div></blockquote>
 <p>Let us apply our UDF on <code class="docutils literal notranslate"><span class="pre">fixedDF</span></code> to create a new DataFrame called
 <code class="docutils literal notranslate"><span class="pre">cleanedDF</span></code> as follows:</p>
 <div class="cell docutils container">
@@ -1488,11 +1255,6 @@ val cleanedDF = fixedDF.select($&quot;agency&quot;, $&quot;platform&quot;, clean
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cleanedDF: org.apache.spark.sql.DataFrame = [agency: string, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Now, let’s check that it actually worked by seeing the first 5 rows of
 the <code class="docutils literal notranslate"><span class="pre">cleanedDF</span></code> whose <code class="docutils literal notranslate"><span class="pre">url</span></code> <code class="docutils literal notranslate"><span class="pre">isNull</span></code> and <code class="docutils literal notranslate"><span class="pre">isNotNull</span></code>, as follows:</p>
 <div class="cell docutils container">
@@ -1503,20 +1265,6 @@ cleanedDF.filter($&quot;url&quot;.isNull).show(5)
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+----------+----+----------+------+
-|agency|  platform| url|      date|visits|
-+------+----------+----+----------+------+
-|   OEM|       SMS|null|2012-02-17| 61652|
-|   OEM|       SMS|null|2012-11-09| 44547|
-| NYCHA|Newsletter|null|2012-05-09|     0|
-|   DHS|   Twitter|null|2012-06-13|   389|
-|   DHS|   Twitter|null|2012-08-02|   431|
-+------+----------+----+----------+------+
-only showing top 5 rows
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Ctrl+Enter
@@ -1525,20 +1273,6 @@ cleanedDF.filter($&quot;url&quot;.isNotNull).show(5, false) // false in .show(5,
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------+----------+------------------------------------------------------------------------------------+----------+------+
-|agency|platform  |url                                                                                 |date      |visits|
-+------+----------+------------------------------------------------------------------------------------+----------+------+
-|EDC   |Flickr    |http://www.flickr.com/nycedc                                                        |2012-05-09|0     |
-|DPR   |Broadcastr|http://beta.broadcastr.com/echo.html?audioid=670026-4001                            |2011-08-08|0     |
-|ENDHT |Facebook  |http://www.facebook.com/pages/nyc-lets-end-human-trafficking/125730490795659?sk=wall|2011-08-08|3     |
-|VAC   |Facebook  |https://www.facebook.com/pages/nyc-voter-assistance-commission/110226709012110      |2011-08-08|36    |
-|PlaNYC|Facebook  |http://www.facebook.com/pages/new-york-ny/planyc/160454173971169?ref=ts             |2011-08-08|47    |
-+------+----------+------------------------------------------------------------------------------------+----------+------+
-only showing top 5 rows
-</pre></div>
-</div>
-</div></blockquote>
 <p>Now there is a suggestion from you manager’s manager’s manager that due
 to some perceived privacy concerns we want to replace <code class="docutils literal notranslate"><span class="pre">agency</span></code> with some
 unique identifier.</p>
@@ -1563,23 +1297,6 @@ unique identifier.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------------------+-----------+
-|              agency|         id|
-+--------------------+-----------+
-|              PlaNYC|34359738368|
-|                 HIA|34359738369|
-|NYC Digital: exte...|34359738370|
-|           NYCGLOBAL|42949672960|
-|              nycgov|68719476736|
-+--------------------+-----------+
-only showing top 5 rows
-
-import org.apache.spark.sql.functions.monotonically_increasing_id
-agencies: org.apache.spark.sql.DataFrame = [agency: string, id: bigint]
-</pre></div>
-</div>
-</div></blockquote>
 <p>Those who want to understand left/right inner/outer joins can see the
 video lectures in Module 3 of Anthony Joseph’s Introduction to Big data
 edX course.</p>
@@ -1598,22 +1315,6 @@ edX course.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------------+----------+--------------------+----------+------+
-|           id|  platform|                 url|      date|visits|
-+-------------+----------+--------------------+----------+------+
-|1580547964928|       SMS|                null|2012-02-17| 61652|
-|1580547964928|       SMS|                null|2012-11-09| 44547|
-| 412316860416|    Flickr|http://www.flickr...|2012-05-09|     0|
-|1649267441664|Newsletter|                null|2012-05-09|     0|
-|1529008357376|   Twitter|                null|2012-06-13|   389|
-+-------------+----------+--------------------+----------+------+
-only showing top 5 rows
-
-anonym: org.apache.spark.sql.DataFrame = [id: bigint, platform: string ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">look</span> <span class="n">at</span> <span class="n">the</span> <span class="n">available</span> <span class="n">tables</span>
@@ -1621,17 +1322,6 @@ anonym: org.apache.spark.sql.DataFrame = [id: bigint, platform: string ... 3 mor
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------------+--------+-----------+---------+-----------+
-|              name|database|description|tableType|isTemporary|
-+------------------+--------+-----------+---------+-----------+
-|  sentimentlex_csv| default|       null| EXTERNAL|      false|
-|            people|    null|       null|TEMPORARY|       true|
-|social_media_usage|    null|       null|TEMPORARY|       true|
-+------------------+--------+-----------+---------+-----------+
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">a</span> <span class="n">TempTable</span> <span class="k">if</span> <span class="n">it</span> <span class="n">exists</span> <span class="n">already</span>
@@ -1650,11 +1340,6 @@ anonym: org.apache.spark.sql.DataFrame = [id: bigint, platform: string ... 3 mor
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.functions.month
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Interesting</span><span class="o">.</span> <span class="n">Now</span> <span class="n">let</span><span class="s1">&#39;s do some aggregation. Display platform, month, visits</span>
@@ -1665,8 +1350,6 @@ anonym: org.apache.spark.sql.DataFrame = [id: bigint, platform: string ... 3 mor
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
-<p>Truncated to 30 rows</p>
 <p>Note, that we could have done aggregation using DataFrame API instead of
 Spark SQL.</p>
 <p>Alright, now let’s see some <em>cool</em> operations with window functions.</p>
@@ -1691,15 +1374,6 @@ percent.createOrReplaceTempView(&quot;percent&quot;)
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.functions.{dayofmonth, month, row_number, sum}
-import org.apache.spark.sql.expressions.Window
-coolDF: org.apache.spark.sql.DataFrame = [id: bigint, platform: string ... 3 more fields]
-window: org.apache.spark.sql.DataFrame = [id: bigint, day: int ... 2 more fields]
-percent: org.apache.spark.sql.DataFrame = [id: bigint, day: int ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- A little bit of visualization as result of our efforts
@@ -1708,7 +1382,6 @@ select id, day, `percent` from percent where `percent` &gt; 0.3 and day = 2
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">You</span> <span class="n">also</span> <span class="n">could</span> <span class="n">just</span> <span class="n">use</span> <span class="n">plain</span> <span class="n">SQL</span> <span class="n">to</span> <span class="n">write</span> <span class="n">query</span> <span class="n">above</span><span class="p">,</span> <span class="n">note</span> <span class="n">that</span> <span class="n">you</span> <span class="n">might</span> <span class="n">need</span> <span class="n">to</span> <span class="n">group</span> <span class="n">by</span> <span class="nb">id</span> <span class="ow">and</span> <span class="n">day</span> <span class="k">as</span> <span class="n">well</span><span class="o">.</span>
@@ -1721,7 +1394,6 @@ select id, day, `percent` from percent where `percent` &gt; 0.3 and day = 2
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
 </div>
 </div>
 <div class="section" id="interoperating-with-rdds">
@@ -1762,12 +1434,6 @@ registered as a table.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>defined class Hubot
-rdd: org.apache.spark.rdd.RDD[Hubot] = ParallelCollectionRDD[136] at parallelize at command-1267216879634399:5
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">In</span> <span class="n">order</span> <span class="n">to</span> <span class="n">convert</span> <span class="n">RDD</span> <span class="n">into</span> <span class="n">DataFrame</span> <span class="n">you</span> <span class="n">need</span> <span class="n">to</span> <span class="n">do</span> <span class="n">this</span><span class="p">:</span>
@@ -1780,29 +1446,6 @@ rdd: org.apache.spark.rdd.RDD[Hubot] = ParallelCollectionRDD[136] at parallelize
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- name: string (nullable = true)
- |-- year: integer (nullable = false)
- |-- manufacturer: string (nullable = true)
- |-- version: array (nullable = true)
- |    |-- element: integer (containsNull = false)
- |-- details: map (nullable = true)
- |    |-- key: string
- |    |-- value: string (valueContainsNull = true)
-
-+--------+----+------------+---------+--------------------+
-|    name|year|manufacturer|  version|             details|
-+--------+----+------------+---------+--------------------+
-|   Jerry|2015|       LCorp|[1, 2, 3]|[eat -&gt; yes, slee...|
-|  Mozart|2010|       LCorp|   [1, 2]|[eat -&gt; no, sleep...|
-|Einstein|2012|       LCorp|[1, 2, 3]|[eat -&gt; yes, slee...|
-+--------+----+------------+---------+--------------------+
-
-hubots: org.apache.spark.sql.DataFrame = [name: string, year: int ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// You can query complex type the same as you query any other column
@@ -1816,18 +1459,6 @@ onesThatEat.show()
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+---+
-|    name|eat|
-+--------+---+
-|   Jerry|yes|
-|Einstein|yes|
-+--------+---+
-
-onesThatEat: org.apache.spark.sql.DataFrame = [name: string, eat: string]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="programmatically-specifying-the-schema">
 <h3>Programmatically Specifying the Schema<a class="headerlink" href="#programmatically-specifying-the-schema" title="Permalink to this headline">¶</a></h3>
@@ -1886,28 +1517,6 @@ provided by <code class="docutils literal notranslate"><span class="pre">SQLCont
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root
- |-- name: string (nullable = false)
- |-- year: integer (nullable = false)
- |-- manufacturer: string (nullable = false)
-
-+--------+----+------------+
-|    name|year|manufacturer|
-+--------+----+------------+
-|   Jerry|2015|       LCorp|
-|  Mozart|2010|       LCorp|
-|Einstein|2012|       LCorp|
-+--------+----+------------+
-
-import org.apache.spark.sql.types._
-rdd: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[141] at parallelize at command-1267216879634403:5
-schema: org.apache.spark.sql.types.StructType = StructType(StructField(name,StringType,false), StructField(year,IntegerType,false), StructField(manufacturer,StringType,false))
-rows: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[142] at map at command-1267216879634403:22
-bots: org.apache.spark.sql.DataFrame = [name: string, year: int ... 1 more field]
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="creating-datasets">
@@ -1939,19 +1548,6 @@ amount of flexibility of RDD API.</p>
 </div>
 </div>
 </div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+----+------------+---------+--------------------+
-|    name|year|manufacturer|  version|             details|
-+--------+----+------------+---------+--------------------+
-|   Jerry|2015|       LCorp|[1, 2, 3]|[eat -&gt; yes, slee...|
-|  Mozart|2010|       LCorp|   [1, 2]|[eat -&gt; no, sleep...|
-|Einstein|2012|       LCorp|[1, 2, 3]|[eat -&gt; yes, slee...|
-+--------+----+------------+---------+--------------------+
-
-ds: org.apache.spark.sql.Dataset[Hubot] = [name: string, year: int ... 3 more fields]
-</pre></div>
-</div>
-</div></blockquote>
 <blockquote>
 <div><p><strong>Side-note:</strong> Dataset API is first-class citizen in Spark, and
 DataFrame is an alias for Dataset[Row]. Note that Python and R use
