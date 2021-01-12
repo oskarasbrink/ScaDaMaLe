@@ -1,0 +1,2366 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wikipedia analysis using Latent Dirichlet Allocation (LDA) &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/001_whySpark.html">
+   Why Apache Spark?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html">
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+   You Should All Have databricks community edition account by now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#import-course-content-now">
+   Import Course Content Now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+   Cloud-free Computing Environment (Optional but recommended)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_01_multiLingualNotebooks.html">
+   Notebooks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+   Further Reference / Homework / Recurrrent Points of Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+   Let’s continue to get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-type-hierarchy">
+   Scala Type Hierarchy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-collections">
+   Scala Collections
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+   Exercise in Functional Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#lazy-evaluation">
+   Lazy Evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#recursions">
+   Recursions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">
+   HOMEWORK notebook - RDDs Transformations and Actions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006_WordCount.html">
+   Word Count on US State of the Union (SoU) Addresses
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">
+   Spark Sql Programming Guide
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html#id1">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">
+   Getting Started - Exercise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html#id1">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">
+   Performance Tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html#id1">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+   SQL Pivoting since Spark 2.4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#load-data">
+   Load Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-in-sql">
+   Pivoting in SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+   Pivoting with Multiple Aggregate Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+   Pivoting with Multiple Grouping Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+   Pivoting with Multiple Pivot Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+   Parsing the output from
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     IsIt1or2Coins
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+   Providing case classes for input and output for easy spark communication
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+   Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+   Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Voluntary Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html">
+   Plugging into GDELT Streams - TODO - IN PROGRESS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html#this-is-just-dipping-our-pinky-toe-in-this-ocean-of-information">
+   This is just dipping our pinky toe in this ocean of information!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html#download-from-gdelt-project">
+   Download from gdelt-project
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/deprecated/Wikipedia LDA Analysis (En).ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/deprecated/Wikipedia LDA Analysis (En).html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="wikipedia-analysis-using-latent-dirichlet-allocation-lda">
+<h1>Wikipedia analysis using Latent Dirichlet Allocation (LDA)<a class="headerlink" href="#wikipedia-analysis-using-latent-dirichlet-allocation-lda" title="Permalink to this headline">¶</a></h1>
+<p>Download the En Wikipedia dump</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span>
+<span class="n">val</span> <span class="n">freeze_date</span> <span class="o">=</span> <span class="s2">&quot;20201120&quot;</span>
+<span class="n">val</span> <span class="n">xml_file</span> <span class="o">=</span> <span class="n">lang</span> <span class="o">+</span> <span class="s2">&quot;wiki-&quot;</span> <span class="o">+</span> <span class="n">freeze_date</span> <span class="o">+</span> <span class="s2">&quot;-pages-articles.xml&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lang: String = en
+freeze_date: String = 20201120
+xml_file: String = enwiki-20201120-pages-articles.xml
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export lang=&quot;en&quot;
+export freeze_date=&quot;20201120&quot;
+echo test ${lang} $freeze_date
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>test en 20201120
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dumps</span><span class="o">.</span><span class="n">wikimedia</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">enwiki</span><span class="o">/</span><span class="mi">20201120</span><span class="o">/</span><span class="n">enwiki</span><span class="o">-</span><span class="mi">20201120</span><span class="o">-</span><span class="n">pages</span><span class="o">-</span><span class="n">articles</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">bz2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--2020-12-03 12:10:53--  https://dumps.wikimedia.org/enwiki/20201120/enwiki-20201120-pages-articles.xml.bz2
+Resolving dumps.wikimedia.org (dumps.wikimedia.org)... 208.80.155.106, 2620:0:861:4:208:80:155:106
+Connecting to dumps.wikimedia.org (dumps.wikimedia.org)|208.80.155.106|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 17956620843 (17G) [application/octet-stream]
+Saving to: ‘enwiki-20201120-pages-articles.xml.bz2’
+
+     0K .......... .......... .......... .......... ..........  0%  627K 7h46m
+    50K .......... .......... .......... .......... ..........  0%  628K 7h45m
+   100K .......... .......... .......... .......... ..........  0%  132M 5h11m
+   150K .......... .......... .......... .......... ..........  0% 1.28M 4h49m
+   200K .......... .......... .......... .......... ..........  0% 1.17M 4h39m
+   250K .......... .......... .......... .......... ..........  0%  113M 3h53m
+   300K .......... .......... .......... .......... ..........  0%  155M 3h20m
+   350K .......... .......... .......... .......... ..........  0% 1.31M 3h22m
+   400K .......... .......... .......... .......... ..........  0%  121M 3h0m
+   450K .......... .......... .......... .......... ..........  0% 1.18M 3h6m
+   500K .......... .......... .......... .......... ..........  0%  132M 2h49m
+   550K .......... .......... .......... .......... ..........  0%  114M 2h35m
+   600K .......... .......... .......... .......... ..........  0%  164M 2h24m
+   650K .......... .......... .......... .......... ..........  0%  154M 2h13m
+   700K .......... .......... .......... .......... ..........  0%  158M 2h5m
+   750K .......... .......... .......... .......... ..........  0%  137M 1h57m
+   800K .......... .......... .......... .......... ..........  0% 1.35M 2h2m
+   850K .......... .......... .......... .......... ..........  0%  161M 1h56m
+   900K .......... .......... .......... .......... ..........  0%  173M 1h50m
+   950K .......... .......... .......... .......... ..........  0% 1.19M 1h56m
+  1000K .......... .......... .......... .......... ..........  0%  173M 1h51m
+  1050K .......... .......... .......... .......... ..........  0%  170M 1h46m
+  1100K .......... .......... .......... .......... ..........  0%  192M 1h41m
+  1150K .......... .......... .......... .......... ..........  0%  138M 97m30s
+  1200K .......... .......... .......... .......... ..........  0%  161M 93m40s
+  1250K .......... .......... .......... .......... ..........  0%  168M 90m8s
+  1300K .......... .......... .......... .......... ..........  0%  165M 86m51s
+  1350K .......... .......... .......... .......... ..........  0%  151M 83m49s
+  1400K .......... .......... .......... .......... ..........  0%  163M 80m59s
+  1450K .......... .......... .......... .......... ..........  0%  178M 78m20s
+  1500K .......... .......... .......... .......... ..........  0%  258M 75m51s
+  1550K .......... .......... .......... .......... ..........  0%  204M 73m31s
+  1600K .......... .......... .......... .......... ..........  0% 46.9M 71m29s
+  1650K .......... .......... .......... .......... ..........  0% 1.45M 75m9s
+  1700K .......... .......... .......... .......... ..........  0%  115M 73m5s
+  1750K .......... .......... .......... .......... ..........  0%  146M 71m6s
+  1800K .......... .......... .......... .......... ..........  0% 9.88M 69m58s
+  1850K .......... .......... .......... .......... ..........  0% 4.47M 69m48s
+  1900K .......... .......... .......... .......... ..........  0% 4.44M 69m40s
+  1950K .......... .......... .......... .......... ..........  0% 3.42M 70m0s
+  2000K .......... .......... .......... .......... ..........  0% 58.3M 68m25s
+  2050K .......... .......... .......... .......... ..........  0% 3.22M 68m54s
+  2100K .......... .......... .......... .......... ..........  0% 4.47M 68m47s
+  2150K .......... .......... .......... .......... ..........  0%  128M 67m16s
+  2200K .......... .......... .......... .......... ..........  0% 3.27M 67m43s
+  2250K .......... .......... .......... .......... ..........  0% 3.36M 68m5s
+  2300K .......... .......... .......... .......... ..........  0% 3.21M 68m32s
+  2350K .......... .......... .......... .......... ..........  0% 3.23M 68m56s
+  2400K .......... .......... .......... .......... ..........  0%  191M 67m34s
+  2450K .......... .......... .......... .......... ..........  0% 4.22M 67m34s
+  2500K .......... .......... .......... .......... ..........  0% 3.61M 67m47s
+  2550K .......... .......... .......... .......... ..........  0% 3.97M 67m52s
+  2600K .......... .......... .......... .......... ..........  0%  204M 66m37s
+  2650K .......... .......... .......... .......... ..........  0% 3.25M 67m0s
+  2700K .......... .......... .......... .......... ..........  0% 4.25M 67m1s
+  2750K .......... .......... .......... .......... ..........  0% 3.97M 67m6s
+  2800K .......... .......... .......... .......... ..........  0% 5.26M 66m52s
+  2850K .......... .......... .......... .......... ..........  0%  176M 65m45s
+  2900K .......... .......... .......... .......... ..........  0% 3.97M 65m51s
+  2950K .......... .......... .......... .......... ..........  0% 3.84M 65m59s
+  3000K .......... .......... .......... .......... ..........  0% 4.48M 65m57s
+  3050K .......... .......... .......... .......... ..........  0%  189M 64m55s
+  3100K .......... .......... .......... .......... ..........  0% 3.40M 65m13s
+  3150K .......... .......... .......... .......... ..........  0% 3.23M 65m35s
+  3200K .......... .......... .......... .......... ..........  0% 3.21M 65m56s
+  3250K .......... .......... .......... .......... ..........  0% 3.31M 66m14s
+  3300K .......... .......... .......... .......... ..........  0%  168M 65m17s
+  3350K .......... .......... .......... .......... ..........  0% 4.03M 65m22s
+  3400K .......... .......... .......... .......... ..........  0% 3.40M 65m38s
+  3450K .......... .......... .......... .......... ..........  0% 4.30M 65m38s
+  3500K .......... .......... .......... .......... ..........  0%  185M 64m44s
+  3550K .......... .......... .......... .......... ..........  0% 4.30M 64m45s
+  3600K .......... .......... .......... .......... ..........  0% 3.11M 65m8s
+  3650K .......... .......... .......... .......... ..........  0% 3.19M 65m27s
+  3700K .......... .......... .......... .......... ..........  0% 3.04M 65m50s
+  3750K .......... .......... .......... .......... ..........  0%  154M 65m0s
+  3800K .......... .......... .......... .......... ..........  0% 3.12M 65m20s
+  3850K .......... .......... .......... .......... ..........  0% 3.06M 65m42s
+  3900K .......... .......... .......... .......... ..........  0% 3.03M 66m3s
+  3950K .......... .......... .......... .......... ..........  0% 3.18M 66m21s
+  4000K .......... .......... .......... .......... ..........  0%  197M 65m33s
+  4050K .......... .......... .......... .......... ..........  0% 3.16M 65m51s
+  4100K .......... .......... .......... .......... ..........  0% 3.27M 66m6s
+  4150K .......... .......... .......... .......... ..........  0% 3.78M 66m13s
+  4200K .......... .......... .......... .......... ..........  0%  173M 65m28s
+  4250K .......... .......... .......... .......... ..........  0% 2.93M 65m50s
+  4300K .......... .......... .......... .......... ..........  0% 3.03M 66m9s
+  4350K .......... .......... .......... .......... ..........  0% 4.17M 66m11s
+  4400K .......... .......... .......... .......... ..........  0% 4.08M 66m13s
+  4450K .......... .......... .......... .......... ..........  0%  163M 65m30s
+  4500K .......... .......... .......... .......... ..........  0% 4.13M 65m33s
+  4550K .......... .......... .......... .......... ..........  0% 3.04M 65m51s
+  4600K .......... .......... .......... .......... ..........  0% 3.74M 65m58s
+  4650K .......... .......... .......... .......... ..........  0%  176M 65m17s
+  4700K .......... .......... .......... .......... ..........  0% 3.90M 65m22s
+  4750K .......... .......... .......... .......... ..........  0% 3.87M 65m27s
+  4800K .......... .......... .......... .......... ..........  0% 4.48M 65m26s
+  4850K .......... .......... .......... .......... ..........  0% 3.05M 65m43s
+  4900K .......... .......... .......... .......... ..........  0%  129M 65m5s
+  4950K .......... .......... .......... .......... ..........  0% 3.86M 65m10s
+  5000K .......... .......... .......... .......... ..........  0% 4.95M 65m6s
+  5050K .......... .......... .......... .......... ..........  0% 4.16M 65m8s
+  5100K .......... .......... .......... .......... ..........  0%  163M 64m31s
+  5150K .......... .......... .......... .......... ..........  0% 3.97M 64m35s
+  5200K .......... .......... .......... .......... ..........  0% 4.12M 64m38s
+  5250K .......... .......... .......... .......... ..........  0% 3.97M 64m42s
+  5300K .......... .......... .......... .......... ..........  0% 3.08M 64m57s
+  5350K .......... .......... .......... .......... ..........  0%  119M 64m22s
+  5400K .......... .......... .......... .......... ..........  0% 3.62M 64m30s
+  5450K .......... .......... .......... .......... ..........  0% 2.96M 64m48s
+  5500K .......... .......... .......... .......... ..........  0% 2.93M 65m5s
+  5550K .......... .......... .......... .......... ..........  0% 3.00M 65m21s
+  5600K .......... .......... .......... .......... ..........  0%  146M 64m48s
+  5650K .......... .......... .......... .......... ..........  0% 2.99M 65m4s
+  5700K .......... .......... .......... .......... ..........  0% 4.12M 65m6s
+  5750K .......... .......... .......... .......... ..........  0% 3.13M 65m20s
+  5800K .......... .......... .......... .......... ..........  0%  159M 64m47s
+  5850K .......... .......... .......... .......... ..........  0% 2.96M 65m3s
+  5900K .......... .......... .......... .......... ..........  0% 2.87M 65m20s
+  5950K .......... .......... .......... .......... ..........  0% 3.05M 65m34s
+  6000K .......... .......... .......... .......... ..........  0% 4.43M 65m34s
+  6050K .......... .......... .......... .......... ..........  0%  169M 65m2s
+  6100K .......... .......... .......... .......... ..........  0% 3.16M 65m15s
+  6150K .......... .......... .......... .......... ..........  0% 3.12M 65m27s
+  6200K .......... .......... .......... .......... ..........  0% 3.93M 65m31s
+  6250K .......... .......... .......... .......... ..........  0%  170M 65m0s
+  6300K .......... .......... .......... .......... ..........  0% 3.02M 65m14s
+  6350K .......... .......... .......... .......... ..........  0% 3.01M 65m28s
+  6400K .......... .......... .......... .......... ..........  0% 3.06M 65m41s
+  6450K .......... .......... .......... .......... ..........  0% 3.96M 65m44s
+  6500K .......... .......... .......... .......... ..........  0%  158M 65m15s
+  6550K .......... .......... .......... .......... ..........  0% 2.87M 65m30s
+  6600K .......... .......... .......... .......... ..........  0% 2.95M 65m44s
+  6650K .......... .......... .......... .......... ..........  0% 3.26M 65m54s
+  6700K .......... .......... .......... .......... ..........  0%  133M 65m26s
+  6750K .......... .......... .......... .......... ..........  0% 5.42M 65m20s
+  6800K .......... .......... .......... .......... ..........  0% 2.95M 65m34s
+  6850K .......... .......... .......... .......... ..........  0% 2.66M 65m52s
+  6900K .......... .......... .......... .......... ..........  0% 5.30M 65m46s
+  6950K .......... .......... .......... .......... ..........  0%  126M 65m19s
+  7000K .......... .......... .......... .......... ..........  0% 3.63M 65m25s
+  7050K .......... .......... .......... .......... ..........  0% 3.71M 65m30s
+  7100K .......... .......... .......... .......... ..........  0% 5.17M 65m25s
+  7150K .......... .......... .......... .......... ..........  0% 2.75M 65m41s
+  7200K .......... .......... .......... .......... ..........  0%  215M 65m15s
+  7250K .......... .......... .......... .......... ..........  0% 2.91M 65m28s
+  7300K .......... .......... .......... .......... ..........  0% 3.74M 65m32s
+  7350K .......... .......... .......... .......... ..........  0% 3.14M 65m43s
+  7400K .......... .......... .......... .......... ..........  0%  186M 65m17s
+  7450K .......... .......... .......... .......... ..........  0% 3.15M 65m27s
+  7500K .......... .......... .......... .......... ..........  0% 3.07M 65m38s
+  7550K .......... .......... .......... .......... ..........  0% 3.92M 65m41s
+  7600K .......... .......... .......... .......... ..........  0% 3.23M 65m50s
+  7650K .......... .......... .......... .......... ..........  0%  137M 65m25s
+  7700K .......... .......... .......... .......... ..........  0% 3.07M 65m35s
+  7750K .......... .......... .......... .......... ..........  0% 5.73M 65m29s
+  7800K .......... .......... .......... .......... ..........  0% 3.80M 65m33s
+  7850K .......... .......... .......... .......... ..........  0%  179M 65m9s
+  7900K .......... .......... .......... .......... ..........  0% 3.15M 65m18s
+  7950K .......... .......... .......... .......... ..........  0% 3.20M 65m27s
+  8000K .......... .......... .......... .......... ..........  0% 4.00M 65m29s
+  8050K .......... .......... .......... .......... ..........  0% 3.17M 65m38s
+  8100K .......... .......... .......... .......... ..........  0%  168M 65m15s
+  8150K .......... .......... .......... .......... ..........  0% 3.21M 65m23s
+  8200K .......... .......... .......... .......... ..........  0% 3.05M 65m34s
+  8250K .......... .......... .......... .......... ..........  0% 3.13M 65m43s
+  8300K .......... .......... .......... .......... ..........  0%  133M 65m20s
+  8350K .......... .......... .......... .......... ..........  0% 2.96M 65m31s
+  8400K .......... .......... .......... .......... ..........  0% 3.81M 65m34s
+  8450K .......... .......... .......... .......... ..........  0% 3.06M 65m44s
+  8500K .......... .......... .......... .......... ..........  0% 3.16M 65m53s
+  8550K .......... .......... .......... .......... ..........  0%  158M 65m30s
+  8600K .......... .......... .......... .......... ..........  0% 3.78M 65m34s
+  8650K .......... .......... .......... .......... ..........  0% 4.08M 65m35s
+  8700K .......... .......... .......... .......... ..........  0% 3.69M 65m39s
+  8750K .......... .......... .......... .......... ..........  0% 4.10M 65m41s
+  8800K .......... .......... .......... .......... ..........  0%  181M 65m19s
+  8850K .......... .......... .......... .......... ..........  0% 3.88M 65m22s
+  8900K .......... .......... .......... .......... ..........  0% 4.84M 65m20s
+  8950K .......... .......... .......... .......... ..........  0% 3.78M 65m23s
+  9000K .......... .......... .......... .......... ..........  0%  144M 65m2s
+  9050K .......... .......... .......... .......... ..........  0% 4.32M 65m2s
+  9100K .......... .......... .......... .......... ..........  0% 3.68M 65m6s
+  9150K .......... .......... .......... .......... ..........  0% 4.37M 65m6s
+  9200K .......... .......... .......... .......... ..........  0% 3.06M 65m15s
+  9250K .......... .......... .......... .......... ..........  0%  150M 64m55s
+  9300K .......... .......... .......... .......... ..........  0% 2.97M 65m5s
+  9350K .......... .......... .......... .......... ..........  0% 2.89M 65m16s
+  9400K .......... .......... .......... .......... ..........  0% 2.90M 65m26s
+  9450K .......... .......... .......... .......... ..........  0%  188M 65m6s
+  9500K .......... .......... .......... .......... ..........  0% 3.34M 65m12s
+  9550K .......... .......... .......... .......... ..........  0% 5.11M 65m9s
+  9600K .......... .......... .......... .......... ..........  0% 3.87M 65m12s
+  9650K .......... .......... .......... .......... ..........  0% 3.98M 65m14s
+  9700K .......... .......... .......... .......... ..........  0%  166M 64m54s
+  9750K .......... .......... .......... .......... ..........  0% 4.42M 64m54s
+  9800K .......... .......... .......... .......... ..........  0% 3.63M 64m58s
+  9850K .......... .......... .......... .......... ..........  0% 3.02M 65m7s
+  9900K .......... .......... .......... .......... ..........  0%  177M 64m48s
+  9950K .......... .......... .......... .......... ..........  0% 3.09M 64m56s
+ 10000K .......... .......... .......... .......... ..........  0% 2.97M 65m6s
+ 10050K .......... .......... .......... .......... ..........  0% 5.32M 65m2s
+ 10100K .......... .......... .......... .......... ..........  0% 3.01M 65m11s
+ 10150K .......... .......... .......... .......... ..........  0%  159M 64m52s
+ 10200K .......... .......... .......... .......... ..........  0% 3.94M 64m55s
+ 10250K .......... .......... .......... .......... ..........  0% 4.09M 64m56s
+ 10300K .......... .......... .......... .......... ..........  0% 4.01M 64m58s
+ 10350K .......... .......... .......... .......... ..........  0% 3.79M 65m1s
+ 10400K .......... .......... .......... .......... ..........  0%  151M 64m43s
+ 10450K .......... .......... .......... .......... ..........  0% 3.07M 64m51s
+ 10500K .......... .......... .......... .......... ..........  0% 3.05M 64m59s
+ 10550K .......... .......... .......... .......... ..........  0% 4.93M 64m57s
+ 10600K .......... .......... .......... .......... ..........  0%  200M 64m39s
+ 10650K .......... .......... .......... .......... ..........  0% 3.10M 64m47s
+ 10700K .......... .......... .......... .......... ..........  0% 3.14M 64m54s
+ 10750K .......... .......... .......... .......... ..........  0% 3.90M 64m56s
+ 10800K .......... .......... .......... .......... ..........  0% 3.97M 64m58s
+ 10850K .......... .......... .......... .......... ..........  0%  141M 64m41s
+ 10900K .......... .......... .......... .......... ..........  0% 3.12M 64m48s
+ 10950K .......... .......... .......... .......... ..........  0% 3.15M 64m55s
+ 11000K .......... .......... .......... .......... ..........  0% 3.32M 65m1s
+ 11050K .......... .......... .......... .......... ..........  0%  161M 64m44s
+ 11100K .......... .......... .......... .......... ..........  0% 4.37M 64m44s
+ 11150K .......... .......... .......... .......... ..........  0% 4.95M 64m42s
+ 11200K .......... .......... .......... .......... ..........  0% 3.83M 64m44s
+ 11250K .......... .......... .......... .......... ..........  0% 3.62M 64m48s
+ 11300K .......... .......... .......... .......... ..........  0%  160M 64m31s
+ 11350K .......... .......... .......... .......... ..........  0% 3.85M 64m34s
+ 11400K .......... .......... .......... .......... ..........  0% 3.14M 64m41s
+ 11450K .......... .......... .......... .......... ..........  0% 3.16M 64m48s
+ 11500K .......... .......... .......... .......... ..........  0%  146M 64m31s
+ 11550K .......... .......... .......... .......... ..........  0% 3.13M 64m38s
+ 11600K .......... .......... .......... .......... ..........  0% 4.64M 64m37s
+ 11650K .......... .......... .......... .......... ..........  0% 3.94M 64m39s
+ 11700K .......... .......... .......... .......... ..........  0% 4.51M 64m39s
+ 11750K .......... .......... .......... .......... ..........  0%  125M 64m23s
+ 11800K .......... .......... .......... .......... ..........  0% 3.85M 64m25s
+ 11850K .......... .......... .......... .......... ..........  0% 3.53M 64m30s
+ 11900K .......... .......... .......... .......... ..........  0% 4.08M 64m31s
+ 11950K .......... .......... .......... .......... ..........  0% 3.63M 64m34s
+ 12000K .......... .......... .......... .......... ..........  0%  153M 64m19s
+ 12050K .......... .......... .......... .......... ..........  0% 2.80M 64m28s
+ 12100K .......... .......... .......... .......... ..........  0% 3.01M 64m36s
+ 12150K .......... .......... .......... .......... ..........  0% 2.92M 64m44s
+ 12200K .......... .......... .......... .......... ..........  0%  159M 64m28s
+ 12250K .......... .......... .......... .......... ..........  0% 2.98M 64m36s
+ 12300K .......... .......... .......... .......... ..........  0% 2.83M 64m45s
+ 12350K .......... .......... .......... .......... ..........  0% 3.09M 64m51s
+ 12400K .......... .......... .......... .......... ..........  0% 3.22M 64m57s
+ 12450K .......... .......... .......... .......... ..........  0%  144M 64m42s
+ 12500K .......... .......... .......... .......... ..........  0% 3.13M 64m48s
+ 12550K .......... .......... .......... .......... ..........  0% 3.13M 64m54s
+ 12600K .......... .......... .......... .......... ..........  0% 6.22M 64m50s
+ 12650K .......... .......... .......... .......... ..........  0%  136M 64m35s
+ 12700K .......... .......... .......... .......... ..........  0% 3.18M 64m41s
+ 12750K .......... .......... .......... .......... ..........  0% 5.41M 64m38s
+ 12800K .......... .......... .......... .......... ..........  0% 3.26M 64m43s
+ 12850K .......... .......... .......... .......... ..........  0% 4.66M 64m43s
+ 12900K .......... .......... .......... .......... ..........  0%  147M 64m28s
+ 12950K .......... .......... .......... .......... ..........  0% 3.17M 64m34s
+ 13000K .......... .......... .......... .......... ..........  0% 4.46M 64m34s
+ 13050K .......... .......... .......... .......... ..........  0% 4.21M 64m35s
+ 13100K .......... .......... .......... .......... ..........  0%  144M 64m20s
+ 13150K .......... .......... .......... .......... ..........  0% 3.32M 64m25s
+ 13200K .......... .......... .......... .......... ..........  0% 4.96M 64m24s
+ 13250K .......... .......... .......... .......... ..........  0% 3.54M 64m27s
+ 13300K .......... .......... .......... .......... ..........  0% 3.37M 64m32s
+ 13350K .......... .......... .......... .......... ..........  0%  136M 64m18s
+ 13400K .......... .......... .......... .......... ..........  0% 3.33M 64m22s
+ 13450K .......... .......... .......... .......... ..........  0% 3.97M 64m24s
+ 13500K .......... .......... .......... .......... ..........  0% 3.47M 64m28s
+ 13550K .......... .......... .......... .......... ..........  0% 4.87M 64m27s
+ 13600K .......... .......... .......... .......... ..........  0%  143M 64m13s
+ 13650K .......... .......... .......... .......... ..........  0% 3.96M 64m15s
+ 13700K .......... .......... .......... .......... ..........  0% 4.16M 64m16s
+ 13750K .......... .......... .......... .......... ..........  0% 4.11M 64m17s
+ 13800K .......... .......... .......... .......... ..........  0%  140M 64m3s
+ 13850K .......... .......... .......... .......... ..........  0% 3.57M 64m7s
+ 13900K .......... .......... .......... .......... ..........  0% 3.05M 64m13s
+ 13950K .......... .......... .......... .......... ..........  0% 3.40M 64m17s
+ 14000K .......... .......... .......... .......... ..........  0% 3.42M 64m21s
+ 14050K .......... .......... .......... .......... ..........  0%  153M 64m8s
+ 14100K .......... .......... .......... .......... ..........  0% 3.39M 64m12s
+ 14150K .......... .......... .......... .......... ..........  0% 4.67M 64m11s
+ 14200K .......... .......... .......... .......... ..........  0% 3.63M 64m14s
+ 14250K .......... .......... .......... .......... ..........  0%  232M 64m1s
+ 14300K .......... .......... .......... .......... ..........  0% 4.10M 64m2s
+ 14350K .......... .......... .......... .......... ..........  0% 4.25M 64m3s
+ 14400K .......... .......... .......... .......... ..........  0% 3.73M 64m6s
+ 14450K .......... .......... .......... .......... ..........  0% 3.34M 64m10s
+ 14500K .......... .......... .......... .......... ..........  0%  194M 63m57s
+ 14550K .......... .......... .......... .......... ..........  0% 4.48M 63m57s
+ 14600K .......... .......... .......... .......... ..........  0% 3.20M 64m2s
+ 14650K .......... .......... .......... .......... ..........  0% 3.47M 64m6s
+ 14700K .......... .......... .......... .......... ..........  0%  161M 63m53s
+ 14750K .......... .......... .......... .......... ..........  0% 3.48M 63m57s
+ 14800K .......... .......... .......... .......... ..........  0% 3.51M 64m0s
+ 14850K .......... .......... .......... .......... ..........  0% 3.54M 64m4s
+ 14900K .......... .......... .......... .......... ..........  0% 3.53M 64m7s
+ 14950K .......... .......... .......... .......... ..........  0%  177M 63m54s
+ 15000K .......... .......... .......... .......... ..........  0% 3.54M 63m58s
+ 15050K .......... .......... .......... .......... ..........  0% 3.20M 64m3s
+ 15100K .......... .......... .......... .......... ..........  0% 3.09M 64m8s
+ 15150K .......... .......... .......... .......... ..........  0% 3.17M 64m13s
+ 15200K .......... .......... .......... .......... ..........  0%  149M 64m1s
+ 15250K .......... .......... .......... .......... ..........  0% 3.20M 64m6s
+ 15300K .......... .......... .......... .......... ..........  0% 3.20M 64m11s
+ 15350K .......... .......... .......... .......... ..........  0% 3.76M 64m13s
+
+*** WARNING: skipped 28360853 bytes of output ***
+
+17519850K .......... .......... .......... .......... .......... 99% 4.24M 4s
+17519900K .......... .......... .......... .......... .......... 99% 4.53M 4s
+17519950K .......... .......... .......... .......... .......... 99% 3.29M 3s
+17520000K .......... .......... .......... .......... .......... 99%  123M 3s
+17520050K .......... .......... .......... .......... .......... 99% 3.40M 3s
+17520100K .......... .......... .......... .......... .......... 99% 4.17M 3s
+17520150K .......... .......... .......... .......... .......... 99% 4.55M 3s
+17520200K .......... .......... .......... .......... .......... 99%  138M 3s
+17520250K .......... .......... .......... .......... .......... 99% 3.20M 3s
+17520300K .......... .......... .......... .......... .......... 99% 3.23M 3s
+17520350K .......... .......... .......... .......... .......... 99% 3.27M 3s
+17520400K .......... .......... .......... .......... .......... 99% 4.13M 3s
+17520450K .......... .......... .......... .......... .......... 99%  144M 3s
+17520500K .......... .......... .......... .......... .......... 99% 4.74M 3s
+17520550K .......... .......... .......... .......... .......... 99% 3.19M 3s
+17520600K .......... .......... .......... .......... .......... 99% 4.67M 3s
+17520650K .......... .......... .......... .......... .......... 99%  188M 3s
+17520700K .......... .......... .......... .......... .......... 99% 3.16M 3s
+17520750K .......... .......... .......... .......... .......... 99% 3.21M 3s
+17520800K .......... .......... .......... .......... .......... 99% 4.13M 3s
+17520850K .......... .......... .......... .......... .......... 99% 3.30M 3s
+17520900K .......... .......... .......... .......... .......... 99%  132M 3s
+17520950K .......... .......... .......... .......... .......... 99% 3.25M 3s
+17521000K .......... .......... .......... .......... .......... 99% 3.95M 3s
+17521050K .......... .......... .......... .......... .......... 99% 4.46M 3s
+17521100K .......... .......... .......... .......... .......... 99%  156M 3s
+17521150K .......... .......... .......... .......... .......... 99% 3.27M 3s
+17521200K .......... .......... .......... .......... .......... 99% 3.30M 3s
+17521250K .......... .......... .......... .......... .......... 99% 3.48M 3s
+17521300K .......... .......... .......... .......... .......... 99% 5.59M 3s
+17521350K .......... .......... .......... .......... .......... 99%  120M 3s
+17521400K .......... .......... .......... .......... .......... 99% 4.02M 3s
+17521450K .......... .......... .......... .......... .......... 99% 3.99M 3s
+17521500K .......... .......... .......... .......... .......... 99% 3.12M 3s
+17521550K .......... .......... .......... .......... .......... 99% 4.27M 3s
+17521600K .......... .......... .......... .......... .......... 99%  150M 3s
+17521650K .......... .......... .......... .......... .......... 99% 3.14M 3s
+17521700K .......... .......... .......... .......... .......... 99% 4.37M 3s
+17521750K .......... .......... .......... .......... .......... 99% 3.16M 3s
+17521800K .......... .......... .......... .......... .......... 99%  135M 3s
+17521850K .......... .......... .......... .......... .......... 99% 3.15M 3s
+17521900K .......... .......... .......... .......... .......... 99% 3.66M 3s
+17521950K .......... .......... .......... .......... .......... 99% 3.97M 3s
+17522000K .......... .......... .......... .......... .......... 99% 4.05M 3s
+17522050K .......... .......... .......... .......... .......... 99%  161M 3s
+17522100K .......... .......... .......... .......... .......... 99% 4.40M 3s
+17522150K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17522200K .......... .......... .......... .......... .......... 99% 3.43M 3s
+17522250K .......... .......... .......... .......... .......... 99%  224M 3s
+17522300K .......... .......... .......... .......... .......... 99% 3.26M 3s
+17522350K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17522400K .......... .......... .......... .......... .......... 99% 4.23M 3s
+17522450K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17522500K .......... .......... .......... .......... .......... 99%  175M 3s
+17522550K .......... .......... .......... .......... .......... 99% 3.27M 3s
+17522600K .......... .......... .......... .......... .......... 99% 3.32M 3s
+17522650K .......... .......... .......... .......... .......... 99% 4.97M 3s
+17522700K .......... .......... .......... .......... .......... 99%  174M 3s
+17522750K .......... .......... .......... .......... .......... 99% 4.04M 3s
+17522800K .......... .......... .......... .......... .......... 99% 3.78M 3s
+17522850K .......... .......... .......... .......... .......... 99% 4.57M 3s
+17522900K .......... .......... .......... .......... .......... 99% 3.30M 3s
+17522950K .......... .......... .......... .......... .......... 99%  169M 3s
+17523000K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17523050K .......... .......... .......... .......... .......... 99% 3.24M 3s
+17523100K .......... .......... .......... .......... .......... 99% 3.96M 3s
+17523150K .......... .......... .......... .......... .......... 99% 4.05M 3s
+17523200K .......... .......... .......... .......... .......... 99%  210M 3s
+17523250K .......... .......... .......... .......... .......... 99% 4.45M 3s
+17523300K .......... .......... .......... .......... .......... 99% 3.20M 3s
+17523350K .......... .......... .......... .......... .......... 99% 3.26M 3s
+17523400K .......... .......... .......... .......... .......... 99%  237M 3s
+17523450K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17523500K .......... .......... .......... .......... .......... 99% 4.30M 3s
+17523550K .......... .......... .......... .......... .......... 99% 3.67M 3s
+17523600K .......... .......... .......... .......... .......... 99% 3.27M 3s
+17523650K .......... .......... .......... .......... .......... 99%  185M 3s
+17523700K .......... .......... .......... .......... .......... 99% 3.33M 3s
+17523750K .......... .......... .......... .......... .......... 99% 3.42M 3s
+17523800K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17523850K .......... .......... .......... .......... .......... 99%  181M 3s
+17523900K .......... .......... .......... .......... .......... 99% 3.20M 3s
+17523950K .......... .......... .......... .......... .......... 99% 4.17M 3s
+17524000K .......... .......... .......... .......... .......... 99% 4.30M 3s
+17524050K .......... .......... .......... .......... .......... 99% 3.28M 3s
+17524100K .......... .......... .......... .......... .......... 99%  166M 3s
+17524150K .......... .......... .......... .......... .......... 99% 3.23M 3s
+17524200K .......... .......... .......... .......... .......... 99% 3.35M 3s
+17524250K .......... .......... .......... .......... .......... 99% 4.19M 3s
+17524300K .......... .......... .......... .......... .......... 99%  152M 3s
+17524350K .......... .......... .......... .......... .......... 99% 3.30M 3s
+17524400K .......... .......... .......... .......... .......... 99% 3.30M 3s
+17524450K .......... .......... .......... .......... .......... 99% 3.31M 2s
+17524500K .......... .......... .......... .......... .......... 99% 3.31M 2s
+17524550K .......... .......... .......... .......... .......... 99% 97.6M 2s
+17524600K .......... .......... .......... .......... .......... 99% 3.78M 2s
+17524650K .......... .......... .......... .......... .......... 99% 4.31M 2s
+17524700K .......... .......... .......... .......... .......... 99% 4.48M 2s
+17524750K .......... .......... .......... .......... .......... 99% 3.23M 2s
+17524800K .......... .......... .......... .......... .......... 99%  192M 2s
+17524850K .......... .......... .......... .......... .......... 99% 4.47M 2s
+17524900K .......... .......... .......... .......... .......... 99% 4.58M 2s
+17524950K .......... .......... .......... .......... .......... 99% 3.34M 2s
+17525000K .......... .......... .......... .......... .......... 99%  207M 2s
+17525050K .......... .......... .......... .......... .......... 99% 4.45M 2s
+17525100K .......... .......... .......... .......... .......... 99% 4.35M 2s
+17525150K .......... .......... .......... .......... .......... 99% 4.30M 2s
+17525200K .......... .......... .......... .......... .......... 99% 3.33M 2s
+17525250K .......... .......... .......... .......... .......... 99%  134M 2s
+17525300K .......... .......... .......... .......... .......... 99% 3.35M 2s
+17525350K .......... .......... .......... .......... .......... 99% 4.89M 2s
+17525400K .......... .......... .......... .......... .......... 99% 3.91M 2s
+17525450K .......... .......... .......... .......... .......... 99%  169M 2s
+17525500K .......... .......... .......... .......... .......... 99% 3.84M 2s
+17525550K .......... .......... .......... .......... .......... 99% 4.39M 2s
+17525600K .......... .......... .......... .......... .......... 99% 4.58M 2s
+17525650K .......... .......... .......... .......... .......... 99% 3.29M 2s
+17525700K .......... .......... .......... .......... .......... 99%  139M 2s
+17525750K .......... .......... .......... .......... .......... 99% 4.16M 2s
+17525800K .......... .......... .......... .......... .......... 99% 4.71M 2s
+17525850K .......... .......... .......... .......... .......... 99% 4.50M 2s
+17525900K .......... .......... .......... .......... .......... 99%  151M 2s
+17525950K .......... .......... .......... .......... .......... 99% 3.17M 2s
+17526000K .......... .......... .......... .......... .......... 99% 3.18M 2s
+17526050K .......... .......... .......... .......... .......... 99% 3.22M 2s
+17526100K .......... .......... .......... .......... .......... 99% 3.53M 2s
+17526150K .......... .......... .......... .......... .......... 99%  154M 2s
+17526200K .......... .......... .......... .......... .......... 99% 3.22M 2s
+17526250K .......... .......... .......... .......... .......... 99% 3.16M 2s
+17526300K .......... .......... .......... .......... .......... 99% 4.94M 2s
+17526350K .......... .......... .......... .......... .......... 99% 4.29M 2s
+17526400K .......... .......... .......... .......... .......... 99%  132M 2s
+17526450K .......... .......... .......... .......... .......... 99% 3.91M 2s
+17526500K .......... .......... .......... .......... .......... 99% 3.85M 2s
+17526550K .......... .......... .......... .......... .......... 99% 4.24M 2s
+17526600K .......... .......... .......... .......... .......... 99%  154M 2s
+17526650K .......... .......... .......... .......... .......... 99% 3.21M 2s
+17526700K .......... .......... .......... .......... .......... 99% 3.19M 2s
+17526750K .......... .......... .......... .......... .......... 99% 3.12M 2s
+17526800K .......... .......... .......... .......... .......... 99% 3.13M 2s
+17526850K .......... .......... .......... .......... .......... 99%  172M 2s
+17526900K .......... .......... .......... .......... .......... 99% 3.27M 2s
+17526950K .......... .......... .......... .......... .......... 99% 3.19M 2s
+17527000K .......... .......... .......... .......... .......... 99% 4.65M 2s
+17527050K .......... .......... .......... .......... .......... 99%  175M 2s
+17527100K .......... .......... .......... .......... .......... 99% 3.18M 2s
+17527150K .......... .......... .......... .......... .......... 99% 3.18M 2s
+17527200K .......... .......... .......... .......... .......... 99% 3.21M 2s
+17527250K .......... .......... .......... .......... .......... 99% 3.22M 2s
+17527300K .......... .......... .......... .......... .......... 99%  149M 2s
+17527350K .......... .......... .......... .......... .......... 99% 3.15M 2s
+17527400K .......... .......... .......... .......... .......... 99% 3.71M 2s
+17527450K .......... .......... .......... .......... .......... 99% 4.93M 2s
+17527500K .......... .......... .......... .......... .......... 99%  189M 2s
+17527550K .......... .......... .......... .......... .......... 99% 3.30M 2s
+17527600K .......... .......... .......... .......... .......... 99% 3.23M 2s
+17527650K .......... .......... .......... .......... .......... 99% 2.48M 2s
+17527700K .......... .......... .......... .......... .......... 99% 3.21M 2s
+17527750K .......... .......... .......... .......... .......... 99%  139M 2s
+17527800K .......... .......... .......... .......... .......... 99% 3.22M 2s
+17527850K .......... .......... .......... .......... .......... 99% 1.60M 2s
+17527900K .......... .......... .......... .......... .......... 99% 3.22M 2s
+17527950K .......... .......... .......... .......... .......... 99% 3.47M 2s
+17528000K .......... .......... .......... .......... .......... 99%  155M 2s
+17528050K .......... .......... .......... .......... .......... 99% 3.46M 2s
+17528100K .......... .......... .......... .......... .......... 99% 3.40M 2s
+17528150K .......... .......... .......... .......... .......... 99% 3.41M 2s
+17528200K .......... .......... .......... .......... .......... 99%  204M 2s
+17528250K .......... .......... .......... .......... .......... 99% 3.90M 2s
+17528300K .......... .......... .......... .......... .......... 99% 1.55M 2s
+17528350K .......... .......... .......... .......... .......... 99% 1.53M 2s
+17528400K .......... .......... .......... .......... .......... 99% 16.4M 2s
+17528450K .......... .......... .......... .......... .......... 99%  162M 2s
+17528500K .......... .......... .......... .......... .......... 99% 3.36M 2s
+17528550K .......... .......... .......... .......... .......... 99% 4.21M 2s
+17528600K .......... .......... .......... .......... .......... 99% 4.81M 2s
+17528650K .......... .......... .......... .......... .......... 99%  148M 2s
+17528700K .......... .......... .......... .......... .......... 99% 3.31M 2s
+17528750K .......... .......... .......... .......... .......... 99% 3.77M 2s
+17528800K .......... .......... .......... .......... .......... 99% 3.35M 2s
+17528850K .......... .......... .......... .......... .......... 99% 3.24M 2s
+17528900K .......... .......... .......... .......... .......... 99%  133M 2s
+17528950K .......... .......... .......... .......... .......... 99% 2.63M 1s
+17529000K .......... .......... .......... .......... .......... 99% 3.49M 1s
+17529050K .......... .......... .......... .......... .......... 99% 4.27M 1s
+17529100K .......... .......... .......... .......... .......... 99%  162M 1s
+17529150K .......... .......... .......... .......... .......... 99% 3.80M 1s
+17529200K .......... .......... .......... .......... .......... 99% 3.40M 1s
+17529250K .......... .......... .......... .......... .......... 99% 3.35M 1s
+17529300K .......... .......... .......... .......... .......... 99% 3.36M 1s
+17529350K .......... .......... .......... .......... .......... 99%  136M 1s
+17529400K .......... .......... .......... .......... .......... 99% 5.44M 1s
+17529450K .......... .......... .......... .......... .......... 99% 4.30M 1s
+17529500K .......... .......... .......... .......... .......... 99% 3.18M 1s
+17529550K .......... .......... .......... .......... .......... 99% 4.30M 1s
+17529600K .......... .......... .......... .......... .......... 99%  176M 1s
+17529650K .......... .......... .......... .......... .......... 99% 4.12M 1s
+17529700K .......... .......... .......... .......... .......... 99% 4.34M 1s
+17529750K .......... .......... .......... .......... .......... 99% 4.09M 1s
+17529800K .......... .......... .......... .......... .......... 99%  156M 1s
+17529850K .......... .......... .......... .......... .......... 99% 3.92M 1s
+17529900K .......... .......... .......... .......... .......... 99% 3.51M 1s
+17529950K .......... .......... .......... .......... .......... 99% 4.34M 1s
+17530000K .......... .......... .......... .......... .......... 99% 3.20M 1s
+17530050K .......... .......... .......... .......... .......... 99%  175M 1s
+17530100K .......... .......... .......... .......... .......... 99%  918K 1s
+17530150K .......... .......... .......... .......... .......... 99% 12.1M 1s
+17530200K .......... .......... .......... .......... .......... 99% 3.14M 1s
+17530250K .......... .......... .......... .......... .......... 99%  140M 1s
+17530300K .......... .......... .......... .......... .......... 99% 4.06M 1s
+17530350K .......... .......... .......... .......... .......... 99% 3.20M 1s
+17530400K .......... .......... .......... .......... .......... 99% 3.23M 1s
+17530450K .......... .......... .......... .......... .......... 99% 5.59M 1s
+17530500K .......... .......... .......... .......... .......... 99%  154M 1s
+17530550K .......... .......... .......... .......... .......... 99% 3.18M 1s
+17530600K .......... .......... .......... .......... .......... 99% 2.01M 1s
+17530650K .......... .......... .......... .......... .......... 99% 3.11M 1s
+17530700K .......... .......... .......... .......... .......... 99%  173M 1s
+17530750K .......... .......... .......... .......... .......... 99% 3.24M 1s
+17530800K .......... .......... .......... .......... .......... 99% 5.72M 1s
+17530850K .......... .......... .......... .......... .......... 99% 3.15M 1s
+17530900K .......... .......... .......... .......... .......... 99% 3.21M 1s
+17530950K .......... .......... .......... .......... .......... 99%  125M 1s
+17531000K .......... .......... .......... .......... .......... 99% 3.44M 1s
+17531050K .......... .......... .......... .......... .......... 99% 4.10M 1s
+17531100K .......... .......... .......... .......... .......... 99% 3.37M 1s
+17531150K .......... .......... .......... .......... .......... 99% 3.35M 1s
+17531200K .......... .......... .......... .......... .......... 99%  138M 1s
+17531250K .......... .......... .......... .......... .......... 99% 4.41M 1s
+17531300K .......... .......... .......... .......... .......... 99% 4.14M 1s
+17531350K .......... .......... .......... .......... .......... 99% 4.90M 1s
+17531400K .......... .......... .......... .......... .......... 99%  141M 1s
+17531450K .......... .......... .......... .......... .......... 99% 3.70M 1s
+17531500K .......... .......... .......... .......... .......... 99% 3.92M 1s
+17531550K .......... .......... .......... .......... .......... 99% 4.86M 1s
+17531600K .......... .......... .......... .......... .......... 99% 3.18M 1s
+17531650K .......... .......... .......... .......... .......... 99%  181M 1s
+17531700K .......... .......... .......... .......... .......... 99% 3.37M 1s
+17531750K .......... .......... .......... .......... .......... 99% 3.42M 1s
+17531800K .......... .......... .......... .......... .......... 99% 4.36M 1s
+17531850K .......... .......... .......... .......... .......... 99%  136M 1s
+17531900K .......... .......... .......... .......... .......... 99% 3.88M 1s
+17531950K .......... .......... .......... .......... .......... 99% 3.54M 1s
+17532000K .......... .......... .......... .......... .......... 99% 3.49M 1s
+17532050K .......... .......... .......... .......... .......... 99% 3.49M 1s
+17532100K .......... .......... .......... .......... .......... 99%  140M 1s
+17532150K .......... .......... .......... .......... .......... 99% 4.26M 1s
+17532200K .......... .......... .......... .......... .......... 99% 3.47M 1s
+17532250K .......... .......... .......... .......... .......... 99% 3.20M 1s
+17532300K .......... .......... .......... .......... .......... 99%  156M 1s
+17532350K .......... .......... .......... .......... .......... 99% 3.29M 1s
+17532400K .......... .......... .......... .......... .......... 99% 3.31M 1s
+17532450K .......... .......... .......... .......... .......... 99% 3.31M 1s
+17532500K .......... .......... .......... .......... .......... 99% 3.38M 1s
+17532550K .......... .......... .......... .......... .......... 99%  129M 1s
+17532600K .......... .......... .......... .......... .......... 99% 3.37M 1s
+17532650K .......... .......... .......... .......... .......... 99% 3.98M 1s
+17532700K .......... .......... .......... .......... .......... 99% 3.40M 1s
+17532750K .......... .......... .......... .......... .......... 99% 3.40M 1s
+17532800K .......... .......... .......... .......... .......... 99%  153M 1s
+17532850K .......... .......... .......... .......... .......... 99% 3.43M 1s
+17532900K .......... .......... .......... .......... .......... 99% 3.39M 1s
+17532950K .......... .......... .......... .......... .......... 99% 4.37M 1s
+17533000K .......... .......... .......... .......... .......... 99%  159M 1s
+17533050K .......... .......... .......... .......... .......... 99% 4.86M 1s
+17533100K .......... .......... .......... .......... .......... 99% 3.38M 1s
+17533150K .......... .......... .......... .......... .......... 99% 4.77M 1s
+17533200K .......... .......... .......... .......... .......... 99% 3.91M 1s
+17533250K .......... .......... .......... .......... .......... 99%  142M 1s
+17533300K .......... .......... .......... .......... .......... 99% 4.30M 1s
+17533350K .......... .......... .......... .......... .......... 99% 3.40M 1s
+17533400K .......... .......... .......... .......... .......... 99% 3.41M 1s
+17533450K .......... .......... .......... .......... .......... 99%  160M 1s
+17533500K .......... .......... .......... .......... .......... 99% 3.40M 0s
+17533550K .......... .......... .......... .......... .......... 99% 3.42M 0s
+17533600K .......... .......... .......... .......... .......... 99% 5.32M 0s
+17533650K .......... .......... .......... .......... .......... 99% 3.24M 0s
+17533700K .......... .......... .......... .......... .......... 99%  174M 0s
+17533750K .......... .......... .......... .......... .......... 99% 3.24M 0s
+17533800K .......... .......... .......... .......... .......... 99% 3.30M 0s
+17533850K .......... .......... .......... .......... .......... 99% 3.23M 0s
+17533900K .......... .......... .......... .......... .......... 99%  189M 0s
+17533950K .......... .......... .......... .......... .......... 99% 3.15M 0s
+17534000K .......... .......... .......... .......... .......... 99% 5.40M 0s
+17534050K .......... .......... .......... .......... .......... 99% 4.30M 0s
+17534100K .......... .......... .......... .......... .......... 99% 2.14M 0s
+17534150K .......... .......... .......... .......... .......... 99%  124M 0s
+17534200K .......... .......... .......... .......... .......... 99% 6.24M 0s
+17534250K .......... .......... .......... .......... .......... 99% 3.19M 0s
+17534300K .......... .......... .......... .......... .......... 99% 3.79M 0s
+17534350K .......... .......... .......... .......... .......... 99% 3.24M 0s
+17534400K .......... .......... .......... .......... .......... 99%  179M 0s
+17534450K .......... .......... .......... .......... .......... 99% 3.22M 0s
+17534500K .......... .......... .......... .......... .......... 99% 3.26M 0s
+17534550K .......... .......... .......... .......... .......... 99% 4.05M 0s
+17534600K .......... .......... .......... .......... .......... 99%  165M 0s
+17534650K .......... .......... .......... .......... .......... 99% 4.26M 0s
+17534700K .......... .......... .......... .......... .......... 99% 3.33M 0s
+17534750K .......... .......... .......... .......... .......... 99% 3.32M 0s
+17534800K .......... .......... .......... .......... .......... 99% 3.39M 0s
+17534850K .......... .......... .......... .......... .......... 99%  187M 0s
+17534900K .......... .......... .......... .......... .......... 99% 3.43M 0s
+17534950K .......... .......... .......... .......... .......... 99% 5.63M 0s
+17535000K .......... .......... .......... .......... .......... 99% 3.18M 0s
+17535050K .......... .......... .......... .......... .......... 99%  197M 0s
+17535100K .......... .......... .......... .......... .......... 99% 3.24M 0s
+17535150K .......... .......... .......... .......... .......... 99% 3.19M 0s
+17535200K .......... .......... .......... .......... .......... 99% 4.12M 0s
+17535250K .......... .......... .......... .......... .......... 99% 4.47M 0s
+17535300K .......... .......... .......... .......... .......... 99%  158M 0s
+17535350K .......... .......... .......... .......... .......... 99% 3.68M 0s
+17535400K .......... .......... .......... .......... .......... 99% 3.22M 0s
+17535450K .......... .......... .......... .......... .......... 99% 3.92M 0s
+17535500K .......... .......... .......... .......... .......... 99%  152M 0s
+17535550K .......... .......... .......... .......... .......... 99% 3.23M 0s
+17535600K .......... .......... .......... .......... .......... 99% 3.25M 0s
+17535650K .......... .......... .......... .......... .......... 99% 3.29M 0s
+17535700K .......... .......... .......... .......... .......... 99% 4.18M 0s
+17535750K .......... ..                                         100%  111M=64m46s
+
+2020-12-03 13:15:40 (4.41 MB/s) - ‘enwiki-20201120-pages-articles.xml.bz2’ saved [17956620843/17956620843]
+</pre></div>
+</div>
+</div></blockquote>
+<p>Extract the .xml-file</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export lang=&quot;en&quot;
+export freeze_date=&quot;20201120&quot;
+ls
+bzip2 -dk ${lang}wiki-${freeze_date}-pages-articles.xml.bz2
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conf
+derby.log
+enwiki-20201120-pages-articles.xml.bz2
+eventlogs
+ganglia
+hls4ml_LHCjet_100p_train.tar.gz
+hls4ml_LHCjet_100p_train.tar.gz?download=1
+logs
+stoppord.csv
+svwiki-20201120-pages-articles.xml.bz2
+svwiki-20201120-pages-articles.xml.bz2.1
+</pre></div>
+</div>
+</div></blockquote>
+<p>Copy file to DBFS cluster</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">val</span> <span class="n">localpath</span><span class="o">=</span><span class="s2">&quot;file:/databricks/driver/&quot;</span> <span class="o">+</span> <span class="n">xml_file</span>
+<span class="n">val</span> <span class="nb">dir</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/05_lda/&quot;</span>
+
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">mkdirs</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="n">localpath</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>localpath: String = file:/databricks/driver/enwiki-20201120-pages-articles.xml
+dir: String = dbfs:/datasets/05_lda/
+res3: Boolean = true
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Verify</span> <span class="n">Dataset</span> <span class="ow">is</span> <span class="ow">in</span> <span class="n">cluster</span>
+<span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="nb">dir</span> <span class="o">+</span> <span class="n">xml_file</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>We now have a wikipedia dump ready to be processed</p>
+<p>This page has some resources that can be used for Wikipedia parsing:
+https://mindfulmachines.io/blog/2018/3/18/wikipedia-data-in-spark-and-scala-updated</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//---------------</span><span class="n">spark_import</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.SparkContext</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.SparkConf</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.SQLContext</span>
+
+<span class="o">//----------------</span><span class="n">xml_loader_import</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.</span><span class="p">{</span> <span class="n">LongWritable</span><span class="p">,</span> <span class="n">Text</span> <span class="p">}</span>
+<span class="kn">import</span> <span class="nn">com.databricks.spark.xml._</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+import org.apache.spark.sql.SQLContext
+import org.apache.hadoop.io.LongWritable
+import org.apache.hadoop.io.Text
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.io.{LongWritable, Text}
+import com.databricks.spark.xml._
+import org.apache.hadoop.conf.Configuration
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">readWikiDump</span><span class="p">(</span><span class="n">sc</span><span class="p">:</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">RDD</span><span class="p">[(</span><span class="n">Long</span><span class="p">,</span> <span class="n">String</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">val</span> <span class="n">conf</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Configuration</span><span class="p">()</span>
+  <span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">XmlInputFormat</span><span class="o">.</span><span class="n">START_TAG_KEY</span><span class="p">,</span> <span class="s2">&quot;&lt;page&gt;&quot;</span><span class="p">)</span>
+  <span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">XmlInputFormat</span><span class="o">.</span><span class="n">END_TAG_KEY</span><span class="p">,</span> <span class="s2">&quot;&lt;/page&gt;&quot;</span><span class="p">)</span>
+  <span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">newAPIHadoopFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> 
+                                <span class="n">classOf</span><span class="p">[</span><span class="n">XmlInputFormat</span><span class="p">],</span> 
+                                <span class="n">classOf</span><span class="p">[</span><span class="n">LongWritable</span><span class="p">],</span> 
+                                <span class="n">classOf</span><span class="p">[</span><span class="n">Text</span><span class="p">],</span> 
+                                <span class="n">conf</span><span class="p">)</span>
+  <span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="n">case</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">new</span> <span class="n">String</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">copyBytes</span><span class="p">()))}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>readWikiDump: (sc: org.apache.spark.SparkContext, file: String)org.apache.spark.rdd.RDD[(Long, String)]
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">wiki</span> <span class="n">dump</span>
+
+<span class="n">val</span> <span class="n">dump</span> <span class="o">=</span> <span class="n">readWikiDump</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="s2">&quot;dbfs:/datasets/svwiki-20201120-pages-articles.xml&quot;</span><span class="p">)</span>
+
+<span class="o">//</span><span class="n">dump</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="n">This</span> <span class="n">throws</span> <span class="n">a</span> <span class="n">memory</span> <span class="n">error</span>
+
+<span class="n">dump</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dump: org.apache.spark.rdd.RDD[(Long, String)] = MapPartitionsRDD[323] at map at command-738986526041351:11
+res5: Array[(Long, String)] =
+Array((10671,&lt;page&gt;
+    &lt;title&gt;Amager&lt;/title&gt;
+    &lt;ns&gt;0&lt;/ns&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;revision&gt;
+      &lt;id&gt;48450724&lt;/id&gt;
+      &lt;parentid&gt;48155628&lt;/parentid&gt;
+      &lt;timestamp&gt;2020-11-15T15:50:09Z&lt;/timestamp&gt;
+      &lt;contributor&gt;
+        &lt;username&gt;Nalle&amp;amp;Lisa&lt;/username&gt;
+        &lt;id&gt;348723&lt;/id&gt;
+      &lt;/contributor&gt;
+      &lt;comment&gt;Länkfix&lt;/comment&gt;
+      &lt;model&gt;wikitext&lt;/model&gt;
+      &lt;format&gt;text/x-wiki&lt;/format&gt;
+      &lt;text bytes=&quot;7485&quot; xml:space=&quot;preserve&quot;&gt;{{källor|datum=2013-05}}
+
+{{Geobox|Island
+&amp;lt;!-- *** Mallhuvud *** --&amp;gt;
+| name                  = Amager
+| native_name           =
+| other_name            =
+| category              = Ö
+&amp;lt;!-- *** Namn **** --&amp;gt;
+| etymology             =
+| nickname              =
+&amp;lt;!-- *** Bild *** --&amp;gt;
+| image                 = Amager.jpg
+| image_caption         =
+&amp;lt;!-- *** Länder, regioner mm *** --&amp;gt;
+| country               = Danmark
+| country_flag          = true
+| state                 = | state_type =
+| region                = [[Region Hovedstaden]]| region_type =
+| district              = | district_type =
+| municipality          = [[Dragørs kommun]]| municipality_type =
+| municipality1         = [[Köpenhamns kommun]]
+| municipality2         = [[Tårnby kommun]]
+&amp;lt;!-- *** Tillhörighet, föremål inom området mm *** --&amp;gt;
+| parent                =
+| range                 = | range_type = Arkipelag
+| border                =
+| part                  =
+| city                  =
+| capital               =
+| landmark              =
+| river                 =
+&amp;lt;!-- *** Läge *** --&amp;gt;
+| location              = [[Öresund]]
+| lat_d                 = 55| lat_m = 37| lat_s = 0| lat_NS = N
+| long_d                = 12| long_m = 37| long_s = 0| long_EW = E
+| highest               =
+| highest_location      = | highest_region = | highest_country =
+| highest_elevation     =
+| highest_lat_d         = | highest_lat_m = | highest_lat_s = | highest_lat_NS =
+| highest_long_d        = | highest_long_m = | highest_long_s = | highest_long_EW =
+&amp;lt;!-- *** Dimensioner *** --&amp;gt;
+| length                = 16.1| length_orientation =
+| width                 = 11.1| width_orientation =
+| height                = 4
+| area                  = 96.29
+&amp;lt;!-- *** Befolkning *** --&amp;gt;
+| population            = 196047| population_date = 1 januari 2018 | population_note =
+| population_density    = auto| population_density_note =
+&amp;lt;!-- *** Tillgänglighet *** --&amp;gt;
+| public                =
+| access                =
+&amp;lt;!-- *** Koder ***  --&amp;gt;
+| timezone              = CET| utc_offset = +1
+| timezone_DST          = CEST| utc_offset_DST = +2
+| postal_code           =
+| area_code             =
+| code                  =
+&amp;lt;!-- *** Fria fält *** --&amp;gt;
+| free                  =
+| free_type             =
+&amp;lt;!-- *** Kartor *** --&amp;gt;
+| map                   = Denmark physical map.svg
+| map_caption           = Amagers läge i Danmark.
+| map_locator           = Danmark
+| map_locator_x         =
+| map_locator_y         =
+&amp;lt;!-- *** Fotnoter *** --&amp;gt;
+| footnotes             =
+}}
+
+&#39;&#39;&#39;Amager&#39;&#39;&#39; är en [[Danmark|dansk]] [[ö (landområde)|ö]] i [[Öresund]]. Öns norra och västra delar tillhör [[Köpenhamn]], medan övriga delar upptas av [[Tårnby kommun]] och [[Dragørs kommun]].
+Amager har en yta på 96,29 km² och befolkningen uppgår till 196&amp;amp;nbsp;047 personer (1/1 2018). På den östra delen av ön finns [[Kastrups flygplats]]. Amager har också flera militära anläggningar (t.ex. Kastrup fort och Dragör fort), strandparksområdena [[Amager Strandpark]] och Kastrup Strandpark, flera restauranger i världsklass (t.ex. Noma), ett stort naturområde ([[Amager Fælled]]), ett av Nordens största köpcentra (Field&#39;s), och mycket annat. Amager förkortas ofta Ama&#39;r för att återspegla det danska uttalet.
+
+Amager är delvis en [[konstgjord ö]], delvis en naturlig sådan. T.ex. så anlades en konstgjord ö i anslutning till det redan existerande Amager Strandpark, när denna rustades upp väsentligen 2005. Ön är mycket låg och vissa delar ligger under havsytan, framför allt det genom fördämning och utfyllnad skapade området [[Kalvebod Fælled]] (Vestamager). Ön började uppodlas i större skala under 1500-talets första hälft då kung [[Kristian II]] bjöd in nederländska bönder till att odla upp ön för kronans räkning. Flertalet slog sig ned i fiskeläget [[Dragør]] där många än idag har namn med nederländskt ursprung som Neels och Tønnes.
+
+Den stora utvecklingsfasen började på 1800-talet då flera fabriker, bostadsområden och militär verksamhet utvecklade sig på ön. Det fanns ett antal stora och kända fabriker på ön och den industriella prägeln höll sig väldigt tydlig långt in på 1900-talet. Det förekommer också områden som tidigare varit sommarstugeområden och där det än idag finns kolonilottområden, t.ex. i Sundbyöster ut mot kusten. Under 1900-talet började militären att utveckla stora övningsområden på ön vilket resulterade i Vestamager som idag innefattar ett stort naturområde endast några kilometer från Köpenhamns centrum. Under senare delen av 1900-talet har flygplatsen [[Kastrups flygplats|Kastrup]] som ligger på ön expanderat kraftigt och i samband med byggandet av [[Öresundsförbindelsen]] började även ett stort område byggas som kallas för [[Ørestad]].
+
+Ön, som är förbunden med övriga Köpenhamn genom flera broar, [[järnväg]] och sedan 2017 även [[Köpenhamns tunnelbana|Metro]], har under de senaste 10-20 åren förändrats mycket. Dels har flera områden exploaterats med nya moderna kvarter lägenheter, t.ex. i områdena Örestad, [[Islands Brygge]] och Amager Strand, och dels så har Amagers närhet till Köpenhamn raderat dess tidigare rykte som en industriell förstad till Köpenhamn. Idag finns det områden av alla sorter på ön - tack vare flygplatsen finns ett aktivt näringsliv kvar, samtidigt som de nya områdena och inte minst upprustningen av t.ex. Amager Strand har förändrat bilden av ön. Idag är flera delar av ön mycket attraktiva bostadsområden.
+
+Ön återfick i samband med Öresundsbron även en järnvägsförbindelse vilket inte funnits sedan 1960-talet. En [[motorväg]] byggdes samtidigt över öns mellersta del. [[Köpenhamns metro]] går till Kastrup och Vestamager med ett antal stationer på ön. Kring metro- och regionaltågsstationen Ørestad har ett stort kontors-, handels- och bostadsområde uppförts under [[2000-talet (decennium)|00-talet]]. Detta sträcker sig från [[Bella Center]] i norr till metrostationen [[Vestamager station|Vestamager]] i söder. Även om området inte ligger vid kusten har Ørestad delvis fått karaktären av en hamnstad genom anläggandet av konstgjorda kanaler och dammar. Vid [[Islands Brygge]] finns en &amp;quot;äkta&amp;quot; sjöstad.
+
+Före [[Öresundsförbindelsen]]s uppförande hade småstaden [[Dragør]] en färjeförbindelse med [[Limhamn]] i södra [[Malmö]]. På grund av denna fanns i Dragør tidigare en betydande gränshandel. Denna har under 2000-talet helt upphört liksom den genomgående trafiken.
+
+Öns västra del, som utvanns från Öresund under 1920- och 30-talen, är med undantag för Bella Center, Ørestad samt ett koloniområde, avsatt som natur- och rekreationsområde. Marken är ängsmark (odlad mark finns dock på den naturliga delen av öns södra del).
+Längst i söder finns den flerhundraåriga skogen [[Kongelunden]]. På öns östra del, vid Öresundskusten, finns [[Amager Strandpark]] med en populär sandstrand. Området har omgestaltats, med en [[konstgjord ö]] och en [[lagun]] innanför. Nyinvigningen av parken, som funnits sedan 1934, ägde rum 2005.
+
+Amager är den tätast befolkade ön i Danmark. Den näst mest tätbefolkade är [[Thurø]].
+
+== Se även ==
+*[[Amagerbro]]
+*[[Amagerport]]
+*[[Amagerbroderi]]
+
+==Externa länkar==
+{{commonscat|Amager}}
+
+{{Öar i Danmark}}
+
+{{auktoritetsdata}}
+
+[[Kategori:Amager| ]]
+[[Kategori:Öar i Region Hovedstaden]]&lt;/text&gt;
+      &lt;sha1&gt;qom8qpk70qa0alvfb4b4ha9or4ftohh&lt;/sha1&gt;
+    &lt;/revision&gt;
+  &lt;/page&gt;), (52187,&lt;page&gt;
+    &lt;title&gt;Afrika&lt;/title&gt;
+    &lt;ns&gt;0&lt;/ns&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;revision&gt;
+      &lt;id&gt;48459142&lt;/id&gt;
+      &lt;parentid&gt;48374249&lt;/parentid&gt;
+      &lt;timestamp&gt;2020-11-18T06:30:03Z&lt;/timestamp&gt;
+      &lt;contributor&gt;
+        &lt;username&gt;LarskeBot&lt;/username&gt;
+        &lt;id&gt;310602&lt;/id&gt;
+      &lt;/contributor&gt;
+      &lt;minor /&gt;
+      &lt;comment&gt;/* Geografi */mellan X - Y → mellan X och Y med [[Project:AWB|AWB]]&lt;/comment&gt;
+      &lt;model&gt;wikitext&lt;/model&gt;
+      &lt;format&gt;text/x-wiki&lt;/format&gt;
+      &lt;text bytes=&quot;37806&quot; xml:space=&quot;preserve&quot;&gt;{{templateStyles-tagg Faktamall}}
+{| class=&amp;quot;infobox&amp;quot; style=&amp;quot;font-size:90%;&amp;quot; width=&amp;quot;300&amp;quot;
+|+ &amp;lt;big&amp;gt;&#39;&#39;&#39;Afrika&#39;&#39;&#39;&amp;lt;/big&amp;gt;
+|-
+| align=&amp;quot;center&amp;quot; colspan=&amp;quot;2&amp;quot; style=&amp;quot;background:#f9f9f9;&amp;quot; | [[Fil:Africa (orthographic projection).svg|280px|Afrika i världen.]]
+----
+|-
+| align=&amp;quot;center&amp;quot; colspan=&amp;quot;2&amp;quot; style=&amp;quot;background:#f9f9f9;&amp;quot; | [[Fil:Afrika politisk.png|280px|Politisk karta.]]
+----
+|-
+| colspan=&amp;quot;2&amp;quot; |
+|-
+| &#39;&#39;&#39;Area:&#39;&#39;&#39; &amp;lt;br /&amp;gt; &#39;&#39;&#39;Folkmängd:&#39;&#39;&#39; &amp;lt;br /&amp;gt; &#39;&#39;&#39;Antal stater:&#39;&#39;&#39; &amp;lt;br /&amp;gt; &#39;&#39;&#39;Autonoma regioner:&#39;&#39;&#39; &amp;lt;br /&amp;gt; &#39;&#39;&#39;Högsta punkt:&#39;&#39;&#39; &amp;lt;br /&amp;gt; &#39;&#39;&#39;Lägsta punkt:&#39;&#39;&#39; || 30&amp;amp;nbsp;221&amp;amp;nbsp;532&amp;amp;nbsp;km² &amp;lt;br /&amp;gt; 1&amp;amp;nbsp;022&amp;amp;nbsp;234&amp;amp;nbsp;000&amp;lt;ref name=&amp;quot;esa.un.org&amp;quot;/&amp;gt; (2010) &amp;lt;br /&amp;gt; 54 &amp;lt;br /&amp;gt; 8 &amp;lt;br /&amp;gt; [[Kilimanjaro]]&amp;amp;nbsp;5&amp;amp;nbsp;895&amp;amp;nbsp;[[m ö.h.|m&amp;amp;nbsp;ö.h.]] &amp;lt;br /&amp;gt; [[Assalsjön]]&amp;amp;nbsp;156&amp;amp;nbsp;[[Meter över havet|m&amp;amp;nbsp;u.h.]]
+|-
+| colspan=&amp;quot;2&amp;quot; |
+----
+|-
+| colspan=&amp;quot;2&amp;quot; | &#39;&#39;&#39;Stater&#39;&#39;&#39;
+|-
+| {{flaggbild2|Algeriet}} &amp;lt;br /&amp;gt; {{flaggbild2|Angola}} &amp;lt;br /&amp;gt; {{flaggbild2|Benin}} &amp;lt;br /&amp;gt; {{flaggbild2|Botswana}} &amp;lt;br /&amp;gt; {{flaggbild2|Burkina Faso}} &amp;lt;br /&amp;gt; {{flaggbild2|Burundi}} &amp;lt;br /&amp;gt; {{flaggbild2|Centralafrikanska republiken}} &amp;lt;br /&amp;gt; {{flaggbild2|Djibouti}} &amp;lt;br /&amp;gt; {{flaggbild2|Egypten}} &amp;lt;br /&amp;gt; {{flaggbild2|Ekvatorialguinea}} &amp;lt;br /&amp;gt; {{flaggbild2|Elfenbenskusten}} &amp;lt;br /&amp;gt; {{flaggbild2|Eritrea}} &amp;lt;br /&amp;gt; {{flaggbild2|Etiopien}} &amp;lt;br /&amp;gt; {{flaggbild2|Gabon}} &amp;lt;br /&amp;gt; {{flaggbild2|Gambia}} &amp;lt;br /&amp;gt; {{flaggbild2|Ghana}} &amp;lt;br /&amp;gt; {{flaggbild2|Guinea}} &amp;lt;br /&amp;gt; {{flaggbild2|Guinea-Bissau}} &amp;lt;br /&amp;gt; {{flaggbild2|Kamerun}} &amp;lt;br /&amp;gt; {{flaggbild2|Kap Verde}} &amp;lt;br /&amp;gt; {{flaggbild2|Kenya}} &amp;lt;br /&amp;gt; {{flaggbild2|Komorerna}} &amp;lt;br /&amp;gt; {{flaggbild2|Kongo-Brazzaville}} &amp;lt;br /&amp;gt; {{flaggbild2|Kongo-Kinshasa}} &amp;lt;br /&amp;gt; {{flaggbild2|Lesotho}} &amp;lt;br /&amp;gt; {{flaggbild2|Liberia}} &amp;lt;br /&amp;gt;{{flaggbild2|Libyen}} ||{{flaggbild2|Madagaskar}} &amp;lt;br /&amp;gt; {{flaggbild2|Malawi}} &amp;lt;br /&amp;gt; {{flaggbild2|Mali}} &amp;lt;br /&amp;gt; {{flaggbild2|Marocko}} &amp;lt;br /&amp;gt; {{flaggbild2|Mauretanien}} &amp;lt;br /&amp;gt; {{flaggbild2|Mauritius}} &amp;lt;br /&amp;gt; {{flaggbild2|Moçambique}} &amp;lt;br /&amp;gt; {{flaggbild2|Namibia}} &amp;lt;br /&amp;gt; {{flaggbild2|Niger}} &amp;lt;br /&amp;gt; {{flaggbild2|Nigeria}} &amp;lt;br /&amp;gt; {{flaggbild2|Rwanda}} &amp;lt;br /&amp;gt; {{flaggbild2|São Tomé och Príncipe}} &amp;lt;br /&amp;gt; {{flaggbild2|Senegal}} &amp;lt;br /&amp;gt; {{flaggbild2|Seychellerna}} &amp;lt;br /&amp;gt; {{flaggbild2|Sierra Leone}} &amp;lt;br /&amp;gt; {{flaggbild2|Somalia}} &amp;lt;br /&amp;gt; {{flaggbild2|Sudan}} &amp;lt;br /&amp;gt; {{flaggbild2|Sydafrika}} &amp;lt;br /&amp;gt; {{flaggbild2|Sydsudan}} &amp;lt;br /&amp;gt; {{flaggbild2|Swaziland}} &amp;lt;br /&amp;gt; {{flaggbild2|Tanzania}} &amp;lt;br /&amp;gt; {{flaggbild2|Tchad}} &amp;lt;br /&amp;gt; {{flaggbild2|Togo}} &amp;lt;br /&amp;gt; {{flaggbild2|Tunisien}} &amp;lt;br /&amp;gt; {{flaggbild2|Uganda}} &amp;lt;br /&amp;gt; {{flaggbild2|Zambia}} &amp;lt;br /&amp;gt; {{flaggbild2|Zimbabwe}}
+|-
+| colspan=&amp;quot;2&amp;quot; |
+----
+&#39;&#39;&#39;Stater som har delar av ytan i Afrika&#39;&#39;&#39;
+|-
+| {{flaggbild2|Egypten}} &amp;lt;br /&amp;gt; {{flaggbild2|Frankrike}} &amp;lt;br /&amp;gt; {{flaggbild2|Jemen}} &amp;lt;br /&amp;gt; {{flaggbild2|Portugal}} &amp;lt;br /&amp;gt; {{flaggbild2|Spanien}}
+|-
+| colspan=&amp;quot;2&amp;quot; |
+----
+&#39;&#39;&#39;Särskilda områden&#39;&#39;&#39;
+&amp;lt;br /&amp;gt; {{flaggbild|Ceuta}} [[Ceuta]] ([[Spanien]])
+
+{{flaggbild|Kanarieöarna}} [[Kanarieöarna]] ([[Spanien]])
+
+{{flaggbild|Madeira}} [[Madeira]] ([[Portugal]])
+
+{{flaggbild|Frankrike}} [[Mayotte]] ([[Frankrike]])
+
+{{flaggbild|Melilla}} [[Melilla]] ([[Spanien]])
+
+{{flaggbild|Frankrike}} [[Réunion]] ([[Frankrike]])
+
+{{flaggbild|Sankta Helena}} [[Sankta Helena]] ([[Storbritannien]])
+
+[[Fil:Flag of Somaliland.svg|22px|Somaliland]] [[Somaliland]]
+
+{{flaggbild2|Västsahara}} ([[Marocko]])
+----
+&#39;&#39;&#39;Största städer (över 10 miljoner invånare med förorter):&#39;&#39;&#39;
+&amp;lt;br /&amp;gt;{{flaggbild|Egypten}} [[Kairo]]
+&amp;lt;br /&amp;gt;{{flaggbild|Kongo-Kinshasa}} [[Kinshasa]]
+&amp;lt;br /&amp;gt;{{flaggbild|Nigeria}} [[Lagos]]
+----
+[[Fil:Africa satellite.jpg|280px|Satellitfoto]]
+|}
+&#39;&#39;&#39;Afrika&#39;&#39;&#39; är [[jorden]]s näst största [[kontinent]] (efter [[Eurasien]]) och även jordens näst största världsdel efter [[Asien]], både vad gäller [[areal]] och [[folkmängd]]. Med världsdelens öar inräknade mäter Afrika 30 244 050&amp;amp;nbsp;km², vilket motsvarar 20,3 % av jordens landmassa eller cirka 6 % av jordens totala area. Omkring 22 miljoner km² av dessa ligger i [[tropikerna]] vilket gör den afrikanska kontinenten till världens varmaste kontinent. I Afrika bor det ungefär 1 miljard människor i 55 länder – en sjundedel av jordens befolkning. Dess längd i nordlig-sydlig riktning är omkring 8 000&amp;amp;nbsp;km och dess största bredd omkring 7&amp;amp;nbsp;800&amp;amp;nbsp;km.
+
+== Etymologi ==
+Ordet &amp;quot;Afrika&amp;quot;s [[etymologi]]ska bakgrund är dunkel, och ordet har dessutom haft olika betydelse under olika [[epok]]er.
+
+I äldre tider kallades allt land väster om [[Egypten]] för &amp;quot;[[Libyen]]&amp;quot;. Enligt den [[Grekland|grek]]iska historieskrivaren [[Herodotos]] berättelse seglade [[fenicisk]]a sjömän på uppdrag av den egyptiska kungen Neko runt Libyen, det vill säga [[kontinent]]en Afrika redan omkring 600 f.Kr.
+
+När [[Romerska riket|romarna]] först använde termen &#39;&#39;[[Africa terra]]&#39;&#39; avsåg de före [[andra puniska kriget]] endast trakten kring [[Karthago]], det vill säga motsvarande ungefär dagens Tunisien där själva staden Karthago låg samt stora delar av Libyen och Algeriet. Romarna uppfattade först [[Egypten]] som en del av [[Asien]], och det var först geografen [[Klaudios Ptolemaios|Ptolemaios]] som drog gränsen vid [[Suez]]. Under kejsartiden kom &#39;&#39;Africa&#39;&#39; att avse hela det området romarna kände till av kontinenten, och allt eftersom européerna har upptäckt mer och mer av kontinenten har termen avsett ett allt större område. Namnet ska ha avsett &amp;quot;landet där &#39;&#39;afri&#39;&#39;&amp;quot; (singularis: &#39;&#39;afer&#39;&#39;) bodde. &#39;&#39;Afer&#39;&#39; avsåg namnet på ett folk som kan motsvara dagens [[berber]]. [[Viking]]arna under 800- och 900-talen kallade norra Afrika för &amp;quot;Blåland&amp;quot;.
+
+== Geografi ==
+{{Fördjupning|Afrikas geografi}}
+Geologiskt är Afrika en mycket gammal kontinent, i huvudsak uppbyggd av [[urberg]]. Under jordens forntid var den en del av jättekontinenten [[Gondwana]]land. Denna gled isär under [[Jura (period)|juraperioden]] och [[Krita (geologi)|kritaperioden]] för 100-150 miljoner år sedan, och så fick Afrika sin nuvarande form.
+
+Inom sina regelbundna kuster rymmer den en total yta på omkring 30 244 050&amp;amp;nbsp;km² inklusive öarna. Afrika åtskiljs från [[Europa]] av [[Medelhavet]] och förenas med [[Asien]] i sitt nordöstra hörn genom [[näs]]et vid [[Suez]], omkring 130&amp;amp;nbsp;km i bredd. Omkring 8 000&amp;amp;nbsp;km skiljer den nordligaste punkten, [[Ras ben Sakka]] i [[Tunisien]], från dess sydligaste, [[Kap Agulhas]] i [[Sydafrika]]. Från [[Kap Verde]], dess västligaste punkt, till [[Ras Hafun]] i [[Somalia]] är det omkring 7 400&amp;amp;nbsp;km. Afrikas kuster mäter omkring 28 000&amp;amp;nbsp;km (1&amp;amp;nbsp;km kust på 1 057&amp;amp;nbsp;km²) varav [[Medelhavet]] står för 5 400&amp;amp;nbsp;km, [[Atlanten]] 11 000&amp;amp;nbsp;km, [[Indiska oceanen]] 8 700&amp;amp;nbsp;km och [[Röda havet]] 2 900&amp;amp;nbsp;km, och avsaknaden av djupare [[bukt]]er och betydande [[halvö]]ar blir uppenbar om man jämför med Europas 9 700 000&amp;amp;nbsp;km² som omgärdas av 32 000&amp;amp;nbsp;km kust (1&amp;amp;nbsp;km kust på 278&amp;amp;nbsp;km² land), eller för det [[fjord]]rika [[Norge]], där motsvarande siffra 385 000&amp;amp;nbsp;km² land och en kuststräcka på 20 000&amp;amp;nbsp;km (1&amp;amp;nbsp;km kust per 19&amp;amp;nbsp;km² land).
+
+Afrikas genomsnittliga höjd över havet är omkring 600 m, vilket motsvarar de båda amerikanska kontinenternas höjd men är lägre än den asiatiska på omkring 950 m. Jämfört med de andra kontinenterna utmärker sig Afrika med en liten andel landområden på mycket hög respektive mycket låg höjd. Landområdena under 180 [[Meter över havet|m ö.h.]] upptar en osedvanligt liten del av den totala landmassan, och även de högsta delarna, som är betydligt lägre än motsvarande i Asien, utgörs av isolerade berg och bergskedjor. Generellt ligger de högre [[platå]]erna i öst och söder och de lägre delarna åt väst och norr och med en linje från ungefär vid [[Röda havet]]s mitt till [[Kongofloden]]s mynning kan kontinenten delas upp i ett lågland i norr och ett högland i söder. Man kan således dela upp Afrika i fyra övergripande landområden:
+# Slättlanden vid kusterna – ofta med [[Mangrove|mangroveträsk]] insprängda – når aldrig långt in från kusterna utom vid vattendragens nedre delar. Slamrika slättland finns egentligen bara vid de större flodernas deltan, och annars utgör kustområdena det lägsta steget i en serie terrasser som bildar stigningen upp till de inre platåerna.
+# [[Atlasbergen]] i norr som ligger isolerat av [[Sahara]]öknen som bitvis ligger under havsnivån.
+# De södra och östra höglanden som ligger på mellan 600 och 1 000 m ö.h.
+# De nordliga och västra slättlanden, inklusive Sahara, som kantas och genomfars av stråk med högra landområden, men i allmänhet håller sig under 600 m ö.h.
+
+Skog täcker cirka en femtedel av Afrikas yta.
+
+Hela Afrika har ett [[Tropiskt klimat|tropiskt]] eller [[Subtropiskt klimat]].
+
+=== Fauna ===
+
+{{Fördjupning|Afrikas fauna}}
+
+Afrika är huvudsakligen känt för den öppna [[savann]]en med väldiga hjordar av hovdjur som [[afrikansk buffel]], gnuer, [[antiloper]], [[giraff]]er och [[zebror]]. Dessa jagas av stora rovdjur som [[lejon]], [[hyenor]] och [[Gepard|geparder]]. Den afrikanska djungeln befolkas av [[ormar]] och [[primater]] samt av vattenlevande djur som [[krokodiler]] och [[groddjur]]. Afrika har även det största antalet arter som kan räknas till [[megafauna]]n, bland annat [[afrikanska elefanter]], [[trubbnoshörning]] och [[flodhäst]], på grund av att kontinenten bara i mindre utsträckning var påverkad av det [[massutdöende]] som skedde under [[pleistocen]].
+
+== Historia ==
+{{Fördjupning|Afrikas historia}}
+Den första mänskliga migrationen, från kontinenten men även inom Afrikas kuster, kan spåras [[lingvistisk]]t, kulturellt och genom datoranalyser av [[genetik|genetiskt]] material. Någonstans i [[Östafrika]] tror dagens forskare att de första [[hominider]] uppkom. I [[Etiopien]] har man hittat ett två miljoner år gammalt skelett som uppkallades [[Australopithecus afarensis|Lucy]], den första kända mänskliga [[primater|primaten]].
+
+=== Tidigare civilisationer och handel ===
+[[Fil:African-civilizations-map-pre-colonial.svg|miniatyr|höger|Några av de mest kända afrikanska civilisationerna. Civilisationer från olika tidsepoker visas parallellt.]]Lingvistiska spår tyder på att [[Bantu]]folk emigrerade från [[Västafrika]] in i [[khoisan]]folkets (de som tidigare kallades [[bushmän]] och [[hottentott]]er) område och undanträngde dem. Bantufolken använde en uppsättning grödor, bland annat [[kassava]] och [[jams]], som var mer lämpade för jordbruk i det [[tropik|tropiska]] Afrika, och med sitt jordbruk kunde bantu försörja en betydligt större folkmängd än de undanträngde jägare eller samlare. Bantufolkens traditionella bosättningsområde sträcker sig från [[Sahara]]öknen till de [[Tempererat klimat|tempererade regionerna]] i söder. Historiskt har deras vapen varit spjut, sköld, pil och båge. Det för [[khoisanspråk]]ens karaktäristiska klickljuden återfinns i [[nguni (språk)|nguni]]- och [[bantu]]språk som till exempel [[xhosa]] och [[zulu]]. Khoisanspråken talas idag främst av utspridda minoritetsgrupper i södra Afrika i länderna kring [[Kalahariöknen]].
+
+Afrika söder om Sahara har bestått olika stater och riken, mindre stadsstater samt [[stam (samhällsvetenskap)|stammar]] och [[klan]]er. Det forna egyptiska riket, är en av världens äldsta stater, och den mest kända av de äldre afrikanska [[civilisation]]erna. Det fanns även statsbildningar i [[Nubien]], [[Ghana]], [[Timbuktu]], [[Kanem-Bornu]] och i nuvarande [[Zimbabwe]].
+
+[[Nordafrika]] kom från och med 600-talet under arabiskt inflytande – en tid av kulturell blomstring – och med kamelens hjälp spreds [[Islam]] och den arabiska kulturen genom Sahara och vidare söderut. Arabiska och persiska handelsmän spred likaså Islam längs med den östafrikanska kusten parallellt med en omfattande svart slavhandel. Detta östafrikanska handelsutbyte med araber och perser sträckte sig ända bort till Java, därmed den etniska, kulturella och språkliga mångfalden på Östafrikas kust, [[Madagaskar]] och [[Komorerna]].
+
+=== Arabvärlden och Europa utforskar kontinenten ===
+Det arabiska intresset för Afrika går långt tillbaka, men handel med slavar från centra som Lamu och Zanzibar vid östkusten har pågått åtminstone sedan senare delen av 1000-talet e.Kr. De miljoner slavar som exporterades till arabvärlden och österut under den [[arabiska slavhandeln]] finns idag kvar som en stor etnisk grupp där, i stor utsträckning integrerad med den ursprungliga arabiska befolkningen. Slavhandel med svarta pågår fortfarande i vissa arabländer, till exempel Sudan.&amp;lt;ref&amp;gt;[http://www.hrw.org/backgrounder/africa/sudanupdate.htm Human Rights Watch] [http://news.bbc.co.uk/2/hi/programmes/this_world/6458377.stm BBC World]&amp;lt;/ref&amp;gt;
+
+Under [[1300-talet]] började vissa europeiska handelsexpeditioner få kontakt med Nord- och Västafrika.
+
+Från 1500-talets mitt fram till förbudet mot slavhandel i Storbritanniens parlament 1807, som kom att få full kraft först något årtionde senare, handlades slavar från lokala stamledare i främst Väst- och Centralafrika. Flera miljoner afrikaner såldes på detta vis som slavar till främst de Europeiska kolonierna i Amerika.
+
+Tidiga kolonisatörer var [[araber]], [[Portugal|portugiser]] och [[Spanien|spanjorer]]. Därefter koloniserades kontinenten av framförallt av [[Storbritannien]], [[Frankrike]], [[Spanien]], [[Italien]], [[Belgien]], [[Nederländerna]], [[Tyskland]] och [[Portugal]].
+
+=== Koloniseringen ===
+{{Fördjupning|Kapplöpningen om Afrika}}
+[[Fil:Map_of_Africa_from_Encyclopaedia_Britannica_1890.jpg|miniatyr|Politisk karta över Afrika från 1890.]] Från slutet av 1000-talet koloniserade arabiska köpmän den afrikanska östkusten. Holländarna koloniserade på 1600-talet den då relativt folktomma södra udden av Afrika. Portugiserna grundade flera kolonier i västra Afrika och vid nuvarande Moçambique. I mitten av [[1800-talet]] leddes flera expeditioner in i de centrala delarna av Afrika, bland annat av Livingstone och Speke, men också den svenske upptäcktsresanden Andersson. Denna kolonisering förändrade i grunden det ekonomiska livet på kontinenten, och innebar i flera fall ensidig export av naturresurser. [[Leopold II av Belgien|Kung Leopolds]] rovdrift på sin privata koloni [[Kongostaten]] är ökänd och kostade miljontals afrikanska liv.
+
+I Afrika fanns efter första världskriget endast tre självständiga stater nämligen konungariket Egypten, republiken Liberia och konungariket Abessinien. Tanger bildade med sitt område en internationell zon. För övrigt var hela världsdelen uppdelad på kolonier åt europeiska makter.&amp;lt;ref&amp;gt;{{runeberg.org|nfcn|0245.html Supplement Afrika}}&amp;lt;/ref&amp;gt;
+
+Flertalet kolonier erhöll [[självständighet]] under slutet av 1950-talet och början av 1960-talet. Avkoloniseringen resulterade i flertalet fall med katastrof, där diktatur och etnisk rensning vanligen blev följden, till exempel i Rhodesia (nuvarande Zimbabwe), Rwanda, Uganda, Nigeria m.fl. stater.
+
+== Politik ==
+{{Fördjupning|Afrikas politik}}
+[[Fil:Electoral_Democracies_in_Africa,_Freedom_House_2007.png|miniatyr|De blå länderna är demokratier enligt tankesmedjan Freedom House.]]
+Det postkoloniala Afrikas politik har i hög grad präglats av diktatur, statskupper och brist på [[mänskliga rättigheter]].
+
+[[Nation]]erna i Afrika har ofta visat sig vara instabila [[stat]]er som efter självständigheten hemsökts av korruption, våldsamma [[statskupp]]er, [[despotism]] och [[dikatur|militärdiktaturer]]. Under perioden [[1960]]-[[1989]] genomfördes över 70 kupper och 13 [[mord]] på [[president]]er. Under det [[kalla kriget]] kämpade [[USA]] och [[Sovjetunionen]] om makten i Afrika, och tillsammans med länder som [[Frankrike]] och [[Kuba]], stödde de aktivt diktaturer och iscensatte flera av dessa kupper och illgärningar mot demokratiskt valda regeringar. Enligt en spridd uppfattning beror många [[militär]]a konflikter om [[territorium|territorier]] och [[gräns]]er under Afrikas moderna historia på de gränser från kolonial tid som huvudsakligen drogs upp efter [[Kongokonferensen]], men detta kan inte visas eftersom något jämförelseområde inte finns. Konflikter i Afrika har ofta drivits av tillgången till kontinentens rika [[råvara|råvarutillgångar]] – [[diamant]]er och [[metall]]er som [[guld]], [[platina]], [[uran]] och [[koppar]].
+
+Korruption och havererade politiska program har lett till utbredd [[undernäring]] och undermålig infrastruktur orsakar alltjämt brist på mat och rent vatten. Sanitetsproblemen har också orsakat en akut spridning av bland annat [[HIV]]-viruset som leder till [[sjukdom]]en [[AIDS]].
+
+Trots nöd och umbäranden finns vissa positiva tecken – [[demokrati]]skt valda [[regering]]ar växer i antal även om de inte utgör någon majoritet ännu. Genom påtryckningar från till exempel [[Internationella valutafonden]] (IMF) har många afrikanska stater lyckats vända en nedåtgående ekonomisk spiral som varat i flera decennier till en positiv tillväxt. Om man beaktar IMF:s katastrofala misslyckanden i länder som [[Argentina]] och [[Filippinerna]] är det dock oklart i vilken omfattning dessa konventionella ekonomiska kriterier ger en rättvis bild av vad Afrika faktiskt behöver.
+
+De afrikanska ledarna har i olika omgångar sökt former för samarbete sinsemellan. Hittills har dock detta inte lyckats särskilt väl. Under [[inbördeskrig]]et i [[Kongo-Kinshasa|Kongo]] var det grannstaterna som spädde på konflikten snarare än utomafrikanska stater, och motivet var främst att skaffa kortsiktiga vinster genom att utvinna diamanter och andra mineraler. Antalet döda i konflikten har uppskattats till 3,5 miljoner under en femårsperiod.
+
+De politiska samarbetsorganisationer man skapat har inte kunnat leva upp till förväntningarna. Organisationen för afrikansk enighet (OAU 1963-2002) kallades till exempel diktatorsklubben för dess tendens att alltid stödja de sittande politiska ledarna och ägna väldigt lite energi åt att främja den vanlige afrikanens mänskliga rättigheter. 2002 skapades i stället &#39;&#39;[[Afrikanska unionen]]&#39;&#39;, som är tänkt att underlätta ett framtida samarbete mellan kontinentens stater. Hittills har denna organisation inte klarat att hantera till exempel utrotningskriget i Darfur-provinsen i Sudan, där en arabisk statsledning tillåtit slakt på hundratusentals av bantubefolkningen i sydväst. En avgörande skillnad mellan såväl OAU som AU å ena sidan och EU å den andra, är att EU startades av en grupp länder som satte demokrati och mänskliga rättigheter i fokus för den egna politiken, och som krävt detta av tillkommande medlemsstater. OAU och AU har från början i stället varit territoriellt inriktade, och visserligen haft demokrati och mänskliga rättigheter som skrivelser i sina stadgar, men ytterst sällan satt kraft bakom dessa ord. På så sätt liknar AU mer FN än EU.
+
+== Ekonomi ==
+{{Fördjupning|Afrikas ekonomi}}
+[[Fil:Bakweri cocoyam farmer from Cameroon.jpg|250px|miniatyr|Jordbrukare på en [[jams]]odling i Kamerun]]
+Afrikas ekonomi omfattar ungefär 887 miljoner människor i 54 olika stater ([[Juli 2005]]). Afrika är världens fattigaste kontinent, och den är, i medeltal, fattigare än den var för 25 år sedan. På [[FN]]:s Human Development Report från [[2003]] (som rankade världens 175 länder enligt en rad kriterier) var plats mellan 151 och 175 intagna av länder i Afrika.
+
+Det finns dock länder som lyckas bra ekonomiskt, bland andra [[Botswana]], [[Ghana]] och [[Sydafrika]]. [[Etiopien]] har också en relativ bra ekonomi tack vare den höga tillväxten i landet på cirka 11-15% per år. Sydafrika har en väl fungerande inhemsk aktiehandel och har stora naturtillgångar i bland annat [[guld]] och [[diamanter]] och ett väl fungerande rättsväsen. Det finns i Sydafrika även tillgång till investeringskapital, stora marknader och utbildad arbetskraft. Det finns även andra afrikanska länder, exempelvis [[Egypten]], som länge haft en väl fungerande handelssektor och ekonomi.
+
+Kontinentens kust mot [[Atlanten]] återfinns stora fyndigheter av [[Petroleum|olja]]. I [[Nigeria]] finns en av världens mest betydande oljereserver och landets ekonomi är bland de snabbast växande i världen.
+
+Afrikas jordbruk sysselsätter drygt hälften av Afrikas befolkning och är den viktigaste näringen. Cirka 6 % (ungefär 1 814 600&amp;amp;nbsp;km²) av världsdelens yta är uppodlad, mest i savannområdena. I stora delar av de brukningsbara områdena är jordens bördighet ganska låg. De bästa jordarna återfinns i begränsade höglandsområden som i till exempel [[Kamerun]] och [[Östafrika]].
+
+== Demografi ==
+{{Fördjupning|Afrikas demografi}}
+===Befolkning===
+Människan, &#39;&#39;[[Homo sapiens|Homo sapiens sapiens]]&#39;&#39;, antas härstamma från Afrika och spred sig härifrån till de omgivande kontinenterna. Den svarta befolkningen söder om Sahara tillhör den ursprungliga befolkningen som hela tiden levat i Afrika.
+
+Norr om Sahara präglar samröret med övriga [[Medelhavet|Medelhavsområdet]] och inte minst sydvästra [[Asien]] både befolkning, språk och kultur.
+
+På ön [[Madagaskar]], som länge var obebodd, härstammar majoriteten av befolkningen från människor som emigrerat från [[Indonesien]]. Under kolonialtiden skedde inflyttning från [[Europa]] och [[Asien]] till södra Afrika, där den icke-svarta befolkningen idag utgör betydande minoritetsgrupper.
+
+Afrikas befolkning uppvisar många för utvecklingsregioner typiska drag, som höga [[födelsetal]] i kombination med sjunkande [[Mortalitet (demografi)|dödstal]] med snabb befolkningsökning och låg medelålder (45 % är under 15 år) som följd. Även om befolkningstätheten varierar kraftigt mellan olika regioner är Afrika generellt en glestbefolkad kontinent, med i genomsnitt 27,8 invånare per km².
+
+Afrika är den kontinent som har den lägsta urbaniseringsgraden, med endast 25% boende i städer. Även här är variationerna stora, och i norra och östra Afrika finns en lång urban tradition.
+
+=== Språk ===
+{{Fördjupning|Afrikas språk}}
+[[Fil:African languages SV.png|miniatyr|300px|Språkfamiljer i Afrika]]
+Uppskattningsvis finns det ungefär 1800 talade [[språk]] i Afrika idag. Vissa av dessa, till exempel [[Swahili]], [[Hausa]], och [[Yoruba (språk)|Yoruba]], talas av många miljoner människor, medan det finns andra som bara talas av några hundra eller ännu färre. Afrika har även många olika [[teckenspråk]]. De flesta afrikaner talar som modersmål ett språk tillhörande någon av de fyra språkfamiljerna [[afroasiatiska språk]], [[nilo-sahariska språk]], [[Niger-Kongospråk]] eller [[khoisanspråk]].
+Med några få nämnvärda undantag i östra Afrika, har nästan alla afrikanska länder språk som har sitt ursprung utanför världsdelen som officiellt språk, på grund av kolonialismen och mänsklig migration. Till exempel används i ett stort antal afrikanska länder [[franska]] eller [[engelska]] som administrativt språk för stat, handel, utbildning och media. [[Arabiska]], [[portugisiska]], [[afrikaans]] och [[malagassiska]] är andra exempel på språk med ursprung utanför Afrika som idag används av miljoner afrikaner, både i offentliga och privata sammanhang.
+
+=== Religion ===
+{{Fördjupning|Afrikas religion}}{{Se även|Kristendomen i Afrika}}
+[[Kristendom]] och [[islam]] är de största religionerna i Afrika, 46,3 % av alla afrikaner är kristna och 40,5 % är muslimer. Resten 11,8 % tillhör olika lokala afrikanska religioner som funnits före den europeiska kolonisationen. Ett mindre antal afrikaner är [[Hinduism|hinduer]], eller har tro från [[Judendom|judisk]] tradition. Exempel på [[Afrikanska judar|afrikanska folk som tillhör judendomen]] är [[Beta Israel]], [[Lemba]]folk och [[Abayudaya]] i östra [[Uganda]]. Sydafrika och Angola har över 55% kristna katoliker.
+
+== Kultur ==
+{{Fördjupning|Afrikas kultur}}
+Afrika har ett stort antal överlappande kulturer, och flera tusen olika etniska grupper. Den mest konventionella distinktionen är den mellan området söder om Sahara och området norr om öknen. De nordliga länderna associerar sig främst med arabkulturen, medan de sydliga länderna består av i sin tur många olika kulturella områden. En av de största kulturella identiteterna är den som innefattar alla folk som talar något [[bantuspråk]].
+
+Det går också att göra en indelning i gamla franska Västafrika å ena sidan, och resten av Afrika (mer specifikt de brittiska eller portugisiska kolonierna i södra och östra Afrika) å andra sidan. En annan kulturell linje går mellan de afrikaner som håller kvar vid sina gamla traditionella livsstilar, och de som har anpassat sig till en mer modern livsstil. Det går även att dela upp traditionalisterna i sådana som ägnar sig åt uppfödning av boskap, och sådana som ägnar sig åt jordbruk.
+
+[[Afrikansk konst]] och [[afrikansk arkitektur]] reflekterar de afrikanska kulturernas diversitet. De äldsta exemplen på afrikansk konst är 75 000 år gamla pärlsmycken gjorda av [[nassarius]]skal, dessa hittades i [[Blombosgrottan]]. [[Pyramiderna i Giza]] var världens högsta byggnader under 4 000 år. [[Klippkyrkorna i Lalibela]] i [[Etiopien]], bland vilka &#39;&#39;[[Bete Giyorgis]]&#39;&#39; (&amp;quot;St. Göranskyrkan&amp;quot;) är mest välkänd, är också kända exempel på afrikansk arkitektur.
+
+== Regioner och territorier ==
+[[Fil:Africa-regions.png|miniatyr|Regioner i Afrika:
+{{legend|#0000ff|[[Nordafrika]]}}
+{{legend|#00ff00|[[Västafrika]]}}
+{{legend|#ff00ff|[[Centralafrika]]}}
+{{legend|#ffa500|[[Östafrika]]}}
+{{legend|#ff0000|[[Södra Afrika]]}}]]
+{| class=&amp;quot;wikitable sortable&amp;quot;
+|+
+|- bgcolor=&amp;quot;#ECECEC&amp;quot;
+! Regioners namn&amp;lt;ref&amp;gt;Enligt [[:Fil:United Nations geographical subregions.png|FN:s regionindelning]] av världen.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt; och&amp;lt;br /&amp;gt; territorier, med flagga
+! data-sort-type=number | [[Area]]&amp;lt;br /&amp;gt;(km²)
+! data-sort-type=number |[[Folkmängd]]&amp;lt;br /&amp;gt;(2010)&amp;lt;ref name=&amp;quot;esa.un.org1&amp;quot;/&amp;gt;
+! data-sort-type=number |[[Befolkningstäthet]]&amp;lt;br /&amp;gt;(per km²)
+! [[Huvudstad]]
+|-
+| colspan=5 style=&amp;quot;background:#eee;&amp;quot; | &#39;&#39;&#39;[[Centralafrika]]&#39;&#39;&#39;:
+|-
+| {{flaggbild2|Angola}}
+| align=&amp;quot;right&amp;quot; | 1 246 700
+| align=&amp;quot;right&amp;quot; | 19&amp;amp;nbsp;081&amp;amp;nbsp;912
+| align=&amp;quot;right&amp;quot; | 15,3
+| [[Luanda]]
+|-
+| {{flaggbild2|Kamerun}}
+| align=&amp;quot;right&amp;quot; | 475 440
+| align=&amp;quot;right&amp;quot; | 19 598 889
+| align=&amp;quot;right&amp;quot; | 41,2
+| [[Yaoundé]]
+|-
+| {{flaggbild2|Centralafrikanska republiken}}
+| align=&amp;quot;right&amp;quot; | 622 984
+| align=&amp;quot;right&amp;quot; | 4 401 051
+| align=&amp;quot;right&amp;quot; | 7,1
+| [[Bangui]]
+|-
+| {{flaggbild2|Tchad}}
+| align=&amp;quot;right&amp;quot; | 1 284 000
+| align=&amp;quot;right&amp;quot; | 11 227 208
+| align=&amp;quot;right&amp;quot; | 8,7
+| [[N&#39;Djamena]]
+|-
+| {{flaggbild2|Kongo-Brazzaville}}
+| align=&amp;quot;right&amp;quot; | 342 000
+| align=&amp;quot;right&amp;quot; | 4 042 899
+| align=&amp;quot;right&amp;quot; | 12,9
+| [[Brazzaville]]
+|-
+| {{flaggbild2|Kongo-Kinshasa}}
+| align=&amp;quot;right&amp;quot; | 2 345 410
+| align=&amp;quot;right&amp;quot; | 65 965 795
+| align=&amp;quot;right&amp;quot; | 28,1
+| [[Kinshasa]]
+|-
+| {{flaggbild2|Ekvatorialguinea}}
+| align=&amp;quot;right&amp;quot; | 28 051
+| align=&amp;quot;right&amp;quot; | 700 401
+| align=&amp;quot;right&amp;quot; | 24,9
+| [[Malabo]]
+|-
+| {{flaggbild2|Gabon}}
+| align=&amp;quot;right&amp;quot; | 267 667
+| align=&amp;quot;right&amp;quot; | 1 505 463
+| align=&amp;quot;right&amp;quot; | 5,6
+| [[Libreville]]
+|-
+| {{flaggbild2|São Tomé och Príncipe}}
+| align=&amp;quot;right&amp;quot; | 1 001
+| align=&amp;quot;right&amp;quot; | 165 397
+| align=&amp;quot;right&amp;quot; | 165,0
+| [[São Tomé]]
+|-
+| colspan=5 style=&amp;quot;background:#eee;&amp;quot; | &#39;&#39;&#39;[[Nordafrika]]&#39;&#39;&#39;:
+|-
+| {{flaggbild2|Algeriet}}
+| align=&amp;quot;right&amp;quot; | 2 381 740
+| align=&amp;quot;right&amp;quot; | 35 468 000
+| align=&amp;quot;right&amp;quot; | 14,9
+| [[Alger (stad)|Alger]]
+|-
+| {{flaggbild2|Egypten}}&amp;lt;ref&amp;gt;[[Egypten]] brukar anses ligga i två världsdelar, Nordafrika (enligt FN:s regionindelning) och Västasien; befolknings- och arealuppgifterna avser endast den afrikanska delen, väster om [[Suezkanalen]].&amp;lt;/small&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 1 001 450
+| align=&amp;quot;right&amp;quot; | 81 121 000
+| align=&amp;quot;right&amp;quot; | 81,0
+| [[Kairo]]
+|-
+| {{flaggbild2|Libyen}}
+| align=&amp;quot;right&amp;quot; | 1 759 540
+| align=&amp;quot;right&amp;quot; | 6 355 112
+| align=&amp;quot;right&amp;quot; | 3,6
+| [[Tripoli]]
+|-
+| {{flaggbild2|Marocko}}
+| align=&amp;quot;right&amp;quot; | 446 550
+| align=&amp;quot;right&amp;quot; | 31 951 412
+| align=&amp;quot;right&amp;quot; | 71,5
+| [[Rabat]]
+|-
+| {{flaggbild2|Sudan}}
+| align=&amp;quot;right&amp;quot; | 1 886 068
+| align=&amp;quot;right&amp;quot; | 33 551 941
+| align=&amp;quot;right&amp;quot; | 17,8
+| [[Khartoum]]
+|-
+| {{flaggbild2|Tunisien}}
+| align=&amp;quot;right&amp;quot; | 163 610
+| align=&amp;quot;right&amp;quot; | 10 480 934
+| align=&amp;quot;right&amp;quot; | 64,1
+| [[Tunis]]
+|-
+| {{flaggbild2|Västsahara}} ([[Marocko]])&amp;lt;ref&amp;gt;[[Västsahara]] är ockuperat av [[Marocko]], som också har anspråk på området.&amp;lt;/small&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 266 000
+| align=&amp;quot;right&amp;quot; | 530 500
+| align=&amp;quot;right&amp;quot; | 2,0
+| [[El Aaiún]]
+|-
+| colspan=5 | &#39;&#39;Områden som är likställda delar av europeiska stater&#39;&#39;:
+|-
+| [[Fil:Flag of the Canary Islands.svg|22x20px|border|Kanarieöarna]] [[Kanarieöarna]] ([[Spanien]])&amp;lt;ref&amp;gt;De till [[Spanien]] hörande [[Kanarieöarna]] brukar geografiskt räknas till Nordafrika på grund av deras relativa närhet till [[Marocko]] och [[Västsahara]]; befolknings- och arealuppgifterna är från år 2001.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 7 492
+| align=&amp;quot;right&amp;quot; | 2 117 519
+| align=&amp;quot;right&amp;quot; | 282,6
+| [[Las Palmas de Gran Canaria]],&amp;lt;br /&amp;gt;[[Santa Cruz de Tenerife]]
+|-
+| [[Fil:Flag Ceuta.svg|22x20px|border|Ceuta]] [[Ceuta]] ([[Spanien]])&amp;lt;ref&amp;gt;Den [[Spanien|spanska]] [[exklav]]en [[Ceuta]] omges på landsidan av Marocko i Nordafrika; befolknings- och arealuppgifterna är från år 2001.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 20
+| align=&amp;quot;right&amp;quot; | 78 674
+| align=&amp;quot;right&amp;quot; | 3933,7
+| –
+|-
+| [[Fil:Flag of Madeira.svg|22x20px|Madeira]] [[Madeira]] ([[Portugal]])&amp;lt;ref&amp;gt;Det till [[Portugal]] hörande [[Madeira]] brukar geografiskt räknas till Nordafrika på grund av deras relativa närhet till [[Marocko]]; befolknings- och arealuppgifterna är från år 2001.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 797
+| align=&amp;quot;right&amp;quot; | 267 302
+| align=&amp;quot;right&amp;quot; | 335,4
+| [[Funchal]]
+|-
+| [[Fil:Flag of Melilla.svg|22x20px|Melilla]] [[Melilla]] ([[Spanien]])&amp;lt;ref&amp;gt;Den [[Spanien|spanska]] [[exklav]]en [[Melilla]] omges på landsidan av Marocko i Nordafrika; befolknings- och arealuppgifterna är från år 2001.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+| align=&amp;quot;right&amp;quot; | 12
+| align=&amp;quot;right&amp;quot; | 73 460
+| align=&amp;quot;right&amp;quot; | 6121,6
+| –
+|-
+| colspan=5 style=&amp;quot;background:#eee;&amp;quot; | &#39;&#39;&#39;[[Södra Afrika]]&#39;&#39;&#39;:
+|-
+| {{flaggbild2|Botswana}}
+| align=&amp;quot;right&amp;quot; | 600 370
+| align=&amp;quot;right&amp;quot; | 2 006 945
+| align=&amp;quot;right&amp;quot; | 3,3
+| [[Gaborone]]
+|-
+| {{flaggbild2|Lesotho}}
+| align=&amp;quot;right&amp;quot; | 30 355
+| align=&amp;quot;right&amp;quot; | 2 171 318
+| align=&amp;quot;right&amp;quot; | 71,5
+| [[Maseru]]
+|-
+| {{flaggbild2|Namibia}}
+| align=&amp;quot;right&amp;quot; | 825 418
+| align=&amp;quot;right&amp;quot; | 2 283 289
+| align=&amp;quot;right&amp;quot; | 2,7
+| [[Windhoek]]
+|-
+| {{flaggbild2|Sydafrika}}
+| align=&amp;quot;right&amp;quot; | 1 219 912
+| align=&amp;quot;right&amp;quot; | 50 132 817
+| align=&amp;quot;right&amp;quot; | 41,1
+| [[Bloemfontein]], [[Kapstaden]], [[Pretoria]] (Tshwane)&amp;lt;ref&amp;gt;[[Bloemfontein]] är [[Sydafrika]]s judiciella huvudstad, medan [[Kapstaden]] är säte för den lagstiftande församlingen och [[Pretoria]] är administrativ huvudstad. Staden Pretoria har inlett en process för att eventuellt byta namn till Tshwane.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+|-
+| {{flaggbild2|Swaziland}}
+| align=&amp;quot;right&amp;quot; | 17 363
+| align=&amp;quot;right&amp;quot; | 1 186 056
+| align=&amp;quot;right&amp;quot; | 68,3
+| [[Mbabane]]
+|-
+| colspan=5 style=&amp;quot;background:#eee;&amp;quot; | &#39;&#39;&#39;[[Västafrika]]&#39;&#39;&#39;:
+|-
+| {{flaggbild2|Benin}}
+| align=&amp;quot;right&amp;quot; | 112 620
+| align=&amp;quot;right&amp;quot; | 8 849 892
+| align=&amp;quot;right&amp;quot; | 78,6
+| [[Porto-Novo]]
+|-
+| {{flaggbild2|Burkina Faso}}
+| align=&amp;quot;right&amp;quot; | 274 200
+| align=&amp;quot;right&amp;quot; | 16 468 714
+| align=&amp;quot;right&amp;quot; | 60,1
+| [[Ouagadougou]]
+|-
+| {{flaggbild2|Kap Verde}}
+| align=&amp;quot;right&amp;quot; | 4 033
+| align=&amp;quot;right&amp;quot; | 495 999
+| align=&amp;quot;right&amp;quot; | 123,0
+| [[Praia]]
+|-
+| {{flaggbild2|Elfenbenskusten}}
+| align=&amp;quot;right&amp;quot; | 322 460
+| align=&amp;quot;right&amp;quot; | 19 737 800
+| align=&amp;quot;right&amp;quot; | 61,2
+| [[Abidjan]], [[Yamoussoukro]]&amp;lt;ref&amp;gt;[[Yamoussoukro]] är [[Elfenbenskusten]]s officiella huvudstad, men [[Abidjan]] fungerar &#39;&#39;[[de facto]]&#39;&#39; som huvudstad.&amp;lt;br /&amp;gt;&amp;lt;/ref&amp;gt;
+|-
+| {{flaggbild2|Gambia}}
+| align=&amp;quot;right&amp;quot; | 11 300
+| align=&amp;quot;right&amp;quot; | 1 728 394
+| align=&amp;quot;right&amp;quot; | 152,9
+| [[Banjul]]
+|-
+| {{flaggbild2|Ghana}}
+| align=&amp;quot;right&amp;quot; | 239 460
+| align=&amp;quot;right&amp;quot; | 24 391 823
+| align=&amp;quot;right&amp;quot; | 101,9
+| [[Accra]]
+|-
+| {{flaggbild2|Guinea}}
+| align=&amp;quot;right&amp;quot; | 245 857
+| align=&amp;quot;right&amp;quot; | 9 981 590
+| align=&amp;quot;right&amp;quot; | 40,6
+| [[Conakry]]
+|-
+| {{flaggbild2|Guinea-Bissau}}
+| align=&amp;quot;right&amp;quot; | 36 120
+| align=&amp;quot;right&amp;quot; | 1 515 224
+| align=&amp;quot;right&amp;quot; | 41,9
+| [[Bissau]]
+|-
+| {{flaggbild2|Liberia}}
+| align=&amp;quot;right&amp;quot; | 111 370
+| align=&amp;quot;right&amp;quot; | 3 994 122
+| align=&amp;quot;right&amp;quot; | 35,9
+| [[Monrovia]]
+|-
+| {{flaggbild2|Mali}}
+| align=&amp;quot;right&amp;quot; | 1 240 000
+| align=&amp;quot;right&amp;quot; | 15 369 809
+| align=&amp;quot;right&amp;quot; | 9,1
+| [[Bamako]]
+|-
+| {{flaggbild2|Mauretanien}}
+| align=&amp;quot;right&amp;quot; | 1 030 700
+| align=&amp;quot;right&amp;quot; | 3 459 773
+| align=&amp;quot;right&amp;quot; | 3,4
+| [[Nouakchott]]
+|-
+| {{flaggbild2|Niger}}
+| align=&amp;quot;right&amp;quot; | 1 267 000
+| align=&amp;quot;right&amp;quot; | 15 511 953
+| align=&amp;quot;right&amp;quot; | 12,2
+| [[Niamey]]
+|-
+| {{flaggbild2|Nigeria}}
+| align=&amp;quot;right&amp;quot; | 923 768
+| align=&amp;quot;right&amp;quot; | 158 423 182
+| align=&amp;quot;right&amp;quot; | 171,5
+| [[Abuja]]
+|-
+| [[Fil:Flag of Saint Helena.svg|22x20px|Sankta Helena]] [[Sankta Helena (ö)|Sankta Helena]] ([[Storbritannien]])
+| align=&amp;quot;right&amp;quot; | 410
+| align=&amp;quot;right&amp;quot; | 4 118
+| align=&amp;quot;right&amp;quot; | 10,0
+| [[Jamestown, Sankta Helena|Jamestown]]
+|-
+| {{flaggbild2|Senegal}}
+| align=&amp;quot;right&amp;quot; | 196 190
+| align=&amp;quot;right&amp;quot; | 12 433 728
+| align=&amp;quot;right&amp;quot; | 63,4
+| [[Dakar]]
+|-
+| {{flaggbild2|Sierra Leone}}
+| align=&amp;quot;right&amp;quot; | 71 740
+| align=&amp;quot;right&amp;quot; | 5 867 536
+| align=&amp;quot;right&amp;quot; | 81,8
+| [[Freetown]]
+|-
+| {{flaggbild2|Togo}}
+| align=&amp;quot;right&amp;quot; | 56 785
+| align=&amp;quot;right&amp;quot; | 6 027 798
+| align=&amp;quot;right&amp;quot; | 106,1
+| [[Lomé]]
+|-
+| colspan=5 style=&amp;quot;background:#eee;&amp;quot; | &#39;&#39;&#39;[[Östafrika]]&#39;&#39;&#39;:
+|-
+| {{flaggbild2|Burundi}}
+| align=&amp;quot;right&amp;quot; | 27 830
+| align=&amp;quot;right&amp;quot; | 8 382 849
+| align=&amp;quot;right&amp;quot; | 301,2
+| [[Bujumbura]]
+|-
+| {{flaggbild2|Komorerna}}
+| align=&amp;quot;right&amp;quot; | 2 170
+| align=&amp;quot;right&amp;quot; | 734 750
+| align=&amp;quot;right&amp;quot; | 338,6
+| [[Moroni]]
+|-
+| {{flaggbild2|Djibouti}}
+| align=&amp;quot;right&amp;quot; | 23 000
+| align=&amp;quot;right&amp;quot; | 888 716
+| align=&amp;quot;right&amp;quot; | 38,6
+| [[Djibouti (stad)|Djibouti]]
+|-
+| {{flaggbild2|Eritrea}}
+| align=&amp;quot;right&amp;quot; | 121 320
+| align=&amp;quot;right&amp;quot; | 5 253 676
+| align=&amp;quot;right&amp;quot; | 43,3
+| [[Asmara]]
+|-
+| {{flaggbild2|Etiopien}}
+| align=&amp;quot;right&amp;quot; | 1 127 127
+| align=&amp;quot;right&amp;quot; | 82 949 541
+| align=&amp;quot;right&amp;quot; | 73,6
+| [[Addis Abeba]]
+|-
+| {{flaggbild2|Kenya}}
+| align=&amp;quot;right&amp;quot; | 582 650
+| align=&amp;quot;right&amp;quot; | 40 512 682
+| align=&amp;quot;right&amp;quot; | 69,5
+| [[Nairobi]]
+|-
+|{{flaggbild2|Madagaskar}}
+| align=&amp;quot;right&amp;quot; | 587 040
+| align=&amp;quot;right&amp;quot; | 20 713 819
+| align=&amp;quot;right&amp;quot; | 35,3
+| [[Antananarivo]]
+|-
+| {{flaggbild2|Malawi}}
+| align=&amp;quot;right&amp;quot; | 118 480
+| align=&amp;quot;right&amp;quot; | 14 900 841
+| align=&amp;quot;right&amp;quot; | 90,3
+| [[Lilongwe]]
+|-
+| {{flaggbild2|Mauritius}}
+| align=&amp;quot;right&amp;quot; | 2 040
+| align=&amp;quot;right&amp;quot; | 1 299 172
+| align=&amp;quot;right&amp;quot; | 636,8
+| [[Port Louis]]
+|-
+| {{flaggbild|Frankrike}} [[Mayotte]] ([[Frankrike]])
+| align=&amp;quot;right&amp;quot; | 374
+| align=&amp;quot;right&amp;quot; | 204 114
+| align=&amp;quot;right&amp;quot; | 545,8
+| [[Mamoudzou]]
+|-
+| {{flaggbild|Moçambique}} [[Moçambique]]
+| align=&amp;quot;right&amp;quot; | 801 590
+| align=&amp;quot;right&amp;quot; | 23 390 765
+| align=&amp;quot;right&amp;quot; | 29,2
+| [[Maputo]]
+|-
+| {{flaggbild|Frankrike}} [[Réunion]] ([[Frankrike]])
+| align=&amp;quot;right&amp;quot; | 2 512
+| align=&amp;quot;right&amp;quot; | 846 068
+| align=&amp;quot;right&amp;quot; | 336,8
+| [[Saint-Denis (Réunion)|Saint-Denis]]
+|-
+| {{flaggbild2|Rwanda}}
+| align=&amp;quot;right&amp;quot; | 26 338
+| align=&amp;quot;right&amp;quot; | 10 624 005
+| align=&amp;quot;right&amp;quot; | 403,4
+| [[Kigali]]
+|-
+| {{flaggbild2|Seychellerna}}
+| align=&amp;quot;right&amp;quot; | 455
+| align=&amp;quot;right&amp;quot; | 86 518
+| align=&amp;quot;right&amp;quot; | 190,1
+| [[Victoria, Seychellerna|Victoria]]
+|-
+| {{flaggbild2|Somalia}}
+| align=&amp;quot;right&amp;quot; | 637 657
+| align=&amp;quot;right&amp;quot; | 9 330 872
+| align=&amp;quot;right&amp;quot; | 14,6
+| [[Mogadishu]]
+|-
+| {{flaggbild2|Sydsudan}}
+| align=&amp;quot;right&amp;quot; | 633 783
+| align=&amp;quot;right&amp;quot; | 8 207 607
+| align=&amp;quot;right&amp;quot; | 13
+| [[Juba]]
+|-
+| {{flaggbild2|Tanzania}}
+| align=&amp;quot;right&amp;quot; | 945 087
+| align=&amp;quot;right&amp;quot; | 44 841 226
+| align=&amp;quot;right&amp;quot; | 47,4
+| [[Dodoma]]
+|-
+| {{flaggbild2|Uganda}}
+| align=&amp;quot;right&amp;quot; | 236 040
+| align=&amp;quot;right&amp;quot; | 33 424 683
+| align=&amp;quot;right&amp;quot; | 141,6
+| [[Kampala]]
+|-
+| {{flaggbild2|Zambia}}
+| align=&amp;quot;right&amp;quot; | 752 614
+| align=&amp;quot;right&amp;quot; | 13 088 570
+| align=&amp;quot;right&amp;quot; | 17,4
+| [[Lusaka]]
+|-
+| {{flaggbild2|Zimbabwe}}
+| align=&amp;quot;right&amp;quot; | 390 580
+| align=&amp;quot;right&amp;quot; | 12 571 454
+| align=&amp;quot;right&amp;quot; | 32,2
+| [[Harare]]
+|- style=&amp;quot; font-weight:bold; &amp;quot;
+| Total
+| align=&amp;quot;right&amp;quot; | 30&amp;amp;nbsp;305&amp;amp;nbsp;053
+| align=&amp;quot;right&amp;quot; | 1&amp;amp;nbsp;022&amp;amp;nbsp;234&amp;amp;nbsp;400
+| align=&amp;quot;right&amp;quot; | 33,7
+|}
+
+== Se även ==
+* [[Nordafrika]]
+* [[Västafrika]]
+* [[Östafrika]]
+* [[Centralafrika]]
+* [[Södra Afrika]]
+* [[Afrikas klimat]]
+
+== Referenser ==
+
+=== Noter ===
+&amp;lt;references&amp;gt;
+&amp;lt;ref name=&amp;quot;esa.un.org&amp;quot;&amp;gt;[http://esa.un.org/unpd/wpp/Excel-Data/population.htm/ &amp;quot;World Population Prospects: The 2010 Revision&amp;quot;] {{Wayback|url=http://esa.un.org/unpd/wpp/Excel-Data/population.htm/ |date=20120606170530 }} [[Förenta nationerna|United Nations]] (Department of Economic and Social Affairs, population division)&amp;lt;/ref&amp;gt;
+&amp;lt;ref name=&amp;quot;esa.un.org1&amp;quot;&amp;gt;[http://esa.un.org/unpd/wpp/Excel-Data/population.htm/ &amp;quot;World Population Prospects: The 2010 Revision&amp;quot;] {{Wayback|url=http://esa.un.org/unpd/wpp/Excel-Data/population.htm/ |date=20120606170530 }} [[United Nations]] (Department of Economic and Social Affairs, population division)&amp;lt;/ref&amp;gt;
+&amp;lt;/references&amp;gt;
+
+=== Källor ===
+{{enwp|url=https://en.wikipedia.org/w/index.php?title=Africa&amp;amp;oldid=81702686|artikel=Africa}}
+* [https://www.courses.psu.edu/test/test100_hkr/AFIM/Main_HTML/Intro_1.html Pennsylvania State University – &#39;&#39;African Ethnic Groups&#39;&#39; och andra kartor]
+* [http://www.pygmies.info/ Pygméerna i Afrika] Kultur och musik av de första urinvånarna i Afrika
+* Afrika i skolböckerna, M. Palmberg 1987
+
+== Externa länkar ==
+{{commonscat|Africa}}
+{{Wikinews|Afrika}}
+{{wikiatlas|Africa}}
+
+{{Afrika}}
+{{Världens regioner}}
+{{auktoritetsdata}}
+
+[[Kategori:Afrika| ]]
+[[Kategori:Wikipedia:Basartiklar]]&lt;/text&gt;
+      &lt;sha1&gt;1ueywtz2sm89v81ujno96unvkkmxpoa&lt;/sha1&gt;
+    &lt;/revision&gt;
+  &lt;/page&gt;), (55447,&lt;page&gt;
+    &lt;title&gt;Amerika&lt;/title&gt;
+    &lt;ns&gt;0&lt;/ns&gt;
+    &lt;id&gt;3&lt;/id&gt;
+    &lt;revision&gt;
+      &lt;id&gt;48343172&lt;/id&gt;
+      &lt;parentid&gt;48187017&lt;/parentid&gt;
+      &lt;timestamp&gt;2020-10-11T13:36:09Z&lt;/timestamp&gt;
+      &lt;contributor&gt;
+        &lt;username&gt;Olympicbandy&lt;/username&gt;
+        &lt;id&gt;564328&lt;/id&gt;
+      &lt;/contributor&gt;
+      &lt;model&gt;wikitext&lt;/model&gt;
+      &lt;format&gt;text/x-wiki&lt;/format&gt;
+      &lt;text bytes=&quot;2728&quot; xml:space=&quot;preserve&quot;&gt;{{för|Amerika som kortnamn på &#39;&#39;&#39;Amerikas förenta stater&#39;&#39;&#39;|USA|andra betydelser|Amerika (olika betydelser)}}
+[[Fil:Americas (orthographic projection).svg|miniatyr|250px|Karta som visar Nord- och Sydamerika, tillsammans benämnda Amerika]]
+&#39;&#39;&#39;Amerika&#39;&#39;&#39; (engelska: &#39;&#39;the Americas&#39;&#39;) består av landmassorna mellan [[Atlanten]] och [[Stilla havet]] på [[västra halvklotet]], namngivna efter den italienske upptäcktsresanden [[Amerigo Vespucci]]. Amerika uppfattas vanligen idag som två världsdelar, [[Nordamerika]] och [[Sydamerika]].&amp;lt;ref&amp;gt;[https://snl.no/Amerika Store norske leksikon/ Amerika]&amp;lt;/ref&amp;gt; Amerika indelas geografiskt i Nordamerika (med [[Centralamerika]]) och Sydamerika. [[Grönland]] ingår geografiskt i Nordamerika, men räknas politiskt och kulturellt till Europa. Kulturgeografiskt avgränsas också ofta [[Latinamerika]], då inklusive både Central- och...
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/deprecated"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

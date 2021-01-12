@@ -1,0 +1,2343 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Preparation &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/001_whySpark.html">
+   Why Apache Spark?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html">
+   databricks community edition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+   Essentials of Databricks Cloud (DBC) in a Big Hurry
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+   DBC Essentials: What is Databricks Cloud?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+   DBC Essentials: Shard, Cluster, Notebook and Dashboard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+   DBC Essentials: Team, State, Collaboration, Elastic Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+   You Should All Have databricks community edition account by now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#import-course-content-now">
+   Import Course Content Now!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+   Cloud-free Computing Environment (Optional but recommended)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_01_multiLingualNotebooks.html">
+   Notebooks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+   Further Reference / Homework / Recurrrent Points of Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+   Let’s continue to get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-type-hierarchy">
+   Scala Type Hierarchy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-collections">
+   Scala Collections
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+   Exercise in Functional Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#lazy-evaluation">
+   Lazy Evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/003_01_scalaCrashCourse.html#recursions">
+   Recursions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">
+   HOMEWORK notebook - RDDs Transformations and Actions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/006_WordCount.html">
+   Word Count on US State of the Union (SoU) Addresses
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">
+   Spark Sql Programming Guide
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html#id1">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">
+   Getting Started - Exercise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html#id1">
+   Data Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">
+   Performance Tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html#id1">
+   Distributed SQL Engine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html">
+   ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+   SQL Pivoting since Spark 2.4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#load-data">
+   Load Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-in-sql">
+   Pivoting in SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+   Pivoting with Multiple Aggregate Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+   Pivoting with Multiple Grouping Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+   Pivoting with Multiple Pivot Columns
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+   glom
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+   Checkpointing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+   Parsing the output from
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     IsIt1or2Coins
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+   Providing case classes for input and output for easy spark communication
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+   Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+   Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Voluntary Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html">
+   Plugging into GDELT Streams - TODO - IN PROGRESS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html#this-is-just-dipping-our-pinky-toe-in-this-ocean-of-information">
+   This is just dipping our pinky toe in this ocean of information!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../000_1-sds-3-x/030_Spark_GDELT_project.html#download-from-gdelt-project">
+   Download from gdelt-project
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/old notebooks/99_yet_another_horovod_test.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/old notebooks/99_yet_another_horovod_test.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>This is another horovord test using parquet files. See
+<a class="reference external" href="https://databricks.com/de/blog/2019/08/15/how-not-to-scale-deep-learning-in-6-easy-steps.html">here</a>
+for full blogpost and
+<a class="reference external" href="https://pages.databricks.com/rs/094-YMS-629/images/how_not_to_scale_deep_learning.html?_ga=2.143003506.610438307.1607953690-2097499573.1600324660">here</a>
+for accompanying notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">Pillow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: Pillow in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (7.0.0)
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conf
+derby.log
+eventlogs
+ganglia
+logs
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="data-preparation">
+<h1>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h1>
+<p>This loads the Caltech 256 images from .jpg files, resizes them to
+299x299, and extracts the label from the file name. The result is
+written to Parquet tables. This only needs to be run once.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip install gdown
+gdown https://drive.google.com/u/0/uc?id=1r6o0pSROcV1_VwT4oSjA2FBUSCWGuxLK
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Collecting gdown
+  Downloading gdown-3.12.2.tar.gz (8.2 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status &#39;done&#39;
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status &#39;done&#39;
+    Preparing wheel metadata: started
+    Preparing wheel metadata: finished with status &#39;done&#39;
+Collecting filelock
+  Downloading filelock-3.0.12-py3-none-any.whl (7.6 kB)
+Requirement already satisfied: six in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from gdown) (1.14.0)
+Requirement already satisfied: tqdm in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from gdown) (4.42.1)
+Requirement already satisfied: requests[socks] in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from gdown) (2.22.0)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from requests[socks]-&gt;gdown) (1.25.8)
+Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from requests[socks]-&gt;gdown) (2.8)
+Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from requests[socks]-&gt;gdown) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from requests[socks]-&gt;gdown) (2020.6.20)
+Requirement already satisfied: PySocks!=1.5.7,&gt;=1.5.6; extra == &quot;socks&quot; in /databricks/conda/envs/databricks-ml-gpu/lib/python3.7/site-packages (from requests[socks]-&gt;gdown) (1.7.1)
+Building wheels for collected packages: gdown
+  Building wheel for gdown (PEP 517): started
+  Building wheel for gdown (PEP 517): finished with status &#39;done&#39;
+  Created wheel for gdown: filename=gdown-3.12.2-py3-none-any.whl size=9681 sha256=8f82ca513d631c0a1f1101e240118e59fdb5da7ccbe1386f3653b7b89a2547f5
+  Stored in directory: /root/.cache/pip/wheels/ba/e0/7e/726e872a53f7358b4b96a9975b04e98113b005cd8609a63abc
+Successfully built gdown
+Installing collected packages: filelock, gdown
+Successfully installed filelock-3.0.12 gdown-3.12.2
+Downloading...
+From: https://drive.google.com/u/0/uc?id=1r6o0pSROcV1_VwT4oSjA2FBUSCWGuxLK
+To: /databricks/driver/256_ObjectCategories.tar
+
+0.00B [00:00, ?B/s]
+1.05MB [00:00, 7.65MB/s]
+2.10MB [00:00, 7.71MB/s]
+3.15MB [00:00, 7.82MB/s]
+4.19MB [00:00, 8.18MB/s]
+5.77MB [00:00, 9.34MB/s]
+8.39MB [00:00, 11.4MB/s]
+13.1MB [00:00, 14.7MB/s]
+21.0MB [00:00, 19.4MB/s]
+25.7MB [00:01, 19.8MB/s]
+34.1MB [00:01, 21.3MB/s]
+42.5MB [00:01, 26.8MB/s]
+59.2MB [00:01, 34.3MB/s]
+81.8MB [00:01, 46.0MB/s]
+92.8MB [00:02, 42.4MB/s]
+102MB [00:02, 40.1MB/s] 
+122MB [00:02, 52.7MB/s]
+133MB [00:02, 50.1MB/s]
+143MB [00:02, 53.4MB/s]
+160MB [00:03, 51.2MB/s]
+177MB [00:03, 60.7MB/s]
+202MB [00:03, 66.3MB/s]
+222MB [00:03, 82.8MB/s]
+234MB [00:03, 88.2MB/s]
+245MB [00:04, 89.3MB/s]
+261MB [00:04, 83.3MB/s]
+284MB [00:04, 103MB/s] 
+298MB [00:04, 81.5MB/s]
+319MB [00:04, 97.9MB/s]
+333MB [00:04, 103MB/s] 
+353MB [00:05, 113MB/s]
+366MB [00:05, 116MB/s]
+386MB [00:05, 99.6MB/s]
+403MB [00:05, 97.2MB/s]
+428MB [00:05, 119MB/s] 
+443MB [00:05, 107MB/s]
+456MB [00:06, 106MB/s]
+482MB [00:06, 129MB/s]
+498MB [00:06, 107MB/s]
+521MB [00:06, 89.5MB/s]
+537MB [00:06, 86.6MB/s]
+548MB [00:07, 66.9MB/s]
+574MB [00:07, 85.9MB/s]
+588MB [00:07, 62.6MB/s]
+612MB [00:07, 80.6MB/s]
+628MB [00:07, 88.7MB/s]
+642MB [00:07, 90.3MB/s]
+655MB [00:08, 97.5MB/s]
+672MB [00:08, 90.2MB/s]
+693MB [00:08, 109MB/s] 
+717MB [00:08, 130MB/s]
+739MB [00:08, 130MB/s]
+755MB [00:08, 121MB/s]
+781MB [00:08, 144MB/s]
+799MB [00:09, 104MB/s]
+814MB [00:09, 89.4MB/s]
+838MB [00:09, 111MB/s] 
+855MB [00:09, 102MB/s]
+873MB [00:09, 88.4MB/s]
+899MB [00:10, 110MB/s] 
+914MB [00:10, 72.3MB/s]
+940MB [00:10, 69.9MB/s]
+966MB [00:10, 89.3MB/s]
+981MB [00:11, 98.5MB/s]
+996MB [00:11, 109MB/s] 
+1.01GB [00:11, 61.6MB/s]
+1.04GB [00:11, 79.7MB/s]
+1.05GB [00:11, 89.3MB/s]
+1.07GB [00:12, 70.7MB/s]
+1.08GB [00:12, 78.5MB/s]
+1.10GB [00:12, 95.3MB/s]
+1.11GB [00:12, 77.7MB/s]
+1.14GB [00:12, 98.1MB/s]
+1.15GB [00:12, 104MB/s] 
+1.17GB [00:13, 110MB/s]
+1.18GB [00:13, 90.4MB/s]
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="mi">256</span><span class="n">_ObjectCategories</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>256_ObjectCategories/
+256_ObjectCategories/001.ak47/
+256_ObjectCategories/001.ak47/001_0001.jpg
+256_ObjectCategories/001.ak47/001_0002.jpg
+256_ObjectCategories/001.ak47/001_0003.jpg
+256_ObjectCategories/001.ak47/001_0004.jpg
+256_ObjectCategories/001.ak47/001_0005.jpg
+256_ObjectCategories/001.ak47/001_0006.jpg
+256_ObjectCategories/001.ak47/001_0007.jpg
+256_ObjectCategories/001.ak47/001_0008.jpg
+256_ObjectCategories/001.ak47/001_0009.jpg
+256_ObjectCategories/001.ak47/001_0010.jpg
+256_ObjectCategories/001.ak47/001_0011.jpg
+256_ObjectCategories/001.ak47/001_0012.jpg
+256_ObjectCategories/001.ak47/001_0013.jpg
+256_ObjectCategories/001.ak47/001_0014.jpg
+256_ObjectCategories/001.ak47/001_0015.jpg
+256_ObjectCategories/001.ak47/001_0016.jpg
+256_ObjectCategories/001.ak47/001_0017.jpg
+256_ObjectCategories/001.ak47/001_0018.jpg
+256_ObjectCategories/001.ak47/001_0019.jpg
+256_ObjectCategories/001.ak47/001_0020.jpg
+256_ObjectCategories/001.ak47/001_0021.jpg
+256_ObjectCategories/001.ak47/001_0022.jpg
+256_ObjectCategories/001.ak47/001_0023.jpg
+256_ObjectCategories/001.ak47/001_0024.jpg
+256_ObjectCategories/001.ak47/001_0025.jpg
+256_ObjectCategories/001.ak47/001_0026.jpg
+256_ObjectCategories/001.ak47/001_0027.jpg
+256_ObjectCategories/001.ak47/001_0028.jpg
+256_ObjectCategories/001.ak47/001_0029.jpg
+256_ObjectCategories/001.ak47/001_0030.jpg
+256_ObjectCategories/001.ak47/001_0031.jpg
+256_ObjectCategories/001.ak47/001_0032.jpg
+256_ObjectCategories/001.ak47/001_0033.jpg
+256_ObjectCategories/001.ak47/001_0034.jpg
+256_ObjectCategories/001.ak47/001_0035.jpg
+256_ObjectCategories/001.ak47/001_0036.jpg
+256_ObjectCategories/001.ak47/001_0037.jpg
+256_ObjectCategories/001.ak47/001_0038.jpg
+256_ObjectCategories/001.ak47/001_0039.jpg
+256_ObjectCategories/001.ak47/001_0040.jpg
+256_ObjectCategories/001.ak47/001_0041.jpg
+256_ObjectCategories/001.ak47/001_0042.jpg
+256_ObjectCategories/001.ak47/001_0043.jpg
+256_ObjectCategories/001.ak47/001_0044.jpg
+256_ObjectCategories/001.ak47/001_0045.jpg
+256_ObjectCategories/001.ak47/001_0046.jpg
+256_ObjectCategories/001.ak47/001_0047.jpg
+256_ObjectCategories/001.ak47/001_0048.jpg
+256_ObjectCategories/001.ak47/001_0049.jpg
+256_ObjectCategories/001.ak47/001_0050.jpg
+256_ObjectCategories/001.ak47/001_0051.jpg
+256_ObjectCategories/001.ak47/001_0052.jpg
+256_ObjectCategories/001.ak47/001_0053.jpg
+256_ObjectCategories/001.ak47/001_0054.jpg
+256_ObjectCategories/001.ak47/001_0055.jpg
+256_ObjectCategories/001.ak47/001_0056.jpg
+256_ObjectCategories/001.ak47/001_0057.jpg
+256_ObjectCategories/001.ak47/001_0058.jpg
+256_ObjectCategories/001.ak47/001_0059.jpg
+256_ObjectCategories/001.ak47/001_0060.jpg
+256_ObjectCategories/001.ak47/001_0061.jpg
+256_ObjectCategories/001.ak47/001_0062.jpg
+256_ObjectCategories/001.ak47/001_0063.jpg
+256_ObjectCategories/001.ak47/001_0064.jpg
+256_ObjectCategories/001.ak47/001_0065.jpg
+256_ObjectCategories/001.ak47/001_0066.jpg
+256_ObjectCategories/001.ak47/001_0067.jpg
+256_ObjectCategories/001.ak47/001_0068.jpg
+256_ObjectCategories/001.ak47/001_0069.jpg
+256_ObjectCategories/001.ak47/001_0070.jpg
+256_ObjectCategories/001.ak47/001_0071.jpg
+256_ObjectCategories/001.ak47/001_0072.jpg
+256_ObjectCategories/001.ak47/001_0073.jpg
+256_ObjectCategories/001.ak47/001_0074.jpg
+256_ObjectCategories/001.ak47/001_0075.jpg
+256_ObjectCategories/001.ak47/001_0076.jpg
+256_ObjectCategories/001.ak47/001_0077.jpg
+256_ObjectCategories/001.ak47/001_0078.jpg
+256_ObjectCategories/001.ak47/001_0079.jpg
+256_ObjectCategories/001.ak47/001_0080.jpg
+256_ObjectCategories/001.ak47/001_0081.jpg
+256_ObjectCategories/001.ak47/001_0082.jpg
+256_ObjectCategories/001.ak47/001_0083.jpg
+256_ObjectCategories/001.ak47/001_0084.jpg
+256_ObjectCategories/001.ak47/001_0085.jpg
+256_ObjectCategories/001.ak47/001_0086.jpg
+256_ObjectCategories/001.ak47/001_0087.jpg
+256_ObjectCategories/001.ak47/001_0088.jpg
+256_ObjectCategories/001.ak47/001_0089.jpg
+256_ObjectCategories/001.ak47/001_0090.jpg
+256_ObjectCategories/001.ak47/001_0091.jpg
+256_ObjectCategories/001.ak47/001_0092.jpg
+256_ObjectCategories/001.ak47/001_0093.jpg
+256_ObjectCategories/001.ak47/001_0094.jpg
+256_ObjectCategories/001.ak47/001_0095.jpg
+256_ObjectCategories/001.ak47/001_0096.jpg
+256_ObjectCategories/001.ak47/001_0097.jpg
+256_ObjectCategories/001.ak47/001_0098.jpg
+256_ObjectCategories/002.american-flag/
+256_ObjectCategories/002.american-flag/002_0001.jpg
+256_ObjectCategories/002.american-flag/002_0002.jpg
+256_ObjectCategories/002.american-flag/002_0003.jpg
+256_ObjectCategories/002.american-flag/002_0004.jpg
+256_ObjectCategories/002.american-flag/002_0005.jpg
+256_ObjectCategories/002.american-flag/002_0006.jpg
+256_ObjectCategories/002.american-flag/002_0007.jpg
+256_ObjectCategories/002.american-flag/002_0008.jpg
+256_ObjectCategories/002.american-flag/002_0009.jpg
+256_ObjectCategories/002.american-flag/002_0010.jpg
+256_ObjectCategories/002.american-flag/002_0011.jpg
+256_ObjectCategories/002.american-flag/002_0012.jpg
+256_ObjectCategories/002.american-flag/002_0013.jpg
+256_ObjectCategories/002.american-flag/002_0014.jpg
+256_ObjectCategories/002.american-flag/002_0015.jpg
+256_ObjectCategories/002.american-flag/002_0016.jpg
+256_ObjectCategories/002.american-flag/002_0017.jpg
+256_ObjectCategories/002.american-flag/002_0018.jpg
+256_ObjectCategories/002.american-flag/002_0019.jpg
+256_ObjectCategories/002.american-flag/002_0020.jpg
+256_ObjectCategories/002.american-flag/002_0021.jpg
+256_ObjectCategories/002.american-flag/002_0022.jpg
+256_ObjectCategories/002.american-flag/002_0023.jpg
+256_ObjectCategories/002.american-flag/002_0024.jpg
+256_ObjectCategories/002.american-flag/002_0025.jpg
+256_ObjectCategories/002.american-flag/002_0026.jpg
+256_ObjectCategories/002.american-flag/002_0027.jpg
+256_ObjectCategories/002.american-flag/002_0028.jpg
+256_ObjectCategories/002.american-flag/002_0029.jpg
+256_ObjectCategories/002.american-flag/002_0030.jpg
+256_ObjectCategories/002.american-flag/002_0031.jpg
+256_ObjectCategories/002.american-flag/002_0032.jpg
+256_ObjectCategories/002.american-flag/002_0033.jpg
+256_ObjectCategories/002.american-flag/002_0034.jpg
+256_ObjectCategories/002.american-flag/002_0035.jpg
+256_ObjectCategories/002.american-flag/002_0036.jpg
+256_ObjectCategories/002.american-flag/002_0037.jpg
+256_ObjectCategories/002.american-flag/002_0038.jpg
+256_ObjectCategories/002.american-flag/002_0039.jpg
+256_ObjectCategories/002.american-flag/002_0040.jpg
+256_ObjectCategories/002.american-flag/002_0041.jpg
+256_ObjectCategories/002.american-flag/002_0042.jpg
+256_ObjectCategories/002.american-flag/002_0043.jpg
+256_ObjectCategories/002.american-flag/002_0044.jpg
+256_ObjectCategories/002.american-flag/002_0045.jpg
+256_ObjectCategories/002.american-flag/002_0046.jpg
+256_ObjectCategories/002.american-flag/002_0047.jpg
+256_ObjectCategories/002.american-flag/002_0048.jpg
+256_ObjectCategories/002.american-flag/002_0049.jpg
+256_ObjectCategories/002.american-flag/002_0050.jpg
+256_ObjectCategories/002.american-flag/002_0051.jpg
+256_ObjectCategories/002.american-flag/002_0052.jpg
+256_ObjectCategories/002.american-flag/002_0053.jpg
+256_ObjectCategories/002.american-flag/002_0054.jpg
+256_ObjectCategories/002.american-flag/002_0055.jpg
+256_ObjectCategories/002.american-flag/002_0056.jpg
+256_ObjectCategories/002.american-flag/002_0057.jpg
+256_ObjectCategories/002.american-flag/002_0058.jpg
+256_ObjectCategories/002.american-flag/002_0059.jpg
+256_ObjectCategories/002.american-flag/002_0060.jpg
+256_ObjectCategories/002.american-flag/002_0061.jpg
+256_ObjectCategories/002.american-flag/002_0062.jpg
+256_ObjectCategories/002.american-flag/002_0063.jpg
+256_ObjectCategories/002.american-flag/002_0064.jpg
+256_ObjectCategories/002.american-flag/002_0065.jpg
+256_ObjectCategories/002.american-flag/002_0066.jpg
+256_ObjectCategories/002.american-flag/002_0067.jpg
+256_ObjectCategories/002.american-flag/002_0068.jpg
+256_ObjectCategories/002.american-flag/002_0069.jpg
+256_ObjectCategories/002.american-flag/002_0070.jpg
+256_ObjectCategories/002.american-flag/002_0071.jpg
+256_ObjectCategories/002.american-flag/002_0072.jpg
+256_ObjectCategories/002.american-flag/002_0073.jpg
+256_ObjectCategories/002.american-flag/002_0074.jpg
+256_ObjectCategories/002.american-flag/002_0075.jpg
+256_ObjectCategories/002.american-flag/002_0076.jpg
+256_ObjectCategories/002.american-flag/002_0077.jpg
+256_ObjectCategories/002.american-flag/002_0078.jpg
+256_ObjectCategories/002.american-flag/002_0079.jpg
+256_ObjectCategories/002.american-flag/002_0080.jpg
+256_ObjectCategories/002.american-flag/002_0081.jpg
+256_ObjectCategories/002.american-flag/002_0082.jpg
+256_ObjectCategories/002.american-flag/002_0083.jpg
+256_ObjectCategories/002.american-flag/002_0084.jpg
+256_ObjectCategories/002.american-flag/002_0085.jpg
+256_ObjectCategories/002.american-flag/002_0086.jpg
+256_ObjectCategories/002.american-flag/002_0087.jpg
+256_ObjectCategories/002.american-flag/002_0088.jpg
+256_ObjectCategories/002.american-flag/002_0089.jpg
+256_ObjectCategories/002.american-flag/002_0090.jpg
+256_ObjectCategories/002.american-flag/002_0091.jpg
+256_ObjectCategories/002.american-flag/002_0092.jpg
+256_ObjectCategories/002.american-flag/002_0093.jpg
+256_ObjectCategories/002.american-flag/002_0094.jpg
+256_ObjectCategories/002.american-flag/002_0095.jpg
+256_ObjectCategories/002.american-flag/002_0096.jpg
+256_ObjectCategories/002.american-flag/002_0097.jpg
+256_ObjectCategories/003.backpack/
+256_ObjectCategories/003.backpack/003_0001.jpg
+256_ObjectCategories/003.backpack/003_0002.jpg
+256_ObjectCategories/003.backpack/003_0003.jpg
+256_ObjectCategories/003.backpack/003_0004.jpg
+256_ObjectCategories/003.backpack/003_0005.jpg
+256_ObjectCategories/003.backpack/003_0006.jpg
+256_ObjectCategories/003.backpack/003_0007.jpg
+256_ObjectCategories/003.backpack/003_0008.jpg
+256_ObjectCategories/003.backpack/003_0009.jpg
+256_ObjectCategories/003.backpack/003_0010.jpg
+256_ObjectCategories/003.backpack/003_0011.jpg
+256_ObjectCategories/003.backpack/003_0012.jpg
+256_ObjectCategories/003.backpack/003_0013.jpg
+256_ObjectCategories/003.backpack/003_0014.jpg
+256_ObjectCategories/003.backpack/003_0015.jpg
+256_ObjectCategories/003.backpack/003_0016.jpg
+256_ObjectCategories/003.backpack/003_0017.jpg
+256_ObjectCategories/003.backpack/003_0018.jpg
+256_ObjectCategories/003.backpack/003_0019.jpg
+256_ObjectCategories/003.backpack/003_0020.jpg
+256_ObjectCategories/003.backpack/003_0021.jpg
+256_ObjectCategories/003.backpack/003_0022.jpg
+256_ObjectCategories/003.backpack/003_0023.jpg
+256_ObjectCategories/003.backpack/003_0024.jpg
+256_ObjectCategories/003.backpack/003_0025.jpg
+256_ObjectCategories/003.backpack/003_0026.jpg
+256_ObjectCategories/003.backpack/003_0027.jpg
+256_ObjectCategories/003.backpack/003_0028.jpg
+256_ObjectCategories/003.backpack/003_0029.jpg
+256_ObjectCategories/003.backpack/003_0030.jpg
+256_ObjectCategories/003.backpack/003_0031.jpg
+256_ObjectCategories/003.backpack/003_0032.jpg
+256_ObjectCategories/003.backpack/003_0033.jpg
+256_ObjectCategories/003.backpack/003_0034.jpg
+256_ObjectCategories/003.backpack/003_0035.jpg
+256_ObjectCategories/003.backpack/003_0036.jpg
+256_ObjectCategories/003.backpack/003_0037.jpg
+256_ObjectCategories/003.backpack/003_0038.jpg
+256_ObjectCategories/003.backpack/003_0039.jpg
+256_ObjectCategories/003.backpack/003_0040.jpg
+256_ObjectCategories/003.backpack/003_0041.jpg
+256_ObjectCategories/003.backpack/003_0042.jpg
+256_ObjectCategories/003.backpack/003_0043.jpg
+256_ObjectCategories/003.backpack/003_0044.jpg
+256_ObjectCategories/003.backpack/003_0045.jpg
+256_ObjectCategories/003.backpack/003_0046.jpg
+256_ObjectCategories/003.backpack/003_0047.jpg
+256_ObjectCategories/003.backpack/003_0048.jpg
+256_ObjectCategories/003.backpack/003_0049.jpg
+256_ObjectCategories/003.backpack/003_0050.jpg
+256_ObjectCategories/003.backpack/003_0051.jpg
+256_ObjectCategories/003.backpack/003_0052.jpg
+256_ObjectCategories/003.backpack/003_0053.jpg
+256_ObjectCategories/003.backpack/003_0054.jpg
+256_ObjectCategories/003.backpack/003_0055.jpg
+256_ObjectCategories/003.backpack/003_0056.jpg
+256_ObjectCategories/003.backpack/003_0057.jpg
+256_ObjectCategories/003.backpack/003_0058.jpg
+256_ObjectCategories/003.backpack/003_0059.jpg
+256_ObjectCategories/003.backpack/003_0060.jpg
+256_ObjectCategories/003.backpack/003_0061.jpg
+256_ObjectCategories/003.backpack/003_0062.jpg
+256_ObjectCategories/003.backpack/003_0063.jpg
+256_ObjectCategories/003.backpack/003_0064.jpg
+256_ObjectCategories/003.backpack/003_0065.jpg
+256_ObjectCategories/003.backpack/003_0066.jpg
+256_ObjectCategories/003.backpack/003_0067.jpg
+256_ObjectCategories/003.backpack/003_0068.jpg
+256_ObjectCategories/003.backpack/003_0069.jpg
+256_ObjectCategories/003.backpack/003_0070.jpg
+256_ObjectCategories/003.backpack/003_0071.jpg
+256_ObjectCategories/003.backpack/003_0072.jpg
+256_ObjectCategories/003.backpack/003_0073.jpg
+256_ObjectCategories/003.backpack/003_0074.jpg
+256_ObjectCategories/003.backpack/003_0075.jpg
+256_ObjectCategories/003.backpack/003_0076.jpg
+256_ObjectCategories/003.backpack/003_0077.jpg
+256_ObjectCategories/003.backpack/003_0078.jpg
+256_ObjectCategories/003.backpack/003_0079.jpg
+256_ObjectCategories/003.backpack/003_0080.jpg
+256_ObjectCategories/003.backpack/003_0081.jpg
+256_ObjectCategories/003.backpack/003_0082.jpg
+256_ObjectCategories/003.backpack/003_0083.jpg
+256_ObjectCategories/003.backpack/003_0084.jpg
+256_ObjectCategories/003.backpack/003_0085.jpg
+256_ObjectCategories/003.backpack/003_0086.jpg
+256_ObjectCategories/003.backpack/003_0087.jpg
+256_ObjectCategories/003.backpack/003_0088.jpg
+256_ObjectCategories/003.backpack/003_0089.jpg
+256_ObjectCategories/003.backpack/003_0090.jpg
+256_ObjectCategories/003.backpack/003_0091.jpg
+256_ObjectCategories/003.backpack/003_0092.jpg
+256_ObjectCategories/003.backpack/003_0093.jpg
+256_ObjectCategories/003.backpack/003_0094.jpg
+256_ObjectCategories/003.backpack/003_0095.jpg
+256_ObjectCategories/003.backpack/003_0096.jpg
+256_ObjectCategories/003.backpack/003_0097.jpg
+256_ObjectCategories/003.backpack/003_0098.jpg
+256_ObjectCategories/003.backpack/003_0099.jpg
+256_ObjectCategories/003.backpack/003_0100.jpg
+256_ObjectCategories/003.backpack/003_0101.jpg
+256_ObjectCategories/003.backpack/003_0102.jpg
+256_ObjectCategories/003.backpack/003_0103.jpg
+256_ObjectCategories/003.backpack/003_0104.jpg
+256_ObjectCategories/003.backpack/003_0105.jpg
+256_ObjectCategories/003.backpack/003_0106.jpg
+256_ObjectCategories/003.backpack/003_0107.jpg
+256_ObjectCategories/003.backpack/003_0108.jpg
+256_ObjectCategories/003.backpack/003_0109.jpg
+256_ObjectCategories/003.backpack/003_0110.jpg
+256_ObjectCategories/003.backpack/003_0111.jpg
+256_ObjectCategories/003.backpack/003_0112.jpg
+256_ObjectCategories/003.backpack/003_0113.jpg
+256_ObjectCategories/003.backpack/003_0114.jpg
+256_ObjectCategories/003.backpack/003_0115.jpg
+256_ObjectCategories/003.backpack/003_0116.jpg
+256_ObjectCategories/003.backpack/003_0117.jpg
+256_ObjectCategories/003.backpack/003_0118.jpg
+256_ObjectCategories/003.backpack/003_0119.jpg
+256_ObjectCategories/003.backpack/003_0120.jpg
+256_ObjectCategories/003.backpack/003_0121.jpg
+256_ObjectCategories/003.backpack/003_0122.jpg
+256_ObjectCategories/003.backpack/003_0123.jpg
+256_ObjectCategories/003.backpack/003_0124.jpg
+256_ObjectCategories/003.backpack/003_0125.jpg
+256_ObjectCategories/003.backpack/003_0126.jpg
+256_ObjectCategories/003.backpack/003_0127.jpg
+256_ObjectCategories/003.backpack/003_0128.jpg
+256_ObjectCategories/003.backpack/003_0129.jpg
+256_ObjectCategories/003.backpack/003_0130.jpg
+256_ObjectCategories/003.backpack/003_0131.jpg
+256_ObjectCategories/003.backpack/003_0132.jpg
+256_ObjectCategories/003.backpack/003_0133.jpg
+256_ObjectCategories/003.backpack/003_0134.jpg
+256_ObjectCategories/003.backpack/003_0135.jpg
+256_ObjectCategories/003.backpack/003_0136.jpg
+256_ObjectCategories/003.backpack/003_0137.jpg
+256_ObjectCategories/003.backpack/003_0138.jpg
+256_ObjectCategories/003.backpack/003_0139.jpg
+256_ObjectCategories/003.backpack/003_0140.jpg
+256_ObjectCategories/003.backpack/003_0141.jpg
+256_ObjectCategories/003.backpack/003_0142.jpg
+256_ObjectCategories/003.backpack/003_0143.jpg
+256_ObjectCategories/003.backpack/003_0144.jpg
+256_ObjectCategories/003.backpack/003_0145.jpg
+256_ObjectCategories/003.backpack/003_0146.jpg
+256_ObjectCategories/003.backpack/003_0147.jpg
+256_ObjectCategories/003.backpack/003_0148.jpg
+256_ObjectCategories/003.backpack/003_0149.jpg
+256_ObjectCategories/003.backpack/003_0150.jpg
+256_ObjectCategories/003.backpack/003_0151.jpg
+256_ObjectCategories/004.baseball-bat/
+256_ObjectCategories/004.baseball-bat/004_0001.jpg
+256_ObjectCategories/004.baseball-bat/004_0002.jpg
+256_ObjectCategories/004.baseball-bat/004_0003.jpg
+256_ObjectCategories/004.baseball-bat/004_0004.jpg
+256_ObjectCategories/004.baseball-bat/004_0005.jpg
+256_ObjectCategories/004.baseball-bat/004_0006.jpg
+256_ObjectCategories/004.baseball-bat/004_0007.jpg
+256_ObjectCategories/004.baseball-bat/004_0008.jpg
+256_ObjectCategories/004.baseball-bat/004_0009.jpg
+256_ObjectCategories/004.baseball-bat/004_0010.jpg
+256_ObjectCategories/004.baseball-bat/004_0011.jpg
+256_ObjectCategories/004.baseball-bat/004_0012.jpg
+256_ObjectCategories/004.baseball-bat/004_0013.jpg
+256_ObjectCategories/004.baseball-bat/004_0014.jpg
+256_ObjectCategories/004.baseball-bat/004_0015.jpg
+256_ObjectCategories/004.baseball-bat/004_0016.jpg
+256_ObjectCategories/004.baseball-bat/004_0017.jpg
+256_ObjectCategories/004.baseball-bat/004_0018.jpg
+256_ObjectCategories/004.baseball-bat/004_0019.jpg
+256_ObjectCategories/004.baseball-bat/004_0020.jpg
+256_ObjectCategories/004.baseball-bat/004_0021.jpg
+256_ObjectCategories/004.baseball-bat/004_0022.jpg
+256_ObjectCategories/004.baseball-bat/004_0023.jpg
+256_ObjectCategories/004.baseball-bat/004_0024.jpg
+256_ObjectCategories/004.baseball-bat/004_0025.jpg
+256_ObjectCategories/004.baseball-bat/004_0026.jpg
+256_ObjectCategories/004.baseball-bat/004_0027.jpg
+256_ObjectCategories/004.baseball-bat/004_0028.jpg
+256_ObjectCategories/004.baseball-bat/004_0029.jpg
+256_ObjectCategories/004.baseball-bat/004_0030.jpg
+256_ObjectCategories/004.baseball-bat/004_0031.jpg
+256_ObjectCategories/004.baseball-bat/004_0032.jpg
+256_ObjectCategories/004.baseball-bat/004_0033.jpg
+256_ObjectCategories/004.baseball-bat/004_0034.jpg
+256_ObjectCategories/004.baseball-bat/004_0035.jpg
+256_ObjectCategories/004.baseball-bat/004_0036.jpg
+256_ObjectCategories/004.baseball-bat/004_0037.jpg
+256_ObjectCategories/004.baseball-bat/004_0038.jpg
+256_ObjectCategories/004.baseball-bat/004_0039.jpg
+256_ObjectCategories/004.baseball-bat/004_0040.jpg
+256_ObjectCategories/004.baseball-bat/004_0041.jpg
+256_ObjectCategories/004.baseball-bat/004_0042.jpg
+256_ObjectCategories/004.baseball-bat/004_0043.jpg
+256_ObjectCategories/004.baseball-bat/004_0044.jpg
+256_ObjectCategories/004.baseball-bat/004_0045.jpg
+256_ObjectCategories/004.baseball-bat/004_0046.jpg
+256_ObjectCategories/004.baseball-bat/004_0047.jpg
+256_ObjectCategories/004.baseball-bat/004_0048.jpg
+256_ObjectCategories/004.baseball-bat/004_0049.jpg
+256_ObjectCategories/004.baseball-bat/004_0050.jpg
+256_ObjectCategories/004.baseball-bat/004_0051.jpg
+256_ObjectCategories/004.baseball-bat/004_0052.jpg
+256_ObjectCategories/004.baseball-bat/004_0053.jpg
+256_ObjectCategories/004.baseball-bat/004_0054.jpg
+256_ObjectCategories/004.baseball-bat/004_0055.jpg
+256_ObjectCategories/004.baseball-bat/004_0056.jpg
+256_ObjectCategories/004.baseball-bat/004_0057.jpg
+256_ObjectCategories/004.baseball-bat/004_0058.jpg
+256_ObjectCategories/004.baseball-bat/004_0059.jpg
+256_ObjectCategories/004.baseball-bat/004_0060.jpg
+256_ObjectCategories/004.baseball-bat/004_0061.jpg
+256_ObjectCategories/004.baseball-bat/004_0062.jpg
+256_ObjectCategories/004.baseball-bat/004_0063.jpg
+256_ObjectCategories/004.baseball-bat/004_0064.jpg
+256_ObjectCategories/004.baseball-bat/004_0065.jpg
+256_ObjectCategories/004.baseball-bat/004_0066.jpg
+256_ObjectCategories/004.baseball-bat/004_0067.jpg
+256_ObjectCategories/004.baseball-bat/004_0068.jpg
+256_ObjectCategories/004.baseball-bat/004_0069.jpg
+256_ObjectCategories/004.baseball-bat/004_0070.jpg
+256_ObjectCategories/004.baseball-bat/004_0071.jpg
+256_ObjectCategories/004.baseball-bat/004_0072.jpg
+256_ObjectCategories/004.baseball-bat/004_0073.jpg
+256_ObjectCategories/004.baseball-bat/004_0074.jpg
+256_ObjectCategories/004.baseball-bat/004_0075.jpg
+256_ObjectCategories/004.baseball-bat/004_0076.jpg
+256_ObjectCategories/004.baseball-bat/004_0077.jpg
+256_ObjectCategories/004.baseball-bat/004_0078.jpg
+256_ObjectCategories/004.baseball-bat/004_0079.jpg
+256_ObjectCategories/004.baseball-bat/004_0080.jpg
+256_ObjectCategories/004.baseball-bat/004_0081.jpg
+256_ObjectCategories/004.baseball-bat/004_0082.jpg
+256_ObjectCategories/004.baseball-bat/004_0083.jpg
+256_ObjectCategories/004.baseball-bat/004_0084.jpg
+256_ObjectCategories/004.baseball-bat/004_0085.jpg
+256_ObjectCategories/004.baseball-bat/004_0086.jpg
+256_ObjectCategories/004.baseball-bat/004_0087.jpg
+256_ObjectCategories/004.baseball-bat/004_0088.jpg
+256_ObjectCategories/004.baseball-bat/004_0089.jpg
+256_ObjectCategories/004.baseball-bat/004_0090.jpg
+256_ObjectCategories/004.baseball-bat/004_0091.jpg
+256_ObjectCategories/004.baseball-bat/004_0092.jpg
+256_ObjectCategories/004.baseball-bat/004_0093.jpg
+256_ObjectCategories/004.baseball-bat/004_0094.jpg
+256_ObjectCategories/004.baseball-bat/004_0095.jpg
+256_ObjectCategories/004.baseball-bat/004_0096.jpg
+256_ObjectCategories/004.baseball-bat/004_0097.jpg
+256_ObjectCategories/004.baseball-bat/004_0098.jpg
+256_ObjectCategories/004.baseball-bat/004_0099.jpg
+256_ObjectCategories/004.baseball-bat/004_0100.jpg
+256_ObjectCategories/004.baseball-bat/004_0101.jpg
+256_ObjectCategories/004.baseball-bat/004_0102.jpg
+256_ObjectCategories/004.baseball-bat/004_0103.jpg
+256_ObjectCategories/004.baseball-bat/004_0104.jpg
+256_ObjectCategories/004.baseball-bat/004_0105.jpg
+256_ObjectCategories/004.baseball-bat/004_0106.jpg
+256_ObjectCategories/004.baseball-bat/004_0107.jpg
+256_ObjectCategories/004.baseball-bat/004_0108.jpg
+256_ObjectCategories/004.baseball-bat/004_0109.jpg
+256_ObjectCategories/004.baseball-bat/004_0110.jpg
+256_ObjectCategories/004.baseball-bat/004_0111.jpg
+256_ObjectCategories/004.baseball-bat/004_0112.jpg
+256_ObjectCategories/004.baseball-bat/004_0113.jpg
+256_ObjectCategories/004.baseball-bat/004_0114.jpg
+256_ObjectCategories/004.baseball-bat/004_0115.jpg
+256_ObjectCategories/004.baseball-bat/004_0116.jpg
+256_ObjectCategories/004.baseball-bat/004_0117.jpg
+256_ObjectCategories/004.baseball-bat/004_0118.jpg
+256_ObjectCategories/004.baseball-bat/004_0119.jpg
+256_ObjectCategories/004.baseball-bat/004_0120.jpg
+256_ObjectCategories/004.baseball-bat/004_0121.jpg
+256_ObjectCategories/004.baseball-bat/004_0122.jpg
+256_ObjectCategories/004.baseball-bat/004_0123.jpg
+256_ObjectCategories/004.baseball-bat/004_0124.jpg
+256_ObjectCategories/004.baseball-bat/004_0125.jpg
+256_ObjectCategories/004.baseball-bat/004_0126.jpg
+256_ObjectCategories/004.baseball-bat/004_0127.jpg
+256_ObjectCategories/005.baseball-glove/
+256_ObjectCategories/005.baseball-glove/005_0001.jpg
+256_ObjectCategories/005.baseball-glove/005_0002.jpg
+256_ObjectCategories/005.baseball-glove/005_0003.jpg
+256_ObjectCategories/005.baseball-glove/005_0004.jpg
+256_ObjectCategories/005.baseball-glove/005_0005.jpg
+256_ObjectCategories/005.baseball-glove/005_0006.jpg
+256_ObjectCategories/005.baseball-glove/005_0007.jpg
+256_ObjectCategories/005.baseball-glove/005_0008.jpg
+256_ObjectCategories/005.baseball-glove/005_0009.jpg
+256_ObjectCategories/005.baseball-glove/005_0010.jpg
+256_ObjectCategories/005.baseball-glove/005_0011.jpg
+256_ObjectCategories/005.baseball-glove/005_0012.jpg
+256_ObjectCategories/005.baseball-glove/005_0013.jpg
+256_ObjectCategories/005.baseball-glove/005_0014.jpg
+256_ObjectCategories/005.baseball-glove/005_0015.jpg
+256_ObjectCategories/005.baseball-glove/005_0016.jpg
+256_ObjectCategories/005.baseball-glove/005_0017.jpg
+256_ObjectCategories/005.baseball-glove/005_0018.jpg
+256_ObjectCategories/005.baseball-glove/005_0019.jpg
+256_ObjectCategories/005.baseball-glove/005_0020.jpg
+256_ObjectCategories/005.baseball-glove/005_0021.jpg
+256_ObjectCategories/005.baseball-glove/005_0022.jpg
+256_ObjectCategories/005.baseball-glove/005_0023.jpg
+256_ObjectCategories/005.baseball-glove/005_0024.jpg
+256_ObjectCategories/005.baseball-glove/005_0025.jpg
+256_ObjectCategories/005.baseball-glove/005_0026.jpg
+256_ObjectCategories/005.baseball-glove/005_0027.jpg
+256_ObjectCategories/005.baseball-glove/005_0028.jpg
+256_ObjectCategories/005.baseball-glove/005_0029.jpg
+256_ObjectCategories/005.baseball-glove/005_0030.jpg
+256_ObjectCategories/005.baseball-glove/005_0031.jpg
+256_ObjectCategories/005.baseball-glove/005_0032.jpg
+256_ObjectCategories/005.baseball-glove/005_0033.jpg
+256_ObjectCategories/005.baseball-glove/005_0034.jpg
+256_ObjectCategories/005.baseball-glove/005_0035.jpg
+256_ObjectCategories/005.baseball-glove/005_0036.jpg
+256_ObjectCategories/005.baseball-glove/005_0037.jpg
+
+*** WARNING: skipped 1434998 bytes of output ***
+
+256_ObjectCategories/257.clutter/257_0285.jpg
+256_ObjectCategories/257.clutter/257_0286.jpg
+256_ObjectCategories/257.clutter/257_0287.jpg
+256_ObjectCategories/257.clutter/257_0288.jpg
+256_ObjectCategories/257.clutter/257_0289.jpg
+256_ObjectCategories/257.clutter/257_0290.jpg
+256_ObjectCategories/257.clutter/257_0291.jpg
+256_ObjectCategories/257.clutter/257_0292.jpg
+256_ObjectCategories/257.clutter/257_0293.jpg
+256_ObjectCategories/257.clutter/257_0294.jpg
+256_ObjectCategories/257.clutter/257_0295.jpg
+256_ObjectCategories/257.clutter/257_0296.jpg
+256_ObjectCategories/257.clutter/257_0297.jpg
+256_ObjectCategories/257.clutter/257_0298.jpg
+256_ObjectCategories/257.clutter/257_0299.jpg
+256_ObjectCategories/257.clutter/257_0300.jpg
+256_ObjectCategories/257.clutter/257_0301.jpg
+256_ObjectCategories/257.clutter/257_0302.jpg
+256_ObjectCategories/257.clutter/257_0303.jpg
+256_ObjectCategories/257.clutter/257_0304.jpg
+256_ObjectCategories/257.clutter/257_0305.jpg
+256_ObjectCategories/257.clutter/257_0306.jpg
+256_ObjectCategories/257.clutter/257_0307.jpg
+256_ObjectCategories/257.clutter/257_0308.jpg
+256_ObjectCategories/257.clutter/257_0309.jpg
+256_ObjectCategories/257.clutter/257_0310.jpg
+256_ObjectCategories/257.clutter/257_0311.jpg
+256_ObjectCategories/257.clutter/257_0312.jpg
+256_ObjectCategories/257.clutter/257_0313.jpg
+256_ObjectCategories/257.clutter/257_0314.jpg
+256_ObjectCategories/257.clutter/257_0315.jpg
+256_ObjectCategories/257.clutter/257_0316.jpg
+256_ObjectCategories/257.clutter/257_0317.jpg
+256_ObjectCategories/257.clutter/257_0318.jpg
+256_ObjectCategories/257.clutter/257_0319.jpg
+256_ObjectCategories/257.clutter/257_0320.jpg
+256_ObjectCategories/257.clutter/257_0321.jpg
+256_ObjectCategories/257.clutter/257_0322.jpg
+256_ObjectCategories/257.clutter/257_0323.jpg
+256_ObjectCategories/257.clutter/257_0324.jpg
+256_ObjectCategories/257.clutter/257_0325.jpg
+256_ObjectCategories/257.clutter/257_0326.jpg
+256_ObjectCategories/257.clutter/257_0327.jpg
+256_ObjectCategories/257.clutter/257_0328.jpg
+256_ObjectCategories/257.clutter/257_0329.jpg
+256_ObjectCategories/257.clutter/257_0330.jpg
+256_ObjectCategories/257.clutter/257_0331.jpg
+256_ObjectCategories/257.clutter/257_0332.jpg
+256_ObjectCategories/257.clutter/257_0333.jpg
+256_ObjectCategories/257.clutter/257_0334.jpg
+256_ObjectCategories/257.clutter/257_0335.jpg
+256_ObjectCategories/257.clutter/257_0336.jpg
+256_ObjectCategories/257.clutter/257_0337.jpg
+256_ObjectCategories/257.clutter/257_0338.jpg
+256_ObjectCategories/257.clutter/257_0339.jpg
+256_ObjectCategories/257.clutter/257_0340.jpg
+256_ObjectCategories/257.clutter/257_0341.jpg
+256_ObjectCategories/257.clutter/257_0342.jpg
+256_ObjectCategories/257.clutter/257_0343.jpg
+256_ObjectCategories/257.clutter/257_0344.jpg
+256_ObjectCategories/257.clutter/257_0345.jpg
+256_ObjectCategories/257.clutter/257_0346.jpg
+256_ObjectCategories/257.clutter/257_0347.jpg
+256_ObjectCategories/257.clutter/257_0348.jpg
+256_ObjectCategories/257.clutter/257_0349.jpg
+256_ObjectCategories/257.clutter/257_0350.jpg
+256_ObjectCategories/257.clutter/257_0351.jpg
+256_ObjectCategories/257.clutter/257_0352.jpg
+256_ObjectCategories/257.clutter/257_0353.jpg
+256_ObjectCategories/257.clutter/257_0354.jpg
+256_ObjectCategories/257.clutter/257_0355.jpg
+256_ObjectCategories/257.clutter/257_0356.jpg
+256_ObjectCategories/257.clutter/257_0357.jpg
+256_ObjectCategories/257.clutter/257_0358.jpg
+256_ObjectCategories/257.clutter/257_0359.jpg
+256_ObjectCategories/257.clutter/257_0360.jpg
+256_ObjectCategories/257.clutter/257_0361.jpg
+256_ObjectCategories/257.clutter/257_0362.jpg
+256_ObjectCategories/257.clutter/257_0363.jpg
+256_ObjectCategories/257.clutter/257_0364.jpg
+256_ObjectCategories/257.clutter/257_0365.jpg
+256_ObjectCategories/257.clutter/257_0366.jpg
+256_ObjectCategories/257.clutter/257_0367.jpg
+256_ObjectCategories/257.clutter/257_0368.jpg
+256_ObjectCategories/257.clutter/257_0369.jpg
+256_ObjectCategories/257.clutter/257_0370.jpg
+256_ObjectCategories/257.clutter/257_0371.jpg
+256_ObjectCategories/257.clutter/257_0372.jpg
+256_ObjectCategories/257.clutter/257_0373.jpg
+256_ObjectCategories/257.clutter/257_0374.jpg
+256_ObjectCategories/257.clutter/257_0375.jpg
+256_ObjectCategories/257.clutter/257_0376.jpg
+256_ObjectCategories/257.clutter/257_0377.jpg
+256_ObjectCategories/257.clutter/257_0378.jpg
+256_ObjectCategories/257.clutter/257_0379.jpg
+256_ObjectCategories/257.clutter/257_0380.jpg
+256_ObjectCategories/257.clutter/257_0381.jpg
+256_ObjectCategories/257.clutter/257_0382.jpg
+256_ObjectCategories/257.clutter/257_0383.jpg
+256_ObjectCategories/257.clutter/257_0384.jpg
+256_ObjectCategories/257.clutter/257_0385.jpg
+256_ObjectCategories/257.clutter/257_0386.jpg
+256_ObjectCategories/257.clutter/257_0387.jpg
+256_ObjectCategories/257.clutter/257_0388.jpg
+256_ObjectCategories/257.clutter/257_0389.jpg
+256_ObjectCategories/257.clutter/257_0390.jpg
+256_ObjectCategories/257.clutter/257_0391.jpg
+256_ObjectCategories/257.clutter/257_0392.jpg
+256_ObjectCategories/257.clutter/257_0393.jpg
+256_ObjectCategories/257.clutter/257_0394.jpg
+256_ObjectCategories/257.clutter/257_0395.jpg
+256_ObjectCategories/257.clutter/257_0396.jpg
+256_ObjectCategories/257.clutter/257_0397.jpg
+256_ObjectCategories/257.clutter/257_0398.jpg
+256_ObjectCategories/257.clutter/257_0399.jpg
+256_ObjectCategories/257.clutter/257_0400.jpg
+256_ObjectCategories/257.clutter/257_0401.jpg
+256_ObjectCategories/257.clutter/257_0402.jpg
+256_ObjectCategories/257.clutter/257_0403.jpg
+256_ObjectCategories/257.clutter/257_0404.jpg
+256_ObjectCategories/257.clutter/257_0405.jpg
+256_ObjectCategories/257.clutter/257_0406.jpg
+256_ObjectCategories/257.clutter/257_0407.jpg
+256_ObjectCategories/257.clutter/257_0408.jpg
+256_ObjectCategories/257.clutter/257_0409.jpg
+256_ObjectCategories/257.clutter/257_0410.jpg
+256_ObjectCategories/257.clutter/257_0411.jpg
+256_ObjectCategories/257.clutter/257_0412.jpg
+256_ObjectCategories/257.clutter/257_0413.jpg
+256_ObjectCategories/257.clutter/257_0414.jpg
+256_ObjectCategories/257.clutter/257_0415.jpg
+256_ObjectCategories/257.clutter/257_0416.jpg
+256_ObjectCategories/257.clutter/257_0417.jpg
+256_ObjectCategories/257.clutter/257_0418.jpg
+256_ObjectCategories/257.clutter/257_0419.jpg
+256_ObjectCategories/257.clutter/257_0420.jpg
+256_ObjectCategories/257.clutter/257_0421.jpg
+256_ObjectCategories/257.clutter/257_0422.jpg
+256_ObjectCategories/257.clutter/257_0423.jpg
+256_ObjectCategories/257.clutter/257_0424.jpg
+256_ObjectCategories/257.clutter/257_0425.jpg
+256_ObjectCategories/257.clutter/257_0426.jpg
+256_ObjectCategories/257.clutter/257_0427.jpg
+256_ObjectCategories/257.clutter/257_0428.jpg
+256_ObjectCategories/257.clutter/257_0429.jpg
+256_ObjectCategories/257.clutter/257_0430.jpg
+256_ObjectCategories/257.clutter/257_0431.jpg
+256_ObjectCategories/257.clutter/257_0432.jpg
+256_ObjectCategories/257.clutter/257_0433.jpg
+256_ObjectCategories/257.clutter/257_0434.jpg
+256_ObjectCategories/257.clutter/257_0435.jpg
+256_ObjectCategories/257.clutter/257_0436.jpg
+256_ObjectCategories/257.clutter/257_0437.jpg
+256_ObjectCategories/257.clutter/257_0438.jpg
+256_ObjectCategories/257.clutter/257_0439.jpg
+256_ObjectCategories/257.clutter/257_0440.jpg
+256_ObjectCategories/257.clutter/257_0441.jpg
+256_ObjectCategories/257.clutter/257_0442.jpg
+256_ObjectCategories/257.clutter/257_0443.jpg
+256_ObjectCategories/257.clutter/257_0444.jpg
+256_ObjectCategories/257.clutter/257_0445.jpg
+256_ObjectCategories/257.clutter/257_0446.jpg
+256_ObjectCategories/257.clutter/257_0447.jpg
+256_ObjectCategories/257.clutter/257_0448.jpg
+256_ObjectCategories/257.clutter/257_0449.jpg
+256_ObjectCategories/257.clutter/257_0450.jpg
+256_ObjectCategories/257.clutter/257_0451.jpg
+256_ObjectCategories/257.clutter/257_0452.jpg
+256_ObjectCategories/257.clutter/257_0453.jpg
+256_ObjectCategories/257.clutter/257_0454.jpg
+256_ObjectCategories/257.clutter/257_0455.jpg
+256_ObjectCategories/257.clutter/257_0456.jpg
+256_ObjectCategories/257.clutter/257_0457.jpg
+256_ObjectCategories/257.clutter/257_0458.jpg
+256_ObjectCategories/257.clutter/257_0459.jpg
+256_ObjectCategories/257.clutter/257_0460.jpg
+256_ObjectCategories/257.clutter/257_0461.jpg
+256_ObjectCategories/257.clutter/257_0462.jpg
+256_ObjectCategories/257.clutter/257_0463.jpg
+256_ObjectCategories/257.clutter/257_0464.jpg
+256_ObjectCategories/257.clutter/257_0465.jpg
+256_ObjectCategories/257.clutter/257_0466.jpg
+256_ObjectCategories/257.clutter/257_0467.jpg
+256_ObjectCategories/257.clutter/257_0468.jpg
+256_ObjectCategories/257.clutter/257_0469.jpg
+256_ObjectCategories/257.clutter/257_0470.jpg
+256_ObjectCategories/257.clutter/257_0471.jpg
+256_ObjectCategories/257.clutter/257_0472.jpg
+256_ObjectCategories/257.clutter/257_0473.jpg
+256_ObjectCategories/257.clutter/257_0474.jpg
+256_ObjectCategories/257.clutter/257_0475.jpg
+256_ObjectCategories/257.clutter/257_0476.jpg
+256_ObjectCategories/257.clutter/257_0477.jpg
+256_ObjectCategories/257.clutter/257_0478.jpg
+256_ObjectCategories/257.clutter/257_0479.jpg
+256_ObjectCategories/257.clutter/257_0480.jpg
+256_ObjectCategories/257.clutter/257_0481.jpg
+256_ObjectCategories/257.clutter/257_0482.jpg
+256_ObjectCategories/257.clutter/257_0483.jpg
+256_ObjectCategories/257.clutter/257_0484.jpg
+256_ObjectCategories/257.clutter/257_0485.jpg
+256_ObjectCategories/257.clutter/257_0486.jpg
+256_ObjectCategories/257.clutter/257_0487.jpg
+256_ObjectCategories/257.clutter/257_0488.jpg
+256_ObjectCategories/257.clutter/257_0489.jpg
+256_ObjectCategories/257.clutter/257_0490.jpg
+256_ObjectCategories/257.clutter/257_0491.jpg
+256_ObjectCategories/257.clutter/257_0492.jpg
+256_ObjectCategories/257.clutter/257_0493.jpg
+256_ObjectCategories/257.clutter/257_0494.jpg
+256_ObjectCategories/257.clutter/257_0495.jpg
+256_ObjectCategories/257.clutter/257_0496.jpg
+256_ObjectCategories/257.clutter/257_0497.jpg
+256_ObjectCategories/257.clutter/257_0498.jpg
+256_ObjectCategories/257.clutter/257_0499.jpg
+256_ObjectCategories/257.clutter/257_0500.jpg
+256_ObjectCategories/257.clutter/257_0501.jpg
+256_ObjectCategories/257.clutter/257_0502.jpg
+256_ObjectCategories/257.clutter/257_0503.jpg
+256_ObjectCategories/257.clutter/257_0504.jpg
+256_ObjectCategories/257.clutter/257_0505.jpg
+256_ObjectCategories/257.clutter/257_0506.jpg
+256_ObjectCategories/257.clutter/257_0507.jpg
+256_ObjectCategories/257.clutter/257_0508.jpg
+256_ObjectCategories/257.clutter/257_0509.jpg
+256_ObjectCategories/257.clutter/257_0510.jpg
+256_ObjectCategories/257.clutter/257_0511.jpg
+256_ObjectCategories/257.clutter/257_0512.jpg
+256_ObjectCategories/257.clutter/257_0513.jpg
+256_ObjectCategories/257.clutter/257_0514.jpg
+256_ObjectCategories/257.clutter/257_0515.jpg
+256_ObjectCategories/257.clutter/257_0516.jpg
+256_ObjectCategories/257.clutter/257_0517.jpg
+256_ObjectCategories/257.clutter/257_0518.jpg
+256_ObjectCategories/257.clutter/257_0519.jpg
+256_ObjectCategories/257.clutter/257_0520.jpg
+256_ObjectCategories/257.clutter/257_0521.jpg
+256_ObjectCategories/257.clutter/257_0522.jpg
+256_ObjectCategories/257.clutter/257_0523.jpg
+256_ObjectCategories/257.clutter/257_0524.jpg
+256_ObjectCategories/257.clutter/257_0525.jpg
+256_ObjectCategories/257.clutter/257_0526.jpg
+256_ObjectCategories/257.clutter/257_0527.jpg
+256_ObjectCategories/257.clutter/257_0528.jpg
+256_ObjectCategories/257.clutter/257_0529.jpg
+256_ObjectCategories/257.clutter/257_0530.jpg
+256_ObjectCategories/257.clutter/257_0531.jpg
+256_ObjectCategories/257.clutter/257_0532.jpg
+256_ObjectCategories/257.clutter/257_0533.jpg
+256_ObjectCategories/257.clutter/257_0534.jpg
+256_ObjectCategories/257.clutter/257_0535.jpg
+256_ObjectCategories/257.clutter/257_0536.jpg
+256_ObjectCategories/257.clutter/257_0537.jpg
+256_ObjectCategories/257.clutter/257_0538.jpg
+256_ObjectCategories/257.clutter/257_0539.jpg
+256_ObjectCategories/257.clutter/257_0540.jpg
+256_ObjectCategories/257.clutter/257_0541.jpg
+256_ObjectCategories/257.clutter/257_0542.jpg
+256_ObjectCategories/257.clutter/257_0543.jpg
+256_ObjectCategories/257.clutter/257_0544.jpg
+256_ObjectCategories/257.clutter/257_0545.jpg
+256_ObjectCategories/257.clutter/257_0546.jpg
+256_ObjectCategories/257.clutter/257_0547.jpg
+256_ObjectCategories/257.clutter/257_0548.jpg
+256_ObjectCategories/257.clutter/257_0549.jpg
+256_ObjectCategories/257.clutter/257_0550.jpg
+256_ObjectCategories/257.clutter/257_0551.jpg
+256_ObjectCategories/257.clutter/257_0552.jpg
+256_ObjectCategories/257.clutter/257_0553.jpg
+256_ObjectCategories/257.clutter/257_0554.jpg
+256_ObjectCategories/257.clutter/257_0555.jpg
+256_ObjectCategories/257.clutter/257_0556.jpg
+256_ObjectCategories/257.clutter/257_0557.jpg
+256_ObjectCategories/257.clutter/257_0558.jpg
+256_ObjectCategories/257.clutter/257_0559.jpg
+256_ObjectCategories/257.clutter/257_0560.jpg
+256_ObjectCategories/257.clutter/257_0561.jpg
+256_ObjectCategories/257.clutter/257_0562.jpg
+256_ObjectCategories/257.clutter/257_0563.jpg
+256_ObjectCategories/257.clutter/257_0564.jpg
+256_ObjectCategories/257.clutter/257_0565.jpg
+256_ObjectCategories/257.clutter/257_0566.jpg
+256_ObjectCategories/257.clutter/257_0567.jpg
+256_ObjectCategories/257.clutter/257_0568.jpg
+256_ObjectCategories/257.clutter/257_0569.jpg
+256_ObjectCategories/257.clutter/257_0570.jpg
+256_ObjectCategories/257.clutter/257_0571.jpg
+256_ObjectCategories/257.clutter/257_0572.jpg
+256_ObjectCategories/257.clutter/257_0573.jpg
+256_ObjectCategories/257.clutter/257_0574.jpg
+256_ObjectCategories/257.clutter/257_0575.jpg
+256_ObjectCategories/257.clutter/257_0576.jpg
+256_ObjectCategories/257.clutter/257_0577.jpg
+256_ObjectCategories/257.clutter/257_0578.jpg
+256_ObjectCategories/257.clutter/257_0579.jpg
+256_ObjectCategories/257.clutter/257_0580.jpg
+256_ObjectCategories/257.clutter/257_0581.jpg
+256_ObjectCategories/257.clutter/257_0582.jpg
+256_ObjectCategories/257.clutter/257_0583.jpg
+256_ObjectCategories/257.clutter/257_0584.jpg
+256_ObjectCategories/257.clutter/257_0585.jpg
+256_ObjectCategories/257.clutter/257_0586.jpg
+256_ObjectCategories/257.clutter/257_0587.jpg
+256_ObjectCategories/257.clutter/257_0588.jpg
+256_ObjectCategories/257.clutter/257_0589.jpg
+256_ObjectCategories/257.clutter/257_0590.jpg
+256_ObjectCategories/257.clutter/257_0591.jpg
+256_ObjectCategories/257.clutter/257_0592.jpg
+256_ObjectCategories/257.clutter/257_0593.jpg
+256_ObjectCategories/257.clutter/257_0594.jpg
+256_ObjectCategories/257.clutter/257_0595.jpg
+256_ObjectCategories/257.clutter/257_0596.jpg
+256_ObjectCategories/257.clutter/257_0597.jpg
+256_ObjectCategories/257.clutter/257_0598.jpg
+256_ObjectCategories/257.clutter/257_0599.jpg
+256_ObjectCategories/257.clutter/257_0600.jpg
+256_ObjectCategories/257.clutter/257_0601.jpg
+256_ObjectCategories/257.clutter/257_0602.jpg
+256_ObjectCategories/257.clutter/257_0603.jpg
+256_ObjectCategories/257.clutter/257_0604.jpg
+256_ObjectCategories/257.clutter/257_0605.jpg
+256_ObjectCategories/257.clutter/257_0606.jpg
+256_ObjectCategories/257.clutter/257_0607.jpg
+256_ObjectCategories/257.clutter/257_0608.jpg
+256_ObjectCategories/257.clutter/257_0609.jpg
+256_ObjectCategories/257.clutter/257_0610.jpg
+256_ObjectCategories/257.clutter/257_0611.jpg
+256_ObjectCategories/257.clutter/257_0612.jpg
+256_ObjectCategories/257.clutter/257_0613.jpg
+256_ObjectCategories/257.clutter/257_0614.jpg
+256_ObjectCategories/257.clutter/257_0615.jpg
+256_ObjectCategories/257.clutter/257_0616.jpg
+256_ObjectCategories/257.clutter/257_0617.jpg
+256_ObjectCategories/257.clutter/257_0618.jpg
+256_ObjectCategories/257.clutter/257_0619.jpg
+256_ObjectCategories/257.clutter/257_0620.jpg
+256_ObjectCategories/257.clutter/257_0621.jpg
+256_ObjectCategories/257.clutter/257_0622.jpg
+256_ObjectCategories/257.clutter/257_0623.jpg
+256_ObjectCategories/257.clutter/257_0624.jpg
+256_ObjectCategories/257.clutter/257_0625.jpg
+256_ObjectCategories/257.clutter/257_0626.jpg
+256_ObjectCategories/257.clutter/257_0627.jpg
+256_ObjectCategories/257.clutter/257_0628.jpg
+256_ObjectCategories/257.clutter/257_0629.jpg
+256_ObjectCategories/257.clutter/257_0630.jpg
+256_ObjectCategories/257.clutter/257_0631.jpg
+256_ObjectCategories/257.clutter/257_0632.jpg
+256_ObjectCategories/257.clutter/257_0633.jpg
+256_ObjectCategories/257.clutter/257_0634.jpg
+256_ObjectCategories/257.clutter/257_0635.jpg
+256_ObjectCategories/257.clutter/257_0636.jpg
+256_ObjectCategories/257.clutter/257_0637.jpg
+256_ObjectCategories/257.clutter/257_0638.jpg
+256_ObjectCategories/257.clutter/257_0639.jpg
+256_ObjectCategories/257.clutter/257_0640.jpg
+256_ObjectCategories/257.clutter/257_0641.jpg
+256_ObjectCategories/257.clutter/257_0642.jpg
+256_ObjectCategories/257.clutter/257_0643.jpg
+256_ObjectCategories/257.clutter/257_0644.jpg
+256_ObjectCategories/257.clutter/257_0645.jpg
+256_ObjectCategories/257.clutter/257_0646.jpg
+256_ObjectCategories/257.clutter/257_0647.jpg
+256_ObjectCategories/257.clutter/257_0648.jpg
+256_ObjectCategories/257.clutter/257_0649.jpg
+256_ObjectCategories/257.clutter/257_0650.jpg
+256_ObjectCategories/257.clutter/257_0651.jpg
+256_ObjectCategories/257.clutter/257_0652.jpg
+256_ObjectCategories/257.clutter/257_0653.jpg
+256_ObjectCategories/257.clutter/257_0654.jpg
+256_ObjectCategories/257.clutter/257_0655.jpg
+256_ObjectCategories/257.clutter/257_0656.jpg
+256_ObjectCategories/257.clutter/257_0657.jpg
+256_ObjectCategories/257.clutter/257_0658.jpg
+256_ObjectCategories/257.clutter/257_0659.jpg
+256_ObjectCategories/257.clutter/257_0660.jpg
+256_ObjectCategories/257.clutter/257_0661.jpg
+256_ObjectCategories/257.clutter/257_0662.jpg
+256_ObjectCategories/257.clutter/257_0663.jpg
+256_ObjectCategories/257.clutter/257_0664.jpg
+256_ObjectCategories/257.clutter/257_0665.jpg
+256_ObjectCategories/257.clutter/257_0666.jpg
+256_ObjectCategories/257.clutter/257_0667.jpg
+256_ObjectCategories/257.clutter/257_0668.jpg
+256_ObjectCategories/257.clutter/257_0669.jpg
+256_ObjectCategories/257.clutter/257_0670.jpg
+256_ObjectCategories/257.clutter/257_0671.jpg
+256_ObjectCategories/257.clutter/257_0672.jpg
+256_ObjectCategories/257.clutter/257_0673.jpg
+256_ObjectCategories/257.clutter/257_0674.jpg
+256_ObjectCategories/257.clutter/257_0675.jpg
+256_ObjectCategories/257.clutter/257_0676.jpg
+256_ObjectCategories/257.clutter/257_0677.jpg
+256_ObjectCategories/257.clutter/257_0678.jpg
+256_ObjectCategories/257.clutter/257_0679.jpg
+256_ObjectCategories/257.clutter/257_0680.jpg
+256_ObjectCategories/257.clutter/257_0681.jpg
+256_ObjectCategories/257.clutter/257_0682.jpg
+256_ObjectCategories/257.clutter/257_0683.jpg
+256_ObjectCategories/257.clutter/257_0684.jpg
+256_ObjectCategories/257.clutter/257_0685.jpg
+256_ObjectCategories/257.clutter/257_0686.jpg
+256_ObjectCategories/257.clutter/257_0687.jpg
+256_ObjectCategories/257.clutter/257_0688.jpg
+256_ObjectCategories/257.clutter/257_0689.jpg
+256_ObjectCategories/257.clutter/257_0690.jpg
+256_ObjectCategories/257.clutter/257_0691.jpg
+256_ObjectCategories/257.clutter/257_0692.jpg
+256_ObjectCategories/257.clutter/257_0693.jpg
+256_ObjectCategories/257.clutter/257_0694.jpg
+256_ObjectCategories/257.clutter/257_0695.jpg
+256_ObjectCategories/257.clutter/257_0696.jpg
+256_ObjectCategories/257.clutter/257_0697.jpg
+256_ObjectCategories/257.clutter/257_0698.jpg
+256_ObjectCategories/257.clutter/257_0699.jpg
+256_ObjectCategories/257.clutter/257_0700.jpg
+256_ObjectCategories/257.clutter/257_0701.jpg
+256_ObjectCategories/257.clutter/257_0702.jpg
+256_ObjectCategories/257.clutter/257_0703.jpg
+256_ObjectCategories/257.clutter/257_0704.jpg
+256_ObjectCategories/257.clutter/257_0705.jpg
+256_ObjectCategories/257.clutter/257_0706.jpg
+256_ObjectCategories/257.clutter/257_0707.jpg
+256_ObjectCategories/257.clutter/257_0708.jpg
+256_ObjectCategories/257.clutter/257_0709.jpg
+256_ObjectCategories/257.clutter/257_0710.jpg
+256_ObjectCategories/257.clutter/257_0711.jpg
+256_ObjectCategories/257.clutter/257_0712.jpg
+256_ObjectCategories/257.clutter/257_0713.jpg
+256_ObjectCategories/257.clutter/257_0714.jpg
+256_ObjectCategories/257.clutter/257_0715.jpg
+256_ObjectCategories/257.clutter/257_0716.jpg
+256_ObjectCategories/257.clutter/257_0717.jpg
+256_ObjectCategories/257.clutter/257_0718.jpg
+256_ObjectCategories/257.clutter/257_0719.jpg
+256_ObjectCategories/257.clutter/257_0720.jpg
+256_ObjectCategories/257.clutter/257_0721.jpg
+256_ObjectCategories/257.clutter/257_0722.jpg
+256_ObjectCategories/257.clutter/257_0723.jpg
+256_ObjectCategories/257.clutter/257_0724.jpg
+256_ObjectCategories/257.clutter/257_0725.jpg
+256_ObjectCategories/257.clutter/257_0726.jpg
+256_ObjectCategories/257.clutter/257_0727.jpg
+256_ObjectCategories/257.clutter/257_0728.jpg
+256_ObjectCategories/257.clutter/257_0729.jpg
+256_ObjectCategories/257.clutter/257_0730.jpg
+256_ObjectCategories/257.clutter/257_0731.jpg
+256_ObjectCategories/257.clutter/257_0732.jpg
+256_ObjectCategories/257.clutter/257_0733.jpg
+256_ObjectCategories/257.clutter/257_0734.jpg
+256_ObjectCategories/257.clutter/257_0735.jpg
+256_ObjectCategories/257.clutter/257_0736.jpg
+256_ObjectCategories/257.clutter/257_0737.jpg
+256_ObjectCategories/257.clutter/257_0738.jpg
+256_ObjectCategories/257.clutter/257_0739.jpg
+256_ObjectCategories/257.clutter/257_0740.jpg
+256_ObjectCategories/257.clutter/257_0741.jpg
+256_ObjectCategories/257.clutter/257_0742.jpg
+256_ObjectCategories/257.clutter/257_0743.jpg
+256_ObjectCategories/257.clutter/257_0744.jpg
+256_ObjectCategories/257.clutter/257_0745.jpg
+256_ObjectCategories/257.clutter/257_0746.jpg
+256_ObjectCategories/257.clutter/257_0747.jpg
+256_ObjectCategories/257.clutter/257_0748.jpg
+256_ObjectCategories/257.clutter/257_0749.jpg
+256_ObjectCategories/257.clutter/257_0750.jpg
+256_ObjectCategories/257.clutter/257_0751.jpg
+256_ObjectCategories/257.clutter/257_0752.jpg
+256_ObjectCategories/257.clutter/257_0753.jpg
+256_ObjectCategories/257.clutter/257_0754.jpg
+256_ObjectCategories/257.clutter/257_0755.jpg
+256_ObjectCategories/257.clutter/257_0756.jpg
+256_ObjectCategories/257.clutter/257_0757.jpg
+256_ObjectCategories/257.clutter/257_0758.jpg
+256_ObjectCategories/257.clutter/257_0759.jpg
+256_ObjectCategories/257.clutter/257_0760.jpg
+256_ObjectCategories/257.clutter/257_0761.jpg
+256_ObjectCategories/257.clutter/257_0762.jpg
+256_ObjectCategories/257.clutter/257_0763.jpg
+256_ObjectCategories/257.clutter/257_0764.jpg
+256_ObjectCategories/257.clutter/257_0765.jpg
+256_ObjectCategories/257.clutter/257_0766.jpg
+256_ObjectCategories/257.clutter/257_0767.jpg
+256_ObjectCategories/257.clutter/257_0768.jpg
+256_ObjectCategories/257.clutter/257_0769.jpg
+256_ObjectCategories/257.clutter/257_0770.jpg
+256_ObjectCategories/257.clutter/257_0771.jpg
+256_ObjectCategories/257.clutter/257_0772.jpg
+256_ObjectCategories/257.clutter/257_0773.jpg
+256_ObjectCategories/257.clutter/257_0774.jpg
+256_ObjectCategories/257.clutter/257_0775.jpg
+256_ObjectCategories/257.clutter/257_0776.jpg
+256_ObjectCategories/257.clutter/257_0777.jpg
+256_ObjectCategories/257.clutter/257_0778.jpg
+256_ObjectCategories/257.clutter/257_0779.jpg
+256_ObjectCategories/257.clutter/257_0780.jpg
+256_ObjectCategories/257.clutter/257_0781.jpg
+256_ObjectCategories/257.clutter/257_0782.jpg
+256_ObjectCategories/257.clutter/257_0783.jpg
+256_ObjectCategories/257.clutter/257_0784.jpg
+256_ObjectCategories/257.clutter/257_0785.jpg
+256_ObjectCategories/257.clutter/257_0786.jpg
+256_ObjectCategories/257.clutter/257_0787.jpg
+256_ObjectCategories/257.clutter/257_0788.jpg
+256_ObjectCategories/257.clutter/257_0789.jpg
+256_ObjectCategories/257.clutter/257_0790.jpg
+256_ObjectCategories/257.clutter/257_0791.jpg
+256_ObjectCategories/257.clutter/257_0792.jpg
+256_ObjectCategories/257.clutter/257_0793.jpg
+256_ObjectCategories/257.clutter/257_0794.jpg
+256_ObjectCategories/257.clutter/257_0795.jpg
+256_ObjectCategories/257.clutter/257_0796.jpg
+256_ObjectCategories/257.clutter/257_0797.jpg
+256_ObjectCategories/257.clutter/257_0798.jpg
+256_ObjectCategories/257.clutter/257_0799.jpg
+256_ObjectCategories/257.clutter/257_0800.jpg
+256_ObjectCategories/257.clutter/257_0801.jpg
+256_ObjectCategories/257.clutter/257_0802.jpg
+256_ObjectCategories/257.clutter/257_0803.jpg
+256_ObjectCategories/257.clutter/257_0804.jpg
+256_ObjectCategories/257.clutter/257_0805.jpg
+256_ObjectCategories/257.clutter/257_0806.jpg
+256_ObjectCategories/257.clutter/257_0807.jpg
+256_ObjectCategories/257.clutter/257_0808.jpg
+256_ObjectCategories/257.clutter/257_0809.jpg
+256_ObjectCategories/257.clutter/257_0810.jpg
+256_ObjectCategories/257.clutter/257_0811.jpg
+256_ObjectCategories/257.clutter/257_0812.jpg
+256_ObjectCategories/257.clutter/257_0813.jpg
+256_ObjectCategories/257.clutter/257_0814.jpg
+256_ObjectCategories/257.clutter/257_0815.jpg
+256_ObjectCategories/257.clutter/257_0816.jpg
+256_ObjectCategories/257.clutter/257_0817.jpg
+256_ObjectCategories/257.clutter/257_0818.jpg
+256_ObjectCategories/257.clutter/257_0819.jpg
+256_ObjectCategories/257.clutter/257_0820.jpg
+256_ObjectCategories/257.clutter/257_0821.jpg
+256_ObjectCategories/257.clutter/257_0822.jpg
+256_ObjectCategories/257.clutter/257_0823.jpg
+256_ObjectCategories/257.clutter/257_0824.jpg
+256_ObjectCategories/257.clutter/257_0825.jpg
+256_ObjectCategories/257.clutter/257_0826.jpg
+256_ObjectCategories/257.clutter/257_0827.jpg
+</pre></div>
+</div>
+</div></blockquote>
+<p>Now the files are stored in the folder
+“256_ObjectCategories/[Category]/*.jpg”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="mi">256</span><span class="n">_ObjectCategories</span>
+<span class="c1">#</span>
+<span class="c1">##ls dbfs:/datasets/group6</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>001.ak47
+002.american-flag
+003.backpack
+004.baseball-bat
+005.baseball-glove
+006.basketball-hoop
+007.bat
+008.bathtub
+009.bear
+010.beer-mug
+011.billiards
+012.binoculars
+013.birdbath
+014.blimp
+015.bonsai-101
+016.boom-box
+017.bowling-ball
+018.bowling-pin
+019.boxing-glove
+020.brain-101
+021.breadmaker
+022.buddha-101
+023.bulldozer
+024.butterfly
+025.cactus
+026.cake
+027.calculator
+028.camel
+029.cannon
+030.canoe
+031.car-tire
+032.cartman
+033.cd
+034.centipede
+035.cereal-box
+036.chandelier-101
+037.chess-board
+038.chimp
+039.chopsticks
+040.cockroach
+041.coffee-mug
+042.coffin
+043.coin
+044.comet
+045.computer-keyboard
+046.computer-monitor
+047.computer-mouse
+048.conch
+049.cormorant
+050.covered-wagon
+051.cowboy-hat
+052.crab-101
+053.desk-globe
+054.diamond-ring
+055.dice
+056.dog
+057.dolphin-101
+058.doorknob
+059.drinking-straw
+060.duck
+061.dumb-bell
+062.eiffel-tower
+063.electric-guitar-101
+064.elephant-101
+065.elk
+066.ewer-101
+067.eyeglasses
+068.fern
+069.fighter-jet
+070.fire-extinguisher
+071.fire-hydrant
+072.fire-truck
+073.fireworks
+074.flashlight
+075.floppy-disk
+076.football-helmet
+077.french-horn
+078.fried-egg
+079.frisbee
+080.frog
+081.frying-pan
+082.galaxy
+083.gas-pump
+084.giraffe
+085.goat
+086.golden-gate-bridge
+087.goldfish
+088.golf-ball
+089.goose
+090.gorilla
+091.grand-piano-101
+092.grapes
+093.grasshopper
+094.guitar-pick
+095.hamburger
+096.hammock
+097.harmonica
+098.harp
+099.harpsichord
+100.hawksbill-101
+101.head-phones
+102.helicopter-101
+103.hibiscus
+104.homer-simpson
+105.horse
+106.horseshoe-crab
+107.hot-air-balloon
+108.hot-dog
+109.hot-tub
+110.hourglass
+111.house-fly
+112.human-skeleton
+113.hummingbird
+114.ibis-101
+115.ice-cream-cone
+116.iguana
+117.ipod
+118.iris
+119.jesus-christ
+120.joy-stick
+121.kangaroo-101
+122.kayak
+123.ketch-101
+124.killer-whale
+125.knife
+126.ladder
+127.laptop-101
+128.lathe
+129.leopards-101
+130.license-plate
+131.lightbulb
+132.light-house
+133.lightning
+134.llama-101
+135.mailbox
+136.mandolin
+137.mars
+138.mattress
+139.megaphone
+140.menorah-101
+141.microscope
+142.microwave
+143.minaret
+144.minotaur
+145.motorbikes-101
+146.mountain-bike
+147.mushroom
+148.mussels
+149.necktie
+150.octopus
+151.ostrich
+152.owl
+153.palm-pilot
+154.palm-tree
+155.paperclip
+156.paper-shredder
+157.pci-card
+158.penguin
+159.people
+160.pez-dispenser
+161.photocopier
+162.picnic-table
+163.playing-card
+164.porcupine
+165.pram
+166.praying-mantis
+167.pyramid
+168.raccoon
+169.radio-telescope
+170.rainbow
+171.refrigerator
+172.revolver-101
+173.rifle
+174.rotary-phone
+175.roulette-wheel
+176.saddle
+177.saturn
+178.school-bus
+179.scorpion-101
+180.screwdriver
+181.segway
+182.self-propelled-lawn-mower
+183.sextant
+184.sheet-music
+185.skateboard
+186.skunk
+187.skyscraper
+188.smokestack
+189.snail
+190.snake
+191.sneaker
+192.snowmobile
+193.soccer-ball
+194.socks
+195.soda-can
+196.spaghetti
+197.speed-boat
+198.spider
+199.spoon
+200.stained-glass
+201.starfish-101
+202.steering-wheel
+203.stirrups
+204.sunflower-101
+205.superman
+206.sushi
+207.swan
+208.swiss-army-knife
+209.sword
+210.syringe
+211.tambourine
+212.teapot
+213.teddy-bear
+214.teepee
+215.telephone-box
+216.tennis-ball
+217.tennis-court
+218.tennis-racket
+219.theodolite
+220.toaster
+221.tomato
+222.tombstone
+223.top-hat
+224.touring-bike
+225.tower-pisa
+226.traffic-light
+227.treadmill
+228.triceratops
+229.tricycle
+230.trilobite-101
+231.tripod
+232.t-shirt
+233.tuning-fork
+234.tweezer
+235.umbrella-101
+236.unicorn
+237.vcr
+238.video-projector
+239.washing-machine
+240.watch-101
+241.waterfall
+242.watermelon
+243.welding-mask
+244.wheelbarrow
+245.windmill
+246.wine-bottle
+247.xylophone
+248.yarmulke
+249.yo-yo
+250.zebra
+251.airplanes-101
+252.car-side-101
+253.faces-easy-101
+254.greyhound
+255.tennis-shoes
+256.toad
+257.clutter
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="n">file</span><span class="p">:</span><span class="o">////</span><span class="n">databricks</span><span class="o">/</span><span class="n">driver</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">mv</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/&quot;</span><span class="p">,</span><span class="s2">&quot;file:////databricks/driver/256_ObjectCategories&quot;</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="n">BinaryType</span><span class="p">,</span> <span class="n">IntegerType</span>
+
+<span class="n">img_size</span> <span class="o">=</span> <span class="mi">299</span>
+<span class="k">def</span> <span class="nf">scale_image</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">):</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+  <span class="c1"># Scale image down</span>
+  <span class="n">image</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">((</span><span class="n">img_size</span><span class="p">,</span> <span class="n">img_size</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span>
+  <span class="c1"># Add border to make it square</span>
+  <span class="n">with_bg</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">img_size</span><span class="p">,</span> <span class="n">img_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+  <span class="n">with_bg</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="p">((</span><span class="n">img_size</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">img_size</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">with_bg</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">file_to_label</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+  <span class="c1"># .../043.coin/043_0042.jpg -&gt; 043.coin -&gt; 043 -&gt; 43</span>
+  <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">scale_image_udf</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="n">scale_image</span><span class="p">,</span> <span class="n">BinaryType</span><span class="p">())</span>
+<span class="n">file_to_label_udf</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="n">file_to_label</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">())</span>
+
+<span class="c1"># Change this to your images path; the root of .../[category]/*.jpg</span>
+<span class="n">caltech_256_path</span> <span class="o">=</span> <span class="s2">&quot;file:////databricks/driver/256_ObjectCategories&quot;</span>
+
+<span class="n">raw_image_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;binaryFile&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;pathGlobFilter&quot;</span><span class="p">,</span> <span class="s2">&quot;*.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;recursiveFileLookup&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">caltech_256_path</span><span class="p">)</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">image_df</span> <span class="o">=</span> <span class="n">raw_image_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">file_to_label_udf</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">),</span> <span class="n">scale_image_udf</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="c1"># Go ahead and make a 90%/10% train/test split</span>
+<span class="p">(</span><span class="n">train_image_df</span><span class="p">,</span> <span class="n">test_image_df</span><span class="p">)</span> <span class="o">=</span> <span class="n">image_df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">table_path_base</span> <span class="o">=</span> <span class="s2">&quot;/tmp/sean.owen/binary/caltech_256_image/&quot;</span>
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">table_path_base</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># parquet.block.size is for Petastorm, later</span>
+<span class="n">train_image_df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;parquet.block.size&quot;</span><span class="p">,</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">table_path_base</span> <span class="o">+</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">test_image_df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;parquet.block.size&quot;</span><span class="p">,</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">table_path_base</span> <span class="o">+</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/old notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
