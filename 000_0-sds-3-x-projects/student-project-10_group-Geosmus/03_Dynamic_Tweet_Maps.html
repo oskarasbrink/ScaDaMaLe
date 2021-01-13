@@ -1,0 +1,3028 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Tweet Maps &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Conclusion" href="04_conclusion.html" />
+    <link rel="prev" title="Clustering emoticons based on tweets" href="02_ClusteringEmoticonsBasedOnTweets.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_1-sds-3-x/001_whySpark.html">
+   Why Apache Spark?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html">
+     databricks community edition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+     Essentials of Databricks Cloud (DBC) in a Big Hurry
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+     DBC Essentials: What is Databricks Cloud?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+     DBC Essentials: Shard, Cluster, Notebook and Dashboard
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+     DBC Essentials: Team, State, Collaboration, Elastic Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+     You Should All Have databricks community edition account by now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#import-course-content-now">
+     Import Course Content Now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+     Cloud-free Computing Environment (Optional but recommended)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_01_multiLingualNotebooks.html">
+     Notebooks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+     Further Reference / Homework / Recurrrent Points of Reference
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_1-sds-3-x/003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html">
+     Scala Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+     Let’s continue to get our hands dirty in Scala
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-type-hierarchy">
+     Scala Type Hierarchy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-collections">
+     Scala Collections
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+     Exercise in Functional Programming
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#lazy-evaluation">
+     Lazy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/003_01_scalaCrashCourse.html#recursions">
+     Recursions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_1-sds-3-x/004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">
+     HOMEWORK notebook - RDDs Transformations and Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/006_WordCount.html">
+     Word Count on US State of the Union (SoU) Addresses
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/007_SparkSQLIntroBasics.html">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_1-sds-3-x/007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">
+     Spark Sql Programming Guide
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html#id1">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">
+     Getting Started - Exercise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html#id1">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">
+     Performance Tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html#id1">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+     SQL Pivoting since Spark 2.4
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#load-data">
+     Load Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-in-sql">
+     Pivoting in SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+     Pivoting with Multiple Aggregate Expressions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+     Pivoting with Multiple Grouping Columns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+     Pivoting with Multiple Pivot Columns
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+     Parsing the output from
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+     Providing case classes for input and output for easy spark communication
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+     Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+     Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-01_group-TheTwoCultures/00_download_data.html">
+   The two cultures
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-01_group-TheTwoCultures/01_load_data.html">
+     Preprocessing and loading the relevant data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-01_group-TheTwoCultures/02_logisticregression.html">
+     The two cultures - Classifying threads with logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-01_group-TheTwoCultures/03_word2vec.html">
+     Classification using Word2Vec
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-01_group-TheTwoCultures/04_LDA.html">
+     Topic Modeling with LDA
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-02_group-LiUUmeaSceneGraphMotifs/01_Loading_GQA-JSON.html">
+   Reading GQA JSON files
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html">
+     Exploring the GQA Scene Graph Dataset Structure and Properties
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html#general-discussion">
+     General discussion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-03_group-GuangyiZhang/01_triads.html">
+   Signed Triads in Social Media
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-04_group-DistributedLinearAlgebra/01_DistributedSVD.html">
+   Distributed singular value decomposition
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html">
+     Music Recommendation System
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html">
+   Wikipedia analysis using Latent Dirichlet Allocation (LDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#folders-and-files">
+   Folders and Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#downloading">
+   Downloading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#extracting-and-filtering">
+   Extracting and Filtering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#prepare-for-lda">
+   Prepare for LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#lda">
+   LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#looking-at-the-model">
+   Looking at the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
+   Unsupervised clustering of particle physics data with distributed training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
+   Background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
+   The UClusted algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
+   Our contribution
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
+     Important!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
+     Important (continued from above)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/04_evaluate.html">
+     Evaluation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-07_group-MathAtKTH/01_Coding_Motifs.html">
+   Motif Finding
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-07_group-MathAtKTH/01_Coding_Motifs.html#application">
+   Application
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-07_group-MathAtKTH/02_Data_Processing.html">
+     Data Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-07_group-MathAtKTH/03_graph_string_converter.html">
+     Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-07_group-MathAtKTH/03_graph_string_converter.html#examples">
+     Examples
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html">
+   ScaDaMaLe project: Distributed ensembles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#data">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensemble-of-neural-networks">
+   Distributed ensemble of neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensembles-prediction-api">
+   Distributed ensembles prediction API
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#application-example-distributed-predictions">
+   Application example: Distributed predictions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-08_group-DistributedEnsemble/00_project.html#application-example-out-of-distribution-detection">
+   Application example: Out of distribution detection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-09_group-TopicModeling/01_Introduction.html">
+   Topic Modeling with SARS-Cov-2 Genome 🧬
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/02_Data_Processing.html">
+     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
+     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
+     <em>
+      LDA
+     </em>
+     20NewsGroupsSmall’)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
+     Visualise Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
+     Format data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/05_Classification.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/05_Classification.html#explore-data">
+     Explore data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/05_Classification.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/05_Classification.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-09_group-TopicModeling/06_Results.html">
+     Results and Conclusion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="01_Introduction.html">
+   Twitter Streaming Using Geolocation and Emoji Based Sentiment Analysis
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_ClusteringEmoticonsBasedOnTweets.html">
+     Clustering emoticons based on tweets
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Dynamic Tweet Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_conclusion.html">
+     Conclusion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_appendix_get-cc-data.html">
+     Notebook for collecting tweets with country codes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_a_appendix_extendedTwitterUtils2run.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_a_appendix_extendedTwitterUtils2run.html#extended-spark-streaming-twitter-twitterutils">
+     Extended spark.streaming.twitter.TwitterUtils
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_b_appendix_TTTDFfunctions.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-11_group-Sketchings/00_QuantileEstimation.html">
+   Anomaly Detection with Iterative Quantile Estimation and T-digest
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-12_group-CovidPandemic/00_ProjectDescriptionAndPlanning.html">
+   Project Description and Introduction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/01_DownloadFilesPeriodicallyScript.html">
+     Download Files Periodically
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/01_StreamToFile.html">
+     Stream to parquet file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/02_DataPreprocess.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/02_DataPreprocess.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html">
+     This notebook is for explosive analysis of features in data.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#statistics-of-invariant-features">
+     Statistics of invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-invariant-features">
+     Correlation between invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-new-case-per-million-total-case-new-death-per-million-total-death-per-million-reproduction-rate-and-stringency-index">
+     Correlation between new case per million, total case, new death per million, total death per million, reproduction rate and stringency index.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/04_DataVisualize.html">
+     Show reproduction rate of selected countries i.e. Sweden, Germany, Danmark, Finland, Norway
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/04_DataVisualize.html#visualize-total-cases-total-deaths-new-cases-and-new-deaths-during-pandemic">
+     Visualize total cases, total deaths, new cases and new deaths during pandemic
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/04_DataVisualize.html#total-deaths">
+     Total Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/04_DataVisualize.html#new-cases">
+     New Cases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/04_DataVisualize.html#new-deaths">
+     New Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/05_Clustering.html">
+     Clustering of country features in the Covid 19 dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/06_DataPredicton_LR.html">
+     Prediction with Linear Regression (LR) Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/07_DataPredicton_ARIMA.html">
+     Prediction with Time Series model - ARIMA
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-12_group-CovidPandemic/08_DataPrediction_GP.html">
+     Prediction with time series model - Gaussian Processes
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html">
+   Genomics Analysis with Glow and Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html#load-libs-and-define-helper-functions">
+   Load libs and define helper functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html#read-data">
+   Read data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html#pca">
+   PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html#predicting-ethinicity">
+   Predicting Ethinicity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-13_group-Genomics/01_1000genomes.html#filtering-of-snps-based-on-chi-squared-test">
+   Filtering of SNPs based on chi-squared test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
+   Distributional combinatorial bandits
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/00_video.html">
+   Reinforcement Learning for Intraday Trading
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html">
+     Reinforcement Learning for Intraday Trading
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html">
+     Reinforcement Learning for Intraday Trading - Distributed model tuning with Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#elephas">
+     Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#notes-to-the-elephas-training">
+     Notes to the elephas training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#id1">
+     Notes to the elephas training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html">
+     Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html#environment">
+     Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html#rl-algorithms">
+     RL-Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html#scalable-dl">
+     Scalable DL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html#spark-scalability-monitoring">
+     Spark scalability monitoring
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-15_group-FinancialDataStreams/03_resources.html#raaz-to-group">
+     Raaz to group…
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-16_group-IntrusionDetection/00_Introduction.html">
+   Problem Definition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-16_group-IntrusionDetection/00_Introduction.html#loading-and-preprocessing-data">
+   Loading and Preprocessing Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-19_group-Featuring/01_FundamentalMatrix.html">
+   Link to our video explaining the 1) theory, 2) preprocessing the dataset, 3) algorithm and 4) results
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-19_group-Featuring/01_FundamentalMatrix.html#https-drive-google-com-drive-folders-1zewj6jsjeuu9f8q5xy-avwxq3yj9oi7z-usp-sharing">
+   https://drive.google.com/drive/folders/1zEWj6JsJEUu9f8Q5Xy_avwxQ3yJ9oI7Z?usp=sharing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-19_group-Featuring/01_FundamentalMatrix.html#problem-formulation">
+   Problem formulation
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-19_group-Featuring/01_FundamentalMatrix.html#results">
+   Results
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-19_group-Featuring/images/FundamentalMatrix_dev_6images.html">
+     Problem formulation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../student-project-20_group-Generalization/00_Background.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-20_group-Generalization/00_Background.html#project-description">
+   Project description
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html">
+     The data set
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html#mixup-data-generator">
+     MixUp data generator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html#training-function">
+     Training function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html#connection-between-mixup-performance-and-generalization">
+     Connection between MixUp performance and generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html#directly-training-on-mixup-data">
+     Directly training on MixUp data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html#conclusions">
+     Conclusions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../student-project-21_group-GraphSpectralAnalysis/00_introduction.html">
+   Graph Spectral Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-21_group-GraphSpectralAnalysis/01_preprocess_data.html">
+     Preprocess the data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-21_group-GraphSpectralAnalysis/02_generate_graphs.html">
+     Generate random graphs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-21_group-GraphSpectralAnalysis/03_compute_rsvd.html">
+     Compute RSVD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-21_group-GraphSpectralAnalysis/04_analyse_eigenvalues.html">
+     Analyse the eigenvalue spectrum
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Voluntary Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/030_Spark_GDELT_project.html">
+   Plugging into GDELT Streams - TODO - IN PROGRESS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/030_Spark_GDELT_project.html#this-is-just-dipping-our-pinky-toe-in-this-ocean-of-information">
+   This is just dipping our pinky toe in this ocean of information!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../000_1-sds-3-x/030_Spark_GDELT_project.html#download-from-gdelt-project">
+   Download from gdelt-project
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/000_0-sds-3-x-projects/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_0-sds-3-x-projects/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dependencies">
+   Dependencies:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-some-functions">
+   Defining some functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initial-processing-of-dataframe">
+   Initial processing of dataframe
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quick-initial-data-exploration">
+   Quick initial data exploration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mapping-the-tweets">
+   Mapping the tweets
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choropleth-maps">
+     Choropleth maps
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cartograms">
+     Cartograms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#animating-the-time-evolution-of-tweets">
+     Animating the time evolution of tweets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sentiment-mapping">
+     Sentiment mapping
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#looking-at-trends-in-emoticon-use-over-times-of-the-day">
+     Looking at trends in emoticon use over times of the day
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="dynamic-tweet-maps">
+<h1>Dynamic Tweet Maps<a class="headerlink" href="#dynamic-tweet-maps" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we are going to make some maps depicting when and where
+tweets are sent.</p>
+<p>We will also use the sentiment classes from the previous notebooks to
+illustrate which type of tweets are frequent at different times in
+different countries.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies:<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>In order to run this notebook you need to install some dependencies, via
+apt, pip and git. To install the dependencies run the following three
+cells (it might take a few minutes).</p>
+<p>(We have used the cluster “small-2-8Ws-class-01-sp3-sc2-12” for our
+experiments.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">libproj</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">libgeos</span><span class="o">++-</span><span class="n">dev</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  libcap2-bin libpam-cap zulu-repo
+Use &#39;sudo apt autoremove&#39; to remove them.
+The following additional packages will be installed:
+  libproj12 proj-data
+Suggested packages:
+  proj-bin
+The following NEW packages will be installed:
+  libproj-dev libproj12 proj-data
+0 upgraded, 3 newly installed, 0 to remove and 17 not upgraded.
+Need to get 4,379 kB of archives.
+After this operation, 16.7 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/universe amd64 proj-data all 4.9.3-2 [4,020 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libproj12 amd64 4.9.3-2 [159 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libproj-dev amd64 4.9.3-2 [199 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 4,379 kB in 12s (380 kB/s)
+Selecting previously unselected package proj-data.
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 91335 files and directories currently installed.)
+Preparing to unpack .../proj-data_4.9.3-2_all.deb ...
+Unpacking proj-data (4.9.3-2) ...
+Selecting previously unselected package libproj12:amd64.
+Preparing to unpack .../libproj12_4.9.3-2_amd64.deb ...
+Unpacking libproj12:amd64 (4.9.3-2) ...
+Selecting previously unselected package libproj-dev:amd64.
+Preparing to unpack .../libproj-dev_4.9.3-2_amd64.deb ...
+Unpacking libproj-dev:amd64 (4.9.3-2) ...
+Setting up proj-data (4.9.3-2) ...
+Setting up libproj12:amd64 (4.9.3-2) ...
+Setting up libproj-dev:amd64 (4.9.3-2) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.3) ...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  libcap2-bin libpam-cap zulu-repo
+Use &#39;sudo apt autoremove&#39; to remove them.
+The following additional packages will be installed:
+  libgeos-3.6.2 libgeos-c1v5 libgeos-dev
+Suggested packages:
+  libgdal-doc
+The following NEW packages will be installed:
+  libgeos++-dev libgeos-3.6.2 libgeos-c1v5 libgeos-dev
+0 upgraded, 4 newly installed, 0 to remove and 17 not upgraded.
+Need to get 1,415 kB of archives.
+After this operation, 9,616 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libgeos-3.6.2 amd64 3.6.2-1build2 [476 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libgeos-c1v5 amd64 3.6.2-1build2 [54.9 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libgeos-dev amd64 3.6.2-1build2 [73.1 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic/universe amd64 libgeos++-dev amd64 3.6.2-1build2 [811 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 1,415 kB in 4s (369 kB/s)
+Selecting previously unselected package libgeos-3.6.2:amd64.
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 91398 files and directories currently installed.)
+Preparing to unpack .../libgeos-3.6.2_3.6.2-1build2_amd64.deb ...
+Unpacking libgeos-3.6.2:amd64 (3.6.2-1build2) ...
+Selecting previously unselected package libgeos-c1v5:amd64.
+Preparing to unpack .../libgeos-c1v5_3.6.2-1build2_amd64.deb ...
+Unpacking libgeos-c1v5:amd64 (3.6.2-1build2) ...
+Selecting previously unselected package libgeos-dev.
+Preparing to unpack .../libgeos-dev_3.6.2-1build2_amd64.deb ...
+Unpacking libgeos-dev (3.6.2-1build2) ...
+Selecting previously unselected package libgeos++-dev.
+Preparing to unpack .../libgeos++-dev_3.6.2-1build2_amd64.deb ...
+Unpacking libgeos++-dev (3.6.2-1build2) ...
+Setting up libgeos-3.6.2:amd64 (3.6.2-1build2) ...
+Setting up libgeos-c1v5:amd64 (3.6.2-1build2) ...
+Setting up libgeos-dev (3.6.2-1build2) ...
+Setting up libgeos++-dev (3.6.2-1build2) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.3) ...
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">plotly</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pycountry</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">geopandas</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">geoplot</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">imageio</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python interpreter will be restarted.
+Collecting plotly
+  Downloading plotly-4.14.3-py2.py3-none-any.whl (13.2 MB)
+Requirement already satisfied: six in /databricks/python3/lib/python3.7/site-packages (from plotly) (1.14.0)
+Collecting retrying&gt;=1.3.3
+  Downloading retrying-1.3.3.tar.gz (10 kB)
+Building wheels for collected packages: retrying
+  Building wheel for retrying (setup.py): started
+  Building wheel for retrying (setup.py): finished with status &#39;done&#39;
+  Created wheel for retrying: filename=retrying-1.3.3-py3-none-any.whl size=11430 sha256=8829c57d69763b45edf845b31560ad3496e8154acce970d5f7075e61f41e680f
+  Stored in directory: /root/.cache/pip/wheels/f9/8d/8d/f6af3f7f9eea3553bc2fe6d53e4b287dad18b06a861ac56ddf
+Successfully built retrying
+Installing collected packages: retrying, plotly
+Successfully installed plotly-4.14.3 retrying-1.3.3
+Python interpreter will be restarted.
+Python interpreter will be restarted.
+Collecting pycountry
+  Downloading pycountry-20.7.3.tar.gz (10.1 MB)
+Building wheels for collected packages: pycountry
+  Building wheel for pycountry (setup.py): started
+  Building wheel for pycountry (setup.py): finished with status &#39;done&#39;
+  Created wheel for pycountry: filename=pycountry-20.7.3-py2.py3-none-any.whl size=10746863 sha256=1b6b003f39c568ac0279a831729cb977ab076e0918124f1a51bc083e90a2cd30
+  Stored in directory: /root/.cache/pip/wheels/57/e8/3f/120ccc1ff7541c108bc5d656e2a14c39da0d824653b62284c6
+Successfully built pycountry
+Installing collected packages: pycountry
+Successfully installed pycountry-20.7.3
+Python interpreter will be restarted.
+Python interpreter will be restarted.
+Collecting geopandas
+  Downloading geopandas-0.8.1-py2.py3-none-any.whl (962 kB)
+Requirement already satisfied: pandas&gt;=0.23.0 in /databricks/python3/lib/python3.7/site-packages (from geopandas) (1.0.1)
+Requirement already satisfied: python-dateutil&gt;=2.6.1 in /databricks/python3/lib/python3.7/site-packages (from pandas&gt;=0.23.0-&gt;geopandas) (2.8.1)
+Requirement already satisfied: numpy&gt;=1.13.3 in /databricks/python3/lib/python3.7/site-packages (from pandas&gt;=0.23.0-&gt;geopandas) (1.18.1)
+Requirement already satisfied: pytz&gt;=2017.2 in /databricks/python3/lib/python3.7/site-packages (from pandas&gt;=0.23.0-&gt;geopandas) (2019.3)
+Collecting pyproj&gt;=2.2.0
+  Downloading pyproj-3.0.0.post1-cp37-cp37m-manylinux2010_x86_64.whl (6.4 MB)
+Requirement already satisfied: certifi in /databricks/python3/lib/python3.7/site-packages (from pyproj&gt;=2.2.0-&gt;geopandas) (2020.6.20)
+Requirement already satisfied: six&gt;=1.5 in /databricks/python3/lib/python3.7/site-packages (from python-dateutil&gt;=2.6.1-&gt;pandas&gt;=0.23.0-&gt;geopandas) (1.14.0)
+Collecting fiona
+  Downloading Fiona-1.8.18-cp37-cp37m-manylinux1_x86_64.whl (14.8 MB)
+Collecting attrs&gt;=17
+  Downloading attrs-20.3.0-py2.py3-none-any.whl (49 kB)
+Collecting click&lt;8,&gt;=4.0
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting click-plugins&gt;=1.0
+  Downloading click_plugins-1.1.1-py2.py3-none-any.whl (7.5 kB)
+Collecting cligj&gt;=0.5
+  Downloading cligj-0.7.1-py3-none-any.whl (7.1 kB)
+Collecting munch
+  Downloading munch-2.5.0-py2.py3-none-any.whl (10 kB)
+Collecting shapely
+  Downloading Shapely-1.7.1-cp37-cp37m-manylinux1_x86_64.whl (1.0 MB)
+Installing collected packages: click, munch, cligj, click-plugins, attrs, shapely, pyproj, fiona, geopandas
+Successfully installed attrs-20.3.0 click-7.1.2 click-plugins-1.1.1 cligj-0.7.1 fiona-1.8.18 geopandas-0.8.1 munch-2.5.0 pyproj-3.0.0.post1 shapely-1.7.1
+Python interpreter will be restarted.
+Python interpreter will be restarted.
+Collecting geoplot
+  Downloading geoplot-0.4.1-py3-none-any.whl (28 kB)
+Requirement already satisfied: seaborn in /databricks/python3/lib/python3.7/site-packages (from geoplot) (0.10.0)
+Requirement already satisfied: matplotlib in /databricks/python3/lib/python3.7/site-packages (from geoplot) (3.1.3)
+Requirement already satisfied: pandas in /databricks/python3/lib/python3.7/site-packages (from geoplot) (1.0.1)
+Requirement already satisfied: geopandas in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from geoplot) (0.8.1)
+Collecting contextily&gt;=1.0.0
+  Downloading contextily-1.0.1-py3-none-any.whl (23 kB)
+Requirement already satisfied: joblib in /databricks/python3/lib/python3.7/site-packages (from contextily&gt;=1.0.0-&gt;geoplot) (0.14.1)
+Requirement already satisfied: requests in /databricks/python3/lib/python3.7/site-packages (from contextily&gt;=1.0.0-&gt;geoplot) (2.22.0)
+Collecting mapclassify&gt;=2.1
+  Downloading mapclassify-2.4.2-py3-none-any.whl (38 kB)
+Requirement already satisfied: scipy&gt;=1.0 in /databricks/python3/lib/python3.7/site-packages (from mapclassify&gt;=2.1-&gt;geoplot) (1.4.1)
+Requirement already satisfied: numpy&gt;=1.3 in /databricks/python3/lib/python3.7/site-packages (from mapclassify&gt;=2.1-&gt;geoplot) (1.18.1)
+Requirement already satisfied: scikit-learn in /databricks/python3/lib/python3.7/site-packages (from mapclassify&gt;=2.1-&gt;geoplot) (0.22.1)
+Requirement already satisfied: python-dateutil&gt;=2.6.1 in /databricks/python3/lib/python3.7/site-packages (from pandas-&gt;geoplot) (2.8.1)
+Requirement already satisfied: pytz&gt;=2017.2 in /databricks/python3/lib/python3.7/site-packages (from pandas-&gt;geoplot) (2019.3)
+Requirement already satisfied: six&gt;=1.5 in /databricks/python3/lib/python3.7/site-packages (from python-dateutil&gt;=2.6.1-&gt;pandas-&gt;geoplot) (1.14.0)
+Collecting cartopy
+  Downloading Cartopy-0.18.0.tar.gz (14.4 MB)
+Requirement already satisfied: shapely&gt;=1.5.6 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from cartopy-&gt;geoplot) (1.7.1)
+Requirement already satisfied: setuptools&gt;=0.7.2 in /usr/local/lib/python3.7/dist-packages (from cartopy-&gt;geoplot) (45.2.0)
+Collecting pyshp&gt;=1.1.4
+  Downloading pyshp-2.1.2.tar.gz (217 kB)
+Collecting descartes
+  Downloading descartes-1.1.0-py3-none-any.whl (5.8 kB)
+Requirement already satisfied: pyproj&gt;=2.2.0 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from geopandas-&gt;geoplot) (3.0.0.post1)
+Requirement already satisfied: fiona in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from geopandas-&gt;geoplot) (1.8.18)
+Requirement already satisfied: certifi in /databricks/python3/lib/python3.7/site-packages (from pyproj&gt;=2.2.0-&gt;geopandas-&gt;geoplot) (2020.6.20)
+Requirement already satisfied: munch in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from fiona-&gt;geopandas-&gt;geoplot) (2.5.0)
+Requirement already satisfied: click-plugins&gt;=1.0 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from fiona-&gt;geopandas-&gt;geoplot) (1.1.1)
+Requirement already satisfied: attrs&gt;=17 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from fiona-&gt;geopandas-&gt;geoplot) (20.3.0)
+Requirement already satisfied: cligj&gt;=0.5 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from fiona-&gt;geopandas-&gt;geoplot) (0.7.1)
+Requirement already satisfied: click&lt;8,&gt;=4.0 in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from fiona-&gt;geopandas-&gt;geoplot) (7.1.2)
+Collecting geopy
+  Downloading geopy-2.1.0-py3-none-any.whl (112 kB)
+Collecting geographiclib&lt;2,&gt;=1.49
+  Downloading geographiclib-1.50-py3-none-any.whl (38 kB)
+Requirement already satisfied: cycler&gt;=0.10 in /databricks/python3/lib/python3.7/site-packages (from matplotlib-&gt;geoplot) (0.10.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /databricks/python3/lib/python3.7/site-packages (from matplotlib-&gt;geoplot) (2.4.6)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /databricks/python3/lib/python3.7/site-packages (from matplotlib-&gt;geoplot) (1.1.0)
+Collecting mercantile
+  Downloading mercantile-1.1.6-py3-none-any.whl (13 kB)
+Collecting networkx
+  Downloading networkx-2.5-py3-none-any.whl (1.6 MB)
+Requirement already satisfied: decorator&gt;=4.3.0 in /databricks/python3/lib/python3.7/site-packages (from networkx-&gt;mapclassify&gt;=2.1-&gt;geoplot) (4.4.1)
+Collecting pillow
+  Downloading Pillow-8.1.0-cp37-cp37m-manylinux1_x86_64.whl (2.2 MB)
+Collecting rasterio
+  Downloading rasterio-1.1.8-1-cp37-cp37m-manylinux1_x86_64.whl (18.3 MB)
+Collecting snuggs&gt;=1.4.1
+  Downloading snuggs-1.4.7-py3-none-any.whl (5.4 kB)
+Collecting affine
+  Downloading affine-2.3.0-py2.py3-none-any.whl (15 kB)
+Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in /databricks/python3/lib/python3.7/site-packages (from requests-&gt;contextily&gt;=1.0.0-&gt;geoplot) (2.8)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /databricks/python3/lib/python3.7/site-packages (from requests-&gt;contextily&gt;=1.0.0-&gt;geoplot) (1.25.8)
+Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in /usr/lib/python3/dist-packages (from requests-&gt;contextily&gt;=1.0.0-&gt;geoplot) (3.0.4)
+Building wheels for collected packages: cartopy, pyshp
+  Building wheel for cartopy (setup.py): started
+  Building wheel for cartopy (setup.py): finished with status &#39;done&#39;
+  Created wheel for cartopy: filename=Cartopy-0.18.0-cp37-cp37m-linux_x86_64.whl size=15127812 sha256=c7db17982c3e2038468a9e83967b488271bad17b1da1aa804cdd929c71c2a3db
+  Stored in directory: /root/.cache/pip/wheels/0b/a9/54/172056df34478378e0636d30cd4d1a868de00e37254649bf1a
+  Building wheel for pyshp (setup.py): started
+  Building wheel for pyshp (setup.py): finished with status &#39;done&#39;
+  Created wheel for pyshp: filename=pyshp-2.1.2-py3-none-any.whl size=36215 sha256=fcef40c190805418c0505ba81e07482209e8de87fdb1b96ae0569aac01357c77
+  Stored in directory: /root/.cache/pip/wheels/fc/5c/43/92beaadf045d95947eee5a8191da4b3bc439d750bb13a3d468
+Successfully built cartopy pyshp
+Installing collected packages: snuggs, geographiclib, affine, rasterio, pyshp, pillow, networkx, mercantile, geopy, mapclassify, descartes, contextily, cartopy, geoplot
+Successfully installed affine-2.3.0 cartopy-0.18.0 contextily-1.0.1 descartes-1.1.0 geographiclib-1.50 geoplot-0.4.1 geopy-2.1.0 mapclassify-2.4.2 mercantile-1.1.6 networkx-2.5 pillow-8.1.0 pyshp-2.1.2 rasterio-1.1.8 snuggs-1.4.7
+Python interpreter will be restarted.
+Python interpreter will be restarted.
+Collecting imageio
+  Downloading imageio-2.9.0-py3-none-any.whl (3.3 MB)
+Requirement already satisfied: numpy in /databricks/python3/lib/python3.7/site-packages (from imageio) (1.18.1)
+Requirement already satisfied: pillow in /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages (from imageio) (8.1.0)
+Installing collected packages: imageio
+Successfully installed imageio-2.9.0
+Python interpreter will be restarted.
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mthh</span><span class="o">/</span><span class="n">cartogram_geopandas</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">cartogram_geopandas</span><span class="o">/</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;cartogram_geopandas&#39;...
+Compiling cycartogram.pyx because it changed.
+[1/1] Cythonizing cycartogram.pyx
+running install
+running build
+running build_py
+creating build
+creating build/lib.linux-x86_64-3.7
+copying cartogram_geopandas.py -&gt; build/lib.linux-x86_64-3.7
+running build_ext
+building &#39;cycartogram&#39; extension
+creating build/temp.linux-x86_64-3.7
+x86_64-linux-gnu-gcc -pthread -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O2 -Wall -g -fstack-protector-strong -Wformat -Werror=format-security -g -fwrapv -O2 -g -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -fPIC -I/usr/include/python3.7m -I/local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/include/python3.7m -c cycartogram.c -o build/temp.linux-x86_64-3.7/cycartogram.o
+cycartogram.c: In function ‘__pyx_f_11cycartogram_transform_geom’:
+cycartogram.c:2084:39: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for (__pyx_t_16 = 0; __pyx_t_16 &lt; __pyx_t_15; __pyx_t_16+=1) {
+                                       ^
+cycartogram.c:2134:41: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for (__pyx_t_21 = 0; __pyx_t_21 &lt; __pyx_t_20; __pyx_t_21+=1) {
+                                         ^
+cycartogram.c: In function ‘__pyx_pf_11cycartogram_9Cartogram_4cartogram’:
+cycartogram.c:3835:37: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for (__pyx_t_13 = 0; __pyx_t_13 &lt; __pyx_t_12; __pyx_t_13+=1) {
+                                     ^
+x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-Bsymbolic-functions -Wl,-z,relro -g -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 build/temp.linux-x86_64-3.7/cycartogram.o -o build/lib.linux-x86_64-3.7/cycartogram.cpython-37m-x86_64-linux-gnu.so
+running install_lib
+copying build/lib.linux-x86_64-3.7/cycartogram.cpython-37m-x86_64-linux-gnu.so -&gt; /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages
+copying build/lib.linux-x86_64-3.7/cartogram_geopandas.py -&gt; /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages
+byte-compiling /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages/cartogram_geopandas.py to cartogram_geopandas.cpython-37.pyc
+running install_egg_info
+Writing /local_disk0/.ephemeral_nfs/envs/pythonEnv-791dfeea-0b95-4c85-930a-6d656eaef318/lib/python3.7/site-packages/cartogram_geopandas-0.0.0c.egg-info
+/databricks/python/lib/python3.7/site-packages/Cython/Compiler/Main.py:369: FutureWarning: Cython directive &#39;language_level&#39; not set, using 2 for now (Py2). This will change in a later release! File: /databricks/driver/cartogram_geopandas/cycartogram.pyx
+  tree = Parsing.p_module(s, pxd, full_module_name)
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="defining-some-functions">
+<h2>Defining some functions<a class="headerlink" href="#defining-some-functions" title="Permalink to this headline">¶</a></h2>
+<p>We will process the collected data a bit before making any plots. To do
+this we will load some functions from notebook
+06<em>appendix</em>tweet<em>carto</em>functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;./06_appendix_tweet_carto_functions&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="initial-processing-of-dataframe">
+<h2>Initial processing of dataframe<a class="headerlink" href="#initial-processing-of-dataframe" title="Permalink to this headline">¶</a></h2>
+<p>This step only needs to be run if you want to overwrite the existing
+preprocessed dataframea “processedDF.csv”. Otherwise you can just skip
+to the next cell and load the already generated dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># path = &quot;/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/{2020,2021}/*/*/*/*/*&quot;</span>
+<span class="c1"># df = load_twitter_geo_data(path)</span>
+<span class="c1"># #Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour.</span>
+<span class="c1"># df = df[(df[&#39;day&#39;] != 22) &amp; (df[&#39;day&#39;] != 2 )].reset_index() #Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour. Data collection ended in the middle of Jan second so to only have full day we disregard Jan 2.</span>
+<span class="c1"># pre_proc_path = &quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/tmp/processedDF.csv&quot;</span>
+<span class="c1"># df.to_csv(pre_proc_path)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="quick-initial-data-exploration">
+<h2>Quick initial data exploration<a class="headerlink" href="#quick-initial-data-exploration" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start by having a look at the first 5 elements.</p>
+<p>For now we are only looking at country of origin and timestamp, so we
+have neither loaded the tweets or the derived sentiment classes from
+before.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data</span>
+<span class="n">pre_proc_path</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/tmp/processedDF.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pre_proc_path</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>The tweets we have loaded were sent between Dec 23 and Jan 1, and the
+timestamps are given in Greenwich Mean Time (GMT). We can use the
+display function again to have a look at how tweets are distributed as a
+function of time of day. To get tweets from a single timezone we just
+have a look at tweets from the United Kingdom (which has the country
+code <em>GB</em>).</p>
+<p>The histograms below show a clear dip in twitter activity from around
+eleven at night untill around eight in the morning. The night between
+the 24th and 25th of December shows a small spike right after midnight
+and new years shows a large spike after midnight. It seems that people
+like to tweet when celebrating!</p>
+<p>There is an abnormal peak on December 27th at 21. We have not been able
+to determine what this is due to.</p>
+<p>NOTE: The cell below has been configured (via the display user
+interface) to show histograms using date as key and hour as values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;countryCode==&#39;GB&#39;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>Truncated to 30 rows</p>
+<p>If we look at Saudi Arabia it seems that something is happening on
+December 31rst and December 28th.</p>
+<ul class="simple">
+<li><p>The timestamps are in GMT, so the smalller peak at 21:00 on December
+31rst is actually located at midnight. Although Saudi Arabia follows
+the islamic calendar it looks like there are still people
+celebrating the gregorian new year. We do not know what could be the
+reason for the larger peak on December 31rst.</p></li>
+<li><p>The largest spike is located on December 28th. It covers tweets send
+between 12:00 and 16:00 GMT, which would correspond to 15:00-18:00
+local time. We have tried to find the cause of this peak, and we
+think it might be due to the conviction of female rights activist
+Loujain al-Hathloul who was sentenced to five years and 8 months of
+prison on this date. We could not find an exact timestamp for this
+event, but the report from france24 is timestamped to 12:20
+(presumably Western European time), which corresponds to 14:20 in
+Saudi Arabia. It might be that there was a bit of lag time between
+media starting to report on the events and the case gaining traction
+on social media. Of course the spike could also be due to something
+else, but this sentencing seems like a likely cause.</p></li>
+</ul>
+<p>Links: *
+https://www.thehindu.com/news/international/saudi-activist-loujain-al-hathloul-sentenced-to-5-years-8-months-in-prison/article33437467.ece
+Timestamp: 17:30 IST corresponding to 15:00 in Saudi Arabia *
+https://www.aljazeera.com/news/2020/12/28/saudi-court-hands-jail-sentence-to-womens-rights-activist
+No timestamp *
+https://www.france24.com/en/live-news/20201228-saudi-activist-loujain-al-hathloul-jailed-for-5-years-8-months
+Timestamp: 12:20 CET corresponding to 14:20 in Saudi Arabia</p>
+<p>NOTE: The articles from thehindu.com and France24 are identical, as they
+both come from AFP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;countryCode==&#39;SA&#39;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>Truncated to 30 rows</p>
+<p>The display function produces normalized histograms, so the below cell
+prints the daily number of tweets.</p>
+<p>There is indeed a lot more tweets collected on the 28th and on the
+31rst.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dateList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2020-12-23&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-25&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-26&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-27&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-28&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-29&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-30&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-31&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-01&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dateList</span><span class="p">:</span>
+  <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;(countryCode==&#39;SA&#39;) and (date==&#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;</span><span class="o">%</span><span class="n">d</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> tweets were collected in Saudi Arabia on </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1519 tweets were collected in Saudi Arabia on 2020-12-23
+1437 tweets were collected in Saudi Arabia on 2020-12-24
+1556 tweets were collected in Saudi Arabia on 2020-12-25
+1871 tweets were collected in Saudi Arabia on 2020-12-26
+1529 tweets were collected in Saudi Arabia on 2020-12-27
+3123 tweets were collected in Saudi Arabia on 2020-12-28
+1700 tweets were collected in Saudi Arabia on 2020-12-29
+1643 tweets were collected in Saudi Arabia on 2020-12-30
+3127 tweets were collected in Saudi Arabia on 2020-12-31
+1486 tweets were collected in Saudi Arabia on 2021-01-01
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="mapping-the-tweets">
+<h2>Mapping the tweets<a class="headerlink" href="#mapping-the-tweets" title="Permalink to this headline">¶</a></h2>
+<p>To create maps using the tweets we will first group the tweets by
+country codes, producing a new dataframe with one row per country.</p>
+<p>The map below is generated by selecting the map option in the display
+UI. This view only offers a simple discrete colorbar, but we can see
+that the most tweet producing countries are the United States and
+Brazil. Hovering above countries gives more detailed information, and
+shows that the Japan, the UK and India also produce a lot of tweets.</p>
+<p>We also get tweets from a number of countries which have blocked access
+to twitter (China: 1825, North Korea: 5, Iran: 1590 and Turkmenistan:
+7).</p>
+<p>https://en.wikipedia.org/wiki/Censorship<em>of</em>Twitter#Government<em>blocking</em>of<em>Twitter</em>access</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group by country code</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">country_code_grouping</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">add_iso_a3_col</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">df_cc</span><span class="p">[[</span><span class="s2">&quot;iso_a3&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">]]</span> <span class="c1">#reorder to have iso_a3 as first column (required in order to use the map view in display). Also we don&#39;t need countryCode and index columns.</span>
+
+<span class="c1"># Inspect result</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>Truncated to 30 rows</p>
+<p>Right now we are dealing with a regular dataframe. But to make some more
+advanced plots we will need information about the shapes of the
+countries (in the form of polygons). We get the shapes via the function
+create<em>geo</em>df(), which relies on the geopandas library. When calling
+display on a geopandas dataframe we just get the raw table, and none of
+the premade visualizations we get when displaying pandas dataframes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the geopandas dataframe</span>
+<span class="n">df_world</span> <span class="o">=</span> <span class="n">create_geo_df</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+<span class="c1"># Inspect result</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_world</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># if you want to work with this file localy you need to do the following:</span>
+<span class="c1"># Save to filestore: df_world.to_csv(&quot;/dbfs/FileStore/group10/world_tweet.csv&quot;)</span>
+<span class="c1"># Download to local by pasting the following into your browser: https://dbc-635ca498-e5f1.cloud.databricks.com/files/group10/world_tweet.csv?o=445287446643905 </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="choropleth-maps">
+<h3>Choropleth maps<a class="headerlink" href="#choropleth-maps" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A choropleth map is a map in which regions are assigned a color
+based on a numerical attribute. This could for example be each
+regions population, average life expectancy, or number of geo tagged
+tweets.</p></li>
+</ul>
+</div>
+<div class="section" id="cartograms">
+<h3>Cartograms<a class="headerlink" href="#cartograms" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A cartogram is a way to represent geograpic differences in some
+variable, by altering the size of regions. The areas and shapes of
+regions are distorted in order to create an approximately equal
+density of the selected variable across all regions. In our case
+there are a lot of tweets coming from brazil and the US so these
+regions will grow in order to produce a lower tweet density. There
+is a tradeoff between shape preservation and getting equal density.
+This is especially evident when the density you are trying to
+equalize differs by several orders of magnitude.</p></li>
+<li><p>The available python cartogram package cartogram<em>geopandas is based
+on Dougenik, J. A, N. R. Chrisman, and D. R. Niemeyer: 1985. “An
+algorithm to construct continuous cartograms”. It is very sparsely
+documented and does not report error scores and tends to diverge if
+allowed to run for too many iterations. We found the Gui program
+Scapetoad to offer superior performance. Scapetoad is based on Mark
+Newman’s C-code “Cart”, which is based on his and Michael T.
+Gastner’s paper “Diffusion-based method for
+producingdensity-equalizing maps” from 2004. Scapetoad is working on
+a Python API, but it has not been released yet. So inspite of its
+shortcomings we will be using cartogram</em>geopandas, since Scapetoad
+can not be called from a notebook.</p></li>
+<li><p>Due to the limitations of the cartogram_geopandas library, we
+choose to run for a modest number of iterations. This means we do
+not have direct proportionality between distorted area and number of
+tweets, rather the distortions give us a qualitative representation
+of where tweeting is frequent.</p></li>
+</ul>
+<p>Links: * mthh, 2015: https://github.com/mthh/cartogram_geopandas *
+Dougenik, Chrisman and Niemeyer, 1985:
+https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.0033-0124.1985.00075.x
+* Gastner and Newman: https://arxiv.org/abs/physics/0401102</p>
+<p>To begin with we will plot all the tweets collected between 23:00:00 and
+23:59:59 (GMT) on December 31rst. On the left side a world map with
+colors indicating number of tweets is shown, and on the right side a
+cartogram. It seems the United kingdom is tweeting a lot at this moment,
+which makes sense as they are about to enter 2021. Happy new year!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pre_proc_path</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;(day==31) and (hour==23)&quot;</span><span class="p">)</span>
+<span class="c1"># Group by country code</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">country_code_grouping</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">add_iso_a3_col</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">df_cc</span><span class="p">[[</span><span class="s2">&quot;iso_a3&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">]]</span> <span class="c1">#reorder to have iso_a3 as first column (required in order to use the map view in display). Also we don&#39;t need countryCode and index columns.</span>
+<span class="c1"># Create the geopandas dataframe</span>
+<span class="n">df_world</span> <span class="o">=</span> <span class="n">create_geo_df</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># Make a choropleth plot</span>
+<span class="n">df_world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;numTweets&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># The make_cartogram function can not handle a tweetcount of zero, so a not so elegant solution is to clip the tweet count at 1.</span>
+<span class="c1"># The alternative (to remove countries without tweets) is not elegant either (and causes problems when we look at the time evolution, since countries will be popping in and out of existence).</span>
+<span class="n">df_world</span><span class="p">[</span><span class="s2">&quot;numTweets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_world</span><span class="p">[</span><span class="s2">&quot;numTweets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">df_world</span><span class="p">[</span><span class="s2">&quot;numTweets&quot;</span><span class="p">]))</span> 
+
+<span class="n">df_cartogram</span> <span class="o">=</span> <span class="n">make_cartogram</span><span class="p">(</span><span class="n">df_world</span><span class="p">,</span> <span class="s1">&#39;numTweets&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_cartogram</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;numTweets&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> 
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>&lt;img
+src=’https://raw.githubusercontent.com/Rasmuskh/ScaDaMaLe<em>notebook</em>resources/main/choropleth<em>and</em>cartogram.png’&gt;</p>
+</div>
+<div class="section" id="animating-the-time-evolution-of-tweets">
+<h3>Animating the time evolution of tweets<a class="headerlink" href="#animating-the-time-evolution-of-tweets" title="Permalink to this headline">¶</a></h3>
+<p>Rather than looking at a snapshot of the worlds twitter activity it
+would be interesting to look at how twitter activity looks across hours
+and days.</p>
+<p>The following cell generates a number of png cartograms. One for every
+hour between December 23rd 2020 and January 2nd 2021.</p>
+<p>It takes quite long to generate them all (around eight minutes) so you
+might want to just load the pregenerated pngs in the cell below.</p>
+<p>NOTE: Geopandas prints some warnings related to using unprojected
+geometries (We work in longitude and latitude rather than some standard
+2D map projection). This is not an issue since we are not using the area
+function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pre_proc_path = &quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/tmp/processedDF.csv&quot;</span>
+<span class="c1"># df = pd.read_csv(pre_proc_path)</span>
+<span class="c1"># key = &quot;hour&quot;</span>
+<span class="c1"># timeOfDayList = list(range(0, 24))</span>
+<span class="c1"># nIter = 5</span>
+<span class="c1"># cartogram_key = &quot;numTweets&quot;</span>
+<span class="c1"># for day in range(23,32):</span>
+<span class="c1">#   out_path = &quot;/dbfs/FileStore/group10/cartogram/2020_Dec_%d_hour_&quot;%day</span>
+<span class="c1">#   legend = &quot;2020 December %d: &quot;%day</span>
+<span class="c1">#   animate_cartogram(df.query(&quot;(day==%d) and (year==2020)&quot;%day), key, timeOfDayList, out_path, nIter, cartogram_key, legend)</span>
+<span class="c1"># for day in range(1,2):</span>
+<span class="c1">#   out_path = &quot;/dbfs/FileStore/group10/cartogram/2021_Jan_%d_hour_&quot;%day</span>
+<span class="c1">#   legend = &quot;2021 January %d: &quot;%day</span>
+<span class="c1">#   animate_cartogram(df.query(&quot;(day==%d) and (year==2021)&quot;%day), key, timeOfDayList, out_path, nIter, cartogram_key, legend)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have generated the PNGs we can go ahead and combine them
+into a gif using the python imageIO library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">images</span><span class="o">=</span><span class="p">[]</span> <span class="c1"># array for storing the png frames for the gif</span>
+<span class="n">timeOfDayList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
+<span class="c1">#Append images to image list</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="mi">32</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">timeOfDayList</span><span class="p">:</span>
+    <span class="n">out_path</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/group10/cartogram/2020_Dec_</span><span class="si">%d</span><span class="s2">_hour_</span><span class="si">%d</span><span class="s2">.png&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">)</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">out_path</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">timeOfDayList</span><span class="p">:</span>
+    <span class="n">out_path</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/group10/cartogram/2021_Jan_</span><span class="si">%d</span><span class="s2">_hour_</span><span class="si">%d</span><span class="s2">.png&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">)</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">out_path</span><span class="p">))</span>
+<span class="c1">#create gif from the image list</span>
+<span class="n">imageio</span><span class="o">.</span><span class="n">mimsave</span><span class="p">(</span><span class="s2">&quot;/dbfs/FileStore/group10/cartogram/many_days_cartogram.gif&quot;</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the following animation. The black vertical bar indicates
+where in the world it is midnight, the yellow vertical bar indicates
+where it is noon, and the time shown at the top is the current GMT time.
+The color/z-axis denotes the number of tweets produced in the given
+hour. Unsurprisingly we see countries inflate during the daytime and
+deflate close to midnight when people tend to sleep.</p>
+<p>&lt;img
+src=’https://raw.githubusercontent.com/Rasmuskh/ScaDaMaLe<em>notebook</em>resources/main/cartogram.gif’&gt;</p>
+</div>
+<div class="section" id="sentiment-mapping">
+<h3>Sentiment mapping<a class="headerlink" href="#sentiment-mapping" title="Permalink to this headline">¶</a></h3>
+<p>This cartogram animation expresses the amount of tweets both through the
+size distortions and the z-axis (the color). In a way it is a bit
+redundant to illustrate the same things in two ways. The plot would be
+more informative if instead the z-axis is used to express some measure
+of sentiment.</p>
+<p>We will load a dataframe containing sentiment cluster information
+extracted in the previous notebook. This dataframe only contains tweets
+which contained “Unicode block Emoticons”, which is about 14% of the
+tweets we collected between December 23rd and January 1rst. The
+dataframe has boolean columns indicating if an emoji from a certain
+cluster is present. We will use the happy and not happy clusters found
+in the previous notebooks to express a single sentiment score:</p>
+<blockquote>
+<div><p>df[“sentiment”] = (1 + df[“happy”] - df[“notHappy”])/2 This is
+useful since it allows us to make a map containing information about
+both clusters. A caveat is that the although these clusters mostly
+contain what we would consider happy and unhappy emojis respectively,
+they do also contain some rather ambivalent emojis. The unhappy
+cluster for example contains a smiley that is both smiling and crying.
+On top of this emojis can take on different meanings in different
+contexts. Expressed in this way we get that: * A sentiment value of 0
+means that the tweet contains unhappy emojis and no happy emojis. * A
+sentiment value of 0.5 means that the tweet either contain both happy
+and unhappy emojis or that it contains neither happy or unhappy
+emojis. * A sentiment value of 1 means that the tweet did not contain
+unhappy emojis but did contain happy emojis.</p>
+</div></blockquote>
+<p>The pie chart below reveals that unhappy tweets are significantly more
+common than happy ones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/processedEmoticonClusterParquets/emoticonCluster.parquet&quot;</span>
+<span class="n">cluster_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;notHappy&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span><span class="p">,</span> <span class="s2">&quot;SK&quot;</span><span class="p">,</span> <span class="s2">&quot;prayer&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">load_twitter_geo_data_sentiment</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">22</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)]</span> <span class="c1">#Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour. Data collection ended in the middle of Jan second so to only have full day we disregard Jan 2.</span>
+
+<span class="c1"># Let&#39;s try combining the happy and sad columns to one &quot;sentiment&quot; column. </span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;notHappy&quot;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;notHappy&quot;</span><span class="p">,</span> <span class="s2">&quot;sentiment&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we will look at a choropleth world map using the “sentiment” score
+as z-axis. Countries with fewer than 100 tweets are not shown here.</p>
+<p>It looks like the tweets from Africa, The US and the middle east are
+less happy than those from latin America, Europe, Asia and Oceania.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_cc</span> <span class="o">=</span> <span class="n">country_code_grouping_sentiment</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">add_iso_a3_col</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+<span class="n">df_cc</span> <span class="o">=</span> <span class="n">df_cc</span><span class="p">[[</span><span class="s2">&quot;iso_a3&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="s2">&quot;sentiment&quot;</span><span class="p">]]</span> <span class="c1">#reorder to have iso_a3 as first column (required in order to use the map view in display). Also we don&#39;t need countryCode and index columns.</span>
+<span class="n">df_cc</span>
+<span class="c1"># Create the geopandas dataframe</span>
+<span class="n">df_world</span> <span class="o">=</span> <span class="n">create_geo_df_sentiment</span><span class="p">(</span><span class="n">df_cc</span><span class="p">)</span>
+
+<span class="n">vmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">df_world</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;numTweets&gt;=20&quot;</span><span class="p">)[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df_world</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;numTweets&gt;=20&quot;</span><span class="p">)[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span><span class="s2">&quot;green&quot;</span><span class="p">])</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_under</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1">#We filter out countries with very few emojii tweets</span>
+<span class="n">df_world</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_world</span><span class="p">[</span><span class="s2">&quot;numTweets&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vmin</span> <span class="o">-</span><span class="mi">1</span>
+<span class="c1"># df_world = df_world.query(&quot;numTweets&gt;10&quot;).reset_index()</span>
+
+<span class="c1"># Make a choropleth plot</span>
+<span class="c1"># This has been commented out and the result is rendered from github to be compatible with the ScaDaMaLe book format</span>
+<span class="c1"># df_world.plot(column=&#39;sentiment&#39;, cmap=cmap, legend=True, vmin=vmin, vmax=vmax, figsize=(20,8))</span>
+<span class="c1"># plt.title(&quot;Sentiment by country&quot;, fontsize=24)</span>
+<span class="c1"># plt.xlabel(&quot;Longitude $^\circ$&quot;, fontsize=20)</span>
+<span class="c1"># plt.ylabel(&quot;Latitude $^\circ$&quot;, fontsize=20)</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>&lt;img
+src=’https://raw.githubusercontent.com/Rasmuskh/ScaDaMaLe<em>notebook</em>resources/main/choropleth_sentiment.png’&gt;</p>
+<p>Let us have a look at how this sentiment score ranks the countries (with
+more than 100 emoji tweets) from happiest to unhappiest.</p>
+<p>Japan, Sweden and Netherlands are in the lead.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df_world</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;numTweets&gt;=100&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;sentiment&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;continent&quot;</span><span class="p">,</span> <span class="s2">&quot;numTweets&quot;</span><span class="p">,</span> <span class="s2">&quot;sentiment&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>Truncated to 30 rows</p>
+<p>We are now ready to generate an animated cartogram using the number of
+tweets to determine the area distortions and using the sentiment score
+as the color dimension.</p>
+<p>We do not have as many emoji tweets, so here we limit ourselves to only
+one frame per day. We color countries with less than 30 tweets per day
+grey, since their sentiment score will be extremely unreliable.</p>
+<p>The following cell generates the animation, but as we already have
+produced it you can skip straight to the next cell where it is
+displayed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Load data</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/processedEmoticonClusterParquets/emoticonCluster.parquet&quot;</span>
+<span class="n">cluster_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;notHappy&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span><span class="p">,</span> <span class="s2">&quot;SK&quot;</span><span class="p">,</span> <span class="s2">&quot;prayer&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">load_twitter_geo_data_sentiment</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">22</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)]</span> <span class="c1">#Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour. Data collection ended in the middle of Jan second so to only have full day we disregard Jan 2.</span>
+
+<span class="c1"># Combine the happy and sad columns into one &quot;sentiment&quot; column. </span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;notHappy&quot;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="c1"># Arguments for the function animate_cartogram_sentiment(...)</span>
+<span class="n">legendList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2020-12-23&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-25&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-26&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-27&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-28&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-29&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-30&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-12-31&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-01&quot;</span><span class="p">]</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;day&quot;</span>
+<span class="n">nIter</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">minSamples</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">cartogram_key</span> <span class="o">=</span> <span class="s2">&quot;numTweets&quot;</span>
+<span class="n">dayList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span><span class="s2">&quot;green&quot;</span><span class="p">])</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_under</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Find upper and lower range for the color dimension.</span>
+<span class="c1"># We want to utilize the full dynamic range of the z-axis.</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.45</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mf">0.55</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">dayList</span><span class="p">:</span>
+  <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;day==</span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">day</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+  <span class="n">df_cc</span> <span class="o">=</span> <span class="n">country_code_grouping_sentiment</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">)</span>
+  <span class="n">df_cc</span> <span class="o">=</span> <span class="n">df_cc</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;count&gt;</span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">minSamples</span><span class="p">)</span>
+  <span class="n">lower</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">df_cc</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
+  <span class="n">upper</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df_cc</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
+  <span class="k">if</span> <span class="n">lower</span><span class="o">&lt;</span><span class="n">vmin</span><span class="p">:</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="n">lower</span>
+  <span class="k">if</span> <span class="n">upper</span><span class="o">&gt;</span><span class="n">vmax</span><span class="p">:</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="n">upper</span>
+
+<span class="n">out_path</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/group10/cartogram/sentiment&quot;</span>
+<span class="n">animate_cartogram_sentiment</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">key</span><span class="p">,</span> <span class="n">dayList</span><span class="p">,</span> <span class="n">out_path</span><span class="p">,</span> <span class="n">nIter</span><span class="p">,</span> <span class="n">cartogram_key</span><span class="p">,</span> <span class="n">minSamples</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">legendList</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+</pre></div>
+</div>
+</div></blockquote>
+<p>Unfortunately we do not have enough data to color all the countries, but
+some interesting things can still be observed. * Most countries tweet
+happier at Christmas and New Years. Take a look at Spain and Brazil for
+example. * Japan and most of Europe looks consistently happy, while
+Africa, Saudi Arabia and the US looks unhappy. * The UK looks
+comparatively less happy than the rest of Europe.</p>
+<p>We keep in mind that these differences may be caused by or exaggerated
+by differences in how emojis are used differently in different
+countries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">displayHTML</span><span class="p">(</span><span class="s2">&quot;&lt;img src=&#39;/files/group10/cartogram/sentiment.gif&#39;&gt;&quot;</span><span class="p">)</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="s2">&quot;&lt;img src=&#39;https://raw.githubusercontent.com/Rasmuskh/ScaDaMaLe_notebook_resources/main/cartogram_sentiment.gif&#39;&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="looking-at-trends-in-emoticon-use-over-times-of-the-day">
+<h3>Looking at trends in emoticon use over times of the day<a class="headerlink" href="#looking-at-trends-in-emoticon-use-over-times-of-the-day" title="Permalink to this headline">¶</a></h3>
+<p>Next we aggregate all of the tweet data into one set of 24 hours, i.e.
+we merge all the days into one to try to see trends in emoticon use
+depending on time of day.</p>
+<p>We want to visualize the different clusters in cartogram animations.
+First we filter the tweets by cluster so that we get a dataframe per
+cluster containing only the tweets wherein there is an emoticon from
+that cluster. In the cartograms we scale each country by how large a
+proportion of the total tweets from that country pertaining to that
+cluster are tweeted in a given hour. So if the area (in the current
+projection…) of a particular country is <span class="math notranslate nohighlight">\(A\)</span>, then its “mass” (recall
+that these plots aim for equal “density”) at hour <span class="math notranslate nohighlight">\(h\)</span> in these plots
+will be \[A + \sigma p*h A,\] where <span class="math notranslate nohighlight">\(p*h\)</span> is the proportion of
+tweets in that country and cluster that is tweeted at hour <span class="math notranslate nohighlight">\(h\)</span> and
+<span class="math notranslate nohighlight">\(\\sigma\)</span> is a scaling factor which we set to 2. In order to reduce
+noise, all countries which have fewer than 100 tweets of a given cluster
+are set to have constant “mass” corresponding to their area.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/processedEmoticonClusterParquets/emoticonCluster.parquet&quot;</span>
+<span class="n">cluster_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;notHappy&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span><span class="p">,</span> <span class="s2">&quot;SK&quot;</span><span class="p">,</span> <span class="s2">&quot;prayer&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># # This cell might take 15-20 minutes to run</span>
+
+<span class="c1"># for cluster_name in cluster_names:</span>
+<span class="c1">#    if cluster_name == &quot;all&quot;:</span>
+<span class="c1">#      df = load_twitter_geo_data(path)</span>
+<span class="c1">#    else:</span>
+<span class="c1">#      df = load_twitter_geo_data_with_filter(path, cluster_name)</span>
+    
+<span class="c1">#    df = df[df[&#39;day&#39;] != 22].reset_index() #Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour.</span>
+<span class="c1">#    df = df[(df[&#39;day&#39;] != 22) &amp; (df[&#39;day&#39;] != 2 )].reset_index() #Data collection was continuous during the 22nd December whereas for the remaining days we only streamed for 3 minutes per hour. Data collection ended in the middle of Jan second so to only have full day we disregard Jan 2.</span>
+  
+<span class="c1">#    # add column in order to be able to display ratio of total tweets</span>
+<span class="c1">#    df[&#39;numTweets&#39;] = df.groupby(&#39;countryCode&#39;)[&#39;countryCode&#39;].transform(&#39;count&#39;)</span>
+<span class="c1">#    df[&quot;proportion&quot;] = 1 / df[&quot;numTweets&quot;]</span>
+  
+<span class="c1">#    # filter out countries with very few tweets</span>
+<span class="c1">#    df = df[df.numTweets &gt;= 100]</span>
+<span class="c1">#    # create cartogram</span>
+<span class="c1">#    key = &quot;hour&quot;</span>
+<span class="c1">#    timeOfDayList = list(range(0, 24))</span>
+<span class="c1">#    out_path = &quot;/dbfs/FileStore/group10/cartogram_&quot; + cluster_name</span>
+<span class="c1">#    nIter = 30</span>
+<span class="c1">#    cartogram_key = &quot;proportion&quot;</span>
+
+<span class="c1">#    animate_cartogram_extra(df[[&quot;index&quot;, &quot;countryCode&quot;, &quot;proportion&quot;, &quot;hour&quot;]], key, timeOfDayList, out_path, nIter, cartogram_key, default_value=0, scale_factor=3, vmin=0.0, vmax=0.15)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+*** WARNING: skipped 91535 bytes of output ***
+
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+/local_disk0/tmp/1610397648296-0/PythonShell.py:59: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  
+/local_disk0/tmp/1610397648296-0/PythonShell.py:62: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  from pyspark.sql import DataFrame
+/local_disk0/.ephemeral_nfs/envs/pythonEnv-d641ec82-5fc6-41ae-809f-b998ad56a210/lib/python3.7/site-packages/cartogram_geopandas.py:48: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  return crtgm.make()
+</pre></div>
+</div>
+</div></blockquote>
+<p>Below are the obtained plots for emoticon use by time of day in the
+different countries. The colorbar corresponds to the proportion of
+tweets from a country tweeted in a given hour and the areas are scaled
+as described above. The black line is again midnight and the yellow line
+noon.</p>
+<p>For some of the clusters, for instance “cat” and “monkey”, it is clear
+that we have too little data to be able to say anything interesting.
+Perhaps the one conclusion one can draw there is that the monkey
+emoticons are not used very often in the US or Japan (since those
+countries tweet a lot but did not have more than 100 total tweets with
+monkey emoticons).</p>
+<p>The other plots mostly show that people tweet more during the day than
+at night. Perhaps the amount of emoticons in each of the “happy” and
+“notHappy” clusters is too large to be able to find some distinctiveness
+in the time of day that people use them.</p>
+<p>The most interesting cluster to look at in this way might be the prayer
+cluster where it appears that we can see glimpses of the regular prayers
+in countries such Egypt and Saudi Arabia.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clusters_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;notHappy&quot;</span><span class="p">,</span> <span class="s2">&quot;SK&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span><span class="p">,</span> <span class="s2">&quot;prayer&quot;</span><span class="p">]</span>
+<span class="n">html_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">  &lt;figure&gt;</span>
+<span class="s2">  &lt;img src=&quot;/files/group10/cartogram_</span><span class="si">{</span><span class="n">cluster_name</span><span class="si">}</span><span class="s2">.gif&quot; style=&quot;width:60%&quot;&gt;</span>
+<span class="s2">  &lt;figcaption&gt;The &quot;</span><span class="si">{</span><span class="n">cluster_name</span><span class="si">}</span><span class="s2">&quot; cluster.&lt;/figcaption&gt;</span>
+<span class="s2">  &lt;/figure&gt;</span>
+<span class="s2">  &lt;hr style=&quot;height:3px;border:none;color:#333;background-color:#333;&quot; /&gt;</span>
+<span class="s2">  &quot;&quot;&quot;</span> <span class="k">for</span> <span class="n">cluster_name</span> <span class="ow">in</span> <span class="n">clusters_to_plot</span><span class="p">])</span>
+  
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">html_str</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_0-sds-3-x-projects/student-project-10_group-Geosmus"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="02_ClusteringEmoticonsBasedOnTweets.html" title="previous page">Clustering emoticons based on tweets</a>
+    <a class='right-next' id="next-link" href="04_conclusion.html" title="next page">Conclusion</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
