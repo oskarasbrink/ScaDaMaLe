@@ -1,0 +1,2199 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to Spark SQL &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spark Sql Programming Guide" href="007a_SparkSQLProgGuide_HW.html" />
+    <link rel="prev" title="Word Count on US State of the Union (SoU) Addresses" href="006_WordCount.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="001_whySpark.html">
+   Why Apache Spark?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html">
+     databricks community edition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+     Essentials of Databricks Cloud (DBC) in a Big Hurry
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+     DBC Essentials: What is Databricks Cloud?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+     DBC Essentials: Shard, Cluster, Notebook and Dashboard
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+     DBC Essentials: Team, State, Collaboration, Elastic Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+     You Should All Have databricks community edition account by now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#import-course-content-now">
+     Import Course Content Now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+     Cloud-free Computing Environment (Optional but recommended)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_01_multiLingualNotebooks.html">
+     Notebooks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+     Further Reference / Homework / Recurrrent Points of Reference
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html">
+     Scala Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+     Let’s continue to get our hands dirty in Scala
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-type-hierarchy">
+     Scala Type Hierarchy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-collections">
+     Scala Collections
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+     Exercise in Functional Programming
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#lazy-evaluation">
+     Lazy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#recursions">
+     Recursions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="005_RDDsTransformationsActionsHOMEWORK.html">
+     HOMEWORK notebook - RDDs Transformations and Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006_WordCount.html">
+     Word Count on US State of the Union (SoU) Addresses
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="007a_SparkSQLProgGuide_HW.html">
+     Spark Sql Programming Guide
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html#id1">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007c_SparkSQLProgGuide_HW.html">
+     Getting Started - Exercise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html#id1">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007e_SparkSQLProgGuide_HW.html">
+     Performance Tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html#id1">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+     SQL Pivoting since Spark 2.4
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#load-data">
+     Load Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-in-sql">
+     Pivoting in SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+     Pivoting with Multiple Aggregate Expressions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+     Pivoting with Multiple Grouping Columns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+     Pivoting with Multiple Pivot Columns
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Extract Transform and Load
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+     Parsing the output from
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+     Providing case classes for input and output for easy spark communication
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+     Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+     Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/00_download_data.html">
+   The two cultures
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/01_load_data.html">
+     Preprocessing and loading the relevant data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/02_logisticregression.html">
+     The two cultures - Classifying threads with logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/03_word2vec.html">
+     Classification using Word2Vec
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/04_LDA.html">
+     Topic Modeling with LDA
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/01_Loading_GQA-JSON.html">
+   Reading GQA JSON files
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html">
+     Exploring the GQA Scene Graph Dataset Structure and Properties
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html#general-discussion">
+     General discussion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-03_group-GuangyiZhang/01_triads.html">
+   Signed Triads in Social Media
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/01_DistributedSVD.html">
+   Distributed singular value decomposition
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html">
+     Music Recommendation System
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html">
+   Wikipedia analysis using Latent Dirichlet Allocation (LDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#folders-and-files">
+   Folders and Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#downloading">
+   Downloading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#extracting-and-filtering">
+   Extracting and Filtering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#prepare-for-lda">
+   Prepare for LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#lda">
+   LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#looking-at-the-model">
+   Looking at the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html">
+   Unsupervised clustering of particle physics data with distributed training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#background">
+   Background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
+   The UClusted algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
+   Our contribution
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
+     Important!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
+     Important (continued from above)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/04_evaluate.html">
+     Evaluation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html">
+   Motif Finding
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html#application">
+   Application
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/02_Data_Processing.html">
+     Data Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html">
+     Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html#examples">
+     Examples
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html">
+   ScaDaMaLe project: Distributed ensembles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#data">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensemble-of-neural-networks">
+   Distributed ensemble of neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensembles-prediction-api">
+   Distributed ensembles prediction API
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-distributed-predictions">
+   Application example: Distributed predictions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-out-of-distribution-detection">
+   Application example: Out of distribution detection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/01_Introduction.html">
+   Topic Modeling with SARS-Cov-2 Genome 🧬
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/02_Data_Processing.html">
+     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
+     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
+     <em>
+      LDA
+     </em>
+     20NewsGroupsSmall’)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
+     Visualise Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
+     Format data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#explore-data">
+     Explore data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/06_Results.html">
+     Results and Conclusion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/01_Introduction.html">
+   Twitter Streaming Using Geolocation and Emoji Based Sentiment Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/02_ClusteringEmoticonsBasedOnTweets.html">
+     Clustering emoticons based on tweets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.html">
+     Dynamic Tweet Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/04_conclusion.html">
+     Conclusion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/05_appendix_get-cc-data.html">
+     Notebook for collecting tweets with country codes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html#extended-spark-streaming-twitter-twitterutils">
+     Extended spark.streaming.twitter.TwitterUtils
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_b_appendix_TTTDFfunctions.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-11_group-Sketchings/00_QuantileEstimation.html">
+   Anomaly Detection with Iterative Quantile Estimation and T-digest
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/00_ProjectDescriptionAndPlanning.html">
+   Project Description and Introduction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_DownloadFilesPeriodicallyScript.html">
+     Download Files Periodically
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_StreamToFile.html">
+     Stream to parquet file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html">
+     This notebook is for explosive analysis of features in data.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#statistics-of-invariant-features">
+     Statistics of invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-invariant-features">
+     Correlation between invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-new-case-per-million-total-case-new-death-per-million-total-death-per-million-reproduction-rate-and-stringency-index">
+     Correlation between new case per million, total case, new death per million, total death per million, reproduction rate and stringency index.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html">
+     Show reproduction rate of selected countries i.e. Sweden, Germany, Danmark, Finland, Norway
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#visualize-total-cases-total-deaths-new-cases-and-new-deaths-during-pandemic">
+     Visualize total cases, total deaths, new cases and new deaths during pandemic
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#total-deaths">
+     Total Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-cases">
+     New Cases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-deaths">
+     New Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/05_Clustering.html">
+     Clustering of country features in the Covid 19 dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/06_DataPredicton_LR.html">
+     Prediction with Linear Regression (LR) Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/07_DataPredicton_ARIMA.html">
+     Prediction with Time Series model - ARIMA
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/08_DataPrediction_GP.html">
+     Prediction with time series model - Gaussian Processes
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html">
+   Genomics Analysis with Glow and Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#load-libs-and-define-helper-functions">
+   Load libs and define helper functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#read-data">
+   Read data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#pca">
+   PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#predicting-ethinicity">
+   Predicting Ethinicity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#filtering-of-snps-based-on-chi-squared-test">
+   Filtering of SNPs based on chi-squared test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
+   Distributional combinatorial bandits
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/00_video.html">
+   Reinforcement Learning for Intraday Trading
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html">
+     Reinforcement Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html#summary-and-outlook">
+     Summary and Outlook
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html">
+     Reinforcement Learning - Distributed model tuning with Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#elephas">
+     Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#notes-to-the-elephas-training">
+     Notes to the elephas training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/03_resources.html">
+     Resources
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html">
+   Intrusion Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html#preparing-the-dataframe-for-training-classifers">
+   Preparing the DataFrame for training classifers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html#problem-description">
+   Problem description
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html#movie-recommender-using-alternating-least-squares">
+     Movie Recommender using Alternating Least Squares
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html">
+   Fundamental Matrix
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html#results">
+   Results
+  </a>
+  <ul class="simple collapse-ul">
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/00_Background.html">
+   MixUp and Generalization
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/01_Random_Forest.html">
+     Random Forests and MixUp
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html">
+     The data set
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#mixup-data-generator">
+     MixUp data generator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#training-function">
+     Training function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#connection-between-mixup-performance-and-generalization">
+     Connection between MixUp performance and generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#directly-training-on-mixup-data">
+     Directly training on MixUp data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#conclusions">
+     Conclusions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/00_introduction.html">
+   Graph Spectral Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/01_preprocess_data.html">
+     Preprocess the data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/02_generate_graphs.html">
+     Generate random graphs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/03_compute_rsvd.html">
+     Compute RSVD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/04_analyse_eigenvalues.html">
+     Analyse the eigenvalue spectrum
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/000_1-sds-3-x/007_SparkSQLIntroBasics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_1-sds-3-x/007_SparkSQLIntroBasics.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Introduction to Spark SQL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-resources-on-sql">
+     Some resources on SQL
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#starting-point-sparksession">
+     Starting Point: SparkSession
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-dataframes">
+     Creating DataFrames
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#just-to-recap">
+       Just to recap:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataframe-basics">
+     DataFrame Basics
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#an-empty-dataframe">
+       1. An empty DataFrame
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dataframe-from-a-range">
+       2. DataFrame from a range
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dataframe-from-an-rdd">
+       3. DataFrame from an RDD
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dataframe-operations-aka-untyped-dataset-operations">
+       4. DataFrame Operations (aka Untyped Dataset Operations)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#running-sql-queries-programmatically">
+       5. Running SQL Queries Programmatically
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#creating-datasets">
+       6. Creating Datasets
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#making-an-empty-dataframe">
+       1. Making an empty DataFrame
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#making-a-dataframe-from-a-range">
+       2. Making a DataFrame from a range
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#making-a-dataframe-from-an-rdd">
+       3. Making a DataFrame from an RDD
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       4. DataFrame Operations (aka Untyped Dataset Operations)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       5. Running SQL Queries Programmatically
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-sql-for-interactively-querying-a-table-is-very-powerful">
+       5. Using SQL for interactively querying a table is very powerful!
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#global-temporary-view">
+         Global Temporary View
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#next-we-will-play-with-data">
+     Next we will play with data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#key-data-management-concepts-semi-structured-tabular-data">
+       Key Data Management Concepts: Semi-Structured Tabular Data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#go-through-the-databricks-introductions-now">
+     Go through the databricks Introductions Now
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#recommended-homework">
+       Recommended Homework
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>ScaDaMaLe Course
+<a class="reference external" href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and
+<a class="reference external" href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+<div class="section" id="introduction-to-spark-sql">
+<h1>Introduction to Spark SQL<a class="headerlink" href="#introduction-to-spark-sql" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>This notebook explains the motivation behind Spark SQL</p></li>
+<li><p>It introduces interactive SparkSQL queries and visualizations</p></li>
+<li><p>This notebook uses content from Databricks SparkSQL notebook and
+<a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL programming
+guide</a></p></li>
+</ul>
+<div class="section" id="some-resources-on-sql">
+<h2>Some resources on SQL<a class="headerlink" href="#some-resources-on-sql" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/SQL">https://en.wikipedia.org/wiki/SQL</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Apache_Hive">https://en.wikipedia.org/wiki/Apache_Hive</a></p></li>
+<li><p><a class="reference external" href="http://www.infoq.com/articles/apache-spark-sql">http://www.infoq.com/articles/apache-spark-sql</a></p></li>
+<li><p><a class="reference external" href="https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html">https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html</a></p></li>
+<li><p><a class="reference external" href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></p></li>
+<li><p><strong>READ</strong>:
+<a class="reference external" href="https://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf">https://people.csail.mit.edu/matei/papers/2015/sigmod<em>spark</em>sql.pdf</a></p></li>
+</ul>
+<p>Some of them are embedded below in-place for your convenience.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">This</span> <span class="n">allows</span> <span class="n">easy</span> <span class="n">embedding</span> <span class="n">of</span> <span class="n">publicly</span> <span class="n">available</span> <span class="n">information</span> <span class="n">into</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">notebook</span>
+<span class="o">//</span><span class="n">when</span> <span class="n">viewing</span> <span class="ow">in</span> <span class="n">git</span><span class="o">-</span><span class="n">book</span> <span class="n">just</span> <span class="n">ignore</span> <span class="n">this</span> <span class="n">block</span> <span class="o">-</span> <span class="n">you</span> <span class="n">may</span> <span class="n">have</span> <span class="n">to</span> <span class="n">manually</span> <span class="n">chase</span> <span class="n">the</span> <span class="n">URL</span> <span class="ow">in</span> <span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">)</span><span class="o">.</span>
+<span class="o">//</span><span class="n">Example</span> <span class="n">usage</span><span class="p">:</span>
+<span class="o">//</span> <span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;</span><span class="p">,</span><span class="mi">250</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">frameIt</span><span class="p">(</span> <span class="n">u</span><span class="p">:</span><span class="n">String</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span><span class="n">Int</span> <span class="p">)</span> <span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="sd">&quot;&quot;&quot;&lt;iframe </span>
+<span class="sd"> src=&quot;&quot;&quot;</span><span class="s2">&quot;+ u+&quot;&quot;&quot;&quot;</span>
+<span class="s2"> width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;</span>
+<span class="s2"> sandbox&gt;</span>
+<span class="s2">  &lt;p&gt;</span>
+<span class="s2">    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;</span>
+<span class="s2">      Fallback link for browsers that, unlikely, don&#39;t support frames</span>
+<span class="s2">    &lt;/a&gt;</span>
+<span class="s2">  &lt;/p&gt;</span>
+<span class="s2">&lt;/iframe&gt;&quot;&quot;&quot;</span>
+   <span class="p">}</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/SQL&quot;</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Apache_Hive#HiveQL&quot;</span><span class="p">,</span><span class="mi">175</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>READ -
+<a class="reference external" href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></p>
+<p>This is an elaboration of the <a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html">Apache Spark 2.2
+sql-progamming-guide</a>.</p>
+</div>
+</div>
+<div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Spark SQL is a Spark module for structured data processing. Unlike the
+basic Spark RDD API, the interfaces provided by Spark SQL provide Spark
+with more information about the structure of both the data and the
+computation being performed. Internally, Spark SQL uses this extra
+information to perform extra optimizations. There are several ways to
+interact with Spark SQL including SQL and the Dataset API. When
+computing a result the same execution engine is used, independent of
+which API/language you are using to express the computation. This
+unification means that developers can easily switch back and forth
+between different APIs based on which provides the most natural way to
+express a given transformation.</p>
+<p>All of the examples on this page use sample data included in the Spark
+distribution and can be run in the spark-shell, pyspark shell, or sparkR
+shell.</p>
+</div>
+<div class="section" id="datasets-and-dataframes">
+<h1>Datasets and DataFrames<a class="headerlink" href="#datasets-and-dataframes" title="Permalink to this headline">¶</a></h1>
+<p>A Dataset is a distributed collection of data. Dataset is a new
+interface added in Spark 1.6 that provides the benefits of RDDs (strong
+typing, ability to use powerful lambda functions) with the benefits of
+Spark SQL’s optimized execution engine. A Dataset can be
+<a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html#creating-datasets">constructed</a>
+from JVM objects and then manipulated using functional transformations
+(map, flatMap, filter, etc.). The Dataset API is available in
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala</a>
+and
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>.
+Python does not have the support for the Dataset API. But due to
+Python’s dynamic nature, many of the benefits of the Dataset API are
+already available (i.e. you can access the field of a row by name
+naturally <code class="docutils literal notranslate"><span class="pre">row.columnName</span></code>). The case for R is similar.</p>
+<p>A DataFrame is a Dataset organized into named columns. It is
+conceptually equivalent to a table in a relational database or a data
+frame in R/Python, but with richer optimizations under the hood.
+DataFrames can be constructed from a wide array of
+<a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html#data-sources">sources</a>
+such as: structured data files, tables in Hive, external databases, or
+existing RDDs. The DataFrame API is available in Scala, Java,
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a>,
+and <a class="reference external" href="http://spark.apache.org/docs/latest/api/R/index.html">R</a>. In Scala
+and Java, a DataFrame is represented by a Dataset of Rows. In the <a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala
+API</a>,
+DataFrame is simply a type alias of Dataset[Row]. While, in Java API,
+users need to use <code class="docutils literal notranslate"><span class="pre">Dataset&lt;Row&gt;</span></code> to represent a DataFrame.</p>
+<p>Throughout this document, we will often refer to Scala/Java Datasets of
+<code class="docutils literal notranslate"><span class="pre">Rows</span></code> as DataFrames.</p>
+</div>
+<div class="section" id="getting-started-in-spark-2-x">
+<h1>Getting Started in Spark 2.x<a class="headerlink" href="#getting-started-in-spark-2-x" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="starting-point-sparksession">
+<h2>Starting Point: SparkSession<a class="headerlink" href="#starting-point-sparksession" title="Permalink to this headline">¶</a></h2>
+<p>The entry point into all functionality in Spark is the
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SparkSession">SparkSession</a>.
+To create a basic SparkSession in your scala Spark code, just use
+<code class="docutils literal notranslate"><span class="pre">SparkSession.builder()</span></code>:</p>
+<p>``` import org.apache.spark.sql.SparkSession</p>
+<p>val spark = SparkSession .builder() .appName(“Spark SQL basic example”)
+.config(“spark.some.config.option”, “some-value”) .getOrCreate()</p>
+<p>// For implicit conversions like converting RDDs to DataFrames import
+spark.implicits._ ```</p>
+<p>Conveniently, in Databricks notebook (similar to <code class="docutils literal notranslate"><span class="pre">spark-shell</span></code>)
+<code class="docutils literal notranslate"><span class="pre">SparkSession</span></code> is already created for you and is available as <code class="docutils literal notranslate"><span class="pre">spark</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span> <span class="o">//</span> <span class="n">ready</span><span class="o">-</span><span class="n">made</span> <span class="n">Spark</span><span class="o">-</span><span class="n">Session</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-dataframes">
+<h2>Creating DataFrames<a class="headerlink" href="#creating-dataframes" title="Permalink to this headline">¶</a></h2>
+<p>With a
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SparkSession"><code class="docutils literal notranslate"><span class="pre">SparkSession</span></code></a>
+or
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SQLContext"><code class="docutils literal notranslate"><span class="pre">SQLContext</span></code></a>,
+applications can create
+<a class="reference external" href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
+<ul class="simple">
+<li><p>from an existing <code class="docutils literal notranslate"><span class="pre">RDD</span></code>,</p></li>
+<li><p>from a Hive table, or</p></li>
+<li><p>from various other data sources.</p></li>
+</ul>
+<div class="section" id="just-to-recap">
+<h3>Just to recap:<a class="headerlink" href="#just-to-recap" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A DataFrame is a distributed collection of data organized into named
+columns (it is not strogly typed).</p></li>
+<li><p>You can think of it as being organized into table RDD of case class
+<code class="docutils literal notranslate"><span class="pre">Row</span></code> (which is not exactly true).</p></li>
+<li><p>DataFrames, in comparison to RDDs, are backed by rich optimizations,
+including:</p>
+<ul>
+<li><p>tracking their own schema,</p></li>
+<li><p>adaptive query execution,</p></li>
+<li><p>code generation including whole stage codegen,</p></li>
+<li><p>extensible Catalyst optimizer, and</p></li>
+<li><p>project
+<a class="reference external" href="https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html">Tungsten</a>
+for optimized storage.</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>Note that performance for DataFrames is the same across languages
+Scala, Java, Python, and R. This is due to the fact that the only
+planning phase is language-specific (logical + physical SQL plan), not
+the actual execution of the SQL plan.</p>
+</div></blockquote>
+<p><img alt="DF speed acrosslanguages" src="https://databricks.com/wp-content/uploads/2015/02/Screen-Shot-2015-02-16-at-9.46.39-AM-1024x457.png" /></p>
+</div>
+</div>
+<div class="section" id="dataframe-basics">
+<h2>DataFrame Basics<a class="headerlink" href="#dataframe-basics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="an-empty-dataframe">
+<h3>1. An empty DataFrame<a class="headerlink" href="#an-empty-dataframe" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="dataframe-from-a-range">
+<h3>2. DataFrame from a range<a class="headerlink" href="#dataframe-from-a-range" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="dataframe-from-an-rdd">
+<h3>3. DataFrame from an RDD<a class="headerlink" href="#dataframe-from-an-rdd" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="dataframe-operations-aka-untyped-dataset-operations">
+<h3>4. DataFrame Operations (aka Untyped Dataset Operations)<a class="headerlink" href="#dataframe-operations-aka-untyped-dataset-operations" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="running-sql-queries-programmatically">
+<h3>5. Running SQL Queries Programmatically<a class="headerlink" href="#running-sql-queries-programmatically" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="creating-datasets">
+<h3>6. Creating Datasets<a class="headerlink" href="#creating-datasets" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="making-an-empty-dataframe">
+<h3>1. Making an empty DataFrame<a class="headerlink" href="#making-an-empty-dataframe" title="Permalink to this headline">¶</a></h3>
+<p>Spark has some of the pre-built methods to create simple DataFrames</p>
+<ul class="simple">
+<li><p>let us make an Empty DataFrame</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">emptyDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">emptyDataFrame</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">make</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">DataFrame</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not really interesting, or is it?</p>
+<p><strong>You Try!</strong></p>
+<p>Uncomment the following cell, put your cursor after <code class="docutils literal notranslate"><span class="pre">emptyDF.</span></code> below and
+hit Tab to see what can be done with <code class="docutils literal notranslate"><span class="pre">emptyDF</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">emptyDF</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="making-a-dataframe-from-a-range">
+<h3>2. Making a DataFrame from a range<a class="headerlink" href="#making-a-dataframe-from-a-range" title="Permalink to this headline">¶</a></h3>
+<p>Let us make a DataFrame next</p>
+<ul class="simple">
+<li><p>from a range of numbers, as follows:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rangeDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">make</span> <span class="n">DataFrame</span> <span class="k">with</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
+<span class="o">//</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that Spark automatically names column as <code class="docutils literal notranslate"><span class="pre">id</span></code> and casts integers to
+type <code class="docutils literal notranslate"><span class="pre">bigint</span></code> for big integer or Long.</p>
+<p>In order to get a preview of data in DataFrame use <code class="docutils literal notranslate"><span class="pre">show()</span></code> as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rangeDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="making-a-dataframe-from-an-rdd">
+<h3>3. Making a DataFrame from an RDD<a class="headerlink" href="#making-a-dataframe-from-an-rdd" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Make an RDD</p></li>
+<li><p>Conver the RDD into a DataFrame using the defualt <code class="docutils literal notranslate"><span class="pre">.toDF()</span></code> method</p></li>
+<li><p>Conver the RDD into a DataFrame using the non-default <code class="docutils literal notranslate"><span class="pre">.toDF(...)</span></code>
+method</p></li>
+<li><p>Do it all in one line</p></li>
+</ul>
+<p>Let’s first make an RDD using the <code class="docutils literal notranslate"><span class="pre">sc.parallelize</span></code> method, transform it
+by a <code class="docutils literal notranslate"><span class="pre">map</span></code> and perform the <code class="docutils literal notranslate"><span class="pre">collect</span></code> action to display it, as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rdd1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">i</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">rdd1</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let us convert the RDD into DataFrame using the <code class="docutils literal notranslate"><span class="pre">.toDF()</span></code> method,
+as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df1</span> <span class="o">=</span> <span class="n">rdd1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>As it is clear, the DataFrame has columns named <code class="docutils literal notranslate"><span class="pre">_1</span></code> and <code class="docutils literal notranslate"><span class="pre">_2</span></code>, each of
+type <code class="docutils literal notranslate"><span class="pre">int</span></code>. Let us see its content using the <code class="docutils literal notranslate"><span class="pre">.show()</span></code> method next.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that by default, i.e. without specifying any options as in
+<code class="docutils literal notranslate"><span class="pre">toDF()</span></code>, the column names are given by <code class="docutils literal notranslate"><span class="pre">_1</span></code> and <code class="docutils literal notranslate"><span class="pre">_2</span></code>.</p>
+<p>We can easily specify column names as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df1</span> <span class="o">=</span> <span class="n">rdd1</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">,</span> <span class="s2">&quot;twice&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, we can do all of the above steps to make the DataFrame <code class="docutils literal notranslate"><span class="pre">df1</span></code>
+in one line and then show it, as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">i</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">,</span> <span class="s2">&quot;twice&quot;</span><span class="p">)</span> <span class="o">//</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">enter</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>4. DataFrame Operations (aka Untyped Dataset Operations)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>DataFrames provide a domain-specific language for structured data
+manipulation in
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala</a>,
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>,
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a>
+and <a class="reference external" href="http://spark.apache.org/docs/latest/api/R/SparkDataFrame.html">R</a>.</p>
+<p>As mentioned above, in Spark 2.0, DataFrames are just Dataset of Rows in
+Scala and Java API. These operations are also referred as “untyped
+transformations” in contrast to “typed transformations” come with
+strongly typed Scala/Java Datasets.</p>
+<p>Here we include some basic examples of structured data processing using
+Datasets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// This import is needed to use the $-notation
+import spark.implicits._
+// Print the schema in a tree format
+df1.printSchema()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Select</span> <span class="n">only</span> <span class="n">the</span> <span class="s2">&quot;name&quot;</span> <span class="n">column</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select both columns, but increment the double column by 1
+df1.select($&quot;once&quot;, $&quot;once&quot; + 1).show()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select both columns, but increment the double column by 1 and rename it as &quot;oncemore&quot;
+df1.select($&quot;once&quot;, ($&quot;once&quot; * 1).as(&quot;oncemore&quot;)).show()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>df1.filter($&quot;once&quot; &gt; 2).show()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">distinct</span> <span class="n">singles</span> <span class="o">-</span>  <span class="n">a</span> <span class="n">bit</span> <span class="n">boring</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s make a more interesting DataFrame for <code class="docutils literal notranslate"><span class="pre">groupBy</span></code> with repeated
+elements so that the <code class="docutils literal notranslate"><span class="pre">count</span></code> will be more than <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df11</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">3</span> <span class="n">to</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">i</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">,</span> <span class="s2">&quot;twice&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">just</span> <span class="n">make</span> <span class="n">a</span> <span class="n">small</span> <span class="n">one</span>
+<span class="n">df11</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df111</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df11</span><span class="p">)</span> <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s take the unionAll of df1 and df11 into df111</span>
+<span class="n">df111</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">df111</span> <span class="ow">is</span> <span class="n">obtained</span> <span class="n">by</span> <span class="n">simply</span> <span class="n">appending</span> <span class="n">the</span> <span class="n">rows</span> <span class="n">of</span> <span class="n">df11</span> <span class="n">to</span> <span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">distinct</span> <span class="n">singles</span> <span class="o">-</span>  <span class="n">a</span> <span class="n">bit</span> <span class="n">less</span> <span class="n">boring</span>
+<span class="n">df111</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a complete list of the types of operations that can be performed on
+a Dataset refer to the <a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">API
+Documentation</a>.</p>
+<p>In addition to simple column references and expressions, Datasets also
+have a rich library of functions including string manipulation, date
+arithmetic, common math operations and more. The complete list is
+available in the <a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions%24">DataFrame Function
+Reference</a>.</p>
+<p><strong>You Try!</strong></p>
+<p>Uncomment the two lines in the next cell, and then fill in the <code class="docutils literal notranslate"><span class="pre">???</span></code>
+below to get a DataFrame <code class="docutils literal notranslate"><span class="pre">df2</span></code> whose first two columns are the same as
+<code class="docutils literal notranslate"><span class="pre">df1</span></code> and whose third column named triple has values that are three
+times the values in the first column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//val df2 = sc.parallelize(1 to 5).map(i =&gt; (i, i*2, i????)).toDF(&quot;single&quot;, &quot;double&quot;, &quot;triple&quot;) // Ctrl+enter after editing ???
+//df2.show()
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>5. Running SQL Queries Programmatically<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sql</span></code> function on a <code class="docutils literal notranslate"><span class="pre">SparkSession</span></code> enables applications to run SQL
+queries programmatically and returns the result as a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">SQL</span> <span class="n">temporary</span> <span class="n">view</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;sdtable&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">sqlDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM sdtable&quot;</span><span class="p">)</span>
+<span class="n">sqlDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM SDTable WHERE once&gt;2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-sql-for-interactively-querying-a-table-is-very-powerful">
+<h3>5. Using SQL for interactively querying a table is very powerful!<a class="headerlink" href="#using-sql-for-interactively-querying-a-table-is-very-powerful" title="Permalink to this headline">¶</a></h3>
+<p>Note <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">comments</span></code> are how you add <code class="docutils literal notranslate"><span class="pre">comments</span></code> in SQL cells beginning
+with <code class="docutils literal notranslate"><span class="pre">%sql</span></code>.</p>
+<ul class="simple">
+<li><p>You can run SQL <code class="docutils literal notranslate"><span class="pre">select</span> <span class="pre">*</span></code> statement to see all columns of the
+table, as follows:</p>
+<ul>
+<li><p>This is equivalent to the above `display(diamondsDF)’ with the
+DataFrame</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">select</span> <span class="nb">all</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">the</span> <span class="n">table</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">SDTable</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">select</span> <span class="nb">all</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">the</span> <span class="n">table</span>
+<span class="o">--</span> <span class="n">note</span> <span class="n">table</span> <span class="n">names</span> <span class="n">of</span> <span class="n">registered</span> <span class="n">tables</span> <span class="n">are</span> <span class="n">case</span><span class="o">-</span><span class="n">insensitive</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">sdtable</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="global-temporary-view">
+<h4>Global Temporary View<a class="headerlink" href="#global-temporary-view" title="Permalink to this headline">¶</a></h4>
+<p>Temporary views in Spark SQL are session-scoped and will disappear if
+the session that creates it terminates. If you want to have a temporary
+view that is shared among all sessions and keep alive until the Spark
+application terminates, you can create a global temporary view. Global
+temporary view is tied to a system preserved database <code class="docutils literal notranslate"><span class="pre">global_temp</span></code>, and
+we must use the qualified name to refer it, e.g.
+<code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">global_temp.view1</span></code>. See
+<a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view">http://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view</a>
+for details.</p>
+<ol class="simple">
+<li><p>Creating Datasets</p></li>
+</ol>
+<hr class="docutils" />
+<p>Datasets are similar to RDDs, however, instead of using Java
+serialization or Kryo they use a specialized
+<a class="reference external" href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Encoder">Encoder</a>
+to serialize the objects for processing or transmitting over the
+network. While both encoders and standard serialization are responsible
+for turning an object into bytes, encoders are code generated
+dynamically and use a format that allows Spark to perform many
+operations like filtering, sorting and hashing without deserializing the
+bytes back into an object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rangeDS</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">make</span> <span class="n">DataSet</span> <span class="k">with</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span> <span class="n">Note</span> <span class="n">we</span> <span class="n">added</span> <span class="s1">&#39;.toDF()&#39;</span> <span class="n">to</span> <span class="n">this</span> <span class="n">to</span> <span class="n">create</span> <span class="n">a</span> <span class="n">DataFrame</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rangeDS</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">the</span> <span class="n">column</span> <span class="n">name</span> <span class="s1">&#39;id&#39;</span> <span class="ow">is</span> <span class="n">made</span> <span class="n">by</span> <span class="n">default</span> <span class="n">here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can have more complicated objects in a <code class="docutils literal notranslate"><span class="pre">DataSet</span></code> too.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Note</span><span class="p">:</span> <span class="n">Case</span> <span class="n">classes</span> <span class="ow">in</span> <span class="n">Scala</span> <span class="mf">2.10</span> <span class="n">can</span> <span class="n">support</span> <span class="n">only</span> <span class="n">up</span> <span class="n">to</span> <span class="mi">22</span> <span class="n">fields</span><span class="o">.</span> <span class="n">To</span> <span class="n">work</span> <span class="n">around</span> <span class="n">this</span> <span class="n">limit</span><span class="p">,</span>
+<span class="o">//</span> <span class="n">you</span> <span class="n">can</span> <span class="n">use</span> <span class="n">custom</span> <span class="n">classes</span> <span class="n">that</span> <span class="n">implement</span> <span class="n">the</span> <span class="n">Product</span> <span class="n">interface</span>
+<span class="n">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span>
+
+<span class="o">//</span> <span class="n">Encoders</span> <span class="n">are</span> <span class="n">created</span> <span class="k">for</span> <span class="n">case</span> <span class="n">classes</span>
+<span class="n">val</span> <span class="n">caseClassDS</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Andy&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Erik&quot;</span><span class="p">,</span><span class="mi">44</span><span class="p">),</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Anna&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span><span class="o">.</span><span class="n">toDS</span><span class="p">()</span>
+<span class="n">caseClassDS</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Encoders</span> <span class="k">for</span> <span class="n">most</span> <span class="n">common</span> <span class="n">types</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">importing</span> <span class="n">spark</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="n">_</span>
+<span class="n">val</span> <span class="n">primitiveDS</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">toDS</span><span class="p">()</span>
+<span class="n">primitiveDS</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="n">Returns</span><span class="p">:</span> <span class="n">Array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">show</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s make a case class for our DF so we can convert it to Dataset</span>
+<span class="n">case</span> <span class="k">class</span> <span class="nc">singleAndDoubleIntegers</span><span class="p">(</span><span class="n">once</span><span class="p">:</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">twice</span><span class="p">:</span> <span class="n">Integer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">ds1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">singleAndDoubleIntegers</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ds1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="next-we-will-play-with-data">
+<h2>Next we will play with data<a class="headerlink" href="#next-we-will-play-with-data" title="Permalink to this headline">¶</a></h2>
+<p>The data here is <strong>semi-structured tabular data</strong> (Tab-delimited text
+file in dbfs). Let us see what Anthony Joseph in BerkeleyX/CS100.1x had
+to say about such data.</p>
+<div class="section" id="key-data-management-concepts-semi-structured-tabular-data">
+<h3>Key Data Management Concepts: Semi-Structured Tabular Data<a class="headerlink" href="#key-data-management-concepts-semi-structured-tabular-data" title="Permalink to this headline">¶</a></h3>
+<p><strong>(watch now 1:26)</strong>:</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=G_67yUxdDbU?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=1"><img alt="Semi-Structured Tabular Data by Anthony Joseph inBerkeleyX/CS100.1x" src="http://img.youtube.com/vi/G_67yUxdDbU/0.jpg" /></a></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="go-through-the-databricks-introductions-now">
+<h2>Go through the databricks Introductions Now<a class="headerlink" href="#go-through-the-databricks-introductions-now" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html</a></p></li>
+<li><p><a class="reference external" href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html</a></p></li>
+</ul>
+<div class="section" id="recommended-homework">
+<h3>Recommended Homework<a class="headerlink" href="#recommended-homework" title="Permalink to this headline">¶</a></h3>
+<p>This week’s recommended homework is a deep dive into the <a class="reference external" href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL
+programming
+guide</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_1-sds-3-x"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="006_WordCount.html" title="previous page">Word Count on US State of the Union (SoU) Addresses</a>
+    <a class='right-next' id="next-link" href="007a_SparkSQLProgGuide_HW.html" title="next page">Spark Sql Programming Guide</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

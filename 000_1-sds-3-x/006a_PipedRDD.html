@@ -1,0 +1,2100 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piped RDDs and Bayesian AB Testing &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Word Count on US State of the Union (SoU) Addresses" href="006_WordCount.html" />
+    <link rel="prev" title="HOMEWORK notebook - RDDs Transformations and Actions" href="005_RDDsTransformationsActionsHOMEWORK.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="001_whySpark.html">
+   Why Apache Spark?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html">
+     databricks community edition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+     Essentials of Databricks Cloud (DBC) in a Big Hurry
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+     DBC Essentials: What is Databricks Cloud?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+     DBC Essentials: Shard, Cluster, Notebook and Dashboard
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+     DBC Essentials: Team, State, Collaboration, Elastic Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+     You Should All Have databricks community edition account by now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#import-course-content-now">
+     Import Course Content Now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+     Cloud-free Computing Environment (Optional but recommended)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_01_multiLingualNotebooks.html">
+     Notebooks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+     Further Reference / Homework / Recurrrent Points of Reference
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html">
+     Scala Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+     Let’s continue to get our hands dirty in Scala
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-type-hierarchy">
+     Scala Type Hierarchy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#scala-collections">
+     Scala Collections
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+     Exercise in Functional Programming
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#lazy-evaluation">
+     Lazy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="003_01_scalaCrashCourse.html#recursions">
+     Recursions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="005_RDDsTransformationsActionsHOMEWORK.html">
+     HOMEWORK notebook - RDDs Transformations and Actions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="006_WordCount.html">
+     Word Count on US State of the Union (SoU) Addresses
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="007a_SparkSQLProgGuide_HW.html">
+     Spark Sql Programming Guide
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007b_SparkSQLProgGuide_HW.html#id1">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007c_SparkSQLProgGuide_HW.html">
+     Getting Started - Exercise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007d_SparkSQLProgGuide_HW.html#id1">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007e_SparkSQLProgGuide_HW.html">
+     Performance Tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007f_SparkSQLProgGuide_HW.html#id1">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+     SQL Pivoting since Spark 2.4
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#load-data">
+     Load Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-in-sql">
+     Pivoting in SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+     Pivoting with Multiple Aggregate Expressions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+     Pivoting with Multiple Grouping Columns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+     Pivoting with Multiple Pivot Columns
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Extract Transform and Load
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+     Parsing the output from
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+     Providing case classes for input and output for easy spark communication
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+     Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+     Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/00_download_data.html">
+   The two cultures
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/01_load_data.html">
+     Preprocessing and loading the relevant data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/02_logisticregression.html">
+     The two cultures - Classifying threads with logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/03_word2vec.html">
+     Classification using Word2Vec
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/04_LDA.html">
+     Topic Modeling with LDA
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/01_Loading_GQA-JSON.html">
+   Reading GQA JSON files
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html">
+     Exploring the GQA Scene Graph Dataset Structure and Properties
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html#general-discussion">
+     General discussion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-03_group-GuangyiZhang/01_triads.html">
+   Signed Triads in Social Media
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/01_DistributedSVD.html">
+   Distributed singular value decomposition
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html">
+     Music Recommendation System
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html">
+   Wikipedia analysis using Latent Dirichlet Allocation (LDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#folders-and-files">
+   Folders and Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#downloading">
+   Downloading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#extracting-and-filtering">
+   Extracting and Filtering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#prepare-for-lda">
+   Prepare for LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#lda">
+   LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#looking-at-the-model">
+   Looking at the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html">
+   Unsupervised clustering of particle physics data with distributed training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#background">
+   Background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
+   The UClusted algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
+   Our contribution
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
+     Important!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
+     Important (continued from above)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/04_evaluate.html">
+     Evaluation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html">
+   Motif Finding
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html#application">
+   Application
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/02_Data_Processing.html">
+     Data Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html">
+     Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html#examples">
+     Examples
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html">
+   ScaDaMaLe project: Distributed ensembles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#data">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensemble-of-neural-networks">
+   Distributed ensemble of neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensembles-prediction-api">
+   Distributed ensembles prediction API
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-distributed-predictions">
+   Application example: Distributed predictions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-out-of-distribution-detection">
+   Application example: Out of distribution detection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/01_Introduction.html">
+   Topic Modeling with SARS-Cov-2 Genome 🧬
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/02_Data_Processing.html">
+     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
+     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
+     <em>
+      LDA
+     </em>
+     20NewsGroupsSmall’)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
+     Visualise Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
+     Format data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#explore-data">
+     Explore data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/06_Results.html">
+     Results and Conclusion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/01_Introduction.html">
+   Twitter Streaming Using Geolocation and Emoji Based Sentiment Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/02_ClusteringEmoticonsBasedOnTweets.html">
+     Clustering emoticons based on tweets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.html">
+     Dynamic Tweet Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/04_conclusion.html">
+     Conclusion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/05_appendix_get-cc-data.html">
+     Notebook for collecting tweets with country codes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html#extended-spark-streaming-twitter-twitterutils">
+     Extended spark.streaming.twitter.TwitterUtils
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_b_appendix_TTTDFfunctions.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-11_group-Sketchings/00_QuantileEstimation.html">
+   Anomaly Detection with Iterative Quantile Estimation and T-digest
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/00_ProjectDescriptionAndPlanning.html">
+   Project Description and Introduction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_DownloadFilesPeriodicallyScript.html">
+     Download Files Periodically
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_StreamToFile.html">
+     Stream to parquet file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html">
+     This notebook is for explosive analysis of features in data.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#statistics-of-invariant-features">
+     Statistics of invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-invariant-features">
+     Correlation between invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-new-case-per-million-total-case-new-death-per-million-total-death-per-million-reproduction-rate-and-stringency-index">
+     Correlation between new case per million, total case, new death per million, total death per million, reproduction rate and stringency index.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html">
+     Show reproduction rate of selected countries i.e. Sweden, Germany, Danmark, Finland, Norway
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#visualize-total-cases-total-deaths-new-cases-and-new-deaths-during-pandemic">
+     Visualize total cases, total deaths, new cases and new deaths during pandemic
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#total-deaths">
+     Total Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-cases">
+     New Cases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-deaths">
+     New Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/05_Clustering.html">
+     Clustering of country features in the Covid 19 dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/06_DataPredicton_LR.html">
+     Prediction with Linear Regression (LR) Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/07_DataPredicton_ARIMA.html">
+     Prediction with Time Series model - ARIMA
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/08_DataPrediction_GP.html">
+     Prediction with time series model - Gaussian Processes
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html">
+   Genomics Analysis with Glow and Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#load-libs-and-define-helper-functions">
+   Load libs and define helper functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#read-data">
+   Read data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#pca">
+   PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#predicting-ethinicity">
+   Predicting Ethinicity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#filtering-of-snps-based-on-chi-squared-test">
+   Filtering of SNPs based on chi-squared test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
+   Distributional combinatorial bandits
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/00_video.html">
+   Reinforcement Learning for Intraday Trading
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html">
+     Reinforcement Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html#summary-and-outlook">
+     Summary and Outlook
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html">
+     Reinforcement Learning - Distributed model tuning with Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#elephas">
+     Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#notes-to-the-elephas-training">
+     Notes to the elephas training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/03_resources.html">
+     Resources
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html">
+   Intrusion Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html#preparing-the-dataframe-for-training-classifers">
+   Preparing the DataFrame for training classifers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html#problem-description">
+   Problem description
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html#movie-recommender-using-alternating-least-squares">
+     Movie Recommender using Alternating Least Squares
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html">
+   Fundamental Matrix
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html#results">
+   Results
+  </a>
+  <ul class="simple collapse-ul">
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/00_Background.html">
+   MixUp and Generalization
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/01_Random_Forest.html">
+     Random Forests and MixUp
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html">
+     The data set
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#mixup-data-generator">
+     MixUp data generator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#training-function">
+     Training function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#connection-between-mixup-performance-and-generalization">
+     Connection between MixUp performance and generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#directly-training-on-mixup-data">
+     Directly training on MixUp data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#conclusions">
+     Conclusions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/00_introduction.html">
+   Graph Spectral Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/01_preprocess_data.html">
+     Preprocess the data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/02_generate_graphs.html">
+     Generate random graphs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/03_compute_rsvd.html">
+     Compute RSVD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/04_analyse_eigenvalues.html">
+     Analyse the eigenvalue spectrum
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/000_1-sds-3-x/006a_PipedRDD.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_1-sds-3-x/006a_PipedRDD.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Piped RDDs and Bayesian AB Testing
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-a-local-collection">
+   From a Local Collection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glom">
+   glom
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#checkpointing">
+   Checkpointing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#youtry">
+     YouTry
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pipe-rdds-to-system-commands">
+   Pipe RDDs to System Commands
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     YouTry
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mappartitions">
+   mapPartitions
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foreachpartition">
+   foreachPartition
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerically-rigorous-bayesian-ab-testing">
+   Numerically Rigorous Bayesian AB Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-isit1or2coins-do">
+     What does
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+     do?
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-the-executible-isit1or2coins-into-our-spark-cluster">
+     Getting the executible
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+     into our Spark Cluster
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usage-instructions-for-isit1or2coins">
+   Usage instructions for IsIt1or2Coins
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#moving-the-executables-to-the-worker-nodes">
+     Moving the executables to the worker nodes
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>ScaDaMaLe Course
+<a class="reference external" href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and
+<a class="reference external" href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+<div class="section" id="piped-rdds-and-bayesian-ab-testing">
+<h1>Piped RDDs and Bayesian AB Testing<a class="headerlink" href="#piped-rdds-and-bayesian-ab-testing" title="Permalink to this headline">¶</a></h1>
+<p>Here we will first take excerpts with minor modifications from the end
+of <strong>Chapter 12. Resilient Distributed Datasets (RDDs)</strong> of <em>Spark: The
+Definitive Guide</em>:</p>
+<ul class="simple">
+<li><p>https://learning.oreilly.com/library/view/spark-the-definitive/9781491912201/ch12.html</p></li>
+</ul>
+<p>Next, we will do Bayesian AB Testing using PipedRDDs.</p>
+<p>First, we create the toy RDDs as in <em>The Definitive Guide</em>:</p>
+<p>To create an RDD from a collection, you will need to use the parallelize
+method on a SparkContext (within a SparkSession). This turns a single
+node collection into a parallel collection. When creating this parallel
+collection, you can also explicitly state the number of partitions into
+which you would like to distribute this array. In this case, we are
+creating two partitions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="n">val</span> <span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>  <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>\
+  <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">words</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">glom</span></code> is an interesting function that takes every partition in your
+dataset and converts them to arrays. This can be useful if you’re
+going to collect the data to the driver and want to have an array for
+each partition. However, this can cause serious stability issues
+because if you have large partitions or a large number of partitions,
+it’s simple to crash the driver.</p>
+</div></blockquote>
+<p>Let’s use <code class="docutils literal notranslate"><span class="pre">glom</span></code> to see how our <code class="docutils literal notranslate"><span class="pre">words</span></code> are distributed among the two
+partitions we used explicitly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s create a directory in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code> for checkpointing of RDDs in the
+sequel. The following <code class="docutils literal notranslate"><span class="pre">%fs</span> <span class="pre">mkdirs</span> <span class="pre">/path_to_dir</span></code> is a shortcut to create
+a directory in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdirs</span> <span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">ScaDaMaLe</span><span class="o">/</span><span class="n">checkpointing</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/ScaDaMaLe/checkpointing&quot;</span><span class="p">)</span>
+<span class="n">words</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Now, when we reference this RDD, it will derive from the checkpoint
+instead of the source data. This can be a helpful optimization.</p>
+</div></blockquote>
+</div>
+<div class="section" id="from-a-local-collection">
+<h1>From a Local Collection<a class="headerlink" href="#from-a-local-collection" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="glom">
+<h1>glom<a class="headerlink" href="#glom" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="checkpointing">
+<h1>Checkpointing<a class="headerlink" href="#checkpointing" title="Permalink to this headline">¶</a></h1>
+<p>One feature not available in the DataFrame API is the concept of
+checkpointing. Checkpointing is the act of saving an RDD to disk so
+that future references to this RDD point to those intermediate
+partitions on disk rather than recomputing the RDD from its original
+source. This is similar to caching except that it’s not stored in
+memory, only disk. This can be helpful when performing iterative
+computation, similar to the use cases for caching:</p>
+<div class="section" id="youtry">
+<h2>YouTry<a class="headerlink" href="#youtry" title="Permalink to this headline">¶</a></h2>
+<p>Just some more words in <code class="docutils literal notranslate"><span class="pre">haha_words</span></code> with <code class="docutils literal notranslate"><span class="pre">\n</span></code>, the End-Of-Line (EOL)
+characters, in-place.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use <code class="docutils literal notranslate"><span class="pre">glom</span></code> to see how our <code class="docutils literal notranslate"><span class="pre">haha_words</span></code> are distributed among the
+partitions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>The pipe method is probably one of Spark’s more interesting methods.
+With pipe, you can return an RDD created by piping elements to a
+forked external process. The resulting RDD is computed by executing
+the given process once per partition. All elements of each input
+partition are written to a process’s stdin as lines of input separated
+by a newline. The resulting partition consists of the process’s stdout
+output, with each line of stdout resulting in one element of the
+output partition. A process is invoked even for empty partitions.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The print behavior can be customized by providing two functions.</p>
+</div></blockquote>
+<p>We can use a simple example and pipe each partition to the command wc.
+Each row will be passed in as a new line, so if we perform a line count,
+we will get the number of lines, one per partition:</p>
+<p>The following produces a <code class="docutils literal notranslate"><span class="pre">PipedRDD</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we take an action via <code class="docutils literal notranslate"><span class="pre">collect</span></code> to bring the results to the Driver.</p>
+<p>NOTE: Be careful what you collect! You can always write the output to
+parquet of binary files in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code> if the returned output is large.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, we got the number of lines returned by <code class="docutils literal notranslate"><span class="pre">wc</span> <span class="pre">-l</span></code> per
+partition.</p>
+</div>
+</div>
+<div class="section" id="pipe-rdds-to-system-commands">
+<h1>Pipe RDDs to System Commands<a class="headerlink" href="#pipe-rdds-to-system-commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>YouTry<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Try to make sense of the next few cells where we do NOT specifiy the
+number of partitions explicitly and let Spark decide on the number of
+partitions automatically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+<span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words</span> <span class="o">=</span> <span class="n">haha_words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD_haha_words</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Do you understand why the above <code class="docutils literal notranslate"><span class="pre">collect</span></code> statement returns what it
+does?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words_again</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">))</span>
+<span class="n">haha_words_again</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+<span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words_again</span> <span class="o">=</span> <span class="n">haha_words_again</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<span class="n">wc_l_PipedRDD_haha_words_again</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Did you understand why some of the results are <code class="docutils literal notranslate"><span class="pre">0</span></code> in the last <code class="docutils literal notranslate"><span class="pre">collect</span></code>
+statement?</p>
+<blockquote>
+<div><p>The previous command revealed that Spark operates on a per-partition
+basis when it comes to actually executing code. You also might have
+noticed earlier that the return signature of a map function on an RDD
+is actually <code class="docutils literal notranslate"><span class="pre">MapPartitionsRDD</span></code>.</p>
+</div></blockquote>
+<p>Or <code class="docutils literal notranslate"><span class="pre">ParallelCollectionRDD</span></code> in our case.</p>
+<blockquote>
+<div><p>This is because map is just a row-wise alias for <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code>,
+which makes it possible for you to map an individual partition
+(represented as an iterator). That’s because physically on the cluster
+we operate on each partition individually (and not a specific row). A
+simple example creates the value “1” for every partition in our data,
+and the sum of the following expression will count the number of
+partitions we have:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">part</span> <span class="o">=&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Int</span><span class="p">](</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1"># 2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Naturally, this means that we operate on a per-partition basis and
+therefore it allows us to perform an operation on that <em>entire</em>
+partition. This is valuable for performing something on an entire
+subdataset of your RDD. You can gather all values of a partition class
+or group into one partition and then operate on that entire group
+using arbitrary functions and controls. An example use case of this
+would be that you could pipe this through some custom machine learning
+algorithm and train an individual model for that company’s portion of
+the dataset. A Facebook engineer has an interesting demonstration of
+their particular implementation of the pipe operator with a similar
+use case demonstrated at <a class="reference external" href="https://spark-summit.org/east-2017/events/experiences-with-sparks-rdd-apis-for-complex-custom-applications/">Spark Summit East
+2017</a>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Other functions similar to <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> include
+<code class="docutils literal notranslate"><span class="pre">mapPartitionsWithIndex</span></code>. With this you specify a function that
+accepts an index (within the partition) and an iterator that goes
+through all items within the partition. The partition index is the
+partition number in your RDD, which identifies where each record in
+our dataset sits (and potentially allows you to debug). You might use
+this to test whether your map functions are behaving correctly:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">String</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>  <span class="n">withinPartIterator</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>    
+  <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="s2">&quot;Partition: $partitionIndex =&gt; $value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterator</span>
+                                                                            <span class="p">}</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">indexedFunc</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">):</span>  
+  <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;partition: </span><span class="si">{}</span><span class="s2"> =&gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span>    <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">withinPartIterator</span><span class="p">]</span>
+<span class="n">words</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">indexedFunc</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Although <code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> needs a return value to work properly, this
+next function does not. <code class="docutils literal notranslate"><span class="pre">foreachPartition</span></code> simply iterates over all
+the partitions of the data. The difference is that the function has no
+return value. This makes it great for doing something with each
+partition like writing it out to a database. In fact, this is how many
+data source connectors are written. You can create</p>
+</div></blockquote>
+<p>your</p>
+<blockquote>
+<div><p>own text file source if you want by specifying outputs to the temp
+directory with a random ID:</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">foreachPartition</span> <span class="p">{</span> <span class="nb">iter</span> <span class="o">=&gt;</span>  
+  <span class="kn">import</span> <span class="nn">java.io._</span>  
+  <span class="kn">import</span> <span class="nn">scala.util.Random</span>  
+  <span class="n">val</span> <span class="n">randomFileName</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Random</span><span class="p">()</span><span class="o">.</span><span class="n">nextInt</span><span class="p">()</span>  
+  <span class="n">val</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span><span class="n">new</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;/tmp/random-file-$</span><span class="si">{randomFileName}</span><span class="s2">.txt&quot;</span><span class="p">))</span>  
+  <span class="k">while</span> <span class="p">(</span><span class="nb">iter</span><span class="o">.</span><span class="n">hasNext</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">pw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">iter</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>  
+  <span class="p">}</span>  
+  <span class="n">pw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>You’ll find these two files if you scan your /tmp directory.</p>
+</div></blockquote>
+<p>You need to scan for the file across all the nodes. As the file may not
+be in the Driver node’s <code class="docutils literal notranslate"><span class="pre">/tmp/</span></code> directory but in those of the executors
+that hosted the partition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">random</span><span class="o">-</span><span class="n">file</span><span class="o">-*.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="mappartitions">
+<h1>mapPartitions<a class="headerlink" href="#mappartitions" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="foreachpartition">
+<h1>foreachPartition<a class="headerlink" href="#foreachpartition" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="numerically-rigorous-bayesian-ab-testing">
+<h1>Numerically Rigorous Bayesian AB Testing<a class="headerlink" href="#numerically-rigorous-bayesian-ab-testing" title="Permalink to this headline">¶</a></h1>
+<p>This is an example of Bayesian AB Testing with computer-aided proofs for
+the posterior samples.</p>
+<p>The main learning goal for you is to use pipedRDDs to distribute, in an
+embarassingly paralle way, across all the worker nodes in the Spark
+cluster an executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code>.</p>
+<div class="section" id="what-does-isit1or2coins-do">
+<h2>What does <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> do?<a class="headerlink" href="#what-does-isit1or2coins-do" title="Permalink to this headline">¶</a></h2>
+<p>At a very high-level, to understand what <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> does, imagine
+the following simple experiment.</p>
+<p>We are given</p>
+<ul class="simple">
+<li><p>the number of heads that result from a first sequence of independent
+and identical tosses of a coin and then</p></li>
+<li><p>we are given the number of heads that result from a second sequence
+of independent and identical tosses of a coin</p></li>
+</ul>
+<p>Our decision problem is to do help shed light on whether both sequence
+of tosses came from the same coin or not (whatever the bias may be).</p>
+<p><code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> tries to help us decide if the two sequence of
+coin-tosses are based on one coin with an unknown bias or two coins with
+different biases.</p>
+<p>If you are curious about details feel free to see:</p>
+<ul class="simple">
+<li><p>Exact Bayesian A/B testing using distributed fault-tolerant Moore
+rejection sampler, Benny Avelin and Raazesh Sainudiin, Extended
+Abstract, 2 pages, 2018 <a class="reference external" href="http://lamastex.org/preprints/20180507_ABTestingViaDistributedMRS.pdf">(PDF
+104KB)</a>.</p></li>
+<li><p>which builds on: An auto-validating, trans-dimensional, universal
+rejection sampler for locally Lipschitz arithmetical expressions,
+Raazesh Sainudiin and Thomas York, <a class="reference external" href="http://interval.louisiana.edu/reliable-computing-journal/volume-18/reliable-computing-18-pp-015-054.pdf">Reliable Computing, vol.18,
+pp.15-54,
+2013</a>
+(<a class="reference external" href="http://lamastex.org/preprints/avs_rc_2013.pdf">preprint: PDF
+2612KB</a>)</p></li>
+</ul>
+<p><strong>See first about <code class="docutils literal notranslate"><span class="pre">PipedRDDs</span></code> excerpt from <em>Spark The Definitive Guide</em>
+earlier.</strong></p>
+</div>
+<div class="section" id="getting-the-executible-isit1or2coins-into-our-spark-cluster">
+<h2>Getting the executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> into our Spark Cluster<a class="headerlink" href="#getting-the-executible-isit1or2coins-into-our-spark-cluster" title="Permalink to this headline">¶</a></h2>
+<p><strong>This has already been done in the project-shard. You need not do it
+again for this executible!</strong></p>
+<p>You need to upload the C++ executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> from: -
+https://github.com/lamastex/mrs2</p>
+<p>Here, suppose you have an executible for linux x86 64 bit processor with
+all dependencies pre-compiled into one executibe.</p>
+<p>Say this executible is <code class="docutils literal notranslate"><span class="pre">IsIt10r2Coins</span></code>.</p>
+<p>This executible comes from the following dockerised build:</p>
+<ul class="simple">
+<li><p>https://github.com/lamastex/mrs2/tree/master/docker</p></li>
+<li><p>by statically compiling inside the docerised environment for mrs2:</p>
+<ul>
+<li><p>https://github.com/lamastex/mrs2/tree/master/mrs-2.0/examples/MooreRejSam/IsIt1or2Coins</p></li>
+</ul>
+</li>
+</ul>
+<p>You can replace the executible with any other executible with
+appropriate I/O to it.</p>
+<p>Then you upload the executible to databricks’ <code class="docutils literal notranslate"><span class="pre">FileStore</span></code>.</p>
+<p>Just note the path to the file and DO NOT click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Table</span></code> or other
+buttons!</p>
+<p><img alt="creenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore" src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/2020/ScaDaMaLe/screenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="s2">&quot;/FileStore/tables/IsIt1or2Coins&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now copy the file from <code class="docutils literal notranslate"><span class="pre">dbfs://FileStore</span></code> that you just uploaded into
+the local file system of the Driver.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/tables/IsIt1or2Coins&quot;</span><span class="p">,</span> <span class="s2">&quot;file:/tmp/IsIt1or2Coins&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note it is a big static executible with all dependencies inbuilt (it
+uses GNU Scientific Library and a specialized C++ Library called C-XSC
+or C Extended for Scientific Computing to do hard-ware optimized
+rigorous numerical proofs using Interval-Extended Hessian
+Differentiation Arithmetics over Rounding-Controlled Hardware-Specified
+Machine Intervals).</p>
+<p>Just note it is over 6.5MB. Also we need to change the permissions so it
+is indeed executible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="usage-instructions-for-isit1or2coins">
+<h1>Usage instructions for IsIt1or2Coins<a class="headerlink" href="#usage-instructions-for-isit1or2coins" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">./IsIt1or2Coins</span> <span class="pre">numboxes</span> <span class="pre">numiter</span> <span class="pre">seed</span> <span class="pre">numtosses1</span> <span class="pre">heads1</span> <span class="pre">numtosses2</span> <span class="pre">heads2</span> <span class="pre">logScale</span></code></p>
+<ul class="simple">
+<li><p>numboxes = Number of boxes for Moore Rejection Sampling (Rigorous von
+Neumann Rejection Sampler) - numiter = Number of samples drawn from
+posterior distribution to estimate the model probabilities - seed = a
+random number seed - numtosses1 = number of tosses for the first coin -
+heads1 = number of heads shown up on the first coin - numtosses2 =
+number of tosses for the second coin - heads2 = number of heads shown up
+on the second coin - logscale = True/False as Int</p></li>
+</ul>
+<p>Don’t worry about the details of what the executible <code class="docutils literal notranslate"><span class="pre">IsIt1or2Coins</span></code> is
+doing for now. Just realise that this executible takes some input on
+command-line and gives some output.</p>
+<p>Let’s make sure the executible takes input and returns output string on
+the Driver node.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can also do it like this</span>
+
+<span class="o">/</span><span class="n">dbfs</span><span class="o">/</span><span class="n">FileStore</span><span class="o">/</span><span class="n">tables</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="moving-the-executables-to-the-worker-nodes">
+<h2>Moving the executables to the worker nodes<a class="headerlink" href="#moving-the-executables-to-the-worker-nodes" title="Permalink to this headline">¶</a></h2>
+<p>To copy the executible from <code class="docutils literal notranslate"><span class="pre">dbfs</span></code> to the local drive of each executor
+you can use the following helper function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import scala.sys.process._
+import scala.concurrent.duration._
+// from Ivan Sadikov
+
+def copyFile(): Unit = {
+  &quot;mkdir -p /tmp/executor/bin&quot;.!!
+  &quot;cp /dbfs/FileStore/tables/IsIt1or2Coins /tmp/executor/bin/&quot;.!!
+}
+
+sc.runOnEachExecutor(copyFile, new FiniteDuration(1, HOURS))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let us use piped RDDs via <code class="docutils literal notranslate"><span class="pre">bash</span></code> to execute the given command in
+each partition as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In fact, you can just use <code class="docutils literal notranslate"><span class="pre">DBFS</span> <span class="pre">FUSE</span></code> to run the commands without any
+file copy in databricks-provisioned Spark clusters we are on here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+<span class="n">val</span> <span class="n">same_input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
+                     <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">same_output</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">same_input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus by mixing several different executibles that are statically
+compiled for linux 64 bit machine, we can mix and match multiple
+executibles with appropriate inputs.</p>
+<p>The resulting outputs can themselves be re-processed in Spark to feed
+into toher pipedRDDs or normal RDDs or DataFrames and DataSets.</p>
+<p>Finally, we can have more than one command per partition and then use
+<code class="docutils literal notranslate"><span class="pre">mapPartitions</span></code> to send all the executible commands within the input
+partition that is to be run by the executor in which that partition
+resides as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+
+<span class="o">//</span> <span class="n">let</span> <span class="n">us</span> <span class="n">make</span> <span class="mi">2</span> <span class="n">commands</span> <span class="ow">in</span> <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="mi">2</span> <span class="nb">input</span> <span class="n">partitions</span>
+<span class="n">val</span> <span class="n">same_input_mp</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 123456789 1000 500 1200 600 1&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 123456789 1000 500 1200 600 1&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+
+<span class="n">val</span> <span class="n">same_output_mp</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">same_input</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">Seq</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">iterator</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>allCatch is a useful tool to use as a filtering function when testing if
+a command will work without error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scala.util.control.Exception.allCatch</span>
+<span class="p">(</span><span class="n">allCatch</span> <span class="n">opt</span> <span class="s2">&quot; 12 &quot;</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">toLong</span><span class="p">)</span><span class="o">.</span><span class="n">isDefined</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_1-sds-3-x"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="005_RDDsTransformationsActionsHOMEWORK.html" title="previous page">HOMEWORK notebook - RDDs Transformations and Actions</a>
+    <a class='right-next' id="next-link" href="006_WordCount.html" title="next page">Word Count on US State of the Union (SoU) Addresses</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
