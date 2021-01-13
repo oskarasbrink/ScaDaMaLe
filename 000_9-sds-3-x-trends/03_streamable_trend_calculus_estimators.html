@@ -1,0 +1,2172 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markov Model for Trend Calculus &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugging into GDELT Mass Media Streams" href="030_Spark_GDELT_project_001.html" />
+    <link rel="prev" title="Streaming Trend Calculus with Maximum Necessary Reversals" href="02_streamable_trend_calculus.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scalable Data Science & Distributed Machine Learning</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/000_ScaDaMaLe.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark Core
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_1-sds-3-x/001_whySpark.html">
+   Why Apache Spark?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html">
+     databricks community edition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#essentials-of-databricks-cloud-dbc-in-a-big-hurry">
+     Essentials of Databricks Cloud (DBC) in a Big Hurry
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-what-is-databricks-cloud">
+     DBC Essentials: What is Databricks Cloud?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-shard-cluster-notebook-and-dashboard">
+     DBC Essentials: Shard, Cluster, Notebook and Dashboard
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#dbc-essentials-team-state-collaboration-elastic-resources">
+     DBC Essentials: Team, State, Collaboration, Elastic Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#you-should-all-have-databricks-community-edition-account-by-now">
+     You Should All Have databricks community edition account by now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#import-course-content-now">
+     Import Course Content Now!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_00_loginToDatabricks.html#cloud-free-computing-environment-optional-but-recommended">
+     Cloud-free Computing Environment (Optional but recommended)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_01_multiLingualNotebooks.html">
+     Notebooks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/002_01_multiLingualNotebooks.html#further-reference-homework-recurrrent-points-of-reference">
+     Further Reference / Homework / Recurrrent Points of Reference
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html">
+   Introduction to Scala through Scala Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-in-your-own-computer">
+   Scala in your own computer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-resources">
+   Scala Resources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#introduction-to-scala">
+   Introduction to Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#let-s-get-our-hands-dirty-in-scala">
+   Let’s get our hands dirty in Scala
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#scala-types">
+   Scala Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#expressions">
+   Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#blocks">
+   Blocks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#classes">
+   Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#case-classes">
+   Case Classes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#objects">
+   Objects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#traits">
+   Traits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#main-method">
+   Main Method
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_1-sds-3-x/003_00_scalaCrashCourse.html#what-i-try-not-do-while-learning-a-new-language">
+   What I try not do while learning a new language?
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html">
+     Scala Resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#let-s-continue-to-get-our-hands-dirty-in-scala">
+     Let’s continue to get our hands dirty in Scala
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-type-hierarchy">
+     Scala Type Hierarchy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#scala-collections">
+     Scala Collections
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#exercise-in-functional-programming">
+     Exercise in Functional Programming
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#lazy-evaluation">
+     Lazy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/003_01_scalaCrashCourse.html#recursions">
+     Recursions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/004_RDDsTransformationsActions.html">
+   Introduction to Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_1-sds-3-x/004_RDDsTransformationsActions.html#spark-cluster-overview">
+   Spark Cluster Overview:
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">
+     HOMEWORK notebook - RDDs Transformations and Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006a_PipedRDD.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/006_WordCount.html">
+     Word Count on US State of the Union (SoU) Addresses
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction to Apache Spark SQL
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/007_SparkSQLIntroBasics.html">
+   Introduction to Spark SQL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/007_SparkSQLIntroBasics.html#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/007_SparkSQLIntroBasics.html#datasets-and-dataframes">
+   Datasets and DataFrames
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_1-sds-3-x/007_SparkSQLIntroBasics.html#getting-started-in-spark-2-x">
+   Getting Started in Spark 2.x
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">
+     Spark Sql Programming Guide
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html#id1">
+     Getting Started
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">
+     Getting Started - Exercise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html#id1">
+     Data Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">
+     Performance Tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html#id1">
+     Distributed SQL Engine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
+     SQL Pivoting since Spark 2.4
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#load-data">
+     Load Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-in-sql">
+     Pivoting in SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-aggregate-expressions">
+     Pivoting with Multiple Aggregate Expressions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-grouping-columns">
+     Pivoting with Multiple Grouping Columns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/007g_PivotInSQL.html#pivoting-with-multiple-pivot-columns">
+     Pivoting with Multiple Pivot Columns
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Extract Transform and Load
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">
+   Diamonds ML Pipeline Workflow - DataFrame ETL and EDA Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-1-load-data-as-dataframe">
+   Step 1. Load data as DataFrame
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#step-2-understand-the-data">
+   Step 2. Understand the data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#let-us-run-through-some-basic-inteactive-sql-queries-next">
+   Let us run through some basic inteactive SQL queries next
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#why-do-we-need-to-know-these-interactive-sql-queries">
+   Why do we need to know these interactive SQL queries?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html#we-will-continue-later-with-ml-pipelines-to-do-prediction-with-a-fitted-model-from-this-dataset">
+   We will continue later with ML pipelines to do prediction with a fitted model from this dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">
+   Power Plant ML Pipeline Application - DataFrame Part
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-1-business-understanding">
+   Step 1: Business Understanding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-2-load-your-data">
+   Step 2: Load Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">
+   USE THIS FOR OTHER SMALLish DataSets you want to import to your CE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-3-explore-your-data">
+   Step 3: Explore Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html#step-4-visualize-your-data">
+   Step 4: Visualize Your Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">
+   Wiki Clickstream Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html#wikipedia-logo">
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/033_OBO_LoadExtract.html">
+   Old Bailey Online Data Analysis in Apache Spark
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_1-sds-3-x/033_OBO_LoadExtract.html#analysing-the-full-old-bailey-online-sessions-papers-dataset">
+   Analysing the Full Old Bailey Online Sessions Papers Dataset
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">
+     Piped RDDs and Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#from-a-local-collection">
+     From a Local Collection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#glom">
+     glom
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#checkpointing">
+     Checkpointing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#pipe-rdds-to-system-commands">
+     Pipe RDDs to System Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#mappartitions">
+     mapPartitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#foreachpartition">
+     foreachPartition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#numerically-rigorous-bayesian-ab-testing">
+     Numerically Rigorous Bayesian AB Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#usage-instructions-for-isit1or2coins">
+     Usage instructions for IsIt1or2Coins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#parsing-the-output-from-isit1or2coins">
+     Parsing the output from
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       IsIt1or2Coins
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html#providing-case-classes-for-input-and-output-for-easy-spark-communication">
+     Providing case classes for input and output for easy spark communication
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">
+   Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Trends in Money and News
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="000_TrendsInFinancialStocksAndNewsEvents.html">
+   Trends in Financial Stocks and News Events
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="00a_FX1M.html">
+     Historical FX-1-M Financial Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="00b_yfinance.html">
+     yfinance Stock Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="000a_finance_utils.html">
+     Utilities Needed for Financial Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="000b_gdelt_utils.html">
+     Utilities Needed for Mass Media Data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="01_trend_calculus_showcase.html">
+   Finding trends in oil price data.
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_streamable_trend_calculus.html">
+     Streaming Trend Calculus with Maximum Necessary Reversals
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Markov Model for Trend Calculus
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="030_Spark_GDELT_project_001.html">
+   Plugging into GDELT Mass Media Streams
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="030a_gdelt_EOI_detection.html">
+     Detecting Events of Interest to OIL/GAS Price Trends
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="030b_gdelt_POI_detection.html">
+     Detecting Persons of Interest to OIL/GAS Price Trends
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Distribute Deep Learning with Horovod
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_7-sds-3-x-ddl/00_DDL_Introduction.html">
+   Introduction to Distributed Deep Learning (DDL) with Horovod over Tensorflow/keras and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0x_mnist-tensorflow-keras.html">
+     Distributed deep learning training using TensorFlow and Keras with HorovodRunner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_7-sds-3-x-ddl/0y_mnist-pytorch.html">
+     Distributed deep learning training using PyTorch with HorovodRunner for MNIST
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  WASP AI-Track Student Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/00_download_data.html">
+   The two cultures
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/01_load_data.html">
+     Preprocessing and loading the relevant data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/02_logisticregression.html">
+     The two cultures - Classifying threads with logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/03_word2vec.html">
+     Classification using Word2Vec
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures/04_LDA.html">
+     Topic Modeling with LDA
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/01_Loading_GQA-JSON.html">
+   Reading GQA JSON files
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html">
+     Exploring the GQA Scene Graph Dataset Structure and Properties
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-02_group-LiUUmeaSceneGraphMotifs/02_SceneGraphMotifs.html#general-discussion">
+     General discussion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-03_group-GuangyiZhang/01_triads.html">
+   Signed Triads in Social Media
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/01_DistributedSVD.html">
+   Distributed singular value decomposition
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html">
+     Music Recommendation System
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html">
+   Wikipedia analysis using Latent Dirichlet Allocation (LDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#folders-and-files">
+   Folders and Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#downloading">
+   Downloading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#extracting-and-filtering">
+   Extracting and Filtering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#prepare-for-lda">
+   Prepare for LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#lda">
+   LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html#looking-at-the-model">
+   Looking at the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html">
+   Unsupervised clustering of particle physics data with distributed training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#background">
+   Background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
+   The UClusted algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
+   Our contribution
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
+     Important!
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
+     Important (continued from above)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-06_group-ParticleClustering/04_evaluate.html">
+     Evaluation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html">
+   Motif Finding
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/01_Coding_Motifs.html#application">
+   Application
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/02_Data_Processing.html">
+     Data Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html">
+     Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-07_group-MathAtKTH/03_graph_string_converter.html#examples">
+     Examples
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html">
+   ScaDaMaLe project: Distributed ensembles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#data">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensemble-of-neural-networks">
+   Distributed ensemble of neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#distributed-ensembles-prediction-api">
+   Distributed ensembles prediction API
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-distributed-predictions">
+   Application example: Distributed predictions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-08_group-DistributedEnsemble/00_project.html#application-example-out-of-distribution-detection">
+   Application example: Out of distribution detection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/01_Introduction.html">
+   Topic Modeling with SARS-Cov-2 Genome 🧬
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/02_Data_Processing.html">
+     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
+     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
+     <em>
+      LDA
+     </em>
+     20NewsGroupsSmall’)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
+     Visualise Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
+     Format data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html">
+     Load processed data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#explore-data">
+     Explore data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#classification">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/05_Classification.html#evaluation">
+     Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-09_group-TopicModeling/06_Results.html">
+     Results and Conclusion
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/01_Introduction.html">
+   Twitter Streaming Using Geolocation and Emoji Based Sentiment Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/02_ClusteringEmoticonsBasedOnTweets.html">
+     Clustering emoticons based on tweets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.html">
+     Dynamic Tweet Maps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/04_conclusion.html">
+     Conclusion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/05_appendix_get-cc-data.html">
+     Notebook for collecting tweets with country codes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html#extended-spark-streaming-twitter-twitterutils">
+     Extended spark.streaming.twitter.TwitterUtils
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-10_group-Geosmus/07_b_appendix_TTTDFfunctions.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-11_group-Sketchings/00_QuantileEstimation.html">
+   Anomaly Detection with Iterative Quantile Estimation and T-digest
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/00_ProjectDescriptionAndPlanning.html">
+   Project Description and Introduction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_DownloadFilesPeriodicallyScript.html">
+     Download Files Periodically
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/01_StreamToFile.html">
+     Stream to parquet file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html">
+     Loading data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/02_DataPreprocess.html#preprocessing">
+     Preprocessing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html">
+     This notebook is for explosive analysis of features in data.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#statistics-of-invariant-features">
+     Statistics of invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-invariant-features">
+     Correlation between invariant features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html#correlation-between-new-case-per-million-total-case-new-death-per-million-total-death-per-million-reproduction-rate-and-stringency-index">
+     Correlation between new case per million, total case, new death per million, total death per million, reproduction rate and stringency index.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html">
+     Show reproduction rate of selected countries i.e. Sweden, Germany, Danmark, Finland, Norway
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#visualize-total-cases-total-deaths-new-cases-and-new-deaths-during-pandemic">
+     Visualize total cases, total deaths, new cases and new deaths during pandemic
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#total-deaths">
+     Total Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-cases">
+     New Cases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/04_DataVisualize.html#new-deaths">
+     New Deaths
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/05_Clustering.html">
+     Clustering of country features in the Covid 19 dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/06_DataPredicton_LR.html">
+     Prediction with Linear Regression (LR) Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/07_DataPredicton_ARIMA.html">
+     Prediction with Time Series model - ARIMA
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-12_group-CovidPandemic/08_DataPrediction_GP.html">
+     Prediction with time series model - Gaussian Processes
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html">
+   Genomics Analysis with Glow and Spark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#load-libs-and-define-helper-functions">
+   Load libs and define helper functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#read-data">
+   Read data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#pca">
+   PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#predicting-ethinicity">
+   Predicting Ethinicity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-13_group-Genomics/01_1000genomes.html#filtering-of-snps-based-on-chi-squared-test">
+   Filtering of SNPs based on chi-squared test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
+   Distributional combinatorial bandits
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/00_video.html">
+   Reinforcement Learning for Intraday Trading
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html">
+     Reinforcement Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html#summary-and-outlook">
+     Summary and Outlook
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html">
+     Reinforcement Learning - Distributed model tuning with Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#elephas">
+     Elephas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html#notes-to-the-elephas-training">
+     Notes to the elephas training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-15_group-FinancialDataStreams/03_resources.html">
+     Resources
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html">
+   Intrusion Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-16_group-IntrusionDetection/00_Introduction.html#preparing-the-dataframe-for-training-classifers">
+   Preparing the DataFrame for training classifers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/00_Intro.html#problem-description">
+   Problem description
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html">
+     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-18_group-ProjectRL/01_Project.html#movie-recommender-using-alternating-least-squares">
+     Movie Recommender using Alternating Least Squares
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html">
+   Fundamental Matrix
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-19_group-Featuring/01_FundamentalMatrix.html#results">
+   Results
+  </a>
+  <ul class="simple collapse-ul">
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/00_Background.html">
+   MixUp and Generalization
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/01_Random_Forest.html">
+     Random Forests and MixUp
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html">
+     The data set
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#mixup-data-generator">
+     MixUp data generator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#training-function">
+     Training function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#connection-between-mixup-performance-and-generalization">
+     Connection between MixUp performance and generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#directly-training-on-mixup-data">
+     Directly training on MixUp data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-20_group-Generalization/02_CNNs.html#conclusions">
+     Conclusions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/00_introduction.html">
+   Graph Spectral Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/01_preprocess_data.html">
+     Preprocess the data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/02_generate_graphs.html">
+     Generate random graphs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/03_compute_rsvd.html">
+     Compute RSVD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../000_0-sds-3-x-projects/student-project-21_group-GraphSpectralAnalysis/04_analyse_eigenvalues.html">
+     Analyse the eigenvalue spectrum
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://lamastex.github.io/ScaDaMaLe/index.html/issues/new?title=Issue%20on%20page%20%2F000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>ScaDaMaLe Course
+<a class="reference external" href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and
+<a class="reference external" href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+<div class="section" id="markov-model-for-trend-calculus">
+<h1>Markov Model for Trend Calculus<a class="headerlink" href="#markov-model-for-trend-calculus" title="Permalink to this headline">¶</a></h1>
+<p>Johannes Graner
+(<a class="reference external" href="https://www.linkedin.com/in/johannes-graner-475677129/">LinkedIn</a>),
+Albert Nilsson
+(<a class="reference external" href="https://www.linkedin.com/in/albert-nilsson-09b62b191/">LinkedIn</a>) and
+Raazesh Sainudiin
+(<a class="reference external" href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2020, Uppsala, Sweden</p>
+<p>This project was supported by Combient Mix AB through summer internships
+at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of
+Mathematics, Uppsala University, Uppsala, Sweden</p>
+<hr class="docutils" />
+<p>We use the dataset generated in the last notebook to build a simple,
+proof of concept Markov model for predicting trends.</p>
+<p>This is merely to verify using a simple model if there is indeed any
+predictive value in the trends and their reversals that many real-worl
+traders bet on every instant in the market.</p>
+<p><strong>Resources</strong></p>
+<p>This builds on the following library and its antecedents therein:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></p></li>
+</ul>
+<p><strong>This work was inspired by:</strong></p>
+<ul class="simple">
+<li><p>Antoine Aamennd’s
+<a class="reference external" href="https://github.com/aamend/texata-r2-2017">texata-2017</a></p></li>
+<li><p>Andrew Morgan’s <a class="reference external" href="https://github.com/ByteSumoLtd/TrendCalculus-lua">Trend Calculus
+Library</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;./000a_finance_utils&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.sql.Timestamp</span>
+<span class="kn">import</span> <span class="nn">io.delta.tables._</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.streaming.</span><span class="p">{</span><span class="n">GroupState</span><span class="p">,</span> <span class="n">GroupStateTimeout</span><span class="p">,</span> <span class="n">OutputMode</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">}</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.types._</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.expressions.</span><span class="p">{</span><span class="n">Window</span><span class="p">,</span> <span class="n">WindowSpec</span><span class="p">}</span>
+<span class="kn">import</span> <span class="nn">org.lamastex.spark.trendcalculus._</span>
+<span class="kn">import</span> <span class="nn">scala.util.Random</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import java.sql.Timestamp
+import io.delta.tables._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode, Trigger}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
+import org.lamastex.spark.trendcalculus._
+import scala.util.Random
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>defined object TrendUtils
+</pre></div>
+</div>
+</div></blockquote>
+<p>Reading the joined dataset from the last notebook.</p>
+<p>We train the model using both oil and gold data and predict trends in
+oil data. We show that this yields better results than just training on
+the oil data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rootPath</span> <span class="o">=</span> <span class="n">TrendUtils</span><span class="o">.</span><span class="n">getStreamableTrendCalculusPath</span>
+<span class="n">val</span> <span class="n">maxRevPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;maxRev&quot;</span>
+<span class="n">val</span> <span class="n">maxRevDS</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">maxRevPath</span><span class="p">)</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">FlatReversal</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to predict what the trend of the next data point will be given
+the trend reversals we have observed.</p>
+<p>For this, we use an m-th order Markov model. We look at the reversal
+state of the last <code class="docutils literal notranslate"><span class="pre">m</span></code> points and use this to predict the trends in the
+next <code class="docutils literal notranslate"><span class="pre">n</span></code> points. <code class="docutils literal notranslate"><span class="pre">k</span></code> is the maximum order of reversal that is considered
+when training the model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">trainingRatio</span></code> is the ratio of the data used for training the model,
+the rest is used for testing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">modelPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;estimators/&quot;</span>
+<span class="n">val</span> <span class="n">maxRevDSWithLagCountPath</span> <span class="o">=</span> <span class="n">modelPath</span> <span class="o">+</span> <span class="s2">&quot;maxRevDSWithLag&quot;</span>
+
+<span class="n">val</span> <span class="n">numPartitions</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">val</span> <span class="n">partialModelPaths</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">numPartitions</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">i</span> <span class="o">=&gt;</span> <span class="n">modelPath</span> <span class="o">+</span> <span class="n">s</span><span class="s2">&quot;partialModel$</span><span class="si">{i}</span><span class="s2">&quot;</span> <span class="p">)</span>
+<span class="n">val</span> <span class="n">fullModelPath</span> <span class="o">=</span> <span class="n">modelPath</span> <span class="o">+</span> <span class="s2">&quot;fullModel&quot;</span>
+
+<span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">val</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">val</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">val</span> <span class="n">trainingRatio</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="nb">type</span> <span class="n">FinalModel</span> <span class="o">=</span> <span class="n">Map</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">Map</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">Double</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def truncRev(k: Int)(rev: Int): Int = {
+  if (math.abs(rev) &gt; k) k*rev.signum else rev
+}
+val truncRevUDF = udf{ rev: Int =&gt; rev.signum }
+def truncRevsUDF(k: Int) = udf{ revs: Seq[Int] =&gt; revs.map(truncRev(k)) }
+
+def lagColumn(df: DataFrame, orderColumnName: String, lagKeyName: String, lagValueName: String, m: Int, n: Int): DataFrame = {
+  val windowSpec = Window.partitionBy(&quot;ticker&quot;).orderBy(orderColumnName)
+  val laggedKeyColNames = (1 to m).map( i =&gt; s&quot;lagKey$i&quot; ).toSeq
+  val laggedValueColNames = (1 to n).map( i =&gt; s&quot;lagValue$i&quot; ).toSeq
+  val dfWithLaggedKeyColumns = (n+1 to m+n)
+    .foldLeft(df)( (df: DataFrame, i: Int) =&gt; df.withColumn(laggedKeyColNames(i-n-1), lag(lagKeyName, i-1, Int.MaxValue).over(windowSpec)) )
+  val dfWithLaggedKeyValueColumns = (1 to n)
+    .foldLeft(dfWithLaggedKeyColumns)( (df: DataFrame, i: Int) =&gt; df.withColumn(laggedValueColNames(i-1), lag(lagValueName, i-1, Int.MaxValue).over(windowSpec)) )
+  
+  dfWithLaggedKeyValueColumns
+    .withColumn(&quot;lagKey&quot;, array(laggedKeyColNames.reverse.take(m).map(col(_)):_*))
+    .withColumn(&quot;lagValue&quot;, array(laggedValueColNames.reverse.takeRight(n).map(col(_)):_*))
+    .withColumn(&quot;lagKeyFirst&quot;, col(laggedKeyColNames.last))
+    .filter($&quot;lagKeyFirst&quot; =!= Int.MaxValue)
+    .drop(&quot;lagKeyFirst&quot;)
+    .drop(laggedKeyColNames:_*)
+    .drop(laggedValueColNames:_*)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>truncRev: (k: Int)(rev: Int)Int
+truncRevUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,IntegerType,Some(List(IntegerType)))
+truncRevsUDF: (k: Int)org.apache.spark.sql.expressions.UserDefinedFunction
+lagColumn: (df: org.apache.spark.sql.DataFrame, orderColumnName: String, lagKeyName: String, lagValueName: String, m: Int, n: Int)org.apache.spark.sql.DataFrame
+</pre></div>
+</div>
+</div></blockquote>
+<p>The trend at each point can be extracted from the trend reversals by
+taking the sum of all previous 1-st order trend reversals. This sum will
+always be either 0 (up trend) or -1 (down trend) and 0 is therefore
+mapped to 1 to get (1, -1) as (up, down).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val maxRevDSWithLag = lagColumn(
+  maxRevDS
+    .orderBy(&quot;x&quot;)
+    .toDF
+    .withColumn(&quot;truncRev&quot;, truncRevUDF($&quot;reversal&quot;))
+    .withColumn(
+      &quot;tmpTrend&quot;,
+      sum(&quot;truncRev&quot;).over(
+        Window
+          .partitionBy(&quot;ticker&quot;)
+          .orderBy(&quot;x&quot;)
+          .rowsBetween(Window.unboundedPreceding, Window.currentRow)
+      )
+    )
+    .withColumn(&quot;trend&quot;, when($&quot;tmpTrend&quot; === 0, 1).otherwise(-1))
+    .drop(&quot;truncRev&quot;, &quot;tmpTrend&quot;),
+  &quot;x&quot;, 
+  &quot;reversal&quot;,
+  &quot;trend&quot;,
+  m, 
+  n
+)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>maxRevDSWithLag: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp ... 5 more fields]
+</pre></div>
+</div>
+</div></blockquote>
+<p>We now want to predict <code class="docutils literal notranslate"><span class="pre">lagValue</span></code> from <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">maxRevDSWithLag</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Cleaning up last run and writing model training input to delta tables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">maxRevDSWithLag</span>
+  <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">))</span>
+  <span class="o">.</span><span class="n">write</span>
+  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">divUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">{</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">toDouble</span><span class="o">/</span><span class="n">b</span> <span class="p">}</span>
+<span class="n">val</span> <span class="n">maxRevDSWithLagCount</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">numberOfRows</span> <span class="o">=</span> <span class="n">maxRevDSWithLagCount</span><span class="o">.</span><span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>divUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,DoubleType,Some(List(LongType, LongType)))
+maxRevDSWithLagCount: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp ... 6 more fields]
+numberOfRows: Long = 6845798
+</pre></div>
+</div>
+</div></blockquote>
+<p>The data is split into training and testing data. This is <em>not</em> done
+randomly as there is a dependence on previous data points. We don’t want
+to train on data that is dependent on the testing data and therefore the
+training data consists of the first (for example) 70% of the data and
+the last 30% is saved for testing. This also reflects how the model
+would be used since we can only train on data points that have already
+been observed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val tickers = maxRevDSWithLagCount.select(&quot;ticker&quot;).distinct.as[String].collect.toSeq
+val tickerDFs = tickers.map( ticker =&gt; maxRevDSWithLagCount.filter($&quot;ticker&quot; === ticker))
+val trainingDF = tickerDFs.map( df =&gt; df.limit((df.count*trainingRatio).toInt) ).reduce( _.union(_) ).orderBy(&quot;x&quot;)
+val trainingRows = trainingDF.count
+
+val testingDF = maxRevDSWithLagCount.except(trainingDF)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tickers: Seq[String] = WrappedArray(XAUUSD, BCOUSD)
+tickerDFs: Seq[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row]] = ArrayBuffer([ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields])
+trainingDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+trainingRows: Long = 4792058
+testingDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+</pre></div>
+</div>
+</div></blockquote>
+<p>Create <code class="docutils literal notranslate"><span class="pre">numTrainingSets</span></code> training set of increasing size to get
+snapshots of how a partially trained model looks like. The sizes are
+spaced logarithmically since the improvement in the model is fastest in
+the beginning.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rowsInPartitions</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">numPartitions</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="n">i</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">trainingRows</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="n">numPartitions</span><span class="p">))</span><span class="o">.</span><span class="n">toInt</span> <span class="p">}</span><span class="o">//.</span><span class="n">scanLeft</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)(</span><span class="n">_</span><span class="o">-</span><span class="n">_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rowsInPartitions: scala.collection.immutable.IndexedSeq[Int] = Vector(4, 21, 100, 470, 2189, 10193, 47464, 221012, 1029129, 4792058)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Model is trained by counting how many times each (<code class="docutils literal notranslate"><span class="pre">lagKey</span></code>, <code class="docutils literal notranslate"><span class="pre">lagValue</span></code>)
+pair is observed and dividing by how many times <code class="docutils literal notranslate"><span class="pre">lagKey</span></code> is observed to
+get an estimation of the transition probabilities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val keyValueCountPartialDFs = rowsInPartitions.map(
+  trainingDF
+    .limit(_)
+    .withColumn(&quot;keyValueObs&quot;, sum(&quot;count&quot;).over(Window.partitionBy($&quot;lagKey&quot;, $&quot;lagValue&quot;)))
+    .withColumn(&quot;totalKeyObs&quot;, sum(&quot;count&quot;).over(Window.partitionBy($&quot;lagKey&quot;)))
+    .drop(&quot;count&quot;)
+)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>keyValueCountPartialDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields])
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>display(keyValueCountPartialDFs.last.orderBy($&quot;keyValueObs&quot;.desc))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keyValueCountPartialDFs
+  .map( df =&gt;
+    df
+      .withColumn(&quot;probability&quot;, divUDF($&quot;keyValueObs&quot;, $&quot;totalKeyObs&quot;))
+      .drop(&quot;keyValueObs&quot;, &quot;totalKeyObs&quot;)
+  )
+  .zip(partialModelPaths).map{ case (df: DataFrame, path: String) =&gt;
+    df.write.mode(&quot;overwrite&quot;).format(&quot;delta&quot;).save(path)  
+  }
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res9: scala.collection.immutable.IndexedSeq[Unit] = Vector((), (), (), (), (), (), (), (), (), ())
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">probDFs</span> <span class="o">=</span> <span class="n">partialModelPaths</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields])
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">probDFs</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;probability&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The prediction is given by taking</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} V \\in argmax(P\_K(V)) \end{split}\]</div>
+<p>where *P_K(V)* is the probability that <em>V</em> is the next trend when the
+last <code class="docutils literal notranslate"><span class="pre">m</span></code> points have had reversals <em>K</em>. If there are more than one
+elements in argmax, an element is chosen uniformly at random.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val aggWindow = Window.partitionBy(&quot;lagKey&quot;).orderBy(&#39;probability desc)
+val testedDFs = probDFs
+  .map { df =&gt;
+     val predictionDF = df
+      .select(&quot;lagKey&quot;, &quot;lagValue&quot;, &quot;probability&quot;)
+      .distinct
+      .withColumn(&quot;rank&quot;, rank().over(aggWindow))
+      .filter(&quot;rank == 1&quot;)
+      .groupBy(&quot;lagKey&quot;)
+      .agg(collect_list(&quot;lagValue&quot;))
+    
+    testingDF
+      .filter($&quot;ticker&quot; === &quot;BCOUSD&quot;)
+      .join(predictionDF, Seq(&quot;lagKey&quot;), &quot;left&quot;)
+      .withColumnRenamed(&quot;collect_list(lagValue)&quot;, &quot;test&quot;)
+  }
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>warning: there was one feature warning; re-run with -feature for details
+aggWindow: org.apache.spark.sql.expressions.WindowSpec = org.apache.spark.sql.expressions.WindowSpec@4f988e13
+testedDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields])
+</pre></div>
+</div>
+</div></blockquote>
+<p>We use a binary loss function that indicates if the prediction was
+correct or not.</p>
+<p><code class="docutils literal notranslate"><span class="pre">getRandomUDF</span></code> is used to choose an element at random in
+argmax(P_K(V)). <code class="docutils literal notranslate"><span class="pre">safeArr</span></code> is used since we might see patterns in the
+test data that were not present in the training data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">getRandomUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span> <span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]])</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="n">val</span> <span class="n">safeArr</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">getOrElse</span><span class="p">(</span><span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]]())</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">safeArr</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">)</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]()</span> <span class="k">else</span> <span class="n">safeArr</span><span class="p">(</span><span class="n">Random</span><span class="o">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">safeArr</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+<span class="p">}</span> <span class="p">)</span>
+
+<span class="n">val</span> <span class="n">lossUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">pred</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">pred</span><span class="p">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>getRandomUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,ArrayType(IntegerType,false),Some(List(ArrayType(ArrayType(IntegerType,false),true))))
+lossUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,IntegerType,Some(List(ArrayType(IntegerType,false), ArrayType(IntegerType,false))))
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val lossDFs = testedDFs.map(_.withColumn(&quot;prediction&quot;, getRandomUDF($&quot;test&quot;)).withColumn(&quot;loss&quot;, lossUDF($&quot;lagValue&quot;, $&quot;prediction&quot;)))
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lossDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields])
+</pre></div>
+</div>
+</div></blockquote>
+<p>Already on line 2 we see a case where <code class="docutils literal notranslate"><span class="pre">lagKey</span></code> was previously not
+observed (indicated by <code class="docutils literal notranslate"><span class="pre">null</span></code> in test column).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">lossDFs</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val testLength = testingDF.count
+val oilTestDF = testingDF.filter($&quot;ticker&quot; === &quot;BCOUSD&quot;)
+val oilTestLength = oilTestDF.count
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>testLength: Long = 2053732
+oilTestDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+oilTestLength: Long = 857750
+</pre></div>
+</div>
+</div></blockquote>
+<p>Out of roughly 2 million observations, about 860k were oil price.</p>
+<p>We find the mean loss for each training dataset of increasing size. As
+one can see, the loss decreases as more data is supplied.</p>
+<p>Further, training on both oil and gold data yields a better result than
+just oil, suggesting that trends behave similarly in the two
+commodities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val losses = lossDFs.map( _.agg(sum(&quot;loss&quot;)).select($&quot;sum(loss)&quot;.as(&quot;totalLoss&quot;)).collect.head.getLong(0).toDouble/oilTestLength )
+// Data up to 2019
+// k=max, m=2 ,n=1: (0.5489615950080244, 0.4014721726541194, 0.3660973816818738, 0.36497087640146797, 0.36485163238050344)
+// k=max, m=10,n=1: (0.9812730246821787, 0.8523390131056561, 0.5819573469954631, 0.3552177121357085, 0.2807503135425113)
+// k=max,m=100,n=1: (1.0, 1.0, 1.0, 1.0, 1.0)
+// k=5  , m=10,n=1: (0.9812730246821787, 0.8522267831239777, 0.5820597568537447, 0.3550507700379618, 0.2806352778112909)
+// k=1  , m=10,n=1: (0.9812730246821787, 0.852200128503329, 0.5821242890932098, 0.3553383593660128, 0.2806549180580846)
+
+// k=max, m=10,n=2: (0.9879380657977248, 0.9049354606556204, 0.7243136776273427, 0.5472986906951395, 0.4783823708897465)
+
+// k=max(17), m=10,n=1, 10 training sets: (0.9977203284971564, 0.9812730246821787, 0.9455375956409875, 0.8523810993487855, 0.7183644724769999, 0.5819320952495854, 0.44607349380350214, 0.35513915114853356, 0.3029480010437388, 0.280629666312207)
+
+// Data up to last month
+// k=max(18), m=10,n=1, 10 training sets: (0.9973104051296998, 0.9843882250072865, 0.9510789857184494, 0.8574351501020111, 0.7515744680851064, 0.6360547945205479, 0.5099656076945497, 0.4249921305741766, 0.3735668901194987, 0.34609501603031184)
+// Could the difference be due to Corona?
+
+// Trained on both oil and gold. testing on oil as previously.
+// k=max(18), m=10,n=1, 10 training sets: (0.9999778490236083, 0.9980728650539201, 0.9527158262897114, 0.8921317400174876, 0.7559988341591373, 0.5820915185077237, 0.46675488195861264, 0.3923101136694841, 0.3574876129408336, 0.3355837948120082)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>losses: scala.collection.immutable.IndexedSeq[Double] = Vector(0.9999778490236083, 0.9980728650539201, 0.9527158262897114, 0.8921317400174876, 0.7559988341591373, 0.5820915185077237, 0.46675488195861264, 0.3923101136694841, 0.3574876129408336, 0.3355837948120082)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Visualizing the improvement of the model as the size of training data
+increases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">trainingSizes</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">lossesDS</span> <span class="o">=</span> <span class="n">sc</span>
+  <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">losses</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">trainingSizes</span><span class="p">))</span>
+  <span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;training&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="s2">&quot;Oil and Gold&quot;</span><span class="p">))</span>
+  <span class="o">.</span><span class="n">union</span><span class="p">(</span>
+    <span class="n">sc</span>
+      <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="mf">0.9973104051296998</span><span class="p">,</span> <span class="mf">0.9843882250072865</span><span class="p">,</span> <span class="mf">0.9510789857184494</span><span class="p">,</span> <span class="mf">0.8574351501020111</span><span class="p">,</span> <span class="mf">0.7515744680851064</span><span class="p">,</span> <span class="mf">0.6360547945205479</span><span class="p">,</span> <span class="mf">0.5099656076945497</span><span class="p">,</span> <span class="mf">0.4249921305741766</span><span class="p">,</span> <span class="mf">0.3735668901194987</span><span class="p">,</span> <span class="mf">0.34609501603031184</span><span class="p">)</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">331</span><span class="p">,</span> <span class="mi">1414</span><span class="p">,</span> <span class="mi">6036</span><span class="p">,</span> <span class="mi">25759</span><span class="p">,</span> <span class="mi">109918</span><span class="p">,</span> <span class="mi">469036</span><span class="p">,</span> <span class="mi">2001430</span><span class="p">)))</span>
+      <span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;training&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="s2">&quot;Oil&quot;</span><span class="p">))</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="k">as</span><span class="p">[(</span><span class="n">Double</span><span class="p">,</span><span class="n">Long</span><span class="p">,</span><span class="n">String</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>trainingSizes: scala.collection.immutable.IndexedSeq[Long] = Vector(4, 21, 100, 470, 2189, 10193, 47464, 221012, 1029129, 4792058)
+lossesDS: org.apache.spark.sql.Dataset[(Double, Long, String)] = [loss: double, size: bigint ... 1 more field]
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">lossesDS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>[TABLE]</p>
+<p>The series using only oil data is very similar to the one with both oil
+and gold data. The final data point has a loss of about 0.35, meaning
+that the model accuracy is around 65% for predicting the the trend of
+the next point in the time series.</p>
+<p>To better understand the difference between the different (partially
+trained) models, we want to calculate the total variation distance
+between them.</p>
+<p>The first step is to collect the models and work with them locally.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">partialModels</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="n">df</span> <span class="o">=&gt;</span> 
+  <span class="n">val</span> <span class="n">tmpMap</span> <span class="o">=</span> <span class="n">df</span>
+    <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;lagKey&quot;</span><span class="p">,</span> <span class="s2">&quot;lagValue&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">distinct</span>
+    <span class="o">.</span><span class="n">collect</span>
+    <span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="n">r</span> <span class="o">=&gt;</span> 
+      <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">getAs</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]](</span><span class="mi">0</span><span class="p">),</span> <span class="n">r</span><span class="o">.</span><span class="n">getAs</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]](</span><span class="mi">1</span><span class="p">),</span> <span class="n">r</span><span class="o">.</span><span class="n">getDouble</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">_1</span><span class="p">)</span> <span class="o">//</span> <span class="n">Grouping</span> <span class="n">by</span> <span class="n">lagKey</span>
+    <span class="o">.</span><span class="n">mapValues</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tup</span> <span class="o">=&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="n">tup</span><span class="o">.</span><span class="n">_2</span> <span class="o">-&gt;</span> <span class="n">tup</span><span class="o">.</span><span class="n">_3</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">toMap</span><span class="p">)</span>
+  
+  <span class="n">tmpMap</span><span class="p">:</span> <span class="n">FinalModel</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If a <code class="docutils literal notranslate"><span class="pre">lagKey</span></code> sequence only belongs to one of the models we are
+comparing, the variation distance is maximal, i.e. 1. Otherwise, we
+compute the total variation distance between the probabilities of
+observing a sequence of <code class="docutils literal notranslate"><span class="pre">n</span></code> trends, following the sequence of trends
+<code class="docutils literal notranslate"><span class="pre">lagKey</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def totalVarDist(m1: FinalModel, m2: FinalModel): Map[Seq[Int], Double] = {
+  val allKeys = m1.keys.toSet.union(m2.keys.toSet)
+  val sharedKeys = m1.keys.toSet.intersect(m2.keys.toSet)
+  val totalVarDists = allKeys.toSeq.map{ key =&gt;
+    if (!sharedKeys.contains(key)) {
+      1.0
+    } else {
+      val val1 = m1.getOrElse(key, Map())
+      val val2 = m2.getOrElse(key, Map())
+      val allValKeys = val1.keys.toSet.union(val2.keys.toSet)
+      allValKeys.map( valKey =&gt; 0.5*math.abs(val1.getOrElse(valKey, 0.0) - val2.getOrElse(valKey, 0.0)) ).sum
+    }
+  }
+  allKeys.zip(totalVarDists).toMap
+}
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>totalVarDist: (m1: FinalModel, m2: FinalModel)Map[Seq[Int],Double]
+</pre></div>
+</div>
+</div></blockquote>
+<p>Computing the variation distance for all possible pairs of partially
+trained models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">totalVariationDistances</span> <span class="o">=</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m1</span> <span class="o">=&gt;</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m2</span> <span class="o">=&gt;</span> <span class="n">totalVarDist</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>totalVariationDistances: scala.collection.immutable.IndexedSeq[scala.collection.immutable.IndexedSeq[Map[Seq[Int],Double]]] = Vector(Vector(Map(WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0), Map(WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0), Map(WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(2, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(1, -1, 3, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 1, -1, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 3, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 2, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(3, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0), Map(WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 6, -2) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, -1, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 5, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(6, -2, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -5, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, -2, 3, -1, 1) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 3, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-1, 1, -2, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 2, -2, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(-2, 3, -1, 1, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 1, -2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(3, -1, 1, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 3) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 2, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(3, 0, -1, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, 0, 0, -3, 1) -&gt; 1.0, WrappedArray(0, -3, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 6, -2, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 6, -2, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 3, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 6, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 1, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 6, -2, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 2, 0, -1, 0, 1, 0, -3, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 1, -2, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -2, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, -1, 0, 2, -2) -&gt; 1.0, WrappedArray(-4, 0, 1, 0, -1, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, 0, -3, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -2, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -3, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -2, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -5, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(2, -2, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(3, -1, 0, 1, 0, 0, -3, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 5, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 4, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 3, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-2, 0, 2, 0, -1, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 3, -1, 0, 1, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(0, 3, 0, -1, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -1, 1, -2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(2, -2, 3, -1, 1, 0, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 5, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, -2, 3, -1, 1, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 5, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 6, -2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -5, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 0, 6) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(-1, 1, -1, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 1, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 2, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 1, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -5, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 5, 0) -&gt; 1.0, WrappedArray(0, 0, 6, -2, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-3, 1, 0, 0, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(1, -1, 3, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, -3, 1, 0, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 3, -1, 0, 1, 0, 0, -3, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 4, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -4, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 2, 0, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 2, -2, 3, -1, 1, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, -2, 1) -&gt; 1.0, WrappedArray(0, 0, -3, 1, 0, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, -2, 3, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 1, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 1, -1, 3) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, -2, 3, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 5) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 5, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, -2, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, -1, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, 0, -1, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 3, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 2, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 1, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, -2, 3, -1, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -3, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 1, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 6, -2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(3, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, -2, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(5, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0), Map(WrappedArray(-1, 0, 2, -1, 0, 0, 0, 1, -3, 3) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, -3) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, -4) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 1, 0, -2, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 5, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 6, -2) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, -2, 0, 6, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 1, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, 0, -6) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 3, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -1, 2, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, -1, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 1, 0, -1, 0, 2, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, -1, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 0, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 2, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 1, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 2, -2, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -1, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 2, -2, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -4, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 1, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 1, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 6, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 5, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 1, 0, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 2, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 2, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 1, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 5, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 5, -1, 1) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 4, -2, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 6, 0, 0, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 1, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 5, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 1, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(0, 6, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 3, 0, -2, 2, 0, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-3, 1, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 2, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(6, -2, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 3, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-4, 0, 1, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 4, 0, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 2, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 1, -1, 0, 0, 4) -&gt; 1.0, WrappedArray(-1, 2, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 2, -2, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 2, -2, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -3, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -5, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -4, 0, 2, -1, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -2, 0, 1, -1, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -5, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 5, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, -2, 3, -1, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -1, 0, 1, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 6, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 2, -1, 0, 0, 0, 1, -3, 3, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(-2, 2, 0, -1, 0, 1, -1, 0, 1, -3) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 2, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 1, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, -3, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(5, -1, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -6, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -2, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 7, 0, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(3, 0, 0, -2, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 3, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(-1, 1, -2, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, 0, 0, -2, 0, 0, 2, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 1, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 7, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 2, -2, 3) -&gt; 1.0, WrappedArray(0, -1, 1, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 3, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, -3, 0, 3, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 1, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 1, 0, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(-2, 3, -1, 1, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 1, -1, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 2, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 5, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 2, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 2, 0, -2, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 2, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(2, -1, 0, 0, 0, 1, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 1, -2) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 3, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 1, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(1, 0, -2, 1, 0, -1, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(2, -1, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -4, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -1, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(3, -1, 1, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -4, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, 0, 0, -2, 1, -1, 0, 2, -1) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 2, -2, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 3, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 3, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, -6, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 1, -1, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 1, 0, -1, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, 1, -3, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 1, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 1, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 1, 0, -1, 1, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -2, 0, 0, 1, -1, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 2, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -2, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(6, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 4, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, -2, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 4) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, -1, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, -3, 0, 0, 2) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -2, 0, 0, 2) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -2, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 0, 2, -1) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 2, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -2, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 6, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, -1, 0, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 3, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, -1, 1, -2, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 5, 0, -1, 1, -2, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 7, 0, 0) -&gt; 1.0, WrappedArray(3, 0, -1, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 2, 0, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -6, 0, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 1, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, 0, -2, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 1, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 1, 0, -2, 0, 1) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 1, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -2, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, -6, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -2, 0, 1, -1, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, -1, 0, 2, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 1, 0, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 2, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 4, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 3, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 1, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 2, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, 0, 0, -3, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 4) -&gt; 1.0, WrappedArray(0, -6, 0, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 4, 0, 0, -2, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 5, 0, -1, 1, -2, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-8, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; ...
+</pre></div>
+</div>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">aggToMatrix</span><span class="p">(</span><span class="n">totalVarDists</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span><span class="n">Double</span><span class="p">]]],</span> <span class="n">aggFunc</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="n">Double</span><span class="p">):</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">totalVariationDistances</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">t</span> <span class="o">=&gt;</span> <span class="n">aggFunc</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">toSeq</span><span class="p">)))</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">printMatrix</span><span class="p">(</span><span class="n">mat</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]]):</span> <span class="n">Unit</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">mat</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="n">s</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$a%2.3f &quot;</span><span class="p">)</span> <span class="p">);</span> <span class="n">println</span><span class="p">()</span> <span class="p">}</span> <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>aggToMatrix: (totalVarDists: Seq[Seq[Map[Seq[Int],Double]]], aggFunc: Seq[Double] =&gt; Double)Seq[Seq[Double]]
+printMatrix: (mat: Seq[Seq[Double]])Unit
+</pre></div>
+</div>
+</div></blockquote>
+<p>We compute three different metrics of the total variation distances.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">maxDists</span></code> is the <em>maximal</em> total variation distance over the
+different <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>s.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">minDists</span></code> is the <em>minimal</em> total variation distance over the
+different <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>s.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meanDists</span></code> is an estimate of the average total variation distance
+over the different <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>s.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">maxDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">minDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">meanDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="o">/</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>maxDists: Seq[Seq[Double]] = Vector(Vector(0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0))
+minDists: Seq[Seq[Double]] = Vector(Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1111111111111111), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.1111111111111111, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
+meanDists: Seq[Seq[Double]] = Vector(Vector(0.0, 0.8095238095238095, 0.9595959595959596, 0.9902676399026764, 0.9975932611311673, 0.9992509363295881, 0.999785112600997, 0.9999212988949179, 0.9999637818340489, 0.9999828303297199), Vector(0.8095238095238095, 0.0, 0.7878787878787878, 0.948905109489051, 0.9879412354592861, 0.9962818797931157, 0.9988235824354509, 0.9995277161089322, 0.9997797172802255, 0.9999006682605777), Vector(0.9595959595959596, 0.7878787878787878, 0.0, 0.7675182481751823, 0.9456465498353374, 0.9839165434703036, 0.9949339063117071, 0.9979342365055828, 0.9990263876562084, 0.9995453963182023), Vector(0.9902676399026764, 0.948905109489051, 0.7675182481751823, 0.0, 0.76569626045364, 0.9313390461281573, 0.9778513135067101, 0.9912980359273889, 0.9959873718299493, 0.998122961240012), Vector(0.9975932611311673, 0.9879412354592861, 0.9456465498353374, 0.76569626045364, 0.0, 0.709855350171288, 0.9069532060773262, 0.9635540738278638, 0.9834583301846547, 0.992240400344003), Vector(0.9992509363295881, 0.9962818797931157, 0.9839165434703036, 0.9313390461281573, 0.709855350171288, 0.0, 0.6846310864524279, 0.8780374739844375, 0.9450962905341598, 0.9743411917827652), Vector(0.999785112600997, 0.9988235824354509, 0.9949339063117071, 0.9778513135067101, 0.9069532060773262, 0.6846310864524279, 0.0, 0.6217124078957903, 0.8326340372200347, 0.9226862715145945), Vector(0.9999212988949179, 0.9995277161089322, 0.9979342365055828, 0.9912980359273889, 0.9635540738278638, 0.8780374739844375, 0.6217124078957903, 0.0, 0.5727678811689098, 0.8064805024139434), Vector(0.9999637818340489, 0.9997797172802255, 0.9990263876562084, 0.9959873718299493, 0.9834583301846547, 0.9450962905341598, 0.8326340372200347, 0.5727678811689098, 0.0, 0.5653398087664567), Vector(0.9999828303297199, 0.9999006682605777, 0.9995453963182023, 0.998122961240012, 0.992240400344003, 0.9743411917827652, 0.9226862715145945, 0.8064805024139434, 0.5653398087664567, 0.0))
+</pre></div>
+</div>
+</div></blockquote>
+<p>Each model is a mapping <code class="docutils literal notranslate"><span class="pre">{key:</span> <span class="pre">{value:</span> <span class="pre">probability}}</span></code> where <code class="docutils literal notranslate"><span class="pre">key</span></code>
+(<code class="docutils literal notranslate"><span class="pre">lagKey</span></code>) is a sequence of reversals and non-reversals of length <code class="docutils literal notranslate"><span class="pre">m</span></code>,
+<code class="docutils literal notranslate"><span class="pre">value</span></code> is a sequence of trends of length <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">probability</span></code> is the
+estimated probability that <code class="docutils literal notranslate"><span class="pre">value</span></code> is observed immediately following
+<code class="docutils literal notranslate"><span class="pre">key</span></code>.</p>
+<p>Hence, for any two models A and B, we can calculate the total variation
+distance between the mappings <code class="docutils literal notranslate"><span class="pre">{value:</span> <span class="pre">probability}</span></code> for a given key in
+the union of the keys for A and B. If a key is not present in one of the
+models, the total variation distance is 1 for that key.</p>
+<p>In the matrix below, the (i,j)-th position is the arithmetic mean of the
+total variation distances for all keys in the union of the keysets. The
+matrix is symmetric with the smallest model in the top row and leftmost
+column and the largest model in the bottom row and rightmost column. All
+diagonal elements are 0 since the total variation distance from one
+model to itself is always 0.</p>
+<p>If there are three models labeled M<em>1, M</em>2, M<em>3 and V</em>i_j is the
+arithmetic mean described above, the matrix is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \\begin{matrix} V*{1,1} &amp; V*{1,2} &amp; V*{1,3} \\end{matrix} $$ \end{split}\]</div>
+<p>\begin{matrix} V*{2,1} &amp; V*{2,2} &amp; V*{2,3} \end{matrix} $<span class="math notranslate nohighlight">\( \)</span><span class="math notranslate nohighlight">\(
+\\begin{matrix} V*{3,1} &amp; V*{3,2} &amp; V\_{3,3} \\end{matrix} \)</span>$</p>
+<p>As one can see, the models differ a lot from each other, suggesting that
+the estimate can still be improved given more data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printMatrix</span><span class="p">(</span><span class="n">meanDists</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0.000 0.810 0.960 0.990 0.998 0.999 1.000 1.000 1.000 1.000 
+0.810 0.000 0.788 0.949 0.988 0.996 0.999 1.000 1.000 1.000 
+0.960 0.788 0.000 0.768 0.946 0.984 0.995 0.998 0.999 1.000 
+0.990 0.949 0.768 0.000 0.766 0.931 0.978 0.991 0.996 0.998 
+0.998 0.988 0.946 0.766 0.000 0.710 0.907 0.964 0.983 0.992 
+0.999 0.996 0.984 0.931 0.710 0.000 0.685 0.878 0.945 0.974 
+1.000 0.999 0.995 0.978 0.907 0.685 0.000 0.622 0.833 0.923 
+1.000 1.000 0.998 0.991 0.964 0.878 0.622 0.000 0.573 0.806 
+1.000 1.000 0.999 0.996 0.983 0.945 0.833 0.573 0.000 0.565 
+1.000 1.000 1.000 0.998 0.992 0.974 0.923 0.806 0.565 0.000
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./000_9-sds-3-x-trends"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="02_streamable_trend_calculus.html" title="previous page">Streaming Trend Calculus with Maximum Necessary Reversals</a>
+    <a class='right-next' id="next-link" href="030_Spark_GDELT_project_001.html" title="next page">Plugging into GDELT Mass Media Streams</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By ScaDaMaLe Team<br/>
+        
+            &copy; Copyright 2020 Creative Commons Zero v1.0 Universal.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
