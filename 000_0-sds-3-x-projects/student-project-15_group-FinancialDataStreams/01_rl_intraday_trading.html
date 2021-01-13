@@ -672,7 +672,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html">
-   Music Recommender System
+   Music Recommendation System
   </a>
  </li>
  <li class="toctree-l1">
@@ -1201,16 +1201,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-20_group-Generalization/01_Background.html">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-20_group-Generalization/01_Background.html#project-description">
-   Project description
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="../student-project-20_group-Generalization/02_CNNs.html">
    The data set
   </a>
@@ -1411,14 +1401,16 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symmary-and-future-work">
-   Symmary and Future Work
+  <a class="reference internal nav-link" href="#summary-and-outlook">
+   Summary and Outlook
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#trend-calculus">
-   Trend Calculus
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#trend-calculus">
+     Trend Calculus
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -1434,14 +1426,36 @@
   <div class="section" id="reinforcement-learning-for-intraday-trading">
 <h1>Reinforcement Learning for Intraday Trading<a class="headerlink" href="#reinforcement-learning-for-intraday-trading" title="Permalink to this headline">¶</a></h1>
 <p>In this project, our aim is to implement a Reinforcement Learning (RL)
-strategy for trading stocks. Specifically, we use the DQN – Deep
-Q-Network – algorithm to train an agent which trades Brent Crude Oil
-(BCOUSD) stocks, in order to maximize long term profit. Finally,
-evaluate the the results from the RL agent based on the predictions from
-the TrendCalculus predictive algorithm. Note that the overall concern is
-to make our implementation scalable.</p>
+strategy for trading stocks. Adopting a learning-based approach, in
+particular using RL, entails several potential benefits over current
+approaches. Firstly, several ML methods allow learning-based
+pre-processing steps, such as convolutional layers which enable
+automatic feature extraction and detection, and may be used to focus the
+computation on the most relevant features. Secondly, constructing an
+end-to-end learning-based pipeline makes the prediction step implicit,
+and potentially reduces the problem complexity to predicting only
+certain aspects or features of the time series which are necessary for
+the control strategy, as opposed to attempting to predict the exact time
+series values. Thirdly, an end-to-end learning-based approach alleviates
+potential bounds of the step-wise modularization that a human-designed
+pipeline would entail, and allows the learning algorithm to
+automatically deduce the optimal strategy for utilizing any feature
+signal, in order to execute the most efficient control strategy.</p>
+<p>The main idea behind RL algorithms is to learn by trial-and-error how to
+act optimally. An agent gathers experience by iteratively interacting
+with an environment. Starting in state S<em>t, the agent takes an action
+A</em>t and receives a reward R<em>t+1 as it moves to state S</em>t+1, as seen
+below
+(<a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/d/da/Markov_diagram_v2.svg">source</a>).
+Using this experience, RL algorithms can learn either a value function
+or a policy directly. We learn the former, which can then be used to
+compute optimal actions, by chosing the action that maximizes the action
+value, Q. Specifically, we use the DQN – Deep Q-Network – algorithm to
+train an agent which trades Brent Crude Oil (BCOUSD) stocks, in order to
+maximize profit.</p>
 <p>&lt;img
-src=https://www.kdnuggets.com/images/reinforcement-learning-fig1-700.jpg&gt;</p>
+src=https://upload.wikimedia.org/wikipedia/commons/d/da/Markov<em>diagram</em>v2.svg
+width=600&gt;</p>
 <div class="section" id="group-members">
 <h2>Group members:<a class="headerlink" href="#group-members" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -1623,7 +1637,7 @@ stock, or <strong>SHORT</strong> for selling stock. Note that <strong>PASS</stro
 required, since if stock is already owned, buying means holding and if
 stock is not owned then shorting means pass. - Reward, r: if
 a</em>t=**LONG** r<em>t=s</em>t+1=**diff_close**; if a<em>t=<strong>SHORT</strong>
-r</em>t=s_t+1=-**diff_close**. Essentially, the reward is negative if
+r</em>t=-s_t+1=-**diff_close**. Essentially, the reward is negative if
 we sell and the stock goes up or if we buy and the stock goes down in
 the next timestep. Conversely, the reward is positive if we buy and the
 stock goes up or if we sell and the stock goes down in the next
@@ -2505,22 +2519,44 @@ January 2019, which wasn’t included during training.</p>
 </div>
 <p>We can see that the policy converged to always shorting, meaning that
 the agent never buys any stock. While abstaining from investments in
-fossil fuels may good advice, the result is not very useful for our
+fossil fuels may be good advice, the result is not very useful for our
 intended application. Nevertherless, reaching a successful automatic
 intraday trading bot in the short time we spent implementing this
 project would be a high bar. After all, this is more or less the holy
 grail of computational economy.</p>
 </div>
-<div class="section" id="symmary-and-future-work">
-<h2>Symmary and Future Work<a class="headerlink" href="#symmary-and-future-work" title="Permalink to this headline">¶</a></h2>
-<p>In this project we have implemented an RL agent for intraday trading.
-This required some data preprocessing using</p>
-</div>
+<div class="section" id="summary-and-outlook">
+<h2>Summary and Outlook<a class="headerlink" href="#summary-and-outlook" title="Permalink to this headline">¶</a></h2>
+<p>In this project we have trained and tested an RL agent, using DQN for
+intraday trading. We started by processing the data and adding a
+**diff_close** column which contains the differece of the closing
+stock value between two timesteps. We then implemented our own Gym
+environment <strong>MarketEnv</strong>, to be able to read data from the BCUSD
+dataset and feed it to an agents, as weel as compute the reward given
+the agent’s action. We used a DQN implementation, to train a
+convolutional Q-Network. Since we are using TensorFlow in the
+background, the training is automatically scaled to use all cpu cores
+available (see <a class="reference external" href="https://www.xspdf.com/resolution/52582340.html">here</a>).
+Finally, we have tested our agent on new data, and concluded that more
+work needs to be put into making the algorithm convege.</p>
+<p>As future work we believe we can still improve the state and reward
+definitions. For the state, used a window of **close_diff** values
+as our state definiion. However, augmenting the state with longer term
+trends computed by the TrendCalculus algorithm could yield significant
+improvements. The TrendCalculus algorithm provides an analytical
+framework effective for identifying trends in historical price data,
+including <a class="reference external" href="https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/01trend-calculus-showcase.html">trend pattern
+analysis</a>
+and <a class="reference external" href="https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/03streamable-trend-calculus-estimators.html">prediction of trend
+changes</a>.
+Below we present the idea behind TrendCalculus and how it relates to
+**close_diff**, as well as a few ideas on how it could be used for
+our application.</p>
 <div class="section" id="trend-calculus">
-<h2>Trend Calculus<a class="headerlink" href="#trend-calculus" title="Permalink to this headline">¶</a></h2>
+<h3>Trend Calculus<a class="headerlink" href="#trend-calculus" title="Permalink to this headline">¶</a></h3>
 <p>Taken from: <a class="reference external" href="https://github.com/lamastex/spark-trend-calculus-examples">https://github.com/lamastex/spark-trend-calculus-examples</a></p>
 <p>Trend Calculus is an algorithm invented by Andrew Morgan that is used to
-find trend changes in a time series ( see
+find trend changes in a time series (see
 <a class="reference external" href="https://github.com/bytesumo/TrendCalculus/blob/master/HowToStudyTrends_v1.03.pdf">here</a>).
 It works by grouping the observations in the time series into windows
 and defining a trend upwards as “higher highs and higher lows” compared
@@ -2548,7 +2584,8 @@ width=600&gt;</p>
 <p>The output of the algorithm is a time series consisting of all the
 labelled reversal points. It is therefore possible to use this as the
 input for another run of the Trend Calculus algorithm, finding more long
-term trends.</p>
+term trends. This can be seen when TrendCalculus is applied to the BCUSD
+datset, shown in column <strong>reversal1</strong> of the table below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val windowSize = 2
@@ -2569,6 +2606,20 @@ dfWithReversalsDiff.createOrReplaceTempView(&quot;temp&quot;)
 </div>
 <p>[TABLE]</p>
 <p>Truncated to 30 rows</p>
+<p>In conjunction with TrendCalculus, a complete automatic trading pipeline
+can be constructed, consisting of (i) trend analysis with TrendCalculus
+(ii) time series prediction and (iii) control, i.e. buy or sell.
+Implementing and evaluating a pipeline such as the one outlined in the
+aforementioned steps is left as a suggestion for future work, and it is
+of particular interest to compare the performance of such a method to a
+learning-based one.</p>
+<p>Below we show that sign(**diff_close**) is equivalent to sign of the
+output of a single iteration of TrendCalculus with window size 2, over
+our **scope**. A possible improvement of our algorithm would be to use
+TrendCalculus to compute long term trends from historical data and
+include it on our state definition. This way, if for example the agent
+observes a long term downward trend, then it can be encouraged to buy
+stock since it is bound to bounce up again.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Taken from: https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/01trend-calculus-showcase.html</span>
@@ -2582,13 +2633,8 @@ dfWithReversalsDiff.createOrReplaceTempView(&quot;temp&quot;)
 <span class="n">TS</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">fullTS</span> <span class="k">if</span> <span class="n">startDate</span> <span class="o">&lt;=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">endDate</span><span class="p">]</span>
 
 <span class="n">allData</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">TS</span><span class="p">],</span> <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">TS</span><span class="p">],</span> <span class="s1">&#39;diff_close&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;diff_close&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">TS</span><span class="p">],</span> <span class="s1">&#39;reversal1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;reversal1&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">TS</span><span class="p">]}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot reversals</span>
+
+<span class="c1"># Plot reversals</span>
 <span class="n">close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">allData</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">])</span>
 <span class="n">diff_close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">allData</span><span class="p">[</span><span class="s1">&#39;diff_close&#39;</span><span class="p">])</span>
 <span class="n">timesteps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">diff_close</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">diff_close</span><span class="p">))</span>
@@ -2617,33 +2663,7 @@ dfWithReversalsDiff.createOrReplaceTempView(&quot;temp&quot;)
 </div>
 </div>
 </div>
-<p>The TrendCalculus algorithm provides an analytical framework effective
-for identifying trends in historical price data, including <a class="reference external" href="https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/01trend-calculus-showcase.html">trend
-pattern
-analysis</a>
-and <a class="reference external" href="https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/03streamable-trend-calculus-estimators.html">prediction of trend
-changes</a>.
-In conjunction with TrendCalculus, a complete automatic trading pipeline
-can be constructed, consisting of (i) trend analysis with TrendCalculus
-(ii) time series prediction (iii) control, i.e. buy or sell.
-Implementing and evaluating a pipeline such as the one outlined in the
-aforementioned steps is left as a suggestion for future work, and it is
-of particular interest to compare the performance of such a method to a
-learning-based one.</p>
-<p>Adopting a learning-based approach, in particular using RL, entails
-several potential benefits. Firstly, several ML methods allow
-learning-based pre-processing steps, such as convolutional layers which
-enable automatic feature extraction and detection, and may be used to
-focus the computation on the most relevant features. Secondly,
-constructing an end-to-end learning-based pipeline makes the prediction
-step implicit, and potentially reduces the problem complexity to
-predicting only certain aspects or features of the time series which are
-necessary for the control strategy, as opposed to attempting to predict
-the exact time series values. Thirdly, an end-to-end learning-based
-approach alleviates potential bounds of the step-wise modularization
-that a human-designed pipeline would entail, and allows the learning
-algorithm to automatically deduce the optimal strategy for utilizing any
-feature signal, in order to execute the most efficient control strategy.</p>
+</div>
 </div>
 </div>
 
