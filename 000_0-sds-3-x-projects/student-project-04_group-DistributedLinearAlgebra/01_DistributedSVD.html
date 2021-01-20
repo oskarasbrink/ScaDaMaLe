@@ -1284,25 +1284,28 @@
 theory and algorithms for distributed singular value decomposition of
 matrices, whereas in the second part we implement a music recommendation
 system closely related to low rank matrix factorization.</p>
-<p>The video presentation for this project can be found &lt;a
-href=”https://vimeo.com/499834997”&gt; here&lt;/a&gt;.</p>
+<p>The video presentation for this project can be found
+<a href="https://vimeo.com/499834997"> here</a>.</p>
 <div class="section" id="distributed-singular-value-decomposition">
 <h2>Distributed singular value decomposition<a class="headerlink" href="#distributed-singular-value-decomposition" title="Permalink to this headline">¶</a></h2>
 <p>This part of the project deals with distributed singular value
 decomposition. The singular value decomposition of a real matrix <span class="math notranslate nohighlight">\(A\)</span> is
-given by \[A= U S V^T,\]</p>
-<p>where <span class="math notranslate nohighlight">\(S\)</span> is a diagonal matrix of size <span class="math notranslate nohighlight">\(n\\times n\)</span> and <span class="math notranslate nohighlight">\(U\)</span> (<span class="math notranslate nohighlight">\(m\\times
-n\)</span> ) and <span class="math notranslate nohighlight">\(V\)</span> (<span class="math notranslate nohighlight">\(n\\times n\)</span>) are real matrices such that <span class="math notranslate nohighlight">\(U^T U =I\)</span> and
-<span class="math notranslate nohighlight">\(V^T V=I\)</span>. (See for example &lt;a
-href=”https://en.wikipedia.org/wiki/Singular<em>value</em>decomposition”&gt;wikipedia
-&lt;/a&gt;, &lt;a
-href=”https://web.mit.edu/be.400/www/SVD/Singular<em>Value</em>Decomposition.htm”&gt;MIT
-&lt;/a&gt; and &lt;a
-href=”https://mathworld.wolfram.com/SingularValueDecomposition.html”&gt;WolframMathworld
-&lt;/a&gt;). A standard way of computing this is to first compute the
-product <span class="math notranslate nohighlight">\(A^T A= VDV^T\)</span>. The matrix S is then obtained by taking the
-square root of the diagonal of <span class="math notranslate nohighlight">\(D\)</span> and finally we obtain <span class="math notranslate nohighlight">\(U\)</span> by
-computing <span class="math notranslate nohighlight">\(U = AV S^{-1}\)</span>.</p>
+given by</p>
+<div class="math notranslate nohighlight">
+\[  A= U S V^T,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(S\)</span> is a diagonal matrix of size <span class="math notranslate nohighlight">\(n\times n\)</span> and <span class="math notranslate nohighlight">\(U\)</span> (<span class="math notranslate nohighlight">\(m\times n\)</span>
+) and <span class="math notranslate nohighlight">\(V\)</span> (<span class="math notranslate nohighlight">\(n\times n\)</span>) are real matrices such that <span class="math notranslate nohighlight">\(U^T U =I\)</span> and
+<span class="math notranslate nohighlight">\(V^T V=I\)</span>. (See for example
+<a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">wikipedia
+</a>,
+<a href="https://web.mit.edu/be.400/www/SVD/Singular_Value_Decomposition.htm">MIT
+</a> and
+<a href="https://mathworld.wolfram.com/SingularValueDecomposition.html">WolframMathworld
+</a>). A standard way of computing this is to first compute the product
+<span class="math notranslate nohighlight">\(A^T A= VDV^T\)</span>. The matrix S is then obtained by taking the square root
+of the diagonal of <span class="math notranslate nohighlight">\(D\)</span> and finally we obtain <span class="math notranslate nohighlight">\(U\)</span> by computing
+<span class="math notranslate nohighlight">\(U = AV S^{-1}\)</span>.</p>
 <p>When one has large matrices and wants to compute the SVD distributed one
 takes into account the structure of the matrix and choose an algorithm
 that takes advantage of this.</p>
@@ -1310,8 +1313,8 @@ that takes advantage of this.</p>
 decomposition of a so called “tall and skinny” matrix <span class="math notranslate nohighlight">\(A\)</span>. This means
 that the number of rows <span class="math notranslate nohighlight">\(m\)</span> is much larger than the number of columns
 <span class="math notranslate nohighlight">\(n\)</span>. An example of where this is the case is the Audioscrobbler
-recommender system used by &lt;a
-href=”https://en.wikipedia.org/wiki/Last.fm”&gt;Last.fm &lt;/a&gt;. The
+recommender system used by
+<a href="https://en.wikipedia.org/wiki/Last.fm">Last.fm </a>. The
 typicall dataset will be a tall and skinny matrix where each row
 contains three entries; an identifier for a song, an identifier for a
 user and a player count (so each row tells us how many times a user has
@@ -1322,29 +1325,31 @@ algorithm has the following steps:</p>
 <ul class="simple">
 <li><p>It is computationally expensive to compute the product <span class="math notranslate nohighlight">\(A^T A\)</span> so we
 compute this distributed (map-reduce).</p></li>
-<li><p><span class="math notranslate nohighlight">\(A^T A\)</span> is of size <span class="math notranslate nohighlight">\(n\\times n\)</span> ( <span class="math notranslate nohighlight">\(n\)</span> is small) so we can compute
-<span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(S\)</span> locally by computing the eigenvectors and -values of
-<span class="math notranslate nohighlight">\(A^TA\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A^T A\)</span> is of size <span class="math notranslate nohighlight">\(n\times n\)</span> ( <span class="math notranslate nohighlight">\(n\)</span> is small) so we can compute <span class="math notranslate nohighlight">\(V\)</span>
+and <span class="math notranslate nohighlight">\(S\)</span> locally by computing the eigenvectors and -values of <span class="math notranslate nohighlight">\(A^TA\)</span>.</p></li>
 <li><p>We then compute <span class="math notranslate nohighlight">\(U= AVS^{-1}\)</span> as distributed matrix multiplication
 by broadcasting <span class="math notranslate nohighlight">\(VS^{-1}\)</span> to each partition and compute the
 multiplication with the rows of <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
 </ul>
 <p>In the spark mllib library theres a package for distributed linear
-algebra (&lt;a
-href=”https://spark.apache.org/docs/2.2.0/mllib-data-types.html”&gt;Data
-Types&lt;/a&gt;) and an object that we will use is the IndexedRow-object
-. This takes two parameters; a vector and an index that indicates on
-which row of the matrix the index is located. We can then create an RDD
-in spark of IndexedRow-objects. Below we use the matrix</p>
-<p>$<span class="math notranslate nohighlight">\(A = \\begin{pmatrix} 1 &amp; 2 \\\\ 3&amp; 4 \\\\ 0&amp; 0\\\\0&amp;0 \\end{pmatrix}
-\)</span>$ to test the algorithm on. We start by creating the matrix as an array
-of tuples. We then map each partittion (tuple) to a dense vector that we
+algebra
+(<a href="https://spark.apache.org/docs/2.2.0/mllib-data-types.html">Data
+Types</a>) and an object that we will use is the IndexedRow-object .
+This takes two parameters; a vector and an index that indicates on which
+row of the matrix the index is located. We can then create an RDD in
+spark of IndexedRow-objects. Below we use the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  A = 
+  \begin{pmatrix} 1 &amp; 2 \\\ 3&amp; 4 \\\ 0&amp; 0\\\0&amp;0 \end{pmatrix}
+\end{split}\]</div>
+<p>to test the algorithm on. We start by creating the matrix as an array of
+tuples. We then map each partittion (tuple) to a dense vector that we
 zip with its index (so we have a (vector,index)-tuple) that we use to
 create an IndexedRow. (It’s worth mentioning that there is an
-implementation of &lt;a
-href=”https://spark.apache.org/docs/2.2.0/mllib-dimensionality-reduction.html”&gt;SVD&lt;/a&gt;
-in Spark for &lt;a
-href=”https://spark.apache.org/docs/2.2.0/api/scala/index.html#org.apache.spark.mllib.linalg.distributed.RowMatrix”&gt;RowMatrices&lt;/a&gt;</p>
+implementation of
+<a href="https://spark.apache.org/docs/2.2.0/mllib-dimensionality-reduction.html">SVD</a>
+in Spark for
+<a href="https://spark.apache.org/docs/2.2.0/api/scala/index.html#org.apache.spark.mllib.linalg.distributed.RowMatrix">RowMatrices</a></p>
 <ul class="simple">
 <li><p>an RDD of rows of a matrix without indices).</p></li>
 </ul>
@@ -1385,15 +1390,25 @@ res0: Array[org.apache.spark.mllib.linalg.distributed.IndexedRow] = Array(Indexe
 </div></blockquote>
 <p>The first part of the algorithm that is “expensive” is the computation
 of the product <span class="math notranslate nohighlight">\(A^T A\)</span> (we compute <span class="math notranslate nohighlight">\(A^T A\)</span> rather than <span class="math notranslate nohighlight">\(A A^T\)</span> since the
-former has the shape <span class="math notranslate nohighlight">\(n \\times n\)</span> which we assume is small enough to
-fit on a local machine and <span class="math notranslate nohighlight">\(A A^T\)</span> is of size <span class="math notranslate nohighlight">\(m\\times m\)</span> ) . We note
-that<br />
-$<span class="math notranslate nohighlight">\( \\left( A^T A\\right)*{j,k} = \\sum*{i=1}^m a*{ij} a*{ik}. \)</span>$</p>
+former has the shape <span class="math notranslate nohighlight">\(n \times n\)</span> which we assume is small enough to fit
+on a local machine and <span class="math notranslate nohighlight">\(A A^T\)</span> is of size <span class="math notranslate nohighlight">\(m\times m\)</span> ) . We note that</p>
+<div class="math notranslate nohighlight">
+\[  \left( A^T A\right)_{j,k} = \sum_{i=1}^m   a_{ij}  a_{ik}. 
+\]</div>
 <p>This means that we can compute <span class="math notranslate nohighlight">\(A^T A\)</span> by mapping a row (say the i:th
-row) $<span class="math notranslate nohighlight">\(a*i = \\left(a*{i1}, \\dots , a\_{in} \\right) \)</span>$</p>
+row)</p>
+<div class="math notranslate nohighlight">
+\[  a_i = \left(a_{i1}, \dots , a_{in}  \right) 
+\]</div>
 <p>to all the products of its elements. We thus create a function that
-takes an IndexedRow $<span class="math notranslate nohighlight">\(a*i \)</span><span class="math notranslate nohighlight">\( and maps it to key-value pairs \)</span><span class="math notranslate nohighlight">\( ((j,k),
-a*{ij} a\_{ik}), 1\\leq j \\leq m, 1\\leq k \\leq n. \)</span>$</p>
+takes an IndexedRow</p>
+<div class="math notranslate nohighlight">
+\[  a_i 
+\]</div>
+<p>and maps it to key-value pairs</p>
+<div class="math notranslate nohighlight">
+\[  ((j,k), a_{ij} a_{ik}), 1\leq j \leq m, 1\leq k \leq n. 
+\]</div>
 <p>We then have an key-value RDD of ((Int,Int),Double)-tuples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1421,15 +1436,20 @@ a*{ij} a\_{ik}), 1\\leq j \\leq m, 1\\leq k \\leq n. \)</span>$</p>
 </div>
 </div>
 <p>We can now perform a reduceByKey-operation (join on <span class="math notranslate nohighlight">\((j,k)\)</span> ) and then
-sum over$<span class="math notranslate nohighlight">\( ((j,k), a*{ij} a*{ik}) \)</span><span class="math notranslate nohighlight">\( for all \)</span>i$ to compute</p>
+sum over</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\left( A^T A\\right)*{j,k} = \\sum*{i=1}^m a*{ij} a*{ik}. \end{split}\]</div>
+\[  ((j,k), a_{ij} a_{ik}) 
+\]</div>
+<p>for all <span class="math notranslate nohighlight">\(i\)</span> to compute</p>
+<div class="math notranslate nohighlight">
+\[  \left( A^T A\right)_{j,k} = \sum_{i=1}^m   a_{ij}  a_{ik}. 
+\]</div>
 <p>We then have a key-value RDD of ((Int,Int),Double)-tuples, where the
 value is an entry in the matrix <span class="math notranslate nohighlight">\(A\)</span> and the key indicates on what
 position in the matrix it is located:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\\left( (j,k), \\left( A^T A\\right)\_{j,k} \\right), 1\\leq j \\leq
-m, 1\\leq k \\leq n.\end{split}\]</div>
+\[  \left( (j,k), \left( A^T A\right)_{j,k} \right), 1\leq j \leq m, 1\leq k \leq n.
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
@@ -1442,15 +1462,14 @@ m, 1\\leq k \\leq n.\end{split}\]</div>
 </div>
 </div>
 <p>We now make use of another object in the distributer linear algebra
-package in spark mllib; &lt;a
-href=”https://spark.apache.org/docs/2.2.0/api/scala/index.html#org.apache.spark.mllib.linalg.distributed.MatrixEntry”&gt;MatrixEntry
-&lt;/a&gt;. We map each key-value pair to a MatrixEntry-object (which
-has a row index, column index and a value). With this we can create a
-&lt;a
-href=”https://spark.apache.org/docs/2.2.0/mllib-data-types.html#coordinatematrix”&gt;CoordinateMatrix
-&lt;/a&gt;. We can transform this to a &lt;a
-href=”https://spark.apache.org/docs/2.2.0/mllib-data-types.html#rowmatrix”&gt;RowMatrix
-&lt;/a&gt; that we finally collect.</p>
+package in spark mllib;
+<a href="https://spark.apache.org/docs/2.2.0/api/scala/index.html#org.apache.spark.mllib.linalg.distributed.MatrixEntry">MatrixEntry
+</a>. We map each key-value pair to a MatrixEntry-object (which has a
+row index, column index and a value). With this we can create a
+<a href="https://spark.apache.org/docs/2.2.0/mllib-data-types.html#coordinatematrix">CoordinateMatrix
+</a>. We can transform this to a
+<a href="https://spark.apache.org/docs/2.2.0/mllib-data-types.html#rowmatrix">RowMatrix
+</a> that we finally collect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.</span><span class="p">{</span><span class="n">CoordinateMatrix</span><span class="p">,</span> <span class="n">MatrixEntry</span><span class="p">}</span>
@@ -1515,8 +1534,11 @@ eigenvectors:</p>
 </div>
 </div>
 </div>
-<p>In the last step we need to compute $<span class="math notranslate nohighlight">\(U = AVS^{-1}.\)</span>$</p>
-<p>Since both <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(S^{-1}\)</span> are of size <span class="math notranslate nohighlight">\(n\\times n\)</span> (and <span class="math notranslate nohighlight">\(n\)</span> is
+<p>In the last step we need to compute</p>
+<div class="math notranslate nohighlight">
+\[  U = AVS^{-1}.
+\]</div>
+<p>Since both <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(S^{-1}\)</span> are of size <span class="math notranslate nohighlight">\(n\times n\)</span> (and <span class="math notranslate nohighlight">\(n\)</span> is
 relatively small) we can compute the product <span class="math notranslate nohighlight">\(VS^{-1}\)</span> locally and then
 broadcast it to each partition of <span class="math notranslate nohighlight">\(A\)</span> (which is an RDD of IndexedRow).</p>
 <div class="cell docutils container">

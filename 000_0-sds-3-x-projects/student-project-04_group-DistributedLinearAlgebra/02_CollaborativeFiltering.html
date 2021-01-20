@@ -1323,16 +1323,16 @@ matrix factorization discussed in the preceeding chapter.</p>
 <div class="section" id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">¶</a></h2>
 <p>We let <span class="math notranslate nohighlight">\(U\)</span> be the set containing all <span class="math notranslate nohighlight">\(m\)</span> users and let <span class="math notranslate nohighlight">\(I\)</span> be the set
-containing all <span class="math notranslate nohighlight">\(n\)</span> available items. Now, we introduce the matrix <span class="math notranslate nohighlight">\(R\\in
-\\mathbb{R}^{m \\times n}\)</span> with elements <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span> as values encoding
-possible interactions between users <span class="math notranslate nohighlight">\(u\\in U\)</span> and items <span class="math notranslate nohighlight">\(i \\in I\)</span>. This
-matrix is often very sparse because of the huge number of possible
-user-item interactions never observed. Depending on the type of
-information encoded in the interaction matrix <span class="math notranslate nohighlight">\(R\)</span> one usally refers to
-either <em>explicit</em> or <em>implicit</em> data.</p>
-<p>For explicit data, <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span> contains information directly related to
+containing all <span class="math notranslate nohighlight">\(n\)</span> available items. Now, we introduce the matrix
+<span class="math notranslate nohighlight">\(R\in \mathbb{R}^{m \times n}\)</span> with elements <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> as values
+encoding possible interactions between users <span class="math notranslate nohighlight">\(u\in U\)</span> and items
+<span class="math notranslate nohighlight">\(i \in I\)</span>. This matrix is often very sparse because of the huge number
+of possible user-item interactions never observed. Depending on the type
+of information encoded in the interaction matrix <span class="math notranslate nohighlight">\(R\)</span> one usally refers
+to either <em>explicit</em> or <em>implicit</em> data.</p>
+<p>For explicit data, <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> contains information directly related to
 user <span class="math notranslate nohighlight">\(u\)</span>’s preference for item <span class="math notranslate nohighlight">\(i\)</span>, e.g movie ratings. In the case of
-implicit data, <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span> contains indirect information of a user’s
+implicit data, <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> contains indirect information of a user’s
 preference for an item by observing past user behavior. Examples could
 be the number of times a user played a song or visited a webpage. Note
 that in the implicit case we are lacking information about items that
@@ -1359,43 +1359,47 @@ high probability that you also like that particular item. In other
 words, similar users have similar tastes.</p>
 <p>There are different approaches to CF, and we have chosen a laten factor
 model approach inspired by low-rank SVD factorization of matrices. The
-aim is to uncover latent features explaining the observed <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span>
-values. Each user <span class="math notranslate nohighlight">\(u\)</span> is associated to a user-feature vector <span class="math notranslate nohighlight">\(x{*u}\\in
-\\mathbb{R}^f\)</span> and similarly each item <span class="math notranslate nohighlight">\(i\)</span> is associated to an
-item-feature vector <span class="math notranslate nohighlight">\(y{*i} \\in \\mathbb{R}^f\)</span>. Then we want the dot
-products <span class="math notranslate nohighlight">\(x{*u}^Ty{*i}\)</span> to explain the observed <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span> values. With
-all user- and item-features at hand in the latent space <span class="math notranslate nohighlight">\(\\mathbb{R}^f\)</span>
+aim is to uncover latent features explaining the observed <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span>
+values. Each user <span class="math notranslate nohighlight">\(u\)</span> is associated to a user-feature vector
+<span class="math notranslate nohighlight">\(x{_u}\in \mathbb{R}^f\)</span> and similarly each item <span class="math notranslate nohighlight">\(i\)</span> is associated to an
+item-feature vector <span class="math notranslate nohighlight">\(y{_i} \in \mathbb{R}^f\)</span>. Then we want the dot
+products <span class="math notranslate nohighlight">\(x{_u}^Ty{_i}\)</span> to explain the observed <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> values. With
+all user- and item-features at hand in the latent space <span class="math notranslate nohighlight">\(\mathbb{R}^f\)</span>
 we can estimate a user <span class="math notranslate nohighlight">\(u\)</span>’s preference for an unseen item <span class="math notranslate nohighlight">\(j\)</span> by simply
-computing <span class="math notranslate nohighlight">\(x{*u}^Ty{*j}\)</span>.</p>
-<p>We transorm the problem of finding the vectors <span class="math notranslate nohighlight">\(x{*u}, y{*i}\)</span> into a
+computing <span class="math notranslate nohighlight">\(x{_u}^Ty{_j}\)</span>.</p>
+<p>We transorm the problem of finding the vectors <span class="math notranslate nohighlight">\(x{_u}, y{_i}\)</span> into a
 minimization problem as suggested in the paper <a class="reference external" href="https://www.researchgate.net/publication/220765111_Collaborative_Filtering_for_Implicit_Feedback_Datasets">Collaborative Filtering
 for Implicit Feedback
 Datasets</a>.
-First we introduce the binarized quantitiy <span class="math notranslate nohighlight">\(p{*u}{*i}\)</span> defined by:</p>
-<p>$<span class="math notranslate nohighlight">\(p*{ui}=\\begin{cases}1 \\text{ if } r*{ui}&amp;gt;0, \\\\ 0 \\text{ if }
-r*{ui}=0,\\end{cases}\)</span><span class="math notranslate nohighlight">\( encoding whether user \)</span>u<span class="math notranslate nohighlight">\( has interacted with
-and supposedly likes item \)</span>i<span class="math notranslate nohighlight">\(. However, our confidence that user \)</span>u<span class="math notranslate nohighlight">\(
-likes item \)</span>i<span class="math notranslate nohighlight">\( given that \)</span>p{*u}{*i}=1<span class="math notranslate nohighlight">\( should vary with the actual
-observed \)</span>r{*u}{*i}<span class="math notranslate nohighlight">\( value. As an example, we would be more confident
-that a user likes an artist he/she has listened to hundreds of times
-than an artist played by the user only once. Therefore we introduce the
-confidence \)</span>c{*u}{_i}$:</p>
-<p>$<span class="math notranslate nohighlight">\(c*{ui}=1+\\alpha r*{ui}\)</span>$,</p>
-<p>where <span class="math notranslate nohighlight">\(\\alpha\)</span> is a hyperparameter. From the above equation we can see
+First we introduce the binarized quantitiy <span class="math notranslate nohighlight">\(p{_u}{_i}\)</span> defined by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  p_{ui}=\begin{cases}1 \text{   if  } r_{ui}&gt;0, \\\ 0 \text{   if  } r_{ui}=0,\end{cases}
+\end{split}\]</div>
+<p>encoding whether user <span class="math notranslate nohighlight">\(u\)</span> has interacted with and supposedly likes item
+<span class="math notranslate nohighlight">\(i\)</span>. However, our confidence that user <span class="math notranslate nohighlight">\(u\)</span> likes item <span class="math notranslate nohighlight">\(i\)</span> given that
+<span class="math notranslate nohighlight">\(p{_u}{_i}=1\)</span> should vary with the actual observed <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> value. As
+an example, we would be more confident that a user likes an artist
+he/she has listened to hundreds of times than an artist played by the
+user only once. Therefore we introduce the confidence <span class="math notranslate nohighlight">\(c{_u}{_i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[  c_{ui}=1+\alpha r_{ui}
+\]</div>
+<p>,</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a hyperparameter. From the above equation we can see
 that the confidence for non observed user-item interaction defaults to</p>
 <ol class="simple">
 <li><p>Now we formulize the minimization problem:</p></li>
 </ol>
-<p>$<span class="math notranslate nohighlight">\(\\min*{X,Y}\\sum*{u\\in U,i \\in
-I}c*{ui}(p*{ui}-x*u^Ty*i)^2+\\lambda(\\sum*{u\\in
-U}||x*u||^2+\\sum*{i\\in I}||y*i||^2),\)</span><span class="math notranslate nohighlight">\( where \)</span>X,Y<span class="math notranslate nohighlight">\( are matrices
-holding the \)</span>x<em>u,y</em>i<span class="math notranslate nohighlight">\( as columns respectively. In addition, we also have
-a regularization term to avoid overfitting. Notice that this is closely
-related to regularized low-rank matrix factorization of the matrix \)</span>P<span class="math notranslate nohighlight">\(
-with \)</span>p{*u}{*i}<span class="math notranslate nohighlight">\( as elements. We want to approximate \)</span>P\approx X^TY<span class="math notranslate nohighlight">\(
-where both \)</span>X,Y<span class="math notranslate nohighlight">\( have low rank (\)</span>f<span class="math notranslate nohighlight">\(). Because of the weights \)</span>c{*u}{*i}<span class="math notranslate nohighlight">\(
-we care more about recover entries in \)</span>P$ with high confidence, directly
-related to the observations.</p>
+<div class="math notranslate nohighlight">
+\[  \min_{X,Y}\sum_{u\in U,i \in I}c_{ui}(p_{ui}-x_u^Ty_i)^2+\lambda(\sum_{u\in U}||x_u||^2+\sum_{i\in I}||y_i||^2),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(X,Y\)</span> are matrices holding the <span class="math notranslate nohighlight">\(x_u,y_i\)</span> as columns respectively.
+In addition, we also have a regularization term to avoid overfitting.
+Notice that this is closely related to regularized low-rank matrix
+factorization of the matrix <span class="math notranslate nohighlight">\(P\)</span> with <span class="math notranslate nohighlight">\(p{_u}{_i}\)</span> as elements. We want to
+approximate <span class="math notranslate nohighlight">\(P\approx X^TY\)</span> where both <span class="math notranslate nohighlight">\(X,Y\)</span> have low rank (<span class="math notranslate nohighlight">\(f\)</span>).
+Because of the weights <span class="math notranslate nohighlight">\(c{_u}{_i}\)</span> we care more about recover entries in
+<span class="math notranslate nohighlight">\(P\)</span> with high confidence, directly related to the observations.</p>
 </div>
 <div class="section" id="dataset">
 <h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
@@ -1511,7 +1515,105 @@ range. From 1 to over 350 000.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>play_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>13883.0</td>
+</tr>
+<tr class="even">
+<td>11690.0</td>
+</tr>
+<tr class="odd">
+<td>11351.0</td>
+</tr>
+<tr class="even">
+<td>10300.0</td>
+</tr>
+<tr class="odd">
+<td>8983.0</td>
+</tr>
+<tr class="even">
+<td>6152.0</td>
+</tr>
+<tr class="odd">
+<td>5955.0</td>
+</tr>
+<tr class="even">
+<td>4616.0</td>
+</tr>
+<tr class="odd">
+<td>4337.0</td>
+</tr>
+<tr class="even">
+<td>4147.0</td>
+</tr>
+<tr class="odd">
+<td>3923.0</td>
+</tr>
+<tr class="even">
+<td>3782.0</td>
+</tr>
+<tr class="odd">
+<td>3735.0</td>
+</tr>
+<tr class="even">
+<td>3644.0</td>
+</tr>
+<tr class="odd">
+<td>3579.0</td>
+</tr>
+<tr class="even">
+<td>3312.0</td>
+</tr>
+<tr class="odd">
+<td>3301.0</td>
+</tr>
+<tr class="even">
+<td>2927.0</td>
+</tr>
+<tr class="odd">
+<td>2720.0</td>
+</tr>
+<tr class="even">
+<td>2686.0</td>
+</tr>
+<tr class="odd">
+<td>2654.0</td>
+</tr>
+<tr class="even">
+<td>2619.0</td>
+</tr>
+<tr class="odd">
+<td>2584.0</td>
+</tr>
+<tr class="even">
+<td>2547.0</td>
+</tr>
+<tr class="odd">
+<td>2397.0</td>
+</tr>
+<tr class="even">
+<td>2382.0</td>
+</tr>
+<tr class="odd">
+<td>2120.0</td>
+</tr>
+<tr class="even">
+<td>2119.0</td>
+</tr>
+<tr class="odd">
+<td>1990.0</td>
+</tr>
+<tr class="even">
+<td>1972.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1520,7 +1622,105 @@ range. From 1 to over 350 000.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>play_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>662.0</td>
+</tr>
+<tr class="even">
+<td>493.0</td>
+</tr>
+<tr class="odd">
+<td>431.0</td>
+</tr>
+<tr class="even">
+<td>403.0</td>
+</tr>
+<tr class="odd">
+<td>354.0</td>
+</tr>
+<tr class="even">
+<td>269.0</td>
+</tr>
+<tr class="odd">
+<td>236.0</td>
+</tr>
+<tr class="even">
+<td>215.0</td>
+</tr>
+<tr class="odd">
+<td>215.0</td>
+</tr>
+<tr class="even">
+<td>212.0</td>
+</tr>
+<tr class="odd">
+<td>193.0</td>
+</tr>
+<tr class="even">
+<td>187.0</td>
+</tr>
+<tr class="odd">
+<td>167.0</td>
+</tr>
+<tr class="even">
+<td>163.0</td>
+</tr>
+<tr class="odd">
+<td>154.0</td>
+</tr>
+<tr class="even">
+<td>151.0</td>
+</tr>
+<tr class="odd">
+<td>142.0</td>
+</tr>
+<tr class="even">
+<td>142.0</td>
+</tr>
+<tr class="odd">
+<td>125.0</td>
+</tr>
+<tr class="even">
+<td>111.0</td>
+</tr>
+<tr class="odd">
+<td>108.0</td>
+</tr>
+<tr class="even">
+<td>104.0</td>
+</tr>
+<tr class="odd">
+<td>99.0</td>
+</tr>
+<tr class="even">
+<td>98.0</td>
+</tr>
+<tr class="odd">
+<td>94.0</td>
+</tr>
+<tr class="even">
+<td>89.0</td>
+</tr>
+<tr class="odd">
+<td>89.0</td>
+</tr>
+<tr class="even">
+<td>86.0</td>
+</tr>
+<tr class="odd">
+<td>85.0</td>
+</tr>
+<tr class="even">
+<td>84.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>We count the total plays and number of unique listeners for each artist.</p>
 <div class="cell docutils container">
@@ -1568,7 +1768,105 @@ artist_data_raw: org.apache.spark.sql.DataFrame = [artistID: int, unique_users: 
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>total_plays_artist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>239.0</td>
+</tr>
+<tr class="even">
+<td>8120.0</td>
+</tr>
+<tr class="odd">
+<td>16155.0</td>
+</tr>
+<tr class="even">
+<td>7112.0</td>
+</tr>
+<tr class="odd">
+<td>685.0</td>
+</tr>
+<tr class="even">
+<td>40.0</td>
+</tr>
+<tr class="odd">
+<td>688.0</td>
+</tr>
+<tr class="even">
+<td>4055.0</td>
+</tr>
+<tr class="odd">
+<td>13461.0</td>
+</tr>
+<tr class="even">
+<td>1378.0</td>
+</tr>
+<tr class="odd">
+<td>13661.0</td>
+</tr>
+<tr class="even">
+<td>713.0</td>
+</tr>
+<tr class="odd">
+<td>2383.0</td>
+</tr>
+<tr class="even">
+<td>749.0</td>
+</tr>
+<tr class="odd">
+<td>620.0</td>
+</tr>
+<tr class="even">
+<td>3789.0</td>
+</tr>
+<tr class="odd">
+<td>3415.0</td>
+</tr>
+<tr class="even">
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>90.0</td>
+</tr>
+<tr class="even">
+<td>6945.0</td>
+</tr>
+<tr class="odd">
+<td>533.0</td>
+</tr>
+<tr class="even">
+<td>28.0</td>
+</tr>
+<tr class="odd">
+<td>9290.0</td>
+</tr>
+<tr class="even">
+<td>1480.0</td>
+</tr>
+<tr class="odd">
+<td>26.0</td>
+</tr>
+<tr class="even">
+<td>5030.0</td>
+</tr>
+<tr class="odd">
+<td>140.0</td>
+</tr>
+<tr class="even">
+<td>640.0</td>
+</tr>
+<tr class="odd">
+<td>127.0</td>
+</tr>
+<tr class="even">
+<td>203.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1577,7 +1875,105 @@ artist_data_raw: org.apache.spark.sql.DataFrame = [artistID: int, unique_users: 
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>total_plays_artist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>239.0</td>
+</tr>
+<tr class="even">
+<td>8120.0</td>
+</tr>
+<tr class="odd">
+<td>7112.0</td>
+</tr>
+<tr class="even">
+<td>685.0</td>
+</tr>
+<tr class="odd">
+<td>40.0</td>
+</tr>
+<tr class="even">
+<td>688.0</td>
+</tr>
+<tr class="odd">
+<td>4055.0</td>
+</tr>
+<tr class="even">
+<td>1378.0</td>
+</tr>
+<tr class="odd">
+<td>713.0</td>
+</tr>
+<tr class="even">
+<td>2383.0</td>
+</tr>
+<tr class="odd">
+<td>749.0</td>
+</tr>
+<tr class="even">
+<td>620.0</td>
+</tr>
+<tr class="odd">
+<td>3789.0</td>
+</tr>
+<tr class="even">
+<td>3415.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>90.0</td>
+</tr>
+<tr class="odd">
+<td>6945.0</td>
+</tr>
+<tr class="even">
+<td>533.0</td>
+</tr>
+<tr class="odd">
+<td>28.0</td>
+</tr>
+<tr class="even">
+<td>9290.0</td>
+</tr>
+<tr class="odd">
+<td>1480.0</td>
+</tr>
+<tr class="even">
+<td>26.0</td>
+</tr>
+<tr class="odd">
+<td>5030.0</td>
+</tr>
+<tr class="even">
+<td>140.0</td>
+</tr>
+<tr class="odd">
+<td>640.0</td>
+</tr>
+<tr class="even">
+<td>127.0</td>
+</tr>
+<tr class="odd">
+<td>203.0</td>
+</tr>
+<tr class="even">
+<td>66.0</td>
+</tr>
+<tr class="odd">
+<td>993.0</td>
+</tr>
+<tr class="even">
+<td>1859.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1586,7 +1982,105 @@ artist_data_raw: org.apache.spark.sql.DataFrame = [artistID: int, unique_users: 
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>unique_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>17.0</td>
+</tr>
+<tr class="odd">
+<td>42.0</td>
+</tr>
+<tr class="even">
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>43.0</td>
+</tr>
+<tr class="even">
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>7.0</td>
+</tr>
+<tr class="odd">
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>We count the total plays and the number of unique artists each user has
 listened to.</p>
@@ -1623,7 +2117,105 @@ user_data_raw: org.apache.spark.sql.DataFrame = [userID: int, unique_artists: bi
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>total_plays_user</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>13760.0</td>
+</tr>
+<tr class="even">
+<td>1439.0</td>
+</tr>
+<tr class="odd">
+<td>8484.0</td>
+</tr>
+<tr class="even">
+<td>13434.0</td>
+</tr>
+<tr class="odd">
+<td>65699.0</td>
+</tr>
+<tr class="even">
+<td>18508.0</td>
+</tr>
+<tr class="odd">
+<td>74165.0</td>
+</tr>
+<tr class="even">
+<td>32879.0</td>
+</tr>
+<tr class="odd">
+<td>19451.0</td>
+</tr>
+<tr class="even">
+<td>69685.0</td>
+</tr>
+<tr class="odd">
+<td>21152.0</td>
+</tr>
+<tr class="even">
+<td>47092.0</td>
+</tr>
+<tr class="odd">
+<td>4466.0</td>
+</tr>
+<tr class="even">
+<td>135162.0</td>
+</tr>
+<tr class="odd">
+<td>53735.0</td>
+</tr>
+<tr class="even">
+<td>16279.0</td>
+</tr>
+<tr class="odd">
+<td>25186.0</td>
+</tr>
+<tr class="even">
+<td>4010.0</td>
+</tr>
+<tr class="odd">
+<td>14098.0</td>
+</tr>
+<tr class="even">
+<td>34790.0</td>
+</tr>
+<tr class="odd">
+<td>12432.0</td>
+</tr>
+<tr class="even">
+<td>14205.0</td>
+</tr>
+<tr class="odd">
+<td>1723.0</td>
+</tr>
+<tr class="even">
+<td>37815.0</td>
+</tr>
+<tr class="odd">
+<td>5132.0</td>
+</tr>
+<tr class="even">
+<td>21459.0</td>
+</tr>
+<tr class="odd">
+<td>1345.0</td>
+</tr>
+<tr class="even">
+<td>28034.0</td>
+</tr>
+<tr class="odd">
+<td>96799.0</td>
+</tr>
+<tr class="even">
+<td>60789.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>Now we join all statistics into a single dataframe.</p>
 <div class="cell docutils container">
@@ -1757,7 +2349,105 @@ sparsity_new: Float = 0.9972172
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>play_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>223.0</td>
+</tr>
+<tr class="even">
+<td>244.0</td>
+</tr>
+<tr class="odd">
+<td>214.0</td>
+</tr>
+<tr class="even">
+<td>170.0</td>
+</tr>
+<tr class="odd">
+<td>245.0</td>
+</tr>
+<tr class="even">
+<td>214.0</td>
+</tr>
+<tr class="odd">
+<td>336.0</td>
+</tr>
+<tr class="even">
+<td>430.0</td>
+</tr>
+<tr class="odd">
+<td>175.0</td>
+</tr>
+<tr class="even">
+<td>298.0</td>
+</tr>
+<tr class="odd">
+<td>282.0</td>
+</tr>
+<tr class="even">
+<td>195.0</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td>82.0</td>
+</tr>
+<tr class="odd">
+<td>97.0</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+</tr>
+<tr class="odd">
+<td>72.0</td>
+</tr>
+<tr class="even">
+<td>9.0</td>
+</tr>
+<tr class="odd">
+<td>129.0</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+</tr>
+<tr class="even">
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>24.0</td>
+</tr>
+<tr class="even">
+<td>13.0</td>
+</tr>
+<tr class="odd">
+<td>14.0</td>
+</tr>
+<tr class="even">
+<td>112.0</td>
+</tr>
+<tr class="odd">
+<td>82.0</td>
+</tr>
+<tr class="even">
+<td>227.0</td>
+</tr>
+<tr class="odd">
+<td>197.0</td>
+</tr>
+<tr class="even">
+<td>95.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1766,7 +2456,105 @@ sparsity_new: Float = 0.9972172
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>total_plays_artist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16155.0</td>
+</tr>
+<tr class="even">
+<td>13461.0</td>
+</tr>
+<tr class="odd">
+<td>13661.0</td>
+</tr>
+<tr class="even">
+<td>14846.0</td>
+</tr>
+<tr class="odd">
+<td>79486.0</td>
+</tr>
+<tr class="even">
+<td>18706.0</td>
+</tr>
+<tr class="odd">
+<td>10447.0</td>
+</tr>
+<tr class="even">
+<td>10646.0</td>
+</tr>
+<tr class="odd">
+<td>11249.0</td>
+</tr>
+<tr class="even">
+<td>45666.0</td>
+</tr>
+<tr class="odd">
+<td>6171.0</td>
+</tr>
+<tr class="even">
+<td>15351.0</td>
+</tr>
+<tr class="odd">
+<td>10997.0</td>
+</tr>
+<tr class="even">
+<td>32020.0</td>
+</tr>
+<tr class="odd">
+<td>80184.0</td>
+</tr>
+<tr class="even">
+<td>14536.0</td>
+</tr>
+<tr class="odd">
+<td>9223.0</td>
+</tr>
+<tr class="even">
+<td>330757.0</td>
+</tr>
+<tr class="odd">
+<td>200027.0</td>
+</tr>
+<tr class="even">
+<td>7994.0</td>
+</tr>
+<tr class="odd">
+<td>7745.0</td>
+</tr>
+<tr class="even">
+<td>44182.0</td>
+</tr>
+<tr class="odd">
+<td>44240.0</td>
+</tr>
+<tr class="even">
+<td>56006.0</td>
+</tr>
+<tr class="odd">
+<td>59353.0</td>
+</tr>
+<tr class="even">
+<td>29041.0</td>
+</tr>
+<tr class="odd">
+<td>8518.0</td>
+</tr>
+<tr class="even">
+<td>8627.0</td>
+</tr>
+<tr class="odd">
+<td>14721.0</td>
+</tr>
+<tr class="even">
+<td>14610.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1775,7 +2563,105 @@ sparsity_new: Float = 0.9972172
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>unique_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>42.0</td>
+</tr>
+<tr class="even">
+<td>43.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+</tr>
+<tr class="even">
+<td>23.0</td>
+</tr>
+<tr class="odd">
+<td>130.0</td>
+</tr>
+<tr class="even">
+<td>45.0</td>
+</tr>
+<tr class="odd">
+<td>20.0</td>
+</tr>
+<tr class="even">
+<td>21.0</td>
+</tr>
+<tr class="odd">
+<td>30.0</td>
+</tr>
+<tr class="even">
+<td>37.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+</tr>
+<tr class="even">
+<td>24.0</td>
+</tr>
+<tr class="odd">
+<td>20.0</td>
+</tr>
+<tr class="even">
+<td>51.0</td>
+</tr>
+<tr class="odd">
+<td>81.0</td>
+</tr>
+<tr class="even">
+<td>32.0</td>
+</tr>
+<tr class="odd">
+<td>24.0</td>
+</tr>
+<tr class="even">
+<td>369.0</td>
+</tr>
+<tr class="odd">
+<td>100.0</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+</tr>
+<tr class="odd">
+<td>33.0</td>
+</tr>
+<tr class="even">
+<td>74.0</td>
+</tr>
+<tr class="odd">
+<td>86.0</td>
+</tr>
+<tr class="even">
+<td>52.0</td>
+</tr>
+<tr class="odd">
+<td>81.0</td>
+</tr>
+<tr class="even">
+<td>55.0</td>
+</tr>
+<tr class="odd">
+<td>24.0</td>
+</tr>
+<tr class="even">
+<td>25.0</td>
+</tr>
+<tr class="odd">
+<td>41.0</td>
+</tr>
+<tr class="even">
+<td>21.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>The total number of plays are correlated to the number of unique
 listeners (as expected) as illustrated in the figure below.</p>
@@ -1786,11 +2672,171 @@ listeners (as expected) as illustrated in the figure below.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>artistID_2</th>
+<th>unique_users</th>
+<th>total_plays_artist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>471.0</td>
+<td>42.0</td>
+<td>16155.0</td>
+</tr>
+<tr class="even">
+<td>1580.0</td>
+<td>43.0</td>
+<td>13461.0</td>
+</tr>
+<tr class="odd">
+<td>1645.0</td>
+<td>21.0</td>
+<td>13661.0</td>
+</tr>
+<tr class="even">
+<td>7340.0</td>
+<td>23.0</td>
+<td>14846.0</td>
+</tr>
+<tr class="odd">
+<td>540.0</td>
+<td>130.0</td>
+<td>79486.0</td>
+</tr>
+<tr class="even">
+<td>858.0</td>
+<td>45.0</td>
+<td>18706.0</td>
+</tr>
+<tr class="odd">
+<td>1990.0</td>
+<td>20.0</td>
+<td>10447.0</td>
+</tr>
+<tr class="even">
+<td>2580.0</td>
+<td>21.0</td>
+<td>10646.0</td>
+</tr>
+<tr class="odd">
+<td>3475.0</td>
+<td>30.0</td>
+<td>11249.0</td>
+</tr>
+<tr class="even">
+<td>1339.0</td>
+<td>37.0</td>
+<td>45666.0</td>
+</tr>
+<tr class="odd">
+<td>2821.0</td>
+<td>21.0</td>
+<td>6171.0</td>
+</tr>
+<tr class="even">
+<td>3488.0</td>
+<td>24.0</td>
+<td>15351.0</td>
+</tr>
+<tr class="odd">
+<td>85.0</td>
+<td>20.0</td>
+<td>10997.0</td>
+</tr>
+<tr class="even">
+<td>251.0</td>
+<td>51.0</td>
+<td>32020.0</td>
+</tr>
+<tr class="odd">
+<td>808.0</td>
+<td>81.0</td>
+<td>80184.0</td>
+</tr>
+<tr class="even">
+<td>2025.0</td>
+<td>32.0</td>
+<td>14536.0</td>
+</tr>
+<tr class="odd">
+<td>2923.0</td>
+<td>24.0</td>
+<td>9223.0</td>
+</tr>
+<tr class="even">
+<td>65.0</td>
+<td>369.0</td>
+<td>330757.0</td>
+</tr>
+<tr class="odd">
+<td>458.0</td>
+<td>100.0</td>
+<td>200027.0</td>
+</tr>
+<tr class="even">
+<td>1977.0</td>
+<td>22.0</td>
+<td>7994.0</td>
+</tr>
+<tr class="odd">
+<td>7324.0</td>
+<td>33.0</td>
+<td>7745.0</td>
+</tr>
+<tr class="even">
+<td>53.0</td>
+<td>74.0</td>
+<td>44182.0</td>
+</tr>
+<tr class="odd">
+<td>481.0</td>
+<td>86.0</td>
+<td>44240.0</td>
+</tr>
+<tr class="even">
+<td>898.0</td>
+<td>52.0</td>
+<td>56006.0</td>
+</tr>
+<tr class="odd">
+<td>296.0</td>
+<td>81.0</td>
+<td>59353.0</td>
+</tr>
+<tr class="even">
+<td>472.0</td>
+<td>55.0</td>
+<td>29041.0</td>
+</tr>
+<tr class="odd">
+<td>1766.0</td>
+<td>24.0</td>
+<td>8518.0</td>
+</tr>
+<tr class="even">
+<td>1787.0</td>
+<td>25.0</td>
+<td>8627.0</td>
+</tr>
+<tr class="odd">
+<td>2542.0</td>
+<td>41.0</td>
+<td>14721.0</td>
+</tr>
+<tr class="even">
+<td>322.0</td>
+<td>21.0</td>
+<td>14610.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>In the
 <a class="reference external" href="https://www.researchgate.net/publication/220765111_Collaborative_Filtering_for_Implicit_Feedback_Datasets">paper</a>
-mentioned above, the authors suggest scaling the <span class="math notranslate nohighlight">\(r{*u}{*i}\)</span> if the
+mentioned above, the authors suggest scaling the <span class="math notranslate nohighlight">\(r{_u}{_i}\)</span> if the
 values tends to vary over large range as in our case. They presented a
 log scaling scheme but after testing different approaches we found that
 scaling by taking the square root of the observed play counts (thus
@@ -1830,7 +2876,105 @@ scaling.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>play_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>13.038404810405298</td>
+</tr>
+<tr class="even">
+<td>15.620499351813308</td>
+</tr>
+<tr class="odd">
+<td>14.628738838327793</td>
+</tr>
+<tr class="even">
+<td>20.73644135332772</td>
+</tr>
+<tr class="odd">
+<td>17.26267650163207</td>
+</tr>
+<tr class="even">
+<td>13.228756555322953</td>
+</tr>
+<tr class="odd">
+<td>18.33030277982336</td>
+</tr>
+<tr class="even">
+<td>15.652475842498529</td>
+</tr>
+<tr class="odd">
+<td>14.628738838327793</td>
+</tr>
+<tr class="even">
+<td>16.792855623746664</td>
+</tr>
+<tr class="odd">
+<td>13.96424004376894</td>
+</tr>
+<tr class="even">
+<td>14.933184523068078</td>
+</tr>
+<tr class="odd">
+<td>3.605551275463989</td>
+</tr>
+<tr class="even">
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>9.848857801796104</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>11.357816691600547</td>
+</tr>
+<tr class="even">
+<td>9.055385138137417</td>
+</tr>
+<tr class="odd">
+<td>3.872983346207417</td>
+</tr>
+<tr class="even">
+<td>3.3166247903554</td>
+</tr>
+<tr class="odd">
+<td>4.898979485566356</td>
+</tr>
+<tr class="even">
+<td>4.69041575982343</td>
+</tr>
+<tr class="odd">
+<td>10.583005244258363</td>
+</tr>
+<tr class="even">
+<td>8.48528137423857</td>
+</tr>
+<tr class="odd">
+<td>3.605551275463989</td>
+</tr>
+<tr class="even">
+<td>3.7416573867739413</td>
+</tr>
+<tr class="odd">
+<td>9.591663046625438</td>
+</tr>
+<tr class="even">
+<td>7.874007874011811</td>
+</tr>
+<tr class="odd">
+<td>8.831760866327848</td>
+</tr>
+<tr class="even">
+<td>14.035668847618199</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1839,7 +2983,105 @@ scaling.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>play_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>20.73644135332772</td>
+</tr>
+<tr class="even">
+<td>14.628738838327793</td>
+</tr>
+<tr class="odd">
+<td>13.228756555322953</td>
+</tr>
+<tr class="even">
+<td>13.96424004376894</td>
+</tr>
+<tr class="odd">
+<td>14.933184523068078</td>
+</tr>
+<tr class="even">
+<td>18.33030277982336</td>
+</tr>
+<tr class="odd">
+<td>13.038404810405298</td>
+</tr>
+<tr class="even">
+<td>15.652475842498529</td>
+</tr>
+<tr class="odd">
+<td>15.620499351813308</td>
+</tr>
+<tr class="even">
+<td>14.628738838327793</td>
+</tr>
+<tr class="odd">
+<td>17.26267650163207</td>
+</tr>
+<tr class="even">
+<td>16.792855623746664</td>
+</tr>
+<tr class="odd">
+<td>4.69041575982343</td>
+</tr>
+<tr class="even">
+<td>11.357816691600547</td>
+</tr>
+<tr class="odd">
+<td>3.3166247903554</td>
+</tr>
+<tr class="even">
+<td>4.898979485566356</td>
+</tr>
+<tr class="odd">
+<td>3.7416573867739413</td>
+</tr>
+<tr class="even">
+<td>10.583005244258363</td>
+</tr>
+<tr class="odd">
+<td>3.605551275463989</td>
+</tr>
+<tr class="even">
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>9.848857801796104</td>
+</tr>
+<tr class="even">
+<td>8.48528137423857</td>
+</tr>
+<tr class="odd">
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>9.055385138137417</td>
+</tr>
+<tr class="odd">
+<td>3.872983346207417</td>
+</tr>
+<tr class="even">
+<td>3.605551275463989</td>
+</tr>
+<tr class="odd">
+<td>9.591663046625438</td>
+</tr>
+<tr class="even">
+<td>15.066519173319364</td>
+</tr>
+<tr class="odd">
+<td>14.035668847618199</td>
+</tr>
+<tr class="even">
+<td>10.862780491200215</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>We split our scaled dataset into training, validation and test sets.</p>
 <div class="cell docutils container">
@@ -1871,17 +3113,20 @@ re-computing the user and artist features while holding the other one
 fixed. It turns out that the over all const function is guaranteed to
 decrease in each iteration. This procedure is called <a class="reference external" href="https://datasciencemadesimpler.wordpress.com/tag/alternating-least-squares/">Alternating Least
 Squares</a>
-and is available in Spark. $<span class="math notranslate nohighlight">\(\\min*{X,Y}\\sum*{u\\in U,i \\in
-I}c*{ui}(p*{ui}-x*u^Ty*i)^2+\\lambda(\\sum*{u\\in
-U}||x*u||^2+\\sum*{i\\in I}||y*i||^2),\)</span>$</p>
+and is available in Spark.</p>
+<div class="math notranslate nohighlight">
+\[  \min_{X,Y}\sum_{u\in U,i \in I}c_{ui}(p_{ui}-x_u^Ty_i)^2+\lambda(\sum_{u\in U}||x_u||^2+\sum_{i\in I}||y_i||^2),
+\]</div>
 <p>The solution to the respective quadratic problems are:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}x*u=(Y^TC^uY+\\lambda Id )^{-1}Y^TC^up(u) \\quad \\forall u\\in U,\end{split}\]</div>
+\[  x_u=(Y^TC^uY+\lambda Id )^{-1}Y^TC^up(u) \quad \forall u\in U,
+\]</div>
 <div class="math notranslate nohighlight">
-\[\begin{split}y*i=(X^TC^iX+\\lambda Id )^{-1}X^TC^ip(i) \\quad \\forall i\\in I,\end{split}\]</div>
+\[  y_i=(X^TC^iX+\lambda Id )^{-1}X^TC^ip(i) \quad \forall i\in I,
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(C^u, C^i\)</span> are a diagonal matrices with diagonal entries
-<span class="math notranslate nohighlight">\(c{*u}{*i}\)</span> <span class="math notranslate nohighlight">\(i \\in I\)</span> and <span class="math notranslate nohighlight">\(c{*u}{*i}\)</span> <span class="math notranslate nohighlight">\(u \\in U\)</span> respectively. The
-<span class="math notranslate nohighlight">\(p(u)\)</span> and <span class="math notranslate nohighlight">\(p(i)\)</span> are vectors containing all binarized user and artist
+<span class="math notranslate nohighlight">\(c{_u}{_i}\)</span> <span class="math notranslate nohighlight">\(i \in I\)</span> and <span class="math notranslate nohighlight">\(c{_u}{_i}\)</span> <span class="math notranslate nohighlight">\(u \in U\)</span> respectively. The <span class="math notranslate nohighlight">\(p(u)\)</span>
+and <span class="math notranslate nohighlight">\(p(i)\)</span> are vectors containing all binarized user and artist
 observations for user <span class="math notranslate nohighlight">\(u\)</span> and artist <span class="math notranslate nohighlight">\(i\)</span> respectively. The computational
 bottlneck is to compute the <span class="math notranslate nohighlight">\(Y^TC^uY\)</span> (require time <span class="math notranslate nohighlight">\(O(f^2n)\)</span> for each
 user). However, we can rewrite the product as <span class="math notranslate nohighlight">\(Y^TC^uY=Y^TY+Y^T(C^u-I)Y\)</span>
@@ -1891,38 +3136,41 @@ number of artists user <span class="math notranslate nohighlight">\(u\)</span> h
 smaller than the total number of artists). Hence, that representation is
 much more beneficial computationally. A similar approach can be applied
 to <span class="math notranslate nohighlight">\(X^TC^iX\)</span>. The matrix inversions need to be done on matrices of size
-<span class="math notranslate nohighlight">\(f \\times f\)</span> where <span class="math notranslate nohighlight">\(f\)</span> is the dimension of the latent feature space and
+<span class="math notranslate nohighlight">\(f \times f\)</span> where <span class="math notranslate nohighlight">\(f\)</span> is the dimension of the latent feature space and
 thus relatively small compared to <span class="math notranslate nohighlight">\(m,n\)</span>.</p>
 <p>When we have all the user and artist features we can produce a
 recommendation list of artist for user <span class="math notranslate nohighlight">\(u\)</span> by taking the dot products
-<span class="math notranslate nohighlight">\(x{*u}^Ty{*i}\)</span> for all artists and arrange them in a list in descending
+<span class="math notranslate nohighlight">\(x{_u}^Ty{_i}\)</span> for all artists and arrange them in a list in descending
 order with respect to these computed values.</p>
 </div>
 <div class="section" id="evaluation">
 <h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
 <p>One approach to measure the performance of the model would be to measure
 the RMSE:</p>
-<p>$<span class="math notranslate nohighlight">\(\\sqrt{\\frac{1}{\\\#\\text{observations}}\\sum*{u,
-i}(p*{ui}^t-x*u^Ty*i)^2},\)</span><span class="math notranslate nohighlight">\( where \)</span>p*{ui}^t<span class="math notranslate nohighlight">\( is the binarized
-observations from the test set. However, this metric is not very
-suitable for this particular application since for the zero entries of
-\)</span>p^t{*u}{_i}$ we don’t know if the user dislikes the artist or just
-hasn’t discovered it. In the
+<div class="math notranslate nohighlight">
+\[\begin{split}  \sqrt{\frac{1}{\\#\text{observations}}\sum_{u, i}(p_{ui}^t-x_u^Ty_i)^2},
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_{ui}^t\)</span> is the binarized observations from the test set.
+However, this metric is not very suitable for this particular
+application since for the zero entries of <span class="math notranslate nohighlight">\(p^t{_u}{_i}\)</span> we don’t know if
+the user dislikes the artist or just hasn’t discovered it. In the
 <a class="reference external" href="https://www.researchgate.net/publication/220765111_Collaborative_Filtering_for_Implicit_Feedback_Datasets">paper</a>
 they suggest the mean percentile rank metric:</p>
-<p>$<span class="math notranslate nohighlight">\(\\overline{rank}=\\frac{\\sum*{u, i}r^t*{ui}rank*{ui}}{\\sum*{u, i}
-r^t*{ui}},\)</span><span class="math notranslate nohighlight">\( where \)</span>rank*{ui}<span class="math notranslate nohighlight">\( is the percentile rank of artist \)</span>i<span class="math notranslate nohighlight">\( in
-the produced recommendation list for user \)</span>u<span class="math notranslate nohighlight">\(. Hence if artist \)</span>j<span class="math notranslate nohighlight">\( is in
-the first place in the list for user \)</span>u<span class="math notranslate nohighlight">\( we get that \)</span>rank{*u}{*j}=0\%<span class="math notranslate nohighlight">\(
-and if it is in the last place we get \)</span>rank{*u}{*j}=100\%<span class="math notranslate nohighlight">\(. Thus, this
-metric is an weighted average of the percentiles of the artists the
-users have listened to. If user \)</span>u<span class="math notranslate nohighlight">\( has listened to artist \)</span>j<span class="math notranslate nohighlight">\( many
-times we have a large \)</span>r{*u}{*j}<span class="math notranslate nohighlight">\( value, but if the artist is ranked
-very low in the recommendation list for this user, it will increase the
-value of \)</span>\overline{rank}<span class="math notranslate nohighlight">\( drastically. If the model instead ranks this
-artist correctly in the top, the product \)</span>r{*u}{*j}rank{*u}{*j}<span class="math notranslate nohighlight">\( will
-get small. Hence, low values of \)</span>\overline{rank}$ is desired.</p>
-<p>Unfortunately, the <span class="math notranslate nohighlight">\(\\overline{rank}\)</span> metric is not implemented in Spark
+<div class="math notranslate nohighlight">
+\[  \overline{rank}=\frac{\sum_{u, i}r^t_{ui}rank_{ui}}{\sum_{u, i} r^t_{ui}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(rank_{ui}\)</span> is the percentile rank of artist <span class="math notranslate nohighlight">\(i\)</span> in the produced
+recommendation list for user <span class="math notranslate nohighlight">\(u\)</span>. Hence if artist <span class="math notranslate nohighlight">\(j\)</span> is in the first
+place in the list for user <span class="math notranslate nohighlight">\(u\)</span> we get that <span class="math notranslate nohighlight">\(rank{_u}{_j}=0\%\)</span> and if it
+is in the last place we get <span class="math notranslate nohighlight">\(rank{_u}{_j}=100\%\)</span>. Thus, this metric is
+an weighted average of the percentiles of the artists the users have
+listened to. If user <span class="math notranslate nohighlight">\(u\)</span> has listened to artist <span class="math notranslate nohighlight">\(j\)</span> many times we have a
+large <span class="math notranslate nohighlight">\(r{_u}{_j}\)</span> value, but if the artist is ranked very low in the
+recommendation list for this user, it will increase the value of
+<span class="math notranslate nohighlight">\(\overline{rank}\)</span> drastically. If the model instead ranks this artist
+correctly in the top, the product <span class="math notranslate nohighlight">\(r{_u}{_j}rank{_u}{_j}\)</span> will get
+small. Hence, low values of <span class="math notranslate nohighlight">\(\overline{rank}\)</span> is desired.</p>
+<p>Unfortunately, the <span class="math notranslate nohighlight">\(\overline{rank}\)</span> metric is not implemented in Spark
 yet, so below we have written our own function for computing it given
 the ranked artist lists for each user. We also remove an artist from the
 recommendation list for a user if we have observed that the user
@@ -1986,8 +3234,8 @@ eval_model: (predictions_scores_new: org.apache.spark.sql.DataFrame, training_se
 module</a>
 from Spark and start the training. We perform a grid search over the
 hyper-parameters: the latent dimension <span class="math notranslate nohighlight">\(f\)</span>, confidence parameter
-<span class="math notranslate nohighlight">\(\\alpha\)</span> and regularization parameter <span class="math notranslate nohighlight">\(\\lambda\)</span>. We choose the
-parameter combinations based on the performance on the validation set.</p>
+<span class="math notranslate nohighlight">\(\alpha\)</span> and regularization parameter <span class="math notranslate nohighlight">\(\lambda\)</span>. We choose the parameter
+combinations based on the performance on the validation set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.recommendation.ALS</span>
@@ -2077,9 +3325,9 @@ alphas: List[Double] = List(0.5, 1.0, 5.0)
 </pre></div>
 </div>
 </div></blockquote>
-<p>We get our final model by choosing <span class="math notranslate nohighlight">\(f=150, \\alpha=0.5\)</span> and
-<span class="math notranslate nohighlight">\(\\lambda=2.0\)</span> train the model again and evaluating it on the test set.
-We observe a test error of 7.75 %.</p>
+<p>We get our final model by choosing <span class="math notranslate nohighlight">\(f=150, \alpha=0.5\)</span> and <span class="math notranslate nohighlight">\(\lambda=2.0\)</span>
+train the model again and evaluating it on the test set. We observe a
+test error of 7.75 %.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Retrain</span> <span class="n">the</span> <span class="n">best</span> <span class="n">model</span><span class="o">.</span>
@@ -2136,11 +3384,8 @@ predictions_scores_test: org.apache.spark.sql.DataFrame = [userID: int, recommen
 list for each user and evaluate the metric. Note that for a random
 ranking the expected ranking percentile for an artist would be 50%,
 expected value of the mean percentile rank should be:
-<span class="math notranslate nohighlight">\(\\mathbb{E}(\\overline{rank})=\\mathbb{E}(\\frac{\\sum{*u}{*i}r^t{*u}{*i}rank{*u}{*i}}{\\sum{*u}{*i}
-r^t{*u}{*i}} ) =
-\\frac{\\sum{*u}{*i}r^t{*u}{*i}\\mathbb{E}(rank{*u}{*i})}{\\sum{*u}{*i}
-r^t{*u}{*i}}= \\frac{\\sum{*u}{*i}r^t{*u}{*i}\\cdot 0.5}{\\sum{*u}{*i}
-r^t{*u}{*i}}=0.5\)</span> for this random model.</p>
+<span class="math notranslate nohighlight">\(\mathbb{E}(\overline{rank})=\mathbb{E}(\frac{\sum{_u}{_i}r^t{_u}{_i}rank{_u}{_i}}{\sum{_u}{_i} r^t{_u}{_i}} ) = \frac{\sum{_u}{_i}r^t{_u}{_i}\mathbb{E}(rank{_u}{_i})}{\sum{_u}{_i} r^t{_u}{_i}}= \frac{\sum{_u}{_i}r^t{_u}{_i}\cdot 0.5}{\sum{_u}{_i} r^t{_u}{_i}}=0.5\)</span>
+for this random model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">case</span> <span class="k">class</span> <span class="nc">Rating</span><span class="p">(</span><span class="n">artistID</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">rating</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span> <span class="o">//</span> <span class="n">Simple</span> <span class="k">class</span> <span class="nc">for</span> <span class="n">getting</span> <span class="n">the</span> <span class="n">recommendations</span> <span class="ow">in</span> <span class="n">suitable</span> <span class="n">form</span><span class="o">.</span>
@@ -2167,7 +3412,7 @@ prediction_scores: org.apache.spark.sql.DataFrame = [userID: int, recommendation
 </pre></div>
 </div>
 </div></blockquote>
-<p>The actual value we get is <span class="math notranslate nohighlight">\(\\overline{rank}\\approx 50.86 \\%\)</span> which
+<p>The actual value we get is <span class="math notranslate nohighlight">\(\overline{rank}\approx 50.86 \%\)</span> which
 agrees with the above reasoning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2207,9 +3452,9 @@ prediction_scores: org.apache.spark.sql.DataFrame = [userID: int, recommendation
 </pre></div>
 </div>
 </div></blockquote>
-<p>For this model we get <span class="math notranslate nohighlight">\(\\overline{rank}\\approx 24.6 \\%\)</span> which is
-better than the random one but much worse than our ALS model that got
-<span class="math notranslate nohighlight">\(\\overline{rank}\\approx 7.75 \\%\)</span></p>
+<p>For this model we get <span class="math notranslate nohighlight">\(\overline{rank}\approx 24.6 \%\)</span> which is better
+than the random one but much worse than our ALS model that got
+<span class="math notranslate nohighlight">\(\overline{rank}\approx 7.75 \%\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">println</span><span class="p">(</span><span class="s2">&quot;Popular_model: mean_rank=&quot;</span> <span class="o">+</span> <span class="n">eval_model</span><span class="p">(</span><span class="n">prediction_scores</span><span class="p">,</span> <span class="n">training_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">))</span>

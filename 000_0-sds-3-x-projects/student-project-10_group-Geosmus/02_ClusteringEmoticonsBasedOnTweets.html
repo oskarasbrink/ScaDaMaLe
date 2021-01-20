@@ -1313,6 +1313,16 @@ clusters that correspond vaguely to some sentiment of an emoticon. We
 will do this in a fairly naïve way since our focus was on learning
 streaming, spark and scala. First let’s have a look at the emojis in
 question, they are presented in the table from Wikipedia below.</p>
+<iframe 
+ src="https://en.wikipedia.org/wiki/Emoticons_(Unicode_block)#Descriptions"
+ width="95%" height="350"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
 <p>In the following two cells we create a list of these emoticons and load
 the previously collected dataset of tweets.</p>
 <div class="cell docutils container">
@@ -1353,12 +1363,14 @@ instead we will try to use our collected tweet dataset to create a
 clustering. Then we will use the intuition based on the descriptions and
 appearances to judge how successful this approach was.</p>
 <p>We will use the Jaccard distance between emoticons to try to cluster
-them. The Jaccard distance between emoticons <span class="math notranslate nohighlight">\(e*1\)</span> and <span class="math notranslate nohighlight">\(e*2\)</span> is given by</p>
-<p>\[ d(e<em>1, e</em>2) = 1 - \frac{\# (e<em>1\wedge e</em>2)}{\# (e<em>1) + \#
-(e</em>2) - \# (e<em>1\wedge e</em>2)}, \]</p>
-<p>where <span class="math notranslate nohighlight">\(\\\#(e)\)</span> is the number of tweets collected containing the
-emoticon <span class="math notranslate nohighlight">\(e\)</span>, and <span class="math notranslate nohighlight">\(\\\# (e*1\\wedge e*2)\)</span> is the number of tweets
-collected containing both <span class="math notranslate nohighlight">\(e*1\)</span> and <span class="math notranslate nohighlight">\(e*2\)</span>.</p>
+them. The Jaccard distance between emoticons <span class="math notranslate nohighlight">\(e_1\)</span> and <span class="math notranslate nohighlight">\(e_2\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  
+  d(e_1, e_2) = 1 - \frac{\\# (e_1\wedge e_2)}{\\# (e_1) + \\# (e_2) - \\# (e_1\wedge e_2)},
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\\#(e)\)</span> is the number of tweets collected containing the emoticon
+<span class="math notranslate nohighlight">\(e\)</span>, and <span class="math notranslate nohighlight">\(\\# (e_1\wedge e_2)\)</span> is the number of tweets collected
+containing both <span class="math notranslate nohighlight">\(e_1\)</span> and <span class="math notranslate nohighlight">\(e_2\)</span>.</p>
 <p>In order to find the Jaccard distances between emoticons, we must create
 a matrix containing for each pair of emoticons how often they appear
 together in the dataset of tweets and also in how many tweets each
@@ -1669,7 +1681,16 @@ respect the Jaccard distances at least to a degree.</p>
 <p>Locally linear embedding (LLE) is one such method, which is focused on
 good presentation of local neighborhoods. You can read more about it in
 the scikit-learn documentation embedded below.</p>
-<div class="cell docutils container">
+<iframe 
+ src="https://scikit-learn.org/stable/modules/manifold.html#locally-linear-embedding"
+ width="95%" height="350"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nbrNeighbors</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">emoticonsNeighbors</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">nbrNeighbors</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;precomputed&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fullDistanceMatrix</span><span class="p">)</span>
@@ -1695,7 +1716,16 @@ lower left corner.</p>
 <h3>t-distributed Stochastic Neighbor Embedding (t-SNE)<a class="headerlink" href="#t-distributed-stochastic-neighbor-embedding-t-sne" title="Permalink to this headline">¶</a></h3>
 <p>Another approach for embedding the distances into 2D is t-SNE. You can
 read more about this method in the sk-learn documentation below.</p>
-<div class="cell docutils container">
+<iframe 
+ src="https://scikit-learn.org/stable/modules/manifold.html#t-sne"
+ width="95%" height="350"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">emoticonsEmbedded</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">early_exaggeration</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
                          <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;precomputed&#39;</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">fullDistanceMatrix</span><span class="p">)</span>
@@ -2042,7 +2072,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DZA</td>
+<td>0.37579617834394907</td>
+</tr>
+<tr class="even">
+<td>CIV</td>
+<td>0.26587301587301587</td>
+</tr>
+<tr class="odd">
+<td>FIN</td>
+<td>0.5069252077562327</td>
+</tr>
+<tr class="even">
+<td>AZE</td>
+<td>0.25742574257425743</td>
+</tr>
+<tr class="odd">
+<td>UKR</td>
+<td>0.5272727272727272</td>
+</tr>
+<tr class="even">
+<td>ZMB</td>
+<td>0.2222222222222222</td>
+</tr>
+<tr class="odd">
+<td>NLD</td>
+<td>0.504885993485342</td>
+</tr>
+<tr class="even">
+<td>BWA</td>
+<td>0.13818722139673106</td>
+</tr>
+<tr class="odd">
+<td>POL</td>
+<td>0.6512488436632747</td>
+</tr>
+<tr class="even">
+<td>MEX</td>
+<td>0.4382897697767007</td>
+</tr>
+<tr class="odd">
+<td>CHN</td>
+<td>0.41338582677165353</td>
+</tr>
+<tr class="even">
+<td>AUT</td>
+<td>0.4725274725274725</td>
+</tr>
+<tr class="odd">
+<td>RUS</td>
+<td>0.46016381236038717</td>
+</tr>
+<tr class="even">
+<td>NAM</td>
+<td>0.18110236220472442</td>
+</tr>
+<tr class="odd">
+<td>IRQ</td>
+<td>0.3049645390070922</td>
+</tr>
+<tr class="even">
+<td>SLV</td>
+<td>0.39826839826839827</td>
+</tr>
+<tr class="odd">
+<td>HRV</td>
+<td>0.452755905511811</td>
+</tr>
+<tr class="even">
+<td>NPL</td>
+<td>0.40932642487046633</td>
+</tr>
+<tr class="odd">
+<td>CZE</td>
+<td>0.597864768683274</td>
+</tr>
+<tr class="even">
+<td>PRT</td>
+<td>0.33161688980432547</td>
+</tr>
+<tr class="odd">
+<td>GHA</td>
+<td>0.19372592184920198</td>
+</tr>
+<tr class="even">
+<td>HKG</td>
+<td>0.4166666666666667</td>
+</tr>
+<tr class="odd">
+<td>TWN</td>
+<td>0.44651162790697674</td>
+</tr>
+<tr class="even">
+<td>BGD</td>
+<td>0.5663716814159292</td>
+</tr>
+<tr class="odd">
+<td>PRY</td>
+<td>0.41501103752759383</td>
+</tr>
+<tr class="even">
+<td>LBN</td>
+<td>0.4008714596949891</td>
+</tr>
+<tr class="odd">
+<td>CHL</td>
+<td>0.4048804780876494</td>
+</tr>
+<tr class="even">
+<td>IDN</td>
+<td>0.37397967682825256</td>
+</tr>
+<tr class="odd">
+<td>LBY</td>
+<td>0.31592039800995025</td>
+</tr>
+<tr class="even">
+<td>SAU</td>
+<td>0.28804244836081105</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2051,7 +2210,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DZA</td>
+<td>0.5095541401273885</td>
+</tr>
+<tr class="even">
+<td>CIV</td>
+<td>0.6507936507936508</td>
+</tr>
+<tr class="odd">
+<td>AZE</td>
+<td>0.66996699669967</td>
+</tr>
+<tr class="even">
+<td>FIN</td>
+<td>0.29085872576177285</td>
+</tr>
+<tr class="odd">
+<td>UKR</td>
+<td>0.403030303030303</td>
+</tr>
+<tr class="even">
+<td>ZMB</td>
+<td>0.6581196581196581</td>
+</tr>
+<tr class="odd">
+<td>NLD</td>
+<td>0.3555917480998914</td>
+</tr>
+<tr class="even">
+<td>BHS</td>
+<td>0.7967479674796748</td>
+</tr>
+<tr class="odd">
+<td>BWA</td>
+<td>0.7488855869242199</td>
+</tr>
+<tr class="even">
+<td>MNG</td>
+<td>0.47474747474747475</td>
+</tr>
+<tr class="odd">
+<td>POL</td>
+<td>0.2738205365402405</td>
+</tr>
+<tr class="even">
+<td>MEX</td>
+<td>0.3759736887657954</td>
+</tr>
+<tr class="odd">
+<td>CHN</td>
+<td>0.4251968503937008</td>
+</tr>
+<tr class="even">
+<td>AUT</td>
+<td>0.27106227106227104</td>
+</tr>
+<tr class="odd">
+<td>NAM</td>
+<td>0.7322834645669292</td>
+</tr>
+<tr class="even">
+<td>RUS</td>
+<td>0.4050632911392405</td>
+</tr>
+<tr class="odd">
+<td>IRQ</td>
+<td>0.5797872340425532</td>
+</tr>
+<tr class="even">
+<td>HRV</td>
+<td>0.3858267716535433</td>
+</tr>
+<tr class="odd">
+<td>SLV</td>
+<td>0.3852813852813853</td>
+</tr>
+<tr class="even">
+<td>NPL</td>
+<td>0.4430051813471503</td>
+</tr>
+<tr class="odd">
+<td>CZE</td>
+<td>0.30604982206405695</td>
+</tr>
+<tr class="even">
+<td>PRT</td>
+<td>0.5468589083419155</td>
+</tr>
+<tr class="odd">
+<td>GHA</td>
+<td>0.6769400110071546</td>
+</tr>
+<tr class="even">
+<td>HKG</td>
+<td>0.44166666666666665</td>
+</tr>
+<tr class="odd">
+<td>TWN</td>
+<td>0.4418604651162791</td>
+</tr>
+<tr class="even">
+<td>BGD</td>
+<td>0.3053097345132743</td>
+</tr>
+<tr class="odd">
+<td>LBN</td>
+<td>0.37037037037037035</td>
+</tr>
+<tr class="even">
+<td>PRY</td>
+<td>0.4503311258278146</td>
+</tr>
+<tr class="odd">
+<td>CHL</td>
+<td>0.4676294820717131</td>
+</tr>
+<tr class="even">
+<td>IDN</td>
+<td>0.4832583708145927</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2060,7 +2348,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NLD</td>
+<td>2.714440825190011e-2</td>
+</tr>
+<tr class="even">
+<td>BWA</td>
+<td>8.915304606240713e-3</td>
+</tr>
+<tr class="odd">
+<td>POL</td>
+<td>3.6077705827937095e-2</td>
+</tr>
+<tr class="even">
+<td>MEX</td>
+<td>2.9600138480180026e-2</td>
+</tr>
+<tr class="odd">
+<td>RUS</td>
+<td>2.680565897244974e-2</td>
+</tr>
+<tr class="even">
+<td>NAM</td>
+<td>1.3123359580052493e-2</td>
+</tr>
+<tr class="odd">
+<td>GHA</td>
+<td>1.4859658778205834e-2</td>
+</tr>
+<tr class="even">
+<td>CHL</td>
+<td>1.99203187250996e-2</td>
+</tr>
+<tr class="odd">
+<td>IDN</td>
+<td>1.4492753623188406e-2</td>
+</tr>
+<tr class="even">
+<td>SAU</td>
+<td>1.137009664582149e-2</td>
+</tr>
+<tr class="odd">
+<td>CAN</td>
+<td>6.283918880319908e-3</td>
+</tr>
+<tr class="even">
+<td>GBR</td>
+<td>2.0970106444005356e-2</td>
+</tr>
+<tr class="odd">
+<td>BRA</td>
+<td>7.161328824348518e-3</td>
+</tr>
+<tr class="even">
+<td>DEU</td>
+<td>3.750450775333574e-2</td>
+</tr>
+<tr class="odd">
+<td>ESP</td>
+<td>1.3123784834737525e-2</td>
+</tr>
+<tr class="even">
+<td>BHR</td>
+<td>9.501187648456057e-3</td>
+</tr>
+<tr class="odd">
+<td>TUR</td>
+<td>2.166027567623588e-2</td>
+</tr>
+<tr class="even">
+<td>TZA</td>
+<td>2.10016155088853e-2</td>
+</tr>
+<tr class="odd">
+<td>USA</td>
+<td>4.399599109888057e-3</td>
+</tr>
+<tr class="even">
+<td>MYS</td>
+<td>1.4437951185974561e-2</td>
+</tr>
+<tr class="odd">
+<td>IND</td>
+<td>1.0137942496260596e-2</td>
+</tr>
+<tr class="even">
+<td>FRA</td>
+<td>5.9966914805624485e-3</td>
+</tr>
+<tr class="odd">
+<td>PAN</td>
+<td>2.190923317683881e-2</td>
+</tr>
+<tr class="even">
+<td>ITA</td>
+<td>1.407967032967033e-2</td>
+</tr>
+<tr class="odd">
+<td>SWE</td>
+<td>1.4666666666666666e-2</td>
+</tr>
+<tr class="even">
+<td>PHL</td>
+<td>1.5424581912648156e-2</td>
+</tr>
+<tr class="odd">
+<td>PER</td>
+<td>3.514376996805112e-2</td>
+</tr>
+<tr class="even">
+<td>JPN</td>
+<td>3.0e-3</td>
+</tr>
+<tr class="odd">
+<td>KEN</td>
+<td>5.504587155963303e-3</td>
+</tr>
+<tr class="even">
+<td>KWT</td>
+<td>1.8150388936905792e-2</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2069,7 +2486,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UKR</td>
+<td>1.2121212121212121e-2</td>
+</tr>
+<tr class="even">
+<td>MEX</td>
+<td>1.15977150770296e-2</td>
+</tr>
+<tr class="odd">
+<td>RUS</td>
+<td>3.052866716306776e-2</td>
+</tr>
+<tr class="even">
+<td>GHA</td>
+<td>2.3665382498624106e-2</td>
+</tr>
+<tr class="odd">
+<td>CHL</td>
+<td>3.137450199203187e-2</td>
+</tr>
+<tr class="even">
+<td>IDN</td>
+<td>3.664834249541896e-3</td>
+</tr>
+<tr class="odd">
+<td>SAU</td>
+<td>7.959067652075043e-3</td>
+</tr>
+<tr class="even">
+<td>CAN</td>
+<td>9.71151099685804e-3</td>
+</tr>
+<tr class="odd">
+<td>GBR</td>
+<td>7.457454267321053e-3</td>
+</tr>
+<tr class="even">
+<td>BRA</td>
+<td>1.3839552132768763e-2</td>
+</tr>
+<tr class="odd">
+<td>ESP</td>
+<td>8.263123784834738e-3</td>
+</tr>
+<tr class="even">
+<td>TUR</td>
+<td>6.943724738314851e-3</td>
+</tr>
+<tr class="odd">
+<td>ZAF</td>
+<td>7.0438799076212475e-3</td>
+</tr>
+<tr class="even">
+<td>USA</td>
+<td>1.0192121490088161e-2</td>
+</tr>
+<tr class="odd">
+<td>ARE</td>
+<td>1.2967200610221205e-2</td>
+</tr>
+<tr class="even">
+<td>CMR</td>
+<td>6.0240963855421686e-2</td>
+</tr>
+<tr class="odd">
+<td>PHL</td>
+<td>6.3321967851924016e-3</td>
+</tr>
+<tr class="even">
+<td>DOM</td>
+<td>2.2123893805309734e-2</td>
+</tr>
+<tr class="odd">
+<td>THA</td>
+<td>1.7991004497751123e-2</td>
+</tr>
+<tr class="even">
+<td>JPN</td>
+<td>1.5058823529411765e-2</td>
+</tr>
+<tr class="odd">
+<td>OMN</td>
+<td>6.934812760055479e-3</td>
+</tr>
+<tr class="even">
+<td>UGA</td>
+<td>2.699055330634278e-2</td>
+</tr>
+<tr class="odd">
+<td>BEL</td>
+<td>5.8823529411764705e-3</td>
+</tr>
+<tr class="even">
+<td>NIC</td>
+<td>2.0833333333333332e-2</td>
+</tr>
+<tr class="odd">
+<td>COL</td>
+<td>1.2636612021857924e-2</td>
+</tr>
+<tr class="even">
+<td>NGA</td>
+<td>1.2213066509711596e-2</td>
+</tr>
+<tr class="odd">
+<td>ARG</td>
+<td>1.2057877813504822e-2</td>
+</tr>
+<tr class="even">
+<td>BHS</td>
+<td>1.6260162601626018e-2</td>
+</tr>
+<tr class="odd">
+<td>POL</td>
+<td>5.550416281221091e-3</td>
+</tr>
+<tr class="even">
+<td>NPL</td>
+<td>7.772020725388601e-3</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2078,7 +2624,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AZE</td>
+<td>1.3201320132013201e-2</td>
+</tr>
+<tr class="even">
+<td>NLD</td>
+<td>2.3344191096634093e-2</td>
+</tr>
+<tr class="odd">
+<td>MEX</td>
+<td>3.340834343084646e-2</td>
+</tr>
+<tr class="even">
+<td>RUS</td>
+<td>2.4571854058078928e-2</td>
+</tr>
+<tr class="odd">
+<td>HRV</td>
+<td>3.937007874015748e-2</td>
+</tr>
+<tr class="even">
+<td>NPL</td>
+<td>2.3316062176165803e-2</td>
+</tr>
+<tr class="odd">
+<td>PRT</td>
+<td>4.325437693099897e-2</td>
+</tr>
+<tr class="even">
+<td>BGD</td>
+<td>7.964601769911504e-2</td>
+</tr>
+<tr class="odd">
+<td>LBN</td>
+<td>1.7429193899782137e-2</td>
+</tr>
+<tr class="even">
+<td>PRY</td>
+<td>2.869757174392936e-2</td>
+</tr>
+<tr class="odd">
+<td>CHL</td>
+<td>4.233067729083665e-2</td>
+</tr>
+<tr class="even">
+<td>IDN</td>
+<td>2.582042312177245e-2</td>
+</tr>
+<tr class="odd">
+<td>SAU</td>
+<td>1.6865643357968543e-2</td>
+</tr>
+<tr class="even">
+<td>PAK</td>
+<td>1.1036174126302882e-2</td>
+</tr>
+<tr class="odd">
+<td>AUS</td>
+<td>2.6835043409629045e-2</td>
+</tr>
+<tr class="even">
+<td>CAN</td>
+<td>2.913453299057412e-2</td>
+</tr>
+<tr class="odd">
+<td>GBR</td>
+<td>2.70253043533686e-2</td>
+</tr>
+<tr class="even">
+<td>BRA</td>
+<td>2.671289323368098e-2</td>
+</tr>
+<tr class="odd">
+<td>HND</td>
+<td>3.353658536585366e-2</td>
+</tr>
+<tr class="even">
+<td>GTM</td>
+<td>2.6829268292682926e-2</td>
+</tr>
+<tr class="odd">
+<td>DEU</td>
+<td>2.84890010818608e-2</td>
+</tr>
+<tr class="even">
+<td>ESP</td>
+<td>2.608554763447829e-2</td>
+</tr>
+<tr class="odd">
+<td>BHR</td>
+<td>4.750593824228029e-3</td>
+</tr>
+<tr class="even">
+<td>ECU</td>
+<td>3.178484107579462e-2</td>
+</tr>
+<tr class="odd">
+<td>IRN</td>
+<td>2.0876826722338204e-2</td>
+</tr>
+<tr class="even">
+<td>TUR</td>
+<td>2.352575396414136e-2</td>
+</tr>
+<tr class="odd">
+<td>VEN</td>
+<td>2.94811320754717e-2</td>
+</tr>
+<tr class="even">
+<td>ZAF</td>
+<td>1.189376443418014e-2</td>
+</tr>
+<tr class="odd">
+<td>TZA</td>
+<td>1.615508885298869e-2</td>
+</tr>
+<tr class="even">
+<td>USA</td>
+<td>2.089384905468073e-2</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2087,7 +2762,136 @@ for the reader to decide.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>iso_a3</th>
+<th>proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CIV</td>
+<td>7.936507936507936e-2</td>
+</tr>
+<tr class="even">
+<td>FIN</td>
+<td>0.18005540166204986</td>
+</tr>
+<tr class="odd">
+<td>AZE</td>
+<td>9.570957095709572e-2</td>
+</tr>
+<tr class="even">
+<td>UKR</td>
+<td>9.090909090909091e-2</td>
+</tr>
+<tr class="odd">
+<td>ZMB</td>
+<td>0.1282051282051282</td>
+</tr>
+<tr class="even">
+<td>NLD</td>
+<td>0.1482084690553746</td>
+</tr>
+<tr class="odd">
+<td>BWA</td>
+<td>9.361069836552749e-2</td>
+</tr>
+<tr class="even">
+<td>MNG</td>
+<td>0.13131313131313133</td>
+</tr>
+<tr class="odd">
+<td>POL</td>
+<td>0.11193339500462535</td>
+</tr>
+<tr class="even">
+<td>MEX</td>
+<td>0.18123593560671628</td>
+</tr>
+<tr class="odd">
+<td>CHN</td>
+<td>0.14173228346456693</td>
+</tr>
+<tr class="even">
+<td>AUT</td>
+<td>0.22344322344322345</td>
+</tr>
+<tr class="odd">
+<td>RUS</td>
+<td>0.11243484735666419</td>
+</tr>
+<tr class="even">
+<td>NAM</td>
+<td>8.923884514435695e-2</td>
+</tr>
+<tr class="odd">
+<td>HRV</td>
+<td>0.12598425196850394</td>
+</tr>
+<tr class="even">
+<td>SLV</td>
+<td>0.21212121212121213</td>
+</tr>
+<tr class="odd">
+<td>NPL</td>
+<td>0.19430051813471502</td>
+</tr>
+<tr class="even">
+<td>CZE</td>
+<td>9.608540925266904e-2</td>
+</tr>
+<tr class="odd">
+<td>PRT</td>
+<td>8.650875386199794e-2</td>
+</tr>
+<tr class="even">
+<td>GHA</td>
+<td>0.12878370941111722</td>
+</tr>
+<tr class="odd">
+<td>HKG</td>
+<td>0.2</td>
+</tr>
+<tr class="even">
+<td>TWN</td>
+<td>0.11162790697674418</td>
+</tr>
+<tr class="odd">
+<td>BGD</td>
+<td>0.17256637168141592</td>
+</tr>
+<tr class="even">
+<td>LBN</td>
+<td>0.24618736383442266</td>
+</tr>
+<tr class="odd">
+<td>PRY</td>
+<td>0.1456953642384106</td>
+</tr>
+<tr class="even">
+<td>CHL</td>
+<td>0.14840637450199204</td>
+</tr>
+<tr class="odd">
+<td>IDN</td>
+<td>0.16058637347992671</td>
+</tr>
+<tr class="even">
+<td>LBY</td>
+<td>6.467661691542288e-2</td>
+</tr>
+<tr class="odd">
+<td>SAU</td>
+<td>0.12601857115785484</td>
+</tr>
+<tr class="even">
+<td>PAK</td>
+<td>0.12691600245248313</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 </div>
 </div>

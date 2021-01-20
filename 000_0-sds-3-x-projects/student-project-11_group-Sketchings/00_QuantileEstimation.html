@@ -1324,29 +1324,35 @@ more naive approach which will be presented later. A problem for both
 these methods are data streams that arise from distributions that change
 over time. Assume that each sample received a time <span class="math notranslate nohighlight">\(t\)</span> can be written as</p>
 <div class="math notranslate nohighlight">
-\[ x(t) = f(t) + w(t), \]</div>
+\[  x(t) = f(t) + w(t), 
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(f(t)\)</span> is a trend value that varies with time and <span class="math notranslate nohighlight">\(w(t)\)</span> is a
 random variable with a distribution that may also vary with time. We are
 interested in finding anomalies in <span class="math notranslate nohighlight">\(w(t)\)</span>. If we were to estimate a
-quantile from samples obtained from a time interval <span class="math notranslate nohighlight">\(T*s\)</span>, the anomalies
+quantile from samples obtained from a time interval <span class="math notranslate nohighlight">\(T_s\)</span>, the anomalies
 would depend on both <span class="math notranslate nohighlight">\(f(t)\)</span> and <span class="math notranslate nohighlight">\(w(t)\)</span>, e.g. if <span class="math notranslate nohighlight">\(f(t)\)</span> is a linearly
 increasing function and <span class="math notranslate nohighlight">\(w(t)\)</span> is constant, most of the anomalous
 samples would be the more recent ones. This could be mitigated by taking
 samples from a small enough interval such that <span class="math notranslate nohighlight">\(f(t)\)</span> and <span class="math notranslate nohighlight">\(w(t)\)</span> can be
 considered constant during that time. This approach requires a
-continuous update of the estimated quantile, which we denote <span class="math notranslate nohighlight">\(q\[n\]\)</span>,
-where <span class="math notranslate nohighlight">\(n\)</span> is the index of the time interval at time <span class="math notranslate nohighlight">\(nT*s\)</span>. In some
+continuous update of the estimated quantile, which we denote <span class="math notranslate nohighlight">\(q[n]\)</span>,
+where <span class="math notranslate nohighlight">\(n\)</span> is the index of the time interval at time <span class="math notranslate nohighlight">\(nT_s\)</span>. In some
 cases this may be a sufficently accurate solution. However, assume now
 that <span class="math notranslate nohighlight">\(w(t)\)</span> is constant but will occasionally change to a distribution
 with higher mean, i.e. this change is now the anomaly we are trying to
 detect. If we use the same target quantile in all time steps, these
 anomalies would go undetected. A compromise is to filter the stream of
-estimated quantiles <span class="math notranslate nohighlight">\(q\[1\],q\[2\],...,q\[n\]\)</span> in a manner that
-preserves scalability. The data stream we will look at will have the
-following form. Each time step yields <span class="math notranslate nohighlight">\(N\)</span> samples with Gaussian
-distribution with standard deviation <span class="math notranslate nohighlight">\(\\sigma\)</span>=1 and mean $<span class="math notranslate nohighlight">\(
-\\mu\[n\]=\\frac{n}{1000}, \)</span><span class="math notranslate nohighlight">\( and with 5\)</span>\%<span class="math notranslate nohighlight">\( probability, 1\)</span>\%<span class="math notranslate nohighlight">\( of the
-data will have mean \)</span><span class="math notranslate nohighlight">\( \\mu\[n\]=\\frac{n}{1000} + 2. \)</span>$</p>
+estimated quantiles <span class="math notranslate nohighlight">\(q[1],q[2],...,q[n]\)</span> in a manner that preserves
+scalability. The data stream we will look at will have the following
+form. Each time step yields <span class="math notranslate nohighlight">\(N\)</span> samples with Gaussian distribution with
+standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span>=1 and mean</p>
+<div class="math notranslate nohighlight">
+\[  \mu[n]=\frac{n}{1000}, 
+\]</div>
+<p>and with 5<span class="math notranslate nohighlight">\(\%\)</span> probability, 1<span class="math notranslate nohighlight">\(\%\)</span> of the data will have mean</p>
+<div class="math notranslate nohighlight">
+\[  \mu[n]=\frac{n}{1000} + 2. 
+\]</div>
 <ol class="simple">
 <li><p>QE with t-digest</p></li>
 </ol>
@@ -1368,44 +1374,44 @@ large datasets.</p>
 <hr class="docutils" />
 <p>A simpler and perhaps more naive approach for empirical QE is to
 estimate the desired quantile as the the <span class="math notranslate nohighlight">\(k\)</span>’th ordered statistic, i.e.
-the value <span class="math notranslate nohighlight">\(q=x\_k\)</span> for which <span class="math notranslate nohighlight">\(k\)</span> samples are smaller or equal to <span class="math notranslate nohighlight">\(q\)</span>,
+the value <span class="math notranslate nohighlight">\(q=x_k\)</span> for which <span class="math notranslate nohighlight">\(k\)</span> samples are smaller or equal to <span class="math notranslate nohighlight">\(q\)</span>,
 e.g. the 95’th percentile from 1000 samples would then be estimated as
 the 950’th ordered statistic. If the data is i.i.d. the estimated
 quantile will then be a random variable with pdf [Rohling]</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} p(x\_k)= k {N\\choose k} \\left\[ P(x) \\right\]^{k-1} \\left\[
-1-P(x) \\right\]^{N-k} p(x), \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(x\_k\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>’th ordered statistic, <span class="math notranslate nohighlight">\(P(x)\)</span> is the cdf of the
+\[  p(x_k)= k  {N\choose k} \left[ P(x) \right]^{k-1} \left[ 1-P(x) \right]^{N-k} p(x), 
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_k\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>’th ordered statistic, <span class="math notranslate nohighlight">\(P(x)\)</span> is the cdf of the
 random variable <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(p(x)\)</span> is the pdf.</p>
 <p>However, if the data is distributed, sorting becomes problematic. We
 therefore present an iterative, and more scalable, method of finding the
 desired quantile (or rather, the ordered statistic). We start with a
-random guess <span class="math notranslate nohighlight">\(\\hat{q}\)</span> (e.g. the mean) and count the number of samples
-that are larger than <span class="math notranslate nohighlight">\(\\hat{q}\)</span>. This can be done in a distributed
+random guess <span class="math notranslate nohighlight">\(\hat{q}\)</span> (e.g. the mean) and count the number of samples
+that are larger than <span class="math notranslate nohighlight">\(\hat{q}\)</span>. This can be done in a distributed
 fashion where each node reports on the number of samples greater than
-<span class="math notranslate nohighlight">\(\\hat{q}\)</span> as well as the total number of samples in each node. These
+<span class="math notranslate nohighlight">\(\hat{q}\)</span> as well as the total number of samples in each node. These
 number are then aggregated at the master node and the ratio yields an
-estimate of a quantile for <span class="math notranslate nohighlight">\(\\hat{q}\)</span>. If this is larger than the
-desired quantile, <span class="math notranslate nohighlight">\(\\hat{q}\)</span> should be decreased and vice versa. One
-then proceeds by iteratively changing <span class="math notranslate nohighlight">\(\\hat{q}\)</span> until the desired
-quantile is found. The search can be made efficient using the following
-steps</p>
+estimate of a quantile for <span class="math notranslate nohighlight">\(\hat{q}\)</span>. If this is larger than the desired
+quantile, <span class="math notranslate nohighlight">\(\hat{q}\)</span> should be decreased and vice versa. One then
+proceeds by iteratively changing <span class="math notranslate nohighlight">\(\hat{q}\)</span> until the desired quantile is
+found. The search can be made efficient using the following steps</p>
 <ol class="simple">
 <li><p>Choose an integer <span class="math notranslate nohighlight">\(k\)</span> that correspends to the desired quantile, e.g.
 <span class="math notranslate nohighlight">\(k\)</span>=950 for <span class="math notranslate nohighlight">\(N\)</span>=1000 (95’th percentile).</p></li>
-<li><p>Arbitrarily choose an initial guess of <span class="math notranslate nohighlight">\(\\hat{q}\)</span>.</p></li>
-<li><p>Count the number of samples that are greater than <span class="math notranslate nohighlight">\(\\hat{q}\)</span>, call
-this <span class="math notranslate nohighlight">\(M\)</span>. If <span class="math notranslate nohighlight">\(M &amp;gt; N-k\)</span> increase <span class="math notranslate nohighlight">\(\\hat{q}\)</span> by 1, then by 2,4,8,16
-etc. until <span class="math notranslate nohighlight">\(M &amp;lt; N-k\)</span> (or reverse this process if <span class="math notranslate nohighlight">\(M\)</span> is initially
+<li><p>Arbitrarily choose an initial guess of <span class="math notranslate nohighlight">\(\hat{q}\)</span>.</p></li>
+<li><p>Count the number of samples that are greater than <span class="math notranslate nohighlight">\(\hat{q}\)</span>, call
+this <span class="math notranslate nohighlight">\(M\)</span>. If <span class="math notranslate nohighlight">\(M &gt; N-k\)</span> increase <span class="math notranslate nohighlight">\(\hat{q}\)</span> by 1, then by 2,4,8,16
+etc. until <span class="math notranslate nohighlight">\(M &lt; N-k\)</span> (or reverse this process if <span class="math notranslate nohighlight">\(M\)</span> is initially
 lower than <span class="math notranslate nohighlight">\(N-k\)</span> ). We now have an upper limit (U) and a lower
-limit (L) for the desired quantile, <span class="math notranslate nohighlight">\(\\hat{q}*U\)</span> and <span class="math notranslate nohighlight">\(\\hat{q}*L\)</span>.
-Let <span class="math notranslate nohighlight">\(d\)</span> = <span class="math notranslate nohighlight">\(\\hat{q}*U\)</span> - <span class="math notranslate nohighlight">\(\\hat{q}*L\)</span>.</p></li>
-<li><p>Let <span class="math notranslate nohighlight">\(\\hat{q} = \\hat{q}\_L\)</span>. In each iteration update <span class="math notranslate nohighlight">\(\\hat{q}
-\\leftarrow \\hat{q} + ud/2\)</span> and then <span class="math notranslate nohighlight">\(d \\leftarrow d/2\)</span> where <span class="math notranslate nohighlight">\(u\)</span>
-is +1 if <span class="math notranslate nohighlight">\(M &amp;gt; N-k\)</span> and -1 otherwise. Stop iterating when <span class="math notranslate nohighlight">\(M=N-k\)</span>.</p></li>
+limit (L) for the desired quantile, <span class="math notranslate nohighlight">\(\hat{q}_U\)</span> and <span class="math notranslate nohighlight">\(\hat{q}_L\)</span>. Let
+<span class="math notranslate nohighlight">\(d\)</span> = <span class="math notranslate nohighlight">\(\hat{q}_U\)</span> - <span class="math notranslate nohighlight">\(\hat{q}_L\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(\hat{q} = \hat{q}_L\)</span>. In each iteration update
+<span class="math notranslate nohighlight">\(\hat{q} \leftarrow \hat{q} + ud/2\)</span> and then <span class="math notranslate nohighlight">\(d \leftarrow d/2\)</span>
+where <span class="math notranslate nohighlight">\(u\)</span> is +1 if <span class="math notranslate nohighlight">\(M &gt; N-k\)</span> and -1 otherwise. Stop iterating when
+<span class="math notranslate nohighlight">\(M=N-k\)</span>.</p></li>
 </ol>
 <p>This approach will converge to a solution in time proportional to
-log<span class="math notranslate nohighlight">\(\_2(N)\)</span>. For other types of iterative searches for finding an
+log<span class="math notranslate nohighlight">\(_2(N)\)</span>. For other types of iterative searches for finding an
 emperical quantile see [Möller].</p>
 <ol class="simple">
 <li><p>Filtering Time Varying Quantiles</p></li>
@@ -1430,70 +1436,65 @@ i.e. samples that are older than <span class="math notranslate nohighlight">\(T\
 estimate while the more recent estimates are weighted together. A basic
 approach is an equally weighted sliding window of size <span class="math notranslate nohighlight">\(T\)</span> where</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\bar{q}\[n\]= \\frac{1}{T}\\sum\_{i=0}^{T-1}q\[n-i\] \end{split}\]</div>
-<p>is the weighted estimate and <span class="math notranslate nohighlight">\(q\[n\]\)</span> is the quantile estimated from
+\[  \bar{q}[n]= \frac{1}{T}\sum_{i=0}^{T-1}q[n-i] 
+\]</div>
+<p>is the weighted estimate and <span class="math notranslate nohighlight">\(q[n]\)</span> is the quantile estimated from
 batch/time <span class="math notranslate nohighlight">\(n\)</span>. This requires storing <span class="math notranslate nohighlight">\(T\)</span> samples in a memory and
 writing (i.e. replacing the oldest sample with the newest) in each time
 step, which may or may not be an issue. Another is to have a filter with
-exponential decay where each sample <span class="math notranslate nohighlight">\(q\[i\]\)</span> for <span class="math notranslate nohighlight">\(i=0,...,n\)</span> is weighted
-by a factor <span class="math notranslate nohighlight">\(ce^{-(n-i)/\\tau}\)</span> for <span class="math notranslate nohighlight">\(\\tau&amp;gt;0\)</span> and</p>
+exponential decay where each sample <span class="math notranslate nohighlight">\(q[i]\)</span> for <span class="math notranslate nohighlight">\(i=0,...,n\)</span> is weighted
+by a factor <span class="math notranslate nohighlight">\(ce^{-(n-i)/\tau}\)</span> for <span class="math notranslate nohighlight">\(\tau&gt;0\)</span> and</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} c= \\left\[\\sum\_{i=0}^{\\infty}e^{-i/\\tau}\\right\]^{-1} = 1 -
-e^{-1/\\tau}. \end{split}\]</div>
+\[  c= \left[\sum_{i=0}^{\infty}e^{-i/\tau}\right]^{-1} = 1 - e^{-1/\tau}. 
+\]</div>
 <p>The weights of previous samples at time <span class="math notranslate nohighlight">\(n=100\)</span> for two different values
-of <span class="math notranslate nohighlight">\(\\tau\)</span> are shown below</p>
+of <span class="math notranslate nohighlight">\(\tau\)</span> are shown below</p>
 <p><img alt="Im1" src="https://raw.githubusercontent.com/gosip/wasp-scadamale-sketching/main/impRe.jpg" /></p>
 <p>This can be simply implemented with the filter</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\bar{q}\[n\]= \\bar{q}\[n-1\]e^{-1/\\tau} + cq\[n\] =
-\\sum\_{i=0}^{n}cq\[i\]e^{(i-n)/\\tau}. \end{split}\]</div>
+\[  \bar{q}[n]= \bar{q}[n-1]e^{-1/\tau} + cq[n] = \sum_{i=0}^{n}cq[i]e^{(i-n)/\tau}. 
+\]</div>
 <p>The sum of <span class="math notranslate nohighlight">\(n\)</span> weights is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\sum\_{i=0}^{n} ce^{-i/\\tau} = c\\frac{1 -
-e^{-n/\\tau}}{1-e^{-1/\\tau}} = 1 - e^{-n/\\tau} \end{split}\]</div>
-<p>which can be approximated as one, e.g. if <span class="math notranslate nohighlight">\(n=5\\tau\)</span> the weights mass is
-greater than 0.99. If we regard <span class="math notranslate nohighlight">\(q\[n\]\)</span> as a random variable with
-expected value <span class="math notranslate nohighlight">\(\\mu\)</span> and variance <span class="math notranslate nohighlight">\(\\sigma^2\)</span> that have been
-approximately constant for a duration of <span class="math notranslate nohighlight">\(L\\gg\\tau\)</span> samples the filter
+\[  \sum_{i=0}^{n} ce^{-i/\tau} = c\frac{1 - e^{-n/\tau}}{1-e^{-1/\tau}} = 1 - e^{-n/\tau} 
+\]</div>
+<p>which can be approximated as one, e.g. if <span class="math notranslate nohighlight">\(n=5\tau\)</span> the weights mass is
+greater than 0.99. If we regard <span class="math notranslate nohighlight">\(q[n]\)</span> as a random variable with
+expected value <span class="math notranslate nohighlight">\(\mu\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> that have been
+approximately constant for a duration of <span class="math notranslate nohighlight">\(L\gg\tau\)</span> samples the filter
 will be asymptotically unbiased</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\mathbf{E}\\left\[q\[n\] \\right\] =
-\\mathbf{E}\\left\[\\sum*{i=0}^{n}cq\[i\]e^{(i-n)/\\tau} \\right\] =
-\\mathbf{E}\\left\[q\[i\] \\right\] \\sum*{i=0}^{n}ce^{-i/\\tau} =
-\\mu(1 - e^{-n/\\tau})\\approx \\mu. \end{split}\]</div>
-<p>Assuming for the sake of analysis that <span class="math notranslate nohighlight">\(\\mu=0\)</span> and that <span class="math notranslate nohighlight">\(q\[n\]\)</span> is
-uncorrelated, i.e. <span class="math notranslate nohighlight">\(\\mathbf{E}\\left\[q\[j\]q\[i\] \\right\]=
-\\sigma^2\)</span> if <span class="math notranslate nohighlight">\(j=i\)</span> and <span class="math notranslate nohighlight">\(\\mathbf{E}\\left\[q\[j\]q\[i\] \\right\]= 0\)</span>
-otherwise, we get the variance as</p>
+\[  \mathbf{E}\left[q[n] \right] = \mathbf{E}\left[\sum_{i=0}^{n}cq[i]e^{(i-n)/\tau}  \right] = \mathbf{E}\left[q[i] \right] \sum_{i=0}^{n}ce^{-i/\tau} = \mu(1 - e^{-n/\tau})\approx \mu. 
+\]</div>
+<p>Assuming for the sake of analysis that <span class="math notranslate nohighlight">\(\mu=0\)</span> and that <span class="math notranslate nohighlight">\(q[n]\)</span> is
+uncorrelated, i.e. <span class="math notranslate nohighlight">\(\mathbf{E}\left[q[j]q[i] \right]= \sigma^2\)</span> if <span class="math notranslate nohighlight">\(j=i\)</span>
+and <span class="math notranslate nohighlight">\(\mathbf{E}\left[q[j]q[i] \right]= 0\)</span> otherwise, we get the variance
+as</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\text{var}\\left\[q\[n\] \\right\] =
-\\mathbf{E}\\left\[\\left(\\sum*{i=0}^{n}cq\[i\]e^{(i-n)/\\tau}
-\\right)^2\\right\] = \\mathbf{E}\\left\[q\[i\]^2 \\right\]
-\\sum*{i=0}^{n}c^2e^{-2i/\\tau} = \\sigma^2c^2\\frac{(1 -
-e^{-2n/\\tau})}{(1 - e^{-2/\\tau})} = \\sigma^2\\frac{(1 -
-e^{-1/\\tau})^2(1 - e^{-2n/\\tau})}{(1 - e^{-1/\\tau})(1 +
-e^{-1/\\tau})} \\approx \\sigma^2\\frac{(1 - e^{-1/\\tau})}{(1 +
-e^{-1/\\tau})} = \\gamma\\sigma^2\end{split}\]</div>
-<p>i.e. a reduction by a factor <span class="math notranslate nohighlight">\(\\gamma\)</span>. This can be compared to the
+\[  \text{var}\left[q[n] \right] =  \mathbf{E}\left[\left(\sum_{i=0}^{n}cq[i]e^{(i-n)/\tau}  \right)^2\right] = \mathbf{E}\left[q[i]^2 \right]  \sum_{i=0}^{n}c^2e^{-2i/\tau}  = \sigma^2c^2\frac{(1 - e^{-2n/\tau})}{(1 - e^{-2/\tau})}   = \sigma^2\frac{(1 - e^{-1/\tau})^2(1 - e^{-2n/\tau})}{(1 - e^{-1/\tau})(1 + e^{-1/\tau})} \approx \sigma^2\frac{(1 - e^{-1/\tau})}{(1 + e^{-1/\tau})} = \gamma\sigma^2
+\]</div>
+<p>i.e. a reduction by a factor <span class="math notranslate nohighlight">\(\gamma\)</span>. This can be compared to the
 factor <span class="math notranslate nohighlight">\(1/T\)</span> which is the reduction in variance from a rectangular
 sliding window of length <span class="math notranslate nohighlight">\(T\)</span>, e.g. if <span class="math notranslate nohighlight">\(T=100\)</span> we get the same steady
-state reduction in variance if <span class="math notranslate nohighlight">\(\\tau=50\)</span>. The value of <span class="math notranslate nohighlight">\(\\gamma\)</span> as a
-function of <span class="math notranslate nohighlight">\(\\tau\)</span> is shown below</p>
+state reduction in variance if <span class="math notranslate nohighlight">\(\tau=50\)</span>. The value of <span class="math notranslate nohighlight">\(\gamma\)</span> as a
+function of <span class="math notranslate nohighlight">\(\tau\)</span> is shown below</p>
 <p><img alt="Im2" src="https://raw.githubusercontent.com/gosip/wasp-scadamale-sketching/main/gammagainRe.jpg" /></p>
-<p>The transfer function for this filter in <span class="math notranslate nohighlight">\(z\)</span>-domain is $<span class="math notranslate nohighlight">\( H(z) =
-\\frac{\\bar{Q}(z)}{Q(z)} = \\frac{1-e^{-1/\\tau}}{1 -
-e^{-1/\\tau}z^{-1}}. \)</span><span class="math notranslate nohighlight">\( The frequency response, obtained by letting
-\)</span>z=e^{j2\pi\nu}<span class="math notranslate nohighlight">\( where the normalized frequency is \)</span>\nu = T<em>sf<span class="math notranslate nohighlight">\(, \)</span>f<span class="math notranslate nohighlight">\(
-is the frequency and \)</span>T</em>s$ is the time between samples, is shown below</p>
+<p>The transfer function for this filter in <span class="math notranslate nohighlight">\(z\)</span>-domain is</p>
+<div class="math notranslate nohighlight">
+\[  H(z) = \frac{\bar{Q}(z)}{Q(z)} = \frac{1-e^{-1/\tau}}{1 - e^{-1/\tau}z^{-1}}. 
+\]</div>
+<p>The frequency response, obtained by letting <span class="math notranslate nohighlight">\(z=e^{j2\pi\nu}\)</span> where the
+normalized frequency is <span class="math notranslate nohighlight">\(\nu = T_sf\)</span>, <span class="math notranslate nohighlight">\(f\)</span> is the frequency and <span class="math notranslate nohighlight">\(T_s\)</span> is
+the time between samples, is shown below</p>
 <p><img alt="Im3" src="https://raw.githubusercontent.com/gosip/wasp-scadamale-sketching/main/fresp2.jpg" /></p>
 <p>The figure shows the tradeoff between supressing (in magnitude) higher
 frequencies and following changes (i.e. keeping phase). The trend that
 the filter should follow should be slow enough such that it can be
-approximated as constant for a duration of <span class="math notranslate nohighlight">\(L\\gg\\tau\)</span>, i.e. depending
-of the frequency of the desired trend, the sampling rate, <span class="math notranslate nohighlight">\(1/T\_s\)</span>,
-needs to be high enough to satisfy this. If the flow of samples is
-constant this will in turn limit the number of samples in each batch and
-the smallest quantile that can be estimated.</p>
+approximated as constant for a duration of <span class="math notranslate nohighlight">\(L\gg\tau\)</span>, i.e. depending of
+the frequency of the desired trend, the sampling rate, <span class="math notranslate nohighlight">\(1/T_s\)</span>, needs to
+be high enough to satisfy this. If the flow of samples is constant this
+will in turn limit the number of samples in each batch and the smallest
+quantile that can be estimated.</p>
 <ol class="simple">
 <li><p>Implementation</p></li>
 </ol>
@@ -2243,7 +2244,415 @@ resMap: scala.collection.mutable.Map[Int,(Int, Double, Double, Double, Double, D
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>Time index, n</th>
+<th>true quantile</th>
+<th>true number of anomalies</th>
+<th>QE with t-digest</th>
+<th>filtered QE with t-digest</th>
+<th>number of anomalies with fix t-digest quantile</th>
+<th>number of anomalies with filtered t-digest quantile</th>
+<th>Naive QE</th>
+<th>filtered naive QE</th>
+<th>number of anomalies with fix naive QE</th>
+<th>number of anomalies with filtered naive QE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>3.7200164854557087</td>
+<td>9.999999999998899</td>
+<td>3.83177124781981</td>
+<td>3.83177124781981</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>3.8125</td>
+<td>3.8125</td>
+<td>10.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>3.7210164854557086</td>
+<td>9.999999999998899</td>
+<td>3.708080772285753</td>
+<td>3.825738792144233</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>3.6875</td>
+<td>3.806403678062589</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>3.722016485455709</td>
+<td>9.999999999998899</td>
+<td>3.773951823511478</td>
+<td>3.8232131118806505</td>
+<td>8.0</td>
+<td>8.0</td>
+<td>3.7890625</td>
+<td>3.8055579388286414</td>
+<td>8.0</td>
+<td>8.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>3.723016485455709</td>
+<td>9.999999999998899</td>
+<td>3.52861076733272</td>
+<td>3.808845185993609</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.52734375</td>
+<td>3.7919892727274016</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>3.7240164854557087</td>
+<td>9.999999999998899</td>
+<td>3.785518110416313</td>
+<td>3.807707511092989</td>
+<td>7.0</td>
+<td>7.0</td>
+<td>3.7890625</td>
+<td>3.791846532337131</td>
+<td>7.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>6.0</td>
+<td>3.7250164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7485411099008963</td>
+<td>3.8048219316566287</td>
+<td>5.0</td>
+<td>6.0</td>
+<td>3.75</td>
+<td>3.7898056528723996</td>
+<td>6.0</td>
+<td>9.0</td>
+</tr>
+<tr class="odd">
+<td>7.0</td>
+<td>3.726016485455709</td>
+<td>9.999999999998899</td>
+<td>3.6989399177046245</td>
+<td>3.799658004901166</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>3.703125</td>
+<td>3.785578187547159</td>
+<td>4.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>3.727016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7769226304826367</td>
+<td>3.7985491876065827</td>
+<td>9.0</td>
+<td>9.0</td>
+<td>3.78125</td>
+<td>3.785367099349615</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>9.0</td>
+<td>3.7280164854557087</td>
+<td>9.999999999998899</td>
+<td>3.676113548571056</td>
+<td>3.7925779310291974</td>
+<td>6.0</td>
+<td>7.0</td>
+<td>3.6796875</td>
+<td>3.7802130444708</td>
+<td>6.0</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+<td>3.7290164854557086</td>
+<td>9.999999999998899</td>
+<td>3.813854665682245</td>
+<td>3.793615609622972</td>
+<td>9.0</td>
+<td>11.0</td>
+<td>3.8125</td>
+<td>3.7817876978730793</td>
+<td>10.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>3.730016485455709</td>
+<td>9.999999999998899</td>
+<td>3.765190861286171</td>
+<td>3.792229318288164</td>
+<td>7.0</td>
+<td>9.0</td>
+<td>3.765625</td>
+<td>3.7809994337961883</td>
+<td>9.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+<td>3.731016485455709</td>
+<td>9.999999999998899</td>
+<td>3.6439893628931093</td>
+<td>3.784999570351559</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>3.640625</td>
+<td>3.774153291874562</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>3.7320164854557087</td>
+<td>9.999999999998899</td>
+<td>3.724306899614852</td>
+<td>3.782039553871141</td>
+<td>8.0</td>
+<td>9.0</td>
+<td>3.71875</td>
+<td>3.771451241445285</td>
+<td>8.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>3.7330164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7901939528114585</td>
+<td>3.7824372486003113</td>
+<td>9.0</td>
+<td>11.0</td>
+<td>3.8125</td>
+<td>3.77345321302353</td>
+<td>10.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+<td>3.734016485455709</td>
+<td>9.999999999998899</td>
+<td>3.618768651267854</td>
+<td>3.7744550369172463</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.62109375</td>
+<td>3.76602255432911</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+<td>3.735016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7522369152258843</td>
+<td>3.7733714463358456</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>3.75</td>
+<td>3.7652411251335107</td>
+<td>7.0</td>
+<td>9.0</td>
+</tr>
+<tr class="odd">
+<td>17.0</td>
+<td>3.7360164854557087</td>
+<td>9.999999999998899</td>
+<td>3.778982102277617</td>
+<td>3.7736450812550544</td>
+<td>8.0</td>
+<td>10.0</td>
+<td>3.78125</td>
+<td>3.7660218871738453</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>18.0</td>
+<td>3.7370164854557086</td>
+<td>9.999999999998899</td>
+<td>3.683638306020955</td>
+<td>3.7692553990280526</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>3.675048828125</td>
+<td>3.7615850787291025</td>
+<td>7.0</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>19.0</td>
+<td>3.738016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8518011006055004</td>
+<td>3.7732812003989773</td>
+<td>11.0</td>
+<td>13.0</td>
+<td>3.875</td>
+<td>3.7671163897096904</td>
+<td>11.0</td>
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td>20.0</td>
+<td>3.739016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8156646710862843</td>
+<td>3.7753482666560543</td>
+<td>9.0</td>
+<td>13.0</td>
+<td>3.8203125</td>
+<td>3.7697107946228723</td>
+<td>12.0</td>
+<td>13.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+<td>3.7400164854557088</td>
+<td>9.999999999998899</td>
+<td>3.7338037713697103</td>
+<td>3.773322117712112</td>
+<td>6.0</td>
+<td>9.0</td>
+<td>3.734375</td>
+<td>3.76798744758339</td>
+<td>6.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+<td>3.7410164854557086</td>
+<td>9.999999999998899</td>
+<td>3.8282711595319676</td>
+<td>3.7760020141048005</td>
+<td>10.0</td>
+<td>11.0</td>
+<td>3.828125</td>
+<td>3.7709203906238664</td>
+<td>11.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>23.0</td>
+<td>3.742016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7734772054426107</td>
+<td>3.7758788777333203</td>
+<td>8.0</td>
+<td>10.0</td>
+<td>3.78125</td>
+<td>3.771424171617823</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>24.0</td>
+<td>3.743016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7466251266250588</td>
+<td>3.7744521554562573</td>
+<td>8.0</td>
+<td>9.0</td>
+<td>3.75</td>
+<td>3.7703793024384264</td>
+<td>8.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>25.0</td>
+<td>3.7440164854557088</td>
+<td>52.70568509224476</td>
+<td>4.531726543628375</td>
+<td>3.811384863178281</td>
+<td>42.0</td>
+<td>43.0</td>
+<td>4.53125</td>
+<td>3.8074874042390476</td>
+<td>43.0</td>
+<td>43.0</td>
+</tr>
+<tr class="even">
+<td>26.0</td>
+<td>3.7450164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7023368703377786</td>
+<td>3.806066529810408</td>
+<td>5.0</td>
+<td>7.0</td>
+<td>3.703125</td>
+<td>3.80239758972382</td>
+<td>6.0</td>
+<td>7.0</td>
+</tr>
+<tr class="odd">
+<td>27.0</td>
+<td>3.746016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8490501565771162</td>
+<td>3.808162866024867</td>
+<td>11.0</td>
+<td>13.0</td>
+<td>3.8515625</td>
+<td>3.80479539069236</td>
+<td>13.0</td>
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td>28.0</td>
+<td>3.747016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7546507980179107</td>
+<td>3.8055530516720113</td>
+<td>6.0</td>
+<td>10.0</td>
+<td>3.75</td>
+<td>3.8021229879535854</td>
+<td>8.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>29.0</td>
+<td>3.7480164854557088</td>
+<td>9.999999999998899</td>
+<td>3.7754381297439727</td>
+<td>3.8040843295984645</td>
+<td>7.0</td>
+<td>9.0</td>
+<td>3.78125</td>
+<td>3.8011050003186995</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>30.0</td>
+<td>3.7490164854557086</td>
+<td>9.999999999998899</td>
+<td>3.8768103137550995</td>
+<td>3.807631217699536</td>
+<td>13.0</td>
+<td>13.0</td>
+<td>3.875</td>
+<td>3.804708901979676</td>
+<td>13.0</td>
+<td>13.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>We see that the filtered quantiles are not affected by the bursts of
 anomalies, seen as spikes in the instantaneous estimates. We also note
@@ -2260,7 +2669,415 @@ initial guess in step <span class="math notranslate nohighlight">\(n\)</span>.</
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>Time index, n</th>
+<th>true quantile</th>
+<th>true number of anomalies</th>
+<th>QE with t-digest</th>
+<th>filtered QE with t-digest</th>
+<th>number of anomalies with fix t-digest quantile</th>
+<th>number of anomalies with filtered t-digest quantile</th>
+<th>Naive QE</th>
+<th>filtered naive QE</th>
+<th>number of anomalies with fix naive QE</th>
+<th>number of anomalies with filtered naive QE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>3.7200164854557087</td>
+<td>9.999999999998899</td>
+<td>3.83177124781981</td>
+<td>3.83177124781981</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>3.8125</td>
+<td>3.8125</td>
+<td>10.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>3.7210164854557086</td>
+<td>9.999999999998899</td>
+<td>3.708080772285753</td>
+<td>3.825738792144233</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>3.6875</td>
+<td>3.806403678062589</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>3.722016485455709</td>
+<td>9.999999999998899</td>
+<td>3.773951823511478</td>
+<td>3.8232131118806505</td>
+<td>8.0</td>
+<td>8.0</td>
+<td>3.7890625</td>
+<td>3.8055579388286414</td>
+<td>8.0</td>
+<td>8.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>3.723016485455709</td>
+<td>9.999999999998899</td>
+<td>3.52861076733272</td>
+<td>3.808845185993609</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.52734375</td>
+<td>3.7919892727274016</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>3.7240164854557087</td>
+<td>9.999999999998899</td>
+<td>3.785518110416313</td>
+<td>3.807707511092989</td>
+<td>7.0</td>
+<td>7.0</td>
+<td>3.7890625</td>
+<td>3.791846532337131</td>
+<td>7.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>6.0</td>
+<td>3.7250164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7485411099008963</td>
+<td>3.8048219316566287</td>
+<td>5.0</td>
+<td>6.0</td>
+<td>3.75</td>
+<td>3.7898056528723996</td>
+<td>6.0</td>
+<td>9.0</td>
+</tr>
+<tr class="odd">
+<td>7.0</td>
+<td>3.726016485455709</td>
+<td>9.999999999998899</td>
+<td>3.6989399177046245</td>
+<td>3.799658004901166</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>3.703125</td>
+<td>3.785578187547159</td>
+<td>4.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>3.727016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7769226304826367</td>
+<td>3.7985491876065827</td>
+<td>9.0</td>
+<td>9.0</td>
+<td>3.78125</td>
+<td>3.785367099349615</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>9.0</td>
+<td>3.7280164854557087</td>
+<td>9.999999999998899</td>
+<td>3.676113548571056</td>
+<td>3.7925779310291974</td>
+<td>6.0</td>
+<td>7.0</td>
+<td>3.6796875</td>
+<td>3.7802130444708</td>
+<td>6.0</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+<td>3.7290164854557086</td>
+<td>9.999999999998899</td>
+<td>3.813854665682245</td>
+<td>3.793615609622972</td>
+<td>9.0</td>
+<td>11.0</td>
+<td>3.8125</td>
+<td>3.7817876978730793</td>
+<td>10.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>3.730016485455709</td>
+<td>9.999999999998899</td>
+<td>3.765190861286171</td>
+<td>3.792229318288164</td>
+<td>7.0</td>
+<td>9.0</td>
+<td>3.765625</td>
+<td>3.7809994337961883</td>
+<td>9.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+<td>3.731016485455709</td>
+<td>9.999999999998899</td>
+<td>3.6439893628931093</td>
+<td>3.784999570351559</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>3.640625</td>
+<td>3.774153291874562</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>3.7320164854557087</td>
+<td>9.999999999998899</td>
+<td>3.724306899614852</td>
+<td>3.782039553871141</td>
+<td>8.0</td>
+<td>9.0</td>
+<td>3.71875</td>
+<td>3.771451241445285</td>
+<td>8.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>3.7330164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7901939528114585</td>
+<td>3.7824372486003113</td>
+<td>9.0</td>
+<td>11.0</td>
+<td>3.8125</td>
+<td>3.77345321302353</td>
+<td>10.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+<td>3.734016485455709</td>
+<td>9.999999999998899</td>
+<td>3.618768651267854</td>
+<td>3.7744550369172463</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.62109375</td>
+<td>3.76602255432911</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+<td>3.735016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7522369152258843</td>
+<td>3.7733714463358456</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>3.75</td>
+<td>3.7652411251335107</td>
+<td>7.0</td>
+<td>9.0</td>
+</tr>
+<tr class="odd">
+<td>17.0</td>
+<td>3.7360164854557087</td>
+<td>9.999999999998899</td>
+<td>3.778982102277617</td>
+<td>3.7736450812550544</td>
+<td>8.0</td>
+<td>10.0</td>
+<td>3.78125</td>
+<td>3.7660218871738453</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>18.0</td>
+<td>3.7370164854557086</td>
+<td>9.999999999998899</td>
+<td>3.683638306020955</td>
+<td>3.7692553990280526</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>3.675048828125</td>
+<td>3.7615850787291025</td>
+<td>7.0</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>19.0</td>
+<td>3.738016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8518011006055004</td>
+<td>3.7732812003989773</td>
+<td>11.0</td>
+<td>13.0</td>
+<td>3.875</td>
+<td>3.7671163897096904</td>
+<td>11.0</td>
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td>20.0</td>
+<td>3.739016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8156646710862843</td>
+<td>3.7753482666560543</td>
+<td>9.0</td>
+<td>13.0</td>
+<td>3.8203125</td>
+<td>3.7697107946228723</td>
+<td>12.0</td>
+<td>13.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+<td>3.7400164854557088</td>
+<td>9.999999999998899</td>
+<td>3.7338037713697103</td>
+<td>3.773322117712112</td>
+<td>6.0</td>
+<td>9.0</td>
+<td>3.734375</td>
+<td>3.76798744758339</td>
+<td>6.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+<td>3.7410164854557086</td>
+<td>9.999999999998899</td>
+<td>3.8282711595319676</td>
+<td>3.7760020141048005</td>
+<td>10.0</td>
+<td>11.0</td>
+<td>3.828125</td>
+<td>3.7709203906238664</td>
+<td>11.0</td>
+<td>11.0</td>
+</tr>
+<tr class="odd">
+<td>23.0</td>
+<td>3.742016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7734772054426107</td>
+<td>3.7758788777333203</td>
+<td>8.0</td>
+<td>10.0</td>
+<td>3.78125</td>
+<td>3.771424171617823</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>24.0</td>
+<td>3.743016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7466251266250588</td>
+<td>3.7744521554562573</td>
+<td>8.0</td>
+<td>9.0</td>
+<td>3.75</td>
+<td>3.7703793024384264</td>
+<td>8.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>25.0</td>
+<td>3.7440164854557088</td>
+<td>52.70568509224476</td>
+<td>4.531726543628375</td>
+<td>3.811384863178281</td>
+<td>42.0</td>
+<td>43.0</td>
+<td>4.53125</td>
+<td>3.8074874042390476</td>
+<td>43.0</td>
+<td>43.0</td>
+</tr>
+<tr class="even">
+<td>26.0</td>
+<td>3.7450164854557086</td>
+<td>9.999999999998899</td>
+<td>3.7023368703377786</td>
+<td>3.806066529810408</td>
+<td>5.0</td>
+<td>7.0</td>
+<td>3.703125</td>
+<td>3.80239758972382</td>
+<td>6.0</td>
+<td>7.0</td>
+</tr>
+<tr class="odd">
+<td>27.0</td>
+<td>3.746016485455709</td>
+<td>9.999999999998899</td>
+<td>3.8490501565771162</td>
+<td>3.808162866024867</td>
+<td>11.0</td>
+<td>13.0</td>
+<td>3.8515625</td>
+<td>3.80479539069236</td>
+<td>13.0</td>
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td>28.0</td>
+<td>3.747016485455709</td>
+<td>9.999999999998899</td>
+<td>3.7546507980179107</td>
+<td>3.8055530516720113</td>
+<td>6.0</td>
+<td>10.0</td>
+<td>3.75</td>
+<td>3.8021229879535854</td>
+<td>8.0</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td>29.0</td>
+<td>3.7480164854557088</td>
+<td>9.999999999998899</td>
+<td>3.7754381297439727</td>
+<td>3.8040843295984645</td>
+<td>7.0</td>
+<td>9.0</td>
+<td>3.78125</td>
+<td>3.8011050003186995</td>
+<td>9.0</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td>30.0</td>
+<td>3.7490164854557086</td>
+<td>9.999999999998899</td>
+<td>3.8768103137550995</td>
+<td>3.807631217699536</td>
+<td>13.0</td>
+<td>13.0</td>
+<td>3.875</td>
+<td>3.804708901979676</td>
+<td>13.0</td>
+<td>13.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>If a fixed quantile is used the number of anomalies will increase with
 time due to the changing statistics of the data distribution. By
@@ -2271,8 +3088,8 @@ spikes with 52.7 calculated anomaleties) in time slots with the abnormal
 distribution. The emperical mean relative errors for the quantile
 defined as</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\varepsilon*q = \\frac{1}{T}\\sum*{n=1}^{T}\\frac{|q\[n\] -
-\\hat{q}\[n\]|}{q\[n\]}\end{split}\]</div>
+\[  \varepsilon_q  = \frac{1}{T}\sum_{n=1}^{T}\frac{|q[n] - \hat{q}[n]|}{q[n]}
+\]</div>
 <p>was 0.0052 with the naive QE and 0.0054 with t-digest, using the
 filtered quantiles. The corresponding error for the number of anomalies
 (this is ideally <span class="math notranslate nohighlight">\(N-k = 10\)</span> in normal batches and 52.7 in abnormal
@@ -2303,18 +3120,17 @@ object that can be used to obtain estimates of different statistics of
 the original data stream, e.g. estimates of several different quantiles.
 On the other hand, the iterative method in the form presented above can
 only be used to estimate one quantile. A way to obtain a data sketch
-with the iterative method is to fix a step size <span class="math notranslate nohighlight">\(\\alpha\)</span> and to
-maintain <span class="math notranslate nohighlight">\(\\frac{1}{\\alpha}\)</span> quantiles for <span class="math notranslate nohighlight">\(\\alpha\)</span>, <span class="math notranslate nohighlight">\(2\\alpha\)</span>,
-<span class="math notranslate nohighlight">\(3\\alpha\)</span>, … If we want to get an estimate of a quantile that is not
-stored in the sketch, we can take two values from the sketch such that
-the desired quantile falls between them and then iterpolate (e.g.
-linearly). The space complexity of this sketch is
-<span class="math notranslate nohighlight">\(O(\\frac{1}{\\alpha})\)</span>, i.e. it depends linearly on the desired level
-of accuracy. Having in mind that our target application is anomaly
-detection, one could modify this solution to better correspond to the
-task at hand: instead of evenly spacing the quantiles, one could be more
-fine-grained towards the endpoints of the interval [0,1] and have
-larger bins in the middle.</p>
+with the iterative method is to fix a step size <span class="math notranslate nohighlight">\(\alpha\)</span> and to maintain
+<span class="math notranslate nohighlight">\(\frac{1}{\alpha}\)</span> quantiles for <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(2\alpha\)</span>, <span class="math notranslate nohighlight">\(3\alpha\)</span>, … If
+we want to get an estimate of a quantile that is not stored in the
+sketch, we can take two values from the sketch such that the desired
+quantile falls between them and then iterpolate (e.g. linearly). The
+space complexity of this sketch is <span class="math notranslate nohighlight">\(O(\frac{1}{\alpha})\)</span>, i.e. it
+depends linearly on the desired level of accuracy. Having in mind that
+our target application is anomaly detection, one could modify this
+solution to better correspond to the task at hand: instead of evenly
+spacing the quantiles, one could be more fine-grained towards the
+endpoints of the interval [0,1] and have larger bins in the middle.</p>
 </div>
 <div class="section" id="alternative-approaches">
 <h2>7.3 Alternative approaches<a class="headerlink" href="#alternative-approaches" title="Permalink to this headline">¶</a></h2>

@@ -1367,15 +1367,17 @@ authors of the ALS algorithm considered approximating this matrix by a
 product of two tall matrices U and M of low rank. In other words, the
 goal is to find a low rank approximation of the ratings matrix R:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} R \\approx U M^\\top = \\begin{bmatrix} u*1 &amp; \\dots &amp; u*N
-\\end{bmatrix}^\\top \\begin{bmatrix} m*1 &amp; \\dots &amp; m*M \\end{bmatrix}
-\\qquad \\text{where} \\qquad U \\in \\mathbb{R}^{N \\times K}, M \\in
-\\mathbb{R}^{M \\times K} \end{split}\]</div>
+\[  
+  R \approx U M^\top = \begin{bmatrix} u_1 &amp; \dots &amp; u_N \end{bmatrix}^\top  \begin{bmatrix}
+  m_1 &amp; \dots &amp; m_M \end{bmatrix} \qquad \text{where} \qquad U \in \mathbb{R}^{N \times K}, M \in \mathbb{R}^{M \times K}
+\]</div>
 <p>Intuitively we think of U (resp. M) as a matrix of users’ features
 (resp. movies features) and we may rewrite this approximation entrywise
 as</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\forall i,j \\qquad r*{i,j} \\approx u*i^\\top m\_j. \end{split}\]</div>
+\[  
+  \forall i,j \qquad r_{i,j} \approx u_i^\top m_j. 
+\]</div>
 </div>
 <div class="section" id="the-loss-function">
 <h3>The loss function<a class="headerlink" href="#the-loss-function" title="Permalink to this headline">¶</a></h3>
@@ -1387,9 +1389,10 @@ sum of squares errors with a Thikonov rigularization that weighs the
 users matrix U (resp. the movies matrix M) using the Gamma<em>U (resp.
 Gamma</em>M)</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\mathcal{L}*{U,M}^{wheighted}(R) = \\sum*{(i,j)\\in S} (r*{i,j} -
-u*i^\\top m*j)^2 + \\lambda \\Vert M \\Gamma*m \\Vert^2 + \\lambda
-\\Vert U \\Gamma\_u \\Vert^2 \end{split}\]</div>
+\[  
+  \mathcal{L}_{U,M}^{wheighted}(R) = \sum_{(i,j)\in S}
+  (r_{i,j} - u_i^\top m_j)^2 + \lambda \Vert M \Gamma_m \Vert^2 + \lambda \Vert U \Gamma_u \Vert^2 
+\]</div>
 <p>where S corresponds to the set of known ratings, \lambda is a
 regularaziation parameter. In fact this loss corresponds to the
 Alternating Least Squares with Weigted Regularization (ALS-WR). We will
@@ -1397,11 +1400,15 @@ be using a variant of that algorithm a.k.a. the ALS algorithm which
 corresponds to minimizing the following slighltly similar loss without
 wheighing:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\mathcal{L}*{U,M}(R) = \\sum*{(i,j)\\in S} (r*{i,j} - u*i^\\top
-m\_j)^2 + \\lambda \\Vert M \\Vert^2 + \\lambda \\Vert U \\Vert^2 \end{split}\]</div>
+\[  
+  \mathcal{L}_{U,M}(R) = \sum_{(i,j)\in S}
+  (r_{i,j} - u_i^\top m_j)^2 + \lambda \Vert M \Vert^2 + \lambda \Vert U \Vert^2 
+\]</div>
 <p>and the goal of the algorithm will be find a condidate (U,M) that</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\min*{U,M} \\mathcal{L}*{U,M}(R) \end{split}\]</div>
+\[  
+  \min_{U,M} \mathcal{L}_{U,M}(R)
+\]</div>
 </div>
 <div class="section" id="id1">
 <h3>The ALS algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
@@ -1464,7 +1471,27 @@ had in the course.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/databricks-datasets/cs100/lab4/data-001/movies.dat</td>
+<td>movies.dat</td>
+<td>171308.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz</td>
+<td>ratings.dat.gz</td>
+<td>2837683.0</td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="loading-the-data">
 <h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">¶</a></h2>
 <p>We read in each of the files and create an RDD consisting of parsed
@@ -1596,7 +1623,198 @@ res35: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>timestamp</th>
+<th>userId</th>
+<th>movieId</th>
+<th>rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9.7830076e8</td>
+<td>1.0</td>
+<td>1193.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78302109e8</td>
+<td>1.0</td>
+<td>661.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>9.78301968e8</td>
+<td>1.0</td>
+<td>914.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>9.78300275e8</td>
+<td>1.0</td>
+<td>3408.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78824291e8</td>
+<td>1.0</td>
+<td>2355.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78302268e8</td>
+<td>1.0</td>
+<td>1197.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>9.78302039e8</td>
+<td>1.0</td>
+<td>1287.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78300719e8</td>
+<td>1.0</td>
+<td>2804.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>9.78302268e8</td>
+<td>1.0</td>
+<td>594.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>9.78301368e8</td>
+<td>1.0</td>
+<td>919.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78824268e8</td>
+<td>1.0</td>
+<td>595.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78301752e8</td>
+<td>1.0</td>
+<td>938.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78302281e8</td>
+<td>1.0</td>
+<td>2398.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>9.78302124e8</td>
+<td>1.0</td>
+<td>2918.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78301753e8</td>
+<td>1.0</td>
+<td>1035.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78302188e8</td>
+<td>1.0</td>
+<td>2791.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78824268e8</td>
+<td>1.0</td>
+<td>2687.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>9.78301777e8</td>
+<td>1.0</td>
+<td>2018.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78301713e8</td>
+<td>1.0</td>
+<td>3105.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78302039e8</td>
+<td>1.0</td>
+<td>2797.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78302205e8</td>
+<td>1.0</td>
+<td>2321.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>9.7830076e8</td>
+<td>1.0</td>
+<td>720.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>9.78300055e8</td>
+<td>1.0</td>
+<td>1270.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td>9.78824195e8</td>
+<td>1.0</td>
+<td>527.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>9.78300103e8</td>
+<td>1.0</td>
+<td>2340.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>9.78824351e8</td>
+<td>1.0</td>
+<td>48.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>9.78301953e8</td>
+<td>1.0</td>
+<td>1097.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>9.78300055e8</td>
+<td>1.0</td>
+<td>1721.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>9.78824139e8</td>
+<td>1.0</td>
+<td>1545.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>9.78824268e8</td>
+<td>1.0</td>
+<td>745.0</td>
+<td>3.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>Here we simply check the size of the datasets we are using</p>
 <div class="cell docutils container">
@@ -1793,7 +2011,62 @@ format:</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/FileStore/tables/Netflix/combined_data_1_tar.xz</td>
+<td>combined_data_1_tar.xz</td>
+<td>1.19273784e8</td>
+</tr>
+<tr class="even">
+<td>dbfs:/FileStore/tables/Netflix/combined_data_2_tar.xz</td>
+<td>combined_data_2_tar.xz</td>
+<td>1.33487548e8</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/FileStore/tables/Netflix/combined_data_3_tar.xz</td>
+<td>combined_data_3_tar.xz</td>
+<td>1.11976904e8</td>
+</tr>
+<tr class="even">
+<td>dbfs:/FileStore/tables/Netflix/combined_data_4_tar.xz</td>
+<td>combined_data_4_tar.xz</td>
+<td>1.32669964e8</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/FileStore/tables/Netflix/formatted_combined_data_1_txt.gz</td>
+<td>formatted_combined_data_1_txt.gz</td>
+<td>1.66682858e8</td>
+</tr>
+<tr class="even">
+<td>dbfs:/FileStore/tables/Netflix/formatted_combined_data_2_txt.gz</td>
+<td>formatted_combined_data_2_txt.gz</td>
+<td>1.87032103e8</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/FileStore/tables/Netflix/formatted_combined_data_3_txt.gz</td>
+<td>formatted_combined_data_3_txt.gz</td>
+<td>1.56042358e8</td>
+</tr>
+<tr class="even">
+<td>dbfs:/FileStore/tables/Netflix/formatted_combined_data_4_txt.gz</td>
+<td>formatted_combined_data_4_txt.gz</td>
+<td>1.85177843e8</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/FileStore/tables/Netflix/movie_titles.csv</td>
+<td>movie_titles.csv</td>
+<td>577547.0</td>
+</tr>
+</tbody>
+</table>
 <p>Let us load first the movie titles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1913,7 +2186,167 @@ RatingsRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Ratin
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>user</th>
+<th>product</th>
+<th>rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1488844.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>822109.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>885013.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>30878.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>823519.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>893988.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>124105.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>1248029.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>1842128.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>2238063.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>1503895.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>2207774.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>2590061.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>2442.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>543865.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>1209119.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>804919.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>1086807.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>1711859.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>372233.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>1080361.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>1245640.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td>558634.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>2165002.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>1181550.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>1227322.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>427928.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>814701.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td>808731.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td>662870.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 </div>
 <div class="section" id="training-the-movie-recommender-system">

@@ -1353,10 +1353,7 @@ compute optimal actions, by chosing the action that maximizes the action
 value, Q. Specifically, we use the DQN – Deep Q-Network – algorithm to
 train an agent which trades Brent Crude Oil (BCOUSD) stocks, in order to
 maximize profit.</p>
-<p>&lt;img
-src=https://upload.wikimedia.org/wikipedia/commons/d/da/Markov<em>diagram</em>v2.svg
-width=600&gt;</p>
-<div class="cell docutils container">
+<img src=https://upload.wikimedia.org/wikipedia/commons/d/da/Markov_diagram_v2.svg width=600><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Scala</span> <span class="n">imports</span>
 <span class="kn">import</span> <span class="nn">org.lamastex.spark.trendcalculus._</span>
@@ -1675,9 +1672,8 @@ agent. Specifically we use the DQN algorithm with Experience Replay,
 which was first described in DeepMind’s: <a class="reference external" href="https://arxiv.org/pdf/1312.5602.pdf">Playing Atari with Deep
 Reinforcement Learning</a>. The
 algorithm is described below, where equation [3], refers to the
-gradient: &lt;img src=”https://imgur.com/eGhNC9m.png” width=650&gt;</p>
-<p>&lt;img src=”https://imgur.com/mvopoh8.png” width=800&gt;</p>
-<div class="cell docutils container">
+gradient: <img src="https://imgur.com/eGhNC9m.png" width=650></p>
+<img src="https://imgur.com/mvopoh8.png" width=800><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
 
@@ -2460,25 +2456,19 @@ It works by grouping the observations in the time series into windows
 and defining a trend upwards as “higher highs and higher lows” compared
 to the previous window. A downwards trend is similarly defined as “lower
 highs and lower lows”.</p>
-<p>&lt;img
-src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/HigherHighHigherLow.png
-width=300&gt;</p>
+<img src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/HigherHighHigherLow.png width=300>
 <p>If there is a higher high and lower low (or lower high and higher low),
 no trend is detected. This is solved by introducing intermediate windows
 that split the non-trend into two trends, ensuring that every point can
 be labeled with either an up or down trend.</p>
-<p>&lt;img
-src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/OuterInnerBars.png
-width=600&gt;</p>
+<img src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/OuterInnerBars.png  width=600>
 <p>When the trends have been calculated for all windows, the points where
 the trends change sign are labeled as reversals. If the reversal is from
 up to down, the previous high is the reversal point and if the reversal
 is from down to up, the previous low is the reversal. This means that
 the reversals always are the appropriate extrema (maximum for up to
 down, minimum for down to up).</p>
-<p>&lt;img
-src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/trendReversals.png
-width=600&gt;</p>
+<img src=https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/images/trendReversals.png width=600>
 <p>The output of the algorithm is a time series consisting of all the
 labelled reversal points. It is therefore possible to use this as the
 input for another run of the Trend Calculus algorithm, finding more long
@@ -2502,7 +2492,229 @@ dfWithReversalsDiff.createOrReplaceTempView(&quot;temp&quot;)
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>ticker</th>
+<th>x</th>
+<th>y</th>
+<th>reversal1</th>
+<th>maxRev</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:15:00.000+0000</td>
+<td>86.74</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:17:00.000+0000</td>
+<td>86.75</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:18:00.000+0000</td>
+<td>86.76</td>
+<td>-1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:19:00.000+0000</td>
+<td>86.74</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:21:00.000+0000</td>
+<td>86.74</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:24:00.000+0000</td>
+<td>86.75</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:26:00.000+0000</td>
+<td>86.77</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:27:00.000+0000</td>
+<td>86.75</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:28:00.000+0000</td>
+<td>86.79</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:32:00.000+0000</td>
+<td>86.81</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:33:00.000+0000</td>
+<td>86.81</td>
+<td>-1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:34:00.000+0000</td>
+<td>86.81</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:35:00.000+0000</td>
+<td>86.79</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:36:00.000+0000</td>
+<td>86.8</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:37:00.000+0000</td>
+<td>86.79</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:38:00.000+0000</td>
+<td>86.79</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:39:00.000+0000</td>
+<td>86.79</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:40:00.000+0000</td>
+<td>86.8</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:41:00.000+0000</td>
+<td>86.8</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:42:00.000+0000</td>
+<td>86.8</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:43:00.000+0000</td>
+<td>86.82</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:44:00.000+0000</td>
+<td>86.81</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:47:00.000+0000</td>
+<td>86.84</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:48:00.000+0000</td>
+<td>86.82</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:49:00.000+0000</td>
+<td>86.84</td>
+<td>-1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:50:00.000+0000</td>
+<td>86.82</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:51:00.000+0000</td>
+<td>86.83</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:52:00.000+0000</td>
+<td>86.82</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>BCOUSD</td>
+<td>2010-11-14T20:53:00.000+0000</td>
+<td>86.83</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>BCOUSD</td>
+<td>2010-11-14T20:54:00.000+0000</td>
+<td>86.84</td>
+<td>null</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>In conjunction with TrendCalculus, a complete automatic trading pipeline
 can be constructed, consisting of (i) trend analysis with TrendCalculus

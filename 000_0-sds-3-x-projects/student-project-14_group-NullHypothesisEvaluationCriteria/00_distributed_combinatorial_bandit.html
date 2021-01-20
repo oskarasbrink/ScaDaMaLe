@@ -1787,12 +1787,11 @@ this reason, we truncate the lineage graph by checkpointing the RDDs.</p>
 <p>The cell below contains the distributed combinatorial bandit algorithm,
 as well as the simulation framework. In a standard (stochastic)
 multi-armed bandit problem setting, there is a set of actions
-<span class="math notranslate nohighlight">\(\\mathcal{A}\)</span> wherein each selected action <span class="math notranslate nohighlight">\(a \\in \\mathcal{A}\)</span>
-results in the agent receiving a random reward <span class="math notranslate nohighlight">\(r(a)\)</span> from the
-environment. The distributions of these rewards are unknown and it is
-the objective of an agent to select actions to learn enough information
-about the reward distributions such that the long-term rewards can be
-maximized.</p>
+<span class="math notranslate nohighlight">\(\mathcal{A}\)</span> wherein each selected action <span class="math notranslate nohighlight">\(a \in \mathcal{A}\)</span> results
+in the agent receiving a random reward <span class="math notranslate nohighlight">\(r(a)\)</span> from the environment. The
+distributions of these rewards are unknown and it is the objective of an
+agent to select actions to learn enough information about the reward
+distributions such that the long-term rewards can be maximized.</p>
 <p>Thompson Sampling is Bayesian bandit algorithm, where the assumption is
 that the parameters of the reward distributions are drawn from some
 known prior. By using observed rewards to compute a posterior
@@ -2264,6 +2263,107 @@ d3.graphs.force(
 </div>
 </div>
 </div>
+<style>
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-size: 17px;
+  font-weight: 200;
+}
+
+</style>
+<div id="clicks-graph">
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+<p>var graph = {“nodes”:[{“name”:”8”},{“name”:”4”},{“name”:”9”},{“name”:”5”},{“name”:”6”},{“name”:”1”},{“name”:”0”},{“name”:”2”},{“name”:”7”},{“name”:”3”}],”links”:[{“source”:6,”target”:5,”value”:26},{“source”:5,”target”:2,”value”:26},{“source”:6,”target”:7,”value”:1},{“source”:7,”target”:2,”value”:1},{“source”:6,”target”:9,”value”:2},{“source”:9,”target”:2,”value”:2},{“source”:6,”target”:1,”value”:1},{“source”:1,”target”:2,”value”:1},{“source”:6,”target”:3,”value”:1},{“source”:3,”target”:2,”value”:1},{“source”:6,”target”:4,”value”:1},{“source”:4,”target”:2,”value”:1},{“source”:6,”target”:8,”value”:1},{“source”:8,”target”:2,”value”:1},{“source”:6,”target”:0,”value”:1},{“source”:0,”target”:2,”value”:1}]};</p>
+<p>var width = 1000,
+height = 500;</p>
+<p>var color = d3.scale.category20();</p>
+<p>var force = d3.layout.force()
+.charge(-700)
+.linkDistance(180)
+.size([width, height]);</p>
+<p>var svg = d3.select(“#clicks-graph”).append(“svg”)
+.attr(“width”, width)
+.attr(“height”, height);</p>
+<p>force
+.nodes(graph.nodes)
+.links(graph.links)
+.start();</p>
+<p>var link = svg.selectAll(“.link”)
+.data(graph.links)
+.enter().append(“line”)
+.attr(“class”, “link”)
+.style(“stroke-width”, function(d) { return Math.sqrt(d.value); });</p>
+<p>var node = svg.selectAll(“.node”)
+.data(graph.nodes)
+.enter().append(“g”)
+.attr(“class”, “node”)
+.call(force.drag);</p>
+<p>node.append(“circle”)
+.attr(“r”, 10)
+.style(“fill”, function (d) {
+if (d.name.startsWith(“other”)) { return color(1); } else { return color(2); };
+})</p>
+<p>node.append(“text”)
+.attr(“dx”, 10)
+.attr(“dy”, “.35em”)
+.text(function(d) { return d.name });</p>
+<p>//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(“tick”, function () {
+link.attr(“x1”, function (d) {
+return d.source.x;
+})
+.attr(“y1”, function (d) {
+return d.source.y;
+})
+.attr(“x2”, function (d) {
+return d.target.x;
+})
+.attr(“y2”, function (d) {
+return d.target.y;
+});
+d3.selectAll(“circle”).attr(“cx”, function (d) {
+return d.x;
+})
+.attr(“cy”, function (d) {
+return d.y;
+});
+d3.selectAll(“text”).attr(“x”, function (d) {
+return d.x;
+})
+.attr(“y”, function (d) {
+return d.y;
+});
+});
+</script></p>
+</div>
 <p>We can also visualize the shortest path in the graph.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2278,6 +2378,107 @@ d3.graphs.force(
 </div>
 </div>
 </div>
+<style>
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-size: 17px;
+  font-weight: 200;
+}
+
+</style>
+<div id="clicks-graph">
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+<p>var graph = {“nodes”:[{“name”:”8”},{“name”:”4”},{“name”:”9”},{“name”:”5”},{“name”:”6”},{“name”:”1”},{“name”:”0”},{“name”:”2”},{“name”:”7”},{“name”:”3”}],”links”:[{“source”:6,”target”:5,”value”:501},{“source”:5,”target”:2,”value”:501},{“source”:6,”target”:7,”value”:1},{“source”:7,”target”:2,”value”:1},{“source”:6,”target”:9,”value”:1},{“source”:9,”target”:2,”value”:1},{“source”:6,”target”:1,”value”:1},{“source”:1,”target”:2,”value”:1},{“source”:6,”target”:3,”value”:1},{“source”:3,”target”:2,”value”:1},{“source”:6,”target”:4,”value”:1},{“source”:4,”target”:2,”value”:1},{“source”:6,”target”:8,”value”:1},{“source”:8,”target”:2,”value”:1},{“source”:6,”target”:0,”value”:1},{“source”:0,”target”:2,”value”:1}]};</p>
+<p>var width = 1000,
+height = 500;</p>
+<p>var color = d3.scale.category20();</p>
+<p>var force = d3.layout.force()
+.charge(-700)
+.linkDistance(180)
+.size([width, height]);</p>
+<p>var svg = d3.select(“#clicks-graph”).append(“svg”)
+.attr(“width”, width)
+.attr(“height”, height);</p>
+<p>force
+.nodes(graph.nodes)
+.links(graph.links)
+.start();</p>
+<p>var link = svg.selectAll(“.link”)
+.data(graph.links)
+.enter().append(“line”)
+.attr(“class”, “link”)
+.style(“stroke-width”, function(d) { return Math.sqrt(d.value); });</p>
+<p>var node = svg.selectAll(“.node”)
+.data(graph.nodes)
+.enter().append(“g”)
+.attr(“class”, “node”)
+.call(force.drag);</p>
+<p>node.append(“circle”)
+.attr(“r”, 10)
+.style(“fill”, function (d) {
+if (d.name.startsWith(“other”)) { return color(1); } else { return color(2); };
+})</p>
+<p>node.append(“text”)
+.attr(“dx”, 10)
+.attr(“dy”, “.35em”)
+.text(function(d) { return d.name });</p>
+<p>//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(“tick”, function () {
+link.attr(“x1”, function (d) {
+return d.source.x;
+})
+.attr(“y1”, function (d) {
+return d.source.y;
+})
+.attr(“x2”, function (d) {
+return d.target.x;
+})
+.attr(“y2”, function (d) {
+return d.target.y;
+});
+d3.selectAll(“circle”).attr(“cx”, function (d) {
+return d.x;
+})
+.attr(“cy”, function (d) {
+return d.y;
+});
+d3.selectAll(“text”).attr(“x”, function (d) {
+return d.x;
+})
+.attr(“y”, function (d) {
+return d.y;
+});
+});
+</script></p>
+</div>
 <p>Now we visualize the instant regret. We should see a lot ot spikes in
 the beginning of the graph but the general trend should be that the
 curve decrease to zero while having fewer spikes as the algorithm gets
@@ -2291,7 +2492,136 @@ spikes as these corresponds to “exploratory” actions.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>Iteration (t)</th>
+<th>Instant regret</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>26.636988940342178</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>23.984447406903655</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>6.0</td>
+<td>28.749696934220793</td>
+</tr>
+<tr class="odd">
+<td>7.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>43.00788444960253</td>
+</tr>
+<tr class="odd">
+<td>9.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+<td>36.899665259259336</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>17.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>18.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>19.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>20.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>23.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>24.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>25.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>26.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>27.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>28.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>29.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>30.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 <p>We can also show the cumulative regret. As the algorithm reaches a final
 solution, the instantaneous regret should decrease and the cumulative
@@ -2305,7 +2635,136 @@ regret should reach a plateau.</p>
 </div>
 </div>
 </div>
-<p>[TABLE]</p>
+<table>
+<thead>
+<tr class="header">
+<th>Iteration (t)</th>
+<th>Cumulative regret</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>26.636988940342178</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>50.62143634724583</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>50.62143634724583</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>50.62143634724583</td>
+</tr>
+<tr class="even">
+<td>6.0</td>
+<td>50.62143634724583</td>
+</tr>
+<tr class="odd">
+<td>7.0</td>
+<td>79.37113328146663</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>79.37113328146663</td>
+</tr>
+<tr class="odd">
+<td>9.0</td>
+<td>122.37901773106915</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+<td>122.37901773106915</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>17.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>18.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>19.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>20.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>21.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>22.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>23.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>24.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>25.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>26.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>27.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>28.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="odd">
+<td>29.0</td>
+<td>159.2786829903285</td>
+</tr>
+<tr class="even">
+<td>30.0</td>
+<td>159.2786829903285</td>
+</tr>
+</tbody>
+</table>
 <p>Truncated to 30 rows</p>
 </div>
 </div>
