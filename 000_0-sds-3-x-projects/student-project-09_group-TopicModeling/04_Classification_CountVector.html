@@ -1313,13 +1313,13 @@
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
 k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
@@ -1327,13 +1327,13 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
 k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 </div>
 <div class="section" id="format-data">
 <h1>Format data<a class="headerlink" href="#format-data" title="Permalink to this headline">¶</a></h1>
@@ -1354,15 +1354,15 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.RegexTokenizer
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.RegexTokenizer
 tokenizer: org.apache.spark.ml.feature.RegexTokenizer = RegexTokenizer: uid=regexTok_5df744efa843, minTokenLength=1, gaps=true, pattern=[\W_]+, toLowercase=true
 tokenized_df_train: org.apache.spark.sql.DataFrame = [genome: string, label: string ... 2 more fields]
 tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: string ... 2 more fields]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
@@ -1381,37 +1381,37 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.CountVectorizer
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.CountVectorizer
 vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerModel: uid=cntVec_9226a16a835f, vocabularySize=241
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vocabList: Array[String] = Array(ttt, tgt, aaa, tta, aca, ttg, taa, att, aat, ctt, caa, tga, gtt, atg, act, aga, tat, tac, aac, tgg, tgc, aag, tca, cta, ttc, tct, gtg, agt, gaa, cat, gct, ctg, cac, gta, ata, tag, gat, ggt, cag, acc, gca, cca, atc, agg, gac, cct, agc, gag, gga, ctc, gtc, ggc, tcc, gcc, acg, cgt, ggg, ccc, tcg, cgc, cga, gcg, cgg, ccg, nnn, nna, naa, ntt, tnn, cnn, gnn, ann, nnt, nng, nnc, agn, ttn, aan, acn, tan, nat, tcn, ngt, nct, can, gtn, ctn, nta, atn, tgn, ana, nca, ggn, nga, tna, nac, ntg, gcn, gan, tgk, ngc, ccn, ncc, ngg, tnt, ntc, nag, agk, yta, cnt, ktt, aya, gkt, kta, gnt, nan, ytt, ktg, gkc, tty, ayt, tay, yaa, acy, gsc, aay, tgy, ggk, ant, tyt, yac, tya, yat, anc, ang, cay, tkt, cak, cna, cng, rcc, akt, ggw, aty, cgn, gyt, tng, acw, aak, cyt, ytg, raa, yca, ntn, gay, gna, kat, kct, gnc, ngn, cty, tkg, tnc, yag, ayc, kca, aka, tyg, gka, ygt, cnc, cya, ttk, ayg, tka, gng, maa, tth, yga, ncn, ama, aar, kag, ytc, gtk, cch, ncg, kaa, ctk, gty, yct, ara, rtg, ckt, tar, gya, kac, tgr, crc, ccy, tkc, tak, akg, tyc, grt, gcy, trt, ggr, ygg, gak, gcr, kgt, ygc, cgk, wga, wtc, tma, tck, atr, waa, vcc, cwt, tcy, tgs, rgc, rac, agy, kgc, gam, haa, agr, rgt, tha, cyc, atk, gtr, tra, nam, gkg, gwg, cra)
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vocabList: Array[String] = Array(ttt, tgt, aaa, tta, aca, ttg, taa, att, aat, ctt, caa, tga, gtt, atg, act, aga, tat, tac, aac, tgg, tgc, aag, tca, cta, ttc, tct, gtg, agt, gaa, cat, gct, ctg, cac, gta, ata, tag, gat, ggt, cag, acc, gca, cca, atc, agg, gac, cct, agc, gag, gga, ctc, gtc, ggc, tcc, gcc, acg, cgt, ggg, ccc, tcg, cgc, cga, gcg, cgg, ccg, nnn, nna, naa, ntt, tnn, cnn, gnn, ann, nnt, nng, nnc, agn, ttn, aan, acn, tan, nat, tcn, ngt, nct, can, gtn, ctn, nta, atn, tgn, ana, nca, ggn, nga, tna, nac, ntg, gcn, gan, tgk, ngc, ccn, ncc, ngg, tnt, ntc, nag, agk, yta, cnt, ktt, aya, gkt, kta, gnt, nan, ytt, ktg, gkc, tty, ayt, tay, yaa, acy, gsc, aay, tgy, ggk, ant, tyt, yac, tya, yat, anc, ang, cay, tkt, cak, cna, cng, rcc, akt, ggw, aty, cgn, gyt, tng, acw, aak, cyt, ytg, raa, yca, ntn, gay, gna, kat, kct, gnc, ngn, cty, tkg, tnc, yag, ayc, kca, aka, tyg, gka, ygt, cnc, cya, ttk, ayg, tka, gng, maa, tth, yga, ncn, ama, aar, kag, ytc, gtk, cch, ncg, kaa, ctk, gty, yct, ara, rtg, ckt, tar, gya, kac, tgr, crc, ccy, tkc, tak, akg, tyc, grt, gcy, trt, ggr, ygg, gak, gcr, kgt, ygc, cgk, wga, wtc, tma, tck, atr, waa, vcc, cwt, tcy, tgs, rgc, rac, agy, kgc, gam, haa, agr, rgt, tha, cyc, atk, gtr, tra, nam, gkg, gwg, cra)
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>res17: Int = 241
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>res17: Int = 241
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
@@ -1420,13 +1420,13 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>countVectors_train: org.apache.spark.sql.DataFrame = [id: bigint, features: vector]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>countVectors_train: org.apache.spark.sql.DataFrame = [id: bigint, features: vector]
 countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vector]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
@@ -1438,16 +1438,16 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.linalg.{Vector=&gt;MLVector}
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.linalg.{Vector=&gt;MLVector}
 import org.apache.spark.mllib.{linalg=&gt;mllib}
 import org.apache.spark.ml.{linalg=&gt;ml}
 lda_countVector_train: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib.linalg.Vector)] = [_1: bigint, _2: vector]
 lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib.linalg.Vector)] = [_1: bigint, _2: vector]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
@@ -1459,15 +1459,15 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.mllib.linalg.{Vectors=&gt;OldVectors}
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.mllib.linalg.{Vectors=&gt;OldVectors}
 import org.apache.spark.ml.linalg.{Vectors=&gt;NewVectors}
 lda_countVector_train_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.linalg.Vector)] = [_1: bigint, _2: vector]
 lda_countVector_test_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.linalg.Vector)] = [_1: bigint, _2: vector]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">trainDF</span> <span class="o">=</span> <span class="n">lda_countVector_train_1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
@@ -1476,13 +1476,13 @@ lda_countVector_test_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>trainDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>trainDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 testDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreshold&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -1492,13 +1492,13 @@ testDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mergedTrainingData: org.apache.spark.sql.DataFrame = [features: vector, genome: string ... 2 more fields]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mergedTrainingData: org.apache.spark.sql.DataFrame = [features: vector, genome: string ... 2 more fields]
 mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: string ... 2 more fields]
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 </div>
 <div class="section" id="classification">
 <h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h1>
@@ -1529,9 +1529,8 @@ mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: stri
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.feature.LabeledPoint
 import org.apache.spark.ml.classification.RandomForestClassifier
@@ -1541,7 +1540,8 @@ rf: org.apache.spark.ml.classification.RandomForestClassifier = rfc_0a45a46b7366
 model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 </div>
 <div class="section" id="evaluation">
 <h1>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h1>
@@ -1589,9 +1589,8 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Confusion matrix:
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Confusion matrix:
 12776.0  0.0     0.0     0.0    0.0    0.0   
 70.0     6955.0  3.0     0.0    0.0    0.0   
 139.0    1.0     1002.0  1.0    0.0    0.0   
@@ -1608,7 +1607,8 @@ fm4 = 0.9067357512953368
 fm5 = 0.8114285714285714
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 </div>
 <div class="section" id="evaluation-test-data">
 <h2>Evaluation Test data<a class="headerlink" href="#evaluation-test-data" title="Permalink to this headline">¶</a></h2>
@@ -1618,9 +1618,8 @@ fm5 = 0.8114285714285714
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Confusion matrix:
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Confusion matrix:
 5450.0  8.0     6.0    4.0    0.0   0.0   
 140.0   2743.0  8.0    0.0    0.0   0.0   
 189.0   7.0     314.0  6.0    0.0   0.0   
@@ -1637,7 +1636,8 @@ fm4 = 0.647887323943662
 fm5 = 0.8301886792452831
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 </div>
 </div>
 

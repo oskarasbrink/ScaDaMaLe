@@ -1282,16 +1282,16 @@
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.mllib.random.RandomRDDs
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.mllib.random.RandomRDDs
 import org.apache.spark.mllib.feature.Normalizer
 import org.apache.spark.rdd.RDD
 import breeze.linalg._
 import breeze.numerics._
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Constants required for the method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1306,16 +1306,16 @@ assert((!one_vs_all) || N == M)
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>N: Int = 250
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N: Int = 250
 M: Int = 250
 D: Int = 2
 T: Int = 500
 one_vs_all: Boolean = true
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Generate points from standard Gaussian distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1324,13 +1324,13 @@ one_vs_all: Boolean = true
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train_data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] = MapPartitionsRDD[10486] at map at command-1767923094595286:1
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train_data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] = MapPartitionsRDD[10486] at map at command-1767923094595286:1
 test_data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] = MapPartitionsRDD[10486] at map at command-1767923094595286:1
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Generate T random rays</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1345,13 +1345,13 @@ test_data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] =
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>get_uni_sphere: ()org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>get_uni_sphere: ()org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])]
 rays: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] = MapPartitionsRDD[10490] at map at command-685894176423986:4
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Compute optimizations: all squared distances and all dot products of
 points with directions vectors.</p>
 <div class="cell docutils container">
@@ -1374,16 +1374,16 @@ points with directions vectors.</p>
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>compute_dst_sq: ()org.apache.spark.rdd.RDD[((Long, Long), Double)]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>compute_dst_sq: ()org.apache.spark.rdd.RDD[((Long, Long), Double)]
 compute_pu: (data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])])org.apache.spark.rdd.RDD[((Long, Long), Double)]
 dst: org.apache.spark.rdd.RDD[((Long, Long), Double)] = MapPartitionsRDD[10492] at map at command-685894176423990:3
 pu_train: org.apache.spark.rdd.RDD[((Long, Long), Double)] = MapPartitionsRDD[10494] at map at command-685894176423990:9
 pu_test: org.apache.spark.rdd.RDD[((Long, Long), Double)] = MapPartitionsRDD[10496] at map at command-685894176423990:9
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Compute the lengths of all rays. The most expensive step.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1414,13 +1414,13 @@ pu_test: org.apache.spark.rdd.RDD[((Long, Long), Double)] = MapPartitionsRDD[104
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>compute_ray_lengths: ()org.apache.spark.rdd.RDD[((Long, Long), Double)]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>compute_ray_lengths: ()org.apache.spark.rdd.RDD[((Long, Long), Double)]
 lengths: org.apache.spark.rdd.RDD[((Long, Long), Double)] = ShuffledRDD[10509] at aggregateByKey at command-685894176423991:20
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Compute the approximated weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1437,13 +1437,13 @@ val weights = compute_weights()
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>compute_weights: ()org.apache.spark.rdd.RDD[(Long, Double)]
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>compute_weights: ()org.apache.spark.rdd.RDD[(Long, Double)]
 weights: org.apache.spark.rdd.RDD[(Long, Double)] = MapPartitionsRDD[10512] at map at command-685894176424002:6
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 <p>Save obtained data in csv.</p>
 <p>Note: we repartition the tables here to work with one csv only; this
 should be removed for larger data.</p>
@@ -1465,13 +1465,13 @@ should be removed for larger data.</p>
 </pre></div>
 </div>
 </div>
-</div>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>save_data: (name: String, data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])])Unit
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>save_data: (name: String, data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])])Unit
 save_weights: (name: String, data: org.apache.spark.rdd.RDD[(Long, Double)])Unit
 </pre></div>
 </div>
-</div></blockquote>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
