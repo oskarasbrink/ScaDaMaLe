@@ -1322,7 +1322,7 @@
 then using R-MAT.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.graphx.util.GraphGenerators</span>
 <span class="kn">import</span> <span class="nn">scala.util.Random</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.</span><span class="p">{</span><span class="n">Row</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">}</span>
@@ -1345,7 +1345,7 @@ import org.apache.spark.sql.types.{IntegerType, LongType, DoubleType, StringType
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Values</span> <span class="n">taken</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">Ethereum</span> <span class="n">graph</span>
 <span class="n">val</span> <span class="n">numNodes</span> <span class="o">=</span> <span class="mi">1520925</span>
 <span class="n">val</span> <span class="n">numEdges</span> <span class="o">=</span> <span class="mi">2152835</span>
@@ -1369,7 +1369,7 @@ lower to higher index</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">makeEdgesCanonical</span> <span class="p">(</span><span class="n">edgeDF</span> <span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">{</span>
   <span class="o">//</span> <span class="n">Remove</span> <span class="bp">self</span><span class="o">-</span><span class="n">loops</span>
   <span class="n">val</span> <span class="n">edgeDFClean</span> <span class="o">=</span> <span class="n">edgeDF</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="o">=!=</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">))</span>
@@ -1417,7 +1417,7 @@ of edges is less than numEdges if some edges are duplicates or if some
 edges are self-loops.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">sampleERGraph</span> <span class="p">(</span><span class="n">numNodes</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">numEdges</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nb">iter</span> <span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">randomEdges</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">0</span> <span class="n">until</span> <span class="n">numEdges</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span>
     <span class="n">idx</span> <span class="o">=&gt;</span>
@@ -1448,7 +1448,7 @@ edges are self-loops.</p>
 <h3>Sample and save 10 different Erdös-Renyi graphs with different seeds and save each to parquet<a class="headerlink" href="#sample-and-save-10-different-erdos-renyi-graphs-with-different-seeds-and-save-each-to-parquet" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">groupedCanonicalEdges</span> <span class="o">=</span> <span class="n">sampleERGraph</span><span class="p">(</span><span class="n">numNodes</span><span class="p">,</span> <span class="n">numEdges</span><span class="p">,</span> <span class="nb">iter</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
   <span class="n">groupedCanonicalEdges</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/projects/group21/uniform_random_graph&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
@@ -1465,7 +1465,7 @@ edges are self-loops.</p>
 <h3>The default parameters for R-MAT generation<a class="headerlink" href="#the-default-parameters-for-r-mat-generation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;RMAT a: &quot;</span> <span class="o">+</span> <span class="n">GraphGenerators</span><span class="o">.</span><span class="n">RMATa</span><span class="p">)</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;RMAT b: &quot;</span> <span class="o">+</span> <span class="n">GraphGenerators</span><span class="o">.</span><span class="n">RMATb</span><span class="p">)</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;RMAT c: &quot;</span> <span class="o">+</span> <span class="n">GraphGenerators</span><span class="o">.</span><span class="n">RMATc</span><span class="p">)</span>
@@ -1487,7 +1487,7 @@ RMATd: 0.25
 <h3>Function for generating a R-MAT graph, storing the edges as a Dataframe and applying makeEdgesCanonical<a class="headerlink" href="#function-for-generating-a-r-mat-graph-storing-the-edges-as-a-dataframe-and-applying-makeedgescanonical" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">sampleRMATGraph</span> <span class="p">(</span><span class="n">numNodes</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">numEdges</span> <span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">rmatGraphraw</span> <span class="o">=</span> <span class="n">GraphGenerators</span><span class="o">.</span><span class="n">rmatGraph</span><span class="p">(</span><span class="n">sc</span><span class="o">=</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="p">,</span> <span class="n">requestedNumVertices</span><span class="o">=</span><span class="n">numNodes</span><span class="p">,</span> <span class="n">numEdges</span><span class="o">=</span><span class="n">numEdges</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">rmatedges</span> <span class="o">=</span> <span class="n">rmatGraphraw</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> 
@@ -1515,7 +1515,7 @@ RMATd: 0.25
 <h3>Sample 10 R-MAT graphs and save each to parquet<a class="headerlink" href="#sample-10-r-mat-graphs-and-save-each-to-parquet" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">groupedCanonicalEdges</span> <span class="o">=</span> <span class="n">sampleRMATGraph</span><span class="p">(</span><span class="n">numNodes</span><span class="p">,</span> <span class="n">numEdges</span><span class="p">)</span>
   <span class="n">groupedCanonicalEdges</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/projects/group21/rmat_random_graph&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>

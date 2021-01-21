@@ -1308,7 +1308,7 @@
 <h1>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
@@ -1323,7 +1323,7 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
@@ -1342,7 +1342,7 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 <p>Generate word count vectors</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
 
 <span class="o">//</span> <span class="n">Set</span> <span class="n">params</span> <span class="k">for</span> <span class="n">RegexTokenizer</span>
@@ -1368,7 +1368,7 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1376,7 +1376,7 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
 <span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
       <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span>
@@ -1395,7 +1395,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
@@ -1408,7 +1408,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
@@ -1421,7 +1421,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
 <span class="n">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
@@ -1437,7 +1437,7 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="p">}</span>
@@ -1459,7 +1459,7 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">NewVectors</span><span class="p">}</span>
 
@@ -1480,7 +1480,7 @@ lda_countVector_test_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">trainDF</span> <span class="o">=</span> <span class="n">lda_countVector_train_1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">testDF</span> <span class="o">=</span> <span class="n">lda_countVector_test_1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
 
@@ -1496,7 +1496,7 @@ testDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreshold&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">val</span> <span class="n">mergedTrainingData</span> <span class="o">=</span> <span class="n">trainDF</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k_mers_df_train</span><span class="p">,</span><span class="n">trainDF</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">k_mers_df_train</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span><span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span>
@@ -1517,7 +1517,7 @@ mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: stri
 <p>The count vectors are used as features for classification</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.</span><span class="p">{</span><span class="n">StringIndexer</span><span class="p">,</span><span class="n">VectorAssembler</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.Pipeline</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.LabeledPoint</span>
@@ -1560,7 +1560,7 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 <h1>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.evaluation.MulticlassMetrics</span>
 
 <span class="k">def</span> <span class="nf">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">ml</span><span class="o">.</span><span class="n">PipelineModel</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">){</span>
@@ -1599,7 +1599,7 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 <h2>Evaluation Training data<a class="headerlink" href="#evaluation-training-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTrainingData</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1629,7 +1629,7 @@ fm5 = 0.8114285714285714
 <h2>Evaluation Test data<a class="headerlink" href="#evaluation-test-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTestData</span><span class="p">)</span>
 </pre></div>
 </div>

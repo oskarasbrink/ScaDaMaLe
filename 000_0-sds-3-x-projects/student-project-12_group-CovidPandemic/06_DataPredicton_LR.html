@@ -1276,7 +1276,7 @@ without considering the time series.</p>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">You</span> <span class="n">need</span> <span class="n">to</span> <span class="n">uncomment</span> <span class="n">this</span> <span class="n">line</span> <span class="k">if</span> <span class="n">you</span> <span class="n">haven</span><span class="s1">&#39;t preprocess data yet.</span>
 
 <span class="o">//</span> <span class="o">%</span><span class="n">run</span> <span class="s2">&quot;./02_DataPreprocess&quot;</span>
@@ -1290,7 +1290,7 @@ without considering the time series.</p>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_cleaned_time_series</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1461,7 +1461,7 @@ without considering the time series.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_cleaned_time_series</span><span class="o">.</span><span class="n">printSchema</span>
 </pre></div>
 </div>
@@ -1504,7 +1504,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="n">c</span> <span class="o">&lt;-</span> <span class="n">df_cleaned_time_series</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="p">{</span>
@@ -1554,7 +1554,7 @@ select the constant features, and select the target column for
 prediction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val df_by_location = df_cleaned_time_series.filter($&quot;date&quot; === &quot;2020-12-01&quot;).sort($&quot;continent&quot;).select($&quot;iso_code&quot;,$&quot;stringency_index&quot;, $&quot;population&quot;,$&quot;population_density&quot;,$&quot;gdp_per_capita&quot;,$&quot;diabetes_prevalence&quot;,$&quot;total_cases_per_million&quot;,$&quot;total_cases&quot;)
 display(df_by_location)
 </pre></div>
@@ -1690,7 +1690,7 @@ display(df_by_location)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_by_location</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1704,7 +1704,7 @@ display(df_by_location)
 <p>Rescale the feature values and the target value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.Column
 val min_str_index = df_by_location.select(min($&quot;stringency_index&quot;)).first()(0)
@@ -1897,7 +1897,7 @@ display(df_by_location_normalized)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_by_location_normalized</span><span class="o">.</span><span class="n">printSchema</span>
 </pre></div>
 </div>
@@ -1924,7 +1924,7 @@ display(df_by_location_normalized)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val df_by_location_normalized_selected = df_by_location_normalized.select($&quot;normal_stringency_index&quot;,$&quot;normal_population&quot;,$&quot;normal_population_density&quot;,$&quot;normal_gdp_per_capita&quot;, $&quot;normal_diabetes_prevalence&quot;,$&quot;log_total_cases_per_million&quot;)
 </pre></div>
 </div>
@@ -1937,7 +1937,7 @@ val df_by_location_normalized_selected = df_by_location_normalized.select($&quot
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_by_location_normalized_selected</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2055,7 +2055,7 @@ to predict the total case in some contries from the data in other
 contries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_by_location_normalized_selected</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;covid_table&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2063,7 +2063,7 @@ contries.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.VectorAssembler</span>
 
 <span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span>  <span class="n">new</span> <span class="n">VectorAssembler</span><span class="p">()</span>
@@ -2085,7 +2085,7 @@ dataset: org.apache.spark.sql.DataFrame = [features: vector, log_total_cases_per
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2093,7 +2093,7 @@ dataset: org.apache.spark.sql.DataFrame = [features: vector, log_total_cases_per
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">var</span> <span class="n">Array</span><span class="p">(</span><span class="n">split20</span><span class="p">,</span> <span class="n">split80</span><span class="p">)</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">),</span> <span class="mi">1800009193</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2107,7 +2107,7 @@ split80: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [features: vec
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">testSet</span> <span class="o">=</span> <span class="n">split20</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 
 <span class="n">val</span> <span class="n">trainingSet</span> <span class="o">=</span> <span class="n">split80</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
@@ -2123,7 +2123,7 @@ trainingSet: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [features:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">testSet</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">//</span> <span class="n">action</span> <span class="n">to</span> <span class="n">actually</span> <span class="n">cache</span>
 </pre></div>
 </div>
@@ -2136,7 +2136,7 @@ trainingSet: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [features:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">trainingSet</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">//</span> <span class="n">action</span> <span class="n">to</span> <span class="n">actually</span> <span class="n">cache</span>
 </pre></div>
 </div>
@@ -2149,7 +2149,7 @@ trainingSet: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [features:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.regression.LinearRegression</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.regression.LinearRegressionModel</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.Pipeline</span>
@@ -2179,7 +2179,7 @@ lrModel: org.apache.spark.ml.regression.LinearRegressionModel = LinearRegression
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">trainingSummary</span> <span class="o">=</span> <span class="n">lrModel</span><span class="o">.</span><span class="n">summary</span>
 
 <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;Coefficients: $</span><span class="si">{lrModel.coefficients}</span><span class="s2">, Intercept: $</span><span class="si">{lrModel.intercept}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -2197,7 +2197,7 @@ trainingSummary: org.apache.spark.ml.regression.LinearRegressionTrainingSummary 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.evaluation.RegressionEvaluator</span>
 
 <span class="o">//</span> <span class="n">make</span> <span class="n">predictions</span> <span class="n">on</span> <span class="n">the</span> <span class="n">test</span> <span class="n">data</span>
@@ -2252,7 +2252,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">lrModel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">testSet</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 </pre></div>
@@ -2261,7 +2261,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val new_predictions = predictions.withColumn(&quot;new_prediction&quot;, exp($&quot;prediction&quot;)).withColumn(&quot;total_cases_per_million&quot;,exp($&quot;log_total_cases_per_million&quot;)).select(&quot;new_prediction&quot;, &quot;total_cases_per_million&quot;, &quot;features&quot;)
 display(new_predictions)
 </pre></div>
@@ -2270,7 +2270,7 @@ display(new_predictions)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">select</span> <span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">true</span> <span class="n">label</span><span class="p">)</span> <span class="ow">and</span> <span class="n">compute</span> <span class="n">test</span> <span class="n">error</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegressionEvaluator</span><span class="p">()</span>
   <span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;total_cases_per_million&quot;</span><span class="p">)</span>

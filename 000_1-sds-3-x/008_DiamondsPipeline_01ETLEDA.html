@@ -1363,7 +1363,7 @@ it to understand the schema.</p>
 data</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">We</span><span class="s1">&#39;ll use the Diamonds dataset from the R datasets hosted on DBC.</span>
 <span class="n">val</span> <span class="n">diamondsFilePath</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv&quot;</span>
 </pre></div>
@@ -1372,7 +1372,7 @@ data</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">diamondsFilePath</span><span class="p">)</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">looks</span> <span class="n">like</span> <span class="n">a</span> <span class="n">csv</span> <span class="n">file</span> <span class="k">as</span> <span class="n">it</span> <span class="n">should</span>
 </pre></div>
 </div>
@@ -1380,7 +1380,7 @@ data</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">diamondsRawDF</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span>    <span class="o">//</span> <span class="n">we</span> <span class="n">can</span> <span class="n">use</span> <span class="n">sqlContext</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">SparkSession</span> <span class="k">for</span> <span class="n">backwards</span> <span class="n">compatibility</span> <span class="n">to</span> <span class="mf">1.</span><span class="n">x</span>
     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;com.databricks.spark.csv&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">use</span> <span class="n">spark</span><span class="o">.</span><span class="n">csv</span> <span class="n">package</span>
     <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Use</span> <span class="n">first</span> <span class="n">line</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">files</span> <span class="k">as</span> <span class="n">header</span>
@@ -1393,7 +1393,7 @@ data</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">There</span> <span class="n">are</span> <span class="mi">10</span> <span class="n">columns</span><span class="o">.</span>  <span class="n">We</span> <span class="n">will</span> <span class="k">try</span> <span class="n">to</span> <span class="n">predict</span> <span class="n">the</span> <span class="n">price</span> <span class="n">of</span> <span class="n">diamonds</span><span class="p">,</span> <span class="n">treating</span> <span class="n">the</span> <span class="n">other</span> <span class="mi">9</span> <span class="n">columns</span> <span class="k">as</span> <span class="n">features</span><span class="o">.</span>
 <span class="n">diamondsRawDF</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
 </pre></div>
@@ -1405,7 +1405,7 @@ data</a>.</p>
 <p>Let us count the number of rows in <code class="docutils literal notranslate"><span class="pre">diamondsDF</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsRawDF</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1416,7 +1416,7 @@ data</a>.</p>
 the DataFrame, as folows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsRawDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1433,7 +1433,7 @@ later and</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.types.DoubleType
 //we will convert price column from int to double for being able to model, fit and predict in downstream ML task
 val diamondsDF = diamondsRawDF.select($&quot;carat&quot;, $&quot;cut&quot;, $&quot;color&quot;, $&quot;clarity&quot;, $&quot;depth&quot;, $&quot;table&quot;,$&quot;price&quot;.cast(DoubleType).as(&quot;price&quot;), $&quot;x&quot;, $&quot;y&quot;, $&quot;z&quot;)
@@ -1445,7 +1445,7 @@ diamondsDF.printSchema // print schema
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">false</span><span class="p">)</span> <span class="o">//</span> <span class="n">notice</span> <span class="n">that</span> <span class="n">price</span> <span class="n">column</span> <span class="n">has</span> <span class="n">Double</span> <span class="n">values</span> <span class="n">that</span> <span class="n">end</span> <span class="ow">in</span> <span class="s1">&#39;.0&#39;</span> <span class="n">now</span>
 </pre></div>
 </div>
@@ -1453,7 +1453,7 @@ diamondsDF.printSchema // print schema
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">View</span> <span class="n">DataFrame</span> <span class="ow">in</span> <span class="n">databricks</span>
 <span class="o">//</span> <span class="n">note</span> <span class="n">this</span> <span class="s1">&#39;display&#39;</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">databricks</span> <span class="n">notebook</span> <span class="n">specific</span> <span class="n">command</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">quite</span> <span class="n">powerful</span> <span class="k">for</span> <span class="n">visual</span> <span class="n">interaction</span> <span class="k">with</span> <span class="n">the</span> <span class="n">data</span>
 <span class="o">//</span> <span class="n">other</span> <span class="n">notebooks</span> <span class="n">like</span> <span class="n">zeppelin</span> <span class="n">have</span> <span class="n">similar</span> <span class="n">commands</span> <span class="k">for</span> <span class="n">interactive</span> <span class="n">visualisation</span>
@@ -1484,7 +1484,7 @@ DataFrame API.</p>
 DataFrame called <code class="docutils literal notranslate"><span class="pre">cutsDF</span></code> and then display it as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">cutsDF</span> <span class="o">=</span> <span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;cut&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1492,7 +1492,7 @@ DataFrame called <code class="docutils literal notranslate"><span class="pre">cu
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">cutsDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1502,7 +1502,7 @@ DataFrame called <code class="docutils literal notranslate"><span class="pre">cu
 dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">View</span> <span class="n">distinct</span> <span class="n">diamond</span> <span class="n">cuts</span> <span class="ow">in</span> <span class="n">dataset</span>
 <span class="n">val</span> <span class="n">cutsDistinctDF</span> <span class="o">=</span> <span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;cut&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
 </pre></div>
@@ -1511,7 +1511,7 @@ dataset.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">cutsDistinctDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1520,7 +1520,7 @@ dataset.</p>
 <p>Clearly, there are just 5 kinds of cuts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">View</span> <span class="n">distinct</span> <span class="n">diamond</span> <span class="n">colors</span> <span class="ow">in</span> <span class="n">dataset</span>
 <span class="n">val</span> <span class="n">colorsDistinctDF</span> <span class="o">=</span> <span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span> <span class="o">//.</span><span class="n">collect</span><span class="p">()</span>
 <span class="n">colorsDistinctDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1530,7 +1530,7 @@ dataset.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">View</span> <span class="n">distinct</span> <span class="n">diamond</span> <span class="n">clarities</span> <span class="ow">in</span> <span class="n">dataset</span>
 <span class="n">val</span> <span class="n">claritiesDistinctDF</span> <span class="o">=</span> <span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;clarity&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span> <span class="o">//</span> <span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 <span class="n">claritiesDistinctDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1554,7 +1554,7 @@ display(),</p>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;cut&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1562,7 +1562,7 @@ display(),</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // come on do the same for color NOW!
 </pre></div>
 </div>
@@ -1570,7 +1570,7 @@ display(),</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="ow">and</span> <span class="n">clarity</span> <span class="n">too</span><span class="o">...</span>
 </pre></div>
 </div>
@@ -1586,7 +1586,7 @@ the colors by choosing in the <code class="docutils literal notranslate"><span c
 settings and can change them as you wish by dragging and dropping.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
  <span class="n">display</span><span class="p">(</span><span class="n">diamondsDF</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1595,7 +1595,7 @@ settings and can change them as you wish by dragging and dropping.</p>
 <p>Now let’s examine one of the continuous features as an example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">Select</span><span class="p">:</span> <span class="s2">&quot;Plot Options...&quot;</span> <span class="o">--&gt;</span> <span class="s2">&quot;Display type&quot;</span> <span class="o">--&gt;</span> <span class="s2">&quot;histogram plot&quot;</span> <span class="ow">and</span> <span class="n">choose</span> <span class="n">to</span> <span class="s2">&quot;Plot over all results&quot;</span> <span class="n">OTHERWISE</span> <span class="n">you</span> <span class="n">get</span> <span class="n">the</span> <span class="n">image</span> <span class="kn">from</span> <span class="nn">first</span> <span class="mi">1000</span> <span class="n">rows</span> <span class="n">only</span>
 <span class="n">display</span><span class="p">(</span><span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;carat&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1623,7 +1623,7 @@ These will be seen in the sequel</p>
 more…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">diamondsDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;cut&quot;</span><span class="p">,</span><span class="s2">&quot;carat&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1632,7 +1632,7 @@ more…</p>
 <p>Try scatter plot to see pairwise scatter plots of continuous features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">diamondsDF</span><span class="p">)</span> <span class="o">//</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> 
 </pre></div>
 </div>
@@ -1641,7 +1641,7 @@ more…</p>
 <p>Note that columns of type string are not in the scatter plot!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDF</span><span class="o">.</span><span class="n">printSchema</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1670,7 +1670,7 @@ the DataFrame <code class="docutils literal notranslate"><span class="pre">diamo
 value is equal to <code class="docutils literal notranslate"><span class="pre">D</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val diamondsDColoredDF = diamondsDF.select(&quot;carat&quot;, &quot;color&quot;, &quot;price&quot;).filter($&quot;color&quot; === &quot;D&quot;) // Shift+Enter
 </pre></div>
 </div>
@@ -1678,7 +1678,7 @@ val diamondsDColoredDF = diamondsDF.select(&quot;carat&quot;, &quot;color&quot;,
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDColoredDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1688,7 +1688,7 @@ val diamondsDColoredDF = diamondsDF.select(&quot;carat&quot;, &quot;color&quot;,
 can do the following for fun:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDColoredDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">show</span>
 </pre></div>
 </div>
@@ -1699,7 +1699,7 @@ can do the following for fun:</p>
 and if not we ened to register our DataFrame as a temporary table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">sqlContext</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">see</span> <span class="n">available</span> <span class="n">tables</span>
 </pre></div>
 </div>
@@ -1709,7 +1709,7 @@ and if not we ened to register our DataFrame as a temporary table.</p>
 cell).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDF</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;diamonds&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1717,7 +1717,7 @@ cell).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">sqlContext</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">see</span> <span class="n">available</span> <span class="n">tables</span>
 </pre></div>
 </div>
@@ -1725,7 +1725,7 @@ cell).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 <span class="o">--</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span> <span class="n">to</span> <span class="n">do</span> <span class="n">the</span> <span class="n">same</span> <span class="ow">in</span> <span class="n">SQL</span>
 <span class="n">select</span> <span class="n">carat</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">price</span> <span class="kn">from</span> <span class="nn">diamonds</span> <span class="n">where</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;D&#39;</span>
 </pre></div>
@@ -1737,7 +1737,7 @@ a new DataFrame <code class="docutils literal notranslate"><span class="pre">dia
 and display it, as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">diamondsDColoredDF_FromTable</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select carat, color, price from diamonds where color=&#39;D&#39;&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
 </div>
@@ -1745,7 +1745,7 @@ and display it, as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="ow">or</span> <span class="k">if</span> <span class="n">you</span> <span class="n">like</span> <span class="n">use</span> <span class="n">upper</span> <span class="n">case</span> <span class="k">for</span> <span class="n">SQL</span> <span class="n">then</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">equivalent</span>
 <span class="n">val</span> <span class="n">diamondsDColoredDF_FromTable</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat, color, price FROM diamonds WHERE color=&#39;D&#39;&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
@@ -1754,7 +1754,7 @@ and display it, as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="kn">from</span> <span class="nn">version</span> <span class="mf">2.</span><span class="n">x</span> <span class="n">onwards</span> <span class="n">you</span> <span class="n">can</span> <span class="n">call</span> <span class="kn">from</span> <span class="nn">SparkSession</span><span class="p">,</span> <span class="n">the</span> <span class="n">pre</span><span class="o">-</span><span class="n">made</span> <span class="n">spark</span> <span class="ow">in</span> <span class="n">spark</span><span class="o">-</span><span class="n">shell</span> <span class="ow">or</span> <span class="n">databricks</span> <span class="n">notebook</span>
 <span class="n">val</span> <span class="n">diamondsDColoredDF_FromTable</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat, color, price FROM diamonds WHERE color=&#39;D&#39;&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">Shift</span><span class="o">+</span><span class="n">Enter</span>
 </pre></div>
@@ -1763,7 +1763,7 @@ and display it, as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </pre></div>
 </div>
@@ -1771,7 +1771,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">You</span> <span class="n">can</span> <span class="n">also</span> <span class="n">use</span> <span class="n">the</span> <span class="n">familiar</span> <span class="n">wildchard</span> <span class="n">character</span> <span class="s1">&#39;%&#39;</span> <span class="n">when</span> <span class="n">matching</span> <span class="n">Strings</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM diamonds WHERE clarity LIKE &#39;V%&#39;&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1780,7 +1780,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Combining</span> <span class="n">conditions</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM diamonds WHERE clarity LIKE &#39;V%&#39; AND price &gt; 10000&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1789,7 +1789,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">selecting</span> <span class="n">a</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">fields</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat, clarity, price FROM diamonds WHERE color = &#39;D&#39;&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1798,7 +1798,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">renaming</span> <span class="n">a</span> <span class="n">field</span> <span class="n">using</span> <span class="k">as</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat AS carrot, clarity, price FROM diamonds&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1807,7 +1807,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">sorting</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat, clarity, price FROM diamonds ORDER BY price DESC&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1816,7 +1816,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">diamondsDF</span><span class="o">.</span><span class="n">printSchema</span> <span class="o">//</span> <span class="n">since</span> <span class="n">price</span> <span class="ow">is</span> <span class="n">double</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">DF</span> <span class="n">that</span> <span class="n">was</span> <span class="n">turned</span> <span class="n">into</span> <span class="n">table</span> <span class="n">we</span> <span class="n">can</span> <span class="n">rely</span> <span class="n">on</span> <span class="n">the</span> <span class="n">descenting</span> <span class="n">sort</span> <span class="n">on</span> <span class="n">doubles</span>
 </pre></div>
 </div>
@@ -1824,7 +1824,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">sort</span> <span class="n">by</span> <span class="n">multiple</span> <span class="n">fields</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT carat, clarity, price FROM diamonds ORDER BY carat ASC, price DESC&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1833,7 +1833,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">use</span> <span class="n">this</span> <span class="n">to</span> <span class="nb">type</span> <span class="n">cast</span> <span class="n">strings</span> <span class="n">into</span> <span class="n">Int</span> <span class="n">when</span> <span class="n">the</span> <span class="n">table</span> <span class="ow">is</span> <span class="n">loaded</span> <span class="k">with</span> <span class="n">string</span><span class="o">-</span><span class="n">valued</span> <span class="n">columns</span>
 <span class="o">//</span><span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select cast(carat as Int) as carat, clarity, cast(price as Int) as price from diamond order by carat asc, price desc&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1842,7 +1842,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">sort</span> <span class="n">by</span> <span class="n">multiple</span> <span class="n">fields</span> <span class="ow">and</span> <span class="n">limit</span> <span class="n">to</span> <span class="n">first</span> <span class="mi">5</span>
 <span class="o">//</span> <span class="n">I</span> <span class="n">prefer</span> <span class="n">lowercase</span> <span class="k">for</span> <span class="n">SQL</span> <span class="o">-</span> <span class="ow">and</span> <span class="n">you</span> <span class="n">can</span> <span class="n">use</span> <span class="n">either</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">course</span> <span class="o">-</span> <span class="n">but</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">field</span> <span class="n">do</span> <span class="n">what</span> <span class="n">your</span> <span class="n">Boss</span> <span class="ow">or</span> <span class="n">your</span> <span class="n">colleagues</span> <span class="n">prefer</span> <span class="p">:)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select carat, clarity, price from diamonds order by carat desc, price desc limit 5&quot;</span><span class="p">))</span>
@@ -1852,7 +1852,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">aggregate</span> <span class="n">functions</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select avg(price) as avgprice from diamonds&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1861,7 +1861,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">average</span> <span class="n">operator</span> <span class="ow">is</span> <span class="n">doing</span> <span class="n">an</span> <span class="n">auto</span><span class="o">-</span><span class="nb">type</span> <span class="n">conversion</span> <span class="kn">from</span> <span class="nn">int</span> <span class="n">to</span> <span class="n">double</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select avg(cast(price as Integer)) as avgprice from diamonds&quot;</span><span class="p">))</span>
 </pre></div>
@@ -1870,7 +1870,7 @@ display(diamondsDColoredDF_FromTable) // Ctrl+Enter to see the same DF!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">aggregate</span> <span class="n">function</span> <span class="ow">and</span> <span class="n">grouping</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select color, avg(price) as avgprice from diamonds group by color&quot;</span><span class="p">))</span>
 </pre></div>

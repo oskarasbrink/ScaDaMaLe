@@ -1274,7 +1274,7 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sh</span>
 <span class="n">ls</span> <span class="mi">06</span><span class="n">_LHC</span>
 </pre></div>
 </div>
@@ -1293,7 +1293,7 @@ utils
 <p>Get the imports.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
@@ -1327,7 +1327,7 @@ by a namespace; not by an argument parser - change the data directories
 appropriately</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">parserdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_dim&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">#help=&#39;Dimension of the encoding layer [Default: 3]&#39;)</span>
               <span class="s1">&#39;n_clusters&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">#help=&#39;Number of clusters [Default: 3]&#39;)</span>
               <span class="s1">&#39;gpu&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">#help=&#39;GPU to use [default: GPU 0]&#39;)</span>
@@ -1392,7 +1392,7 @@ appropriately</p>
 <p>Define the utils functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">get_learning_rate</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
     <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">exponential_decay</span><span class="p">(</span>
         <span class="n">BASE_LEARNING_RATE</span><span class="p">,</span>  <span class="c1"># Base learning rate.</span>
@@ -1422,7 +1422,7 @@ evaluation one epoch - selects the loss and optimizer - save the final
 model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train</span><span class="p">():</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/gpu:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">GPU_INDEX</span><span class="p">)):</span>
@@ -1534,7 +1534,7 @@ model</p>
 <p>Training utils.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
     <span class="n">batch_label</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">]</span>
     <span class="n">batch_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
@@ -1565,7 +1565,7 @@ full loss requires an initial guess for the position of the cluster
 centroids. - prints training (and evaluation) cluster accuracy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">train_writer</span><span class="p">,</span> <span class="n">is_full_training</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; ops: dict mapping from string to tf ops &quot;&quot;&quot;</span>
     <span class="n">is_training</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1722,7 +1722,7 @@ centroids. - prints training (and evaluation) cluster accuracy.</p>
 <p>run the training</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">train</span><span class="p">()</span>
 </pre></div>
 </div>

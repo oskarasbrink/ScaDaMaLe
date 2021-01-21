@@ -1546,7 +1546,7 @@ binary classification problem, which the machine learning algorithm has
 to predict the attack record label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># load csv with pyspark</span>
 <span class="c1"># File location and type</span>
 <span class="n">file_location</span> <span class="o">=</span> <span class="s2">&quot;/FileStore/tables/IDdataset.csv&quot;</span>
@@ -1738,7 +1738,7 @@ to predict the attack record label.</p>
 so we drop those columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#dropping ip and port of source and destination </span>
 <span class="n">df</span><span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_c0&quot;</span><span class="p">,</span><span class="s2">&quot;_c1&quot;</span><span class="p">,</span><span class="s2">&quot;_c2&quot;</span><span class="p">,</span> <span class="s2">&quot;_c3&quot;</span><span class="p">,</span> <span class="s2">&quot;_c47&quot;</span><span class="p">)</span>
 
@@ -1921,7 +1921,7 @@ neccesssary, as it seems pyspark returned a string dataframe from csv,
 and doesnot change data types for numbers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 
 <span class="c1">#handling categorical data</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">StringIndexer</span>
@@ -1954,7 +1954,7 @@ values. For this, we use .isNull() over rows of each column, and count
 null values in each column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#check if it has missing data</span>
 
 <span class="c1">#showing number of null data  </span>
@@ -2011,7 +2011,7 @@ null values. So we fill them by using Imputer function of pyspark. This
 function fill the missing values with the mean of the column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#handling null data</span>
 
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">Imputer</span>
@@ -2055,7 +2055,7 @@ vectors. For this we defined a UDF function.</p>
 that are “labels”, and “features”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">VectorAssembler</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -2115,7 +2115,7 @@ To this end, we map all rows in trainSet using the method
 “functionForRdd”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">features_to_assemble</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">45</span><span class="p">):</span>
   <span class="n">features_to_assemble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
@@ -2131,7 +2131,7 @@ To this end, we map all rows in trainSet using the method
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># random forest implementation</span>
 <span class="k">def</span> <span class="nf">functionForRdd</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
   <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2155,7 +2155,7 @@ together with the labels column (“_1”) will be used for training. We
 also divide our data into train and test in the cell below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">assembler</span> <span class="o">=</span> <span class="n">VectorAssembler</span><span class="p">(</span>
     <span class="n">inputCols</span><span class="o">=</span><span class="n">features_to_assemble</span><span class="p">,</span>
     <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
@@ -2177,7 +2177,7 @@ columns before training and then we use the method fit to train the
 classifer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 <span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">featuresCol</span> <span class="o">=</span> <span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;_1&#39;</span><span class="p">)</span>
 <span class="n">rfModel</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
@@ -2199,7 +2199,7 @@ create this rdd using the map function on prediction (rdd) and then
 calculate different metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">pyspark.mllib.evaluation</span> <span class="kn">import</span> <span class="n">BinaryClassificationMetrics</span>
 
 <span class="n">prediction</span> <span class="o">=</span> <span class="n">rfModel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -2209,7 +2209,7 @@ calculate different metrics.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">predictionAndLabels</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">_1</span><span class="p">))</span>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">BinaryClassificationMetrics</span><span class="p">(</span><span class="n">predictionAndLabels</span><span class="p">)</span>
@@ -2232,7 +2232,7 @@ Recall = 0.9909789543458447
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">metrics2</span><span class="o">.</span><span class="n">accuracy</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2250,7 +2250,7 @@ Recall = 0.9909789543458447
 training and testing set respectively as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#Logistic Regression Classification</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="n">logr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">featuresCol</span> <span class="o">=</span> <span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;_1&#39;</span><span class="p">)</span>
@@ -2261,7 +2261,7 @@ training and testing set respectively as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">pyspark.mllib.evaluation</span> <span class="kn">import</span> <span class="n">BinaryClassificationMetrics</span>
 
 <span class="n">lr_prediction</span> <span class="o">=</span> <span class="n">logrmodel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -2275,7 +2275,7 @@ training and testing set respectively as follows:</p>
 also multi-class evaluation metrics as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#Logistic Regression Evaluation</span>
 <span class="n">lr_predictionAndLabels</span> <span class="o">=</span> <span class="n">lr_prediction</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">_1</span><span class="p">))</span>
 
@@ -2306,7 +2306,7 @@ Recall = 0.9734132902477421
 testing set respectively as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">GBTClassifier</span>
 
 <span class="n">gbt</span> <span class="o">=</span> <span class="n">GBTClassifier</span><span class="p">(</span><span class="n">featuresCol</span> <span class="o">=</span> <span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;_1&#39;</span><span class="p">,</span> <span class="n">maxDepth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -2317,7 +2317,7 @@ testing set respectively as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">pyspark.mllib.evaluation</span> <span class="kn">import</span> <span class="n">BinaryClassificationMetrics</span>
 
 <span class="n">gbt_prediction</span> <span class="o">=</span> <span class="n">gbtmodel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -2331,7 +2331,7 @@ testing set respectively as follows:</p>
 evaluation metrics as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">gbt_predictionAndLabels</span> <span class="o">=</span> <span class="n">gbt_prediction</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">_1</span><span class="p">))</span>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">BinaryClassificationMetrics</span><span class="p">(</span><span class="n">gbt_predictionAndLabels</span><span class="p">)</span>
@@ -2354,7 +2354,7 @@ Recall = 0.9658111691109454
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># import sys</span>
 <span class="c1"># # !{sys.executable} -m pip install tensorflow</span>
 <span class="c1"># # !{sys.executable} -m pip uninstall keras</span>
@@ -2417,7 +2417,7 @@ output layer have the size of 43 and 2, with two hidden layers of 5 and
 4 neurons respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Multilayer Perceptron Classifier</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">MultilayerPerceptronClassifier</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="kn">import</span> <span class="n">MulticlassClassificationEvaluator</span>
@@ -2440,7 +2440,7 @@ output layer have the size of 43 and 2, with two hidden layers of 5 and
 the test data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># compute accuracy on the test set</span>
 <span class="n">testLabeled</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span> <span class="s1">&#39;_1&#39;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
 <span class="n">mlpc_prediction</span> <span class="o">=</span> <span class="n">mlpcModel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">testLabeled</span><span class="p">)</span>
@@ -2452,7 +2452,7 @@ the test data.</p>
 accuracy as an evaluation metric.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">predictionAndLabels</span> <span class="o">=</span> <span class="n">mlpc_prediction</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test set accuracy = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictionAndLabels</span><span class="p">)))</span>
@@ -2472,7 +2472,7 @@ accuracy as an evaluation metric.</p>
 multiclass classification and for regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Decision Tree</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
@@ -2487,7 +2487,7 @@ multiclass classification and for regression.</p>
 area under ROC is 0.9738, Precision is 0.9626 and recall is 0.9531.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Decision Tree Metrics</span>
 <span class="n">prediction</span> <span class="o">=</span> <span class="n">dtModel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="n">predictionAndLabels</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">_1</span><span class="p">))</span>

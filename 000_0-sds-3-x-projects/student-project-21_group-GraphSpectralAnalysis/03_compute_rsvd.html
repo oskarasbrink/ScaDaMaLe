@@ -1302,7 +1302,7 @@
 <p>Here we read the preprcessed data and compute the rSVD</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">com.criteo.rsvd._</span>
 <span class="kn">import</span> <span class="nn">scala.util.Random</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.MatrixEntry</span>
@@ -1323,7 +1323,7 @@ import org.apache.spark.sql.functions.{min, max}
 <h2>Set up RSVD config with JSON file<a class="headerlink" href="#set-up-rsvd-config-with-json-file" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">code</span> <span class="n">snippet</span> <span class="k">for</span> <span class="n">saving</span> <span class="n">config</span> <span class="k">as</span> <span class="n">json</span>
 <span class="n">val</span> <span class="n">config_map</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="s2">&quot;embeddingDim&quot;</span> <span class="o">-&gt;</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;oversample&quot;</span> <span class="o">-&gt;</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;powerIter&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span> <span class="o">-&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;blockSize&quot;</span> <span class="o">-&gt;</span> <span class="mi">50000</span><span class="p">,</span> <span class="s2">&quot;partitionWidthInBlocks&quot;</span> <span class="o">-&gt;</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;partitionHeightInBlocks&quot;</span> <span class="o">-&gt;</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">config_spark_save</span> <span class="o">=</span> <span class="n">config_map</span><span class="o">.</span><span class="n">toSeq</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
@@ -1340,7 +1340,7 @@ config_spark_save: org.apache.spark.sql.DataFrame = [key: string, value: int]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">load</span> <span class="n">config</span> <span class="kn">from</span> <span class="nn">json</span> <span class="p">(</span><span class="n">assuming</span> <span class="n">only</span> <span class="n">integer</span> <span class="n">values</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">config_spark</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;/projects/group21/rsvd_config.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">r</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">toMap</span>
 </pre></div>
@@ -1354,7 +1354,7 @@ config_spark_save: org.apache.spark.sql.DataFrame = [key: string, value: int]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">RSVD</span> <span class="n">configuration</span>
 <span class="n">val</span> <span class="n">config</span> <span class="o">=</span> <span class="n">RSVDConfig</span><span class="p">(</span>
   <span class="n">embeddingDim</span> <span class="o">=</span> <span class="n">config_spark</span><span class="p">(</span><span class="s2">&quot;embeddingDim&quot;</span><span class="p">),</span>
@@ -1381,7 +1381,7 @@ config_spark_save: org.apache.spark.sql.DataFrame = [key: string, value: int]
 <h2>Create pipeline for computing RSVD from dataframe of edge<a class="headerlink" href="#create-pipeline-for-computing-rsvd-from-dataframe-of-edge" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">computeRSVD</span> <span class="p">(</span><span class="n">groupedCanonicalEdges</span> <span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">config</span> <span class="p">:</span> <span class="n">RSVDConfig</span><span class="p">):</span> <span class="n">RsvdResults</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">matHeight</span> <span class="o">=</span> <span class="n">groupedCanonicalEdges</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
   <span class="n">val</span> <span class="n">Row</span><span class="p">(</span><span class="n">maxValue</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">=</span> <span class="n">groupedCanonicalEdges</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">head</span>
@@ -1407,7 +1407,7 @@ config_spark_save: org.apache.spark.sql.DataFrame = [key: string, value: int]
 <h2>Compute and save RSVD for Ethereum graph<a class="headerlink" href="#compute-and-save-rsvd-for-ethereum-graph" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">groupedCanonicalEdges</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/projects/group21/test_ethereum_canonical_edges&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;flow&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">rsvd_results_path</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s2">&quot;/projects/group21/test_ethereum_&quot;</span>
 
@@ -1434,7 +1434,7 @@ singularDF: org.apache.spark.sql.DataFrame = [value: double]
 <h2>Compute and save RSVD for Erdös-Renyi graphs<a class="headerlink" href="#compute-and-save-rsvd-for-erdos-renyi-graphs" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">groupedCanonicalEdges</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/projects/group21/uniform_random_graph&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">rsvd_results_path</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s2">&quot;/projects/group21/uniform_random_graph_&quot;</span>
@@ -1454,7 +1454,7 @@ singularDF: org.apache.spark.sql.DataFrame = [value: double]
 <h2>Compute and save RSVD for R-MAT graphs<a class="headerlink" href="#compute-and-save-rsvd-for-r-mat-graphs" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">groupedCanonicalEdges</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/projects/group21/rmat_random_graph&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">rsvd_results_path</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s2">&quot;/projects/group21/rmat_random_graph_&quot;</span>

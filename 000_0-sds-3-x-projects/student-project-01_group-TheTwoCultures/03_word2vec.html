@@ -1339,7 +1339,7 @@ word embeddings, using logistic regression.</p>
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="kn">import</span> <span class="nn">required</span> <span class="n">libraries</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.</span><span class="p">{</span><span class="n">Word2Vec</span><span class="p">,</span><span class="n">Word2VecModel</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.</span><span class="p">{</span><span class="n">Pipeline</span><span class="p">,</span> <span class="n">PipelineModel</span><span class="p">}</span>
@@ -1365,7 +1365,7 @@ import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
 <span class="o">/</span><span class="n">scalable</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">science</span><span class="o">/</span><span class="mi">000_0</span><span class="o">-</span><span class="n">sds</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">projects</span><span class="o">/</span><span class="n">student</span><span class="o">-</span><span class="n">project</span><span class="o">-</span><span class="mi">01</span><span class="n">_group</span><span class="o">-</span><span class="n">TheTwoCultures</span><span class="o">/</span><span class="mi">01</span><span class="n">_load_data</span>
 </pre></div>
 </div>
@@ -1379,7 +1379,7 @@ import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
 that loads saved results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">process</span> <span class="o">.</span><span class="n">xml</span><span class="o">-</span><span class="n">files</span>
 <span class="n">val</span> <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv-sexsamlevnad.xml&quot;</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
@@ -1391,7 +1391,7 @@ that loads saved results.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">paths</span> <span class="n">to</span> <span class="n">saved</span> <span class="n">dataframes</span>
 <span class="n">val</span> <span class="n">file_path_familjeliv</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv-sexsamlevnad_df&quot;</span> 
 <span class="n">val</span> <span class="n">file_path_flashback</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/flashback/flashback-sex_df&quot;</span>
@@ -1423,7 +1423,7 @@ corpus_id - the corpus from which the data was gathered</p></li>
 <p>Let’s have a look at the dataframes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_familjeliv</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1547,7 +1547,7 @@ corpus_id - the corpus from which the data was gathered</p></li>
 <p>We add labels and merge the two dataframes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">df_flashback</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df_familjeliv</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -1565,7 +1565,7 @@ corpus_id - the corpus from which the data was gathered</p></li>
 Tokenizers. We do not eliminate stop words.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">define</span> <span class="n">the</span> <span class="n">tokenizer</span>
 <span class="n">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegexTokenizer</span><span class="p">()</span>
   <span class="o">.</span><span class="n">setPattern</span><span class="p">(</span><span class="s2">&quot;(?U),&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="k">break</span> <span class="n">by</span> <span class="n">commas</span>
@@ -1584,7 +1584,7 @@ Tokenizers. We do not eliminate stop words.</p>
 <p>Let’s tokenize and check out the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">define</span> <span class="n">the</span> <span class="n">thread</span> <span class="n">title</span> <span class="n">tokenizer</span>
 
 <span class="n">val</span> <span class="n">df_tokenized</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1600,7 +1600,7 @@ Tokenizers. We do not eliminate stop words.</p>
 define the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">define</span> <span class="n">the</span> <span class="n">model</span>
 <span class="n">val</span> <span class="n">word2Vec</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Word2Vec</span><span class="p">()</span>
   <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
@@ -1621,7 +1621,7 @@ the tokenized one. Training the model takes roughly 2h30m, so we save
 the result to avoid the hassle of redoing calculations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">train</span> <span class="n">it</span>
 <span class="n">val</span> <span class="n">word2Vec_model</span> <span class="o">=</span> <span class="n">word2Vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_tokenized</span><span class="p">)</span>
 
@@ -1634,7 +1634,7 @@ the result to avoid the hassle of redoing calculations.</p>
 <p>We can also load a saved model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">load</span> <span class="n">a</span> <span class="n">saved</span> <span class="n">model</span>
 
 <span class="n">val</span> <span class="n">model</span> <span class="o">=</span> <span class="n">Word2VecModel</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/student-project-01/word2vec_model_sex&quot;</span><span class="p">)</span>
@@ -1653,7 +1653,7 @@ the result to avoid the hassle of redoing calculations.</p>
 <p>Let’s embedd the text and view the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">transform</span> <span class="n">the</span> <span class="n">text</span> <span class="n">using</span> <span class="n">the</span> <span class="n">model</span>
 
 <span class="n">val</span> <span class="n">embedded_text</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_tokenized</span><span class="p">)</span>
@@ -1669,7 +1669,7 @@ the result to avoid the hassle of redoing calculations.</p>
 <p>Let’s have a look!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">embedded_text</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;result&quot;</span><span class="p">,</span><span class="s2">&quot;text&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1683,7 +1683,7 @@ from earlier. First we define the logistic regression model, using the
 same settings as before.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Logistic</span> <span class="n">regression</span>
 <span class="n">val</span> <span class="n">logreg</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LogisticRegression</span><span class="p">()</span>
   <span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
@@ -1704,7 +1704,7 @@ same settings as before.</p>
 Word2Vec and logistic regression into a pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">setStages</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">word2Vec</span><span class="p">,</span> <span class="n">logreg</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1718,7 +1718,7 @@ Word2Vec and logistic regression into a pipeline.</p>
 <p>Split the data into training and test data</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">random_order</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span>
 <span class="n">val</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">random_order</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 <span class="n">val</span> <span class="n">training</span> <span class="o">=</span> <span class="n">splits</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -1739,7 +1739,7 @@ test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [thread_id: strin
 sure to save the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">fit</span> <span class="n">the</span> <span class="n">model</span> <span class="n">to</span> <span class="n">the</span> <span class="n">training</span> <span class="n">data</span>
 <span class="n">val</span> <span class="n">logreg_model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training</span><span class="p">)</span>
 
@@ -1751,7 +1751,7 @@ sure to save the result.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">load</span> <span class="n">saved</span> <span class="n">model</span>
 
 <span class="n">val</span> <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">PipelineModel</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/student-project-01/word2vec_logreg_model&quot;</span><span class="p">)</span>
@@ -1766,7 +1766,7 @@ sure to save the result.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -1779,7 +1779,7 @@ sure to save the result.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">predictions</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="n">false</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1822,7 +1822,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">()</span><span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 </pre></div>
@@ -1841,7 +1841,7 @@ conceptually simpler model. More is not always better!</p>
 on thread titles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">df_threads</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;thread_title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;thread_title&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">evaluation</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_threads</span><span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">evaluation</span><span class="p">)</span>

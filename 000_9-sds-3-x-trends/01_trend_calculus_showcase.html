@@ -1295,7 +1295,7 @@ Library</a></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
 <span class="s2">&quot;./000a_finance_utils&quot;</span>
 </pre></div>
 </div>
@@ -1308,7 +1308,7 @@ Morgan. More information about Trend Calculus can be found at
 <a class="reference external" href="https://lamastex.github.io/spark-trend-calculus-examples/">https://lamastex.github.io/spark-trend-calculus-examples/</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.lamastex.spark.trendcalculus._</span>
 <span class="kn">import</span> <span class="nn">spark.implicits._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
@@ -1344,7 +1344,7 @@ increasing.</p>
 as much information as possible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val windowSize = 2
 val dataRootPath = TrendUtils.getFx1mPath
 val oilDS = spark.read.fx1m(dataRootPath + &quot;bcousd/*.csv.gz&quot;).toDF.withColumn(&quot;ticker&quot;, lit(&quot;BCOUSD&quot;)).select($&quot;ticker&quot;, $&quot;time&quot; as &quot;x&quot;, $&quot;close&quot; as &quot;y&quot;).as[TickerPoint].orderBy(&quot;x&quot;)
@@ -1362,7 +1362,7 @@ in the next iteration, since the output will just be an empty dataframe
 in that case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">numReversals</span> <span class="o">=</span> <span class="mi">15</span>
 <span class="n">val</span> <span class="n">dfWithReversals</span> <span class="o">=</span> <span class="n">new</span> <span class="n">TrendCalculus2</span><span class="p">(</span><span class="n">oilDS</span><span class="p">,</span> <span class="n">windowSize</span><span class="p">,</span> <span class="n">spark</span><span class="p">)</span><span class="o">.</span><span class="n">nReversalsJoinedWithMaxRev</span><span class="p">(</span><span class="n">numReversals</span><span class="p">)</span>
 </pre></div>
@@ -1377,7 +1377,7 @@ dfWithReversals: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dfWithReversals</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1549,7 +1549,7 @@ dfWithReversals: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp 
 <p>The number of reversals decrease rapidly as more iterations are done.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">dfWithReversals</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
 </div>
@@ -1562,7 +1562,7 @@ dfWithReversals: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">numReversals</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">i</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="p">(</span><span class="n">dfWithReversals</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;reversal$i is not null&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1592,7 +1592,7 @@ res4: scala.collection.immutable.IndexedSeq[Unit] = Vector((), (), (), (), (), (
 visualizations using Python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">checkPointPath</span> <span class="o">=</span> <span class="n">TrendUtils</span><span class="o">.</span><span class="n">getTrendCalculusCheckpointPath</span>
 <span class="n">dfWithReversals</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">SaveMode</span><span class="o">.</span><span class="n">Overwrite</span><span class="p">)</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">checkPointPath</span> <span class="o">+</span> <span class="s2">&quot;joinedDSWithMaxRev_new&quot;</span><span class="p">)</span>
 <span class="n">dfWithReversals</span><span class="o">.</span><span class="n">unpersist</span>
@@ -1609,7 +1609,7 @@ visualizations using Python.</p>
 <p>The Python library plotly is used to make interactive visualizations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">plot</span>
 <span class="kn">from</span> <span class="nn">plotly.graph_objs</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1623,7 +1623,7 @@ visualizations using Python.</p>
 locally since plotly is not available for distributed data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">joinedDS</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1638,7 +1638,7 @@ probably not very interesting considering that the data stretches over
 roughly 10 years!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">joinedDS</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;maxRev &gt; 2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1648,7 +1648,7 @@ roughly 10 years!</p>
 <p>We select the relevant information in the dataframe for visualization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">fullTS</span> <span class="o">=</span> <span class="n">joinedDS</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;maxRev &gt; 2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">,</span><span class="s2">&quot;maxRev&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1660,7 +1660,7 @@ year, month and day are required. The interval from years 1800 to 2200
 ensures all data is selected.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">startDate</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1800</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">endDate</span><span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2200</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
 <span class="n">TS</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">fullTS</span> <span class="k">if</span> <span class="n">startDate</span> <span class="o">&lt;=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">endDate</span><span class="p">]</span>
@@ -1671,7 +1671,7 @@ ensures all data is selected.</p>
 <p>Setting up the visualization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">numReversals</span> <span class="o">=</span> <span class="mi">15</span>
 <span class="n">startReversal</span> <span class="o">=</span> <span class="mi">7</span>
 
@@ -1700,7 +1700,7 @@ not make the graph too cluttered. The seventh order reversal (the lowest
 order shown) is still on the scale of hours to a few days.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span>
   <span class="p">[</span><span class="n">Scattergl</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">allData</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">allData</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Oil Price&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="n">markerPlots</span>
   <span class="p">,</span>

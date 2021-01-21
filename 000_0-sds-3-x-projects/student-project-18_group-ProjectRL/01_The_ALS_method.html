@@ -1443,7 +1443,7 @@ More specifically, it contains the ALS class which allows for using the
 ALS algorithm as described earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.ALS</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.MatrixFactorizationModel</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.Rating</span>
@@ -1467,7 +1467,7 @@ import org.apache.spark.mllib.recommendation.Rating
 had in the course.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">The</span> <span class="n">data</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">here</span>
 </pre></div>
 </div>
@@ -1514,7 +1514,7 @@ exercise.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">take</span> <span class="n">a</span> <span class="n">peek</span> <span class="n">at</span> <span class="n">what</span><span class="s1">&#39;s in the rating file</span>
 <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -1528,7 +1528,7 @@ exercise.</p></li>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">timedRatingsRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
       <span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="p">(</span><span class="n">timestamp</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Rating</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="n">movieId</span><span class="p">,</span> <span class="n">rating</span><span class="p">))</span>
@@ -1558,7 +1558,7 @@ res34: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">ratingsRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
       <span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Rating</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="n">movieId</span><span class="p">,</span> <span class="n">rating</span><span class="p">)</span>
@@ -1588,7 +1588,7 @@ res35: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">movies</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/movies.dat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
       <span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="p">(</span><span class="n">movieId</span><span class="p">,</span> <span class="n">movieName</span><span class="p">)</span>
@@ -1606,7 +1606,7 @@ res35: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 <p>Let’s make a data frame to visually explore the data next.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1619,7 +1619,7 @@ res35: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">timedRatingsDF</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
       <span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="p">(</span><span class="n">timestamp</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Rating</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="n">movieId</span><span class="p">,</span> <span class="n">rating</span><span class="p">))</span>
@@ -1714,7 +1714,7 @@ res35: Array[Unit] = Array((), (), (), (), (), (), (), (), (), ())
 <p>Here we simply check the size of the datasets we are using</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">numRatings</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">count</span>
 <span class="n">val</span> <span class="n">numUsers</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="o">.</span><span class="n">count</span>
 <span class="n">val</span> <span class="n">numMovies</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">product</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="o">.</span><span class="n">count</span>
@@ -1747,7 +1747,7 @@ numMovies: Long = 3615
 and seed and returns multiple RDDs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">Array</span><span class="p">(</span><span class="n">trainingRDD</span><span class="p">,</span> <span class="n">validationRDD</span><span class="p">,</span> <span class="n">testRDD</span><span class="p">)</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">),</span> <span class="mi">0</span><span class="n">L</span><span class="p">)</span>
 <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s find the exact sizes we have next</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot; training data size = &quot;</span> <span class="o">+</span> <span class="n">trainingRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
@@ -1771,7 +1771,7 @@ exact number of entries in each dataset varies slightly due to the
 random nature of the <code class="docutils literal notranslate"><span class="pre">randomSplit()</span></code> transformation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s find the exact sizes we have next</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot; training data size = &quot;</span> <span class="o">+</span> <span class="n">trainingRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
         <span class="s2">&quot;, validation data size = &quot;</span> <span class="o">+</span> <span class="n">validationRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
@@ -1791,7 +1791,7 @@ random nature of the <code class="docutils literal notranslate"><span class="pre
 <h2>Training the recommender system<a class="headerlink" href="#training-the-recommender-system" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Build</span> <span class="n">the</span> <span class="n">recommendation</span> <span class="n">model</span> <span class="n">using</span> <span class="n">ALS</span> <span class="n">by</span> <span class="n">fitting</span> <span class="n">to</span> <span class="n">the</span> <span class="n">validation</span> <span class="n">data</span>
 <span class="o">//</span> <span class="n">just</span> <span class="n">trying</span> <span class="n">three</span> <span class="n">different</span> <span class="n">hyper</span><span class="o">-</span><span class="n">parameter</span> <span class="p">(</span><span class="n">rank</span><span class="p">)</span> <span class="n">values</span> <span class="n">to</span> <span class="n">optimise</span> <span class="n">over</span>
 <span class="n">val</span> <span class="n">ranks</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span> 
@@ -1841,7 +1841,7 @@ rank: Int = 0
 <p>Here we have the best model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
   <span class="n">val</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">4</span>
   <span class="n">val</span> <span class="n">numIterations</span> <span class="o">=</span> <span class="mi">10</span>
   <span class="n">val</span> <span class="n">regularizationParameter</span> <span class="o">=</span> <span class="mf">0.01</span>
@@ -1905,7 +1905,7 @@ format:</p>
 <code class="docutils literal notranslate"><span class="pre">MovieID,</span> <span class="pre">UserID,</span> <span class="pre">rating,</span> <span class="pre">date</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Path</span> <span class="n">where</span> <span class="n">the</span> <span class="n">data</span> <span class="ow">is</span> <span class="n">stored</span> 
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/FileStore/tables/Netflix&quot;</span><span class="p">))</span> 
 </pre></div>
@@ -1972,7 +1972,7 @@ format:</p>
 <p>Let us load first the movie titles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">Movie</span> <span class="k">class</span> 
 <span class="nc">case</span> <span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">movieID</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">tilte</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
 
@@ -2002,7 +2002,7 @@ moviesTitlesRDD: org.apache.spark.rdd.RDD[Movie] = MapPartitionsRDD[129] at map 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.ALS</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.MatrixFactorizationModel</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.recommendation.Rating</span>
@@ -2019,7 +2019,7 @@ import org.apache.spark.mllib.recommendation.Rating
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 
 <span class="n">val</span> <span class="n">RatingsRDD_1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/FileStore/tables/Netflix/formatted_combined_data_1_txt.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -2066,7 +2066,7 @@ RatingsRDD_4: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Rat
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Concatenating</span> <span class="n">the</span> <span class="n">ratings</span> <span class="n">RDDs</span> <span class="p">(</span><span class="n">could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">a</span> <span class="n">nice</span> <span class="n">way</span> <span class="n">of</span> <span class="n">doing</span> <span class="n">this</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">RatingsRDD_1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">RatingsRDD_2</span><span class="p">)</span> 
 <span class="n">val</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">r1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">RatingsRDD_3</span><span class="p">)</span>
@@ -2086,7 +2086,7 @@ RatingsRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Ratin
 <p>Let us put our dataset in a dataframe to visulaize it more nicely</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">RatingsDF</span> <span class="o">=</span> <span class="n">RatingsRDD</span><span class="o">.</span><span class="n">toDF</span>
 <span class="n">display</span><span class="p">(</span><span class="n">RatingsDF</span><span class="p">)</span>
 </pre></div>
@@ -2167,7 +2167,7 @@ RatingsRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Ratin
 training set (60%) - a validation set (20%) - a test set (20%)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Splitting</span> <span class="n">the</span> <span class="n">dataset</span> 
 <span class="n">val</span> <span class="n">Array</span><span class="p">(</span><span class="n">trainingRDD</span><span class="p">,</span> <span class="n">validationRDD</span><span class="p">,</span> <span class="n">testRDD</span><span class="p">)</span> <span class="o">=</span> <span class="n">RatingsRDD</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">),</span> <span class="mi">0</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -2188,7 +2188,7 @@ entries (the exact number of entries in each dataset varies slightly due
 to the random nature of the <code class="docutils literal notranslate"><span class="pre">randomSplit()</span></code> transformation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s find the exact sizes we have next</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot; training data size = &quot;</span> <span class="o">+</span> <span class="n">trainingRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
         <span class="s2">&quot;, validation data size = &quot;</span> <span class="o">+</span> <span class="n">validationRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
@@ -2204,7 +2204,7 @@ to the random nature of the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Build</span> <span class="n">the</span> <span class="n">recommendation</span> <span class="n">model</span> <span class="n">using</span> <span class="n">ALS</span> <span class="n">by</span> <span class="n">fitting</span> <span class="n">to</span> <span class="n">the</span> <span class="n">validation</span> <span class="n">data</span>
 <span class="o">//</span> <span class="n">just</span> <span class="n">trying</span> <span class="n">three</span> <span class="n">different</span> <span class="n">hyper</span><span class="o">-</span><span class="n">parameter</span> <span class="p">(</span><span class="n">rank</span><span class="p">)</span> <span class="n">values</span> <span class="n">to</span> <span class="n">optimise</span> <span class="n">over</span>
 <span class="n">val</span> <span class="n">ranks</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">);</span> 

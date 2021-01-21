@@ -1299,7 +1299,7 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">plotly</span>
 </pre></div>
 </div>
@@ -1326,7 +1326,7 @@ Python interpreter will be restarted.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
 <span class="s2">&quot;./DataPreprocess&quot;</span>
 </pre></div>
 </div>
@@ -1336,7 +1336,7 @@ Python interpreter will be restarted.
 <h1>Show reproduction rate of selected countries i.e. Sweden, Germany, Danmark, Finland, Norway<a class="headerlink" href="#show-reproduction-rate-of-selected-countries-i-e-sweden-germany-danmark-finland-norway" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;location&quot;, $&quot;date&quot;).filter($&quot;reproduction_rate&quot;.isNotNull).filter(
                                                                                        $&quot;location&quot;===&quot;Sweden&quot; ||
                                                                                        $&quot;location&quot;===&quot;Germany&quot; ||
@@ -1419,7 +1419,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 <h1>Visualize total cases, total deaths, new cases and new deaths during pandemic<a class="headerlink" href="#visualize-total-cases-total-deaths-new-cases-and-new-deaths-during-pandemic" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_cleaned_time_series</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;visual_rdd&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1427,7 +1427,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
@@ -1437,7 +1437,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">test_table</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;visual_rdd&quot;</span><span class="p">)</span>
 
 <span class="n">country</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_table</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;iso_code&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">collect</span><span class="p">())</span>
@@ -1458,7 +1458,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 <p>Total Cases</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">visual_df</span><span class="p">[</span><span class="o">~</span><span class="n">visual_df</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;WLD&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)],</span> <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_cases&quot;</span><span class="p">,</span> <span class="c1"># total_cases is a column of gapminder</span>
                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="c1"># column to add to hover information</span>
@@ -1474,7 +1474,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 <h1>Total Deaths<a class="headerlink" href="#total-deaths" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">visual_df</span><span class="p">[</span><span class="o">~</span><span class="n">visual_df</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;WLD&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)],</span> <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_deaths&quot;</span><span class="p">,</span> <span class="c1"># total_deaths is a column of gapminder</span>
                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="c1"># column to add to hover information</span>
@@ -1490,7 +1490,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 <h1>New Cases<a class="headerlink" href="#new-cases" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">visual_df</span><span class="p">[</span><span class="o">~</span><span class="n">visual_df</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;WLD&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)],</span> <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;new_cases&quot;</span><span class="p">,</span> <span class="c1"># new_cases is a column of gapminder</span>
                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="c1"># column to add to hover information</span>
@@ -1506,7 +1506,7 @@ display(df_cleaned_time_series.select($&quot;reproduction_rate&quot;, $&quot;loc
 <h1>New Deaths<a class="headerlink" href="#new-deaths" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">visual_df</span><span class="p">[</span><span class="o">~</span><span class="n">visual_df</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;WLD&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)],</span> <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;new_deaths&quot;</span><span class="p">,</span> <span class="c1"># new_deaths is a column of gapminder</span>
                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="c1"># column to add to hover information</span>

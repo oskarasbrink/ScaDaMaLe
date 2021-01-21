@@ -1355,7 +1355,7 @@ train an agent which trades Brent Crude Oil (BCOUSD) stocks, in order to
 maximize profit.</p>
 <img src=https://upload.wikimedia.org/wikipedia/commons/d/da/Markov_diagram_v2.svg width=600><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Scala</span> <span class="n">imports</span>
 <span class="kn">import</span> <span class="nn">org.lamastex.spark.trendcalculus._</span>
 <span class="kn">import</span> <span class="nn">spark.implicits._</span>
@@ -1400,7 +1400,7 @@ current and the previous <strong>time</strong>. Note hat since <strong>ticker</s
 the same, we remove that column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // Load dataset
 val oilDS = spark.read.fx1m(&quot;dbfs:/FileStore/shared_uploads/fabiansi@kth.se/*csv.gz&quot;).toDF.withColumn(&quot;ticker&quot;, lit(&quot;BCOUSD&quot;)).select($&quot;ticker&quot;, $&quot;time&quot; as &quot;x&quot;, $&quot;close&quot; as &quot;y&quot;).as[TickerPoint].orderBy(&quot;time&quot;)
 
@@ -1453,7 +1453,7 @@ select the first 10 data points and show them in a table.</p>
 BCUSD dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#Python imports</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">gym</span>
@@ -1473,7 +1473,7 @@ BCUSD dataset.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Create Dataframe from temp data</span>
 <span class="n">oilDF_py</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
 
@@ -1548,7 +1548,7 @@ episode’s starting point can be sampled at random or not, which is
 defined when calling <strong>reset</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Adapted from: https://github.com/kh-kim/stock_market_reinforcement_learning/blob/master/market_env.py</span>
 
 
@@ -1605,7 +1605,7 @@ defined when calling <strong>reset</strong>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">rewards</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1638,7 +1638,7 @@ defined when calling <strong>reset</strong>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Plot samples</span>
 <span class="n">timesteps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">))</span>
 <span class="n">longs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span> <span class="o">==</span>  <span class="mi">0</span><span class="p">)</span>
@@ -1682,7 +1682,7 @@ algorithm is described below, where equation [3], refers to the
 gradient: <img src="https://imgur.com/eGhNC9m.png" width=650></p>
 <img src="https://imgur.com/mvopoh8.png" width=800><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
 
 <span class="k">class</span> <span class="nc">ExperienceReplay</span><span class="p">:</span>
@@ -1736,7 +1736,7 @@ opted for an RNN, however 1-dimensional CNNs are also a common choice
 which is less computationally heavy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
 
 <span class="c1"># RL parameters</span>
@@ -1859,7 +1859,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Plotting training results</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">returns</span><span class="p">)</span>
@@ -1892,7 +1892,7 @@ this, by decoupling the selection from the evaluation.</p>
 January 2019, which wasn’t included during training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1928,7 +1928,7 @@ January 2019, which wasn’t included during training.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Plotting testing results</span>
 <span class="n">timesteps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">))</span>
 <span class="n">longs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span> <span class="o">==</span>  <span class="mi">0</span><span class="p">)</span>
@@ -2020,7 +2020,7 @@ term trends. This can be seen when TrendCalculus is applied to the BCUSD
 datset, shown in column <strong>reversal1</strong> of the table below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val windowSize = 2
 val numReversals = 1 // we look at 1 iteration of the algorithm. 
 
@@ -2144,7 +2144,7 @@ observes a long term downward trend, then it can be encouraged to buy
 stock since it is bound to bounce up again.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Taken from: https://lamastex.github.io/spark-trend-calculus-examples/notebooks/db/01trend-calculus-showcase.html</span>
 
 <span class="c1"># Create Dataframe from temp data</span>

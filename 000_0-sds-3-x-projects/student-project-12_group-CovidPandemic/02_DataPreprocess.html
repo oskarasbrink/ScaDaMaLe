@@ -1330,7 +1330,7 @@
 <h1>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/datasets/group12/&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1385,7 +1385,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/group12/analysis/*.parquet&quot;</span><span class="p">)</span>
 
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1558,7 +1558,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1576,7 +1576,7 @@
 <h2>0. filter out data of HongKong and unknown location<a class="headerlink" href="#filter-out-data-of-hongkong-and-unknown-location" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.expressions.Window</span>
 </pre></div>
@@ -1591,7 +1591,7 @@ import org.apache.spark.sql.expressions.Window
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // filter unknow and HK data
 val df_filteredLocation = df.filter($&quot;iso_code&quot;=!=&quot;HKG&quot;).filter($&quot;iso_code&quot;.isNotNull)
 
@@ -1614,7 +1614,7 @@ res4: df_filteredLocation.type = [iso_code: string, continent: string ... 48 mor
 <h2>1. fill dates from 2020-01-23 (to ensure all countries having 316 days loggings)<a class="headerlink" href="#fill-dates-from-2020-01-23-to-ensure-all-countries-having-316-days-loggings" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // filter date before 2020-01-23
 val df_filtered_date = df_fillContinentNull.filter($&quot;date&quot;&gt;&quot;2020-01-22&quot;).cache
 df_fillContinentNull.unpersist()
@@ -1633,7 +1633,7 @@ res6: df_fillContinentNull.type = [iso_code: string, continent: string ... 48 mo
 <h2>2. Fill missing value for total<em>cases, total</em>deaths, new<em>cases</em>smoothed, new<em>deaths</em>smoothed<a class="headerlink" href="#fill-missing-value-for-totalcases-totaldeaths-newcasessmoothed-newdeathssmoothed" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 
 
 <span class="o">//</span> <span class="n">fill</span> <span class="n">missing</span> <span class="k">for</span> <span class="n">new_cases_smoothed</span> <span class="ow">and</span> <span class="n">new_deaths_smoothed</span>
@@ -1849,7 +1849,7 @@ diabetes<em>prevalence - female</em>smokers - male<em>smokers -
 hospital</em>beds<em>per</em>thousand - life<em>expectancy - human</em>development_index</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // select invariant features
 val df_invariantFeatures = df_cleaned.select($&quot;iso_code&quot;,$&quot;location&quot;, $&quot;population&quot;,$&quot;population_density&quot;,
                                              $&quot;median_age&quot;, $&quot;aged_65_older&quot;,
@@ -2053,7 +2053,7 @@ display(df_cleaned_feature)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">df_cleaned_feature_permillion</span> <span class="o">=</span> <span class="n">df_cleaned_feature</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;total_cases_per_million_correct&quot;</span><span class="p">,</span> <span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;total_cases&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">)</span><span class="o">*</span><span class="mi">1000000</span><span class="p">)</span>
                                                    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;new_cases_per_million_correct&quot;</span><span class="p">,</span> <span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;new_cases&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">)</span><span class="o">*</span><span class="mi">1000000</span><span class="p">)</span>
                                                    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;new_cases_smoothed_per_million_correct&quot;</span><span class="p">,</span> <span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;new_cases_smoothed&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">df_cleaned_feature</span><span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">)</span><span class="o">*</span><span class="mi">1000000</span><span class="p">)</span>
@@ -2088,7 +2088,7 @@ display(df_cleaned_feature)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 
 <span class="n">val</span> <span class="n">df_cleaned_time_series</span> <span class="o">=</span> <span class="n">df_cleaned_feature_permillion</span>
                               <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;reproduction_rate&quot;</span><span class="p">,</span> <span class="n">last</span><span class="p">(</span><span class="s2">&quot;reproduction_rate&quot;</span><span class="p">,</span> <span class="n">true</span><span class="p">)</span>

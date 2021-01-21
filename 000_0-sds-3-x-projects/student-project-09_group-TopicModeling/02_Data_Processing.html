@@ -1265,7 +1265,7 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/hugower@kth.se/sequences_oceania.fasta&quot;</span><span class="p">,</span>
                                <span class="s2">&quot;dbfs:/FileStore/shared_uploads/hugower@kth.se/sequences_northamerica.fasta&quot;</span><span class="p">,</span>
                                <span class="s2">&quot;dbfs:/FileStore/shared_uploads/hugower@kth.se/sequences_southamerica.fasta&quot;</span><span class="p">,</span>
@@ -1283,7 +1283,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">scala.util.matching.Regex</span>
 
 <span class="n">val</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Regex</span> <span class="o">=</span> <span class="s2">&quot;/[a-zA-Z]+_([a-zA-Z]+)</span><span class="se">\\</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">r</span>
@@ -1315,7 +1315,7 @@ read_datasets: (paths: List[String])List[org.apache.spark.rdd.RDD[(String, Strin
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">read</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">cache</span> <span class="k">for</span> <span class="n">optimization</span>
 <span class="n">sc</span><span class="o">.</span><span class="n">hadoopConfiguration</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;textinputformat.record.delimiter&quot;</span><span class="p">,</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">datasets</span> <span class="o">=</span> <span class="n">read_datasets</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
@@ -1332,7 +1332,7 @@ read_datasets: (paths: List[String])List[org.apache.spark.rdd.RDD[(String, Strin
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">datasets</span><span class="o">.</span><span class="n">length</span>
 </pre></div>
 </div>
@@ -1345,7 +1345,7 @@ read_datasets: (paths: List[String])List[org.apache.spark.rdd.RDD[(String, Strin
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">datasets</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1388,7 +1388,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span><span class="o">++</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1401,7 +1401,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">data</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1444,7 +1444,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="p">{</span><span class="n">case</span> <span class="p">(</span><span class="n">genome</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">genome</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">),</span><span class="n">label</span><span class="p">)})</span>
 <span class="n">headers</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
@@ -1459,7 +1459,7 @@ res2: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">headers</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1472,7 +1472,7 @@ res2: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">val</span> <span class="n">filtered_s</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span> <span class="p">{</span><span class="n">case</span> <span class="p">(</span><span class="n">genome</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">genome</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">last</span> <span class="o">==</span> <span class="s2">&quot;complete&quot;</span><span class="p">})</span>
 <span class="n">val</span> <span class="n">samples</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="p">{</span><span class="n">case</span> <span class="p">(</span><span class="n">genome</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">genome</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">label</span><span class="p">)})</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">samples</span><span class="o">.</span><span class="n">count</span>
@@ -1488,7 +1488,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">genome_length_per_s</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">genome</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">genome</span><span class="o">.</span><span class="n">length</span><span class="p">()})</span>
 </pre></div>
 </div>
@@ -1501,7 +1501,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">genome_length_per_s</span><span class="o">.</span><span class="n">stats</span>
 </pre></div>
 </div>
@@ -1516,7 +1516,7 @@ res0: Long = 31550
 <h1>Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers<a class="headerlink" href="#extract-overlapping-since-yet-do-not-know-which-parts-corresponds-to-coding-regions-3-mers" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">A</span> <span class="n">tail</span> <span class="n">recursive</span> <span class="n">overlapping</span> <span class="n">subsequence</span> <span class="n">function</span>
 <span class="k">def</span> <span class="nf">subsequence_str</span><span class="p">(</span> <span class="n">sequence</span><span class="p">:</span><span class="n">String</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">overlapping</span><span class="p">:</span><span class="n">Boolean</span> <span class="p">):</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
   <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">seq</span><span class="p">:</span><span class="n">String</span><span class="p">,</span> <span class="n">acc</span><span class="p">:</span><span class="n">String</span><span class="p">):</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
@@ -1542,7 +1542,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">k_mers</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="p">{</span><span class="n">case</span> <span class="p">(</span><span class="n">genome</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">subsequence_str</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">false</span><span class="p">),</span><span class="n">label</span><span class="p">)}</span> <span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1555,7 +1555,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">k_mers</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1568,7 +1568,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">kmers_df</span> <span class="o">=</span> <span class="n">k_mers</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">),</span><span class="n">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)})</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;genome&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1581,7 +1581,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">kmers_df</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1594,7 +1594,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">split</span> <span class="n">train</span> <span class="ow">and</span> <span class="n">test</span> <span class="n">data</span>
 <span class="n">val</span> <span class="n">split</span> <span class="o">=</span> <span class="n">kmers_df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
@@ -1608,7 +1608,7 @@ res0: Long = 31550
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">train</span> <span class="o">=</span> <span class="n">split</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -1623,7 +1623,7 @@ res4: Array[org.apache.spark.sql.Row] = Array([AAA GGT TTA TAC CTT CCC AGG TAA C
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">train</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
 </div>
@@ -1636,7 +1636,7 @@ res4: Array[org.apache.spark.sql.Row] = Array([AAA GGT TTA TAC CTT CCC AGG TAA C
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">test</span> <span class="o">=</span> <span class="n">split</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -1651,7 +1651,7 @@ res7: Array[org.apache.spark.sql.Row] = Array([AAA GGT TTA TAC CTT CCC AGG TAA C
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">test</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
 </div>
@@ -1664,7 +1664,7 @@ res7: Array[org.apache.spark.sql.Row] = Array([AAA GGT TTA TAC CTT CCC AGG TAA C
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span> <span class="o">//</span> <span class="n">remove</span> <span class="n">existing</span> <span class="n">folder</span>
 <span class="n">test</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">)</span>
 

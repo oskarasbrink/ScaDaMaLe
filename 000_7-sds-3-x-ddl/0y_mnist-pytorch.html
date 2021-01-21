@@ -1357,7 +1357,7 @@ Databricks recommends saving training data under <code class="docutils literal n
 to <code class="docutils literal notranslate"><span class="pre">file:/dbfs/ml</span></code> on driver and worker nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">PYTORCH_DIR</span> <span class="o">=</span> <span class="s1">&#39;/dbfs/ml/horovod_pytorch&#39;</span>
 </pre></div>
 </div>
@@ -1373,7 +1373,7 @@ Example</a>.</p>
 <h3>Define a simple convolutional network<a class="headerlink" href="#define-a-simple-convolutional-network" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
@@ -1404,7 +1404,7 @@ Example</a>.</p>
 <h3>Configure single-node training<a class="headerlink" href="#configure-single-node-training" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Specify training parameters</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
@@ -1416,7 +1416,7 @@ Example</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_loader</span><span class="p">):</span>
@@ -1439,7 +1439,7 @@ Example</a>.</p>
 <h3>Prepare log directory<a class="headerlink" href="#prepare-log-directory" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -1454,7 +1454,7 @@ Example</a>.</p>
 <h3>Create method for checkpointing and persisting model<a class="headerlink" href="#create-method-for-checkpointing-and-persisting-model" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
   <span class="n">filepath</span> <span class="o">=</span> <span class="n">LOG_DIR</span> <span class="o">+</span> <span class="s1">&#39;/checkpoint-</span><span class="si">{epoch}</span><span class="s1">.pth.tar&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
   <span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
@@ -1471,7 +1471,7 @@ Example</a>.</p>
 <h3>Run single-node training with PyTorch<a class="headerlink" href="#run-single-node-training-with-pytorch" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
 
@@ -1500,7 +1500,7 @@ Example</a>.</p>
 node.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Runs in  49.65 seconds on 3 node    GPU cluster</span>
 <span class="c1"># Runs in 118.2 seconds on 3 node non-GPU cluster</span>
 <span class="n">train</span><span class="p">(</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
@@ -1518,7 +1518,7 @@ and distributes it to Spark workers. A Horovod MPI job is embedded as a
 Spark job using barrier execution mode.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">horovod.torch</span> <span class="k">as</span> <span class="nn">hvd</span>
 <span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
 </pre></div>
@@ -1527,7 +1527,7 @@ Spark job using barrier execution mode.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_hvd</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">):</span>
   
   <span class="c1"># Initialize Horovod</span>
@@ -1582,7 +1582,7 @@ example uses a cluster with two workers, each with a single GPU, so set
 on the driver node.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Runs in 51.63 seconds on 3 node     GPU cluster</span>
 <span class="c1"># Runs in 96.6  seconds on 3 node non-GPU cluster</span>
 <span class="n">hr</span> <span class="o">=</span> <span class="n">HorovodRunner</span><span class="p">(</span><span class="n">np</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> 

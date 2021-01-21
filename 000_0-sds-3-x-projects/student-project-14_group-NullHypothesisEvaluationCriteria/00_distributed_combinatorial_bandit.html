@@ -1343,7 +1343,7 @@ theoretical properties in terms of online learning.</p>
 <h2>Loading of Openstreetmap data<a class="headerlink" href="#loading-of-openstreetmap-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
 <span class="kn">import</span> <span class="nn">scala.sys.process._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions.</span><span class="p">{</span><span class="n">col</span><span class="p">}</span>
@@ -1382,7 +1382,7 @@ handleCommon: ()(df: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFra
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">sqlContext</span><span class="o">.</span><span class="n">setConf</span><span class="p">(</span><span class="s2">&quot;spark.sql.parquet.binaryAsString&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">nodeDF</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/group14/sweden-latest_osm_pbf_node.parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">handleCommon</span><span class="p">())</span>
 
@@ -1399,7 +1399,7 @@ wayDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [id: bigint, tag
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions.{explode,arrays_zip, concat,array, lit}
@@ -1420,7 +1420,7 @@ wayDF_filtered: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [id: bi
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.functions._
 
 val wayNodeDF = wayDF_exploded.select($&quot;exploded.0&quot;.as(&quot;start&quot;), $&quot;exploded.1&quot;.as(&quot;end&quot;),$&quot;tags.highway&quot;, $&quot;tags.maxspeed&quot;)
@@ -1447,7 +1447,7 @@ wayNodeDF_nonull: org.apache.spark.sql.DataFrame = [start: bigint, end: bigint .
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.functions._
 
 val nodeLatLonDF = nodeDF
@@ -1478,7 +1478,7 @@ wayGeometry_distDF: org.apache.spark.sql.DataFrame = [time: double, start: bigin
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 
 <span class="kn">import</span> <span class="nn">org.apache.spark.graphx._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.rdd.RDD</span>
@@ -1542,7 +1542,7 @@ a “path graph” where each edge is given the value 1 or 0 depending on if
 it is on the shortest path or not.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import scala.reflect.ClassTag
 import org.apache.spark.graphx._
 
@@ -1677,7 +1677,7 @@ as the input graph as input. The function then ouputs the path graph
 mentioned above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">scala.util.Random</span>
 
 <span class="k">def</span> <span class="nf">shortestPath</span><span class="p">(</span><span class="n">srcId</span> <span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">dstId</span> <span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">graph</span> <span class="p">:</span> <span class="n">Graph</span><span class="p">[</span><span class="n">Long</span><span class="p">,</span> <span class="n">Double</span><span class="p">],</span> <span class="n">placeholder</span><span class="p">:</span> <span class="n">Boolean</span><span class="p">)</span> <span class="p">:</span> <span class="n">Graph</span><span class="p">[</span><span class="n">Long</span><span class="p">,</span> <span class="n">Double</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -1713,7 +1713,7 @@ combining edge attributes from both graphs. This will only work if both
 graphs have identical partitioning strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">scala.reflect.ClassTag</span>
 
 <span class="o">//</span> <span class="c1"># Merge edge attributes of two (identical in structure) graphs</span>
@@ -1738,7 +1738,7 @@ function on the edge RDDs and subsequently build a new graph from the
 sampled weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import scala.util.Random
 
 def graphRandomGaussian(graph : Graph[Long, (Double, Double)], seed : Int, eps : Double, sparkSqlRandom : Boolean) : Graph[Long, Double] = {
@@ -1770,7 +1770,7 @@ performance, especially in iterative algorithms (such as in GraphX). For
 this reason, we truncate the lineage graph by checkpointing the RDDs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">locallyCheckpointedGraph</span><span class="p">[</span><span class="n">VD</span> <span class="p">:</span> <span class="n">ClassTag</span><span class="p">,</span> <span class="n">ED</span> <span class="p">:</span> <span class="n">ClassTag</span><span class="p">](</span><span class="n">graph</span> <span class="p">:</span> <span class="n">Graph</span><span class="p">[</span><span class="n">VD</span><span class="p">,</span> <span class="n">ED</span><span class="p">])</span> <span class="p">:</span> <span class="n">Graph</span><span class="p">[</span><span class="n">VD</span><span class="p">,</span> <span class="n">ED</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">mappedGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">mapEdges</span><span class="p">(</span><span class="n">e</span> <span class="o">=&gt;</span> <span class="n">e</span><span class="o">.</span><span class="n">attr</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">edgeRdd</span> <span class="o">=</span> <span class="n">mappedGraph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="p">)</span>
@@ -1831,7 +1831,7 @@ graph, since we had performance issues keeping us from evaluating it in
 a meaningful way.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">scala.math.sqrt</span>
 <span class="kn">import</span> <span class="nn">scala.math.max</span>
 
@@ -1986,7 +1986,7 @@ graph.</p>
 <p>But first, we need to initialize the d3 package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">package</span> <span class="n">d3</span>
 
 
@@ -2166,7 +2166,7 @@ Compilation successful.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.graphframes.GraphFrame
 import org.apache.spark.sql.functions.lit // import the lit function in sql
 
@@ -2300,7 +2300,7 @@ force.on("tick", function () {
 <p>We can also visualize the shortest path in the graph.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 
 val posteriorShortestPath = GraphFrame.fromGraphX(lastAction.mapEdges(e =&gt; e.attr.toInt*10000))
 
@@ -2435,7 +2435,7 @@ closer to the optimal solutions. Note that there will always be some
 spikes as these corresponds to “exploratory” actions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">((</span><span class="mi">1</span> <span class="n">to</span> <span class="n">N</span><span class="p">)</span> <span class="nb">zip</span> <span class="n">instantRegretValues</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;Iteration (t)&quot;</span><span class="p">,</span><span class="s2">&quot;Instant regret&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
@@ -2502,7 +2502,7 @@ solution, the instantaneous regret should decrease and the cumulative
 regret should reach a plateau.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">cumulativeRegret</span> <span class="o">=</span> <span class="n">instantRegretValues</span><span class="o">.</span><span class="n">scanLeft</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)(</span><span class="n">_</span> <span class="o">+</span> <span class="n">_</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">((</span><span class="mi">1</span> <span class="n">to</span> <span class="n">N</span><span class="p">)</span> <span class="nb">zip</span> <span class="n">cumulativeRegret</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;Iteration (t)&quot;</span><span class="p">,</span><span class="s2">&quot;Cumulative regret&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>

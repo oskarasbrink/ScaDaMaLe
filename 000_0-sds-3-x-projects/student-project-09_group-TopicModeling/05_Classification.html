@@ -1296,7 +1296,7 @@
 <h1>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">Load</span> <span class="n">LDA</span> <span class="n">model</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span>
 <span class="o">//</span> <span class="n">data</span> <span class="nb">format</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">[</span><span class="n">genome</span><span class="p">:</span><span class="n">string</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span><span class="n">string</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="n">long</span><span class="p">]</span>
 <span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span>
@@ -1319,7 +1319,7 @@ testData: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">Merge</span> <span class="n">data</span> <span class="n">sources</span> <span class="n">to</span> <span class="n">get</span> <span class="n">labels</span> 
 <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreshold&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">mergedTrainingData</span> <span class="o">=</span> <span class="n">trainingData</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k_mers_df_train</span><span class="p">,</span><span class="n">trainingData</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">k_mers_df_train</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span><span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span>
@@ -1336,7 +1336,7 @@ mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">mergedTrainingData</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1358,7 +1358,7 @@ only showing top 5 rows
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">mergedTestData</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1383,7 +1383,7 @@ only showing top 5 rows
 <h1>Explore data<a class="headerlink" href="#explore-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.functions._
 import org.apache.spark.ml._
 
@@ -1411,7 +1411,7 @@ df_feats: org.apache.spark.sql.DataFrame = [label: string, f1: double ... 9 more
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">df_feats</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1432,7 +1432,7 @@ df_feats: org.apache.spark.sql.DataFrame = [label: string, f1: double ... 9 more
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions.rand</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_feats</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">true</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">()))</span>
 </pre></div>
@@ -1607,7 +1607,7 @@ df_feats: org.apache.spark.sql.DataFrame = [label: string, f1: double ... 9 more
 <h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.</span><span class="p">{</span><span class="n">StringIndexer</span><span class="p">,</span><span class="n">VectorAssembler</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.Pipeline</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.LabeledPoint</span>
@@ -1650,7 +1650,7 @@ model: org.apache.spark.ml.PipelineModel = pipeline_fd80c4a01f49
 <h1>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.evaluation.MulticlassMetrics</span>
 
 <span class="k">def</span> <span class="nf">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">ml</span><span class="o">.</span><span class="n">PipelineModel</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">){</span>
@@ -1694,7 +1694,7 @@ evaluateModel: (model: org.apache.spark.ml.PipelineModel, df: org.apache.spark.s
 <p>Review fit of training dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTrainingData</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1722,7 +1722,7 @@ fm5 = 0.8994708994708994
 <p>Performance on Test dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTestData</span><span class="p">)</span>
 </pre></div>
 </div>

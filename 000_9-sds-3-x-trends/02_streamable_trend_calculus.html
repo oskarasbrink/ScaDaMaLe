@@ -1294,7 +1294,7 @@ Library</a></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
 <span class="s2">&quot;./000a_finance_utils&quot;</span>
 </pre></div>
 </div>
@@ -1307,7 +1307,7 @@ series of trends with their k-th order reversal.</p>
 trends that we show in the next notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">java.sql.Timestamp</span>
 <span class="kn">import</span> <span class="nn">io.delta.tables._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
@@ -1336,7 +1336,7 @@ import org.lamastex.spark.trendcalculus._
 month and gold price data from 2009 to last month.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">rootPath</span> <span class="o">=</span> <span class="n">TrendUtils</span><span class="o">.</span><span class="n">getStreamableTrendCalculusPath</span>
 <span class="n">val</span> <span class="n">oilGoldPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;oilGoldDelta&quot;</span>
 </pre></div>
@@ -1345,7 +1345,7 @@ month and gold price data from 2009 to last month.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">oilGoldPath</span><span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1421,7 +1421,7 @@ month and gold price data from 2009 to last month.</p>
 <p>Reading the data from s3 as a Structured Stream to simulate streaming.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">spark</span>
   <span class="o">.</span><span class="n">readStream</span>
   <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span>
@@ -1442,7 +1442,7 @@ as a stream. - Repeat from 1. using the latest result as input. Stop
 when result is empty.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 val windowSize = 2
 
 // Initializing variables for while loop.
@@ -1512,7 +1512,7 @@ so the highest order reversal is</p>
 <p>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">i</span> <span class="o">=</span> <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;multiSinks_new&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
 </pre></div>
 </div>
@@ -1527,7 +1527,7 @@ so the highest order reversal is</p>
 as static datasets to be able to join them together.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">sinkPaths</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;multiSinks_new/reversal&quot;</span> <span class="o">+</span> <span class="n">_</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">maxRevPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;maxRev_new&quot;</span>
 <span class="n">val</span> <span class="n">revTables</span> <span class="o">=</span> <span class="n">sinkPaths</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">DeltaTable</span><span class="o">.</span><span class="n">forPath</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">FlatReversal</span><span class="p">])</span>
@@ -1540,7 +1540,7 @@ as static datasets to be able to join them together.</p>
 increases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">revTables</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1555,7 +1555,7 @@ increases.</p>
 column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 def maxByAbs(a: Int, b: Int): Int = {
   Seq(a,b).maxBy(math.abs)
 }
@@ -1587,7 +1587,7 @@ maxRevDS: org.apache.spark.sql.Dataset[org.lamastex.spark.trendcalculus.FlatReve
 <p>Writing result as delta table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">maxRevDS</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">partitionBy</span><span class="p">(</span><span class="s2">&quot;ticker&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">maxRevPath</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1601,7 +1601,7 @@ that this is a reversal point for that order and every lower order.</p>
 trend reversal downwards for orders 1, 2, 3, and 4.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">DeltaTable</span><span class="o">.</span><span class="n">forPath</span><span class="p">(</span><span class="n">maxRevPath</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">FlatReversal</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;ticker == &#39;BCOUSD&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 </pre></div>
 </div>

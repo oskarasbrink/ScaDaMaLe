@@ -1407,7 +1407,7 @@ driver and the worker nodes prior to and at the end of training.</p>
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randrange</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -1446,7 +1446,7 @@ framework as well as to generate out-of-distribution data for OOD
 detection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">create_gaussian_RDD</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">num_observations</span><span class="p">,</span> <span class="n">class_proportions</span><span class="p">,</span> <span class="n">train_test_split</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Create toy Gaussian classification data</span>
 <span class="sd">  Let C := number of clusters/classes and P := number of data features</span>
@@ -1510,7 +1510,7 @@ https://archive.ics.uci.edu/ml/datasets/Internet+Firewall+Data.</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">load_firewall_data</span><span class="p">(</span><span class="n">train_test_split</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">file_location</span><span class="o">=</span><span class="s2">&quot;/FileStore/shared_uploads/amanda.olmin@liu.se/fire_wall_data.csv&quot;</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Load and preprocess firewall data</span>
 <span class="sd">  Args:</span>
@@ -1568,7 +1568,7 @@ https://archive.ics.uci.edu/ml/datasets/Internet+Firewall+Data.</p>
 distribute data between ensemble members.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">get_partitioned_rdd</span><span class="p">(</span><span class="n">input_rdd</span><span class="p">,</span> <span class="n">partition_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Partition RDD </span>
 <span class="sd">  </span>
@@ -1597,7 +1597,7 @@ structure) can be easily stored in and loaded from a state dictionary
 (state_dict) object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#Feedforward network for classification</span>
 <span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
   
@@ -1659,7 +1659,7 @@ nodes, and thus writing them for a distributed ensemble is not basically
 different from a local setup.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#utility class for pytorch data loader</span>
 <span class="k">class</span> <span class="nc">DataSet</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -1767,7 +1767,7 @@ operation. This tells Spark to run the function on each element in
 parallel (on worker machines) independently.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_ensemble</span><span class="p">(</span><span class="n">n_models</span><span class="p">,</span> <span class="n">inputdims</span><span class="p">,</span> <span class="n">nclasses</span><span class="p">,</span> <span class="n">max_layers</span><span class="p">,</span> <span class="n">min_neurons</span><span class="p">,</span> <span class="n">max_neurons</span><span class="p">,</span> <span class="n">data_iterator</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Constructing and training a distributed ensemble of feedforward networks</span>
 <span class="sd">  </span>
@@ -1823,7 +1823,7 @@ parallel (on worker machines) independently.</p>
 the disk **</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">save_models_distr</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">dir_</span><span class="p">,</span> <span class="n">model_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
   <span class="n">dir_</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span>
   <span class="n">dir_</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1895,7 +1895,7 @@ x R^(N) –&gt; T</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">ens_preds</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">test_x</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Distributed ensemble predictions</span>
 <span class="sd">  Takes a set of models and test data and makes distributed predictions</span>
@@ -1990,7 +1990,7 @@ example. We’ll create gaussian toy data with three slightly overlapping
 clusters:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
 <span class="n">variances</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">num_observations</span> <span class="o">=</span> <span class="mi">5000</span>
@@ -2007,7 +2007,7 @@ nodes, but in most use cases it will be convenient to save the ensemble
 on disk.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">data_iterator</span><span class="o">=</span><span class="n">get_partitioned_rdd</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">Totensor</span><span class="p">)</span><span class="o">.</span><span class="n">toLocalIterator</span><span class="p">()</span>
 <span class="n">n_models</span><span class="o">=</span><span class="mi">5</span> <span class="c1"># ensemble size</span>
 <span class="n">inputdims</span><span class="o">=</span><span class="mi">2</span> <span class="c1"># features dimensions</span>
@@ -2035,7 +2035,7 @@ on disk.</p>
 all in a distributed manner.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">test_xx</span><span class="p">,</span> <span class="n">test_yy</span> <span class="o">=</span> <span class="n">Totensor</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">collect</span><span class="p">())</span>
 <span class="n">model_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;m</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">.pt&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_models</span><span class="p">)]</span>
 <span class="n">models</span> <span class="o">=</span> <span class="n">load_models</span><span class="p">(</span><span class="n">model_names</span><span class="p">,</span> <span class="n">saved_models_dir</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -2060,7 +2060,7 @@ distribution, which will illustrate the certain predictions with
 distinct colur and uncertain with muddied colours.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">avg_prob_vecs</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 <span class="n">hard_preds</span> <span class="o">=</span> <span class="n">avg_prob_vecs</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 <span class="n">every_nth</span> <span class="o">=</span> <span class="mi">5</span>
@@ -2098,7 +2098,7 @@ confident, low entropy, nonsense predictions.</p>
 First, we train it and again, save the trained parameters to file</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span> <span class="o">=</span> <span class="n">load_firewall_data</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">data_iterator</span><span class="o">=</span><span class="n">get_partitioned_rdd</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">Totensor</span><span class="p">)</span><span class="o">.</span><span class="n">toLocalIterator</span><span class="p">()</span>
 
@@ -2124,7 +2124,7 @@ First, we train it and again, save the trained parameters to file</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">gen_ood_data</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">):</span>
   <span class="n">num_test_samples</span><span class="p">,</span> <span class="n">dim_x</span> <span class="o">=</span> <span class="n">test_x</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
   <span class="n">random_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">dim_x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim_x</span><span class="p">)</span>
@@ -2160,7 +2160,7 @@ First, we train it and again, save the trained parameters to file</p>
 in-distribution and OOD data</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">entropy_hist</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">ood</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">,</span> <span class="n">upper_x_bound</span><span class="p">):</span>
   <span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_1</span><span class="p">,</span> <span class="n">ax_2</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
   <span class="n">_plot_hist</span><span class="p">(</span><span class="n">ax_1</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">,</span> <span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">upper_x_bound</span><span class="p">)</span>
@@ -2186,7 +2186,7 @@ in-distribution and OOD data</strong></p>
 this curve (AUROC)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">is_ood</span><span class="p">(</span><span class="n">entropies</span><span class="p">,</span> <span class="n">cut_off_entropy</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">entropies</span> <span class="o">&gt;</span> <span class="n">cut_off_entropy</span>
 
@@ -2224,7 +2224,7 @@ this curve (AUROC)</strong></p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AUROC: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">tpr</span><span class="p">,</span> <span class="n">fpr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

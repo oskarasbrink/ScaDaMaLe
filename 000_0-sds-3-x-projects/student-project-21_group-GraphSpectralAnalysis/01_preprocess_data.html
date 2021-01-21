@@ -1312,7 +1312,7 @@ the transaction is changed for flipped edges - Aggregate transactions
 based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">pyspark.sql.functions</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql.window</span> <span class="kn">import</span> <span class="n">Window</span>
 </pre></div>
@@ -1324,7 +1324,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <p>And drop nans and self-loop</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;FileStore/tables/ethereum_march_2018_2020&quot;</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>\
@@ -1340,7 +1340,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <h2>Enumerate the addresses with a unique id<a class="headerlink" href="#enumerate-the-addresses-with-a-unique-id" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">addresses</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;from_address&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;to_address&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">)))</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
 <span class="n">address_window</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">)</span>
 <span class="n">addresses</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">row_number</span><span class="p">()</span><span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="n">address_window</span><span class="p">))</span>
@@ -1357,7 +1357,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Exchange string addresses for node ids</span>
 <span class="n">df_with_ids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;to_address&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;dst__&quot;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;to_address&quot;</span><span class="p">)</span>\
   <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;from_address&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;src__&quot;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;from_address&quot;</span><span class="p">)</span>
@@ -1380,7 +1380,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <h2>Group the edges by source (src) and destination (dst) by taking the sum of the flow<a class="headerlink" href="#group-the-edges-by-source-src-and-destination-dst-by-taking-the-sum-of-the-flow" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">grouped_canonical_edges</span> <span class="o">=</span> <span class="n">canonical_edges</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;flow&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;flow&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;flow&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1391,7 +1391,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <h2>Enumerate the edges with a unique edge id<a class="headerlink" href="#enumerate-the-edges-with-a-unique-edge-id" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">edges_window</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">))</span>
 <span class="n">grouped_canonical_edges</span> <span class="o">=</span> <span class="n">grouped_canonical_edges</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">row_number</span><span class="p">()</span><span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="n">edges_window</span><span class="p">))</span>
 </pre></div>
@@ -1403,7 +1403,7 @@ based on src, dst pair - Enumerate the edges with a unique edge id</p>
 <h2>Save the results in parquet files<a class="headerlink" href="#save-the-results-in-parquet-files" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">preprocessed_edges_path</span> <span class="o">=</span> <span class="s2">&quot;/projects/group21/test_ethereum_canonical_edges&quot;</span>
 <span class="n">preprocessed_addresses_path</span> <span class="o">=</span> <span class="s2">&quot;/projects/group21/test_ethereum_addresses&quot;</span>
 

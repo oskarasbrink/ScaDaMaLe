@@ -1303,7 +1303,7 @@ to different workers and be run in parallel.</p>
 <p>Import the necessary packages.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
@@ -1333,7 +1333,7 @@ construct the mixed data. The time complexity of this loader is at least
 twice the time as a normal Tensorflow data loader.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">class</span> <span class="nc">MixupImageDataGenerator_from_tensor</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1415,7 +1415,7 @@ twice the time as a normal Tensorflow data loader.</p>
 training and validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">creates the CNN with number_conv convolutional layers followed by number_dense dense layers. THe model is compiled with a SGD optimizer and a categorical crossentropy loss.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -1473,7 +1473,7 @@ loaders, train the model on the preprocessed data and validate the
 method on the different data sets and report back to the scheduler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">training_function</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># Hyperparameters</span>
     <span class="n">number_conv</span><span class="p">,</span> <span class="n">number_dense</span><span class="p">,</span><span class="n">train_with_mixed_data</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;number_conv&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;number_dense&quot;</span><span class="p">],</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;train_with_mixed_data&quot;</span><span class="p">]</span>
@@ -1525,7 +1525,7 @@ method on the different data sets and report back to the scheduler.</p>
 <p>The global hyperparameters that we need for training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">img_height</span><span class="p">,</span><span class="n">img_width</span><span class="p">,</span><span class="n">channels</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.2</span>
@@ -1539,7 +1539,7 @@ parallel, we use the ray.tune package that will schedule the training
 and split the available resources to the various workers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1"># Limit the number of rows.</span>
 <span class="n">reporter</span> <span class="o">=</span> <span class="n">CLIReporter</span><span class="p">(</span><span class="n">max_progress_rows</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># Add a custom metric column, in addition to the default metrics.</span>
@@ -1612,7 +1612,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#print(df)</span>
 <span class="n">df</span>
 </pre></div>

@@ -1295,7 +1295,7 @@ only one GPU, the code scales nicely if more GPUs are available.</p>
 available. In this case, we have one GPU.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">import</span> <span class="nn">horovod.tensorflow.keras</span> <span class="k">as</span> <span class="nn">hvd</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1323,7 +1323,7 @@ available. In this case, we have one GPU.</p>
 <p>Next, we define the generator for our MixUp images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">class</span> <span class="nc">MixupImageDataGenerator_from_tensor</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1407,7 +1407,7 @@ the dataloaders. We will use dataloaders both with and without MixUp for
 both training and validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">creates the CNN with number_conv convolutional layers followed by number_dense dense layers. THe model is compiled with a SGD optimizer and a categorical crossentropy loss.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -1464,7 +1464,7 @@ both training and validation.</p>
 worker uses the datagenerator to load data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_hvd</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">train_with_mix</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
   <span class="c1"># Import tensorflow modules to each worker</span>
   <span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
@@ -1530,7 +1530,7 @@ worker uses the datagenerator to load data.</p>
 <p>Below, we give the parameters that control the training procedure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The global parameters for training.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -1554,7 +1554,7 @@ worker uses the datagenerator to load data.</p>
 MixUp.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
 
 <span class="n">hr</span> <span class="o">=</span> <span class="n">HorovodRunner</span><span class="p">(</span><span class="n">np</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -1565,7 +1565,7 @@ MixUp.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
 
 <span class="n">hr_nomix</span> <span class="o">=</span> <span class="n">HorovodRunner</span><span class="p">(</span><span class="n">np</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>

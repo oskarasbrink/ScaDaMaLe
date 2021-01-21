@@ -1319,7 +1319,7 @@ model by including the movie’s genres to give better recommendations.</p></li>
 <h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // import the relevant libraries for `mllib`
 
 import org.apache.spark.mllib.recommendation.ALS
@@ -1342,7 +1342,7 @@ import scala.collection.mutable.WrappedArray
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">small</span> <span class="n">dataset</span> <span class="ow">and</span> <span class="n">display</span> <span class="n">information</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">The</span> <span class="n">data</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">here</span>
 </pre></div>
@@ -1373,7 +1373,7 @@ import scala.collection.mutable.WrappedArray
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">the</span> <span class="n">RDD</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">ratings</span>
 
 <span class="n">val</span> <span class="n">ratingsRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
@@ -1392,7 +1392,7 @@ import scala.collection.mutable.WrappedArray
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">We</span> <span class="n">take</span> <span class="n">a</span> <span class="n">look</span> <span class="n">at</span> <span class="n">the</span> <span class="n">first</span> <span class="mi">10</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Ratings</span> <span class="n">RDD</span>
 <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">println</span><span class="p">)</span>
 </pre></div>
@@ -1419,7 +1419,7 @@ genre field is ignored. They will considered in the second part of this
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">movies</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/movies.dat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
       <span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="p">(</span><span class="n">movieId</span><span class="p">,</span> <span class="n">movieName</span><span class="p">)</span>
@@ -1436,7 +1436,7 @@ notebook.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">check</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">small</span> <span class="n">dataset</span>
 
 <span class="n">val</span> <span class="n">numRatings</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">count</span>
@@ -1459,7 +1459,7 @@ numMovies: Long = 3615
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Creating</span> <span class="n">a</span> <span class="n">Training</span> <span class="n">Set</span><span class="p">,</span> <span class="n">test</span> <span class="n">Set</span> <span class="ow">and</span> <span class="n">Validation</span> <span class="n">Set</span>
 
 <span class="n">val</span> <span class="n">Array</span><span class="p">(</span><span class="n">trainingRDD</span><span class="p">,</span> <span class="n">validationRDD</span><span class="p">,</span> <span class="n">testRDD</span><span class="p">)</span> <span class="o">=</span> <span class="n">ratingsRDD</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">),</span> <span class="mi">0</span><span class="n">L</span><span class="p">)</span>
@@ -1476,7 +1476,7 @@ testRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Rating] 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s find the exact sizes we have next</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot; training data size = &quot;</span> <span class="o">+</span> <span class="n">trainingRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
         <span class="s2">&quot;, validation data size = &quot;</span> <span class="o">+</span> <span class="n">validationRDD</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">+</span>
@@ -1497,7 +1497,7 @@ testRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Rating] 
 in this dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">DataFrame</span> <span class="k">with</span> <span class="n">the</span> <span class="n">data</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 
@@ -1580,7 +1580,7 @@ in this dataset</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">history</span> <span class="o">=</span> <span class="n">ratingsDF</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">asc</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">))</span>
 <span class="n">history</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1604,7 +1604,7 @@ history: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [rating: doubl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1654,7 +1654,7 @@ movies</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Train</span> <span class="n">the</span> <span class="n">model</span> <span class="k">as</span> <span class="n">usually</span>
   <span class="n">val</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">4</span>
   <span class="n">val</span> <span class="n">numIterations</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1674,7 +1674,7 @@ model: org.apache.spark.mllib.recommendation.MatrixFactorizationModel = org.apac
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Choose</span> <span class="nb">any</span> <span class="n">random</span> <span class="n">user</span><span class="p">,</span><span class="n">which</span> <span class="ow">is</span> <span class="n">going</span> <span class="n">to</span> <span class="n">be</span> <span class="n">our</span> <span class="n">test</span> <span class="n">user</span>
 <span class="n">val</span> <span class="n">newUserID</span> <span class="o">=</span> <span class="mi">1000</span>
 
@@ -1704,7 +1704,7 @@ res94: org.apache.spark.rdd.RDD[Unit] = MapPartitionsRDD[21969] at map at comman
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
   <span class="o">//</span> <span class="n">Evaluate</span> <span class="n">the</span> <span class="n">model</span> <span class="n">on</span> <span class="n">this</span> <span class="n">test</span> <span class="n">user</span>
   <span class="n">val</span> <span class="n">usersProductsTest</span> <span class="o">=</span> <span class="n">newTest</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Rating</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span> <span class="o">=&gt;</span>
                                               <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">product</span><span class="p">)</span>
@@ -1720,7 +1720,7 @@ res94: org.apache.spark.rdd.RDD[Unit] = MapPartitionsRDD[21969] at map at comman
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
   <span class="o">//</span> <span class="n">get</span> <span class="n">the</span> <span class="n">predictions</span> <span class="k">for</span> <span class="n">this</span> <span class="n">test</span> <span class="n">user</span>
   <span class="n">val</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">usersProductsTest</span><span class="p">)</span>
                          <span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Rating</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
@@ -1743,7 +1743,7 @@ ratesAndPreds: org.apache.spark.rdd.RDD[((Int, Int), (Double, Double))] = MapPar
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Convert</span> <span class="n">the</span> <span class="n">RDD</span> <span class="k">with</span> <span class="n">the</span> <span class="n">predictions</span> <span class="n">to</span> <span class="n">a</span> <span class="n">DataFrame</span>
 <span class="n">val</span> <span class="n">preds2</span> <span class="o">=</span> <span class="n">ratesAndPreds</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">((</span><span class="n">user</span><span class="p">,</span> <span class="n">product</span><span class="p">),</span> <span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">product</span><span class="p">,</span><span class="n">r2</span><span class="p">)</span> <span class="p">}</span>
 
@@ -1773,7 +1773,7 @@ predsDF: org.apache.spark.sql.DataFrame = [userID: int, movieID: int ... 1 more 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Order</span> <span class="n">the</span> <span class="n">movies</span> <span class="n">according</span> <span class="n">to</span> <span class="n">the</span> <span class="n">predictions</span>
 <span class="n">val</span> <span class="n">orderedPreds</span> <span class="o">=</span> <span class="n">predsDF</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;pred&quot;</span><span class="p">))</span>
 <span class="n">orderedPreds</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1798,7 +1798,7 @@ orderedPreds: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [userID: 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Return</span> <span class="n">the</span> <span class="n">ID</span> <span class="n">of</span> <span class="n">the</span> <span class="n">highest</span> <span class="n">recommended</span> <span class="n">one</span>
 
 <span class="n">val</span> <span class="n">t</span> <span class="o">=</span> <span class="n">orderedPreds</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;movieID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1822,7 +1822,7 @@ t: List[Any] = List(1)
 each column (of each movie) - Return the columns with the highest</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">only</span> <span class="k">for</span> <span class="n">the</span> <span class="n">ones</span> <span class="n">they</span> <span class="n">said</span><span class="o">.</span> <span class="n">Doesnt</span> <span class="n">include</span> <span class="n">the</span> <span class="n">ones</span> <span class="n">computed</span> <span class="n">by</span> <span class="n">our</span> <span class="n">model</span><span class="o">...</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 
@@ -1870,7 +1870,7 @@ averageRates: org.apache.spark.sql.DataFrame = [movieID: int, avg(rating): doubl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Order</span> <span class="n">the</span> <span class="n">movies</span> <span class="n">by</span> <span class="n">top</span> <span class="n">ratings</span>
 <span class="n">val</span> <span class="n">orderedRates</span> <span class="o">=</span> <span class="n">averageRates</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;avg(rating)&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;avg(rating)&quot;</span><span class="p">,</span><span class="s2">&quot;avg_rate&quot;</span><span class="p">)</span>
 <span class="n">orderedRates</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1911,7 +1911,7 @@ orderedRates: org.apache.spark.sql.DataFrame = [movieID: int, avg_rate: double]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Return</span> <span class="n">the</span> <span class="n">top</span> <span class="mi">5</span> <span class="n">movies</span> <span class="k">with</span> <span class="n">highest</span> <span class="n">ratings</span> <span class="n">over</span> <span class="nb">all</span> <span class="n">users</span>
 
 <span class="n">val</span> <span class="n">topMovies</span> <span class="o">=</span> <span class="n">orderedRates</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -1942,7 +1942,7 @@ moviesList: List[Any] = List(853, 787, 578, 3636, 989)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">In</span> <span class="n">alternative</span><span class="p">,</span> <span class="k">return</span> <span class="n">the</span> <span class="n">top</span> <span class="n">movies</span> <span class="k">with</span> <span class="n">rating</span> <span class="n">of</span> <span class="mi">5</span> <span class="n">over</span> <span class="nb">all</span> <span class="n">users</span>
 
 <span class="n">val</span> <span class="n">topMovies5</span> <span class="o">=</span> <span class="n">orderedRates</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;avg_rate == 5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;movieID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">toList</span>
@@ -1982,7 +1982,7 @@ topMovies5: List[Any] = List(853, 787, 578, 3636, 989, 854, 3280, 2444, 3443, 38
 <h3>we investigate whether suggestion based on genre can be more accurate. Imagine a scenario in which an user is interested in watching a movie of a particular genre, say an Animation movie, given this information, can we suggest a better film with respect to the film that we would have suggested by only knowing user’s previous ratings on such movie?<a class="headerlink" href="#we-investigate-whether-suggestion-based-on-genre-can-be-more-accurate-imagine-a-scenario-in-which-an-user-is-interested-in-watching-a-movie-of-a-particular-genre-say-an-animation-movie-given-this-information-can-we-suggest-a-better-film-with-respect-to-the-film-that-we-would-have-suggested-by-only-knowing-users-previous-ratings-on-such-movie" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">movies</span> <span class="n">file</span> <span class="k">as</span> <span class="n">a</span> <span class="n">dataframe</span> <span class="ow">and</span> <span class="n">display</span> <span class="n">it</span>
 <span class="n">val</span> <span class="n">movies_df</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/movies.dat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
@@ -1997,7 +1997,7 @@ topMovies5: List[Any] = List(853, 787, 578, 3636, 989, 854, 3280, 2444, 3443, 38
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // Select a GENRE, or a set of GENREs and filter the movies dataset according to this genre
 val GENRE = &quot;Animation&quot;
 
@@ -2016,7 +2016,7 @@ val movie_ID_genres = genre_df.select(&quot;movieId&quot;).rdd.map(r =&gt; r(0))
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">We</span> <span class="n">now</span> <span class="n">read</span> <span class="ow">and</span> <span class="n">display</span> <span class="n">the</span> <span class="n">ratings</span> <span class="n">dataframe</span> <span class="p">(</span><span class="n">without</span> <span class="n">the</span> <span class="n">timestamp</span> <span class="n">field</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span> <span class="n">dataframe</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">RatingsDF</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/cs100/lab4/data-001/ratings.dat.gz&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">line</span> <span class="o">=&gt;</span>
       <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
@@ -2097,7 +2097,7 @@ val movie_ID_genres = genre_df.select(&quot;movieId&quot;).rdd.map(r =&gt; r(0))
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // Based on the movies id obtained by the filtering on the movie dataset we filter the ratings df and we convert it to rdd format
 val Ratings_genre_df = RatingsDF.filter($&quot;movieId&quot;.isin(movie_ID_genres:_*))
 val genre_rdd = Ratings_genre_df.rdd
@@ -2175,7 +2175,7 @@ display(Ratings_genre_df)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Print</span> <span class="n">some</span> <span class="n">dataset</span> <span class="n">statistics</span>
 <span class="n">val</span> <span class="n">numRatings</span> <span class="o">=</span> <span class="n">genre_rdd</span><span class="o">.</span><span class="n">count</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Got &quot;</span> <span class="o">+</span> <span class="n">numRatings</span> <span class="o">+</span> <span class="s2">&quot; ratings&quot;</span><span class="p">)</span>
@@ -2191,7 +2191,7 @@ numRatings: Long = 22080
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="ow">and</span> <span class="n">evaluation</span> <span class="n">dataset</span> <span class="ow">and</span> <span class="nb">print</span> <span class="n">some</span> <span class="n">statistics</span> 
 <span class="n">val</span> <span class="n">Array</span><span class="p">(</span><span class="n">temp_trainingRDD</span><span class="p">,</span> <span class="n">temp_validationRDD</span><span class="p">,</span> <span class="n">temp_testRDD</span><span class="p">)</span> <span class="o">=</span> <span class="n">genre_rdd</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">),</span> <span class="mi">0</span><span class="n">L</span><span class="p">)</span>
 
@@ -2213,7 +2213,7 @@ temp_testRDD: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitions
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Map</span> <span class="n">the</span> <span class="n">rdds</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Rating</span> <span class="nb">type</span>
 <span class="n">val</span> <span class="n">maptrainingRDD</span> <span class="o">=</span> <span class="n">temp_trainingRDD</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">Rating</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Double</span><span class="p">]))</span>
 <span class="n">val</span> <span class="n">mapvalidationRDD</span> <span class="o">=</span> <span class="n">temp_validationRDD</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">Rating</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Double</span><span class="p">]))</span>
@@ -2231,7 +2231,7 @@ maptestRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Ratin
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Build</span> <span class="n">the</span> <span class="n">recommendation</span> <span class="n">model</span> <span class="n">using</span> <span class="n">ALS</span> <span class="n">by</span> <span class="n">fitting</span> <span class="n">to</span> <span class="n">the</span> <span class="n">training</span> <span class="n">data</span> <span class="p">(</span><span class="k">with</span> <span class="n">Hyperparameter</span> <span class="n">tuning</span><span class="p">)</span>
 <span class="o">//</span> <span class="n">trying</span> <span class="n">different</span> <span class="n">hyper</span><span class="o">-</span><span class="n">parameter</span> <span class="p">(</span><span class="n">rank</span><span class="p">)</span> <span class="n">values</span> <span class="n">to</span> <span class="n">optimise</span> <span class="n">over</span>
 <span class="n">val</span> <span class="n">ranks</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">);</span> 

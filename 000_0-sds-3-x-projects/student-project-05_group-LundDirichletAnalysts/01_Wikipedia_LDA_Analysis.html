@@ -1486,7 +1486,7 @@ avoid the need to rerun previous sections in every session. We here set
 some variables that will help us locate those files correctly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;sv&quot;</span>
 <span class="n">val</span> <span class="n">freeze_date</span> <span class="o">=</span> <span class="s2">&quot;20201120&quot;</span>
 <span class="n">val</span> <span class="n">xml_file</span> <span class="o">=</span> <span class="n">lang</span> <span class="o">+</span> <span class="s2">&quot;wiki-&quot;</span> <span class="o">+</span> <span class="n">freeze_date</span> <span class="o">+</span> <span class="s2">&quot;-pages-articles.xml&quot;</span>
@@ -1519,7 +1519,7 @@ stopword_path: String = dbfs:/datasets/05_lda/stoppord.csv
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%sh
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%sh
 export group=05_lda
 mkdir $group
 cd $group
@@ -1539,7 +1539,7 @@ ls
 <p>We download a list of suitable stopwords from a separate location.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sh</span>
 <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">peterdalle</span><span class="o">/</span><span class="n">svensktext</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">stoppord</span><span class="o">/</span><span class="n">stoppord</span><span class="o">.</span><span class="n">csv</span>
 </pre></div>
 </div>
@@ -1562,7 +1562,7 @@ Saving to: ‘stoppord.csv’
 <p>Move stopwords to DBFS</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">file</span> <span class="o">=</span><span class="s2">&quot;file:/databricks/driver/stoppord.csv&quot;</span>
 <span class="n">val</span> <span class="nb">dir</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/05_lda/&quot;</span>
 
@@ -1582,7 +1582,7 @@ res1: Boolean = true
 <p>We check that the file exists, and has some contents.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">stopword_path</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/05_lda/stoppord.csv&quot;</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">stopword_path</span><span class="p">))</span>
 </pre></div>
@@ -1617,7 +1617,7 @@ requires unpacking on driver node. To allow parallel download and
 unpacking the multistream may be a better choice.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sh</span>
 <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dumps</span><span class="o">.</span><span class="n">wikimedia</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">svwiki</span><span class="o">/</span><span class="mi">20201120</span><span class="o">/</span><span class="n">svwiki</span><span class="o">-</span><span class="mi">20201120</span><span class="o">-</span><span class="n">pages</span><span class="o">-</span><span class="n">articles</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">bz2</span>
 </pre></div>
 </div>
@@ -1661,7 +1661,7 @@ output truncated to 30 lines...
 <p>Extract the .xml-file</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sh</span>
 <span class="n">ls</span>
 <span class="n">bzip2</span> <span class="o">-</span><span class="n">dk</span> <span class="n">svwiki</span><span class="o">-</span><span class="mi">20201120</span><span class="o">-</span><span class="n">pages</span><span class="o">-</span><span class="n">articles</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">bz2</span>
 </pre></div>
@@ -1681,7 +1681,7 @@ svwiki-20201120-pages-articles.xml.bz2
 <p>Copy file to DBFS cluster</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">localpath</span><span class="o">=</span><span class="s2">&quot;file:/databricks/driver/svwiki-20201120-pages-articles.xml&quot;</span>
 
 <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">mkdirs</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/&quot;</span><span class="p">)</span>
@@ -1694,7 +1694,7 @@ svwiki-20201120-pages-articles.xml.bz2
 <p>We verify that we now have an xml file with some contents.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/svwiki-20201120-pages-articles.xml&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1730,7 +1730,7 @@ metadata) is enclosed in <page> </page> tags, so we split it into an
 rdd.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="o">---------------</span><span class="n">spark_import</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.SparkContext</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.SparkConf</span>
@@ -1769,7 +1769,7 @@ import scala.util.matching.UnanchoredRegex
 an RDD.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">readWikiDump</span><span class="p">(</span><span class="n">sc</span><span class="p">:</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">RDD</span><span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">conf</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Configuration</span><span class="p">()</span>
   <span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">XmlInputFormat</span><span class="o">.</span><span class="n">START_TAG_KEY</span><span class="p">,</span> <span class="s2">&quot;&lt;page&gt;&quot;</span><span class="p">)</span>
@@ -1795,7 +1795,7 @@ but we see that the pages still contain a lof of uninteresting bits in
 their text.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">wiki</span> <span class="n">dump</span>
 <span class="n">val</span> <span class="n">dump</span> <span class="o">=</span> <span class="n">readWikiDump</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="s2">&quot;dbfs:/datasets/svwiki-20201120-pages-articles.xml&quot;</span><span class="p">)</span>
 
@@ -1847,7 +1847,7 @@ namespace 0 (not containing <code class="docutils literal notranslate"><span cla
 macro tag stating that it was generated by a robot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">redirection</span> <span class="o">=</span> <span class="s2">&quot;&lt;redirect title=&quot;</span><span class="o">.</span><span class="n">r</span>
 <span class="k">def</span> <span class="nf">is_not_redirect</span><span class="p">(</span><span class="n">source</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span> <span class="n">redirection</span><span class="o">.</span><span class="n">findFirstIn</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">}</span>
 
@@ -1911,7 +1911,7 @@ them.</p>
 as we may want to use them when we analyze the resulting LDA model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">id_regexp</span> <span class="o">=</span> <span class="n">raw</span><span class="s2">&quot;&lt;id&gt;([0-9]*)&lt;/id&gt;&quot;</span><span class="o">.</span><span class="n">r</span>
 <span class="k">def</span> <span class="nf">extract_id</span><span class="p">(</span><span class="n">source</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="n">id_regexp</span><span class="o">.</span><span class="n">findFirstMatchIn</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
@@ -1981,7 +1981,7 @@ on the form <code class="docutils literal notranslate"><span class="pre">{{A}}</
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">filter_xml</span><span class="p">(</span><span class="n">source</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">noAmp</span> <span class="o">=</span> <span class="n">raw</span><span class="s2">&quot;&amp;amp;&quot;</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">replaceAllIn</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">noNbsp</span> <span class="o">=</span> <span class="n">raw</span><span class="s2">&quot;&amp;nbsp;&quot;</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">replaceAllIn</span><span class="p">(</span><span class="n">noAmp</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
@@ -2083,7 +2083,7 @@ there, but it guesses that <code class="docutils literal notranslate"><span clas
 string continues to the end of the cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">sanitize</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">String</span><span class="o">=</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">noDollar</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">replaceAllLiterally</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
   <span class="n">val</span> <span class="n">noBackSlash</span> <span class="o">=</span> <span class="n">noDollar</span><span class="o">.</span><span class="n">replaceAllLiterally</span><span class="p">(</span><span class="n">raw</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">, &quot;&quot;)</span>
@@ -2103,7 +2103,7 @@ sanitized_xml: org.apache.spark.rdd.RDD[(Long, String, String)] = MapPartitionsR
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">def</span> <span class="nf">filterMarkup</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="p">{</span>
   
   <span class="o">//</span> <span class="n">Loop</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">some</span> <span class="n">specific</span> <span class="n">sections</span>
@@ -2206,7 +2206,7 @@ output truncated to 30 lines...
 the next section can reload it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">filtered_articles_file</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2219,7 +2219,7 @@ the next section can reload it.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">filtered</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="o">.</span><span class="n">replaceAllLiterally</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;**COMMA**&quot;</span><span class="p">),</span> <span class="n">contents</span><span class="o">.</span><span class="n">replaceAllLiterally</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;**NEWLINE**&quot;</span><span class="p">))})</span>
 <span class="n">outputs</span><span class="o">.</span><span class="n">saveAsTextFile</span><span class="p">(</span><span class="n">filtered_articles_file</span><span class="p">);</span>
 </pre></div>
@@ -2243,7 +2243,7 @@ and as the library work on dataframes, we do so as well.</p>
 section, we can reload the data here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;^</span><span class="se">\\</span><span class="s2">(([^,]*),([^,]*),(.*)</span><span class="se">\\</span><span class="s2">)$&quot;</span><span class="o">.</span><span class="n">r</span>
 <span class="k">def</span> <span class="nf">parse_line</span><span class="p">(</span><span class="n">s</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
   <span class="k">assert</span> <span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">)</span>
@@ -2279,7 +2279,7 @@ n_articles: Long = 813245
 one, and look at some samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">corpus_df</span> <span class="o">=</span> <span class="n">filtered</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2295,7 +2295,7 @@ to be completed for all the elements in the rdd, and it therefore takes
 a few minutes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">corpus_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2609,7 +2609,7 @@ characters and only keep words with a minimal length of 4 characters in
 order to avoid short words that are not relevant to the subject.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
 
 <span class="o">//</span> <span class="n">Set</span> <span class="n">params</span> <span class="k">for</span> <span class="n">RegexTokenizer</span>
@@ -2634,7 +2634,7 @@ tokenized_df: org.apache.spark.sql.DataFrame = [id: bigint, title: string ... 2 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">tokenized_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2654,7 +2654,7 @@ and we add some custom stopwords that are relevant to wikipedia pages
 and articles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">swedish_stopwords</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">stopword_path</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">wikipedia_stopwords</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;note&quot;</span><span class="p">,</span> <span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;mark&quot;</span><span class="p">,</span> <span class="s2">&quot;long&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;kartposition&quot;</span><span class="p">,</span> <span class="s2">&quot;quot&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;page&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;revision&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;sha1&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;coord&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="s2">&quot;align&quot;</span><span class="p">,</span> <span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="s2">&quot;nasa&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;mouth&quot;</span><span class="p">,</span> <span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="s2">&quot;highest&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">,</span> <span class="s2">&quot;kategori&quot;</span><span class="p">,</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="s2">&quot;wikipedia&quot;</span><span class="p">,</span> <span class="s2">&quot;referenser&quot;</span><span class="p">,</span> <span class="s2">&quot;källor&quot;</span><span class="p">,</span> <span class="s2">&quot;noter&quot;</span><span class="p">)</span>
 <span class="o">//</span> <span class="n">Combine</span> <span class="n">newly</span> <span class="n">identified</span> <span class="n">stopwords</span> <span class="n">to</span> <span class="n">our</span> <span class="n">exising</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">stopwords</span>
@@ -2673,7 +2673,7 @@ stopwords: Array[String] = Array(word, all, alla, allas, allt, alltså, andra, a
 <p>The spark ML library gives us functions to remove stopwords</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.StopWordsRemover</span>
 
 <span class="n">val</span> <span class="n">remover</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StopWordsRemover</span><span class="p">()</span>
@@ -2711,7 +2711,7 @@ but these can be experimented with further in order to obtain even
 better clusterings.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
 
 <span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
@@ -2733,7 +2733,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 <p>Next, we convert the dataframe to an RDD that contains the word counts</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.Vector</span>
 
 <span class="n">val</span> <span class="n">countVectors</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">filtered_df</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
@@ -2757,7 +2757,7 @@ res41: Array[(Long, org.apache.spark.mllib.linalg.Vector)] = Array((1,(10000,[1,
 <p>We can also save the countvector file for later use.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="n">lda_countVector_file</span><span class="p">)</span>
 
 <span class="o">//</span> <span class="n">lda_countVector_mllib</span><span class="o">.</span><span class="n">saveAsTextFile</span><span class="p">(</span><span class="n">lda_countVector_file</span><span class="p">);</span>
@@ -2794,7 +2794,7 @@ visualize the results. We use 20 iterations, which yields a reasonable
 runtime (about 16 minutes).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">numTopics</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">val</span> <span class="n">maxIterations</span> <span class="o">=</span> <span class="mi">20</span>
 </pre></div>
@@ -2834,7 +2834,7 @@ distributions of words within each document.</p>
 <p>This can all be done using spark’s build in LDA optimizer</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.clustering.</span><span class="p">{</span><span class="n">LDA</span><span class="p">,</span> <span class="n">OnlineLDAOptimizer</span><span class="p">}</span>
 
 <span class="n">val</span> <span class="n">lda</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LDA</span><span class="p">()</span>
@@ -2857,7 +2857,7 @@ lda: org.apache.spark.mllib.clustering.LDA = org.apache.spark.mllib.clustering.L
 training functionality to obtain the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">ldaModel</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">lda_countVector_mllib</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2870,7 +2870,7 @@ training functionality to obtain the model.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">lda_file</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
 <span class="n">ldaModel</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">lda_file</span><span class="p">)</span> 
 </pre></div>
@@ -2887,7 +2887,7 @@ training functionality to obtain the model.</p>
 in the vocabulary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">maxTermsPerTopic</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">val</span> <span class="n">topicIndices</span> <span class="o">=</span> <span class="n">ldaModel</span><span class="o">.</span><span class="n">describeTopics</span><span class="p">(</span><span class="n">maxTermsPerTopic</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
@@ -2908,7 +2908,7 @@ topics: Array[Array[(String, Double)]] = Array(Array((kommunen,0.096546517484855
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$numTopics topics:&quot;</span><span class="p">)</span>
 <span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="o">.</span><span class="n">foreach</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;TOPIC $i&quot;</span><span class="p">)</span>
@@ -2959,7 +2959,7 @@ output truncated to 30 lines...
 <h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Zip</span> <span class="n">topic</span> <span class="n">terms</span> <span class="k">with</span> <span class="n">topic</span> <span class="n">IDs</span>
 <span class="n">val</span> <span class="n">termArray</span> <span class="o">=</span> <span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span>
 </pre></div>
@@ -2973,7 +2973,7 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Transform</span> <span class="n">data</span> <span class="n">into</span> <span class="n">the</span> <span class="n">form</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">probability</span><span class="p">,</span> <span class="n">topicId</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">termRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">termArray</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">termRDD2</span> <span class="o">=</span> <span class="n">termRDD</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">Array</span><span class="p">[(</span><span class="n">String</span><span class="p">,</span> <span class="n">Double</span><span class="p">)],</span> <span class="n">Int</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -2993,7 +2993,7 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[188
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">DF</span> <span class="k">with</span> <span class="n">proper</span> <span class="n">column</span> <span class="n">names</span>
 <span class="n">val</span> <span class="n">termDF</span> <span class="o">=</span> <span class="n">termRDD2</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="s2">&quot;term&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_3&quot;</span><span class="p">,</span> <span class="s2">&quot;topicId&quot;</span><span class="p">)</span>
 </pre></div>
@@ -3007,7 +3007,7 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[188
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">termDF</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -3082,7 +3082,7 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[188
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Create</span> <span class="n">JSON</span> <span class="n">data</span>
 <span class="n">val</span> <span class="n">rawJson</span> <span class="o">=</span> <span class="n">termDF</span><span class="o">.</span><span class="n">toJSON</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -3127,7 +3127,7 @@ output truncated to 30 lines...
 <p>Plot visualization</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">displayHTML</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">&lt;!DOCTYPE html&gt;</span>
 <span class="s2">&lt;meta charset=&quot;utf-8&quot;&gt;</span>
@@ -3725,7 +3725,7 @@ articles on the same topic.</p>
 be more specific, so we reload it as a <code class="docutils literal notranslate"><span class="pre">LocalLDAModel</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Load</span> <span class="n">the</span> <span class="n">model</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.clustering.LocalLDAModel</span>
 <span class="n">val</span> <span class="n">model</span> <span class="o">=</span> <span class="n">LocalLDAModel</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">lda_file</span><span class="p">)</span>
@@ -3741,7 +3741,7 @@ model: org.apache.spark.mllib.clustering.LocalLDAModel = org.apache.spark.mllib.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Load</span> <span class="n">the</span> <span class="n">countvector</span>
 <span class="o">//</span> <span class="n">val</span> <span class="n">lda_countVector_mllib_loaded</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;lda_countvector_sv_20201208&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">This</span> <span class="n">doesn</span><span class="s1">&#39;t work, need to figure out how to parse the loaded rdd</span>
 <span class="o">//</span> <span class="nb">print</span><span class="p">(</span><span class="n">lda_countVector_mllib_loaded</span><span class="p">)</span>
@@ -3752,7 +3752,7 @@ model: org.apache.spark.mllib.clustering.LocalLDAModel = org.apache.spark.mllib.
 <p>We sample some articles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">numsample</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">val</span> <span class="n">sample</span> <span class="o">=</span> <span class="n">lda_countVector_mllib</span><span class="o">.</span><span class="n">takeSample</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="n">numsample</span><span class="p">)</span>
 </pre></div>
@@ -3769,7 +3769,7 @@ sample: Array[(Long, org.apache.spark.mllib.linalg.Vector)] = Array((2779114,(10
 about them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">sampleRdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">makeRDD</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">topicDistributions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">topicDistributions</span><span class="p">(</span><span class="n">sampleRdd</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">MLTopics</span> <span class="o">=</span> <span class="n">topicDistributions</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">vs</span><span class="o">.</span><span class="n">argmax</span><span class="p">)})</span>
@@ -3794,7 +3794,7 @@ allTopicProbs: org.apache.spark.rdd.RDD[(Long, org.apache.spark.mllib.linalg.Vec
 that very strongly belong in the same topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="k">for</span> <span class="p">(</span> <span class="p">(</span><span class="n">article_id</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">MLTopics</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">title</span> <span class="o">=</span> <span class="n">selection</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="n">case</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">id</span> <span class="o">==</span> <span class="n">article_id</span><span class="p">})(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_2</span>
   <span class="n">val</span> <span class="n">topicProbs</span> <span class="o">=</span> <span class="n">allTopicProbs</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">vs</span><span class="p">(</span><span class="n">topic_id</span><span class="p">))})</span>

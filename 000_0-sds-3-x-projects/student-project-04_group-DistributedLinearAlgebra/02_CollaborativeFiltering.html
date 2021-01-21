@@ -1418,7 +1418,7 @@ dataset as discussed erlier. Based on this dataset we want our model to
 give artist recommendations to the users.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">spark.implicits._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 </pre></div>
@@ -1434,7 +1434,7 @@ import org.apache.spark.sql.functions._
 <p><strong>Lets load the data!</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Load</span> <span class="n">the</span> <span class="p">(</span><span class="n">userID</span><span class="p">,</span> <span class="n">artistID</span><span class="p">,</span> <span class="n">play_count</span><span class="p">)</span> <span class="n">triplets</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">fileName_data</span><span class="o">=</span><span class="s2">&quot;dbfs:/FileStore/tables/project4/hetrec2011-lastfm-2k/user_artists.dat&quot;</span>
 <span class="n">val</span> <span class="n">df_raw</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;delimiter&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fileName_data</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span>
@@ -1483,7 +1483,7 @@ artist_names: org.apache.spark.sql.DataFrame = [artistID: int, name: string]
 <p>We print some statistics and visualize the raw data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">n_data</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">observations</span>
 <span class="n">val</span> <span class="n">n_users</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">countDistinct</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">unique</span> <span class="n">users</span>
 <span class="n">val</span> <span class="n">n_artists</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">countDistinct</span><span class="p">(</span><span class="s2">&quot;artistID&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">unique</span> <span class="n">artists</span>
@@ -1513,7 +1513,7 @@ sparsity: Float = 0.9972172
 range. From 1 to over 350 000.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_raw</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1564,7 +1564,7 @@ range. From 1 to over 350 000.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 display(df_raw.select(&quot;play_count&quot;).filter($&quot;play_count&quot;&lt;1000))
 </pre></div>
 </div>
@@ -1616,7 +1616,7 @@ display(df_raw.select(&quot;play_count&quot;).filter($&quot;play_count&quot;&lt;
 <p>We count the total plays and number of unique listeners for each artist.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Compute</span> <span class="n">some</span> <span class="n">statistics</span> <span class="k">for</span> <span class="n">the</span> <span class="n">artists</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">artist_data_raw</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;artistID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;artistID&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="s2">&quot;unique_users&quot;</span><span class="p">,</span>
                                                       <span class="nb">sum</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="s2">&quot;total_plays_artist&quot;</span><span class="p">)</span>
@@ -1655,7 +1655,7 @@ artist_data_raw: org.apache.spark.sql.DataFrame = [artistID: int, unique_users: 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">artist_data_raw</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;total_plays_artist&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1706,7 +1706,7 @@ artist_data_raw: org.apache.spark.sql.DataFrame = [artistID: int, unique_users: 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 display(artist_data_raw.select(&quot;total_plays_artist&quot;).filter($&quot;total_plays_artist&quot;&lt;10000))
 </pre></div>
 </div>
@@ -1757,7 +1757,7 @@ display(artist_data_raw.select(&quot;total_plays_artist&quot;).filter($&quot;tot
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">artist_data_raw</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;unique_users&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1810,7 +1810,7 @@ display(artist_data_raw.select(&quot;total_plays_artist&quot;).filter($&quot;tot
 listened to.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Compute</span> <span class="n">statistics</span> <span class="k">for</span> <span class="n">each</span> <span class="n">user</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">user_data_raw</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="s2">&quot;unique_artists&quot;</span><span class="p">,</span>
                                                   <span class="nb">sum</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="s2">&quot;total_plays_user&quot;</span><span class="p">)</span>
@@ -1837,7 +1837,7 @@ user_data_raw: org.apache.spark.sql.DataFrame = [userID: int, unique_artists: bi
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">user_data_raw</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;total_plays_user&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1889,7 +1889,7 @@ user_data_raw: org.apache.spark.sql.DataFrame = [userID: int, unique_artists: bi
 <p>Now we join all statistics into a single dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Merge</span> <span class="nb">all</span> <span class="n">statistics</span> <span class="ow">and</span> <span class="n">data</span> <span class="n">into</span> <span class="n">a</span> <span class="n">single</span> <span class="n">dataframe</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">df_joined</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">artist_data_raw</span><span class="p">,</span> <span class="s2">&quot;artistID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user_data_raw</span><span class="p">,</span> <span class="s2">&quot;userID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">artist_names</span><span class="p">,</span><span class="s2">&quot;artistID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">,</span> <span class="s2">&quot;artistID&quot;</span><span class="p">,</span><span class="s2">&quot;play_count&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;unique_artists&quot;</span><span class="p">,</span><span class="s2">&quot;unique_users&quot;</span><span class="p">,</span> <span class="s2">&quot;total_plays_user&quot;</span><span class="p">,</span><span class="s2">&quot;total_plays_artist&quot;</span><span class="p">)</span>
 <span class="n">df_joined</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -1920,7 +1920,7 @@ items. Therefore we will filter out artists with fewer than 20 unique
 listeners and users that have listened to less than 5 artists.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 // Remove artists with less than 20 unique users, and recompute the statistics.
 val df_filtered_1 = df_joined.filter($&quot;unique_users&quot;&gt;=20).select(df_joined(&quot;userID&quot;),df_joined(&quot;artistID&quot;),df_joined(&quot;play_count&quot;))
 val artist_data_1 = df_filtered_1.groupBy(&quot;artistID&quot;).agg(count(&quot;artistID&quot;) as &quot;unique_users&quot;,
@@ -1988,7 +1988,7 @@ significantly reduced indicating there were many artists in the raw data
 only played by a small fraction of users.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">val</span> <span class="n">n_data_new</span> <span class="o">=</span> <span class="n">user_artist_data</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">observations</span>
 <span class="n">val</span> <span class="n">n_users_new</span> <span class="o">=</span> <span class="n">user_artist_data</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">countDistinct</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">unique</span> <span class="n">users</span>
 <span class="n">val</span> <span class="n">n_artists_new</span> <span class="o">=</span> <span class="n">user_artist_data</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">countDistinct</span><span class="p">(</span><span class="s2">&quot;artistID&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">Long</span><span class="p">]</span><span class="o">.</span><span class="n">floatValue</span><span class="p">();</span> <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">unique</span> <span class="n">artists</span>
@@ -2016,7 +2016,7 @@ sparsity_new: Float = 0.9972172
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">user_artist_data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2067,7 +2067,7 @@ sparsity_new: Float = 0.9972172
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">artist_data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;total_plays_artist&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2118,7 +2118,7 @@ sparsity_new: Float = 0.9972172
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">artist_data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;unique_users&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2171,7 +2171,7 @@ sparsity_new: Float = 0.9972172
 listeners (as expected) as illustrated in the figure below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">artist_data</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2253,7 +2253,7 @@ scaling by taking the square root of the observed play counts (thus
 reducing the range) worked best.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">Scaling</span> <span class="n">the</span> <span class="n">play_counts</span>
 <span class="n">val</span> <span class="n">user_artist_data_scaled</span> <span class="o">=</span> <span class="n">user_artist_data</span>
 <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;scaled_value&quot;</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">)))</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;scaled_value&quot;</span><span class="p">,</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span>
@@ -2282,7 +2282,7 @@ user_artist_data_scaled: org.apache.spark.sql.DataFrame = [userID: int, artistID
 scaling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">user_artist_data_scaled</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2333,7 +2333,7 @@ scaling.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">display</span><span class="p">(</span><span class="n">user_artist_data_scaled</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;play_count&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2385,7 +2385,7 @@ scaling.</p>
 <p>We split our scaled dataset into training, validation and test sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Split</span> <span class="n">data</span> <span class="n">into</span> <span class="n">training</span><span class="p">,</span> <span class="n">validation</span> <span class="ow">and</span> <span class="n">test</span> <span class="n">sets</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">Array</span><span class="p">(</span><span class="n">training_set</span><span class="p">,</span> <span class="n">validation_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">)</span> <span class="o">=</span> <span class="n">user_artist_data_scaled</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;userID&quot;</span><span class="p">,</span><span class="s2">&quot;artistID&quot;</span><span class="p">,</span><span class="s2">&quot;play_count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 <span class="n">training_set</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
@@ -2479,7 +2479,7 @@ recommendation, that is, recommending the same artists we know that the
 user has already listened to.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.Dataset 
 import org.apache.spark.sql.Row
@@ -2539,7 +2539,7 @@ hyper-parameters: the latent dimension <span class="math notranslate nohighlight
 combinations based on the performance on the validation set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.recommendation.ALS</span>
 <span class="o">//</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">iterations</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">ALS</span> <span class="n">algorithm</span>
 <span class="n">val</span> <span class="n">numIter</span> <span class="o">=</span> <span class="mi">10</span>
@@ -2622,7 +2622,7 @@ train the model again and evaluating it on the test set. We observe a
 test error of 7.75 %.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span> <span class="n">Retrain</span> <span class="n">the</span> <span class="n">best</span> <span class="n">model</span><span class="o">.</span>
 
 <span class="n">val</span> <span class="n">numIter_final</span><span class="o">=</span><span class="mi">10</span>
@@ -2681,7 +2681,7 @@ expected value of the mean percentile rank should be:
 for this random model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">case</span> <span class="k">class</span> <span class="nc">Rating</span><span class="p">(</span><span class="n">artistID</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">rating</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span> <span class="o">//</span> <span class="n">Simple</span> <span class="k">class</span> <span class="nc">for</span> <span class="n">getting</span> <span class="n">the</span> <span class="n">recommendations</span> <span class="ow">in</span> <span class="n">suitable</span> <span class="n">form</span><span class="o">.</span>
 
 <span class="o">//</span> <span class="n">Generating</span> <span class="n">random</span> <span class="n">array</span> <span class="n">of</span> <span class="n">artistIDs</span><span class="o">.</span>
@@ -2710,7 +2710,7 @@ prediction_scores: org.apache.spark.sql.DataFrame = [userID: int, recommendation
 agrees with the above reasoning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Random_model: mean_rank=&quot;</span> <span class="o">+</span> <span class="n">eval_model</span><span class="p">(</span><span class="n">prediction_scores</span><span class="p">,</span> <span class="n">training_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2728,7 +2728,7 @@ recommendations independent of the user. Hence, this is not personalized
 recommenations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="o">//</span><span class="n">Generating</span> <span class="n">arrays</span> <span class="n">of</span> <span class="n">artistIDs</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span> <span class="n">most</span> <span class="n">plays</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">most_popular</span> <span class="o">=</span> <span class="n">artist_data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;artistID_2&quot;</span><span class="p">,</span> <span class="s2">&quot;total_plays_artist&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;total_plays_artist&quot;</span><span class="p">))</span>
                               <span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">row</span> <span class="o">=&gt;</span><span class="n">Rating</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">getInt</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">row</span><span class="o">.</span><span class="n">getLong</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">))</span>
@@ -2753,7 +2753,7 @@ than the random one but much worse than our ALS model that got
 <span class="math notranslate nohighlight">\(\overline{rank}\approx 7.75 \%\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Popular_model: mean_rank=&quot;</span> <span class="o">+</span> <span class="n">eval_model</span><span class="p">(</span><span class="n">prediction_scores</span><span class="p">,</span> <span class="n">training_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -2769,7 +2769,7 @@ on observations in the train set and recommended undiscovered artists
 generated by our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
 import org.apache.spark.ml.recommendation.ALSModel
 
 // Function for showing the favorit artists for a given user based on the training set.
@@ -2820,7 +2820,7 @@ recommendToUser: (model: org.apache.spark.ml.recommendation.ALSModel, userID: or
 <p>Let’s generate some recommenations for a user.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Listening history:&quot;</span><span class="p">)</span>
 <span class="o">//</span> <span class="n">Print</span> <span class="n">top</span> <span class="mi">5</span> <span class="n">artists</span> <span class="k">for</span> <span class="n">userID</span> <span class="mi">302</span>
 <span class="n">val</span> <span class="n">sub_data</span> <span class="o">=</span> <span class="n">userHistory</span><span class="p">(</span><span class="mi">302</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">training_set</span><span class="p">,</span> <span class="n">artist_names</span><span class="p">)</span>
