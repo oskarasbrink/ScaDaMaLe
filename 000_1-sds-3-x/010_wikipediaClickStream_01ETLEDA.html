@@ -1436,7 +1436,8 @@ Databricks file:
 <code class="docutils literal notranslate"><span class="pre">/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/wikipedia-datasets/&quot;</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s2">&quot;/databricks-datasets/wikipedia-datasets/&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1452,7 +1453,8 @@ understand how the data was generated (remember to Right-Click and use
 -&gt; and &lt;- if navigating within the embedded html frame below).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">This</span> <span class="n">allows</span> <span class="n">easy</span> <span class="n">embedding</span> <span class="n">of</span> <span class="n">publicly</span> <span class="n">available</span> <span class="n">information</span> <span class="n">into</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">notebook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">This</span> <span class="n">allows</span> <span class="n">easy</span> <span class="n">embedding</span> <span class="n">of</span> <span class="n">publicly</span> <span class="n">available</span> <span class="n">information</span> <span class="n">into</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">notebook</span>
 <span class="o">//</span><span class="n">when</span> <span class="n">viewing</span> <span class="ow">in</span> <span class="n">git</span><span class="o">-</span><span class="n">book</span> <span class="n">just</span> <span class="n">ignore</span> <span class="n">this</span> <span class="n">block</span> <span class="o">-</span> <span class="n">you</span> <span class="n">may</span> <span class="n">have</span> <span class="n">to</span> <span class="n">manually</span> <span class="n">chase</span> <span class="n">the</span> <span class="n">URL</span> <span class="ow">in</span> <span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">)</span><span class="o">.</span>
 <span class="o">//</span><span class="n">Example</span> <span class="n">usage</span><span class="p">:</span>
 <span class="o">//</span> <span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;</span><span class="p">,</span><span class="mi">250</span><span class="p">))</span>
@@ -1476,7 +1478,8 @@ understand how the data was generated (remember to Right-Click and use
 <p>Run the next two cells for some housekeeping.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">BuildInfo</span><span class="o">.</span><span class="n">sparkBranch</span> <span class="o">&lt;</span> <span class="s2">&quot;1.6&quot;</span><span class="p">)</span> <span class="n">sys</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Attach this notebook to a cluster running Spark 1.6+&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">BuildInfo</span><span class="o">.</span><span class="n">sparkBranch</span> <span class="o">&lt;</span> <span class="s2">&quot;1.6&quot;</span><span class="p">)</span> <span class="n">sys</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Attach this notebook to a cluster running Spark 1.6+&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1486,7 +1489,8 @@ understand how the data was generated (remember to Right-Click and use
 <h2>Loading and Exploring the data<a class="headerlink" href="#loading-and-exploring-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:///databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:///databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1495,14 +1499,16 @@ understand how the data was generated (remember to Right-Click and use
 <h3>Looking at the first few lines of the data<a class="headerlink" href="#looking-at-the-first-few-lines-of-the-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">)</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">data</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">data</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1581,7 +1587,8 @@ of Spark’s standard release. But, we are using Spark 1.6</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Load</span> <span class="n">the</span> <span class="n">raw</span> <span class="n">dataset</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">a</span> <span class="n">CSV</span> <span class="n">file</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Load</span> <span class="n">the</span> <span class="n">raw</span> <span class="n">dataset</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">a</span> <span class="n">CSV</span> <span class="n">file</span>
 <span class="n">val</span> <span class="n">clickstream</span> <span class="o">=</span> <span class="n">sqlContext</span>
     <span class="o">.</span><span class="n">read</span>
     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;com.databricks.spark.csv&quot;</span><span class="p">)</span>
@@ -1596,7 +1603,8 @@ of Spark’s standard release. But, we are using Spark 1.6</p></li>
 <h3>Print the schema<a class="headerlink" href="#print-the-schema" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clickstream</span><span class="o">.</span><span class="n">printSchema</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clickstream</span><span class="o">.</span><span class="n">printSchema</span>
 </pre></div>
 </div>
 </div>
@@ -1606,7 +1614,8 @@ of Spark’s standard release. But, we are using Spark 1.6</p></li>
 <h3>Display some sample data<a class="headerlink" href="#display-some-sample-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">clickstream</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">clickstream</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1615,7 +1624,8 @@ of Spark’s standard release. But, we are using Spark 1.6</p></li>
 directly in Spark, use the show(numRows: Int) function of DataFrame</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clickstream</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clickstream</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1631,7 +1641,8 @@ remotely over the network.</p>
 and to see how long it takes to read the DataFrame from S3.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clickstream</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clickstream</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1645,7 +1656,8 @@ Spark cluster. The file has 22.5 million rows/lines.</p></li>
 <p>Now call count again to see how much faster it is to read from memory</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clickstream</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clickstream</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1662,7 +1674,8 @@ is better to cache it in memory</p></li>
 order.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//Type in your answer here...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+//Type in your answer here...
 display(clickstream
   .select(clickstream(&quot;curr_title&quot;), clickstream(&quot;n&quot;))
   .groupBy(&quot;curr_title&quot;)
@@ -1679,7 +1692,8 @@ display(clickstream
 <p>In other words, who were the top referers to Wikipedia?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>display(clickstream
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+display(clickstream
   .select(clickstream(&quot;prev_title&quot;), clickstream(&quot;n&quot;))
   .groupBy(&quot;prev_title&quot;)
   .sum()
@@ -1702,7 +1716,8 @@ Facebook.</p>
 <h2>What were the top 5 trending articles people from Twitter were looking up in Wikipedia?<a class="headerlink" href="#what-were-the-top-5-trending-articles-people-from-twitter-were-looking-up-in-wikipedia" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//Type in your answer here...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+//Type in your answer here...
 display(clickstream
   .select(clickstream(&quot;curr_title&quot;), clickstream(&quot;prev_title&quot;), clickstream(&quot;n&quot;))
   .filter(&quot;prev_title = &#39;other-twitter&#39;&quot;)
@@ -1718,7 +1733,8 @@ display(clickstream
 <h3>What percentage of page visits in Wikipedia are from other pages in Wikipedia itself?<a class="headerlink" href="#what-percentage-of-page-visits-in-wikipedia-are-from-other-pages-in-wikipedia-itself" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">allClicks</span> <span class="o">=</span> <span class="n">clickstream</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;sum(n)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">getLong</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">allClicks</span> <span class="o">=</span> <span class="n">clickstream</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;sum(n)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">getLong</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">referals</span> <span class="o">=</span> <span class="n">clickstream</span><span class="o">.</span>
                 <span class="nb">filter</span><span class="p">(</span><span class="n">clickstream</span><span class="p">(</span><span class="s2">&quot;prev_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isNotNull</span><span class="p">)</span><span class="o">.</span>
                 <span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;sum(n)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">getLong</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -1732,7 +1748,8 @@ display(clickstream
 <h3>Register the DataFrame to perform more complex queries<a class="headerlink" href="#register-the-dataframe-to-perform-more-complex-queries" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clickstream</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;clicks&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clickstream</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;clicks&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1742,7 +1759,8 @@ display(clickstream
 <h3>Which Wikipedia pages have the most referrals to the Donald Trump page?<a class="headerlink" href="#which-wikipedia-pages-have-the-most-referrals-to-the-donald-trump-page" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">SELECT</span> <span class="o">*</span>
 <span class="n">FROM</span> <span class="n">clicks</span>
 <span class="n">WHERE</span> 
   <span class="n">curr_title</span> <span class="o">=</span> <span class="s1">&#39;Donald_Trump&#39;</span> <span class="n">AND</span>
@@ -1759,7 +1777,8 @@ display(clickstream
 <p><code class="docutils literal notranslate"><span class="pre">'Donald_Trump',</span> <span class="pre">'Bernie_Sanders',</span> <span class="pre">'Hillary_Rodham_Clinton',</span> <span class="pre">'Ted_Cruz'</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">YouTry</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="o">--</span> <span class="n">YouTry</span> 
 <span class="o">---</span>
 <span class="o">--</span> <span class="n">fill</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">right</span> <span class="n">sql</span> <span class="n">query</span> <span class="n">here</span>
 </pre></div>
@@ -1780,7 +1799,8 @@ Earth.</p>
 once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">d3ivan</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">package</span> <span class="n">d3ivan</span>
 <span class="o">//</span> <span class="n">We</span> <span class="n">use</span> <span class="n">a</span> <span class="n">package</span> <span class="nb">object</span> <span class="n">so</span> <span class="n">that</span> <span class="n">we</span> <span class="n">can</span> <span class="n">define</span> <span class="n">top</span> <span class="n">level</span> <span class="n">classes</span> <span class="n">like</span> <span class="n">Edge</span> <span class="n">that</span> <span class="n">need</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">other</span> <span class="n">cells</span>
 
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
@@ -1950,14 +1970,16 @@ once.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d3ivan</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">d3ivan</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d3ivan</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">force</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">d3ivan</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">force</span><span class="p">(</span>
   <span class="n">height</span> <span class="o">=</span> <span class="mi">800</span><span class="p">,</span>
   <span class="n">width</span> <span class="o">=</span> <span class="mi">800</span><span class="p">,</span>
   <span class="n">clicks</span> <span class="o">=</span> <span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -2018,14 +2040,16 @@ instances of the system.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://parquet.apache.org/documentation/latest/&quot;</span><span class="p">,</span><span class="mi">350</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">frameIt</span><span class="p">(</span><span class="s2">&quot;https://parquet.apache.org/documentation/latest/&quot;</span><span class="p">,</span><span class="mi">350</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Convert</span> <span class="n">the</span> <span class="n">DatFrame</span> <span class="n">to</span> <span class="n">a</span> <span class="n">more</span> <span class="n">efficent</span> <span class="nb">format</span> <span class="n">to</span> <span class="n">speed</span> <span class="n">up</span> <span class="n">our</span> <span class="n">analysis</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Convert</span> <span class="n">the</span> <span class="n">DatFrame</span> <span class="n">to</span> <span class="n">a</span> <span class="n">more</span> <span class="n">efficent</span> <span class="nb">format</span> <span class="n">to</span> <span class="n">speed</span> <span class="n">up</span> <span class="n">our</span> <span class="n">analysis</span>
 <span class="n">clickstream</span><span class="o">.</span>
   <span class="n">write</span><span class="o">.</span>
   <span class="n">mode</span><span class="p">(</span><span class="n">SaveMode</span><span class="o">.</span><span class="n">Overwrite</span><span class="p">)</span><span class="o">.</span>
@@ -2042,21 +2066,24 @@ creating the RDD from the text file (much slower).</p>
 languages quickly in a a scalable manner.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">clicks</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/datasets/wiki-clickstream&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">clicks</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/datasets/wiki-clickstream&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clicks</span><span class="o">.</span><span class="n">printSchema</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">clicks</span><span class="o">.</span><span class="n">printSchema</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">clicks</span><span class="p">)</span>  <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s display this DataFrame</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">clicks</span><span class="p">)</span>  <span class="o">//</span> <span class="n">let</span><span class="s1">&#39;s display this DataFrame</span>
 </pre></div>
 </div>
 </div>
@@ -2065,14 +2092,16 @@ languages quickly in a a scalable manner.</p>
 <h4>DataFrame in python<a class="headerlink" href="#dataframe-in-python" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clicksPy</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/datasets/wiki-clickstream&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">clicksPy</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;/datasets/wiki-clickstream&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python you need to put the object int its own line like this to get the type information</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># in Python you need to put the object int its own line like this to get the type information</span>
 <span class="n">clicksPy</span> 
 </pre></div>
 </div>
@@ -2080,7 +2109,8 @@ languages quickly in a a scalable manner.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clicksPy</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">clicksPy</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2105,7 +2135,8 @@ python. Read the docs in databricks guide first:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">SparkR</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">r</span>
+<span class="n">library</span><span class="p">(</span><span class="n">SparkR</span><span class="p">)</span>
 
 <span class="c1"># just a quick test</span>
 <span class="n">df</span> <span class="o">&lt;-</span> <span class="n">createDataFrame</span><span class="p">(</span><span class="n">faithful</span><span class="p">)</span>
@@ -2116,7 +2147,8 @@ python. Read the docs in databricks guide first:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in the Parquet file created above. Parquet files are self-describing so the schema is preserved.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">r</span>
+<span class="c1"># Read in the Parquet file created above. Parquet files are self-describing so the schema is preserved.</span>
 <span class="c1"># The result of loading a parquet file is also a DataFrame.</span>
 <span class="n">clicksR</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">df</span><span class="p">(</span><span class="s2">&quot;/datasets/wiki-clickstream&quot;</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;parquet&quot;</span><span class="p">)</span>
 <span class="n">clicksR</span> <span class="c1"># in R you need to put the object int its own line like this to get the type information</span>
@@ -2126,14 +2158,16 @@ python. Read the docs in databricks guide first:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">head</span><span class="p">(</span><span class="n">clicksR</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">r</span>
+<span class="n">head</span><span class="p">(</span><span class="n">clicksR</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">clicksR</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">r</span>
+<span class="n">display</span><span class="p">(</span><span class="n">clicksR</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

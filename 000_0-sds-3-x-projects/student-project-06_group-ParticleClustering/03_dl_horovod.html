@@ -1282,7 +1282,8 @@ implementation.</p>
 <code class="docutils literal notranslate"><span class="pre">1_data_and_preprocssing</span></code> and download the data from dbfs to local.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="mi">06</span><span class="n">_LHC</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">ls</span> <span class="mi">06</span><span class="n">_LHC</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -1301,7 +1302,8 @@ utils
 <p>Get the imports.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1331,7 +1333,8 @@ utils
 <p>Get the input parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parserdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_dim&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">#help=&#39;Dimension of the encoding layer [Default: 3]&#39;)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">parserdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_dim&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">#help=&#39;Dimension of the encoding layer [Default: 3]&#39;)</span>
               <span class="s1">&#39;n_clusters&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">#help=&#39;Number of clusters [Default: 3]&#39;)</span>
               <span class="s1">&#39;gpu&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">#help=&#39;GPU to use [default: GPU 0]&#39;)</span>
               <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;gapnet_clasify&#39;</span><span class="p">,</span> <span class="c1">#help=&#39;Model name [default: gapnet_classify]&#39;)</span>
@@ -1395,7 +1398,8 @@ utils
 <p>Define the utils functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_learning_rate</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">get_learning_rate</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
     <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">exponential_decay</span><span class="p">(</span>
         <span class="n">BASE_LEARNING_RATE</span><span class="p">,</span>  <span class="c1"># Base learning rate.</span>
         <span class="n">batch</span> <span class="o">*</span> <span class="n">BATCH_SIZE</span><span class="p">,</span>  <span class="c1"># Current index into the dataset.</span>
@@ -1423,7 +1427,8 @@ utils
 user chosen</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
  
 <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="s1">&#39;/dbfs/databricks/driver/06_LHC/logs/train/</span><span class="si">{}</span><span class="s1">/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
@@ -1440,7 +1445,8 @@ GPUs - we split the data in the h5 file for each device.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_h5_hvd</span><span class="p">(</span><span class="n">h5_filename</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">load_h5_hvd</span><span class="p">(</span><span class="n">h5_filename</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">h5_filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">rank</span><span class="p">::</span><span class="n">size</span><span class="p">]</span>
     <span class="n">label</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">][</span><span class="n">rank</span><span class="p">::</span><span class="n">size</span><span class="p">]</span>
@@ -1461,7 +1467,8 @@ hooks for checkpoint saving ever 1000 steps. - switch from a normal TF
 training session to a monitored training session.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_hvd</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">train_hvd</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">horovod.tensorflow</span> <span class="k">as</span> <span class="nn">hvd</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
     <span class="kn">import</span> <span class="nn">shutil</span>
@@ -1646,7 +1653,8 @@ training session to a monitored training session.</p>
 <p>Training utils.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
     <span class="n">batch_label</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">]</span>
     <span class="n">batch_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
     <span class="k">return</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span>
@@ -1675,7 +1683,8 @@ load the correct h5 data. - remove progress bars since progress bars
 from each device would overlap.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">train_writer</span><span class="p">,</span> <span class="n">hvd_rank</span><span class="p">,</span> <span class="n">hvd_size</span><span class="p">,</span> <span class="n">is_full_training</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">train_writer</span><span class="p">,</span> <span class="n">hvd_rank</span><span class="p">,</span> <span class="n">hvd_size</span><span class="p">,</span> <span class="n">is_full_training</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; ops: dict mapping from string to tf ops &quot;&quot;&quot;</span>
     <span class="n">is_training</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -1835,7 +1844,8 @@ cluster does not allow more GPUs - run the horovod runner with the given
 training function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
  
 <span class="n">hr</span> <span class="o">=</span> <span class="n">HorovodRunner</span><span class="p">(</span><span class="n">np</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">hr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_hvd</span><span class="p">)</span>

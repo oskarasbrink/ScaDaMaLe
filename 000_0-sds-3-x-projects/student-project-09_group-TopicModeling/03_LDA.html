@@ -1295,7 +1295,8 @@
 <h1>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1312,7 +1313,8 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 <h1>Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034<em>LDA</em>20NewsGroupsSmall’)<a class="headerlink" href="#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
 
 <span class="o">//</span> <span class="n">Set</span> <span class="n">params</span> <span class="k">for</span> <span class="n">RegexTokenizer</span>
 <span class="n">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegexTokenizer</span><span class="p">()</span>
@@ -1337,14 +1339,16 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1353,7 +1357,8 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 consists of A-T-G-C, 4 letters), we used a fixed vocabulary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizerModel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizerModel</span>
 <span class="o">//</span> <span class="n">create</span> <span class="n">a</span> <span class="n">dictionary</span> <span class="n">array</span> <span class="kn">from</span> <span class="nn">all</span> <span class="n">possible</span> <span class="n">k</span><span class="o">-</span><span class="n">mers</span> 
 <span class="n">val</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">val</span> <span class="n">fixed_vocab</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="n">k</span><span class="p">))(</span><span class="n">List</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;t&quot;</span><span class="p">,</span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">permutations</span><span class="p">)</span><span class="o">.</span><span class="n">toArray</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">stackoverflow</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">questions</span><span class="o">/</span><span class="mi">38406959</span><span class="o">/</span><span class="n">creating</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">permutations</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="nb">list</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">limited</span><span class="o">-</span><span class="nb">range</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">scala</span>
@@ -1381,7 +1386,8 @@ indicate some pattern for that sample, we keep them. This approach
 provided us better topic diversity and results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
 <span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
       <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span>
       <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
@@ -1399,7 +1405,8 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
 </div>
@@ -1411,7 +1418,8 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
 </div>
@@ -1423,7 +1431,8 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
 <span class="n">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1438,7 +1447,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1450,7 +1460,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">countVectors_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">countVectors_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1462,7 +1473,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">countVectors_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">countVectors_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1477,7 +1489,8 @@ conflict when LDA topic distribution is given as RandomForestClassifier
 input</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="p">}</span>
 <span class="n">val</span> <span class="n">lda_countVector_train</span> <span class="o">=</span> <span class="n">countVectors_train</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Row</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">countVector</span><span class="p">:</span> <span class="n">MLVector</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">mllib</span><span class="o">.</span><span class="n">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="p">(</span><span class="n">countVector</span><span class="p">))</span> <span class="p">}</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
@@ -1497,7 +1510,8 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Array</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">(</span><span class="n">VocabSize</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="n">indexedTokens</span><span class="p">),</span> <span class="n">Array</span><span class="p">(</span><span class="n">Token</span> <span class="n">Frequency</span><span class="p">)))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Array</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">(</span><span class="n">VocabSize</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="n">indexedTokens</span><span class="p">),</span> <span class="n">Array</span><span class="p">(</span><span class="n">Token</span> <span class="n">Frequency</span><span class="p">)))</span>
 <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1510,7 +1524,8 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">num_topics</span> <span class="o">=</span> <span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">num_topics</span> <span class="o">=</span> <span class="mi">20</span>
 </pre></div>
 </div>
 </div>
@@ -1523,7 +1538,8 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 <p>Create the LDA builder</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.clustering.</span><span class="p">{</span><span class="n">LDA</span><span class="p">,</span> <span class="n">EMLDAOptimizer</span><span class="p">,</span><span class="n">DistributedLDAModel</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.clustering.</span><span class="p">{</span><span class="n">LDA</span><span class="p">,</span> <span class="n">EMLDAOptimizer</span><span class="p">,</span><span class="n">DistributedLDAModel</span><span class="p">}</span>
 
 <span class="n">val</span> <span class="n">lda</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LDA</span><span class="p">()</span>
 <span class="o">.</span><span class="n">setOptimizer</span><span class="p">(</span><span class="n">new</span> <span class="n">EMLDAOptimizer</span><span class="p">())</span>
@@ -1543,7 +1559,8 @@ lda: org.apache.spark.mllib.clustering.LDA = org.apache.spark.mllib.clustering.L
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">convert</span> <span class="n">ML</span> <span class="n">vectors</span> <span class="n">into</span> <span class="n">MLlib</span> <span class="n">vectors</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">convert</span> <span class="n">ML</span> <span class="n">vectors</span> <span class="n">into</span> <span class="n">MLlib</span> <span class="n">vectors</span>
 <span class="n">val</span> <span class="n">lda_countVector_train_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_train</span><span class="o">.</span><span class="n">rdd</span>
 <span class="n">val</span> <span class="n">lda_countVector_test_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">rdd</span>
 <span class="n">val</span> <span class="n">ldaModel</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">lda_countVector_train_mllib</span><span class="p">)</span>
@@ -1560,7 +1577,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">distLDAModel</span> <span class="o">=</span> <span class="n">ldaModel</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">DistributedLDAModel</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">distLDAModel</span> <span class="o">=</span> <span class="n">ldaModel</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">DistributedLDAModel</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1572,7 +1590,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">topicIndices</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">describeTopics</span><span class="p">(</span><span class="n">maxTermsPerTopic</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">topicIndices</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">describeTopics</span><span class="p">(</span><span class="n">maxTermsPerTopic</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1584,7 +1603,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">spark</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">scala</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="c1">#org.apache.spark.mllib.clustering.DistributedLDAModel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">spark</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">scala</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="c1">#org.apache.spark.mllib.clustering.DistributedLDAModel</span>
 <span class="n">val</span> <span class="n">topicDistributions_train</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">topicDistributions</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1597,7 +1617,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lda_countVector_test_mllib</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">lda_countVector_test_mllib</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1609,7 +1630,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">topicDistributions_test</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">toLocal</span><span class="o">.</span><span class="n">topicDistributions</span><span class="p">(</span><span class="n">lda_countVector_test_mllib</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">topicDistributions_test</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">toLocal</span><span class="o">.</span><span class="n">topicDistributions</span><span class="p">(</span><span class="n">lda_countVector_test_mllib</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1621,14 +1643,16 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="p">(</span><span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">num_topics</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">num_topics</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1640,7 +1664,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1652,7 +1677,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">NewVectors</span><span class="p">}</span>
 
 <span class="n">val</span> <span class="n">n_topicDistributions_train</span> <span class="o">=</span> <span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="p">)})</span>
@@ -1671,7 +1697,8 @@ n_topicDistributions_test: org.apache.spark.rdd.RDD[(Long, org.apache.spark.ml.l
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">save</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">train</span> <span class="ow">and</span> <span class="n">test</span> <span class="k">with</span> <span class="n">partitioning</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">save</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">train</span> <span class="ow">and</span> <span class="n">test</span> <span class="k">with</span> <span class="n">partitioning</span>
 <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span> <span class="o">//</span> <span class="n">remove</span> <span class="n">existing</span> <span class="n">folder</span>
 <span class="n">n_topicDistributions_train</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="p">)</span>
 
@@ -1683,7 +1710,8 @@ n_topicDistributions_test: org.apache.spark.rdd.RDD[(Long, org.apache.spark.ml.l
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">termWeights</span><span class="p">)</span> <span class="o">=&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">termWeights</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="n">terms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">vocabList</span><span class="p">(</span><span class="n">_</span><span class="p">))</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">termWeights</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$num_topics topics:&quot;</span><span class="p">)</span>
@@ -1944,7 +1972,8 @@ topics: Array[Array[(String, Double)]] = Array(Array((aaa,0.13131543650186733), 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">termWeights</span><span class="p">)</span> <span class="o">=&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">termWeights</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="n">terms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">vocabList</span><span class="p">(</span><span class="n">_</span><span class="p">))</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">termWeights</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$num_topics topics:&quot;</span><span class="p">)</span>
@@ -2208,7 +2237,8 @@ topics: Array[Array[(String, Double)]] = Array(Array((aaa,0.13131543650186733), 
 <h1>Visualise Results<a class="headerlink" href="#visualise-results" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Zip</span> <span class="n">topic</span> <span class="n">terms</span> <span class="k">with</span> <span class="n">topic</span> <span class="n">IDs</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Zip</span> <span class="n">topic</span> <span class="n">terms</span> <span class="k">with</span> <span class="n">topic</span> <span class="n">IDs</span>
 <span class="n">val</span> <span class="n">termArray</span> <span class="o">=</span> <span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span>
 </pre></div>
 </div>
@@ -2221,7 +2251,8 @@ topics: Array[Array[(String, Double)]] = Array(Array((aaa,0.13131543650186733), 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Transform</span> <span class="n">data</span> <span class="n">into</span> <span class="n">the</span> <span class="n">form</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">probability</span><span class="p">,</span> <span class="n">topicId</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Transform</span> <span class="n">data</span> <span class="n">into</span> <span class="n">the</span> <span class="n">form</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">probability</span><span class="p">,</span> <span class="n">topicId</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">termRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">termArray</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">termRDD2</span> <span class="o">=</span><span class="n">termRDD</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">Array</span><span class="p">[(</span><span class="n">String</span><span class="p">,</span> <span class="n">Double</span><span class="p">)],</span> <span class="n">Int</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">arrayOfTuple</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span>
@@ -2240,7 +2271,8 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Create</span> <span class="n">DF</span> <span class="k">with</span> <span class="n">proper</span> <span class="n">column</span> <span class="n">names</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Create</span> <span class="n">DF</span> <span class="k">with</span> <span class="n">proper</span> <span class="n">column</span> <span class="n">names</span>
 <span class="n">val</span> <span class="n">termDF</span> <span class="o">=</span> <span class="n">termRDD2</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="s2">&quot;term&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_3&quot;</span><span class="p">,</span> <span class="s2">&quot;topicId&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2253,7 +2285,8 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Create</span> <span class="n">JSON</span> <span class="n">data</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Create</span> <span class="n">JSON</span> <span class="n">data</span>
 <span class="n">val</span> <span class="n">rawJson</span> <span class="o">=</span> <span class="n">termDF</span><span class="o">.</span><span class="n">toJSON</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2466,7 +2499,8 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">displayHTML</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">displayHTML</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">&lt;!DOCTYPE html&gt;</span>
 <span class="s2">&lt;meta charset=&quot;utf-8&quot;&gt;</span>
 <span class="s2">&lt;style&gt;</span>

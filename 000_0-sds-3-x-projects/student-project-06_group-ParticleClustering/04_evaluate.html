@@ -1272,7 +1272,8 @@ have the clustering accuracy of the model on this new data.</p>
 <p>Import packages needed for the script and set the correct paths</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1304,7 +1305,8 @@ have the clustering accuracy of the model on this new data.</p>
 <p>Default settings</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+
 <span class="n">parserdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gpu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="c1">#help=&#39;GPUs to use [default: 0]&#39;)</span>
               <span class="s1">&#39;n_clusters&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="c1"># type=int, default=3, #help=&#39;Number of clusters [Default: 3]&#39;)</span>
               <span class="s1">&#39;max_dim&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="c1">#type=int, default=3, #help=&#39;Dimension of the encoding layer [Default: 3]&#39;)</span>
@@ -1337,7 +1339,8 @@ have the clustering accuracy of the model on this new data.</p>
 <p>Some helper functions</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Calculate the clustering accuracy</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1">#Calculate the clustering accuracy</span>
 <span class="k">def</span> <span class="nf">cluster_acc</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate clustering accuracy. Require scikit-learn installed</span>
@@ -1357,7 +1360,8 @@ have the clustering accuracy of the model on this new data.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the latest checkpoint (the training script saves one every 1000th step)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Find the latest checkpoint (the training script saves one every 1000th step)</span>
 <span class="k">def</span> <span class="nf">find_ckpt</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">base</span><span class="p">):</span>
   <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
   <span class="n">s</span><span class="o">=</span><span class="n">base</span><span class="o">+</span><span class="s2">&quot;.ckpt-&quot;</span>
@@ -1372,7 +1376,8 @@ have the clustering accuracy of the model on this new data.</p>
 <p>Run the evaluation script</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_POINT</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_point</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">NUM_POINT</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_point</span>
 <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch</span>
 <span class="n">NFEATURES</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">nfeat</span>
 <span class="n">FULL_TRAINING</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">full_train</span>
@@ -1527,7 +1532,8 @@ pooling) has been written. This can be used to make visualizations such
 as the one in the introduction notebook (taken from the paper).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">H5_OUT</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">H5_OUT</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

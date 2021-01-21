@@ -1332,7 +1332,8 @@ datasets that need row to column conversions.</p>
 <p>Create tables and load temperature data</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">OR</span> <span class="n">REPLACE</span> <span class="n">TEMPORARY</span> <span class="n">VIEW</span> <span class="n">high_temps</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">CREATE</span> <span class="n">OR</span> <span class="n">REPLACE</span> <span class="n">TEMPORARY</span> <span class="n">VIEW</span> <span class="n">high_temps</span>
   <span class="n">USING</span> <span class="n">csv</span>
   <span class="n">OPTIONS</span> <span class="p">(</span><span class="n">path</span> <span class="s2">&quot;/databricks-datasets/weather/high_temps&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="s2">&quot;FAILFAST&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1341,7 +1342,8 @@ datasets that need row to column conversions.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">OR</span> <span class="n">REPLACE</span> <span class="n">TEMPORARY</span> <span class="n">VIEW</span> <span class="n">low_temps</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">CREATE</span> <span class="n">OR</span> <span class="n">REPLACE</span> <span class="n">TEMPORARY</span> <span class="n">VIEW</span> <span class="n">low_temps</span>
   <span class="n">USING</span> <span class="n">csv</span>
   <span class="n">OPTIONS</span> <span class="p">(</span><span class="n">path</span> <span class="s2">&quot;/databricks-datasets/weather/low_temps&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="s2">&quot;FAILFAST&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1355,7 +1357,8 @@ datasets that need row to column conversions.</p>
 year as rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
   <span class="n">SELECT</span> <span class="n">year</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">month</span><span class="p">,</span> <span class="n">temp</span>
   <span class="n">FROM</span> <span class="n">high_temps</span>
   <span class="n">WHERE</span> <span class="n">date</span> <span class="n">BETWEEN</span> <span class="n">DATE</span> <span class="s1">&#39;2015-01-01&#39;</span> <span class="n">AND</span> <span class="n">DATE</span> <span class="s1">&#39;2018-08-31&#39;</span>
@@ -1379,7 +1382,8 @@ year as rows.</p>
 columns and year as rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
   <span class="n">SELECT</span> <span class="n">year</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">month</span><span class="p">,</span> <span class="n">temp</span>
   <span class="n">FROM</span> <span class="n">high_temps</span>
   <span class="n">WHERE</span> <span class="n">date</span> <span class="n">BETWEEN</span> <span class="n">DATE</span> <span class="s1">&#39;2015-01-01&#39;</span> <span class="n">AND</span> <span class="n">DATE</span> <span class="s1">&#39;2018-08-31&#39;</span>
@@ -1400,7 +1404,8 @@ columns and year as rows.</p>
 columns and (year, hi/lo) as rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT * FROM (
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%sql
+SELECT * FROM (
   SELECT year(date) year, month(date) month, temp, flag `H/L`
   FROM (
     SELECT date, temp, &#39;H&#39; as flag
@@ -1427,7 +1432,8 @@ ORDER BY year DESC, `H/L` ASC
 hi/lo) as columns and year as rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="p">(</span>
   <span class="n">SELECT</span> <span class="n">year</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="n">month</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">flag</span>
   <span class="n">FROM</span> <span class="p">(</span>
     <span class="n">SELECT</span> <span class="n">date</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span> <span class="k">as</span> <span class="n">flag</span>

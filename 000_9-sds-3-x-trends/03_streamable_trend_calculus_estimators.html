@@ -1299,14 +1299,16 @@ Library</a></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;./000a_finance_utils&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span>
+<span class="s2">&quot;./000a_finance_utils&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.sql.Timestamp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">java.sql.Timestamp</span>
 <span class="kn">import</span> <span class="nn">io.delta.tables._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
@@ -1338,7 +1340,8 @@ oil data. We show that this yields better results than just training on
 the oil data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rootPath</span> <span class="o">=</span> <span class="n">TrendUtils</span><span class="o">.</span><span class="n">getStreamableTrendCalculusPath</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">rootPath</span> <span class="o">=</span> <span class="n">TrendUtils</span><span class="o">.</span><span class="n">getStreamableTrendCalculusPath</span>
 <span class="n">val</span> <span class="n">maxRevPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;maxRev&quot;</span>
 <span class="n">val</span> <span class="n">maxRevDS</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">maxRevPath</span><span class="p">)</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">FlatReversal</span><span class="p">]</span>
 </pre></div>
@@ -1355,7 +1358,8 @@ when training the model.</p>
 the rest is used for testing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">modelPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;estimators/&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">modelPath</span> <span class="o">=</span> <span class="n">rootPath</span> <span class="o">+</span> <span class="s2">&quot;estimators/&quot;</span>
 <span class="n">val</span> <span class="n">maxRevDSWithLagCountPath</span> <span class="o">=</span> <span class="n">modelPath</span> <span class="o">+</span> <span class="s2">&quot;maxRevDSWithLag&quot;</span>
 
 <span class="n">val</span> <span class="n">numPartitions</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1373,7 +1377,8 @@ the rest is used for testing.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def truncRev(k: Int)(rev: Int): Int = {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+def truncRev(k: Int)(rev: Int): Int = {
   if (math.abs(rev) &gt; k) k*rev.signum else rev
 }
 val truncRevUDF = udf{ rev: Int =&gt; rev.signum }
@@ -1415,7 +1420,8 @@ always be either 0 (up trend) or -1 (down trend) and 0 is therefore
 mapped to 1 to get (1, -1) as (up, down).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val maxRevDSWithLag = lagColumn(
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val maxRevDSWithLag = lagColumn(
   maxRevDS
     .orderBy(&quot;x&quot;)
     .toDF
@@ -1449,7 +1455,8 @@ mapped to 1 to get (1, -1) as (up, down).</p>
 <p>We now want to predict <code class="docutils literal notranslate"><span class="pre">lagValue</span></code> from <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">maxRevDSWithLag</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">maxRevDSWithLag</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1457,7 +1464,8 @@ mapped to 1 to get (1, -1) as (up, down).</p>
 <p>Cleaning up last run and writing model training input to delta tables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">maxRevDSWithLag</span>
   <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">))</span>
@@ -1471,7 +1479,8 @@ mapped to 1 to get (1, -1) as (up, down).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">divUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">{</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">toDouble</span><span class="o">/</span><span class="n">b</span> <span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">divUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">{</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">toDouble</span><span class="o">/</span><span class="n">b</span> <span class="p">}</span>
 <span class="n">val</span> <span class="n">maxRevDSWithLagCount</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">maxRevDSWithLagCountPath</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">numberOfRows</span> <span class="o">=</span> <span class="n">maxRevDSWithLagCount</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
@@ -1494,7 +1503,8 @@ would be used since we can only train on data points that have already
 been observed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val tickers = maxRevDSWithLagCount.select(&quot;ticker&quot;).distinct.as[String].collect.toSeq
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val tickers = maxRevDSWithLagCount.select(&quot;ticker&quot;).distinct.as[String].collect.toSeq
 val tickerDFs = tickers.map( ticker =&gt; maxRevDSWithLagCount.filter($&quot;ticker&quot; === ticker))
 val trainingDF = tickerDFs.map( df =&gt; df.limit((df.count*trainingRatio).toInt) ).reduce( _.union(_) ).orderBy(&quot;x&quot;)
 val trainingRows = trainingDF.count
@@ -1519,7 +1529,8 @@ spaced logarithmically since the improvement in the model is fastest in
 the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">rowsInPartitions</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">numPartitions</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="n">i</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">trainingRows</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="n">numPartitions</span><span class="p">))</span><span class="o">.</span><span class="n">toInt</span> <span class="p">}</span><span class="o">//.</span><span class="n">scanLeft</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)(</span><span class="n">_</span><span class="o">-</span><span class="n">_</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">rowsInPartitions</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">numPartitions</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="n">i</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">trainingRows</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="n">numPartitions</span><span class="p">))</span><span class="o">.</span><span class="n">toInt</span> <span class="p">}</span><span class="o">//.</span><span class="n">scanLeft</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)(</span><span class="n">_</span><span class="o">-</span><span class="n">_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1534,7 +1545,8 @@ pair is observed and dividing by how many times <code class="docutils literal no
 get an estimation of the transition probabilities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val keyValueCountPartialDFs = rowsInPartitions.map(
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val keyValueCountPartialDFs = rowsInPartitions.map(
   trainingDF
     .limit(_)
     .withColumn(&quot;keyValueObs&quot;, sum(&quot;count&quot;).over(Window.partitionBy($&quot;lagKey&quot;, $&quot;lagValue&quot;)))
@@ -1552,14 +1564,16 @@ get an estimation of the transition probabilities.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>display(keyValueCountPartialDFs.last.orderBy($&quot;keyValueObs&quot;.desc))
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+display(keyValueCountPartialDFs.last.orderBy($&quot;keyValueObs&quot;.desc))
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keyValueCountPartialDFs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+keyValueCountPartialDFs
   .map( df =&gt;
     df
       .withColumn(&quot;probability&quot;, divUDF($&quot;keyValueObs&quot;, $&quot;totalKeyObs&quot;))
@@ -1579,7 +1593,8 @@ get an estimation of the transition probabilities.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">probDFs</span> <span class="o">=</span> <span class="n">partialModelPaths</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">probDFs</span> <span class="o">=</span> <span class="n">partialModelPaths</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1591,7 +1606,8 @@ get an estimation of the transition probabilities.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">probDFs</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;probability&quot;</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">probDFs</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;probability&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1605,7 +1621,8 @@ last <code class="docutils literal notranslate"><span class="pre">m</span></code
 elements in argmax, an element is chosen uniformly at random.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val aggWindow = Window.partitionBy(&quot;lagKey&quot;).orderBy(&#39;probability desc)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val aggWindow = Window.partitionBy(&quot;lagKey&quot;).orderBy(&#39;probability desc)
 val testedDFs = probDFs
   .map { df =&gt;
      val predictionDF = df
@@ -1639,7 +1656,8 @@ argmax(P_K(V)). <code class="docutils literal notranslate"><span class="pre">saf
 test data that were not present in the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">getRandomUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span> <span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]])</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">getRandomUDF</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span> <span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]])</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="n">val</span> <span class="n">safeArr</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">getOrElse</span><span class="p">(</span><span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]]())</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">safeArr</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">)</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">]()</span> <span class="k">else</span> <span class="n">safeArr</span><span class="p">(</span><span class="n">Random</span><span class="o">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">safeArr</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
 <span class="p">}</span> <span class="p">)</span>
@@ -1659,7 +1677,8 @@ lossUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunct
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val lossDFs = testedDFs.map(_.withColumn(&quot;prediction&quot;, getRandomUDF($&quot;test&quot;)).withColumn(&quot;loss&quot;, lossUDF($&quot;lagValue&quot;, $&quot;prediction&quot;)))
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val lossDFs = testedDFs.map(_.withColumn(&quot;prediction&quot;, getRandomUDF($&quot;test&quot;)).withColumn(&quot;loss&quot;, lossUDF($&quot;lagValue&quot;, $&quot;prediction&quot;)))
 </pre></div>
 </div>
 </div>
@@ -1673,14 +1692,16 @@ lossUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunct
 observed (indicated by <code class="docutils literal notranslate"><span class="pre">null</span></code> in test column).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">lossDFs</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">lossDFs</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val testLength = testingDF.count
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val testLength = testingDF.count
 val oilTestDF = testingDF.filter($&quot;ticker&quot; === &quot;BCOUSD&quot;)
 val oilTestLength = oilTestDF.count
 </pre></div>
@@ -1702,7 +1723,8 @@ just oil, suggesting that trends behave similarly in the two
 commodities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val losses = lossDFs.map( _.agg(sum(&quot;loss&quot;)).select($&quot;sum(loss)&quot;.as(&quot;totalLoss&quot;)).collect.head.getLong(0).toDouble/oilTestLength )
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+val losses = lossDFs.map( _.agg(sum(&quot;loss&quot;)).select($&quot;sum(loss)&quot;.as(&quot;totalLoss&quot;)).collect.head.getLong(0).toDouble/oilTestLength )
 // Data up to 2019
 // k=max, m=2 ,n=1: (0.5489615950080244, 0.4014721726541194, 0.3660973816818738, 0.36497087640146797, 0.36485163238050344)
 // k=max, m=10,n=1: (0.9812730246821787, 0.8523390131056561, 0.5819573469954631, 0.3552177121357085, 0.2807503135425113)
@@ -1733,7 +1755,8 @@ commodities.</p>
 increases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">trainingSizes</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">trainingSizes</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">lossesDS</span> <span class="o">=</span> <span class="n">sc</span>
   <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">losses</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">trainingSizes</span><span class="p">))</span>
   <span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
@@ -1757,7 +1780,8 @@ lossesDS: org.apache.spark.sql.Dataset[(Double, Long, String)] = [loss: double, 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">lossesDS</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">display</span><span class="p">(</span><span class="n">lossesDS</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1821,56 +1845,6 @@ lossesDS: org.apache.spark.sql.Dataset[(Double, Long, String)] = [loss: double, 
 <td>4792058.0</td>
 <td>Oil and Gold</td>
 </tr>
-<tr class="odd">
-<td>0.9973104051296998</td>
-<td>4.0</td>
-<td>Oil</td>
-</tr>
-<tr class="even">
-<td>0.9843882250072865</td>
-<td>18.0</td>
-<td>Oil</td>
-</tr>
-<tr class="odd">
-<td>0.9510789857184494</td>
-<td>77.0</td>
-<td>Oil</td>
-</tr>
-<tr class="even">
-<td>0.8574351501020111</td>
-<td>331.0</td>
-<td>Oil</td>
-</tr>
-<tr class="odd">
-<td>0.7515744680851064</td>
-<td>1414.0</td>
-<td>Oil</td>
-</tr>
-<tr class="even">
-<td>0.6360547945205479</td>
-<td>6036.0</td>
-<td>Oil</td>
-</tr>
-<tr class="odd">
-<td>0.5099656076945497</td>
-<td>25759.0</td>
-<td>Oil</td>
-</tr>
-<tr class="even">
-<td>0.4249921305741766</td>
-<td>109918.0</td>
-<td>Oil</td>
-</tr>
-<tr class="odd">
-<td>0.3735668901194987</td>
-<td>469036.0</td>
-<td>Oil</td>
-</tr>
-<tr class="even">
-<td>0.34609501603031184</td>
-<td>2001430.0</td>
-<td>Oil</td>
-</tr>
 </tbody>
 </table></div></div>
 </div>
@@ -1884,7 +1858,8 @@ between them.</p>
 <p>The first step is to collect the models and work with them locally.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">partialModels</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="n">df</span> <span class="o">=&gt;</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">partialModels</span> <span class="o">=</span> <span class="n">probDFs</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="n">df</span> <span class="o">=&gt;</span> 
   <span class="n">val</span> <span class="n">tmpMap</span> <span class="o">=</span> <span class="n">df</span>
     <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;lagKey&quot;</span><span class="p">,</span> <span class="s2">&quot;lagValue&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">distinct</span>
@@ -1908,7 +1883,8 @@ observing a sequence of <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">lagKey</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def totalVarDist(m1: FinalModel, m2: FinalModel): Map[Seq[Int], Double] = {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+def totalVarDist(m1: FinalModel, m2: FinalModel): Map[Seq[Int], Double] = {
   val allKeys = m1.keys.toSet.union(m2.keys.toSet)
   val sharedKeys = m1.keys.toSet.intersect(m2.keys.toSet)
   val totalVarDists = allKeys.toSeq.map{ key =&gt;
@@ -1936,14 +1912,16 @@ observing a sequence of <code class="docutils literal notranslate"><span class="
 trained models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">totalVariationDistances</span> <span class="o">=</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m1</span> <span class="o">=&gt;</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m2</span> <span class="o">=&gt;</span> <span class="n">totalVarDist</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">totalVariationDistances</span> <span class="o">=</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m1</span> <span class="o">=&gt;</span> <span class="n">partialModels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">m2</span> <span class="o">=&gt;</span> <span class="n">totalVarDist</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">aggToMatrix</span><span class="p">(</span><span class="n">totalVarDists</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span><span class="n">Double</span><span class="p">]]],</span> <span class="n">aggFunc</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="n">Double</span><span class="p">):</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">def</span> <span class="nf">aggToMatrix</span><span class="p">(</span><span class="n">totalVarDists</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span><span class="n">Double</span><span class="p">]]],</span> <span class="n">aggFunc</span><span class="p">:</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="n">Double</span><span class="p">):</span> <span class="n">Seq</span><span class="p">[</span><span class="n">Seq</span><span class="p">[</span><span class="n">Double</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">totalVariationDistances</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">map</span><span class="p">(</span> <span class="n">t</span> <span class="o">=&gt;</span> <span class="n">aggFunc</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">toSeq</span><span class="p">)))</span>
 <span class="p">}</span>
 
@@ -1971,7 +1949,8 @@ over the different <code class="docutils literal notranslate"><span class="pre">
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">maxDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">maxDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">minDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">meanDists</span> <span class="o">=</span> <span class="n">aggToMatrix</span><span class="p">(</span><span class="n">totalVariationDistances</span><span class="p">,</span> <span class="n">s</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="o">/</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
@@ -2015,7 +1994,8 @@ arithmetic mean described above, the matrix is</p>
 the estimate can still be improved given more data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printMatrix</span><span class="p">(</span><span class="n">meanDists</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">printMatrix</span><span class="p">(</span><span class="n">meanDists</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

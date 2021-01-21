@@ -1339,7 +1339,8 @@ needed is pre-installed in the runtime environment on the right nodes.</p>
 <p>The next cell creates a directory for saved checkpoint models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="s1">&#39;/dbfs/ml/MNISTDemo/train/</span><span class="si">{}</span><span class="s1">/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
@@ -1362,7 +1363,8 @@ data across the available nodes, and converts the data to shapes and
 types needed for training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
   
   <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;MNIST-data-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">rank</span><span class="p">)</span>
@@ -1393,7 +1395,8 @@ consists of 2 convolutional layers, a max-pooling layer, two dropout
 layers, and a final dense layer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
   <span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">models</span>
   <span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
   
@@ -1422,7 +1425,8 @@ This section illustrates single-node training code using
 <code class="docutils literal notranslate"><span class="pre">tensorflow.keras</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify training parameters</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Specify training parameters</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>        
@@ -1455,7 +1459,8 @@ node. The process takes several minutes. The accuracy improves with each
 epoch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Runs in  23.67 seconds on 3-node     GPU</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Runs in  23.67 seconds on 3-node     GPU</span>
 <span class="c1"># Runs in 418.8  seconds on 3-node non-GPU</span>
 <span class="n">train</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
@@ -1504,7 +1509,8 @@ For more information about Horovod, see the <a class="reference external" href="
 documentation</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_hvd</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">train_hvd</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
   <span class="c1"># Import tensorflow modules to each worker</span>
   <span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
   <span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
@@ -1565,7 +1571,8 @@ example uses a cluster with two workers, each with a single GPU, so set
 on the driver node.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># runs in  47.84 seconds on 3-node     GPU cluster</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># runs in  47.84 seconds on 3-node     GPU cluster</span>
 <span class="c1"># Runs in 316.8  seconds on 3-node non-GPU cluster</span>
 <span class="kn">from</span> <span class="nn">sparkdl</span> <span class="kn">import</span> <span class="n">HorovodRunner</span>
 

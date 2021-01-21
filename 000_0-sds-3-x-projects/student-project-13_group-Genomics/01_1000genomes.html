@@ -1409,7 +1409,8 @@ We make some plots.</p>
 <h1>Load libs and define helper functions<a class="headerlink" href="#load-libs-and-define-helper-functions" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">array_min</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">monotonically_increasing_id</span><span class="p">,</span> <span class="n">when</span><span class="p">,</span> <span class="n">log10</span>
@@ -1433,7 +1434,8 @@ We make some plots.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper functions</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Helper functions</span>
 
 <span class="k">def</span> <span class="nf">plot_layout</span><span class="p">(</span><span class="n">plot_title</span><span class="p">,</span> <span class="n">plot_style</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">plot_style</span><span class="p">)</span> <span class="c1">#e.g. ggplot, seaborn-colorblind, print(plt.style.available)</span>
@@ -1478,7 +1480,8 @@ We make some plots.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paths to store/find data.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Paths to store/find data.</span>
 <span class="c1"># Since a lot of the processing takes a long time, we store intermediate results.</span>
 <span class="n">vcf_path</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz&quot;</span>
 <span class="n">delta_silver_path</span> <span class="o">=</span> <span class="s2">&quot;/mnt/gwas_test/snps.delta&quot;</span>
@@ -1501,7 +1504,8 @@ We make some plots.</p>
 ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr1.phase3<em>shapeit2</em>mvncall<em>integrated</em>v5a.20130502.genotypes.vcf.gz</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="mi">1000</span><span class="n">genomes</span><span class="o">.</span><span class="n">ebi</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span><span class="o">/</span><span class="n">vol1</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">release</span><span class="o">/</span><span class="mi">20130502</span><span class="o">/</span><span class="n">ALL</span><span class="o">.</span><span class="n">chr1</span><span class="o">.</span><span class="n">phase3_shapeit2_mvncall_integrated_v5a</span><span class="o">.</span><span class="mf">20130502.</span><span class="n">genotypes</span><span class="o">.</span><span class="n">vcf</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">wget</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="mi">1000</span><span class="n">genomes</span><span class="o">.</span><span class="n">ebi</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span><span class="o">/</span><span class="n">vol1</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">release</span><span class="o">/</span><span class="mi">20130502</span><span class="o">/</span><span class="n">ALL</span><span class="o">.</span><span class="n">chr1</span><span class="o">.</span><span class="n">phase3_shapeit2_mvncall_integrated_v5a</span><span class="o">.</span><span class="mf">20130502.</span><span class="n">genotypes</span><span class="o">.</span><span class="n">vcf</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
 </div>
@@ -1519,7 +1523,8 @@ easy read of genomic-specific file formats, and other helper methods.</p>
 <p>Load and view the vcf files. The info fields are combined to one column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vcf_view_unsplit</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;vcf&quot;</span><span class="p">)</span><span class="o">.</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">vcf_view_unsplit</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;vcf&quot;</span><span class="p">)</span><span class="o">.</span> \
    <span class="n">option</span><span class="p">(</span><span class="s2">&quot;flattenInfoFields&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span><span class="o">.</span> \
    <span class="n">load</span><span class="p">(</span><span class="n">vcf_path</span><span class="p">)</span>
 
@@ -1539,7 +1544,8 @@ amoung the analyzed subjects.</p>
 them using the <code class="docutils literal notranslate"><span class="pre">split_miltiallelics</span></code> function from Glow.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vcf_view</span> <span class="o">=</span> <span class="n">glow</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;split_multiallelics&quot;</span><span class="p">,</span> <span class="n">vcf_view_unsplit</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">vcf_view</span> <span class="o">=</span> <span class="n">glow</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;split_multiallelics&quot;</span><span class="p">,</span> <span class="n">vcf_view_unsplit</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">vcf_view</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;genotypes&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;genotypes&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
 </div>
@@ -1551,7 +1557,8 @@ neccessary statistics, which we will use later, using the Glow functions
 <code class="docutils literal notranslate"><span class="pre">call_summary_stats</span></code> and <code class="docutils literal notranslate"><span class="pre">hardy_weinberg</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># NOTE - this takes approx 2 hours</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># NOTE - this takes approx 2 hours</span>
 
 <span class="n">vcf_view</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;expand_struct(call_summary_stats(genotypes))&quot;</span><span class="p">,</span> <span class="s2">&quot;expand_struct(hardy_weinberg(genotypes))&quot;</span><span class="p">)</span><span class="o">.</span> \
    <span class="n">write</span><span class="o">.</span> \
@@ -1569,7 +1576,8 @@ low quality SNPs.</p>
 <p>We read the saved dataframe, and filter the dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hyper paramters</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Hyper paramters</span>
 <span class="n">allele_freq_cutoff</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">num_pcs</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#number of principal components</span>
 </pre></div>
@@ -1578,7 +1586,8 @@ low quality SNPs.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hwe</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">hwe</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
                  <span class="n">load</span><span class="p">(</span><span class="n">delta_silver_path</span><span class="p">)</span><span class="o">.</span> \
                  <span class="n">where</span><span class="p">((</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;alleleFrequencies&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">allele_freq_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> 
                        <span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;alleleFrequencies&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">allele_freq_cutoff</span><span class="p">)))</span><span class="o">.</span> \
@@ -1595,7 +1604,8 @@ low quality SNPs.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hwe_cutoff</span> <span class="o">=</span> <span class="n">calculate_pval_bonferroni_cutoff</span><span class="p">(</span><span class="n">hwe</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">hwe_cutoff</span> <span class="o">=</span> <span class="n">calculate_pval_bonferroni_cutoff</span><span class="p">(</span><span class="n">hwe</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1604,7 +1614,8 @@ low quality SNPs.</p>
 and where the Hardy-Weiburg value is higher than cutoff.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
    <span class="n">load</span><span class="p">(</span><span class="n">hwe_path</span><span class="p">)</span><span class="o">.</span> \
    <span class="n">where</span><span class="p">((</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;alleleFrequencies&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">allele_freq_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> 
          <span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;alleleFrequencies&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">allele_freq_cutoff</span><span class="p">))</span> <span class="o">&amp;</span>
@@ -1619,7 +1630,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We saved the results to disc and here we jus tload them as the above computation takes a lot of time</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># We saved the results to disc and here we jus tload them as the above computation takes a lot of time</span>
 <span class="n">hwe_filtered</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;delta&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">delta_gold_path</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1632,7 +1644,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 <p>We perform a PCA analysis for data exploration purposes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vectorized</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">vectorized</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span> \
                         <span class="n">load</span><span class="p">(</span><span class="n">delta_gold_path</span><span class="p">)</span><span class="o">.</span> \
                         <span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;array_to_sparse_vector(genotype_states(genotypes)) as features&quot;</span><span class="p">)</span><span class="o">.</span> \
                         <span class="n">cache</span><span class="p">()</span>
@@ -1650,7 +1663,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note - takes approx 30 min</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Note - takes approx 30 min</span>
 
 <span class="n">matrix</span> <span class="o">=</span> <span class="n">RowMatrix</span><span class="p">(</span><span class="n">MLUtils</span><span class="o">.</span><span class="n">convertVectorColumnsFromML</span><span class="p">(</span><span class="n">vectorized</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">features</span><span class="p">))</span>
 <span class="n">pcs</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">computeSVD</span><span class="p">(</span><span class="n">num_pcs</span><span class="p">)</span>
@@ -1660,7 +1674,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="nd">@dataclass</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">Covariates</span><span class="p">:</span>
     <span class="n">covariates</span><span class="p">:</span> <span class="n">DenseMatrix</span>
       
@@ -1674,7 +1689,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcs_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">pcs</span><span class="o">.</span><span class="n">V</span><span class="o">.</span><span class="n">toArray</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;pc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_pcs</span><span class="p">)])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">pcs_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">pcs</span><span class="o">.</span><span class="n">V</span><span class="o">.</span><span class="n">toArray</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;pc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_pcs</span><span class="p">)])</span>
 
 <span class="n">display</span><span class="p">(</span><span class="n">pcs_df</span><span class="p">)</span>
 
@@ -1685,7 +1701,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read already caluclated pca</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Read already caluclated pca</span>
 <span class="n">pcs_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/sds/genomics/pcs_df.csv&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">pcs_df</span><span class="p">)</span>
 </pre></div>
@@ -1697,7 +1714,8 @@ and where the Hardy-Weiburg value is higher than cutoff.</p>
 ethnicity).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sample_metadata</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">sample_info_path</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">sample_metadata</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">sample_info_path</span><span class="p">)</span>
 <span class="n">sample_info</span> <span class="o">=</span> <span class="n">get_sample_info</span><span class="p">(</span><span class="n">vcf_view</span><span class="p">,</span> <span class="n">sample_metadata</span><span class="p">)</span>
 
 <span class="n">sample_count</span> <span class="o">=</span> <span class="n">sample_info</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -1711,7 +1729,8 @@ ethnicity).</p>
 <p>View 1st and 2nd principal component</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">pcs_with_samples</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pcs_with_samples</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1736,7 +1755,8 @@ We experiment with several different sizes of the final data set.</p>
 encode it for regression</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read sample information</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Read sample information</span>
 <span class="n">sample_metadata</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">sample_info_path</span><span class="p">)</span>
 <span class="n">sample_info</span> <span class="o">=</span> <span class="n">get_sample_info</span><span class="p">(</span><span class="n">vcf_view</span><span class="p">,</span> <span class="n">sample_metadata</span><span class="p">)</span>
 
@@ -1753,14 +1773,16 @@ to balance the data and see if this would have obvious negative impact
 on our results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">sample_info</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sample_info</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># One hot encoding of the labels</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># One hot encoding of the labels</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">IndexToString</span><span class="p">,</span> <span class="n">StringIndexer</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
@@ -1804,7 +1826,8 @@ format the data into a sparce feature vectors and numeric corresponding
 label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load earlier-filtered data</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Load earlier-filtered data</span>
 <span class="n">delta_gold_path</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/snps.qced.delta.delta&quot;</span>
 <span class="n">hwe_filtered</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;delta&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">delta_gold_path</span><span class="p">)</span>
 <span class="n">vectorized_2</span> <span class="o">=</span> <span class="n">hwe_filtered</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">glow</span><span class="o">.</span><span class="n">genotype_states</span><span class="p">(</span><span class="s1">&#39;genotypes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;states&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1820,7 +1843,8 @@ label.</p>
 methods to achieve the required format of the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a column that indicates to which SNP the states belong and then explode SNPs</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Add a column that indicates to which SNP the states belong and then explode SNPs</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">monotonically_increasing_id</span> 
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">explode</span><span class="p">,</span> <span class="n">posexplode</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span><span class="p">,</span> <span class="n">concat</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">lit</span><span class="p">,</span> <span class="n">row_number</span><span class="p">,</span> <span class="n">collect_list</span>
@@ -1841,7 +1865,8 @@ methods to achieve the required format of the data:</p>
 convert the dense feature vectors into sparse vectors</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">features_df</span> <span class="o">=</span> <span class="n">features_df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;array_to_sparse_vector(Features) as features_sparse&quot;</span><span class="p">,</span><span class="s2">&quot;Population_index&quot;</span><span class="p">,</span> <span class="s2">&quot;population_onehot&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">features_df</span> <span class="o">=</span> <span class="n">features_df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;array_to_sparse_vector(Features) as features_sparse&quot;</span><span class="p">,</span><span class="s2">&quot;Population_index&quot;</span><span class="p">,</span> <span class="s2">&quot;population_onehot&quot;</span><span class="p">)</span>
 <span class="n">features_df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1854,7 +1879,8 @@ convert the dense feature vectors into sparse vectors</p>
 subset of features, we are saving them to disc.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_200_000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_200_000.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_200_000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_200_000.delta&quot;</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">ChiSqSelector</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 200000)</span>
 <span class="c1"># selected_feat_200_000 = selector.fit(features_df).transform(features_df)</span>
@@ -1866,7 +1892,8 @@ subset of features, we are saving them to disc.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_20_000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_20_000.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_20_000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_20_000.delta&quot;</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 20000)</span>
 <span class="c1"># selected_feat_20_000 = selector.fit(features_df).transform(features_df)</span>
 <span class="c1"># selected_feat_20_000.write.format(&quot;delta&quot;).save(feature_selection_20_000)</span>
@@ -1877,7 +1904,8 @@ subset of features, we are saving them to disc.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_2000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_2000.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_2000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_2000.delta&quot;</span>
 <span class="c1"># from pyspark.ml.feature import ChiSqSelector</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 2000)</span>
 <span class="c1"># selected_feat_2000 = selector.fit(features_df).transform(features_df)</span>
@@ -1891,7 +1919,8 @@ subset of features, we are saving them to disc.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_results_1000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_1000.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_results_1000</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_1000.delta&quot;</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 1000)</span>
 <span class="c1"># selected_feat_1000 = selector.fit(features_df).transform(features_df)</span>
 <span class="c1"># selected_feat_1000.write.format(&quot;delta&quot;).save(feature_selection_results_1000)</span>
@@ -1903,7 +1932,8 @@ subset of features, we are saving them to disc.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_results_100</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_100.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_results_100</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_100.delta&quot;</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 100)</span>
 <span class="c1"># selected_feat_100 = selector.fit(features_df).transform(features_df)</span>
 <span class="c1"># selected_feat_100.write.format(&quot;delta&quot;).save(feature_selection_results_100)</span>
@@ -1915,7 +1945,8 @@ subset of features, we are saving them to disc.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection_50</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_50.delta&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">feature_selection_50</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/sds/genomics/selected_feat_50.delta&quot;</span>
 <span class="c1"># selector = ChiSqSelector(featuresCol=&#39;features_sparse&#39;, outputCol=&#39;ChiSq&#39;,labelCol=&#39;Population_index&#39;, numTopFeatures = 50)</span>
 <span class="c1"># selected_feat_50 = selector.fit(features_df).transform(features_df)</span>
 <span class="c1"># selected_feat_50.write.format(&quot;delta&quot;).save(feature_selection_50)</span>
@@ -1932,7 +1963,8 @@ SNPs, test-train split and fitting of logistic regression and random
 forest models. The performance is measured in accuracy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="kn">import</span> <span class="n">MulticlassClassificationEvaluator</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
@@ -1981,7 +2013,8 @@ forest models. The performance is measured in accuracy.</p>
 <h2>Results and Discussion<a class="headerlink" href="#results-and-discussion" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">rf_plot</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;all_feat&#39;</span><span class="p">,</span> <span class="s1">&#39;200,000&#39;</span><span class="p">,</span> <span class="s1">&#39;20,000&#39;</span><span class="p">,</span> <span class="s1">&#39;2,000&#39;</span><span class="p">,</span> <span class="s1">&#39;1,000&#39;</span><span class="p">,</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span> <span class="s1">&#39;50&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">acc_rf</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="n">lf_plot</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;all_feat&#39;</span><span class="p">,</span> <span class="s1">&#39;200,000&#39;</span><span class="p">,</span> <span class="s1">&#39;20,000&#39;</span><span class="p">,</span> <span class="s1">&#39;2,000&#39;</span><span class="p">,</span> <span class="s1">&#39;1,000&#39;</span><span class="p">,</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span> <span class="s1">&#39;50&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">acc_lr</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>

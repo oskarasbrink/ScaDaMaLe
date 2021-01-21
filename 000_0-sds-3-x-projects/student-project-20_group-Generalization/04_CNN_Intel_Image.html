@@ -1271,7 +1271,8 @@ Again, this notebook runs on CPUs, but the hyperparameter search is
 scalable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Imports</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
@@ -1296,7 +1297,8 @@ forest, glacier, mountain, sea, or street. However when we load the data
 to our model we will rescale the images to 32x32 RBG images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Global parameters for training.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -1318,7 +1320,8 @@ data more accessible. We do this by copying the data from the dbfs to
 the working directory. This is done with our copy_data function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">shutil</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">shutil</span>
 <span class="k">def</span> <span class="nf">copy_data</span><span class="p">():</span>
   <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/Group20/seg_train/seg_train&quot;</span>
   <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;seg_train&#39;</span><span class="p">)</span>
@@ -1341,7 +1344,8 @@ the working directory. This is done with our copy_data function.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MixupImageDataGenerator</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">class</span> <span class="nc">MixupImageDataGenerator</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1407,7 +1411,8 @@ the working directory. This is done with our copy_data function.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A method that gives us the different dataloaders that we need for training and validation.</span>
 
 <span class="sd">With for_training set to True, the model gives us the dataloaders</span>
@@ -1494,7 +1499,8 @@ the working directory. This is done with our copy_data function.</p>
 <p>Next, we define the function for creating the CNN.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">creates the CNN with number_conv convolutional layers followed by number_dense dense layers. The model is compiled with a SGD optimizer and a categorical crossentropy loss.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span><span class="n">number_conv</span><span class="p">,</span><span class="n">number_dense</span><span class="p">):</span>
@@ -1524,7 +1530,8 @@ in the config dictionary, train the model and evaluate the model on the
 different datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_function</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">training_function</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># Hyperparameters</span>
     <span class="n">number_conv</span><span class="p">,</span> <span class="n">number_dense</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;number_conv&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;number_dense&quot;</span><span class="p">]</span>
     <span class="n">train_with_mixed_data</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;train_with_mixed_data&quot;</span><span class="p">]</span>
@@ -1583,7 +1590,8 @@ different datasets.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_data_dir</span><span class="p">,</span><span class="n">test_data_dir</span> <span class="o">=</span> <span class="n">copy_data</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">train_data_dir</span><span class="p">,</span><span class="n">test_data_dir</span> <span class="o">=</span> <span class="n">copy_data</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1602,7 +1610,8 @@ validation set as well as on a MixUp version of the same validation set,
 the idea being to study the connection between these metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limit the number of rows.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Limit the number of rows.</span>
 <span class="n">reporter</span> <span class="o">=</span> <span class="n">CLIReporter</span><span class="p">(</span><span class="n">max_progress_rows</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># Add a custom metric column, in addition to the default metrics.</span>
 <span class="c1"># Note that this must be a metric that is returned in your training results.</span>
@@ -2151,7 +2160,8 @@ Number of errored trials: 3
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -2160,7 +2170,8 @@ Number of errored trials: 3
 effect on network performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limit the number of rows.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Limit the number of rows.</span>
 <span class="n">reporter</span> <span class="o">=</span> <span class="n">CLIReporter</span><span class="p">(</span><span class="n">max_progress_rows</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># Add a custom metric column, in addition to the default metrics.</span>
 <span class="c1"># Note that this must be a metric that is returned in your training results.</span>
@@ -2684,7 +2695,8 @@ Number of trials: 1/4 (1 RUNNING)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>

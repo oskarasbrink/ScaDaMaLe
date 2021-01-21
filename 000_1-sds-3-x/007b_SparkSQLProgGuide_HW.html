@@ -1407,7 +1407,8 @@ already created for you and is available as <code class="docutils literal notran
 <code class="docutils literal notranslate"><span class="pre">sqlContext</span></code> are also available).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Evaluation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cell</span> <span class="n">by</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">will</span> <span class="nb">print</span> <span class="n">spark</span> <span class="n">session</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">notebook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Evaluation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cell</span> <span class="n">by</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Enter</span> <span class="n">will</span> <span class="nb">print</span> <span class="n">spark</span> <span class="n">session</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">notebook</span>
 <span class="n">spark</span>
 </pre></div>
 </div>
@@ -1458,7 +1459,8 @@ in the Spark repo.</p>
 <code class="docutils literal notranslate"><span class="pre">people.json</span></code> file into <code class="docutils literal notranslate"><span class="pre">dbfs</span></code>. Let us do this programmatically next.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">the</span> <span class="n">following</span> <span class="n">lines</span> <span class="n">merely</span> <span class="n">fetch</span> <span class="n">the</span> <span class="n">file</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">URL</span> <span class="ow">and</span> <span class="n">load</span> <span class="n">it</span> <span class="n">into</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="k">for</span> <span class="n">us</span> <span class="n">to</span> <span class="k">try</span> <span class="ow">in</span> <span class="n">databricks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">the</span> <span class="n">following</span> <span class="n">lines</span> <span class="n">merely</span> <span class="n">fetch</span> <span class="n">the</span> <span class="n">file</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">URL</span> <span class="ow">and</span> <span class="n">load</span> <span class="n">it</span> <span class="n">into</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="k">for</span> <span class="n">us</span> <span class="n">to</span> <span class="k">try</span> <span class="ow">in</span> <span class="n">databricks</span>
 <span class="o">//</span> <span class="n">getLines</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">file</span> <span class="n">at</span> <span class="n">the</span> <span class="n">URL</span>
 <span class="n">val</span> <span class="n">peopleJsonLinesFromURL</span> <span class="o">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">Source</span><span class="o">.</span><span class="n">fromURL</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/apache/spark/master/examples/src/main/resources/people.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getLines</span>
 <span class="o">//</span> <span class="n">remove</span> <span class="nb">any</span> <span class="n">pre</span><span class="o">-</span><span class="n">existing</span> <span class="n">file</span> <span class="n">at</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="n">location</span>
@@ -1473,14 +1475,16 @@ in the Spark repo.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.json&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">you</span> <span class="n">can</span> <span class="n">also</span> <span class="n">read</span> <span class="n">into</span> <span class="n">df</span> <span class="n">like</span> <span class="n">this</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">you</span> <span class="n">can</span> <span class="n">also</span> <span class="n">read</span> <span class="n">into</span> <span class="n">df</span> <span class="n">like</span> <span class="n">this</span>
 <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1488,7 +1492,8 @@ in the Spark repo.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1510,7 +1515,8 @@ strongly typed Scala/Java Datasets.</p>
 Datasets:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// This import is needed to use the $-notation
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+// This import is needed to use the $-notation
 import spark.implicits._
 // Print the schema in a tree format
 df.printSchema()
@@ -1520,7 +1526,8 @@ df.printSchema()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Select</span> <span class="n">only</span> <span class="n">the</span> <span class="s2">&quot;name&quot;</span> <span class="n">column</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Select</span> <span class="n">only</span> <span class="n">the</span> <span class="s2">&quot;name&quot;</span> <span class="n">column</span>
 <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1528,7 +1535,8 @@ df.printSchema()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select everybody, but increment the age by 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+// Select everybody, but increment the age by 1
 df.select($&quot;name&quot;, $&quot;age&quot; + 1).show()
 </pre></div>
 </div>
@@ -1536,7 +1544,8 @@ df.select($&quot;name&quot;, $&quot;age&quot; + 1).show()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Select people older than 21
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+// Select people older than 21
 df.filter($&quot;age&quot; &gt; 21).show()
 </pre></div>
 </div>
@@ -1544,7 +1553,8 @@ df.filter($&quot;age&quot; &gt; 21).show()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Count</span> <span class="n">people</span> <span class="n">by</span> <span class="n">age</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Count</span> <span class="n">people</span> <span class="n">by</span> <span class="n">age</span>
 <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1568,7 +1578,8 @@ Reference</a>.</p>
 queries programmatically and returns the result as a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">SQL</span> <span class="n">temporary</span> <span class="n">view</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">SQL</span> <span class="n">temporary</span> <span class="n">view</span>
 <span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;people&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1576,7 +1587,8 @@ queries programmatically and returns the result as a <code class="docutils liter
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">sqlDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM people&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">sqlDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM people&quot;</span><span class="p">)</span>
 <span class="n">sqlDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1594,7 +1606,8 @@ we must use the qualified name to refer it, e.g.
 <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">global_temp.view1</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="k">global</span> <span class="n">temporary</span> <span class="n">view</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="k">global</span> <span class="n">temporary</span> <span class="n">view</span>
 <span class="n">df</span><span class="o">.</span><span class="n">createGlobalTempView</span><span class="p">(</span><span class="s2">&quot;people&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1602,7 +1615,8 @@ we must use the qualified name to refer it, e.g.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Global temporary view is tied to a system preserved database `global_temp`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+// Global temporary view is tied to a system preserved database `global_temp`
 spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()
 </pre></div>
 </div>
@@ -1610,7 +1624,8 @@ spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Global</span> <span class="n">temporary</span> <span class="n">view</span> <span class="ow">is</span> <span class="n">cross</span><span class="o">-</span><span class="n">session</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Global</span> <span class="n">temporary</span> <span class="n">view</span> <span class="ow">is</span> <span class="n">cross</span><span class="o">-</span><span class="n">session</span>
 <span class="n">spark</span><span class="o">.</span><span class="n">newSession</span><span class="p">()</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM global_temp.people&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1630,7 +1645,8 @@ operations like filtering, sorting and hashing without deserializing the
 bytes back into an object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span>
 
 <span class="o">//</span> <span class="n">Encoders</span> <span class="n">are</span> <span class="n">created</span> <span class="k">for</span> <span class="n">case</span> <span class="n">classes</span>
 <span class="n">val</span> <span class="n">caseClassDS</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Andy&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span><span class="o">.</span><span class="n">toDS</span><span class="p">()</span>
@@ -1641,7 +1657,8 @@ bytes back into an object.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Encoders</span> <span class="k">for</span> <span class="n">most</span> <span class="n">common</span> <span class="n">types</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">importing</span> <span class="n">spark</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="n">_</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Encoders</span> <span class="k">for</span> <span class="n">most</span> <span class="n">common</span> <span class="n">types</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">importing</span> <span class="n">spark</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="n">_</span>
 <span class="n">val</span> <span class="n">primitiveDS</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">toDS</span><span class="p">()</span>
 <span class="n">primitiveDS</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="o">//</span> <span class="n">Returns</span><span class="p">:</span> <span class="n">Array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
@@ -1650,7 +1667,8 @@ bytes back into an object.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">DataFrames</span> <span class="n">can</span> <span class="n">be</span> <span class="n">converted</span> <span class="n">to</span> <span class="n">a</span> <span class="n">Dataset</span> <span class="n">by</span> <span class="n">providing</span> <span class="n">a</span> <span class="n">class</span><span class="o">.</span> <span class="n">Mapping</span> <span class="n">will</span> <span class="n">be</span> <span class="n">done</span> <span class="n">by</span> <span class="n">name</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">DataFrames</span> <span class="n">can</span> <span class="n">be</span> <span class="n">converted</span> <span class="n">to</span> <span class="n">a</span> <span class="n">Dataset</span> <span class="n">by</span> <span class="n">providing</span> <span class="n">a</span> <span class="n">class</span><span class="o">.</span> <span class="n">Mapping</span> <span class="n">will</span> <span class="n">be</span> <span class="n">done</span> <span class="n">by</span> <span class="n">name</span>
 <span class="n">val</span> <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;dbfs:///datasets/spark-examples/people.json&quot;</span>
 <span class="n">val</span> <span class="n">peopleDS</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="k">as</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span>
 <span class="n">peopleDS</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1683,7 +1701,8 @@ This RDD can be implicitly converted to a DataFrame and then be
 registered as a table. Tables can be used in subsequent SQL statements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">the</span> <span class="n">following</span> <span class="n">lines</span> <span class="n">merely</span> <span class="n">fetch</span> <span class="n">the</span> <span class="n">file</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">URL</span> <span class="ow">and</span> <span class="n">load</span> <span class="n">it</span> <span class="n">into</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="k">for</span> <span class="n">us</span> <span class="n">to</span> <span class="k">try</span> <span class="ow">in</span> <span class="n">databricks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">the</span> <span class="n">following</span> <span class="n">lines</span> <span class="n">merely</span> <span class="n">fetch</span> <span class="n">the</span> <span class="n">file</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">URL</span> <span class="ow">and</span> <span class="n">load</span> <span class="n">it</span> <span class="n">into</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="k">for</span> <span class="n">us</span> <span class="n">to</span> <span class="k">try</span> <span class="ow">in</span> <span class="n">databricks</span>
 <span class="o">//</span> <span class="n">getLines</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">file</span> <span class="n">at</span> <span class="n">the</span> <span class="n">URL</span>
 <span class="n">val</span> <span class="n">peopleTxtLinesFromURL</span> <span class="o">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">Source</span><span class="o">.</span><span class="n">fromURL</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/apache/spark/master/examples/src/main/resources/people.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getLines</span>
 <span class="o">//</span> <span class="n">remove</span> <span class="nb">any</span> <span class="n">pre</span><span class="o">-</span><span class="n">existing</span> <span class="n">file</span> <span class="n">at</span> <span class="n">the</span> <span class="n">dbfs</span> <span class="n">location</span>
@@ -1698,14 +1717,16 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/spark-examples/people.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">For</span> <span class="n">implicit</span> <span class="n">conversions</span> <span class="kn">from</span> <span class="nn">RDDs</span> <span class="n">to</span> <span class="n">DataFrames</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">For</span> <span class="n">implicit</span> <span class="n">conversions</span> <span class="kn">from</span> <span class="nn">RDDs</span> <span class="n">to</span> <span class="n">DataFrames</span>
 <span class="kn">import</span> <span class="nn">spark.implicits._</span>
 
 <span class="o">//</span> <span class="n">make</span> <span class="n">a</span> <span class="n">case</span> <span class="k">class</span>
@@ -1724,14 +1745,16 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span>
 <span class="n">peopleDF</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;people&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1739,7 +1762,8 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">SQL</span> <span class="n">statements</span> <span class="n">can</span> <span class="n">be</span> <span class="n">run</span> <span class="n">by</span> <span class="n">using</span> <span class="n">the</span> <span class="n">sql</span> <span class="n">methods</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">Spark</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">SQL</span> <span class="n">statements</span> <span class="n">can</span> <span class="n">be</span> <span class="n">run</span> <span class="n">by</span> <span class="n">using</span> <span class="n">the</span> <span class="n">sql</span> <span class="n">methods</span> <span class="n">provided</span> <span class="n">by</span> <span class="n">Spark</span>
 <span class="n">val</span> <span class="n">teenagersDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT name, age FROM people WHERE age BETWEEN 13 AND 19&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1747,14 +1771,16 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">teenagersDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">teenagersDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">a</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">result</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">by</span> <span class="n">field</span> <span class="n">index</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">a</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">result</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">by</span> <span class="n">field</span> <span class="n">index</span>
 <span class="n">teenagersDF</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">teenager</span> <span class="o">=&gt;</span> <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="n">teenager</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1762,7 +1788,8 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">or</span> <span class="n">by</span> <span class="n">field</span> <span class="n">name</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="ow">or</span> <span class="n">by</span> <span class="n">field</span> <span class="n">name</span>
 <span class="n">teenagersDF</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">teenager</span> <span class="o">=&gt;</span> <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="n">teenager</span><span class="o">.</span><span class="n">getAs</span><span class="p">[</span><span class="n">String</span><span class="p">](</span><span class="s2">&quot;name&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1770,7 +1797,8 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">No</span> <span class="n">pre</span><span class="o">-</span><span class="n">defined</span> <span class="n">encoders</span> <span class="k">for</span> <span class="n">Dataset</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="p">]],</span> <span class="n">define</span> <span class="n">explicitly</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">No</span> <span class="n">pre</span><span class="o">-</span><span class="n">defined</span> <span class="n">encoders</span> <span class="k">for</span> <span class="n">Dataset</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="p">]],</span> <span class="n">define</span> <span class="n">explicitly</span>
 <span class="n">implicit</span> <span class="n">val</span> <span class="n">mapEncoder</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">Encoders</span><span class="o">.</span><span class="n">kryo</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -1778,7 +1806,8 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Primitive</span> <span class="n">types</span> <span class="ow">and</span> <span class="n">case</span> <span class="n">classes</span> <span class="n">can</span> <span class="n">be</span> <span class="n">also</span> <span class="n">defined</span> <span class="k">as</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Primitive</span> <span class="n">types</span> <span class="ow">and</span> <span class="n">case</span> <span class="n">classes</span> <span class="n">can</span> <span class="n">be</span> <span class="n">also</span> <span class="n">defined</span> <span class="k">as</span>
 <span class="o">//</span> <span class="kn">import</span> <span class="nn">more</span> <span class="n">classes</span> <span class="n">here</span><span class="o">...</span>
 <span class="o">//</span><span class="n">implicit</span> <span class="n">val</span> <span class="n">stringIntMapEncoder</span><span class="p">:</span> <span class="n">Encoder</span><span class="p">[</span><span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ExpressionEncoder</span><span class="p">()</span>
 </pre></div>
@@ -1787,7 +1816,8 @@ registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">row</span><span class="o">.</span><span class="n">getValuesMap</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="n">retrieves</span> <span class="n">multiple</span> <span class="n">columns</span> <span class="n">at</span> <span class="n">once</span> <span class="n">into</span> <span class="n">a</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span> <span class="n">T</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">row</span><span class="o">.</span><span class="n">getValuesMap</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="n">retrieves</span> <span class="n">multiple</span> <span class="n">columns</span> <span class="n">at</span> <span class="n">once</span> <span class="n">into</span> <span class="n">a</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span> <span class="n">T</span><span class="p">]</span>
 <span class="n">teenagersDF</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">teenager</span> <span class="o">=&gt;</span> <span class="n">teenager</span><span class="o">.</span><span class="n">getValuesMap</span><span class="p">[</span><span class="n">Any</span><span class="p">](</span><span class="n">List</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">)))</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1810,7 +1840,8 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 <p>For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.sql.Row</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.Row</span>
 
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.types._</span>
 
@@ -1822,7 +1853,8 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">schema</span> <span class="ow">is</span> <span class="n">encoded</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">schema</span> <span class="ow">is</span> <span class="n">encoded</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span>
 <span class="n">val</span> <span class="n">schemaString</span> <span class="o">=</span> <span class="s2">&quot;name age&quot;</span>
 </pre></div>
 </div>
@@ -1830,7 +1862,8 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Generate</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">string</span> <span class="n">of</span> <span class="n">schema</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Generate</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">string</span> <span class="n">of</span> <span class="n">schema</span>
 <span class="n">val</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">schemaString</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
   <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">fieldName</span> <span class="o">=&gt;</span> <span class="n">StructField</span><span class="p">(</span><span class="n">fieldName</span><span class="p">,</span> <span class="n">StringType</span><span class="p">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">))</span>
 </pre></div>
@@ -1839,14 +1872,16 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Convert</span> <span class="n">records</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span> <span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="n">to</span> <span class="n">Rows</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Convert</span> <span class="n">records</span> <span class="n">of</span> <span class="n">the</span> <span class="n">RDD</span> <span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="n">to</span> <span class="n">Rows</span>
 <span class="n">val</span> <span class="n">rowRDD</span> <span class="o">=</span> <span class="n">peopleRDD</span>
   <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))</span>
   <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=&gt;</span> <span class="n">Row</span><span class="p">(</span><span class="n">attributes</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">attributes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">trim</span><span class="p">))</span>
@@ -1856,7 +1891,8 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Apply</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">to</span> <span class="n">the</span> <span class="n">RDD</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Apply</span> <span class="n">the</span> <span class="n">schema</span> <span class="n">to</span> <span class="n">the</span> <span class="n">RDD</span>
 <span class="n">val</span> <span class="n">peopleDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">rowRDD</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1864,14 +1900,16 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">peopleDF</span><span class="o">.</span><span class="n">show</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Creates</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span> <span class="n">using</span> <span class="n">the</span> <span class="n">DataFrame</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Creates</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span> <span class="n">using</span> <span class="n">the</span> <span class="n">DataFrame</span>
 <span class="n">peopleDF</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;people&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1879,7 +1917,8 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">SQL</span> <span class="n">can</span> <span class="n">be</span> <span class="n">run</span> <span class="n">over</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span> <span class="n">created</span> <span class="n">using</span> <span class="n">DataFrames</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">SQL</span> <span class="n">can</span> <span class="n">be</span> <span class="n">run</span> <span class="n">over</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">view</span> <span class="n">created</span> <span class="n">using</span> <span class="n">DataFrames</span>
 <span class="n">val</span> <span class="n">results</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT name FROM people&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1887,14 +1926,16 @@ provided by <code class="docutils literal notranslate"><span class="pre">SparkSe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">show</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">results</span><span class="o">.</span><span class="n">show</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">results</span> <span class="n">of</span> <span class="n">SQL</span> <span class="n">queries</span> <span class="n">are</span> <span class="n">DataFrames</span> <span class="ow">and</span> <span class="n">support</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">normal</span> <span class="n">RDD</span> <span class="n">operations</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">results</span> <span class="n">of</span> <span class="n">SQL</span> <span class="n">queries</span> <span class="n">are</span> <span class="n">DataFrames</span> <span class="ow">and</span> <span class="n">support</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">normal</span> <span class="n">RDD</span> <span class="n">operations</span>
 <span class="o">//</span> <span class="n">The</span> <span class="n">columns</span> <span class="n">of</span> <span class="n">a</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">result</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">by</span> <span class="n">field</span> <span class="n">index</span> <span class="ow">or</span> <span class="n">by</span> <span class="n">field</span> <span class="n">name</span>
 <span class="n">results</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=&gt;</span> <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="n">attributes</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>

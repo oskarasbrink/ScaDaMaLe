@@ -1355,7 +1355,8 @@ in Spark for
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+
 <span class="o">//</span><span class="n">Import</span> <span class="n">the</span> <span class="n">necessary</span> <span class="n">objects</span><span class="p">:</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.IndexedRow</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.Matrices</span>
@@ -1412,7 +1413,8 @@ takes an IndexedRow</p>
 <p>We then have an key-value RDD of ((Int,Int),Double)-tuples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scala.collection.mutable.ArrayBuffer</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">scala.collection.mutable.ArrayBuffer</span>
 
 
 <span class="o">//</span><span class="n">Function</span> <span class="n">that</span> <span class="n">maps</span> <span class="n">an</span> <span class="n">indexed</span> <span class="n">row</span> <span class="p">(</span><span class="n">index</span><span class="p">,(</span><span class="n">a_1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">a_n</span><span class="p">))</span> <span class="n">to</span>   <span class="p">((</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="n">a_j</span><span class="o">*</span><span class="n">a_k</span><span class="p">),</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">..</span><span class="p">,</span><span class="n">n</span> <span class="ow">and</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">n</span>
@@ -1452,7 +1454,8 @@ position in the matrix it is located:</p>
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+
 <span class="o">//</span><span class="n">Sum</span> <span class="n">up</span> <span class="nb">all</span> <span class="n">key</span><span class="o">-</span><span class="n">value</span> <span class="n">pairs</span> <span class="n">that</span> <span class="n">have</span> <span class="n">the</span> <span class="n">same</span> <span class="n">key</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="p">(</span><span class="n">corresponts</span> <span class="n">to</span> <span class="n">getting</span> <span class="n">the</span> <span class="n">element</span> <span class="n">of</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">A</span> <span class="n">on</span> <span class="n">the</span> <span class="n">j</span><span class="p">:</span><span class="n">th</span> <span class="n">row</span> <span class="ow">and</span> <span class="n">k</span><span class="p">:</span><span class="n">th</span> <span class="n">column</span><span class="p">)</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">keyvalSum</span> <span class="o">=</span> <span class="n">keyvalRDD</span><span class="o">.</span><span class="n">reduceByKey</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">=&gt;</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span>
 
@@ -1472,7 +1475,8 @@ row index, column index and a value). With this we can create a
 </a> that we finally collect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.</span><span class="p">{</span><span class="n">CoordinateMatrix</span><span class="p">,</span> <span class="n">MatrixEntry</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.</span><span class="p">{</span><span class="n">CoordinateMatrix</span><span class="p">,</span> <span class="n">MatrixEntry</span><span class="p">}</span>
 <span class="kn">import</span> <span class="nn">breeze.linalg.DenseMatrix</span>
 
 <span class="o">//</span><span class="nb">map</span> <span class="n">to</span> <span class="n">matrix</span> <span class="n">entries</span>
@@ -1494,7 +1498,8 @@ row index, column index and a value). With this we can create a
 the Breeze linear algebra package):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">numRows</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">numRows</span><span class="p">()</span>
 <span class="n">val</span> <span class="n">n</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">numCols</span><span class="p">()</span>
 
 <span class="o">//</span><span class="n">Create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">DenseMatrix</span> <span class="p">(</span><span class="ow">in</span> <span class="n">which</span> <span class="n">we</span> <span class="n">will</span> <span class="n">store</span> <span class="n">the</span> <span class="n">product</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="o">.</span>
@@ -1518,7 +1523,8 @@ inserting them in a diagonal matrix and the matrix <span class="math notranslate
 eigenvectors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+
 <span class="kn">import</span> <span class="nn">scala.collection.mutable.ArrayBuffer</span>
 <span class="kn">import</span> <span class="nn">breeze.linalg._</span><span class="o">,</span> <span class="nn">eigSym.EigSym</span>
 
@@ -1543,7 +1549,8 @@ relatively small) we can compute the product <span class="math notranslate nohig
 broadcast it to each partition of <span class="math notranslate nohighlight">\(A\)</span> (which is an RDD of IndexedRow).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Compute</span> <span class="n">the</span> <span class="n">inverse</span> <span class="n">of</span> <span class="n">S</span><span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Compute</span> <span class="n">the</span> <span class="n">inverse</span> <span class="n">of</span> <span class="n">S</span><span class="o">.</span>
 <span class="n">val</span> <span class="n">Sinv</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>   <span class="o">//</span><span class="n">invert</span> <span class="n">the</span> <span class="n">diagonal</span> <span class="n">matrix</span><span class="o">.</span>
 
 <span class="o">//</span><span class="n">Compute</span> <span class="n">the</span> <span class="n">product</span> <span class="n">of</span> <span class="n">V</span> <span class="ow">and</span> <span class="n">inverse</span> <span class="n">of</span> <span class="n">S</span><span class="o">.</span>
@@ -1560,7 +1567,8 @@ DenseMatrix on the left. We use this to map each row of <span class="math notran
 product with <span class="math notranslate nohighlight">\(VS^{-1}\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.</span><span class="p">{</span><span class="n">IndexedRowMatrix</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.distributed.</span><span class="p">{</span><span class="n">IndexedRowMatrix</span><span class="p">}</span>
 
 <span class="o">//</span><span class="n">Function</span> <span class="n">that</span> <span class="n">multiplies</span> <span class="n">an</span> <span class="n">indexedRow</span> <span class="nb">object</span> <span class="k">with</span> <span class="n">a</span> <span class="n">DenseMatrix</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">breeze.linalg.DenseMatrix</span><span class="p">)</span> <span class="n">on</span> <span class="n">the</span> <span class="n">left</span> <span class="ow">and</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">Array</span><span class="o">.</span>
 <span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">IndexedRow</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">DenseMatrix</span><span class="p">[</span><span class="n">Double</span><span class="p">]):</span> <span class="n">Array</span><span class="p">[</span><span class="n">Double</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
@@ -1590,7 +1598,8 @@ product with <span class="math notranslate nohighlight">\(VS^{-1}\)</span>:</p>
 <span class="math notranslate nohighlight">\(A\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Print</span> <span class="n">the</span> <span class="n">product</span> <span class="n">USV</span><span class="o">.</span><span class="n">t</span> <span class="n">to</span> <span class="n">check</span> <span class="n">that</span> <span class="n">it</span> <span class="n">equals</span> <span class="n">A</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Print</span> <span class="n">the</span> <span class="n">product</span> <span class="n">USV</span><span class="o">.</span><span class="n">t</span> <span class="n">to</span> <span class="n">check</span> <span class="n">that</span> <span class="n">it</span> <span class="n">equals</span> <span class="n">A</span><span class="p">:</span>
 <span class="n">println</span><span class="p">(</span><span class="n">U</span><span class="o">*</span><span class="n">S</span><span class="o">*</span><span class="n">V</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 </pre></div>
 </div>

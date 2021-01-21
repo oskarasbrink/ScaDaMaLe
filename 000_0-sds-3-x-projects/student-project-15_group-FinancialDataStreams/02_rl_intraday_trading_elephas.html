@@ -1317,7 +1317,8 @@
 <h1>Reinforcement Learning - Distributed model tuning with Elephas<a class="headerlink" href="#reinforcement-learning-distributed-model-tuning-with-elephas" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Scala</span> <span class="n">imports</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Scala</span> <span class="n">imports</span>
 <span class="kn">import</span> <span class="nn">org.lamastex.spark.trendcalculus._</span>
 <span class="kn">import</span> <span class="nn">spark.implicits._</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
@@ -1340,7 +1341,8 @@ import org.apache.spark.sql.expressions._
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Load dataset
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+// Load dataset
 val oilDS = spark.read.fx1m(&quot;dbfs:/FileStore/shared_uploads/fabiansi@kth.se/*csv.gz&quot;).toDF.withColumn(&quot;ticker&quot;, lit(&quot;BCOUSD&quot;)).select($&quot;ticker&quot;, $&quot;time&quot; as &quot;x&quot;, $&quot;close&quot; as &quot;y&quot;).as[TickerPoint].orderBy(&quot;time&quot;)
 
 // Add column with difference from previous close value (expected &#39;x&#39;, &#39;y&#39; column names)
@@ -1382,7 +1384,8 @@ oilDS5: org.apache.spark.sql.DataFrame = [time: timestamp, close: double ... 2 m
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Python imports</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1">#Python imports</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">math</span>
@@ -1410,7 +1413,8 @@ WARNING
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create Dataframe from temp data</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Create Dataframe from temp data</span>
 <span class="n">oilDF_py</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
 
 <span class="c1"># Select the 10 first Rows of data and print them</span>
@@ -1450,7 +1454,8 @@ Last data point: 2019-06-20 23:59:00
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from: https://github.com/kh-kim/stock_market_reinforcement_learning/blob/master/market_env.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Adapted from: https://github.com/kh-kim/stock_market_reinforcement_learning/blob/master/market_env.py</span>
 
 
 <span class="k">class</span> <span class="nc">MarketEnv</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">):</span>
@@ -1506,7 +1511,8 @@ Last data point: 2019-06-20 23:59:00
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
 
 <span class="k">class</span> <span class="nc">ExperienceReplay</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_memory</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">discount</span><span class="o">=.</span><span class="mi">9</span><span class="p">):</span>
@@ -1546,7 +1552,8 @@ Last data point: 2019-06-20 23:59:00
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># Adapted from: https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/4201196137758409/command/4201196137758410</span>
 
 <span class="c1"># RL parameters</span>
 <span class="n">epsilon</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>  <span class="c1"># exploration</span>
@@ -1642,7 +1649,8 @@ training step newly by using the keras model from the previous training
 step.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># elephas variables</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># elephas variables</span>
 <span class="n">ele_epochs</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">ele_batchsize</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">ele_verbose</span> <span class="o">=</span> <span class="mi">0</span>

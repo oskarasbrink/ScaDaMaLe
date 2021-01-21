@@ -1383,7 +1383,8 @@ which you would like to distribute this array. In this case, we are
 creating two partitions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
 <span class="n">val</span> <span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>  <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
@@ -1392,7 +1393,8 @@ creating two partitions:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># in Python</span>
 <span class="n">myCollection</span> <span class="o">=</span> <span class="s2">&quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;</span>\
   <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="n">words</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">myCollection</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -1413,14 +1415,16 @@ it’s simple to crash the driver.</p>
 partitions we used explicitly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span> 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">words</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1430,14 +1434,16 @@ sequel. The following <code class="docutils literal notranslate"><span class="pr
 a directory in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdirs</span> <span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">ScaDaMaLe</span><span class="o">/</span><span class="n">checkpointing</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">fs</span>
+<span class="n">mkdirs</span> <span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">ScaDaMaLe</span><span class="o">/</span><span class="n">checkpointing</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/ScaDaMaLe/checkpointing&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;dbfs:///datasets/ScaDaMaLe/checkpointing&quot;</span><span class="p">)</span>
 <span class="n">words</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1469,7 +1475,8 @@ computation, similar to the use cases for caching:</p>
 characters, in-place.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1478,7 +1485,8 @@ characters, in-place.</p>
 partitions</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
 </pre></div>
 </div>
 </div>
@@ -1502,14 +1510,16 @@ we will get the number of lines, one per partition:</p>
 <p>The following produces a <code class="docutils literal notranslate"><span class="pre">PipedRDD</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">wc_l_PipedRDD</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
 <span class="n">wc_l_PipedRDD</span>
 </pre></div>
 </div>
@@ -1520,14 +1530,16 @@ we will get the number of lines, one per partition:</p>
 parquet of binary files in <code class="docutils literal notranslate"><span class="pre">dbfs:///</span></code> if the returned output is large.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="n">wc_l_PipedRDD</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1545,7 +1557,8 @@ number of partitions explicitly and let Spark decide on the number of
 partitions automatically.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">haha_words</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">haha_words</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
 <span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words</span> <span class="o">=</span> <span class="n">haha_words</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
 <span class="n">wc_l_PipedRDD_haha_words</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1557,7 +1570,8 @@ partitions automatically.</p>
 does?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">haha_words_again</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">haha_words_again</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;ha</span><span class="se">\n</span><span class="s2">ha&quot;</span><span class="p">,</span> <span class="s2">&quot;he</span><span class="se">\n</span><span class="s2">he</span><span class="se">\n</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="s2">&quot;ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho</span><span class="se">\n</span><span class="s2">ho&quot;</span><span class="p">))</span>
 <span class="n">haha_words_again</span><span class="o">.</span><span class="n">glom</span><span class="o">.</span><span class="n">collect</span>
 <span class="n">val</span> <span class="n">wc_l_PipedRDD_haha_words_again</span> <span class="o">=</span> <span class="n">haha_words_again</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;wc -l&quot;</span><span class="p">)</span>
 <span class="n">wc_l_PipedRDD_haha_words_again</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1585,7 +1599,8 @@ partitions we have:</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
 <span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="n">part</span> <span class="o">=&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Int</span><span class="p">](</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="mf">2.0</span>
 </pre></div>
 </div>
@@ -1593,7 +1608,8 @@ partitions we have:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># in Python</span>
 <span class="n">words</span><span class="o">.</span><span class="n">mapPartitions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1"># 2</span>
 </pre></div>
 </div>
@@ -1624,7 +1640,8 @@ this to test whether your map functions are behaving correctly:</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="ow">in</span> <span class="n">Scala</span>
 <span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">String</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>  <span class="n">withinPartIterator</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>    
   <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">s</span><span class="s2">&quot;Partition: $partitionIndex =&gt; $value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterator</span>
                                                                             <span class="p">}</span>
@@ -1635,7 +1652,8 @@ this to test whether your map functions are behaving correctly:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># in Python</span>
 <span class="k">def</span> <span class="nf">indexedFunc</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span> <span class="n">withinPartIterator</span><span class="p">):</span>  
   <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;partition: </span><span class="si">{}</span><span class="s2"> =&gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">partitionIndex</span><span class="p">,</span>    <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">withinPartIterator</span><span class="p">]</span>
 <span class="n">words</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">indexedFunc</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1658,7 +1676,8 @@ directory with a random ID:</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="o">.</span><span class="n">foreachPartition</span> <span class="p">{</span> <span class="nb">iter</span> <span class="o">=&gt;</span>  
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">words</span><span class="o">.</span><span class="n">foreachPartition</span> <span class="p">{</span> <span class="nb">iter</span> <span class="o">=&gt;</span>  
   <span class="kn">import</span> <span class="nn">java.io._</span>  
   <span class="kn">import</span> <span class="nn">scala.util.Random</span>  
   <span class="n">val</span> <span class="n">randomFileName</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Random</span><span class="p">()</span><span class="o">.</span><span class="n">nextInt</span><span class="p">()</span>  
@@ -1680,14 +1699,16 @@ be in the Driver node’s <code class="docutils literal notranslate"><span class
 that hosted the partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">pwd</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">random</span><span class="o">-</span><span class="n">file</span><span class="o">-*.</span><span class="n">txt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">ls</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">random</span><span class="o">-</span><span class="n">file</span><span class="o">-*.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -1766,7 +1787,8 @@ buttons!</p>
 <p><img alt="creenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore" src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/2020/ScaDaMaLe/screenShotOfUploadingStaticExecutibleIsIt1or2CoinsViaFileStore.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="s2">&quot;/FileStore/tables/IsIt1or2Coins&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">fs</span>
+<span class="n">ls</span> <span class="s2">&quot;/FileStore/tables/IsIt1or2Coins&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1775,14 +1797,16 @@ buttons!</p>
 the local file system of the Driver.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/tables/IsIt1or2Coins&quot;</span><span class="p">,</span> <span class="s2">&quot;file:/tmp/IsIt1or2Coins&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/tables/IsIt1or2Coins&quot;</span><span class="p">,</span> <span class="s2">&quot;file:/tmp/IsIt1or2Coins&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
 </pre></div>
 </div>
 </div>
@@ -1797,7 +1821,8 @@ Machine Intervals).</p>
 is indeed executible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span>
 </pre></div>
 </div>
 </div>
@@ -1823,14 +1848,16 @@ command-line and gives some output.</p>
 the Driver node.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can also do it like this</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sh</span>
+<span class="c1"># You can also do it like this</span>
 
 <span class="o">/</span><span class="n">dbfs</span><span class="o">/</span><span class="n">FileStore</span><span class="o">/</span><span class="n">tables</span><span class="o">/</span><span class="n">IsIt1or2Coins</span> <span class="mi">1000</span> <span class="mi">100</span> <span class="mi">234565432</span> <span class="mi">1000</span> <span class="mi">500</span> <span class="mi">1200</span> <span class="mi">600</span> <span class="mi">1</span>
 </pre></div>
@@ -1843,7 +1870,8 @@ the Driver node.</p>
 you can use the following helper function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import scala.sys.process._
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+import scala.sys.process._
 import scala.concurrent.duration._
 // from Ivan Sadikov
 
@@ -1861,7 +1889,8 @@ sc.runOnEachExecutor(copyFile, new FiniteDuration(1, HOURS))
 each partition as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/executor/bin/IsIt1or2Coins 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
 
 <span class="n">val</span> <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span>
   <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -1876,7 +1905,8 @@ each partition as follows:</p>
 file copy in databricks-provisioned Spark clusters we are on here:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
 <span class="n">val</span> <span class="n">same_input</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
                      <span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">)</span>
 
@@ -1900,7 +1930,8 @@ partition that is to be run by the executor in which that partition
 resides as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">val</span> <span class="n">isIt1or2StaticExecutible</span> <span class="o">=</span> <span class="s2">&quot;/dbfs/FileStore/tables/IsIt1or2Coins&quot;</span>
 
 <span class="o">//</span> <span class="n">let</span> <span class="n">us</span> <span class="n">make</span> <span class="mi">2</span> <span class="n">commands</span> <span class="ow">in</span> <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="mi">2</span> <span class="nb">input</span> <span class="n">partitions</span>
 <span class="n">val</span> <span class="n">same_input_mp</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$isIt1or2StaticExecutible 1000 100 234565432 1000 500 1200 600 1&quot;</span><span class="p">,</span> 
@@ -1922,7 +1953,8 @@ resides as follows:</p>
 a command will work without error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scala.util.control.Exception.allCatch</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">scala.util.control.Exception.allCatch</span>
 <span class="p">(</span><span class="n">allCatch</span> <span class="n">opt</span> <span class="s2">&quot; 12 &quot;</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">toLong</span><span class="p">)</span><span class="o">.</span><span class="n">isDefined</span>
 </pre></div>
 </div>

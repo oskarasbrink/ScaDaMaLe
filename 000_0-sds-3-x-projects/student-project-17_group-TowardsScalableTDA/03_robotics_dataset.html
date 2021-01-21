@@ -1300,7 +1300,8 @@ intermediate confgurations along the path):</p>
 <img src="files/group17/images/path_test_1.png"/>
 <img src="files/group17/images/path_test_2.png"/><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Read data from file</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1"># # Read data from file</span>
 <span class="c1"># joint_centers_all = spark.read.format(&quot;csv&quot;).load(&quot;dbfs:/FileStore/shared_uploads/robert.gieselmann@gmail.com/robotics_dataset_joint_centers.csv&quot;,inferSchema =True,header=False)</span>
 <span class="c1"># joint_centers_to_plot = np.reshape(np.array(joint_centers_all.collect()), (-1, 2))</span>
 
@@ -1319,7 +1320,8 @@ intermediate confgurations along the path):</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">python</span>
+<span class="c1">#import os</span>
 <span class="c1">#os.remove(&quot;/dbfs/FileStore/group17/data/robotics_test/joint_configs_test.csv&quot;)</span>
 <span class="c1">#os.remove(&quot;/dbfs/FileStore/group17/data/robotics_train/joint_configs_train.csv&quot;)</span>
 <span class="c1">#os.listdir(&quot;/dbfs/FileStore/group17/data/robotics_train&quot;)</span>
@@ -1330,7 +1332,8 @@ intermediate confgurations along the path):</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.apache.spark.mllib.random.RandomRDDs</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.random.RandomRDDs</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.mllib.feature.Normalizer</span>
 <span class="kn">import</span> <span class="nn">org.apache.spark.rdd.RDD</span>
 <span class="kn">import</span> <span class="nn">breeze.linalg._</span>
@@ -1350,7 +1353,8 @@ import breeze.numerics._
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Constants</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Constants</span>
 <span class="n">val</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">//</span> <span class="n">train</span> <span class="n">size</span>
 <span class="n">val</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">//</span> <span class="n">test</span> <span class="n">size</span>
 <span class="n">val</span> <span class="n">D</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">//</span> <span class="n">dimensionality</span>
@@ -1371,7 +1375,8 @@ one_vs_all: Boolean = true
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">files</span> <span class="kn">from</span> <span class="nn">csv</span> <span class="ow">and</span> <span class="n">convert</span> <span class="n">to</span> <span class="n">RDD</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">files</span> <span class="kn">from</span> <span class="nn">csv</span> <span class="ow">and</span> <span class="n">convert</span> <span class="n">to</span> <span class="n">RDD</span>
 <span class="n">val</span> <span class="n">df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/FileStore/group17/data/robotics_train/joint_configs_train.csv&quot;</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/FileStore/group17/data/robotics_test/joint_configs_test.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1386,7 +1391,8 @@ df_test: org.apache.spark.sql.DataFrame = [_c0: double, _c1: double ... 8 more f
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Convert</span> <span class="n">to</span> <span class="n">RDD</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Convert</span> <span class="n">to</span> <span class="n">RDD</span> 
 <span class="n">val</span> <span class="n">rdd_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">toSeq</span><span class="o">.</span><span class="n">toArray</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">toString</span><span class="o">.</span><span class="n">toDouble</span><span class="p">))</span>
 <span class="n">val</span> <span class="n">rdd_test</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">toSeq</span><span class="o">.</span><span class="n">toArray</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">toString</span><span class="o">.</span><span class="n">toDouble</span><span class="p">))</span>
 
@@ -1407,14 +1413,16 @@ test_data: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] =
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_data</span><span class="o">.</span><span class="n">collect</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">train_data</span><span class="o">.</span><span class="n">collect</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_uni_sphere</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">def</span> <span class="nf">get_uni_sphere</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span>
   <span class="n">var</span> <span class="n">u</span> <span class="o">=</span> <span class="n">RandomRDDs</span><span class="o">.</span><span class="n">normalVectorRDD</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
   <span class="n">u</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Normalizer</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
   <span class="n">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="p">()</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">new</span> <span class="n">DenseVector</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">toArray</span><span class="p">))</span> <span class="p">}</span>
@@ -1434,7 +1442,8 @@ rays: org.apache.spark.rdd.RDD[(Long, breeze.linalg.DenseVector[Double])] = MapP
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_dst_sq</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="o">//</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">def</span> <span class="nf">compute_dst_sq</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="o">//</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
   <span class="o">//</span> <span class="n">dst</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="o">|</span><span class="n">x_n</span> <span class="o">-</span> <span class="n">x</span><span class="s1">&#39;_m|^2</span>
   <span class="n">val</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">train_vec</span><span class="p">),</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">test_vec</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(((</span><span class="n">train_vec</span> <span class="o">-</span> <span class="n">test_vec</span><span class="p">)</span> <span class="o">*</span><span class="p">:</span><span class="o">*</span> <span class="p">(</span><span class="n">train_vec</span> <span class="o">-</span> <span class="n">test_vec</span><span class="p">))</span> <span class="o">^</span><span class="p">:</span><span class="o">^</span> <span class="mf">2.0</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span>
   <span class="n">dst</span>
@@ -1464,7 +1473,8 @@ pu_test: org.apache.spark.rdd.RDD[((Long, Long), Double)] = MapPartitionsRDD[258
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_ray_lengths</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="o">//</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="k">def</span> <span class="nf">compute_ray_lengths</span><span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="o">//</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
   <span class="o">//</span> <span class="n">lengths</span><span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">dst</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pu_train</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">pu_test</span><span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">]))</span>
   <span class="k">def</span> <span class="nf">compute_length</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">dst_val</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">pu_train_val</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">pu_test_val</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">one_vs_all</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">==</span> <span class="n">m</span><span class="p">)</span> <span class="p">{</span>
@@ -1500,7 +1510,8 @@ lengths: org.apache.spark.rdd.RDD[((Long, Long), Double)] = ShuffledRDD[2596] at
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def compute_weights() = { // (M, )
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%scala
+def compute_weights() = { // (M, )
   def agg_f(a: (Double, Double), b: (Double, Double)) = { (a._1 + b._1, a._2 + b._2) }
   
   val weights = lengths.map { case ((m, t), length) =&gt; (m, if (!length.isInfinity) (1.0, length) else (0.0, 0.0)) }
@@ -1522,7 +1533,8 @@ weights: org.apache.spark.rdd.RDD[(Long, Double)] = MapPartitionsRDD[2599] at ma
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">RDD</span><span class="p">[(</span><span class="n">Long</span><span class="p">,</span> <span class="n">DenseVector</span><span class="p">[</span><span class="n">Double</span><span class="p">])])</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="o">//</span><span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">RDD</span><span class="p">[(</span><span class="n">Long</span><span class="p">,</span> <span class="n">DenseVector</span><span class="p">[</span><span class="n">Double</span><span class="p">])])</span> <span class="o">=</span> <span class="p">{</span>
 <span class="o">//</span>  <span class="n">data</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">k</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">toArray</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)}</span>
 <span class="o">//</span>    <span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">SaveMode</span><span class="o">.</span><span class="n">Overwrite</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;quote&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/group17/data/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
 <span class="o">//</span><span class="p">}</span>
@@ -1544,7 +1556,8 @@ weights: org.apache.spark.rdd.RDD[(Long, Double)] = MapPartitionsRDD[2599] at ma
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">collect</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">scala</span>
+<span class="n">weights</span><span class="o">.</span><span class="n">collect</span>
 </pre></div>
 </div>
 </div>
