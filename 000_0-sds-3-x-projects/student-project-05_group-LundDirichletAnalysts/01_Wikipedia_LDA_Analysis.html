@@ -1442,25 +1442,32 @@ algorithms.</p></li>
 <li><p>Remove links and other markup-formatting</p></li>
 </ol>
 </li>
-<li><p>Generate the LDA model</p></li>
+<li><p>Generate the LDA model</p>
+<ol class="simple">
 <li><p>Remove stopwords</p></li>
 <li><p>Train the model</p></li>
-<li><p>Analyse the model</p></li>
+</ol>
+</li>
+<li><p>Analyse the model</p>
+<ol class="simple">
 <li><p>Pick an article and explore its topic.</p></li>
 <li><p>Recommend similar articles.</p></li>
+</ol>
+</li>
 </ol>
 </div>
 <div class="section" id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">https://en.wikipedia.org/wiki/Latent<em>Dirichlet</em>allocation</a></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation" class="uri">https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation</a></p></li>
 <li><p><a class="reference external" href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/mllib/clustering/LDA.html">https://spark.apache.org/docs/latest/api/scala/org/apache/spark/mllib/clustering/LDA.html</a></p></li>
 <li><p><a class="reference external" href="https://dumps.wikimedia.org/svwiki/20201120/">https://dumps.wikimedia.org/svwiki/20201120/</a></p></li>
+<li><p><span class="xref myst">034<em>LDA</em>20NewsGroupsSmall</span>
+(see notebook
+<code class="docutils literal notranslate"><span class="pre">scalable-data-science/000_2-sds-3-x-ml/034_LDA_20NewsGroupSmall</span></code>)</p></li>
 <li><p><a class="reference external" href="https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/2972105651606635/command/2972105651606636">034<em>LDA</em>20NewsGroupsSmall</a>
 (temp. cluster link)</p></li>
-<li><p>[scalable-data-science/000<em>0-sds-3-x-projects/034</em>LDA_20NewsGroupSmall]</p></li>
-<li><p><a class="reference external" href="TestFolder/another_notebook.ipynb#section_id3">To Some Internal
-Section</a></p></li>
 </ul>
 </div>
 <div class="section" id="acknowledgement">
@@ -1575,7 +1582,7 @@ res1: Boolean = true
 </div>
 </div>
 </div>
-<p>We check that the file exists, and has some contents.</p>
+<p>Check that the file exists, and has some contents.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
@@ -1609,9 +1616,11 @@ res1: Boolean = true
 data is chosen via the name of the file. For the current date, <a class="reference external" href="https://dumps.wikimedia.org/svwiki/20201120/">this is
 the file share</a> on
 Wikimedia.</p>
-<p>There are several files, we used “pages-articles”. This monolith file
+<p>There are several files, we use “pages-articles”. This monolith file
 requires unpacking on driver node. To allow parallel download and
 unpacking the multistream may be a better choice.</p>
+<p>In the current setup, download takes 6 minutes, extracting takes 10
+minutes and</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sh</span>
@@ -1719,7 +1728,8 @@ svwiki-20201120-pages-articles.xml.bz2
 <div class="section" id="extracting-and-filtering">
 <h2>Extracting and Filtering<a class="headerlink" href="#extracting-and-filtering" title="Permalink to this headline">¶</a></h2>
 <p>Before we can try to build an LDA model, we need to split the contents
-into separate pages, and anything that is not relevant article content.</p>
+into separate pages, and discard anything that is not relevant article
+content.</p>
 <div class="section" id="extracting-pages">
 <h3>Extracting Pages<a class="headerlink" href="#extracting-pages" title="Permalink to this headline">¶</a></h3>
 <p>The full wikipedia dump is a very large xml files, each page (with
@@ -1742,7 +1752,7 @@ rdd.</p>
 
 <span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span>
 
-<span class="o">//</span> <span class="o">----</span> <span class="n">Mathing</span>
+<span class="o">//</span> <span class="o">----</span> <span class="n">Matching</span>
 <span class="kn">import</span> <span class="nn">scala.util.matching.UnanchoredRegex</span>
 </pre></div>
 </div>
