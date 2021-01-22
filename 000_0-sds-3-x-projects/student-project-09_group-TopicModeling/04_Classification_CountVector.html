@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Load processed data &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
+    <title>Classification CountVector &#8212; Scalable Data Science &amp; Distributed Machine Learning</title>
     
   <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Load processed data" href="05_Classification.html" />
-    <link rel="prev" title="Load processed data" href="03_LDA.html" />
+    <link rel="prev" title="LDA - Extract Features" href="03_LDA.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -733,46 +733,17 @@
   <ul class="current collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="02_Data_Processing.html">
-     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+     Data Processing
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="03_LDA.html">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
-     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
-     <em>
-      LDA
-     </em>
-     20NewsGroupsSmall’)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="03_LDA.html#visualise-results">
-     Visualise Results
+     LDA - Extract Features
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#format-data">
-     Format data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#classification">
-     Classification
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="#evaluation">
-     Evaluation
+     Classification CountVector
     </a>
    </li>
    <li class="toctree-l2">
@@ -1261,32 +1232,32 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-processed-data">
    Load processed data
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#format-data">
    Format data
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#classification">
    Classification
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#evaluation">
    Evaluation
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluation-training-data">
      Evaluation Training data
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluation-test-data">
      Evaluation Test data
     </a>
@@ -1304,8 +1275,10 @@
         
               <div>
                 
-  <div class="section" id="load-processed-data">
-<h1>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="classification-countvector">
+<h1>Classification CountVector<a class="headerlink" href="#classification-countvector" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="load-processed-data">
+<h2>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
@@ -1338,7 +1311,7 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 </div>
 </div>
 <div class="section" id="format-data">
-<h1>Format data<a class="headerlink" href="#format-data" title="Permalink to this headline">¶</a></h1>
+<h2>Format data<a class="headerlink" href="#format-data" title="Permalink to this headline">¶</a></h2>
 <p>Generate word count vectors</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1513,7 +1486,7 @@ mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: stri
 </div>
 </div>
 <div class="section" id="classification">
-<h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h1>
+<h2>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h2>
 <p>The count vectors are used as features for classification</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1557,7 +1530,7 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 </div>
 </div>
 <div class="section" id="evaluation">
-<h1>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h1>
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
@@ -1596,7 +1569,7 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 </div>
 </div>
 <div class="section" id="evaluation-training-data">
-<h2>Evaluation Training data<a class="headerlink" href="#evaluation-training-data" title="Permalink to this headline">¶</a></h2>
+<h3>Evaluation Training data<a class="headerlink" href="#evaluation-training-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
@@ -1626,7 +1599,7 @@ fm5 = 0.8114285714285714
 </div>
 </div>
 <div class="section" id="evaluation-test-data">
-<h2>Evaluation Test data<a class="headerlink" href="#evaluation-test-data" title="Permalink to this headline">¶</a></h2>
+<h3>Evaluation Test data<a class="headerlink" href="#evaluation-test-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
@@ -1651,6 +1624,7 @@ fm3 = 0.7970370370370371
 fm4 = 0.647887323943662
 fm5 = 0.8301886792452831
 </pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1685,7 +1659,7 @@ fm5 = 0.8301886792452831
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="03_LDA.html" title="previous page">Load processed data</a>
+    <a class='left-prev' id="prev-link" href="03_LDA.html" title="previous page">LDA - Extract Features</a>
     <a class='right-next' id="next-link" href="05_Classification.html" title="next page">Load processed data</a>
 
     </div>

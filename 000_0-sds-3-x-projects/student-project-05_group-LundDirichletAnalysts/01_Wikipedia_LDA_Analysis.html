@@ -733,46 +733,17 @@
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/02_Data_Processing.html">
-     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+     Data Processing
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
-     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
-     <em>
-      LDA
-     </em>
-     20NewsGroupsSmall’)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
-     Visualise Results
+     LDA - Extract Features
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
-     Format data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
-     Classification
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
-     Evaluation
+     Classification CountVector
     </a>
    </li>
    <li class="toctree-l2">
@@ -1267,18 +1238,23 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scope">
-     Scope
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#results">
      Results
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scope">
+     Scope
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#references">
      References
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acknowledgement">
+     Acknowledgement
     </a>
    </li>
   </ul>
@@ -1407,16 +1383,16 @@
   <div class="section" id="wikipedia-analysis-using-latent-dirichlet-allocation-lda">
 <h1>Wikipedia analysis using Latent Dirichlet Allocation (LDA)<a class="headerlink" href="#wikipedia-analysis-using-latent-dirichlet-allocation-lda" title="Permalink to this headline">¶</a></h1>
 <p>Authors: Axel Berg, Johan Grönqvist, Jens Gulin</p>
-<p>Link to presentation:
-https://lunduniversityo365-my.sharepoint.com/:v:/g/personal/ax8107be<em>lu</em>se/EU2uVibnZShNsXfbPWXEmJQBDcc6dR9kFVCGCgo1TSckcQ?e=Gow6lI</p>
+<p><a class="reference external" href="https://lunduniversityo365-my.sharepoint.com/:v:/g/personal/ax8107be_lu_se/EU2uVibnZShNsXfbPWXEmJQBDcc6dR9kFVCGCgo1TSckcQ?e=Gow6lI">Link to video
+presentation</a></p>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>As part of the course assignment to set up a scalable pipeline, we
-decided to run topic analysis on Wikipedia articles. Latent Dirichlet
-Allocation (LDA) extracts topics from the corpus and we uses those to
-assign each article to the most covered topic. As a proof-of-concept
-system, we make a simple recommender system, recommending the highest
-scoring from each topic.</p>
+<p>As part of the course assignment to set up a scalable pipeline, we run
+topic analysis on Wikipedia articles. Latent Dirichlet Allocation (LDA)
+extracts topics from the corpus and we use those to assign each article
+to the most covered topic. As a proof-of-concept system, we make a
+simple recommender system, highlighting the highest scoring articles for
+the topic as a follow-up of the currently read article.</p>
 <p>Although the pipeline is meant to be generalizable, this workbook is not
 streamlined, but also explores the data. This is to help presentation,
 and also to support any effort to re-use the pipeline on another data
@@ -1426,26 +1402,43 @@ and sample output.</p>
 <p>We currently run the pipeline on Swedish Wikipedia. Changing the
 download and data cleaning slightly, it should work on other sources.
 Most of the cells are language agnostic, but stopwords and tokenization
-needs to be adapted to new languages. Swedish Wikipedia also have a
-peculiarity, having a high number of articles automatically generated
-from structured data by bots. We decided to discard those article from
-analysis since their relatively high number and uniform wording skewed
-the results. The detection of autogenerated articles is thus specific
-and could be skipped or changed for other languages.</p>
+needs to be adapted to new languages. Swedish Wikipedia is a bit
+peculiar, having a high number of articles automatically generated from
+structured data by bots. We discard those articles from the analysis,
+since their relatively high number and uniform wording skewed the
+results. The detection of auto-generated articles is thus specific and
+could be skipped or changed for other languages.</p>
+<div class="section" id="results">
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
+<p>We provide a notebook, primarily in Scala programming language, that can
+run on a Databricks cluster (7.3 LTS, including Apache Spark 3.0.1,
+Scala 2.12). Since this was a shared cluster with dynamic scaling, the
+runtime performance isn’t clearly defined, but some notable measures are
+mentioned for reference. The reference cluster has up to 8 workers, each
+with 4 CPU and no GPU.</p>
+<p>The pipeline works well and the topics produced seems ok. We have done
+no further qualitative evaluation and no systematic search for optimal
+hyper-parameters. In regards to runtime performance, the scalable
+cluster handles the workload in a fair manner and we have not focused on
+optimization at this point.</p>
+<p>There are several potential improvements that are outside of the scope
+of this project. They include changes to improve execution time and
+topic quality, as well as use-cases utilizing the created model.</p>
+</div>
 <div class="section" id="scope">
 <h3>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h3>
-<p>This notebook examplifies topic analysis on Swedish Wikipedia. For
-overview and documenation, the code is divided into sections. Use the
-outline to navigate to relevant parts. The following stages illustrates
+<p>This notebook exemplifies topic analysis on Swedish Wikipedia. For
+overview and documentation, the code is divided into sections. Use the
+outline to navigate to relevant parts. The following stages illustrate
 the flow of the pipeline.</p>
 <ol class="simple">
 <li><p>Download a data dump of all pages from Wikipedia (compressed XML of
 current state)</p></li>
 <li><p>Clean the data</p>
 <ol class="simple">
-<li><p>Discard unwanted pages. Keep only article-space pages not
-automatically generated by algorithms.</p></li>
-<li><p>Filter the xml to extract meta data and raw article text.</p></li>
+<li><p>Keep only article-space pages not automatically generated by
+algorithms.</p></li>
+<li><p>Filter the XML to extract meta data and raw article text.</p></li>
 <li><p>Remove links and other markup-formatting</p></li>
 </ol>
 </li>
@@ -1457,44 +1450,47 @@ automatically generated by algorithms.</p></li>
 <li><p>Recommend similar articles.</p></li>
 </ol>
 </div>
-<div class="section" id="results">
-<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
-<p>The pipeline works well and the topics produced seems ok. We have done
-no further qualitative evaluation and no systematic search for optimal
-hyper-parameters. In regards to runtime performance, the scalable
-cluster handles the work load in a fair manner and we have not focused
-on optimization at this point.</p>
-<p>There are several potential improvement that are outside of the scope of
-this project, but hat we would expect to improve execution time,
-selected topics, and use-cases utilizing the resulting model.</p>
-</div>
 <div class="section" id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>https://en.wikipedia.org/wiki/Latent<em>Dirichlet</em>allocation</p></li>
-<li><p>https://spark.apache.org/docs/latest/api/scala/org/apache/spark/mllib/clustering/LDA.html</p></li>
-<li><p>https://dumps.wikimedia.org/svwiki/20201120/</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">https://en.wikipedia.org/wiki/Latent<em>Dirichlet</em>allocation</a></p></li>
+<li><p><a class="reference external" href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/mllib/clustering/LDA.html">https://spark.apache.org/docs/latest/api/scala/org/apache/spark/mllib/clustering/LDA.html</a></p></li>
+<li><p><a class="reference external" href="https://dumps.wikimedia.org/svwiki/20201120/">https://dumps.wikimedia.org/svwiki/20201120/</a></p></li>
+<li><p><a class="reference external" href="https://dbc-635ca498-e5f1.cloud.databricks.com/?o=445287446643905#notebook/2972105651606635/command/2972105651606636">034<em>LDA</em>20NewsGroupsSmall</a>
+(temp. cluster link)</p></li>
+<li><p>[scalable-data-science/000<em>0-sds-3-x-projects/034</em>LDA_20NewsGroupSmall]</p></li>
+<li><p><a class="reference external" href="TestFolder/another_notebook.ipynb#section_id3">To Some Internal
+Section</a></p></li>
 </ul>
+</div>
+<div class="section" id="acknowledgement">
+<h3>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h3>
+<p>This work was partially supported by the Wallenberg AI, Autonomous
+Systems and Software Program (WASP) funded by the Knut and Alice
+Wallenberg Foundation.</p>
 </div>
 </div>
 <div class="section" id="folders-and-files">
 <h2>Folders and Files<a class="headerlink" href="#folders-and-files" title="Permalink to this headline">¶</a></h2>
-<p>To allow pipelines running in parallel simplify configurability, work is
-parameterized in file and folder structure.</p>
-<p>To simplify exploration, the data is saved to file as snapshots, to
-avoid the need to rerun previous sections in every session. We here set
-some variables that will help us locate those files correctly.</p>
+<p>Define variables to make the rest of the notebook more generic.</p>
+<p>To allow pipelines running in parallel and to simplify configurability,
+work is parameterized in a file and folder structure.</p>
+<p>To simplify exploration, the data is saved to file as snapshots. This
+also avoids the need to rerun previous sections in every session.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span> <span class="n">Setup</span> <span class="n">Wikipedia</span> <span class="n">source</span>
 <span class="n">val</span> <span class="n">lang</span> <span class="o">=</span> <span class="s2">&quot;sv&quot;</span>
 <span class="n">val</span> <span class="n">freeze_date</span> <span class="o">=</span> <span class="s2">&quot;20201120&quot;</span>
 <span class="n">val</span> <span class="n">xml_file</span> <span class="o">=</span> <span class="n">lang</span> <span class="o">+</span> <span class="s2">&quot;wiki-&quot;</span> <span class="o">+</span> <span class="n">freeze_date</span> <span class="o">+</span> <span class="s2">&quot;-pages-articles.xml&quot;</span>
 
+<span class="o">//</span> <span class="n">Setup</span> <span class="n">base</span> <span class="n">paths</span> <span class="k">for</span> <span class="n">storage</span>
 <span class="n">val</span> <span class="n">group</span> <span class="o">=</span> <span class="s2">&quot;05_lda&quot;</span>  <span class="o">//</span> <span class="n">directory</span> <span class="n">name</span> <span class="n">to</span> <span class="n">separate</span> <span class="n">file</span> <span class="n">structure</span><span class="p">,</span> <span class="n">allows</span> <span class="n">to</span> <span class="n">run</span> <span class="n">different</span> <span class="n">instances</span> <span class="ow">in</span> <span class="n">parallel</span>
 <span class="n">val</span> <span class="n">localpath</span><span class="o">=</span><span class="n">s</span><span class="s2">&quot;file:/databricks/driver/$group/&quot;</span>
 <span class="n">val</span> <span class="nb">dir</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;dbfs:/datasets/$group/&quot;</span>
 
+<span class="o">//</span> <span class="n">Some</span> <span class="n">file</span> <span class="n">names</span>
 <span class="n">val</span> <span class="n">filtered_articles_file</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{dir}</span><span class="s2">filtered_articles_$</span><span class="si">{lang}</span><span class="s2">_$</span><span class="si">{freeze_date}</span><span class="s2">&quot;</span>
 <span class="n">val</span> <span class="n">lda_countVector_file</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{dir}</span><span class="s2">lda_countvector_$</span><span class="si">{lang}</span><span class="s2">_$</span><span class="si">{freeze_date}</span><span class="s2">&quot;</span>
 <span class="n">val</span> <span class="n">lda_file</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{dir}</span><span class="s2">lda_$</span><span class="si">{lang}</span><span class="s2">_$</span><span class="si">{freeze_date}</span><span class="s2">.model&quot;</span>
@@ -1610,8 +1606,9 @@ res1: Boolean = true
 <div class="section" id="wikipedia-download">
 <h3>Wikipedia Download<a class="headerlink" href="#wikipedia-download" title="Permalink to this headline">¶</a></h3>
 <p>Wikipedia downloads are available as compressed files, and language and
-data is chosen via the name of the file. For the current date, this is
-the file share. https://dumps.wikimedia.org/svwiki/20201120/</p>
+data is chosen via the name of the file. For the current date, <a class="reference external" href="https://dumps.wikimedia.org/svwiki/20201120/">this is
+the file share</a> on
+Wikimedia.</p>
 <p>There are several files, we used “pages-articles”. This monolith file
 requires unpacking on driver node. To allow parallel download and
 unpacking the multistream may be a better choice.</p>
@@ -1691,7 +1688,7 @@ svwiki-20201120-pages-articles.xml.bz2
 </div>
 </div>
 </div>
-<p>We verify that we now have an xml file with some contents.</p>
+<p>Verify that we now have an xml file with some contents.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>

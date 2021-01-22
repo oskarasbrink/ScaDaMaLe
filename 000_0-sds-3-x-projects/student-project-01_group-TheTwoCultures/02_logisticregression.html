@@ -733,46 +733,17 @@
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/02_Data_Processing.html">
-     Extract (overlapping [since yet do not know which parts corresponds to coding regions]) 3-mers
+     Data Processing
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#format-data-for-apache-spark-mllib-clustering-lda-adapted-from-the-lda-course-tutorial-034lda20newsgroupssmall">
-     Format data for apache.spark.mllib.clustering.LDA (adapted from the LDA course tutorial ‘034
-     <em>
-      LDA
-     </em>
-     20NewsGroupsSmall’)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/03_LDA.html#visualise-results">
-     Visualise Results
+     LDA - Extract Features
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html">
-     Load processed data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#format-data">
-     Format data
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#classification">
-     Classification
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-09_group-TopicModeling/04_Classification_CountVector.html#evaluation">
-     Evaluation
+     Classification CountVector
     </a>
    </li>
    <li class="toctree-l2">
@@ -1342,10 +1313,12 @@ df_text_familjeliv: org.apache.spark.sql.DataFrame = [w: string]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Add</span> <span class="n">label</span> <span class="n">columns</span>
+<span class="o">//</span><span class="n">Add</span> <span class="n">label</span> <span class="n">columns</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">that</span> <span class="n">we</span> <span class="n">have</span> <span class="n">exactly</span> <span class="n">the</span> <span class="n">same</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="kn">from</span> <span class="nn">both</span> <span class="n">forums</span>
 <span class="n">val</span> <span class="n">df_text_flashback_c</span> <span class="o">=</span> <span class="n">df_text_flashback</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">val</span> <span class="n">df_text_familjeliv_c</span> <span class="o">=</span> <span class="n">df_text_familjeliv</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">toInt</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">val</span> <span class="n">df_text_full</span> <span class="o">=</span> <span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df_text_familjeliv_c</span><span class="p">)</span>
+
+<span class="o">//</span><span class="n">Check</span> <span class="n">the</span> <span class="n">counts</span>
 <span class="n">println</span><span class="p">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
 <span class="n">println</span><span class="p">(</span><span class="n">df_text_familjeliv_c</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
 <span class="n">println</span><span class="p">(</span><span class="n">df_text_full</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
@@ -1425,6 +1398,7 @@ remover: org.apache.spark.ml.feature.StopWordsRemover = StopWordsRemover: uid=st
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Run</span> <span class="n">the</span> <span class="n">stopwordsremover</span>
 <span class="n">val</span> <span class="n">removed_df</span> <span class="o">=</span> <span class="n">remover</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1442,17 +1416,19 @@ remover: org.apache.spark.ml.feature.StopWordsRemover = StopWordsRemover: uid=st
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Unlimited</span> <span class="n">size</span> <span class="n">vocabulary</span> <span class="n">just</span> <span class="n">to</span> <span class="n">see</span> <span class="n">how</span> <span class="n">much</span> <span class="n">there</span> <span class="ow">is</span>
 <span class="n">val</span> <span class="n">vectorizerall</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
    <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
    <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Only</span> <span class="n">count</span> <span class="n">words</span> <span class="n">that</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">5</span> <span class="n">threadss</span>
    <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">removed_df</span><span class="p">)</span> <span class="o">//</span> <span class="n">returns</span> <span class="n">CountVectorizerModel</span>
 
+<span class="o">//</span><span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">one</span> <span class="n">we</span> <span class="n">use</span><span class="p">,</span> <span class="n">limit</span> <span class="n">size</span> <span class="n">of</span> <span class="n">vocabulary</span>
 <span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
    <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
    <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
    <span class="o">.</span><span class="n">setVocabSize</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">dictonary</span>
-   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Only</span> <span class="n">count</span> <span class="n">words</span> <span class="n">that</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">5</span> <span class="n">threadss</span>
    <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">removed_df</span><span class="p">)</span> <span class="o">//</span> <span class="n">returns</span> <span class="n">CountVectorizerModel</span>
 </pre></div>
 </div>
@@ -1467,6 +1443,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Let</span><span class="s1">&#39;s take a look at the vocabulary</span>
 <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
@@ -1523,14 +1500,6 @@ test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [c: int, features
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">display</span><span class="p">(</span><span class="n">training</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <ol class="simple">
 <li><p>Logistic Regression model</p></li>
 </ol>
@@ -1550,9 +1519,9 @@ test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [c: int, features
 <span class="o">//</span><span class="n">Logistic</span> <span class="n">regression</span>
 <span class="n">val</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LogisticRegression</span><span class="p">()</span>
   <span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setMaxIter</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setRegParam</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setElasticNetParam</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">setMaxIter</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">//</span><span class="n">Run</span> <span class="k">for</span> <span class="mi">100</span> <span class="n">iterations</span> <span class="p">(</span><span class="ow">not</span> <span class="n">necessary</span> <span class="n">but</span> <span class="n">let</span><span class="s1">&#39;s stay on safe side)</span>
+  <span class="o">.</span><span class="n">setRegParam</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span> <span class="o">//</span><span class="n">Just</span> <span class="n">a</span> <span class="n">tiny</span> <span class="n">bit</span> <span class="n">of</span> <span class="n">regularization</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">overfitting</span>
+  <span class="o">.</span><span class="n">setElasticNetParam</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">//</span> <span class="mi">50</span><span class="o">-</span><span class="mi">50</span> <span class="n">between</span> <span class="n">L1</span> <span class="ow">and</span> <span class="n">L2</span> <span class="n">loss</span>
 
 <span class="o">//</span> <span class="n">Fit</span> <span class="n">the</span> <span class="n">model</span>
 <span class="n">val</span> <span class="n">lrModel</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training</span><span class="p">)</span>
@@ -1574,6 +1543,7 @@ lrModel: org.apache.spark.ml.classification.LogisticRegressionModel = LogisticRe
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Check</span> <span class="n">the</span> <span class="n">training</span> <span class="n">progress</span>
 <span class="n">lrModel</span><span class="o">.</span><span class="n">binarySummary</span><span class="o">.</span><span class="n">objectiveHistory</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">loss</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1649,7 +1619,10 @@ findmin: (idx: Int, value: Double)Unit
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Let</span><span class="s1">&#39;s check which words are considered most important for classification</span>
 <span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">findmax</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="o">//</span><span class="n">First</span> <span class="n">check</span> <span class="n">familjeliv</span>
 <span class="n">println</span><span class="p">(</span><span class="n">maxarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">))</span>
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
@@ -1657,6 +1630,8 @@ findmin: (idx: Int, value: Double)Unit
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
 <span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">findmin</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="o">//</span><span class="n">Check</span> <span class="k">for</span> <span class="n">flashback</span>
 <span class="n">println</span><span class="p">(</span><span class="n">minarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">))</span>
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
 <span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
@@ -1744,6 +1719,7 @@ output truncated to 30 lines...
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="o">//</span><span class="n">Check</span> <span class="n">auroc</span> <span class="n">value</span>
 <span class="n">val</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">()</span><span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 </pre></div>
