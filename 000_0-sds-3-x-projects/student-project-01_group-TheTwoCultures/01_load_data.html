@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1241,111 +1211,111 @@
 <div class="section" id="preprocessing-and-loading-the-relevant-data">
 <h1>Preprocessing and loading the relevant data<a class="headerlink" href="#preprocessing-and-loading-the-relevant-data" title="Permalink to this headline">¶</a></h1>
 <p>Each forum comes as an XML-file with the structure given below:</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Data</span> <span class="n">comes</span> <span class="ow">in</span> <span class="n">XML</span><span class="o">-</span><span class="n">files</span> <span class="k">with</span> <span class="n">the</span> <span class="n">following</span> <span class="n">structure</span><span class="o">.</span>
-<span class="o">/*</span>
-<span class="o">&lt;</span><span class="n">corpus</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;familjeliv-adoption&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">forum</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;13-242&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Adoption &amp;gt; Intresserad&quot;</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.familjeliv.</span>
-<span class="n">se</span><span class="o">/</span><span class="n">forum</span><span class="o">/</span><span class="mi">13</span><span class="o">/</span><span class="mi">242</span><span class="s2">&quot;&gt;</span>
-<span class="o">&lt;</span><span class="n">thread</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;34277335&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Tips för att välja land&quot;</span> <span class="n">postcount</span><span class="o">=</span><span class="s2">&quot;25&quot;</span> <span class="n">lastpost</span><span class="o">=</span><span class="s2">&quot;2</span>
-<span class="mi">008</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">08</span> <span class="mi">17</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">14</span><span class="s2">&quot; url=&quot;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">familjeliv</span><span class="o">.</span><span class="n">se</span><span class="o">/</span><span class="n">forum</span><span class="o">/</span><span class="n">thread</span><span class="o">/</span><span class="mi">34277335</span><span class="o">-</span><span class="n">tips</span><span class="o">-</span><span class="k">for</span>
-<span class="o">-</span><span class="n">att</span><span class="o">-</span><span class="n">valja</span><span class="o">-</span><span class="n">land</span><span class="s2">&quot;&gt;</span>
-<span class="o">&lt;</span><span class="n">text</span> <span class="n">datefrom</span><span class="o">=</span><span class="s2">&quot;20080707&quot;</span> <span class="n">dateto</span><span class="o">=</span><span class="s2">&quot;20080707&quot;</span> <span class="n">timefrom</span><span class="o">=</span><span class="s2">&quot;220854&quot;</span> <span class="n">timeto</span><span class="o">=</span><span class="s2">&quot;220854&quot;</span> <span class="n">lix</span><span class="o">=</span><span class="s2">&quot;30.55&quot;</span> <span class="n">ovix</span><span class="o">=</span><span class="s2">&quot;60.74&quot;</span> <span class="n">nk</span><span class="o">=</span><span class="s2">&quot;0.51&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;34284994&quot;</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;Miss TN&quot;</span> <span class="n">date</span><span class="o">=</span><span class="s2">&quot;2008-07-07 22:08:54&quot;</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.familjeliv.se/forum/thread/34277335-tips-for-att-valja-land/2#anchor-m16&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">sentence</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;bacc55562-baca83a75&quot;</span> <span class="n">_geocontext</span><span class="o">=</span><span class="s2">&quot;|&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;VB&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;VB.PRS.AKT&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|känna|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|känna..vb.2|känna..vb.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|känna..1:0.522|känna..2:0.313|känna..4:0.158|känna..3:0.006|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;01&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;07&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;AA&quot;</span><span class="o">&gt;</span><span class="n">Känner</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;PN&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;PN.UTR.SIN.DEF.SUB&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|ni|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|ni..pn.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|ni..1:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;02&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;01&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;OO&quot;</span><span class="o">&gt;</span><span class="n">ni</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;PP&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;PP&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|för|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|för..pp.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|för..1:-1.000|för..5:-1.000|för..6:-1.000|för..7:-1.000|för..9:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;03&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;01&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;OA&quot;</span><span class="o">&gt;</span><span class="n">för</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;DT&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;DT.NEU.SIN.IND&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|en|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|en..al.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|den..1:-1.000|en..2:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;04&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;06&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;DT&quot;</span><span class="o">&gt;</span><span class="n">ett</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;JJ&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;JJ.POS.NEU.SIN.IND.NOM&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|låg|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|låg..av.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|låg..1:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;05&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;06&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;AT&quot;</span><span class="o">&gt;</span><span class="n">lågt</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;NN&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;NN.NEU.SIN.IND.NOM&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|medgivande|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|medgivande..nn.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|medgivande..1:0.595|medgivande..2:0.405|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|medge..vb.1|mede..nn.1|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|givande..nn.1|ande..nn.1|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|medgiv+ande|med+givande|med+giv+ande|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|medge..vb.1+ande..nn.1:4.632e-17|mede..nn.1+givande..nn.1:6.075e-27|mede..nn.1+giv..nn.1+ande..nn.1:5.387e-27|mede..nn.1+ge..vb.1+ande..nn.1:1.257e-29|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;06&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;03&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;PA&quot;</span><span class="o">&gt;</span><span class="n">medgivande</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;VB&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;VB.PRS.AKT&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|skola|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|skola..vb.2|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|skola..4:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;07&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;ROOT&quot;</span><span class="o">&gt;</span><span class="n">ska</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;PN&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;PN.UTR.PLU.DEF.SUB&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|ni|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|ni..pn.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|ni..1:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;08&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;07&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;SS&quot;</span><span class="o">&gt;</span><span class="n">ni</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;AB&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;AB&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|verkligen|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|verkligen..ab.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|verkligen..1:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;09&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;07&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;MA&quot;</span><span class="o">&gt;</span><span class="n">verkligen</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;VB&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;VB.INF.AKT&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|sträva|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|sträva..vb.1|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|sträva..1:-1.000|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;10&quot;</span> <span class="n">dephead</span><span class="o">=</span><span class="s2">&quot;07&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;VG&quot;</span><span class="o">&gt;</span><span class="n">sträva</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">.</span>
-<span class="o">.</span>
-<span class="o">.</span>
-<span class="o">&lt;/</span><span class="n">sentence</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">text</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">thread</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">thread</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;42755312&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Om vi planerar ett barn om sju år, när ska vi dra igång adoptionsprocessen?&quot;</span> <span class="n">postcount</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">lastpost</span><span class="o">=</span><span class="s2">&quot;2009-04-01 18:39:55&quot;</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.familjeliv.se/forum/thread/42755312-om-vi-planerar-ett-barn-om-sju-ar-nar-ska-vi-dra-igang-adoptionsprocessen&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">text</span> <span class="n">datefrom</span><span class="o">=</span><span class="s2">&quot;20090331&quot;</span> <span class="n">dateto</span><span class="o">=</span><span class="s2">&quot;20090331&quot;</span> <span class="n">timefrom</span><span class="o">=</span><span class="s2">&quot;201724&quot;</span> <span class="n">timeto</span><span class="o">=</span><span class="s2">&quot;201724&quot;</span> <span class="n">lix</span><span class="o">=</span><span class="s2">&quot;27.48&quot;</span> <span class="n">ovix</span><span class="o">=</span><span class="s2">&quot;50.60&quot;</span> <span class="n">nk</span><span class="o">=</span><span class="s2">&quot;0.37&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;42755312&quot;</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;alvaereva&quot;</span> <span class="n">date</span><span class="o">=</span><span class="s2">&quot;2009-03-31 20:17:24&quot;</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.familjeliv.se/forum/thread/42755312-om-vi-planerar-ett-barn-om-sju-ar-nar-ska-vi-dra-igang-adoptionsprocessen/1&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">sentence</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;bac2ec05f-bace4e647&quot;</span> <span class="n">_geocontext</span><span class="o">=</span><span class="s2">&quot;|&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">w</span> <span class="n">pos</span><span class="o">=</span><span class="s2">&quot;KN&quot;</span> <span class="n">msd</span><span class="o">=</span><span class="s2">&quot;KN&quot;</span> <span class="n">lemma</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">lex</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">sense</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">compwf</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">complemgram</span><span class="o">=</span><span class="s2">&quot;|&quot;</span> <span class="n">ref</span><span class="o">=</span><span class="s2">&quot;01&quot;</span> <span class="n">deprel</span><span class="o">=</span><span class="s2">&quot;ROOT&quot;</span><span class="o">&gt;</span><span class="n">Som</span><span class="o">&lt;/</span><span class="n">w</span><span class="o">&gt;</span>
-<span class="o">.</span>
-<span class="o">.</span>
-<span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Data comes in XML-files with the following structure.</span>
+<span class="cm">/*</span>
+<span class="cm">&lt;corpus id=&quot;familjeliv-adoption&quot;&gt;</span>
+<span class="cm">&lt;forum id=&quot;13-242&quot; title=&quot;Adoption &amp;gt; Intresserad&quot; url=&quot;http://www.familjeliv.</span>
+<span class="cm">se/forum/13/242&quot;&gt;</span>
+<span class="cm">&lt;thread id=&quot;34277335&quot; title=&quot;Tips för att välja land&quot; postcount=&quot;25&quot; lastpost=&quot;2</span>
+<span class="cm">008-07-08 17:55:14&quot; url=&quot;http://www.familjeliv.se/forum/thread/34277335-tips-for</span>
+<span class="cm">-att-valja-land&quot;&gt;</span>
+<span class="cm">&lt;text datefrom=&quot;20080707&quot; dateto=&quot;20080707&quot; timefrom=&quot;220854&quot; timeto=&quot;220854&quot; lix=&quot;30.55&quot; ovix=&quot;60.74&quot; nk=&quot;0.51&quot; id=&quot;34284994&quot; username=&quot;Miss TN&quot; date=&quot;2008-07-07 22:08:54&quot; url=&quot;http://www.familjeliv.se/forum/thread/34277335-tips-for-att-valja-land/2#anchor-m16&quot;&gt;</span>
+<span class="cm">&lt;sentence id=&quot;bacc55562-baca83a75&quot; _geocontext=&quot;|&quot;&gt;</span>
+<span class="cm">&lt;w pos=&quot;VB&quot; msd=&quot;VB.PRS.AKT&quot; lemma=&quot;|känna|&quot; lex=&quot;|känna..vb.2|känna..vb.1|&quot; sense=&quot;|känna..1:0.522|känna..2:0.313|känna..4:0.158|känna..3:0.006|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;01&quot; dephead=&quot;07&quot; deprel=&quot;AA&quot;&gt;Känner&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;PN&quot; msd=&quot;PN.UTR.SIN.DEF.SUB&quot; lemma=&quot;|ni|&quot; lex=&quot;|ni..pn.1|&quot; sense=&quot;|ni..1:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;02&quot; dephead=&quot;01&quot; deprel=&quot;OO&quot;&gt;ni&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;PP&quot; msd=&quot;PP&quot; lemma=&quot;|för|&quot; lex=&quot;|för..pp.1|&quot; sense=&quot;|för..1:-1.000|för..5:-1.000|för..6:-1.000|för..7:-1.000|för..9:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;03&quot; dephead=&quot;01&quot; deprel=&quot;OA&quot;&gt;för&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;DT&quot; msd=&quot;DT.NEU.SIN.IND&quot; lemma=&quot;|en|&quot; lex=&quot;|en..al.1|&quot; sense=&quot;|den..1:-1.000|en..2:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;04&quot; dephead=&quot;06&quot; deprel=&quot;DT&quot;&gt;ett&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;JJ&quot; msd=&quot;JJ.POS.NEU.SIN.IND.NOM&quot; lemma=&quot;|låg|&quot; lex=&quot;|låg..av.1|&quot; sense=&quot;|låg..1:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;05&quot; dephead=&quot;06&quot; deprel=&quot;AT&quot;&gt;lågt&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;NN&quot; msd=&quot;NN.NEU.SIN.IND.NOM&quot; lemma=&quot;|medgivande|&quot; lex=&quot;|medgivande..nn.1|&quot; sense=&quot;|medgivande..1:0.595|medgivande..2:0.405|&quot; prefix=&quot;|medge..vb.1|mede..nn.1|&quot; suffix=&quot;|givande..nn.1|ande..nn.1|&quot; compwf=&quot;|medgiv+ande|med+givande|med+giv+ande|&quot; complemgram=&quot;|medge..vb.1+ande..nn.1:4.632e-17|mede..nn.1+givande..nn.1:6.075e-27|mede..nn.1+giv..nn.1+ande..nn.1:5.387e-27|mede..nn.1+ge..vb.1+ande..nn.1:1.257e-29|&quot; ref=&quot;06&quot; dephead=&quot;03&quot; deprel=&quot;PA&quot;&gt;medgivande&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;VB&quot; msd=&quot;VB.PRS.AKT&quot; lemma=&quot;|skola|&quot; lex=&quot;|skola..vb.2|&quot; sense=&quot;|skola..4:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;07&quot; deprel=&quot;ROOT&quot;&gt;ska&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;PN&quot; msd=&quot;PN.UTR.PLU.DEF.SUB&quot; lemma=&quot;|ni|&quot; lex=&quot;|ni..pn.1|&quot; sense=&quot;|ni..1:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;08&quot; dephead=&quot;07&quot; deprel=&quot;SS&quot;&gt;ni&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;AB&quot; msd=&quot;AB&quot; lemma=&quot;|verkligen|&quot; lex=&quot;|verkligen..ab.1|&quot; sense=&quot;|verkligen..1:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;09&quot; dephead=&quot;07&quot; deprel=&quot;MA&quot;&gt;verkligen&lt;/w&gt;</span>
+<span class="cm">&lt;w pos=&quot;VB&quot; msd=&quot;VB.INF.AKT&quot; lemma=&quot;|sträva|&quot; lex=&quot;|sträva..vb.1|&quot; sense=&quot;|sträva..1:-1.000|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;10&quot; dephead=&quot;07&quot; deprel=&quot;VG&quot;&gt;sträva&lt;/w&gt;</span>
+<span class="cm">.</span>
+<span class="cm">.</span>
+<span class="cm">.</span>
+<span class="cm">&lt;/sentence&gt;</span>
+<span class="cm">&lt;/text&gt;</span>
+<span class="cm">&lt;/thread&gt;</span>
+<span class="cm">&lt;thread id=&quot;42755312&quot; title=&quot;Om vi planerar ett barn om sju år, när ska vi dra igång adoptionsprocessen?&quot; postcount=&quot;3&quot; lastpost=&quot;2009-04-01 18:39:55&quot; url=&quot;http://www.familjeliv.se/forum/thread/42755312-om-vi-planerar-ett-barn-om-sju-ar-nar-ska-vi-dra-igang-adoptionsprocessen&quot;&gt;</span>
+<span class="cm">&lt;text datefrom=&quot;20090331&quot; dateto=&quot;20090331&quot; timefrom=&quot;201724&quot; timeto=&quot;201724&quot; lix=&quot;27.48&quot; ovix=&quot;50.60&quot; nk=&quot;0.37&quot; id=&quot;42755312&quot; username=&quot;alvaereva&quot; date=&quot;2009-03-31 20:17:24&quot; url=&quot;http://www.familjeliv.se/forum/thread/42755312-om-vi-planerar-ett-barn-om-sju-ar-nar-ska-vi-dra-igang-adoptionsprocessen/1&quot;&gt;</span>
+<span class="cm">&lt;sentence id=&quot;bac2ec05f-bace4e647&quot; _geocontext=&quot;|&quot;&gt;</span>
+<span class="cm">&lt;w pos=&quot;KN&quot; msd=&quot;KN&quot; lemma=&quot;|&quot; lex=&quot;|&quot; sense=&quot;|&quot; prefix=&quot;|&quot; suffix=&quot;|&quot; compwf=&quot;|&quot; complemgram=&quot;|&quot; ref=&quot;01&quot; deprel=&quot;ROOT&quot;&gt;Som&lt;/w&gt;</span>
+<span class="cm">.</span>
+<span class="cm">.</span>
+<span class="cm">.</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
-import org.apache.spark.sql.functions.{col,concat_ws, udf, flatten, explode, collect_list, collect_set, lit}
-import org.apache.spark.sql.types.{ ArrayType, StructType, StructField, StringType, IntegerType }
-import com.databricks.spark.xml._ // Add the DataFrame.read.xml() method
-import org.apache.spark.sql.functions._
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql.functions.</span><span class="o">{</span><span class="n">col</span><span class="o">,</span><span class="n">concat_ws</span><span class="o">,</span> <span class="n">udf</span><span class="o">,</span> <span class="n">flatten</span><span class="o">,</span> <span class="n">explode</span><span class="o">,</span> <span class="n">collect_list</span><span class="o">,</span> <span class="n">collect_set</span><span class="o">,</span> <span class="n">lit</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql.types.</span><span class="o">{</span> <span class="nc">ArrayType</span><span class="o">,</span> <span class="nc">StructType</span><span class="o">,</span> <span class="nc">StructField</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="nc">IntegerType</span> <span class="o">}</span>
+<span class="k">import</span> <span class="nn">com.databricks.spark.xml._</span> <span class="c1">// Add the DataFrame.read.xml() method</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 
 
-def read_xml(file_name: String): org.apache.spark.sql.DataFrame = {
-  val sentence_schema = StructType(Array(
-    StructField(&quot;w&quot;, ArrayType(StringType, true), nullable=true)
-  ))
-  val text_schema = StructType(Array(
-     StructField(&quot;sentence&quot;, ArrayType(sentence_schema), nullable=false)
-  ))
+<span class="k">def</span> <span class="n">read_xml</span><span class="o">(</span><span class="n">file_name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">sentence_schema</span> <span class="o">=</span> <span class="nc">StructType</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">,</span> <span class="nc">ArrayType</span><span class="o">(</span><span class="nc">StringType</span><span class="o">,</span> <span class="kc">true</span><span class="o">),</span> <span class="n">nullable</span><span class="k">=</span><span class="kc">true</span><span class="o">)</span>
+  <span class="o">))</span>
+  <span class="k">val</span> <span class="n">text_schema</span> <span class="o">=</span> <span class="nc">StructType</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span>
+     <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;sentence&quot;</span><span class="o">,</span> <span class="nc">ArrayType</span><span class="o">(</span><span class="n">sentence_schema</span><span class="o">),</span> <span class="n">nullable</span><span class="k">=</span><span class="kc">false</span><span class="o">)</span>
+  <span class="o">))</span>
 
-  val thread_schema = StructType(Array(
-    StructField(&quot;_id&quot;, StringType, nullable = false),
-    StructField(&quot;_title&quot;, StringType, nullable = false),
-    StructField(&quot;_url&quot;, StringType, nullable = false),
-    StructField(&quot;text&quot;, text_schema, nullable=false)
-  ))
+  <span class="k">val</span> <span class="n">thread_schema</span> <span class="o">=</span> <span class="nc">StructType</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_id&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_title&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_url&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;text&quot;</span><span class="o">,</span> <span class="n">text_schema</span><span class="o">,</span> <span class="n">nullable</span><span class="k">=</span><span class="kc">false</span><span class="o">)</span>
+  <span class="o">))</span>
 
-  val forum_schema = StructType(Array(
-    StructField(&quot;_id&quot;, StringType, nullable = false),
-    StructField(&quot;_title&quot;, StringType, nullable = false),
-    StructField(&quot;_url&quot;, StringType, nullable = false),
-    StructField(&quot;thread&quot;, ArrayType(thread_schema), nullable=false)
-  ))
+  <span class="k">val</span> <span class="n">forum_schema</span> <span class="o">=</span> <span class="nc">StructType</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_id&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_title&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_url&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;thread&quot;</span><span class="o">,</span> <span class="nc">ArrayType</span><span class="o">(</span><span class="n">thread_schema</span><span class="o">),</span> <span class="n">nullable</span><span class="k">=</span><span class="kc">false</span><span class="o">)</span>
+  <span class="o">))</span>
 
-  val corpus_schema = StructType(Array(
-    StructField(&quot;_id&quot;, StringType, nullable = false),
-    StructField(&quot;forum&quot;, forum_schema, nullable=false)
-  ))
+  <span class="k">val</span> <span class="n">corpus_schema</span> <span class="o">=</span> <span class="nc">StructType</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;_id&quot;</span><span class="o">,</span> <span class="nc">StringType</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">),</span>
+    <span class="nc">StructField</span><span class="o">(</span><span class="s">&quot;forum&quot;</span><span class="o">,</span> <span class="n">forum_schema</span><span class="o">,</span> <span class="n">nullable</span><span class="k">=</span><span class="kc">false</span><span class="o">)</span>
+  <span class="o">))</span>
 
-  spark.read
-    .option(&quot;rowTag&quot;, &quot;forum&quot;)
-    .schema(forum_schema)
-    .xml(file_name)
- }
+  <span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+    <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;rowTag&quot;</span><span class="o">,</span> <span class="s">&quot;forum&quot;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">schema</span><span class="o">(</span><span class="n">forum_schema</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">xml</span><span class="o">(</span><span class="n">file_name</span><span class="o">)</span>
+ <span class="o">}</span>
 
-def get_dataset(file_name: String) : org.apache.spark.sql.DataFrame = {
-  val xml_df = read_xml(file_name)
-  val ds = xml_df.withColumn(&quot;thread&quot;, explode($&quot;thread&quot;))
-  val splitted_name = file_name.split(&quot;/&quot;)
-  val forum = splitted_name(splitted_name.size-2)
-  val corpus = splitted_name(splitted_name.size-1)
-  val value = udf((arr: Seq[String]) =&gt; arr.mkString(&quot;,&quot;))
-  ds.select(col(&quot;_id&quot;) as &quot;forum_id&quot;,
-                     col(&quot;_title&quot;) as &quot;forum_title&quot;,
-                     col(&quot;thread._id&quot;) as &quot;thread_id&quot;,
-                     col(&quot;thread._title&quot;) as &quot;thread_title&quot;,
-                     flatten(col(&quot;thread.text.sentence.w&quot;)) as &quot;w&quot;)
-                .withColumn(&quot;w&quot;, explode($&quot;w&quot;))
-               .groupBy(&quot;thread_id&quot;)
-               .agg(first(&quot;thread_title&quot;) as(&quot;thread_title&quot;),
-                    collect_list(&quot;w&quot;) as &quot;w&quot;,
-                    first(&quot;forum_id&quot;) as &quot;forum_id&quot;,
-                    first(&quot;forum_title&quot;) as &quot;forum_title&quot;)
-               .withColumn(&quot;w&quot;, concat_ws(&quot;,&quot;,col(&quot;w&quot;)))
-               .withColumn(&quot;platform&quot;, lit(forum))
-               .withColumn(&quot;corpus_id&quot;, lit(corpus))
-}
+<span class="k">def</span> <span class="n">get_dataset</span><span class="o">(</span><span class="n">file_name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">xml_df</span> <span class="o">=</span> <span class="n">read_xml</span><span class="o">(</span><span class="n">file_name</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">xml_df</span><span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;thread&quot;</span><span class="o">,</span> <span class="n">explode</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;thread&quot;</span><span class="o">))</span>
+  <span class="k">val</span> <span class="n">splitted_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">forum</span> <span class="o">=</span> <span class="n">splitted_name</span><span class="o">(</span><span class="n">splitted_name</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">2</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">splitted_name</span><span class="o">(</span><span class="n">splitted_name</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">value</span> <span class="o">=</span> <span class="n">udf</span><span class="o">((</span><span class="n">arr</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">=&gt;</span> <span class="n">arr</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">))</span>
+  <span class="n">ds</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">col</span><span class="o">(</span><span class="s">&quot;_id&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;forum_id&quot;</span><span class="o">,</span>
+                     <span class="n">col</span><span class="o">(</span><span class="s">&quot;_title&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;forum_title&quot;</span><span class="o">,</span>
+                     <span class="n">col</span><span class="o">(</span><span class="s">&quot;thread._id&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;thread_id&quot;</span><span class="o">,</span>
+                     <span class="n">col</span><span class="o">(</span><span class="s">&quot;thread._title&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;thread_title&quot;</span><span class="o">,</span>
+                     <span class="n">flatten</span><span class="o">(</span><span class="n">col</span><span class="o">(</span><span class="s">&quot;thread.text.sentence.w&quot;</span><span class="o">))</span> <span class="n">as</span> <span class="s">&quot;w&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">,</span> <span class="n">explode</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;w&quot;</span><span class="o">))</span>
+               <span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;thread_id&quot;</span><span class="o">)</span>
+               <span class="o">.</span><span class="n">agg</span><span class="o">(</span><span class="n">first</span><span class="o">(</span><span class="s">&quot;thread_title&quot;</span><span class="o">)</span> <span class="n">as</span><span class="o">(</span><span class="s">&quot;thread_title&quot;</span><span class="o">),</span>
+                    <span class="n">collect_list</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;w&quot;</span><span class="o">,</span>
+                    <span class="n">first</span><span class="o">(</span><span class="s">&quot;forum_id&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;forum_id&quot;</span><span class="o">,</span>
+                    <span class="n">first</span><span class="o">(</span><span class="s">&quot;forum_title&quot;</span><span class="o">)</span> <span class="n">as</span> <span class="s">&quot;forum_title&quot;</span><span class="o">)</span>
+               <span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">,</span> <span class="n">concat_ws</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">,</span><span class="n">col</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">)))</span>
+               <span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;platform&quot;</span><span class="o">,</span> <span class="n">lit</span><span class="o">(</span><span class="n">forum</span><span class="o">))</span>
+               <span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;corpus_id&quot;</span><span class="o">,</span> <span class="n">lit</span><span class="o">(</span><span class="n">corpus</span><span class="o">))</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1362,20 +1332,20 @@ get_dataset: (file_name: String)org.apache.spark.sql.DataFrame
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="k">def</span> <span class="nf">save_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">filePath</span><span class="p">:</span><span class="n">String</span><span class="p">){</span>
-  <span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>  
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">def</span> <span class="n">save_df</span><span class="o">(</span><span class="n">df</span><span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span><span class="o">,</span> <span class="n">filePath</span><span class="k">:</span><span class="kt">String</span><span class="o">){</span>
+  <span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;parquet&quot;</span><span class="o">).</span><span class="n">save</span><span class="o">(</span><span class="n">filePath</span><span class="o">)</span>  
+<span class="o">}</span>
 
-<span class="k">def</span> <span class="nf">load_df</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>
- <span class="p">}</span>
+<span class="k">def</span> <span class="n">load_df</span><span class="o">(</span><span class="n">filePath</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;parquet&quot;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="n">filePath</span><span class="o">)</span>
+ <span class="o">}</span>
 
-<span class="k">def</span> <span class="nf">no_forums</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">val</span> <span class="n">forums</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;forum_title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
-  <span class="n">forums</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">false</span><span class="p">)</span>
-  <span class="n">forums</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">no_forums</span><span class="o">(</span><span class="n">df</span><span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">forums</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;forum_title&quot;</span><span class="o">).</span><span class="n">distinct</span><span class="o">()</span>
+  <span class="n">forums</span><span class="o">.</span><span class="n">show</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+  <span class="n">forums</span><span class="o">.</span><span class="n">count</span><span class="o">()</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1393,47 +1363,47 @@ no_forums: (df: org.apache.spark.sql.DataFrame)Long
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">var</span> <span class="n">fl_root</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/familjeliv/&quot;</span>
-<span class="n">var</span> <span class="n">fb_root</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/flashback/&quot;</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">var</span> <span class="n">fl_root</span> <span class="o">=</span> <span class="s">&quot;dbfs:/datasets/student-project-01/familjeliv/&quot;</span>
+<span class="k">var</span> <span class="n">fb_root</span> <span class="o">=</span> <span class="s">&quot;dbfs:/datasets/student-project-01/flashback/&quot;</span>
 
-<span class="n">val</span> <span class="n">fl_data</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="s2">&quot;familjeliv-allmanna-ekonomi&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;familjeliv-sexsamlevnad&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">fl_data</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;familjeliv-allmanna-ekonomi&quot;</span><span class="o">,</span>
+                    <span class="s">&quot;familjeliv-sexsamlevnad&quot;</span><span class="o">)</span>
 
-<span class="n">val</span> <span class="n">fb_data</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="s2">&quot;flashback-ekonomi&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;flashback-sex&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">fb_data</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;flashback-ekonomi&quot;</span><span class="o">,</span>
+                    <span class="s">&quot;flashback-sex&quot;</span><span class="o">)</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="n">name</span> <span class="o">&lt;-</span> <span class="n">fl_data</span><span class="p">){</span>
-  <span class="k">try</span><span class="p">{</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fb_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span><span class="p">)</span>
-    <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fl_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span><span class="p">)</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{name}</span><span class="s2">_df already exists!&quot;</span><span class="p">)</span>
-  <span class="p">}</span>
-  <span class="n">catch</span><span class="p">{</span>
-    <span class="n">case</span> <span class="n">e</span><span class="p">:</span> <span class="n">java</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FileNotFoundException</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="n">val</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fl_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">.xml&quot;</span>
-      <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-      <span class="n">val</span> <span class="n">file_path</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fl_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span>
-      <span class="n">save_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">name</span> <span class="o">&lt;-</span> <span class="n">fl_data</span><span class="o">){</span>
+  <span class="k">try</span><span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">fb_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span><span class="o">)</span>
+    <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">fl_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">name</span><span class="si">}</span><span class="s">_df already exists!&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">catch</span><span class="o">{</span>
+    <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">java.io.FileNotFoundException</span> <span class="o">=&gt;</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">file_name</span> <span class="o">=</span> <span class="s">s&quot;</span><span class="si">${</span><span class="n">fl_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">.xml&quot;</span>
+      <span class="k">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="o">(</span><span class="n">file_name</span><span class="o">)</span>
+      <span class="k">val</span> <span class="n">file_path</span> <span class="o">=</span> <span class="s">s&quot;</span><span class="si">${</span><span class="n">fl_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span>
+      <span class="n">save_df</span><span class="o">(</span><span class="n">df</span><span class="o">,</span> <span class="n">file_path</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="n">name</span> <span class="o">&lt;-</span> <span class="n">fb_data</span><span class="p">){</span>
-  <span class="k">try</span><span class="p">{</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fb_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span><span class="p">)</span>
-    <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fb_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span><span class="p">)</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$</span><span class="si">{name}</span><span class="s2">_df already exists!&quot;</span><span class="p">)</span>
-  <span class="p">}</span>
-  <span class="n">catch</span><span class="p">{</span>
-    <span class="n">case</span> <span class="n">e</span><span class="p">:</span> <span class="n">java</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FileNotFoundException</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="n">val</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fb_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">.xml&quot;</span>
-      <span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-      <span class="n">val</span> <span class="n">file_path</span> <span class="o">=</span> <span class="n">s</span><span class="s2">&quot;$</span><span class="si">{fb_root}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">_df&quot;</span>
-      <span class="n">save_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">name</span> <span class="o">&lt;-</span> <span class="n">fb_data</span><span class="o">){</span>
+  <span class="k">try</span><span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">fb_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span><span class="o">)</span>
+    <span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">ls</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">fb_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">name</span><span class="si">}</span><span class="s">_df already exists!&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">catch</span><span class="o">{</span>
+    <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">java.io.FileNotFoundException</span> <span class="o">=&gt;</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">file_name</span> <span class="o">=</span> <span class="s">s&quot;</span><span class="si">${</span><span class="n">fb_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">.xml&quot;</span>
+      <span class="k">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="o">(</span><span class="n">file_name</span><span class="o">)</span>
+      <span class="k">val</span> <span class="n">file_path</span> <span class="o">=</span> <span class="s">s&quot;</span><span class="si">${</span><span class="n">fb_root</span><span class="si">}${</span><span class="n">name</span><span class="si">}</span><span class="s">_df&quot;</span>
+      <span class="n">save_df</span><span class="o">(</span><span class="n">df</span><span class="o">,</span> <span class="n">file_path</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1465,16 +1435,16 @@ fb_data: Array[String] = Array(flashback-ekonomi, flashback-sex)
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "scala212"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "scala212",
             path: "./000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'scala212'</script>
 
               </div>
               

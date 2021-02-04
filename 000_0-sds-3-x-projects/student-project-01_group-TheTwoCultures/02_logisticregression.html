@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1238,13 +1208,13 @@
 <h1>The two cultures - Classifying threads with logistic regression<a class="headerlink" href="#the-two-cultures-classifying-threads-with-logistic-regression" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Imports</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.StopWordsRemover</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.classification.LogisticRegression</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.evaluation.BinaryClassificationEvaluator</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Imports</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.StopWordsRemover</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.classification.LogisticRegression</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.evaluation.BinaryClassificationEvaluator</span>
 </pre></div>
 </div>
 </div>
@@ -1262,22 +1232,22 @@ import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
 <li><p>Load the data</p></li>
 </ol>
 <hr class="docutils" />
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
-<span class="o">/</span><span class="n">scalable</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">science</span><span class="o">/</span><span class="mi">000_0</span><span class="o">-</span><span class="n">sds</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">projects</span><span class="o">/</span><span class="n">student</span><span class="o">-</span><span class="n">project</span><span class="o">-</span><span class="mi">01</span><span class="n">_group</span><span class="o">-</span><span class="n">TheTwoCultures</span><span class="o">/</span><span class="mi">01</span><span class="n">_load_data</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">run</span>
+<span class="o">/</span><span class="n">scalable</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">science</span><span class="o">/</span><span class="mi">000</span><span class="n">_0</span><span class="o">-</span><span class="n">sds</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">projects</span><span class="o">/</span><span class="n">student</span><span class="o">-</span><span class="n">project</span><span class="o">-</span><span class="mi">01</span><span class="nc">_group</span><span class="o">-</span><span class="nc">TheTwoCultures</span><span class="o">/</span><span class="mi">01</span><span class="nc">_load_data</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Load</span> <span class="n">dataframes</span>
-<span class="n">val</span> <span class="n">file_path_familjeliv</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv-sexsamlevnad_df&quot;</span>
-<span class="n">val</span> <span class="n">file_path_flashback</span> <span class="o">=</span> <span class="s2">&quot;dbfs:/datasets/student-project-01/flashback/flashback-sex_df&quot;</span>
-<span class="n">val</span> <span class="n">df_familjeliv</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">file_path_familjeliv</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">df_flashback</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">file_path_flashback</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Load dataframes</span>
+<span class="k">val</span> <span class="n">file_path_familjeliv</span> <span class="o">=</span> <span class="s">&quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv-sexsamlevnad_df&quot;</span>
+<span class="k">val</span> <span class="n">file_path_flashback</span> <span class="o">=</span> <span class="s">&quot;dbfs:/datasets/student-project-01/flashback/flashback-sex_df&quot;</span>
+<span class="k">val</span> <span class="n">df_familjeliv</span> <span class="o">=</span> <span class="n">load_df</span><span class="o">(</span><span class="n">file_path_familjeliv</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">df_flashback</span> <span class="o">=</span> <span class="n">load_df</span><span class="o">(</span><span class="n">file_path_flashback</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1292,10 +1262,10 @@ df_flashback: org.apache.spark.sql.DataFrame = [thread_id: string, thread_title:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Extract</span> <span class="n">the</span> <span class="n">text</span>
-<span class="n">val</span> <span class="n">df_text_flashback</span> <span class="o">=</span> <span class="n">df_flashback</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">df_text_familjeliv</span> <span class="o">=</span> <span class="n">df_familjeliv</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Extract the text</span>
+<span class="k">val</span> <span class="n">df_text_flashback</span> <span class="o">=</span> <span class="n">df_flashback</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">df_text_familjeliv</span> <span class="o">=</span> <span class="n">df_familjeliv</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1312,16 +1282,16 @@ df_text_familjeliv: org.apache.spark.sql.DataFrame = [w: string]
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Add</span> <span class="n">label</span> <span class="n">columns</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">that</span> <span class="n">we</span> <span class="n">have</span> <span class="n">exactly</span> <span class="n">the</span> <span class="n">same</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="kn">from</span> <span class="nn">both</span> <span class="n">forums</span>
-<span class="n">val</span> <span class="n">df_text_flashback_c</span> <span class="o">=</span> <span class="n">df_text_flashback</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">val</span> <span class="n">df_text_familjeliv_c</span> <span class="o">=</span> <span class="n">df_text_familjeliv</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">toInt</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">val</span> <span class="n">df_text_full</span> <span class="o">=</span> <span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df_text_familjeliv_c</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Add label columns and make sure that we have exactly the same amount of data from both forums</span>
+<span class="k">val</span> <span class="n">df_text_flashback_c</span> <span class="o">=</span> <span class="n">df_text_flashback</span><span class="o">.</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="n">lit</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">df_text_familjeliv_c</span> <span class="o">=</span> <span class="n">df_text_familjeliv</span><span class="o">.</span><span class="n">orderBy</span><span class="o">(</span><span class="n">rand</span><span class="o">()).</span><span class="n">limit</span><span class="o">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="o">().</span><span class="n">toInt</span><span class="o">).</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="n">lit</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">df_text_full</span> <span class="o">=</span> <span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">df_text_familjeliv_c</span><span class="o">)</span>
 
-<span class="o">//</span><span class="n">Check</span> <span class="n">the</span> <span class="n">counts</span>
-<span class="n">println</span><span class="p">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
-<span class="n">println</span><span class="p">(</span><span class="n">df_text_familjeliv_c</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
-<span class="n">println</span><span class="p">(</span><span class="n">df_text_full</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="c1">//Check the counts</span>
+<span class="n">println</span><span class="o">(</span><span class="n">df_text_flashback_c</span><span class="o">.</span><span class="n">count</span><span class="o">())</span>
+<span class="n">println</span><span class="o">(</span><span class="n">df_text_familjeliv_c</span><span class="o">.</span><span class="n">count</span><span class="o">())</span>
+<span class="n">println</span><span class="o">(</span><span class="n">df_text_full</span><span class="o">.</span><span class="n">count</span><span class="o">())</span>
 </pre></div>
 </div>
 </div>
@@ -1342,14 +1312,14 @@ df_text_full: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [w: strin
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegexTokenizer</span><span class="p">()</span>
-  <span class="o">.</span><span class="n">setPattern</span><span class="p">(</span><span class="s2">&quot;(?U),&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="k">break</span> <span class="n">by</span> <span class="n">whitespace</span>
-  <span class="o">.</span><span class="n">setMinTokenLength</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Filter</span> <span class="n">away</span> <span class="n">tokens</span> <span class="k">with</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="mi">5</span>
-  <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">column</span>
-  <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">output</span> <span class="n">column</span>
-<span class="n">val</span> <span class="n">tokenized_df</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_text_full</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span>
-<span class="n">tokenized_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">false</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RegexTokenizer</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">setPattern</span><span class="o">(</span><span class="s">&quot;(?U),&quot;</span><span class="o">)</span> <span class="c1">// break by whitespace</span>
+  <span class="o">.</span><span class="n">setMinTokenLength</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span> <span class="c1">// Filter away tokens with length &lt; 5</span>
+  <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;w&quot;</span><span class="o">)</span> <span class="c1">// name of the input column</span>
+  <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;text&quot;</span><span class="o">)</span> <span class="c1">// name of the output column</span>
+<span class="k">val</span> <span class="n">tokenized_df</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">df_text_full</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;text&quot;</span><span class="o">)</span>
+<span class="n">tokenized_df</span><span class="o">.</span><span class="n">show</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1375,15 +1345,15 @@ tokenized_df: org.apache.spark.sql.DataFrame = [c: int, text: array&lt;string&gt
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Stopwordsremover</span> <span class="p">(</span><span class="n">similar</span> <span class="n">to</span> <span class="n">lda</span> <span class="n">notebook</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">stoppord</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;dbfs:/datasets/student-project-01/stoppord.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">stopwordList</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="s2">&quot;bara&quot;</span><span class="p">,</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span><span class="s2">&quot;finns&quot;</span><span class="p">,</span><span class="s2">&quot;vill&quot;</span><span class="p">,</span><span class="s2">&quot;samt&quot;</span><span class="p">,</span><span class="s2">&quot;inga&quot;</span><span class="p">,</span><span class="s2">&quot;även&quot;</span><span class="p">,</span><span class="s2">&quot;finns&quot;</span><span class="p">,</span><span class="s2">&quot;ganska&quot;</span><span class="p">,</span><span class="s2">&quot;också&quot;</span><span class="p">,</span><span class="s2">&quot;igen&quot;</span><span class="p">,</span><span class="s2">&quot;just&quot;</span><span class="p">,</span><span class="s2">&quot;that&quot;</span><span class="p">,</span><span class="s2">&quot;with&quot;</span><span class="p">,</span><span class="s2">&quot;http&quot;</span><span class="p">,</span><span class="s2">&quot;jpg&quot;</span><span class="p">,</span>  <span class="s2">&quot;kanske&quot;</span><span class="p">,</span><span class="s2">&quot;tycker&quot;</span><span class="p">,</span><span class="s2">&quot;gillar&quot;</span><span class="p">,</span><span class="s2">&quot;bra&quot;</span><span class="p">,</span><span class="s2">&quot;000&quot;</span><span class="p">,</span><span class="s2">&quot;måste&quot;</span><span class="p">,</span><span class="s2">&quot;tjej&quot;</span><span class="p">,</span><span class="s2">&quot;tjejer&quot;</span><span class="p">,</span><span class="s2">&quot;tjejen&quot;</span><span class="p">,</span><span class="s2">&quot;tjejerna&quot;</span><span class="p">,</span><span class="s2">&quot;kvinna&quot;</span><span class="p">,</span><span class="s2">&quot;kvinnor&quot;</span><span class="p">,</span><span class="s2">&quot;kille&quot;</span><span class="p">,</span><span class="s2">&quot;killar&quot;</span><span class="p">,</span><span class="s2">&quot;killen&quot;</span><span class="p">,</span><span class="s2">&quot;män&quot;</span><span class="p">,</span><span class="s2">&quot;rätt&quot;</span><span class="p">,</span><span class="s2">&quot;män&quot;</span><span class="p">,</span><span class="s2">&quot;com&quot;</span><span class="p">,</span><span class="s2">&quot;and&quot;</span><span class="p">,</span><span class="s2">&quot;html&quot;</span><span class="p">,</span><span class="s2">&quot;många&quot;</span><span class="p">,</span><span class="s2">&quot;aldrig&quot;</span><span class="p">,</span><span class="s2">&quot;www&quot;</span><span class="p">,</span><span class="s2">&quot;mpg&quot;</span><span class="p">,</span><span class="s2">&quot;avi&quot;</span><span class="p">,</span><span class="s2">&quot;wmv&quot;</span><span class="p">,</span><span class="s2">&quot;riktigt&quot;</span><span class="p">,</span><span class="s2">&quot;känner&quot;</span><span class="p">,</span><span class="s2">&quot;väldigt&quot;</span><span class="p">,</span><span class="s2">&quot;font&quot;</span><span class="p">,</span><span class="s2">&quot;size&quot;</span><span class="p">,</span><span class="s2">&quot;mms&quot;</span><span class="p">,</span><span class="s2">&quot;2008&quot;</span><span class="p">,</span><span class="s2">&quot;2009&quot;</span><span class="p">,</span> <span class="s2">&quot;flashback&quot;</span><span class="p">,</span> <span class="s2">&quot;familjeliv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">stoppord</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">StopWordsRemover</span><span class="o">.</span><span class="n">loadDefaultStopWords</span><span class="p">(</span><span class="s2">&quot;swedish&quot;</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Stopwordsremover (similar to lda notebook)</span>
+<span class="k">val</span> <span class="n">stoppord</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="s">&quot;dbfs:/datasets/student-project-01/stoppord.csv&quot;</span><span class="o">).</span><span class="n">collect</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">stopwordList</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;bara&quot;</span><span class="o">,</span><span class="s">&quot;lite&quot;</span><span class="o">,</span><span class="s">&quot;finns&quot;</span><span class="o">,</span><span class="s">&quot;vill&quot;</span><span class="o">,</span><span class="s">&quot;samt&quot;</span><span class="o">,</span><span class="s">&quot;inga&quot;</span><span class="o">,</span><span class="s">&quot;även&quot;</span><span class="o">,</span><span class="s">&quot;finns&quot;</span><span class="o">,</span><span class="s">&quot;ganska&quot;</span><span class="o">,</span><span class="s">&quot;också&quot;</span><span class="o">,</span><span class="s">&quot;igen&quot;</span><span class="o">,</span><span class="s">&quot;just&quot;</span><span class="o">,</span><span class="s">&quot;that&quot;</span><span class="o">,</span><span class="s">&quot;with&quot;</span><span class="o">,</span><span class="s">&quot;http&quot;</span><span class="o">,</span><span class="s">&quot;jpg&quot;</span><span class="o">,</span>  <span class="s">&quot;kanske&quot;</span><span class="o">,</span><span class="s">&quot;tycker&quot;</span><span class="o">,</span><span class="s">&quot;gillar&quot;</span><span class="o">,</span><span class="s">&quot;bra&quot;</span><span class="o">,</span><span class="s">&quot;000&quot;</span><span class="o">,</span><span class="s">&quot;måste&quot;</span><span class="o">,</span><span class="s">&quot;tjej&quot;</span><span class="o">,</span><span class="s">&quot;tjejer&quot;</span><span class="o">,</span><span class="s">&quot;tjejen&quot;</span><span class="o">,</span><span class="s">&quot;tjejerna&quot;</span><span class="o">,</span><span class="s">&quot;kvinna&quot;</span><span class="o">,</span><span class="s">&quot;kvinnor&quot;</span><span class="o">,</span><span class="s">&quot;kille&quot;</span><span class="o">,</span><span class="s">&quot;killar&quot;</span><span class="o">,</span><span class="s">&quot;killen&quot;</span><span class="o">,</span><span class="s">&quot;män&quot;</span><span class="o">,</span><span class="s">&quot;rätt&quot;</span><span class="o">,</span><span class="s">&quot;män&quot;</span><span class="o">,</span><span class="s">&quot;com&quot;</span><span class="o">,</span><span class="s">&quot;and&quot;</span><span class="o">,</span><span class="s">&quot;html&quot;</span><span class="o">,</span><span class="s">&quot;många&quot;</span><span class="o">,</span><span class="s">&quot;aldrig&quot;</span><span class="o">,</span><span class="s">&quot;www&quot;</span><span class="o">,</span><span class="s">&quot;mpg&quot;</span><span class="o">,</span><span class="s">&quot;avi&quot;</span><span class="o">,</span><span class="s">&quot;wmv&quot;</span><span class="o">,</span><span class="s">&quot;riktigt&quot;</span><span class="o">,</span><span class="s">&quot;känner&quot;</span><span class="o">,</span><span class="s">&quot;väldigt&quot;</span><span class="o">,</span><span class="s">&quot;font&quot;</span><span class="o">,</span><span class="s">&quot;size&quot;</span><span class="o">,</span><span class="s">&quot;mms&quot;</span><span class="o">,</span><span class="s">&quot;2008&quot;</span><span class="o">,</span><span class="s">&quot;2009&quot;</span><span class="o">,</span> <span class="s">&quot;flashback&quot;</span><span class="o">,</span> <span class="s">&quot;familjeliv&quot;</span><span class="o">).</span><span class="n">union</span><span class="o">(</span><span class="n">stoppord</span><span class="o">).</span><span class="n">union</span><span class="o">(</span><span class="nc">StopWordsRemover</span><span class="o">.</span><span class="n">loadDefaultStopWords</span><span class="o">(</span><span class="s">&quot;swedish&quot;</span><span class="o">))</span>
 
-<span class="n">val</span> <span class="n">remover</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StopWordsRemover</span><span class="p">()</span>
-  <span class="o">.</span><span class="n">setStopWords</span><span class="p">(</span><span class="n">stopwordList</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">remover</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StopWordsRemover</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">setStopWords</span><span class="o">(</span><span class="n">stopwordList</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;text&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;filtered&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1397,9 +1367,9 @@ remover: org.apache.spark.ml.feature.StopWordsRemover = StopWordsRemover: uid=st
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Run</span> <span class="n">the</span> <span class="n">stopwordsremover</span>
-<span class="n">val</span> <span class="n">removed_df</span> <span class="o">=</span> <span class="n">remover</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Run the stopwordsremover</span>
+<span class="k">val</span> <span class="n">removed_df</span> <span class="o">=</span> <span class="n">remover</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">tokenized_df</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;filtered&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1415,21 +1385,21 @@ remover: org.apache.spark.ml.feature.StopWordsRemover = StopWordsRemover: uid=st
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Unlimited</span> <span class="n">size</span> <span class="n">vocabulary</span> <span class="n">just</span> <span class="n">to</span> <span class="n">see</span> <span class="n">how</span> <span class="n">much</span> <span class="n">there</span> <span class="ow">is</span>
-<span class="n">val</span> <span class="n">vectorizerall</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
-   <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
-   <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Only</span> <span class="n">count</span> <span class="n">words</span> <span class="n">that</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">5</span> <span class="n">threadss</span>
-   <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">removed_df</span><span class="p">)</span> <span class="o">//</span> <span class="n">returns</span> <span class="n">CountVectorizerModel</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Unlimited size vocabulary just to see how much there is</span>
+<span class="k">val</span> <span class="n">vectorizerall</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountVectorizer</span><span class="o">()</span>
+   <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;filtered&quot;</span><span class="o">)</span>
+   <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
+   <span class="o">.</span><span class="n">setMinDF</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span> <span class="c1">// Only count words that occur in at least 5 threadss</span>
+   <span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">removed_df</span><span class="o">)</span> <span class="c1">// returns CountVectorizerModel</span>
 
-<span class="o">//</span><span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">one</span> <span class="n">we</span> <span class="n">use</span><span class="p">,</span> <span class="n">limit</span> <span class="n">size</span> <span class="n">of</span> <span class="n">vocabulary</span>
-<span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
-   <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
-   <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-   <span class="o">.</span><span class="n">setVocabSize</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">dictonary</span>
-   <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">Only</span> <span class="n">count</span> <span class="n">words</span> <span class="n">that</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">5</span> <span class="n">threadss</span>
-   <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">removed_df</span><span class="p">)</span> <span class="o">//</span> <span class="n">returns</span> <span class="n">CountVectorizerModel</span>
+<span class="c1">//This is the one we use, limit size of vocabulary</span>
+<span class="k">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountVectorizer</span><span class="o">()</span>
+   <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;filtered&quot;</span><span class="o">)</span>
+   <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
+   <span class="o">.</span><span class="n">setVocabSize</span><span class="o">(</span><span class="mi">1000</span><span class="o">)</span> <span class="c1">// Size of dictonary</span>
+   <span class="o">.</span><span class="n">setMinDF</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span> <span class="c1">// Only count words that occur in at least 5 threadss</span>
+   <span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">removed_df</span><span class="o">)</span> <span class="c1">// returns CountVectorizerModel</span>
 </pre></div>
 </div>
 </div>
@@ -1442,8 +1412,8 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Let</span><span class="s1">&#39;s take a look at the vocabulary</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Let&#39;s take a look at the vocabulary</span>
 <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
@@ -1456,12 +1426,12 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Count</span> <span class="n">the</span> <span class="n">word</span> <span class="n">frequencies</span>
-<span class="n">val</span> <span class="n">tf</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">removed_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;filtered&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Count the word frequencies</span>
+<span class="k">val</span> <span class="n">tf</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">removed_df</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;filtered&quot;</span><span class="o">)).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;features&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
 
-<span class="o">//</span><span class="n">Print</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">vector</span> <span class="n">to</span> <span class="n">show</span> <span class="n">what</span> <span class="n">it</span> <span class="n">looks</span> <span class="n">like</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">)</span>
+<span class="c1">//Print the feature vector to show what it looks like</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1478,14 +1448,14 @@ tf: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [c: int, features: 
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Train</span> <span class="n">test</span> <span class="n">split</span>
-<span class="n">val</span> <span class="n">random_order</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span>
-<span class="n">val</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">random_order</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">(</span><span class="n">Array</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">1337</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">training</span> <span class="o">=</span> <span class="n">splits</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">test</span> <span class="o">=</span> <span class="n">splits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="n">training</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
-<span class="n">println</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Train test split</span>
+<span class="k">val</span> <span class="n">random_order</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">orderBy</span><span class="o">(</span><span class="n">rand</span><span class="o">())</span>
+<span class="k">val</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">random_order</span><span class="o">.</span><span class="n">randomSplit</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span><span class="mf">0.8</span><span class="o">,</span> <span class="mf">0.2</span><span class="o">),</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">1337</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">training</span> <span class="o">=</span> <span class="n">splits</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">test</span> <span class="o">=</span> <span class="n">splits</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="n">println</span><span class="o">(</span><span class="n">training</span><span class="o">.</span><span class="n">count</span><span class="o">())</span>
+<span class="n">println</span><span class="o">(</span><span class="n">test</span><span class="o">.</span><span class="n">count</span><span class="o">())</span>
 </pre></div>
 </div>
 </div>
@@ -1515,20 +1485,19 @@ test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [c: int, features
 <p>where <span class="math notranslate nohighlight">\(x_i\)</span> is occurrence for word <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(m\)</span> is 1000.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Logistic</span> <span class="n">regression</span>
-<span class="n">val</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-  <span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">setMaxIter</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">//</span><span class="n">Run</span> <span class="k">for</span> <span class="mi">100</span> <span class="n">iterations</span> <span class="p">(</span><span class="ow">not</span> <span class="n">necessary</span> <span class="n">but</span> <span class="n">let</span><span class="s1">&#39;s stay on safe side)</span>
-  <span class="o">.</span><span class="n">setRegParam</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span> <span class="o">//</span><span class="n">Just</span> <span class="n">a</span> <span class="n">tiny</span> <span class="n">bit</span> <span class="n">of</span> <span class="n">regularization</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">overfitting</span>
-  <span class="o">.</span><span class="n">setElasticNetParam</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">//</span> <span class="mi">50</span><span class="o">-</span><span class="mi">50</span> <span class="n">between</span> <span class="n">L1</span> <span class="ow">and</span> <span class="n">L2</span> <span class="n">loss</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Logistic regression</span>
+<span class="k">val</span> <span class="n">lr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LogisticRegression</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">setLabelCol</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setMaxIter</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span> <span class="c1">//Run for 100 iterations (not necessary but let&#39;s stay on safe side)</span>
+  <span class="o">.</span><span class="n">setRegParam</span><span class="o">(</span><span class="mf">0.0001</span><span class="o">)</span> <span class="c1">//Just a tiny bit of regularization to avoid overfitting</span>
+  <span class="o">.</span><span class="n">setElasticNetParam</span><span class="o">(</span><span class="mf">0.5</span><span class="o">)</span> <span class="c1">// 50-50 between L1 and L2 loss</span>
 
-<span class="o">//</span> <span class="n">Fit</span> <span class="n">the</span> <span class="n">model</span>
-<span class="n">val</span> <span class="n">lrModel</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training</span><span class="p">)</span>
+<span class="c1">// Fit the model</span>
+<span class="k">val</span> <span class="n">lrModel</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">training</span><span class="o">)</span>
 
-<span class="o">//</span> <span class="n">Print</span> <span class="n">the</span> <span class="n">coefficients</span> <span class="ow">and</span> <span class="n">intercept</span> <span class="k">for</span> <span class="n">logistic</span> <span class="n">regression</span>
-<span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;Coefficients: $</span><span class="si">{lrModel.coefficients}</span><span class="s2"> Intercept: $</span><span class="si">{lrModel.intercept}</span><span class="s2">&quot;</span><span class="p">)</span>
-
+<span class="c1">// Print the coefficients and intercept for logistic regression</span>
+<span class="n">println</span><span class="o">(</span><span class="s">s&quot;Coefficients: </span><span class="si">${</span><span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="si">}</span><span class="s"> Intercept: </span><span class="si">${</span><span class="n">lrModel</span><span class="o">.</span><span class="n">intercept</span><span class="si">}</span><span class="s">&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1540,11 +1509,11 @@ lrModel: org.apache.spark.ml.classification.LogisticRegressionModel = LogisticRe
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Check</span> <span class="n">the</span> <span class="n">training</span> <span class="n">progress</span>
-<span class="n">lrModel</span><span class="o">.</span><span class="n">binarySummary</span><span class="o">.</span><span class="n">objectiveHistory</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">loss</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Check the training progress</span>
+<span class="n">lrModel</span><span class="o">.</span><span class="n">binarySummary</span><span class="o">.</span><span class="n">objectiveHistory</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">loss</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">loss</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
@@ -1579,31 +1548,101 @@ lrModel: org.apache.spark.ml.classification.LogisticRegressionModel = LogisticRe
 0.36598766543382155
 0.36552148713988714
 0.36489674170117575
-output truncated to 30 lines...
+0.3642680588834924
+0.3639094968425095
+0.36356352360761807
+0.36327750935764375
+0.3629089490102315
+0.36260859404530466
+0.36229226989103425
+0.3621272472404833
+0.3618046028311709
+0.3615942816156314
+0.36121023670287755
+0.3610369566545829
+0.3608245320973927
+0.36069542925054654
+0.3605556136822391
+0.3603799837387267
+0.3602237172630807
+0.36008234980954673
+0.3599768248534264
+0.3598706844036592
+0.3597657926536273
+0.35960685891902666
+0.35950913074580076
+0.3593783438514593
+0.35932661057373777
+0.35920615046518095
+0.3591667981234418
+0.3590252166136159
+0.35897456562434876
+0.3588855878916592
+0.3588502207526231
+0.35876953010750107
+0.35872562461494656
+0.35865890528569055
+0.35860386570105623
+0.3585524560445921
+0.358505701620312
+0.3584665738039789
+0.358419419323597
+0.358376374660276
+0.35833428647513815
+0.3582967610521753
+0.3582587829803578
+0.3582321100588377
+0.358192907277209
+0.358168689702564
+0.3581298353252894
+0.35810689571309373
+0.3580739302151592
+0.35805122464791833
+0.35802296415487456
+0.3579981219892494
+0.3579701972082382
+0.3579466634666583
+0.3579193738118825
+0.35790146260258143
+0.35787976143107586
+0.3578580462343845
+0.3578362293364006
+0.35781582119315325
+0.3577959325988474
+0.35777739193295144
+0.3577622018592272
+0.3577442821559652
+0.35772954415792707
+0.3577081107541279
+0.3576922858210291
+0.3576765410249369
+0.3576659782767189
+0.35765085840121164
+0.3576379742016104
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Ugly</span> <span class="n">code</span> <span class="n">to</span> <span class="n">lookup</span> <span class="n">maximum</span> <span class="ow">and</span> <span class="n">minimum</span> <span class="n">values</span>
-<span class="n">var</span> <span class="n">maxarray</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">ofDim</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">findmax</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">maxarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">1</span><span class="p">)){</span>
-    <span class="n">maxarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">idx</span>
-    <span class="n">maxarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="n">maxarray</span> <span class="o">=</span> <span class="n">maxarray</span><span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="o">-</span> <span class="n">_</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">var</span> <span class="n">minarray</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">ofDim</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">findmin</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">minarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">1</span><span class="p">)){</span>
-    <span class="n">minarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">idx</span>
-    <span class="n">minarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="n">minarray</span> <span class="o">=</span> <span class="n">minarray</span><span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Ugly code to lookup maximum and minimum values</span>
+<span class="k">var</span> <span class="n">maxarray</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">.</span><span class="n">ofDim</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mi">5</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">findmax</span><span class="o">(</span><span class="n">idx</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">maxarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">1</span><span class="o">)){</span>
+    <span class="n">maxarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">=</span> <span class="n">idx</span>
+    <span class="n">maxarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">maxarray</span> <span class="o">=</span> <span class="n">maxarray</span><span class="o">.</span><span class="n">sortBy</span><span class="o">(-</span> <span class="k">_</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">var</span> <span class="n">minarray</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">.</span><span class="n">ofDim</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mi">5</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">findmin</span><span class="o">(</span><span class="n">idx</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">minarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">1</span><span class="o">)){</span>
+    <span class="n">minarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">=</span> <span class="n">idx</span>
+    <span class="n">minarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">minarray</span> <span class="o">=</span> <span class="n">minarray</span><span class="o">.</span><span class="n">sortBy</span><span class="o">(</span><span class="k">_</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1618,26 +1657,26 @@ findmin: (idx: Int, value: Double)Unit
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Let</span><span class="s1">&#39;s check which words are considered most important for classification</span>
-<span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">findmax</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Let&#39;s check which words are considered most important for classification</span>
+<span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="o">((</span><span class="n">idx</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">findmax</span><span class="o">(</span><span class="n">idx</span><span class="o">,</span> <span class="n">value</span><span class="o">))</span>
 
-<span class="o">//</span><span class="n">First</span> <span class="n">check</span> <span class="n">familjeliv</span>
-<span class="n">println</span><span class="p">(</span><span class="n">maxarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">maxarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">findmin</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<span class="c1">//First check familjeliv</span>
+<span class="n">println</span><span class="o">(</span><span class="n">maxarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">maxarray</span><span class="o">(</span><span class="mi">0</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">maxarray</span><span class="o">(</span><span class="mi">1</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">maxarray</span><span class="o">(</span><span class="mi">2</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">maxarray</span><span class="o">(</span><span class="mi">3</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">maxarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">lrModel</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">foreachActive</span><span class="o">((</span><span class="n">idx</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">findmin</span><span class="o">(</span><span class="n">idx</span><span class="o">,</span> <span class="n">value</span><span class="o">))</span>
 
-<span class="o">//</span><span class="n">Check</span> <span class="k">for</span> <span class="n">flashback</span>
-<span class="n">println</span><span class="p">(</span><span class="n">minarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">println</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="p">(</span><span class="n">minarray</span><span class="p">(</span><span class="mi">4</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">))</span>
+<span class="c1">//Check for flashback</span>
+<span class="n">println</span><span class="o">(</span><span class="n">minarray</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">minarray</span><span class="o">(</span><span class="mi">0</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">minarray</span><span class="o">(</span><span class="mi">1</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">minarray</span><span class="o">(</span><span class="mi">2</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">minarray</span><span class="o">(</span><span class="mi">3</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">(</span><span class="n">minarray</span><span class="o">(</span><span class="mi">4</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
@@ -1672,11 +1711,11 @@ jävligt
 <li><p>Predict on test data</p></li>
 </ol>
 <hr class="docutils" />
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">lrModel</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="n">predictions</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">false</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">lrModel</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">test</span><span class="o">)</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">orderBy</span><span class="o">(</span><span class="n">rand</span><span class="o">()).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;prediction&quot;</span><span class="o">,</span> <span class="s">&quot;probability&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">(</span><span class="mi">30</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1711,17 +1750,23 @@ jävligt
 |1  |1.0       |[0.0021508873399861557,0.9978491126600139] |
 |1  |1.0       |[0.3858439417926455,0.6141560582073544]    |
 |1  |1.0       |[0.4517753939274335,0.5482246060725665]    |
-output truncated to 30 lines...
+|1  |1.0       |[0.02573645474447229,0.9742635452555276]   |
+|0  |0.0       |[0.8022052550237544,0.19779474497624555]   |
+|1  |1.0       |[0.042382658471976975,0.9576173415280229]  |
++---+----------+-------------------------------------------+
+only showing top 30 rows
+
+predictions: org.apache.spark.sql.DataFrame = [c: int, features: vector ... 3 more fields]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">Check</span> <span class="n">auroc</span> <span class="n">value</span>
-<span class="n">val</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">()</span><span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
-<span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//Check auroc value</span>
+<span class="k">val</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BinaryClassificationEvaluator</span><span class="o">().</span><span class="n">setLabelCol</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="o">(</span><span class="n">predictions</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1743,16 +1788,16 @@ res19: Double = 0.928445521562674
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "scala212"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "scala212",
             path: "./000_0-sds-3-x-projects/student-project-01_group-TheTwoCultures"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'scala212'</script>
 
               </div>
               

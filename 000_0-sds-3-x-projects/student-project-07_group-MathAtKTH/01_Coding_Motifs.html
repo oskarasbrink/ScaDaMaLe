@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1314,11 +1284,11 @@ specialized tools not suitable for general motif finding.</p>
 <p>First we load the packages we need.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.sql._</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql._</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql.functions._</span>
 
-<span class="kn">import</span> <span class="nn">org.graphframes._</span>
+<span class="k">import</span> <span class="nn">org.graphframes._</span>
 </pre></div>
 </div>
 </div>
@@ -1335,13 +1305,13 @@ import org.graphframes._
 <p>Here we code some usual motifs that are common within graph theory.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">A</span> <span class="n">function</span> <span class="n">counting</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">multiple</span> <span class="n">edges</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="k">def</span> <span class="nf">count_mult_edges</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[e1]-&gt;(b); (a)-[e2]-&gt;(b)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;e1 != e2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** A function counting the number of multiple edges.</span>
+<span class="cm">*/</span>
+<span class="k">def</span> <span class="n">count_mult_edges</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[e1]-&gt;(b); (a)-[e2]-&gt;(b)&quot;</span><span class="o">).</span><span class="n">filter</span><span class="o">(</span><span class="s">&quot;e1 != e2&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1353,13 +1323,13 @@ import org.graphframes._
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">A</span> <span class="n">function</span> <span class="n">counting</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="mi">3</span><span class="o">-</span><span class="n">cycles</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="k">def</span> <span class="nf">count_3_cycle</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(b); (b)-[]-&gt;(c); (c)-[]-&gt;(a)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** A function counting the number of 3-cycles.</span>
+<span class="cm">*/</span>
+<span class="k">def</span> <span class="n">count_3_cycle</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(b); (b)-[]-&gt;(c); (c)-[]-&gt;(a)&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1371,13 +1341,13 @@ import org.graphframes._
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">A</span> <span class="n">function</span> <span class="n">counting</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">loop</span> <span class="n">edges</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="k">def</span> <span class="nf">count_loop</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(a)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** A function counting the number of loop edges.</span>
+<span class="cm">*/</span>
+<span class="k">def</span> <span class="n">count_loop</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(a)&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1389,13 +1359,13 @@ import org.graphframes._
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">A</span> <span class="n">function</span> <span class="n">counting</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bidirected</span> <span class="n">edges</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="k">def</span> <span class="nf">count_bidir_edges</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(b); (b)-[]-&gt;(a)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;a.id != b.id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** A function counting the number of bidirected edges.</span>
+<span class="cm">*/</span>
+<span class="k">def</span> <span class="n">count_bidir_edges</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(b); (b)-[]-&gt;(a)&quot;</span><span class="o">).</span><span class="n">filter</span><span class="o">(</span><span class="s">&quot;a.id != b.id&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1417,24 +1387,24 @@ filter the result ensuring that all nodes are distinct.</p>
 Thus counting them corresponds to finding entries in the f-vector.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Two</span> <span class="n">functions</span> <span class="n">counting</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="mi">2</span><span class="o">-</span> <span class="ow">and</span> <span class="mi">4</span><span class="o">-</span><span class="n">dimensional</span> <span class="n">faces</span> <span class="n">of</span> <span class="n">a</span> 
-<span class="o">**</span> <span class="n">simplicial</span> <span class="n">graphical</span> <span class="n">simplex</span><span class="o">.</span> <span class="n">It</span> <span class="ow">is</span> <span class="n">assumed</span> <span class="n">the</span> <span class="n">the</span> <span class="n">input_graph</span> <span class="n">does</span>
-<span class="o">**</span> <span class="ow">not</span> <span class="n">contain</span> <span class="nb">any</span> <span class="n">loops</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Two functions counting the number of 2- and 4-dimensional faces of a </span>
+<span class="cm">** simplicial graphical simplex. It is assumed the the input_graph does</span>
+<span class="cm">** not contain any loops.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">count_K2</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Should</span> <span class="n">be</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">edges</span><span class="o">.</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(b)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">count_K2</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span> <span class="c1">// Should be the same as the number of edges.</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(b)&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 
-<span class="k">def</span> <span class="nf">count_K3</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(b); (a)-[]-&gt;(c); (b)-[]-&gt;(c)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">count_K3</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(b); (a)-[]-&gt;(c); (b)-[]-&gt;(c)&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 
-<span class="k">def</span> <span class="nf">count_K4</span><span class="p">(</span><span class="n">input_graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(a)-[]-&gt;(b); (a)-[]-&gt;(c); (a)-[]-&gt;(d); (b)-[]-&gt;(c); (b)-[]-&gt;(d); (c)-[]-&gt;(d)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">count_K4</span><span class="o">(</span><span class="n">input_graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">input_graph</span><span class="o">.</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;(a)-[]-&gt;(b); (a)-[]-&gt;(c); (a)-[]-&gt;(d); (b)-[]-&gt;(c); (b)-[]-&gt;(d); (c)-[]-&gt;(d)&quot;</span><span class="o">).</span><span class="n">count</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1456,14 +1426,14 @@ without more specialized code.</p>
 <p>Read the edges.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">The</span> <span class="n">file</span> <span class="n">edges</span><span class="o">.</span><span class="n">csv</span> <span class="n">contains</span> <span class="n">lines</span> <span class="n">on</span> <span class="n">the</span> <span class="n">form</span> <span class="s2">&quot;1,5,edge&quot;</span> <span class="n">indicating</span>
-<span class="o">**</span> <span class="n">we</span> <span class="n">have</span> <span class="n">an</span> <span class="n">edge</span> <span class="kn">from</span> <span class="nn">vertex</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">vertex</span> <span class="mf">5.</span> <span class="n">As</span> <span class="n">we</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">care</span> <span class="n">about</span> <span class="n">the</span> 
-<span class="o">**</span> <span class="n">third</span> <span class="n">entry</span> <span class="p">(</span><span class="n">i</span> <span class="n">just</span> <span class="n">says</span> <span class="s2">&quot;edge&quot;</span><span class="p">)</span> <span class="n">we</span> <span class="n">choose</span> <span class="n">just</span> <span class="n">the</span> <span class="n">two</span> <span class="n">first</span> <span class="n">entries</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** The file edges.csv contains lines on the form &quot;1,5,edge&quot; indicating</span>
+<span class="cm">** we have an edge from vertex 1 to vertex 5. As we do not care about the </span>
+<span class="cm">** third entry (i just says &quot;edge&quot;) we choose just the two first entries.</span>
+<span class="cm">*/</span>
 
-<span class="n">val</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sep&quot;</span><span class="p">,</span><span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/petterre@kth.se/edges.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_c0&quot;</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_c1&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;csv&quot;</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;sep&quot;</span><span class="o">,</span><span class="s">&quot;,&quot;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="s">&quot;/FileStore/shared_uploads/petterre@kth.se/edges.csv&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_c0&quot;</span><span class="o">,</span> <span class="s">&quot;src&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_c1&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">)</span>
 
 <span class="n">edges</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
@@ -1479,14 +1449,14 @@ res0: Long = 7822274
 <p>Get the vertices from the edges.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">For</span> <span class="n">simplicity</span> <span class="n">we</span> <span class="n">read</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">nodes</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">column</span> <span class="s2">&quot;scr&quot;</span><span class="o">.</span> <span class="n">Notice</span> 
-<span class="o">**</span> <span class="n">that</span> <span class="n">we</span> <span class="n">use</span> <span class="n">the</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">every</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">source</span> <span class="n">of</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> 
-<span class="o">**</span> <span class="n">edge</span><span class="o">.</span> <span class="n">Thus</span> <span class="n">we</span> <span class="n">can</span> <span class="n">get</span> <span class="n">the</span> <span class="n">vertices</span> <span class="n">like</span> <span class="n">this</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** For simplicity we read all the nodes from the column &quot;scr&quot;. Notice </span>
+<span class="cm">** that we use the fact that every node is the source of at least one </span>
+<span class="cm">** edge. Thus we can get the vertices like this.</span>
+<span class="cm">*/</span>
 
-<span class="n">val</span> <span class="n">vertices</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">vertices</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">).</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">).</span><span class="n">count</span><span class="o">().</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">).</span><span class="n">sort</span><span class="o">(</span><span class="n">desc</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">)).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;id&quot;</span><span class="o">)</span>
 
 <span class="n">vertices</span><span class="o">.</span><span class="n">count</span>
 </pre></div>
@@ -1502,12 +1472,12 @@ res2: Long = 31346
 <p>Since every node is the source of another, we are good to go.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Now</span> <span class="n">we</span> <span class="n">can</span> <span class="n">create</span> <span class="n">out</span> <span class="n">graph</span> <span class="n">of</span> <span class="n">interest</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Now we can create out graph of interest.</span>
+<span class="cm">*/</span>
 
-<span class="n">val</span> <span class="n">rat_brain_graph</span> <span class="o">=</span> <span class="n">GraphFrame</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">rat_brain_graph</span> <span class="o">=</span> <span class="nc">GraphFrame</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1529,12 +1499,12 @@ degree of each node being just above 499.</p>
 are very important for designing better algorithms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">As</span> <span class="n">mentioned</span> <span class="n">before</span><span class="p">,</span> <span class="n">we</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">want</span> <span class="n">loops</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">graph</span><span class="o">.</span> <span class="n">Thus</span> <span class="n">we</span>
-<span class="o">**</span> <span class="n">call</span> <span class="n">our</span> <span class="n">above</span> <span class="n">function</span> <span class="ow">and</span> <span class="n">check</span> <span class="n">whether</span> <span class="n">we</span> <span class="n">have</span> <span class="nb">any</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="n">count_loop</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span> <span class="mi">0</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** As mentioned before, we do not want loops in this graph. Thus we</span>
+<span class="cm">** call our above function and check whether we have any.</span>
+<span class="cm">*/</span>
+<span class="n">count_loop</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">// 0</span>
 </pre></div>
 </div>
 </div>
@@ -1546,17 +1516,17 @@ are very important for designing better algorithms.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">A</span> <span class="n">very</span> <span class="n">relevant</span> <span class="n">question</span> <span class="ow">is</span> <span class="k">if</span> <span class="n">this</span> <span class="n">graph</span> <span class="ow">is</span> <span class="n">connected</span><span class="o">.</span> <span class="n">If</span> <span class="n">it</span> <span class="ow">is</span> <span class="ow">not</span>
-<span class="o">**</span> <span class="n">it</span> <span class="n">would</span> <span class="n">be</span> <span class="n">more</span> <span class="n">efficient</span> <span class="n">to</span> <span class="n">just</span> <span class="n">look</span> <span class="n">at</span> <span class="n">the</span> <span class="n">induvidual</span> <span class="n">components</span><span class="o">.</span>
-<span class="o">**</span> <span class="n">That</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">the</span> <span class="n">case</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** A very relevant question is if this graph is connected. If it is not</span>
+<span class="cm">** it would be more efficient to just look at the induvidual components.</span>
+<span class="cm">** That is not the case.</span>
+<span class="cm">*/</span>
 
-<span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/petterre@kth.se/&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">setCheckpointDir</span><span class="o">(</span><span class="s">&quot;/FileStore/shared_uploads/petterre@kth.se/&quot;</span><span class="o">)</span>
 
-<span class="n">val</span> <span class="n">rat_brain_graph_connected_components</span> <span class="o">=</span> <span class="n">rat_brain_graph</span><span class="o">.</span><span class="n">connectedComponents</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<span class="n">rat_brain_graph_connected_components</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;component&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">val</span> <span class="n">rat_brain_graph_connected_components</span> <span class="o">=</span> <span class="n">rat_brain_graph</span><span class="o">.</span><span class="n">connectedComponents</span><span class="o">.</span><span class="n">run</span><span class="o">()</span>
+<span class="n">rat_brain_graph_connected_components</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;component&quot;</span><span class="o">).</span><span class="n">describe</span><span class="o">().</span><span class="n">show</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1578,13 +1548,13 @@ rat_brain_graph_connected_components: org.apache.spark.sql.DataFrame = [id: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Let</span> <span class="n">us</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">look</span> <span class="n">at</span> <span class="n">some</span> <span class="n">stastistics</span> <span class="k">for</span> <span class="n">this</span> <span class="n">graph</span><span class="o">.</span> <span class="n">We</span> <span class="n">can</span> 
-<span class="o">**</span> <span class="n">count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="mi">3</span><span class="o">-</span><span class="n">cycles</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Let us continue to look at some stastistics for this graph. We can </span>
+<span class="cm">** count the number of 3-cycles.</span>
+<span class="cm">*/</span>
 
-<span class="n">count_3_cycle</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span><span class="mi">25</span> <span class="mi">630</span> <span class="mi">728</span>
+<span class="n">count_3_cycle</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">//25 630 728</span>
 </pre></div>
 </div>
 </div>
@@ -1596,13 +1566,13 @@ rat_brain_graph_connected_components: org.apache.spark.sql.DataFrame = [id: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Let</span> <span class="n">us</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">look</span> <span class="n">at</span> <span class="n">some</span> <span class="n">stastistics</span> <span class="k">for</span> <span class="n">this</span> <span class="n">graph</span><span class="o">.</span> <span class="n">We</span> <span class="n">can</span> 
-<span class="o">**</span> <span class="n">count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">multiple</span> <span class="n">edges</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Let us continue to look at some stastistics for this graph. We can </span>
+<span class="cm">** count the number of multiple edges.</span>
+<span class="cm">*/</span>
 
-<span class="n">count_mult_edges</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span> <span class="mi">0</span>
+<span class="n">count_mult_edges</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">// 0</span>
 </pre></div>
 </div>
 </div>
@@ -1614,13 +1584,13 @@ rat_brain_graph_connected_components: org.apache.spark.sql.DataFrame = [id: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Let</span> <span class="n">us</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">look</span> <span class="n">at</span> <span class="n">some</span> <span class="n">stastistics</span> <span class="k">for</span> <span class="n">this</span> <span class="n">graph</span><span class="o">.</span> <span class="n">We</span> <span class="n">can</span> 
-<span class="o">**</span> <span class="n">count</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bidirected</span> <span class="n">edges</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Let us continue to look at some stastistics for this graph. We can </span>
+<span class="cm">** count the number of bidirected edges.</span>
+<span class="cm">*/</span>
 
-<span class="n">count_bidir_edges</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span><span class="mi">165</span> <span class="mi">220</span>
+<span class="n">count_bidir_edges</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">//165 220</span>
 </pre></div>
 </div>
 </div>
@@ -1637,12 +1607,12 @@ rat_brain_graph_connected_components: org.apache.spark.sql.DataFrame = [id: stri
 preform.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">First</span> <span class="n">we</span> <span class="n">look</span> <span class="n">after</span> <span class="n">K2</span><span class="o">.</span> <span class="n">As</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">graph</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">,</span> <span class="n">we</span> <span class="n">expect</span> <span class="n">this</span> <span class="n">to</span> 
-<span class="o">**</span> <span class="n">be</span> <span class="n">equal</span> <span class="n">to</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">edges</span><span class="p">,</span> <span class="n">otherwise</span> <span class="n">something</span> <span class="ow">is</span> <span class="n">wrong</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="n">count_K2</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span><span class="mi">7</span> <span class="mi">822</span> <span class="mi">274</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** First we look after K2. As that is the graph a-&gt;b, we expect this to </span>
+<span class="cm">** be equal to the number of edges, otherwise something is wrong.</span>
+<span class="cm">*/</span>
+<span class="n">count_K2</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">//7 822 274</span>
 </pre></div>
 </div>
 </div>
@@ -1654,14 +1624,14 @@ preform.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span> 
-<span class="o">**</span> <span class="n">Now</span> <span class="n">we</span> <span class="n">find</span> <span class="n">K3</span><span class="o">.</span> <span class="n">As</span> <span class="n">we</span> <span class="n">will</span> <span class="n">see</span><span class="p">,</span> <span class="n">this</span> <span class="n">takes</span> <span class="n">a</span> <span class="n">lot</span> <span class="n">of</span> <span class="n">time</span><span class="p">,</span> <span class="n">longer</span> <span class="n">than</span>
-<span class="o">**</span> <span class="n">we</span> <span class="n">want</span> <span class="n">it</span> <span class="n">to</span><span class="o">.</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">because</span> <span class="s1">&#39;find&#39;</span> <span class="n">does</span> <span class="n">a</span> <span class="n">general</span> <span class="n">search</span> <span class="n">algorithm</span><span class="o">.</span>
-<span class="o">**</span> <span class="n">See</span> <span class="n">below</span> <span class="k">for</span> <span class="n">a</span> <span class="n">discussion</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/* </span>
+<span class="cm">** Now we find K3. As we will see, this takes a lot of time, longer than</span>
+<span class="cm">** we want it to. This is because &#39;find&#39; does a general search algorithm.</span>
+<span class="cm">** See below for a discussion.</span>
+<span class="cm">*/</span>
 
-<span class="n">count_K3</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span> <span class="o">//</span><span class="mi">35</span> <span class="mi">976</span> <span class="mi">731</span>
+<span class="n">count_K3</span><span class="o">(</span><span class="n">rat_brain_graph</span><span class="o">)</span> <span class="c1">//35 976 731</span>
 </pre></div>
 </div>
 </div>
@@ -1671,10 +1641,10 @@ preform.</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">count_K4</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//count_K4(rat_brain_graph)</span>
 </pre></div>
 </div>
 </div>
@@ -1690,40 +1660,40 @@ can be made a lot quicker since we can use the structure of the graph
 <p>How this can be done quicker can be read in “Computing persistent
 homology of directed flag complexes” by Daniel Luetgehetmann, Dejan
 Govc, Jason Smith, and Ran Levi (https://arxiv.org/abs/1906.10458).</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">direct</span> <span class="n">implementation</span><span class="o">.</span> 
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="nc">This</span> <span class="n">is</span> <span class="n">a</span> <span class="n">direct</span> <span class="n">implementation</span><span class="o">.</span> 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">A</span> <span class="n">implementation</span> <span class="n">of</span> <span class="n">counting</span> <span class="n">cells</span><span class="o">.</span> <span class="n">It</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">parallelized</span> <span class="n">but</span> <span class="n">could</span> <span class="n">be</span>
-<span class="o">**</span> <span class="k">if</span> <span class="n">we</span> <span class="n">start</span> <span class="n">collecting</span> <span class="n">the</span> <span class="n">results</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">better</span> <span class="n">way</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** A implementation of counting cells. It is not parallelized but could be</span>
+<span class="cm">** if we start collecting the results in a better way.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">count_cells</span><span class="p">(</span><span class="n">old_child_set</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">f_vector</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">edges</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">cut_of</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="o">//</span> <span class="n">Make</span> <span class="n">a</span> <span class="n">new</span> <span class="n">f</span><span class="o">-</span><span class="n">vector</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">mutable</span>
-  <span class="n">var</span> <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">f_vector</span><span class="p">;</span>
-  <span class="o">//</span> <span class="n">For</span> <span class="n">each</span> <span class="n">new</span> <span class="n">node</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">vert</span> <span class="o">&lt;-</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">collect</span><span class="p">()){</span>
-    <span class="o">//</span> <span class="n">Update</span> <span class="n">the</span> <span class="n">f</span><span class="o">-</span><span class="n">vector</span> 
-    <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">f_vector_new</span><span class="o">.</span><span class="n">updated</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">f_vector_new</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-    <span class="o">//</span> <span class="n">If</span> <span class="n">we</span> <span class="n">have</span> <span class="ow">not</span> <span class="n">reached</span> <span class="n">our</span> <span class="n">cut</span> <span class="n">off</span> <span class="n">limit</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="p">){</span>
-      <span class="o">//</span> <span class="n">Find</span> <span class="n">the</span> <span class="n">children</span> <span class="n">of</span> <span class="s2">&quot;vert&quot;</span> <span class="ow">and</span> <span class="n">find</span> <span class="n">the</span> <span class="n">intersection</span><span class="o">.</span>
-      <span class="o">//</span> <span class="n">val</span> <span class="n">child_set</span> <span class="o">=</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">edges</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">vert</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">));</span>
-      <span class="o">//</span> <span class="n">Call</span> <span class="n">this</span> <span class="n">function</span> <span class="n">recursively</span>
-      <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">count_cells</span><span class="p">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">edges</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">vert</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;dst&quot;</span><span class="p">)),</span> <span class="n">f_vector_new</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">cut_of</span><span class="p">,</span> <span class="n">dim</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="o">//</span> <span class="n">Return</span> <span class="n">the</span> <span class="n">f</span><span class="o">-</span><span class="n">vector</span>
+<span class="k">def</span> <span class="n">count_cells</span><span class="o">(</span><span class="n">old_child_set</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">f_vector</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">dim</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="c1">// Make a new f-vector that is mutable</span>
+  <span class="k">var</span> <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">f_vector</span><span class="o">;</span>
+  <span class="c1">// For each new node</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">vert</span> <span class="o">&lt;-</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">collect</span><span class="o">()){</span>
+    <span class="c1">// Update the f-vector </span>
+    <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">f_vector_new</span><span class="o">.</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="n">f_vector_new</span><span class="o">(</span><span class="n">dim</span><span class="o">)</span> <span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+    <span class="c1">// If we have not reached our cut off limit</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">){</span>
+      <span class="c1">// Find the children of &quot;vert&quot; and find the intersection.</span>
+      <span class="c1">// val child_set = old_child_set.intersect(edges.filter(edges(&quot;src&quot;) === vert(0)).select(&quot;dst&quot;));</span>
+      <span class="c1">// Call this function recursively</span>
+      <span class="n">f_vector_new</span> <span class="o">=</span> <span class="n">count_cells</span><span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">edges</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">vert</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;dst&quot;</span><span class="o">)),</span> <span class="n">f_vector_new</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">cut_of</span><span class="o">,</span> <span class="n">dim</span><span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="c1">// Return the f-vector</span>
   <span class="n">f_vector_new</span>
-<span class="p">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1733,26 +1703,26 @@ Govc, Jason Smith, and Ran Levi (https://arxiv.org/abs/1906.10458).</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">parallelized</span> <span class="n">version</span><span class="o">.</span> <span class="n">Notice</span> <span class="n">that</span> <span class="n">the</span> <span class="n">parallelization</span> <span class="ow">is</span> <span class="n">very</span> <span class="n">naive</span> <span class="ow">and</span> <span class="n">it</span> <span class="n">starts</span> <span class="n">to</span> <span class="n">many</span> <span class="n">threads</span><span class="o">.</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="nc">This</span> <span class="n">is</span> <span class="n">a</span> <span class="n">parallelized</span> <span class="n">version</span><span class="o">.</span> <span class="nc">Notice</span> <span class="n">that</span> <span class="n">the</span> <span class="n">parallelization</span> <span class="n">is</span> <span class="n">very</span> <span class="n">naive</span> <span class="n">and</span> <span class="n">it</span> <span class="n">starts</span> <span class="n">to</span> <span class="n">many</span> <span class="n">threads</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">Helper</span> <span class="n">function</span> <span class="n">to</span> <span class="n">count_cells_par</span><span class="o">.</span> <span class="n">Does</span> <span class="n">a</span> <span class="n">component</span><span class="o">-</span><span class="n">wise</span> <span class="n">addition</span><span class="o">.</span> 
-<span class="o">**</span> <span class="n">Badly</span> <span class="n">written</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** Helper function to count_cells_par. Does a component-wise addition. </span>
+<span class="cm">** Badly written.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">component_addition</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]):</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="o">//</span> <span class="n">Do</span> <span class="n">it</span> <span class="n">the</span> <span class="n">dumb</span> <span class="n">way</span>
-  <span class="n">List</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="n">a</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">component_addition</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">b</span><span class="k">:</span><span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="c1">// Do it the dumb way</span>
+  <span class="nc">List</span><span class="o">(</span><span class="n">a</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">1</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">2</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">3</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">4</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">4</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">5</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">5</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">6</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">6</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">7</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">7</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">8</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">8</span><span class="o">),</span><span class="n">a</span><span class="o">(</span><span class="mi">9</span><span class="o">)+</span><span class="n">b</span><span class="o">(</span><span class="mi">9</span><span class="o">))</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1764,19 +1734,19 @@ Govc, Jason Smith, and Ran Levi (https://arxiv.org/abs/1906.10458).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
-/*
-** A parallel (?) implementation of counting cells. 
-*/
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** A parallel (?) implementation of counting cells. </span>
+<span class="cm">*/</span>
 
-def count_cells_par(old_child_set: DataFrame, edges: DataFrame, cut_of: Int, dim: Int): List[Int] = {
-  if ((cut_of &gt; dim) &amp;&amp; (old_child_set.count &gt; 0)){
-    return old_child_set.collect().par.map(vert =&gt; count_cells_par(old_child_set.intersect(edges.filter(edges(&quot;src&quot;) === vert(0)).select(&quot;dst&quot;)), edges, cut_of, dim+1)/* vert_to_f-vector*/).reduce(component_addition(_,_)).updated(dim, 1)
-  }
-  else{
-    return List(0,0,0,0,0,0,0,0,0,0).updated(dim, 1);
-  }
-}
+<span class="k">def</span> <span class="n">count_cells_par</span><span class="o">(</span><span class="n">old_child_set</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">dim</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">((</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)){</span>
+    <span class="k">return</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">collect</span><span class="o">().</span><span class="n">par</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">vert</span> <span class="o">=&gt;</span> <span class="n">count_cells_par</span><span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">edges</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">vert</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;dst&quot;</span><span class="o">)),</span> <span class="n">edges</span><span class="o">,</span> <span class="n">cut_of</span><span class="o">,</span> <span class="n">dim</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span><span class="cm">/* vert_to_f-vector*/</span><span class="o">).</span><span class="n">reduce</span><span class="o">(</span><span class="n">component_addition</span><span class="o">(</span><span class="k">_</span><span class="o">,</span><span class="k">_</span><span class="o">)).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">else</span><span class="o">{</span>
+    <span class="k">return</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1791,29 +1761,29 @@ does just one step of parallelization, as oppose to starting to many
 threads.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%%scala
-/*
-** A parallel (?) implementation of counting cells. 
-*/
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** A parallel (?) implementation of counting cells. </span>
+<span class="cm">*/</span>
 
-def count_cells_opt(old_child_set: DataFrame, edges: DataFrame, cut_of: Int, dim: Int): List[Int] = {
-  if ((cut_of &gt; dim) &amp;&amp; (old_child_set.count &gt; 0)){
-    return old_child_set.collect().par.map(vert =&gt; count_cells_opt_helper(old_child_set.intersect(edges.filter(edges(&quot;src&quot;) === vert(0)).select(&quot;dst&quot;)), edges, cut_of, dim+1)/* vert_to_f-vector*/).reduce(component_addition(_,_)).updated(dim, 1)
-  }
-  else{
-    return List(0,0,0,0,0,0,0,0,0,0).updated(dim, 1);
-  }
-}
+<span class="k">def</span> <span class="n">count_cells_opt</span><span class="o">(</span><span class="n">old_child_set</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">dim</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">((</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)){</span>
+    <span class="k">return</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">collect</span><span class="o">().</span><span class="n">par</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">vert</span> <span class="o">=&gt;</span> <span class="n">count_cells_opt_helper</span><span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">edges</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">vert</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;dst&quot;</span><span class="o">)),</span> <span class="n">edges</span><span class="o">,</span> <span class="n">cut_of</span><span class="o">,</span> <span class="n">dim</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span><span class="cm">/* vert_to_f-vector*/</span><span class="o">).</span><span class="n">reduce</span><span class="o">(</span><span class="n">component_addition</span><span class="o">(</span><span class="k">_</span><span class="o">,</span><span class="k">_</span><span class="o">)).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">else</span><span class="o">{</span>
+    <span class="k">return</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 
-def count_cells_opt_helper(old_child_set: DataFrame, edges: DataFrame, cut_of: Int, dim: Int): List[Int] = {
-  if ((cut_of &gt; dim) &amp;&amp; (old_child_set.count &gt; 0)){
-    // The next line should not parallelize the process.
-    return old_child_set.collect().map(vert =&gt; count_cells_par(old_child_set.intersect(edges.filter(edges(&quot;src&quot;) === vert(0)).select(&quot;dst&quot;)), edges, cut_of, dim+1)/* vert_to_f-vector*/).reduce(component_addition(_,_)).updated(dim, 1)
-  }
-  else{
-    return List(0,0,0,0,0,0,0,0,0,0).updated(dim, 1);
-  }
-}
+<span class="k">def</span> <span class="n">count_cells_opt_helper</span><span class="o">(</span><span class="n">old_child_set</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">dim</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">((</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)){</span>
+    <span class="c1">// The next line should not parallelize the process.</span>
+    <span class="k">return</span> <span class="n">old_child_set</span><span class="o">.</span><span class="n">collect</span><span class="o">().</span><span class="n">map</span><span class="o">(</span><span class="n">vert</span> <span class="o">=&gt;</span> <span class="n">count_cells_par</span><span class="o">(</span><span class="n">old_child_set</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">edges</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">edges</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">vert</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;dst&quot;</span><span class="o">)),</span> <span class="n">edges</span><span class="o">,</span> <span class="n">cut_of</span><span class="o">,</span> <span class="n">dim</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span><span class="cm">/* vert_to_f-vector*/</span><span class="o">).</span><span class="n">reduce</span><span class="o">(</span><span class="n">component_addition</span><span class="o">(</span><span class="k">_</span><span class="o">,</span><span class="k">_</span><span class="o">)).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">else</span><span class="o">{</span>
+    <span class="k">return</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">).</span><span class="n">updated</span><span class="o">(</span><span class="n">dim</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1830,21 +1800,21 @@ count_cells_opt_helper: (old_child_set: org.apache.spark.sql.DataFrame, edges: o
 a GraphFrame.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">Makes</span> <span class="n">it</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">call</span> <span class="s2">&quot;count_cells&quot;</span> <span class="n">on</span> <span class="n">a</span> <span class="n">GraphFrame</span> <span class="nb">object</span><span class="o">.</span> <span class="n">Notice</span>
-<span class="o">**</span> <span class="n">that</span> <span class="n">we</span> <span class="n">can</span> <span class="n">get</span> <span class="n">wrong</span> <span class="n">results</span> <span class="k">if</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">graph</span> <span class="n">has</span> <span class="n">loops</span><span class="o">.</span> <span class="n">We</span> <span class="n">recommend</span>
-<span class="o">**</span> <span class="n">running</span> <span class="s2">&quot;count_loops&quot;</span> <span class="n">to</span> <span class="n">see</span> <span class="k">if</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">case</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** Makes it easier to call &quot;count_cells&quot; on a GraphFrame object. Notice</span>
+<span class="cm">** that we can get wrong results if the input graph has loops. We recommend</span>
+<span class="cm">** running &quot;count_loops&quot; to see if that is the case.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">f_vector_of_graphframe</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">,</span> <span class="n">cut_of</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">var</span> <span class="n">f_vector</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">){</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too big cut_of&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="n">f_vector_of_graphframe</span><span class="o">(</span><span class="n">graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">f_vector</span> <span class="o">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="s">&quot;Too big cut_of&quot;</span><span class="o">)</span>
     <span class="n">f_vector</span>
-  <span class="p">}</span>
-  <span class="n">count_cells</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="n">f_vector</span><span class="p">,</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">),</span> <span class="n">cut_of</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
+  <span class="o">}</span>
+  <span class="n">count_cells</span><span class="o">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">),</span> <span class="n">f_vector</span><span class="o">,</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">),</span> <span class="n">cut_of</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1856,24 +1826,24 @@ a GraphFrame.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">Makes</span> <span class="n">it</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">call</span> <span class="s2">&quot;count_cells_par&quot;</span> <span class="n">on</span> <span class="n">a</span> <span class="n">GraphFrame</span> <span class="nb">object</span><span class="o">.</span> <span class="n">Notice</span>
-<span class="o">**</span> <span class="n">that</span> <span class="n">we</span> <span class="n">can</span> <span class="n">get</span> <span class="n">wrong</span> <span class="n">results</span> <span class="k">if</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">graph</span> <span class="n">has</span> <span class="n">loops</span><span class="o">.</span> <span class="n">We</span> <span class="n">recommend</span>
-<span class="o">**</span> <span class="n">running</span> <span class="s2">&quot;count_loops&quot;</span> <span class="n">to</span> <span class="n">see</span> <span class="k">if</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">case</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** Makes it easier to call &quot;count_cells_par&quot; on a GraphFrame object. Notice</span>
+<span class="cm">** that we can get wrong results if the input graph has loops. We recommend</span>
+<span class="cm">** running &quot;count_loops&quot; to see if that is the case.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">f_vector_of_graphframe_par</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">,</span> <span class="n">cut_of</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">var</span> <span class="n">temp_int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">){</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too big cut_of&quot;</span><span class="p">)</span>
-    <span class="n">temp_int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="k">else</span><span class="p">{</span>
-    <span class="n">temp_int</span> <span class="o">=</span> <span class="n">cut_of</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">count_cells_par</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">),</span> <span class="n">temp_int</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="k">def</span> <span class="n">f_vector_of_graphframe_par</span><span class="o">(</span><span class="n">graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">temp_int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="s">&quot;Too big cut_of&quot;</span><span class="o">)</span>
+    <span class="n">temp_int</span> <span class="o">=</span> <span class="mi">9</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="k">else</span><span class="o">{</span>
+    <span class="n">temp_int</span> <span class="o">=</span> <span class="n">cut_of</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="n">count_cells_par</span><span class="o">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">),</span> <span class="n">temp_int</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1885,21 +1855,21 @@ a GraphFrame.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">Makes</span> <span class="n">it</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">call</span> <span class="s2">&quot;count_cells_opt&quot;</span> <span class="n">on</span> <span class="n">a</span> <span class="n">GraphFrame</span> <span class="nb">object</span><span class="o">.</span> <span class="n">Notice</span>
-<span class="o">**</span> <span class="n">that</span> <span class="n">we</span> <span class="n">can</span> <span class="n">get</span> <span class="n">wrong</span> <span class="n">results</span> <span class="k">if</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">graph</span> <span class="n">has</span> <span class="n">loops</span><span class="o">.</span> <span class="n">We</span> <span class="n">recommend</span>
-<span class="o">**</span> <span class="n">running</span> <span class="s2">&quot;count_loops&quot;</span> <span class="n">to</span> <span class="n">see</span> <span class="k">if</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">case</span><span class="o">.</span>
-<span class="o">*/</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** Makes it easier to call &quot;count_cells_opt&quot; on a GraphFrame object. Notice</span>
+<span class="cm">** that we can get wrong results if the input graph has loops. We recommend</span>
+<span class="cm">** running &quot;count_loops&quot; to see if that is the case.</span>
+<span class="cm">*/</span>
 
-<span class="k">def</span> <span class="nf">f_vector_of_graphframe_opt</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">GraphFrame</span><span class="p">,</span> <span class="n">cut_of</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">List</span><span class="p">[</span><span class="n">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">var</span> <span class="n">f_vector</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">){</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too big cut_of&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="n">f_vector_of_graphframe_opt</span><span class="o">(</span><span class="n">graph</span><span class="k">:</span> <span class="kt">GraphFrame</span><span class="o">,</span> <span class="n">cut_of</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">f_vector</span> <span class="o">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">cut_of</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="s">&quot;Too big cut_of&quot;</span><span class="o">)</span>
     <span class="n">f_vector</span>
-  <span class="p">}</span>
-  <span class="n">count_cells_opt</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">),</span> <span class="n">cut_of</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
+  <span class="o">}</span>
+  <span class="n">count_cells_opt</span><span class="o">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">),</span> <span class="n">cut_of</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1916,37 +1886,37 @@ a GraphFrame.</p>
 <p>Let us take a small example that we can run in a fair time and show.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">/*</span>
-<span class="o">**</span> <span class="n">First</span> <span class="n">we</span> <span class="n">will</span> <span class="n">define</span> <span class="n">a</span> <span class="n">small</span> <span class="n">graph</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">manageable</span> <span class="n">by</span> <span class="n">hand</span><span class="o">.</span> <span class="n">This</span> 
-<span class="o">**</span> <span class="n">graph</span> <span class="n">encodes</span> <span class="k">for</span> <span class="n">a</span> <span class="n">simplicial</span> <span class="nb">complex</span> <span class="k">with</span> <span class="n">f</span><span class="o">-</span><span class="n">vector</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span>
-<span class="o">*/</span>
-<span class="o">//</span> <span class="n">Vertex</span> <span class="n">DataFrame</span>
-<span class="n">val</span> <span class="n">v</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">List</span><span class="p">(</span>
-  <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="p">))</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="cm">/*</span>
+<span class="cm">** First we will define a small graph that is manageable by hand. This </span>
+<span class="cm">** graph encodes for a simplicial complex with f-vector (6, 11, 7, 1).</span>
+<span class="cm">*/</span>
+<span class="c1">// Vertex DataFrame</span>
+<span class="k">val</span> <span class="n">v</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">createDataFrame</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span>
+  <span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="mi">4</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;e&quot;</span><span class="o">,</span> <span class="mi">5</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;f&quot;</span><span class="o">,</span> <span class="mi">6</span><span class="o">)</span>
+<span class="o">)).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;no&quot;</span><span class="o">)</span>
 
-<span class="o">//</span> <span class="n">Edge</span> <span class="n">DataFrame</span>
-<span class="n">val</span> <span class="n">e</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">List</span><span class="p">(</span>
-  <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">),</span> 
-  <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">),</span>
-  <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">)</span>
-<span class="p">))</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">)</span>
+<span class="c1">// Edge DataFrame</span>
+<span class="k">val</span> <span class="n">e</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">createDataFrame</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span>
+  <span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;b&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;d&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">),</span> 
+  <span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;f&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;a&quot;</span><span class="o">),</span>
+  <span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;f&quot;</span><span class="o">)</span>
+<span class="o">)).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">,</span> <span class="s">&quot;dst&quot;</span><span class="o">)</span>
 
-<span class="n">val</span> <span class="n">g</span> <span class="o">=</span> <span class="n">GraphFrame</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+<span class="k">val</span> <span class="n">g</span> <span class="o">=</span> <span class="nc">GraphFrame</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
 </pre></div>
 </div>
 </div>
@@ -1960,8 +1930,8 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">f_vector_of_graphframe</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">f_vector_of_graphframe</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1973,8 +1943,8 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">f_vector_of_graphframe_par</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">f_vector_of_graphframe_par</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1986,8 +1956,8 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">f_vector_of_graphframe_opt</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">f_vector_of_graphframe_opt</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1999,11 +1969,11 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">println</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="n">count_K2</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">count_K3</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="n">count_K4</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">println</span><span class="o">(</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">count</span><span class="o">)</span>
+<span class="n">println</span><span class="o">(</span><span class="n">count_K2</span><span class="o">(</span><span class="n">g</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">count_K3</span><span class="o">(</span><span class="n">g</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">count_K4</span><span class="o">(</span><span class="n">g</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
@@ -2016,10 +1986,10 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span><span class="n">f_vector_of_graphframe_opt</span><span class="p">(</span><span class="n">rat_brain_graph</span><span class="p">,</span> <span class="n">cut_of</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">//f_vector_of_graphframe_opt(rat_brain_graph, cut_of = 2)</span>
 </pre></div>
 </div>
 </div>
@@ -2038,16 +2008,16 @@ g: org.graphframes.GraphFrame = GraphFrame(v:[id: string, no: int], e:[src: stri
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "scala212"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "scala212",
             path: "./000_0-sds-3-x-projects/student-project-07_group-MathAtKTH"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'scala212'</script>
 
               </div>
               

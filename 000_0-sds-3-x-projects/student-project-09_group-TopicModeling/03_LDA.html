@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1269,9 +1239,9 @@
 <h2>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1289,18 +1259,18 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 ‘034<em>LDA</em>20NewsGroupsSmall’.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
 
-<span class="o">//</span> <span class="n">Set</span> <span class="n">params</span> <span class="k">for</span> <span class="n">RegexTokenizer</span>
-<span class="n">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegexTokenizer</span><span class="p">()</span>
-<span class="o">.</span><span class="n">setPattern</span><span class="p">(</span><span class="s2">&quot;[</span><span class="se">\\</span><span class="s2">W_]+&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="k">break</span> <span class="n">by</span> <span class="n">white</span> <span class="n">space</span> <span class="n">character</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> 
-<span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;genome&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">column</span>
-<span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">output</span> <span class="n">column</span>
+<span class="c1">// Set params for RegexTokenizer</span>
+<span class="k">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RegexTokenizer</span><span class="o">()</span>
+<span class="o">.</span><span class="n">setPattern</span><span class="o">(</span><span class="s">&quot;[\\W_]+&quot;</span><span class="o">)</span> <span class="c1">// break by white space character(s) </span>
+<span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;genome&quot;</span><span class="o">)</span> <span class="c1">// name of the input column</span>
+<span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">)</span> <span class="c1">// name of the output column</span>
 
-<span class="o">//</span> <span class="n">Tokenize</span> <span class="n">train</span> <span class="ow">and</span> <span class="n">test</span> <span class="n">documents</span>
-<span class="n">val</span> <span class="n">tokenized_df_train</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">k_mers_df_train</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">tokenized_df_test</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">k_mers_df_test</span><span class="p">)</span>
+<span class="c1">// Tokenize train and test documents</span>
+<span class="k">val</span> <span class="n">tokenized_df_train</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">k_mers_df_train</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">tokenized_df_test</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">k_mers_df_test</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1313,18 +1283,18 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">display</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">display</span><span class="o">(</span><span class="n">tokenized_df_test</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
@@ -1334,14 +1304,14 @@ consists of A-T-G-C, 4 letters), we initially planned to use a fixed
 vocabulary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizerModel</span>
-<span class="o">//</span> <span class="n">create</span> <span class="n">a</span> <span class="n">dictionary</span> <span class="n">array</span> <span class="kn">from</span> <span class="nn">all</span> <span class="n">possible</span> <span class="n">k</span><span class="o">-</span><span class="n">mers</span> 
-<span class="n">val</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">val</span> <span class="n">fixed_vocab</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="n">k</span><span class="p">))(</span><span class="n">List</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;t&quot;</span><span class="p">,</span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">permutations</span><span class="p">)</span><span class="o">.</span><span class="n">toArray</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">stackoverflow</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">questions</span><span class="o">/</span><span class="mi">38406959</span><span class="o">/</span><span class="n">creating</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">permutations</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="nb">list</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">limited</span><span class="o">-</span><span class="nb">range</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">fixed_vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizerModel</span><span class="p">(</span><span class="n">fixed_vocab</span><span class="p">)</span>
-<span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span>
-<span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizerModel</span>
+<span class="c1">// create a dictionary array from all possible k-mers </span>
+<span class="k">val</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">val</span> <span class="n">fixed_vocab</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">((</span><span class="n">k</span><span class="o">))(</span><span class="nc">List</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span><span class="s">&quot;t&quot;</span><span class="o">,</span><span class="s">&quot;g&quot;</span><span class="o">,</span><span class="s">&quot;c&quot;</span><span class="o">)).</span><span class="n">flatten</span><span class="o">.</span><span class="n">combinations</span><span class="o">(</span><span class="n">k</span><span class="o">).</span><span class="n">flatMap</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">permutations</span><span class="o">).</span><span class="n">toArray</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">))</span> <span class="c1">// https://stackoverflow.com/questions/38406959/creating-all-permutations-of-a-list-with-a-limited-range-in-scala</span>
+<span class="k">val</span> <span class="n">fixed_vectorizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountVectorizerModel</span><span class="o">(</span><span class="n">fixed_vocab</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1363,15 +1333,15 @@ indicate some pattern for that sample, we keep them. This approach
 provided us better topic diversity and results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
 
-<span class="o">//</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">dictionary</span> <span class="n">of</span> <span class="n">kmers</span>
-<span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
-      <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="o">//</span> <span class="n">a</span> <span class="n">term</span> <span class="n">must</span> <span class="n">appear</span> <span class="n">at</span> <span class="n">least</span> <span class="ow">in</span> <span class="mi">10</span> <span class="n">documents</span> <span class="n">to</span> <span class="n">be</span> <span class="n">included</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">vocabulary</span><span class="o">.</span>
-      <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span> <span class="o">//</span> <span class="n">create</span> <span class="n">the</span> <span class="n">vocabulary</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">train</span> <span class="n">data</span>
+<span class="c1">// Create a dictionary of kmers</span>
+<span class="k">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountVectorizer</span><span class="o">()</span>
+      <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">setMinDF</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>  <span class="c1">// a term must appear at least in 10 documents to be included in the vocabulary.</span>
+      <span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">)</span> <span class="c1">// create the vocabulary based on the train data</span>
 </pre></div>
 </div>
 </div>
@@ -1384,9 +1354,9 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Vocabulary</span> <span class="n">of</span> <span class="n">k</span><span class="o">-</span><span class="n">mers</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">some</span> <span class="n">weird</span> <span class="n">nucleotides</span>
-<span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Vocabulary of k-mers which contains some weird nucleotides</span>
+<span class="k">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
 </div>
@@ -1398,7 +1368,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
@@ -1411,10 +1381,10 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
-<span class="n">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Create vector of token counts</span>
+<span class="k">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;features&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">tokenized_df_test</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;features&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1427,8 +1397,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1440,8 +1410,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">countVectors_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">countVectors_train</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1453,8 +1423,8 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">countVectors_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">countVectors_test</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1469,13 +1439,13 @@ conflict when LDA topic distribution is given as RandomForestClassifier
 input</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="p">}</span>
-<span class="o">//</span> <span class="n">convert</span> <span class="n">each</span> <span class="n">sample</span> <span class="kn">from</span> <span class="nn">ml</span> <span class="n">to</span> <span class="n">mllib</span> <span class="n">vectors</span> <span class="p">(</span><span class="n">because</span> <span class="n">this</span> <span class="n">causes</span> <span class="n">problems</span> <span class="ow">in</span> <span class="n">classifier</span> <span class="n">step</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">lda_countVector_train</span> <span class="o">=</span> <span class="n">countVectors_train</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Row</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">countVector</span><span class="p">:</span> <span class="n">MLVector</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">mllib</span><span class="o">.</span><span class="n">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="p">(</span><span class="n">countVector</span><span class="p">))</span> <span class="p">}</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">lda_countVector_test</span> <span class="o">=</span> <span class="n">countVectors_test</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Row</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">countVector</span><span class="p">:</span> <span class="n">MLVector</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">mllib</span><span class="o">.</span><span class="n">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="p">(</span><span class="n">countVector</span><span class="p">))</span> <span class="p">}</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="o">{</span><span class="nc">Vector</span> <span class="o">=&gt;</span> <span class="nc">MLVector</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="o">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.</span><span class="o">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="o">}</span>
+<span class="c1">// convert each sample from ml to mllib vectors (because this causes problems in classifier step)</span>
+<span class="k">val</span> <span class="n">lda_countVector_train</span> <span class="o">=</span> <span class="n">countVectors_train</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">case</span> <span class="nc">Row</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">countVector</span><span class="k">:</span> <span class="kt">MLVector</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">mllib</span><span class="o">.</span><span class="nc">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="o">(</span><span class="n">countVector</span><span class="o">))</span> <span class="o">}.</span><span class="n">cache</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">lda_countVector_test</span> <span class="o">=</span> <span class="n">countVectors_test</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">case</span> <span class="nc">Row</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">countVector</span><span class="k">:</span> <span class="kt">MLVector</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">mllib</span><span class="o">.</span><span class="nc">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="o">(</span><span class="n">countVector</span><span class="o">))</span> <span class="o">}.</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1491,9 +1461,9 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Array</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">(</span><span class="n">VocabSize</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="n">indexedTokens</span><span class="p">),</span> <span class="n">Array</span><span class="p">(</span><span class="n">Token</span> <span class="n">Frequency</span><span class="p">)))</span>
-<span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// format: Array(id, (VocabSize, Array(indexedTokens), Array(Token Frequency)))</span>
+<span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1505,9 +1475,9 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">topics</span> 
-<span class="n">val</span> <span class="n">num_topics</span> <span class="o">=</span> <span class="mi">20</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// The number of topics </span>
+<span class="k">val</span> <span class="n">num_topics</span> <span class="o">=</span> <span class="mi">20</span>
 </pre></div>
 </div>
 </div>
@@ -1522,15 +1492,15 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 <h2>Run LDA<a class="headerlink" href="#run-lda" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.clustering.</span><span class="p">{</span><span class="n">LDA</span><span class="p">,</span> <span class="n">EMLDAOptimizer</span><span class="p">,</span><span class="n">DistributedLDAModel</span><span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.clustering.</span><span class="o">{</span><span class="nc">LDA</span><span class="o">,</span> <span class="nc">EMLDAOptimizer</span><span class="o">,</span><span class="nc">DistributedLDAModel</span><span class="o">}</span>
 
-<span class="n">val</span> <span class="n">lda</span> <span class="o">=</span> <span class="n">new</span> <span class="n">LDA</span><span class="p">()</span>
-<span class="o">.</span><span class="n">setOptimizer</span><span class="p">(</span><span class="n">new</span> <span class="n">EMLDAOptimizer</span><span class="p">())</span>
-<span class="o">.</span><span class="n">setK</span><span class="p">(</span><span class="n">num_topics</span><span class="p">)</span>
-<span class="o">.</span><span class="n">setMaxIterations</span><span class="p">(</span><span class="mi">20000</span><span class="p">)</span>
-<span class="o">.</span><span class="n">setDocConcentration</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">use</span> <span class="n">default</span> <span class="n">values</span>
-<span class="o">.</span><span class="n">setTopicConcentration</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">use</span> <span class="n">default</span> <span class="n">values</span>
+<span class="k">val</span> <span class="n">lda</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LDA</span><span class="o">()</span>
+<span class="o">.</span><span class="n">setOptimizer</span><span class="o">(</span><span class="k">new</span> <span class="nc">EMLDAOptimizer</span><span class="o">())</span>
+<span class="o">.</span><span class="n">setK</span><span class="o">(</span><span class="n">num_topics</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setMaxIterations</span><span class="o">(</span><span class="mi">20000</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setDocConcentration</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// use default values</span>
+<span class="o">.</span><span class="n">setTopicConcentration</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// use default values</span>
 </pre></div>
 </div>
 </div>
@@ -1543,11 +1513,11 @@ lda: org.apache.spark.mllib.clustering.LDA = org.apache.spark.mllib.clustering.L
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Run</span> <span class="n">the</span> <span class="n">LDA</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">model</span> <span class="n">described</span>  
-<span class="n">val</span> <span class="n">lda_countVector_train_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_train</span><span class="o">.</span><span class="n">rdd</span>
-<span class="n">val</span> <span class="n">lda_countVector_test_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">rdd</span>
-<span class="n">val</span> <span class="n">ldaModel</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">lda_countVector_train_mllib</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Run the LDA based on the model described  </span>
+<span class="k">val</span> <span class="n">lda_countVector_train_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_train</span><span class="o">.</span><span class="n">rdd</span>
+<span class="k">val</span> <span class="n">lda_countVector_test_mllib</span> <span class="o">=</span> <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">rdd</span>
+<span class="k">val</span> <span class="n">ldaModel</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">run</span><span class="o">(</span><span class="n">lda_countVector_train_mllib</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1561,9 +1531,9 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Cast</span> <span class="n">to</span> <span class="n">distributed</span> <span class="n">LDA</span> <span class="n">model</span> <span class="p">(</span><span class="n">which</span> <span class="ow">is</span> <span class="n">possible</span> <span class="n">through</span> <span class="n">EMLDAOptimizer</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">model</span><span class="p">)</span> <span class="n">so</span> <span class="n">we</span> <span class="n">can</span> <span class="n">get</span> <span class="n">topic</span> <span class="n">distributions</span>
-<span class="n">val</span> <span class="n">distLDAModel</span> <span class="o">=</span> <span class="n">ldaModel</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="p">[</span><span class="n">DistributedLDAModel</span><span class="p">]</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Cast to distributed LDA model (which is possible through EMLDAOptimizer in the model) so we can get topic distributions</span>
+<span class="k">val</span> <span class="n">distLDAModel</span> <span class="o">=</span> <span class="n">ldaModel</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">DistributedLDAModel</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
@@ -1575,8 +1545,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">topicIndices</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">describeTopics</span><span class="p">(</span><span class="n">maxTermsPerTopic</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">topicIndices</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">describeTopics</span><span class="o">(</span><span class="n">maxTermsPerTopic</span> <span class="o">=</span> <span class="mi">10</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1588,10 +1558,10 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">spark</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">scala</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="c1">#org.apache.spark.mllib.clustering.DistributedLDAModel</span>
-<span class="o">//</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">each</span> <span class="n">train</span> <span class="n">document</span> <span class="n">which</span> <span class="n">we</span> <span class="n">will</span> <span class="n">use</span> <span class="k">as</span> <span class="n">features</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">classification</span> <span class="n">step</span>
-<span class="n">val</span> <span class="n">topicDistributions_train</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">topicDistributions</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// https://spark.apache.org/docs/1.5.0/api/scala/index.html#org.apache.spark.mllib.clustering.DistributedLDAModel</span>
+<span class="c1">// Get the topic distributions for each train document which we will use as features in the classification step</span>
+<span class="k">val</span> <span class="n">topicDistributions_train</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">topicDistributions</span><span class="o">.</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1603,8 +1573,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">lda_countVector_test_mllib</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">lda_countVector_test_mllib</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1616,9 +1586,9 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">each</span> <span class="n">test</span> <span class="n">document</span> <span class="n">which</span> <span class="n">we</span> <span class="n">will</span> <span class="n">use</span> <span class="k">as</span> <span class="n">features</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">classification</span> <span class="n">step</span>
-<span class="n">val</span> <span class="n">topicDistributions_test</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">toLocal</span><span class="o">.</span><span class="n">topicDistributions</span><span class="p">(</span><span class="n">lda_countVector_test_mllib</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Get the topic distributions for each test document which we will use as features in the classification step</span>
+<span class="k">val</span> <span class="n">topicDistributions_test</span> <span class="o">=</span> <span class="n">distLDAModel</span><span class="o">.</span><span class="n">toLocal</span><span class="o">.</span><span class="n">topicDistributions</span><span class="o">(</span><span class="n">lda_countVector_test_mllib</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1628,18 +1598,18 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="k">assert</span> <span class="p">(</span><span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">num_topics</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">assert</span> <span class="o">(</span><span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)(</span><span class="mi">0</span><span class="o">).</span><span class="n">_2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">num_topics</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1651,8 +1621,8 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1664,12 +1634,12 @@ ldaModel: org.apache.spark.mllib.clustering.LDAModel = org.apache.spark.mllib.cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">NewVectors</span><span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="o">{</span><span class="nc">Vectors</span> <span class="o">=&gt;</span> <span class="nc">OldVectors</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="o">{</span><span class="nc">Vectors</span> <span class="o">=&gt;</span> <span class="nc">NewVectors</span><span class="o">}</span>
 
-<span class="n">val</span> <span class="n">n_topicDistributions_train</span> <span class="o">=</span> <span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="p">)})</span>
-<span class="n">val</span> <span class="n">n_topicDistributions_test</span> <span class="o">=</span> <span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="p">)})</span>
+<span class="k">val</span> <span class="n">n_topicDistributions_train</span> <span class="o">=</span> <span class="n">topicDistributions_train</span><span class="o">.</span><span class="n">map</span><span class="o">({</span><span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="o">=&gt;(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="o">)})</span>
+<span class="k">val</span> <span class="n">n_topicDistributions_test</span> <span class="o">=</span> <span class="n">topicDistributions_test</span><span class="o">.</span><span class="n">map</span><span class="o">({</span><span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="o">=&gt;(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="o">)})</span>
 </pre></div>
 </div>
 </div>
@@ -1682,32 +1652,32 @@ n_topicDistributions_test: org.apache.spark.rdd.RDD[(Long, org.apache.spark.ml.l
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">save</span> <span class="n">the</span> <span class="n">topic</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">train</span> <span class="ow">and</span> <span class="n">test</span> <span class="k">with</span> <span class="n">partitioning</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">notebook</span>
-<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span> <span class="o">//</span> <span class="n">remove</span> <span class="n">existing</span> <span class="n">folder</span>
-<span class="n">n_topicDistributions_train</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// save the topic distributions for train and test with partitioning for the next notebook</span>
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="o">(</span><span class="s">&quot;/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="o">,</span> <span class="n">recurse</span><span class="k">=</span><span class="kc">true</span><span class="o">)</span> <span class="c1">// remove existing folder</span>
+<span class="n">n_topicDistributions_train</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/topic_dist_train_t20_i20k_no_cv&quot;</span><span class="o">)</span>
 
-<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/FileStore/shared_uploads/caylak@kth.se/topic_dist_test_t20_i20k_no_cv&quot;</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="n">true</span><span class="p">)</span> <span class="o">//</span> <span class="n">remove</span> <span class="n">existing</span> <span class="n">folder</span>
-<span class="n">n_topicDistributions_test</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/topic_dist_test_t20_i20k_no_cv&quot;</span><span class="p">)</span>
+<span class="n">dbutils</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="o">(</span><span class="s">&quot;/FileStore/shared_uploads/caylak@kth.se/topic_dist_test_t20_i20k_no_cv&quot;</span><span class="o">,</span> <span class="n">recurse</span><span class="k">=</span><span class="kc">true</span><span class="o">)</span> <span class="c1">// remove existing folder</span>
+<span class="n">n_topicDistributions_test</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/topic_dist_test_t20_i20k_no_cv&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">top</span> <span class="n">word</span> <span class="n">distributions</span> <span class="k">for</span> <span class="n">each</span> <span class="n">topic</span>
-<span class="n">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">termWeights</span><span class="p">)</span> <span class="o">=&gt;</span>
-  <span class="n">terms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">vocabList</span><span class="p">(</span><span class="n">_</span><span class="p">))</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">termWeights</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$num_topics topics:&quot;</span><span class="p">)</span>
-<span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="o">.</span><span class="n">foreach</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">=&gt;</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;TOPIC $i&quot;</span><span class="p">)</span>
-  <span class="n">topic</span><span class="o">.</span><span class="n">foreach</span> <span class="p">{</span> <span class="n">case</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;$term</span><span class="se">\t</span><span class="s2">$weight&quot;</span><span class="p">)</span> <span class="p">}</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;==========&quot;</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Get the top word distributions for each topic</span>
+<span class="k">val</span> <span class="n">topics</span> <span class="o">=</span> <span class="n">topicIndices</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">case</span> <span class="o">(</span><span class="n">terms</span><span class="o">,</span> <span class="n">termWeights</span><span class="o">)</span> <span class="o">=&gt;</span>
+  <span class="n">terms</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">vocabList</span><span class="o">(</span><span class="k">_</span><span class="o">)).</span><span class="n">zip</span><span class="o">(</span><span class="n">termWeights</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">$num_topics</span><span class="s"> topics:&quot;</span><span class="o">)</span>
+<span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span> <span class="k">case</span> <span class="o">(</span><span class="n">topic</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">=&gt;</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;TOPIC </span><span class="si">$i</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">topic</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span> <span class="k">case</span> <span class="o">(</span><span class="n">term</span><span class="o">,</span> <span class="n">weight</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">$term</span><span class="s">\t</span><span class="si">$weight</span><span class="s">&quot;</span><span class="o">)</span> <span class="o">}</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;==========&quot;</span><span class="o">)</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1742,7 +1712,218 @@ att	0.1771773579445795
 aca	0.1273508073428366
 ctt	0.12417703909804925
 tta	0.10088919432568136
-output truncated to 30 lines...
+ttg	0.07025874336577707
+caa	0.06781849637448154
+ata	0.06551643079794925
+gta	0.0566203488787403
+cag	0.050952344374832294
+tca	0.05064669189688532
+==========
+TOPIC 3
+ttt	0.12900506402878842
+tct	0.08187154980316187
+caa	0.0804903536037813
+agt	0.06820785348113596
+tat	0.06403202450597477
+ggc	0.06354048211661752
+aat	0.059722422879030124
+aaa	0.05764305780933505
+act	0.056823028552883896
+tac	0.05050462429017033
+==========
+TOPIC 4
+tag	0.280789956368097
+cac	0.14884669801130576
+tta	0.12363916305747652
+agg	0.06715808907042371
+cat	0.05808903649551852
+ctc	0.035200330930716894
+ttg	0.0325620539187323
+acg	0.02912154147106237
+atc	0.02758866266257834
+aac	0.027547370865081168
+==========
+TOPIC 5
+att	0.11591805759819132
+aca	0.08452545717333106
+aac	0.08232998329440071
+ttg	0.07645773366533996
+ctt	0.07292660037841622
+tta	0.06979775260163676
+tca	0.06377736116678143
+atc	0.0636127848169404
+ctc	0.05333310944153443
+aaa	0.0403129870403956
+==========
+TOPIC 6
+caa	0.09381881392542014
+aca	0.07294005855217066
+aaa	0.06184882176158587
+cct	0.060194426786324064
+aac	0.05364240123558053
+gta	0.05125828309982973
+cat	0.048842531897893296
+ata	0.048538928994278294
+ctt	0.046355753246257694
+att	0.0438895720348804
+==========
+TOPIC 7
+act	0.138920713555467
+gaa	0.11623655855686699
+gtt	0.11131954478072532
+cct	0.09797657089663879
+gca	0.09537701456561963
+gct	0.07867848533081129
+aat	0.07443106809609575
+tct	0.07020863559136906
+ggt	0.03446134517117473
+cca	0.033385060241571896
+==========
+TOPIC 8
+ctg	0.28277883416145083
+gtg	0.24258736038861525
+cta	0.18511978802062573
+ttg	0.16014802621366006
+aag	0.05615522182851401
+cag	0.03983192456693103
+tta	0.020870881653583494
+ctc	0.0062814812111272045
+atg	0.00399671737635821
+att	9.82373258811589E-4
+==========
+TOPIC 9
+ttc	0.11215026160406903
+aga	0.09997045883724656
+tgt	0.09899616804868992
+acc	0.08542133373176733
+agg	0.07086604003052271
+taa	0.06834480309637822
+tac	0.06739680588614552
+agc	0.05697027903014449
+aac	0.056905309123899905
+tgg	0.05592287104822075
+==========
+TOPIC 10
+tat	0.3045069518222243
+ttt	0.10598334819720531
+gat	0.08497145047846107
+gga	0.07195554779872801
+gaa	0.06334411211783564
+gac	0.0501259249002475
+tct	0.04184334240304662
+gtc	0.04081731047807028
+tgt	0.03407004785264182
+ggc	0.03084819860780612
+==========
+TOPIC 11
+aat	0.15313129377634324
+gtt	0.11136486968533195
+act	0.09938109260597303
+ttt	0.08098107901971825
+tct	0.07436579060226875
+cca	0.05973226662906273
+gtc	0.054342333209175524
+gct	0.045969566448502135
+gca	0.04230395769909175
+caa	0.03379103377830444
+==========
+TOPIC 12
+atg	0.40393420174728084
+aag	0.1596752741519448
+ata	0.08818488731461775
+cag	0.08716769751558717
+ttg	0.06381755416913878
+gtg	0.049195933694508975
+gta	0.04824283384256685
+cta	0.026223167199516388
+att	0.024815702746123547
+gag	0.02148135368458484
+==========
+TOPIC 13
+ttt	0.035599603090872865
+aaa	0.03316334088308096
+tta	0.029506633362044763
+aca	0.028837067221916004
+att	0.027851671336394827
+aat	0.027841516352361567
+ttg	0.0266395226520003
+ctt	0.026460194631246266
+gtt	0.025952308084089198
+tgt	0.025801614473320057
+==========
+TOPIC 14
+tga	0.40588646983739857
+taa	0.37622335900348414
+tgc	0.10329844674204074
+tgg	0.06408543556719108
+agc	0.04398157038264574
+tgt	0.0019443504371832467
+agg	0.0010816324847375551
+aga	9.690985396810429E-4
+acg	6.089366179352809E-4
+cac	5.306961262864047E-4
+==========
+TOPIC 15
+tgc	0.24867912307479623
+tgg	0.22221039810278131
+aga	0.20406796030722257
+tgt	0.12898820492414326
+agc	0.09584946822473574
+ttc	0.02554181811977189
+taa	0.023060962961734793
+cgg	0.020407562155919816
+ccg	0.011656627402572343
+cgc	0.006080144266796195
+==========
+TOPIC 16
+ttt	0.09608019178573185
+cat	0.09468093931917036
+tac	0.08831517668933483
+cac	0.07888279734384865
+agt	0.07869379372671728
+tgt	0.0771074369407922
+ttc	0.0663989870422319
+tcc	0.06297689584243867
+aac	0.05267634917479531
+agg	0.04892840448322181
+==========
+TOPIC 17
+ggt	0.22228300511643612
+gct	0.17755862786216
+gat	0.17554547535640996
+gaa	0.11845531895301108
+gtt	0.09025470457109182
+aat	0.05251852326151254
+act	0.04535072041908663
+gac	0.04157274838229573
+ggc	0.031801606359594274
+tct	0.01448129735009463
+==========
+TOPIC 18
+tgt	0.21848944559310404
+acc	0.08454143009325459
+ttt	0.07189677948995123
+tac	0.07173317060439306
+aga	0.07085445959317387
+agt	0.07034306881074903
+ttc	0.06751676005545235
+aac	0.04214370938600386
+cat	0.039481737827846496
+atc	0.03802927898631681
+==========
+TOPIC 19
+aaa	0.24419795743787553
+aca	0.08971504465736907
+aat	0.0696418602760822
+tca	0.06173297410313595
+cca	0.045853026172169624
+gtt	0.044662470242603544
+ctt	0.04423826724372272
+tct	0.042421366904275344
+ttt	0.04228231192822315
+caa	0.03977456484384988
+==========
+topics: Array[Array[(String, Double)]] = Array(Array((aaa,0.13131543650186733), (ttt,0.07527114848360429), (caa,0.07135461182849644), (tca,0.0686676695645471), (aca,0.0682272864770198), (cca,0.042410198142041916), (aac,0.041688158000092713), (cga,0.039750957604586946), (gga,0.033574925939461), (act,0.031983245462294564)), Array((tta,0.2045738779164489), (ctt,0.12552474142776435), (aag,0.12281910412100323), (att,0.09544738898234381), (ttg,0.08943498040951323), (cta,0.07217060937253246), (gta,0.07107253249067667), (cag,0.06059690672969983), (ctc,0.052955711044136405), (gtg,0.02543376284487667)), Array((att,0.1771773579445795), (aca,0.1273508073428366), (ctt,0.12417703909804925), (tta,0.10088919432568136), (ttg,0.07025874336577707), (caa,0.06781849637448154), (ata,0.06551643079794925), (gta,0.0566203488787403), (cag,0.050952344374832294), (tca,0.05064669189688532)), Array((ttt,0.12900506402878842), (tct,0.08187154980316187), (caa,0.0804903536037813), (agt,0.06820785348113596), (tat,0.06403202450597477), (ggc,0.06354048211661752), (aat,0.059722422879030124), (aaa,0.05764305780933505), (act,0.056823028552883896), (tac,0.05050462429017033)), Array((tag,0.280789956368097), (cac,0.14884669801130576), (tta,0.12363916305747652), (agg,0.06715808907042371), (cat,0.05808903649551852), (ctc,0.035200330930716894), (ttg,0.0325620539187323), (acg,0.02912154147106237), (atc,0.02758866266257834), (aac,0.027547370865081168)), Array((att,0.11591805759819132), (aca,0.08452545717333106), (aac,0.08232998329440071), (ttg,0.07645773366533996), (ctt,0.07292660037841622), (tta,0.06979775260163676), (tca,0.06377736116678143), (atc,0.0636127848169404), (ctc,0.05333310944153443), (aaa,0.0403129870403956)), Array((caa,0.09381881392542014), (aca,0.07294005855217066), (aaa,0.06184882176158587), (cct,0.060194426786324064), (aac,0.05364240123558053), (gta,0.05125828309982973), (cat,0.048842531897893296), (ata,0.048538928994278294), (ctt,0.046355753246257694), (att,0.0438895720348804)), Array((act,0.138920713555467), (gaa,0.11623655855686699), (gtt,0.11131954478072532), (cct,0.09797657089663879), (gca,0.09537701456561963), (gct,0.07867848533081129), (aat,0.07443106809609575), (tct,0.07020863559136906), (ggt,0.03446134517117473), (cca,0.033385060241571896)), Array((ctg,0.28277883416145083), (gtg,0.24258736038861525), (cta,0.18511978802062573), (ttg,0.16014802621366006), (aag,0.05615522182851401), (cag,0.03983192456693103), (tta,0.020870881653583494), (ctc,0.0062814812111272045), (atg,0.00399671737635821), (att,9.82373258811589E-4)), Array((ttc,0.11215026160406903), (aga,0.09997045883724656), (tgt,0.09899616804868992), (acc,0.08542133373176733), (agg,0.07086604003052271), (taa,0.06834480309637822), (tac,0.06739680588614552), (agc,0.05697027903014449), (aac,0.056905309123899905), (tgg,0.05592287104822075)), Array((tat,0.3045069518222243), (ttt,0.10598334819720531), (gat,0.08497145047846107), (gga,0.07195554779872801), (gaa,0.06334411211783564), (gac,0.0501259249002475), (tct,0.04184334240304662), (gtc,0.04081731047807028), (tgt,0.03407004785264182), (ggc,0.03084819860780612)), Array((aat,0.15313129377634324), (gtt,0.11136486968533195), (act,0.09938109260597303), (ttt,0.08098107901971825), (tct,0.07436579060226875), (cca,0.05973226662906273), (gtc,0.054342333209175524), (gct,0.045969566448502135), (gca,0.04230395769909175), (caa,0.03379103377830444)), Array((atg,0.40393420174728084), (aag,0.1596752741519448), (ata,0.08818488731461775), (cag,0.08716769751558717), (ttg,0.06381755416913878), (gtg,0.049195933694508975), (gta,0.04824283384256685), (cta,0.026223167199516388), (att,0.024815702746123547), (gag,0.02148135368458484)), Array((ttt,0.035599603090872865), (aaa,0.03316334088308096), (tta,0.029506633362044763), (aca,0.028837067221916004), (att,0.027851671336394827), (aat,0.027841516352361567), (ttg,0.0266395226520003), (ctt,0.026460194631246266), (gtt,0.025952308084089198), (tgt,0.025801614473320057)), Array((tga,0.40588646983739857), (taa,0.37622335900348414), (tgc,0.10329844674204074), (tgg,0.06408543556719108), (agc,0.04398157038264574), (tgt,0.0019443504371832467), (agg,0.0010816324847375551), (aga,9.690985396810429E-4), (acg,6.089366179352809E-4), (cac,5.306961262864047E-4)), Array((tgc,0.24867912307479623), (tgg,0.22221039810278131), (aga,0.20406796030722257), (tgt,0.12898820492414326), (agc,0.09584946822473574), (ttc,0.02554181811977189), (taa,0.023060962961734793), (cgg,0.020407562155919816), (ccg,0.011656627402572343), (cgc,0.006080144266796195)), Array((ttt,0.09608019178573185), (cat,0.09468093931917036), (tac,0.08831517668933483), (cac,0.07888279734384865), (agt,0.07869379372671728), (tgt,0.0771074369407922), (ttc,0.0663989870422319), (tcc,0.06297689584243867), (aac,0.05267634917479531), (agg,0.04892840448322181)), Array((ggt,0.22228300511643612), (gct,0.17755862786216), (gat,0.17554547535640996), (gaa,0.11845531895301108), (gtt,0.09025470457109182), (aat,0.05251852326151254), (act,0.04535072041908663), (gac,0.04157274838229573), (ggc,0.031801606359594274), (tct,0.01448129735009463)), Array((tgt,0.21848944559310404), (acc,0.08454143009325459), (ttt,0.07189677948995123), (tac,0.07173317060439306), (aga,0.07085445959317387), (agt,0.07034306881074903), (ttc,0.06751676005545235), (aac,0.04214370938600386), (cat,0.039481737827846496), (atc,0.03802927898631681)), Array((aaa,0.24419795743787553), (aca,0.08971504465736907), (aat,0.0696418602760822), (tca,0.06173297410313595), (cca,0.045853026172169624), (gtt,0.044662470242603544), (ctt,0.04423826724372272), (tct,0.042421366904275344), (ttt,0.04228231192822315), (caa,0.03977456484384988)))
 </pre></div>
 </div>
 </div>
@@ -1752,9 +1933,9 @@ output truncated to 30 lines...
 <h2>Visualise Results<a class="headerlink" href="#visualise-results" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Zip</span> <span class="n">topic</span> <span class="n">terms</span> <span class="k">with</span> <span class="n">topic</span> <span class="n">IDs</span>
-<span class="n">val</span> <span class="n">termArray</span> <span class="o">=</span> <span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Zip topic terms with topic IDs</span>
+<span class="k">val</span> <span class="n">termArray</span> <span class="o">=</span> <span class="n">topics</span><span class="o">.</span><span class="n">zipWithIndex</span>
 </pre></div>
 </div>
 </div>
@@ -1766,14 +1947,14 @@ output truncated to 30 lines...
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Transform</span> <span class="n">data</span> <span class="n">into</span> <span class="n">the</span> <span class="n">form</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">probability</span><span class="p">,</span> <span class="n">topicId</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">termRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">termArray</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">termRDD2</span> <span class="o">=</span><span class="n">termRDD</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">Array</span><span class="p">[(</span><span class="n">String</span><span class="p">,</span> <span class="n">Double</span><span class="p">)],</span> <span class="n">Int</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="n">val</span> <span class="n">arrayOfTuple</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span>
-  <span class="n">val</span> <span class="n">topicId</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span>
-  <span class="n">arrayOfTuple</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">el</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">_1</span><span class="p">,</span> <span class="n">el</span><span class="o">.</span><span class="n">_2</span><span class="p">,</span> <span class="n">topicId</span><span class="p">))</span>
-<span class="p">})</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Transform data into the form (term, probability, topicId)</span>
+<span class="k">val</span> <span class="n">termRDD</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">termArray</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">termRDD2</span> <span class="k">=</span><span class="n">termRDD</span><span class="o">.</span><span class="n">flatMap</span><span class="o">(</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="o">(</span><span class="kt">Array</span><span class="o">[(</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Double</span><span class="o">)],</span> <span class="nc">Int</span><span class="o">))</span> <span class="o">=&gt;</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">arrayOfTuple</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span>
+  <span class="k">val</span> <span class="n">topicId</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span>
+  <span class="n">arrayOfTuple</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">el</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">el</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">el</span><span class="o">.</span><span class="n">_2</span><span class="o">,</span> <span class="n">topicId</span><span class="o">))</span>
+<span class="o">})</span>
 </pre></div>
 </div>
 </div>
@@ -1786,9 +1967,9 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Create</span> <span class="n">DF</span> <span class="k">with</span> <span class="n">proper</span> <span class="n">column</span> <span class="n">names</span>
-<span class="n">val</span> <span class="n">termDF</span> <span class="o">=</span> <span class="n">termRDD2</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="s2">&quot;term&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_3&quot;</span><span class="p">,</span> <span class="s2">&quot;topicId&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Create DF with proper column names</span>
+<span class="k">val</span> <span class="n">termDF</span> <span class="o">=</span> <span class="n">termRDD2</span><span class="o">.</span><span class="n">toDF</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_1&quot;</span><span class="o">,</span> <span class="s">&quot;term&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_2&quot;</span><span class="o">,</span> <span class="s">&quot;probability&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_3&quot;</span><span class="o">,</span> <span class="s">&quot;topicId&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1798,11 +1979,11 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Create</span> <span class="n">JSON</span> <span class="n">data</span>
-<span class="n">val</span> <span class="n">rawJson</span> <span class="o">=</span> <span class="n">termDF</span><span class="o">.</span><span class="n">toJSON</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">mkString</span><span class="p">(</span><span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Create JSON data</span>
+<span class="k">val</span> <span class="n">rawJson</span> <span class="o">=</span> <span class="n">termDF</span><span class="o">.</span><span class="n">toJSON</span><span class="o">.</span><span class="n">collect</span><span class="o">().</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;,\n&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1837,106 +2018,276 @@ termRDD2: org.apache.spark.rdd.RDD[(String, Double, Int)] = MapPartitionsRDD[829
 {&quot;term&quot;:&quot;ata&quot;,&quot;probability&quot;:0.06551643079794925,&quot;topicId&quot;:2},
 {&quot;term&quot;:&quot;gta&quot;,&quot;probability&quot;:0.0566203488787403,&quot;topicId&quot;:2},
 {&quot;term&quot;:&quot;cag&quot;,&quot;probability&quot;:0.050952344374832294,&quot;topicId&quot;:2},
-output truncated to 30 lines...
+{&quot;term&quot;:&quot;tca&quot;,&quot;probability&quot;:0.05064669189688532,&quot;topicId&quot;:2},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.12900506402878842,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.08187154980316187,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;caa&quot;,&quot;probability&quot;:0.0804903536037813,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;agt&quot;,&quot;probability&quot;:0.06820785348113596,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;tat&quot;,&quot;probability&quot;:0.06403202450597477,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;ggc&quot;,&quot;probability&quot;:0.06354048211661752,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.059722422879030124,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;aaa&quot;,&quot;probability&quot;:0.05764305780933505,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;act&quot;,&quot;probability&quot;:0.056823028552883896,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;tac&quot;,&quot;probability&quot;:0.05050462429017033,&quot;topicId&quot;:3},
+{&quot;term&quot;:&quot;tag&quot;,&quot;probability&quot;:0.280789956368097,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;cac&quot;,&quot;probability&quot;:0.14884669801130576,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;tta&quot;,&quot;probability&quot;:0.12363916305747652,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;agg&quot;,&quot;probability&quot;:0.06715808907042371,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;cat&quot;,&quot;probability&quot;:0.05808903649551852,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;ctc&quot;,&quot;probability&quot;:0.035200330930716894,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;ttg&quot;,&quot;probability&quot;:0.0325620539187323,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;acg&quot;,&quot;probability&quot;:0.02912154147106237,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;atc&quot;,&quot;probability&quot;:0.02758866266257834,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.027547370865081168,&quot;topicId&quot;:4},
+{&quot;term&quot;:&quot;att&quot;,&quot;probability&quot;:0.11591805759819132,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;aca&quot;,&quot;probability&quot;:0.08452545717333106,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.08232998329440071,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;ttg&quot;,&quot;probability&quot;:0.07645773366533996,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;ctt&quot;,&quot;probability&quot;:0.07292660037841622,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;tta&quot;,&quot;probability&quot;:0.06979775260163676,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;tca&quot;,&quot;probability&quot;:0.06377736116678143,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;atc&quot;,&quot;probability&quot;:0.0636127848169404,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;ctc&quot;,&quot;probability&quot;:0.05333310944153443,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;aaa&quot;,&quot;probability&quot;:0.0403129870403956,&quot;topicId&quot;:5},
+{&quot;term&quot;:&quot;caa&quot;,&quot;probability&quot;:0.09381881392542014,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;aca&quot;,&quot;probability&quot;:0.07294005855217066,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;aaa&quot;,&quot;probability&quot;:0.06184882176158587,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;cct&quot;,&quot;probability&quot;:0.060194426786324064,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.05364240123558053,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;gta&quot;,&quot;probability&quot;:0.05125828309982973,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;cat&quot;,&quot;probability&quot;:0.048842531897893296,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;ata&quot;,&quot;probability&quot;:0.048538928994278294,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;ctt&quot;,&quot;probability&quot;:0.046355753246257694,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;att&quot;,&quot;probability&quot;:0.0438895720348804,&quot;topicId&quot;:6},
+{&quot;term&quot;:&quot;act&quot;,&quot;probability&quot;:0.138920713555467,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;gaa&quot;,&quot;probability&quot;:0.11623655855686699,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;gtt&quot;,&quot;probability&quot;:0.11131954478072532,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;cct&quot;,&quot;probability&quot;:0.09797657089663879,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;gca&quot;,&quot;probability&quot;:0.09537701456561963,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;gct&quot;,&quot;probability&quot;:0.07867848533081129,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.07443106809609575,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.07020863559136906,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;ggt&quot;,&quot;probability&quot;:0.03446134517117473,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;cca&quot;,&quot;probability&quot;:0.033385060241571896,&quot;topicId&quot;:7},
+{&quot;term&quot;:&quot;ctg&quot;,&quot;probability&quot;:0.28277883416145083,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;gtg&quot;,&quot;probability&quot;:0.24258736038861525,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;cta&quot;,&quot;probability&quot;:0.18511978802062573,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;ttg&quot;,&quot;probability&quot;:0.16014802621366006,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;aag&quot;,&quot;probability&quot;:0.05615522182851401,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;cag&quot;,&quot;probability&quot;:0.03983192456693103,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;tta&quot;,&quot;probability&quot;:0.020870881653583494,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;ctc&quot;,&quot;probability&quot;:0.0062814812111272045,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;atg&quot;,&quot;probability&quot;:0.00399671737635821,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;att&quot;,&quot;probability&quot;:9.82373258811589E-4,&quot;topicId&quot;:8},
+{&quot;term&quot;:&quot;ttc&quot;,&quot;probability&quot;:0.11215026160406903,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;aga&quot;,&quot;probability&quot;:0.09997045883724656,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.09899616804868992,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;acc&quot;,&quot;probability&quot;:0.08542133373176733,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;agg&quot;,&quot;probability&quot;:0.07086604003052271,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;taa&quot;,&quot;probability&quot;:0.06834480309637822,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;tac&quot;,&quot;probability&quot;:0.06739680588614552,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;agc&quot;,&quot;probability&quot;:0.05697027903014449,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.056905309123899905,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;tgg&quot;,&quot;probability&quot;:0.05592287104822075,&quot;topicId&quot;:9},
+{&quot;term&quot;:&quot;tat&quot;,&quot;probability&quot;:0.3045069518222243,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.10598334819720531,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;gat&quot;,&quot;probability&quot;:0.08497145047846107,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;gga&quot;,&quot;probability&quot;:0.07195554779872801,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;gaa&quot;,&quot;probability&quot;:0.06334411211783564,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;gac&quot;,&quot;probability&quot;:0.0501259249002475,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.04184334240304662,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;gtc&quot;,&quot;probability&quot;:0.04081731047807028,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.03407004785264182,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;ggc&quot;,&quot;probability&quot;:0.03084819860780612,&quot;topicId&quot;:10},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.15313129377634324,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;gtt&quot;,&quot;probability&quot;:0.11136486968533195,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;act&quot;,&quot;probability&quot;:0.09938109260597303,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.08098107901971825,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.07436579060226875,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;cca&quot;,&quot;probability&quot;:0.05973226662906273,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;gtc&quot;,&quot;probability&quot;:0.054342333209175524,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;gct&quot;,&quot;probability&quot;:0.045969566448502135,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;gca&quot;,&quot;probability&quot;:0.04230395769909175,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;caa&quot;,&quot;probability&quot;:0.03379103377830444,&quot;topicId&quot;:11},
+{&quot;term&quot;:&quot;atg&quot;,&quot;probability&quot;:0.40393420174728084,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;aag&quot;,&quot;probability&quot;:0.1596752741519448,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;ata&quot;,&quot;probability&quot;:0.08818488731461775,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;cag&quot;,&quot;probability&quot;:0.08716769751558717,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;ttg&quot;,&quot;probability&quot;:0.06381755416913878,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;gtg&quot;,&quot;probability&quot;:0.049195933694508975,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;gta&quot;,&quot;probability&quot;:0.04824283384256685,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;cta&quot;,&quot;probability&quot;:0.026223167199516388,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;att&quot;,&quot;probability&quot;:0.024815702746123547,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;gag&quot;,&quot;probability&quot;:0.02148135368458484,&quot;topicId&quot;:12},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.035599603090872865,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;aaa&quot;,&quot;probability&quot;:0.03316334088308096,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;tta&quot;,&quot;probability&quot;:0.029506633362044763,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;aca&quot;,&quot;probability&quot;:0.028837067221916004,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;att&quot;,&quot;probability&quot;:0.027851671336394827,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.027841516352361567,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;ttg&quot;,&quot;probability&quot;:0.0266395226520003,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;ctt&quot;,&quot;probability&quot;:0.026460194631246266,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;gtt&quot;,&quot;probability&quot;:0.025952308084089198,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.025801614473320057,&quot;topicId&quot;:13},
+{&quot;term&quot;:&quot;tga&quot;,&quot;probability&quot;:0.40588646983739857,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;taa&quot;,&quot;probability&quot;:0.37622335900348414,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;tgc&quot;,&quot;probability&quot;:0.10329844674204074,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;tgg&quot;,&quot;probability&quot;:0.06408543556719108,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;agc&quot;,&quot;probability&quot;:0.04398157038264574,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.0019443504371832467,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;agg&quot;,&quot;probability&quot;:0.0010816324847375551,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;aga&quot;,&quot;probability&quot;:9.690985396810429E-4,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;acg&quot;,&quot;probability&quot;:6.089366179352809E-4,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;cac&quot;,&quot;probability&quot;:5.306961262864047E-4,&quot;topicId&quot;:14},
+{&quot;term&quot;:&quot;tgc&quot;,&quot;probability&quot;:0.24867912307479623,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;tgg&quot;,&quot;probability&quot;:0.22221039810278131,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;aga&quot;,&quot;probability&quot;:0.20406796030722257,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.12898820492414326,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;agc&quot;,&quot;probability&quot;:0.09584946822473574,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;ttc&quot;,&quot;probability&quot;:0.02554181811977189,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;taa&quot;,&quot;probability&quot;:0.023060962961734793,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;cgg&quot;,&quot;probability&quot;:0.020407562155919816,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;ccg&quot;,&quot;probability&quot;:0.011656627402572343,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;cgc&quot;,&quot;probability&quot;:0.006080144266796195,&quot;topicId&quot;:15},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.09608019178573185,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;cat&quot;,&quot;probability&quot;:0.09468093931917036,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;tac&quot;,&quot;probability&quot;:0.08831517668933483,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;cac&quot;,&quot;probability&quot;:0.07888279734384865,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;agt&quot;,&quot;probability&quot;:0.07869379372671728,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.0771074369407922,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;ttc&quot;,&quot;probability&quot;:0.0663989870422319,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;tcc&quot;,&quot;probability&quot;:0.06297689584243867,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.05267634917479531,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;agg&quot;,&quot;probability&quot;:0.04892840448322181,&quot;topicId&quot;:16},
+{&quot;term&quot;:&quot;ggt&quot;,&quot;probability&quot;:0.22228300511643612,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;gct&quot;,&quot;probability&quot;:0.17755862786216,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;gat&quot;,&quot;probability&quot;:0.17554547535640996,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;gaa&quot;,&quot;probability&quot;:0.11845531895301108,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;gtt&quot;,&quot;probability&quot;:0.09025470457109182,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.05251852326151254,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;act&quot;,&quot;probability&quot;:0.04535072041908663,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;gac&quot;,&quot;probability&quot;:0.04157274838229573,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;ggc&quot;,&quot;probability&quot;:0.031801606359594274,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.01448129735009463,&quot;topicId&quot;:17},
+{&quot;term&quot;:&quot;tgt&quot;,&quot;probability&quot;:0.21848944559310404,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;acc&quot;,&quot;probability&quot;:0.08454143009325459,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.07189677948995123,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;tac&quot;,&quot;probability&quot;:0.07173317060439306,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;aga&quot;,&quot;probability&quot;:0.07085445959317387,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;agt&quot;,&quot;probability&quot;:0.07034306881074903,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;ttc&quot;,&quot;probability&quot;:0.06751676005545235,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;aac&quot;,&quot;probability&quot;:0.04214370938600386,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;cat&quot;,&quot;probability&quot;:0.039481737827846496,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;atc&quot;,&quot;probability&quot;:0.03802927898631681,&quot;topicId&quot;:18},
+{&quot;term&quot;:&quot;aaa&quot;,&quot;probability&quot;:0.24419795743787553,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;aca&quot;,&quot;probability&quot;:0.08971504465736907,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;aat&quot;,&quot;probability&quot;:0.0696418602760822,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;tca&quot;,&quot;probability&quot;:0.06173297410313595,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;cca&quot;,&quot;probability&quot;:0.045853026172169624,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;gtt&quot;,&quot;probability&quot;:0.044662470242603544,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;ctt&quot;,&quot;probability&quot;:0.04423826724372272,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;tct&quot;,&quot;probability&quot;:0.042421366904275344,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;ttt&quot;,&quot;probability&quot;:0.04228231192822315,&quot;topicId&quot;:19},
+{&quot;term&quot;:&quot;caa&quot;,&quot;probability&quot;:0.03977456484384988,&quot;topicId&quot;:19}
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">displayHTML</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;!DOCTYPE html&gt;</span>
-<span class="s2">&lt;meta charset=&quot;utf-8&quot;&gt;</span>
-<span class="s2">&lt;style&gt;</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">displayHTML</span><span class="o">(</span><span class="s">s&quot;&quot;&quot;</span>
+<span class="s">&lt;!DOCTYPE html&gt;</span>
+<span class="s">&lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="s">&lt;style&gt;</span>
 
-<span class="s2">circle {</span>
-<span class="s2">  fill: rgb(31, 119, 180);</span>
-<span class="s2">  fill-opacity: 0.5;</span>
-<span class="s2">  stroke: rgb(31, 119, 180);</span>
-<span class="s2">  stroke-width: 1px;</span>
-<span class="s2">}</span>
+<span class="s">circle {</span>
+<span class="s">  fill: rgb(31, 119, 180);</span>
+<span class="s">  fill-opacity: 0.5;</span>
+<span class="s">  stroke: rgb(31, 119, 180);</span>
+<span class="s">  stroke-width: 1px;</span>
+<span class="s">}</span>
 
-<span class="s2">.leaf circle {</span>
-<span class="s2">  fill: #ff7f0e;</span>
-<span class="s2">  fill-opacity: 1;</span>
-<span class="s2">}</span>
+<span class="s">.leaf circle {</span>
+<span class="s">  fill: #ff7f0e;</span>
+<span class="s">  fill-opacity: 1;</span>
+<span class="s">}</span>
 
-<span class="s2">text {</span>
-<span class="s2">  font: 14px sans-serif;</span>
-<span class="s2">}</span>
+<span class="s">text {</span>
+<span class="s">  font: 14px sans-serif;</span>
+<span class="s">}</span>
 
-<span class="s2">&lt;/style&gt;</span>
-<span class="s2">&lt;body&gt;</span>
-<span class="s2">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;&gt;&lt;/script&gt;</span>
-<span class="s2">&lt;script&gt;</span>
+<span class="s">&lt;/style&gt;</span>
+<span class="s">&lt;body&gt;</span>
+<span class="s">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s">&lt;script&gt;</span>
 
-<span class="s2">var json = {</span>
-<span class="s2"> &quot;name&quot;: &quot;data&quot;,</span>
-<span class="s2"> &quot;children&quot;: [</span>
-<span class="s2">  {</span>
-<span class="s2">     &quot;name&quot;: &quot;topics&quot;,</span>
-<span class="s2">     &quot;children&quot;: [</span>
-<span class="s2">      $</span><span class="si">{rawJson}</span><span class="s2"></span>
-<span class="s2">     ]</span>
-<span class="s2">    }</span>
-<span class="s2">   ]</span>
-<span class="s2">};</span>
+<span class="s">var json = {</span>
+<span class="s"> &quot;name&quot;: &quot;data&quot;,</span>
+<span class="s"> &quot;children&quot;: [</span>
+<span class="s">  {</span>
+<span class="s">     &quot;name&quot;: &quot;topics&quot;,</span>
+<span class="s">     &quot;children&quot;: [</span>
+<span class="s">      </span><span class="si">${</span><span class="n">rawJson</span><span class="si">}</span><span class="s"></span>
+<span class="s">     ]</span>
+<span class="s">    }</span>
+<span class="s">   ]</span>
+<span class="s">};</span>
 
-<span class="s2">var r = 1000,</span>
-<span class="s2">    format = d3.format(&quot;,d&quot;),</span>
-<span class="s2">    fill = d3.scale.category20c();</span>
+<span class="s">var r = 1000,</span>
+<span class="s">    format = d3.format(&quot;,d&quot;),</span>
+<span class="s">    fill = d3.scale.category20c();</span>
 
-<span class="s2">var bubble = d3.layout.pack()</span>
-<span class="s2">    .sort(null)</span>
-<span class="s2">    .size([r, r])</span>
-<span class="s2">    .padding(1.5);</span>
+<span class="s">var bubble = d3.layout.pack()</span>
+<span class="s">    .sort(null)</span>
+<span class="s">    .size([r, r])</span>
+<span class="s">    .padding(1.5);</span>
 
-<span class="s2">var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)</span>
-<span class="s2">    .attr(&quot;width&quot;, r)</span>
-<span class="s2">    .attr(&quot;height&quot;, r)</span>
-<span class="s2">    .attr(&quot;class&quot;, &quot;bubble&quot;);</span>
+<span class="s">var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)</span>
+<span class="s">    .attr(&quot;width&quot;, r)</span>
+<span class="s">    .attr(&quot;height&quot;, r)</span>
+<span class="s">    .attr(&quot;class&quot;, &quot;bubble&quot;);</span>
 
-<span class="s2">  </span>
-<span class="s2">var node = vis.selectAll(&quot;g.node&quot;)</span>
-<span class="s2">    .data(bubble.nodes(classes(json))</span>
-<span class="s2">    .filter(function(d) { return !d.children; }))</span>
-<span class="s2">    .enter().append(&quot;g&quot;)</span>
-<span class="s2">    .attr(&quot;class&quot;, &quot;node&quot;)</span>
-<span class="s2">    .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })</span>
-<span class="s2">    color = d3.scale.category20();</span>
-<span class="s2">  </span>
-<span class="s2">  node.append(&quot;title&quot;)</span>
-<span class="s2">      .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });</span>
+<span class="s">  </span>
+<span class="s">var node = vis.selectAll(&quot;g.node&quot;)</span>
+<span class="s">    .data(bubble.nodes(classes(json))</span>
+<span class="s">    .filter(function(d) { return !d.children; }))</span>
+<span class="s">    .enter().append(&quot;g&quot;)</span>
+<span class="s">    .attr(&quot;class&quot;, &quot;node&quot;)</span>
+<span class="s">    .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })</span>
+<span class="s">    color = d3.scale.category20();</span>
+<span class="s">  </span>
+<span class="s">  node.append(&quot;title&quot;)</span>
+<span class="s">      .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });</span>
 
-<span class="s2">  node.append(&quot;circle&quot;)</span>
-<span class="s2">      .attr(&quot;r&quot;, function(d) { return d.r; })</span>
-<span class="s2">      .style(&quot;fill&quot;, function(d) {return color(d.topicName);});</span>
+<span class="s">  node.append(&quot;circle&quot;)</span>
+<span class="s">      .attr(&quot;r&quot;, function(d) { return d.r; })</span>
+<span class="s">      .style(&quot;fill&quot;, function(d) {return color(d.topicName);});</span>
 
-<span class="s2">var text = node.append(&quot;text&quot;)</span>
-<span class="s2">    .attr(&quot;text-anchor&quot;, &quot;middle&quot;)</span>
-<span class="s2">    .attr(&quot;dy&quot;, &quot;.3em&quot;)</span>
-<span class="s2">    .text(function(d) { return d.className.substring(0, d.r / 3)});</span>
-<span class="s2">  </span>
-<span class="s2">  text.append(&quot;tspan&quot;)</span>
-<span class="s2">      .attr(&quot;dy&quot;, &quot;1.2em&quot;)</span>
-<span class="s2">      .attr(&quot;x&quot;, 0)</span>
-<span class="s2">      .text(function(d) {return Math.ceil(d.value * 10000) /10000; });</span>
+<span class="s">var text = node.append(&quot;text&quot;)</span>
+<span class="s">    .attr(&quot;text-anchor&quot;, &quot;middle&quot;)</span>
+<span class="s">    .attr(&quot;dy&quot;, &quot;.3em&quot;)</span>
+<span class="s">    .text(function(d) { return d.className.substring(0, d.r / 3)});</span>
+<span class="s">  </span>
+<span class="s">  text.append(&quot;tspan&quot;)</span>
+<span class="s">      .attr(&quot;dy&quot;, &quot;1.2em&quot;)</span>
+<span class="s">      .attr(&quot;x&quot;, 0)</span>
+<span class="s">      .text(function(d) {return Math.ceil(d.value * 10000) /10000; });</span>
 
-<span class="s2">// Returns a flattened hierarchy containing all leaf nodes under the root.</span>
-<span class="s2">function classes(root) {</span>
-<span class="s2">  var classes = [];</span>
+<span class="s">// Returns a flattened hierarchy containing all leaf nodes under the root.</span>
+<span class="s">function classes(root) {</span>
+<span class="s">  var classes = [];</span>
 
-<span class="s2">  function recurse(term, node) {</span>
-<span class="s2">    if (node.children) node.children.forEach(function(child) { recurse(node.term, child); });</span>
-<span class="s2">    else classes.push({topicName: node.topicId, className: node.term, value: node.probability});</span>
-<span class="s2">  }</span>
+<span class="s">  function recurse(term, node) {</span>
+<span class="s">    if (node.children) node.children.forEach(function(child) { recurse(node.term, child); });</span>
+<span class="s">    else classes.push({topicName: node.topicId, className: node.term, value: node.probability});</span>
+<span class="s">  }</span>
 
-<span class="s2">  recurse(null, root);</span>
-<span class="s2">  return {children: classes};</span>
-<span class="s2">}</span>
-<span class="s2">&lt;/script&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s">  recurse(null, root);</span>
+<span class="s">  return {children: classes};</span>
+<span class="s">}</span>
+<span class="s">&lt;/script&gt;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -2245,16 +2596,16 @@ function classes(root) {
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "scala212"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "scala212",
             path: "./000_0-sds-3-x-projects/student-project-09_group-TopicModeling"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'scala212'</script>
 
               </div>
               

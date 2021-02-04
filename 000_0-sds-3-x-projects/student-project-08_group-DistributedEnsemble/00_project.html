@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1376,7 +1346,7 @@ driver and the worker nodes prior to and at the end of training.</p>
 </div>
 <div class="section" id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randrange</span>
@@ -1415,7 +1385,7 @@ to split the final RDD into train and test sets.</p>
 <p>We will use this data later on to demonstrate our distributed ensembles
 framework as well as to generate out-of-distribution data for OOD
 detection.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">create_gaussian_RDD</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">num_observations</span><span class="p">,</span> <span class="n">class_proportions</span><span class="p">,</span> <span class="n">train_test_split</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1479,7 +1449,7 @@ https://archive.ics.uci.edu/ml/datasets/Internet+Firewall+Data.</p>
 <li><p>Number of features: 11 (all numerical).</p></li>
 <li><p>Number of classes: 4 (allow/deny/drop/reset both).</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">load_firewall_data</span><span class="p">(</span><span class="n">train_test_split</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">file_location</span><span class="o">=</span><span class="s2">&quot;/FileStore/shared_uploads/amanda.olmin@liu.se/fire_wall_data.csv&quot;</span><span class="p">):</span>
@@ -1537,7 +1507,7 @@ https://archive.ics.uci.edu/ml/datasets/Internet+Firewall+Data.</p>
 <p>** RDD partition **</p>
 <p>Below, we provide a function that partitions an RDD. We will use it to
 distribute data between ensemble members.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">get_partitioned_rdd</span><span class="p">(</span><span class="n">input_rdd</span><span class="p">,</span> <span class="n">partition_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
@@ -1566,7 +1536,7 @@ neurons in each layer is passed as an argument to the constructor of
 this class. Moreover, any instance of this network class (parameters and
 structure) can be easily stored in and loaded from a state dictionary
 (state_dict) object.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#Feedforward network for classification</span>
@@ -1628,7 +1598,7 @@ output (probabilities) of the network at that point.</p>
 <p>We note that Spark can automatically distribute these functions on the
 nodes, and thus writing them for a distributed ensemble is not basically
 different from a local setup.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="c1">#utility class for pytorch data loader</span>
@@ -1736,7 +1706,7 @@ contains all the necessary information about a network.</p>
 applied to each element of the model/data RDD, in the form of a <em>map</em>
 operation. This tells Spark to run the function on each element in
 parallel (on worker machines) independently.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">train_ensemble</span><span class="p">(</span><span class="n">n_models</span><span class="p">,</span> <span class="n">inputdims</span><span class="p">,</span> <span class="n">nclasses</span><span class="p">,</span> <span class="n">max_layers</span><span class="p">,</span> <span class="n">min_neurons</span><span class="p">,</span> <span class="n">max_neurons</span><span class="p">,</span> <span class="n">data_iterator</span><span class="p">):</span>
@@ -1792,7 +1762,7 @@ parallel (on worker machines) independently.</p>
 </div>
 <p>** Utility functions for saving and loading the ensemble model from
 the disk **</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">save_models_distr</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">dir_</span><span class="p">,</span> <span class="n">model_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1864,7 +1834,7 @@ the worker nodes.
 Note that each metric function must be on the form: f: R^(N x D_x)
 x R^(N) –&gt; T</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">ens_preds</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">test_x</span><span class="p">):</span>
@@ -1959,7 +1929,7 @@ x R^(N) –&gt; T</p></li>
 <p>Let’s first demonstrate our distributed ensembles with a simple toy
 example. We’ll create gaussian toy data with three slightly overlapping
 clusters:</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
@@ -2029,7 +1999,7 @@ Average accuracy for the whole ensemble: 0.9210789203643799
 ensemble. We’ll plot the test data, each point coloured the predicted
 distribution, which will illustrate the certain predictions with
 distinct colur and uncertain with muddied colours.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">avg_prob_vecs</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -2093,7 +2063,7 @@ First, we train it and again, save the trained parameters to file</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">gen_ood_data</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">):</span>
@@ -2129,7 +2099,7 @@ First, we train it and again, save the trained parameters to file</p>
 </div>
 <p><strong>Comparison of the entropy of the ensemble classifier on
 in-distribution and OOD data</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">entropy_hist</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">ood</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">,</span> <span class="n">upper_x_bound</span><span class="p">):</span>
@@ -2155,7 +2125,7 @@ in-distribution and OOD data</strong></p>
 </div>
 <p><strong>Evaluation of the OOD detection in terms of ROC curve and area under
 this curve (AUROC)</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">python</span>
 <span class="k">def</span> <span class="nf">is_ood</span><span class="p">(</span><span class="n">entropies</span><span class="p">,</span> <span class="n">cut_off_entropy</span><span class="p">):</span>

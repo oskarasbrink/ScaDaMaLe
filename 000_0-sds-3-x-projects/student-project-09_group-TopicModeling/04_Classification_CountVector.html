@@ -159,21 +159,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#from-a-local-collection">
-     From a Local Collection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#glom">
-     glom
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#checkpointing">
-     Checkpointing
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/006a_PipedRDD.html#pipe-rdds-to-system-commands">
      Pipe RDDs to System Commands
     </a>
@@ -271,11 +256,6 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html">
-     ScaDaMaLe, Scalable Data Science and Distributed Machine Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../000_1-sds-3-x/007g_PivotInSQL.html#sql-pivoting-since-spark-2-4">
      SQL Pivoting since Spark 2.4
     </a>
    </li>
@@ -628,44 +608,24 @@
    Wikipedia analysis using Latent Dirichlet Allocation (LDA)
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html">
    Unsupervised clustering of particle physics data with distributed training
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#introduction">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#background">
-   Background
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#the-uclusted-algorithm">
-   The UClusted algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#motivation">
-   Motivation
-  </a>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../student-project-06_group-ParticleClustering/00_Introduction.html#our-contribution">
-   Our contribution
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html">
-     Important!
+     Data and preprocessing
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../student-project-06_group-ParticleClustering/01_data_and_preprocessing.html#important-continued-from-above">
-     Important (continued from above)
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/02_dl_single_machine.html">
+     UCluster on a single machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-06_group-ParticleClustering/03_dl_horovod.html">
+     UCluster with distributed learning
     </a>
    </li>
    <li class="toctree-l2">
@@ -960,7 +920,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html">
-   Distributional combinatorial bandits
+   Distributed combinatorial bandits
   </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
@@ -1017,6 +977,16 @@
    Density Estimation via Voronoi Diagrams in High Dimensions
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/01_methodology.html">
+     Methodology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html">
+     Gaussian Analysis
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html">
      Robotics Dataset
@@ -1281,9 +1251,9 @@
 <h2>Load processed data<a class="headerlink" href="#load-processed-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1296,9 +1266,9 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">k_mers_df_train</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">k_mers_df_test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;</span><span class="o">).</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1315,18 +1285,18 @@ k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome
 <p>Generate word count vectors</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.RegexTokenizer</span>
 
-<span class="o">//</span> <span class="n">Set</span> <span class="n">params</span> <span class="k">for</span> <span class="n">RegexTokenizer</span>
-<span class="n">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegexTokenizer</span><span class="p">()</span>
-<span class="o">.</span><span class="n">setPattern</span><span class="p">(</span><span class="s2">&quot;[</span><span class="se">\\</span><span class="s2">W_]+&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="k">break</span> <span class="n">by</span> <span class="n">white</span> <span class="n">space</span> <span class="n">character</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="o">-</span> <span class="k">try</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">emails</span> <span class="ow">and</span> <span class="n">other</span> <span class="n">patterns</span>
-<span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;genome&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">column</span>
-<span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">output</span> <span class="n">column</span>
+<span class="c1">// Set params for RegexTokenizer</span>
+<span class="k">val</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RegexTokenizer</span><span class="o">()</span>
+<span class="o">.</span><span class="n">setPattern</span><span class="o">(</span><span class="s">&quot;[\\W_]+&quot;</span><span class="o">)</span> <span class="c1">// break by white space character(s)  - try to remove emails and other patterns</span>
+<span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;genome&quot;</span><span class="o">)</span> <span class="c1">// name of the input column</span>
+<span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">)</span> <span class="c1">// name of the output column</span>
 
-<span class="o">//</span> <span class="n">Tokenize</span> <span class="n">document</span>
-<span class="n">val</span> <span class="n">tokenized_df_train</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">k_mers_df_train</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">tokenized_df_test</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">k_mers_df_test</span><span class="p">)</span>
+<span class="c1">// Tokenize document</span>
+<span class="k">val</span> <span class="n">tokenized_df_train</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">k_mers_df_train</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">tokenized_df_test</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">k_mers_df_test</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1339,23 +1309,23 @@ tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: stri
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">display</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">))</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">display</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
-<span class="n">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountVectorizer</span><span class="p">()</span>
-      <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;tokens&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">setMinDF</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.CountVectorizer</span>
+<span class="k">val</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountVectorizer</span><span class="o">()</span>
+      <span class="o">.</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;tokens&quot;</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">setMinDF</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1368,8 +1338,8 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">vocabList</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">vocabulary</span>
 </pre></div>
 </div>
 </div>
@@ -1381,7 +1351,7 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
 <span class="n">vocabList</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
@@ -1394,10 +1364,10 @@ vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerMo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="o">//</span> <span class="n">Create</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">token</span> <span class="n">counts</span>
-<span class="n">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_train</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tokenized_df_test</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="c1">// Create vector of token counts</span>
+<span class="k">val</span> <span class="n">countVectors_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">tokenized_df_train</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;features&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">countVectors_test</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">tokenized_df_test</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;features&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1410,13 +1380,13 @@ countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vecto
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vector</span> <span class="o">=&gt;</span> <span class="n">MLVector</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.</span><span class="p">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="o">{</span><span class="nc">Vector</span> <span class="o">=&gt;</span> <span class="nc">MLVector</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.</span><span class="o">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">mllib</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.</span><span class="o">{</span><span class="n">linalg</span> <span class="o">=&gt;</span> <span class="n">ml</span><span class="o">}</span>
 
-<span class="n">val</span> <span class="n">lda_countVector_train</span> <span class="o">=</span> <span class="n">countVectors_train</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Row</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">countVector</span><span class="p">:</span> <span class="n">MLVector</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">mllib</span><span class="o">.</span><span class="n">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="p">(</span><span class="n">countVector</span><span class="p">))</span> <span class="p">}</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">lda_countVector_test</span> <span class="o">=</span> <span class="n">countVectors_test</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">case</span> <span class="n">Row</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">,</span> <span class="n">countVector</span><span class="p">:</span> <span class="n">MLVector</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">mllib</span><span class="o">.</span><span class="n">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="p">(</span><span class="n">countVector</span><span class="p">))</span> <span class="p">}</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="k">val</span> <span class="n">lda_countVector_train</span> <span class="o">=</span> <span class="n">countVectors_train</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">case</span> <span class="nc">Row</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">countVector</span><span class="k">:</span> <span class="kt">MLVector</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">mllib</span><span class="o">.</span><span class="nc">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="o">(</span><span class="n">countVector</span><span class="o">))</span> <span class="o">}.</span><span class="n">cache</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">lda_countVector_test</span> <span class="o">=</span> <span class="n">countVectors_test</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">case</span> <span class="nc">Row</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">countVector</span><span class="k">:</span> <span class="kt">MLVector</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">mllib</span><span class="o">.</span><span class="nc">Vectors</span><span class="o">.</span><span class="n">fromML</span><span class="o">(</span><span class="n">countVector</span><span class="o">))</span> <span class="o">}.</span><span class="n">cache</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1432,13 +1402,13 @@ lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">OldVectors</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="p">{</span><span class="n">Vectors</span> <span class="o">=&gt;</span> <span class="n">NewVectors</span><span class="p">}</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.linalg.</span><span class="o">{</span><span class="nc">Vectors</span> <span class="o">=&gt;</span> <span class="nc">OldVectors</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.linalg.</span><span class="o">{</span><span class="nc">Vectors</span> <span class="o">=&gt;</span> <span class="nc">NewVectors</span><span class="o">}</span>
 
 
-<span class="n">val</span> <span class="n">lda_countVector_train_1</span> <span class="o">=</span> <span class="n">lda_countVector_train</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="p">)})</span>
-<span class="n">val</span> <span class="n">lda_countVector_test_1</span> <span class="o">=</span> <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="n">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="p">)})</span>
+<span class="k">val</span> <span class="n">lda_countVector_train_1</span> <span class="o">=</span> <span class="n">lda_countVector_train</span><span class="o">.</span><span class="n">map</span><span class="o">({</span><span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="o">=&gt;(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="o">)})</span>
+<span class="k">val</span> <span class="n">lda_countVector_test_1</span> <span class="o">=</span> <span class="n">lda_countVector_test</span><span class="o">.</span><span class="n">map</span><span class="o">({</span><span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="o">=&gt;(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">.</span><span class="n">asML</span><span class="o">)})</span>
 </pre></div>
 </div>
 </div>
@@ -1453,10 +1423,9 @@ lda_countVector_test_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">val</span> <span class="n">trainDF</span> <span class="o">=</span> <span class="n">lda_countVector_train_1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
-<span class="n">val</span> <span class="n">testDF</span> <span class="o">=</span> <span class="n">lda_countVector_test_1</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
-
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">val</span> <span class="n">trainDF</span> <span class="o">=</span> <span class="n">lda_countVector_train_1</span><span class="o">.</span><span class="n">toDF</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">testDF</span> <span class="o">=</span> <span class="n">lda_countVector_test_1</span><span class="o">.</span><span class="n">toDF</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -1469,11 +1438,11 @@ testDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreshold&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="s">&quot;spark.sql.autoBroadcastJoinThreshold&quot;</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
 
-<span class="n">val</span> <span class="n">mergedTrainingData</span> <span class="o">=</span> <span class="n">trainDF</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k_mers_df_train</span><span class="p">,</span><span class="n">trainDF</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">k_mers_df_train</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span><span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span>
-<span class="n">val</span> <span class="n">mergedTestData</span> <span class="o">=</span> <span class="n">testDF</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k_mers_df_test</span><span class="p">,</span><span class="n">testDF</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="n">k_mers_df_test</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span><span class="s2">&quot;features&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">mergedTrainingData</span> <span class="o">=</span> <span class="n">trainDF</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">k_mers_df_train</span><span class="o">,</span><span class="n">trainDF</span><span class="o">(</span><span class="s">&quot;_1&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">k_mers_df_train</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">),</span><span class="s">&quot;inner&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_2&quot;</span><span class="o">,</span><span class="s">&quot;features&quot;</span><span class="o">).</span><span class="n">drop</span><span class="o">(</span><span class="s">&quot;_1&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">mergedTestData</span> <span class="o">=</span> <span class="n">testDF</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">k_mers_df_test</span><span class="o">,</span><span class="n">testDF</span><span class="o">(</span><span class="s">&quot;_1&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">k_mers_df_test</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">),</span><span class="s">&quot;inner&quot;</span><span class="o">).</span><span class="n">withColumnRenamed</span><span class="o">(</span><span class="s">&quot;_2&quot;</span><span class="o">,</span><span class="s">&quot;features&quot;</span><span class="o">).</span><span class="n">drop</span><span class="o">(</span><span class="s">&quot;_1&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1490,28 +1459,28 @@ mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: stri
 <p>The count vectors are used as features for classification</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.</span><span class="p">{</span><span class="n">StringIndexer</span><span class="p">,</span><span class="n">VectorAssembler</span><span class="p">}</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.Pipeline</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.feature.LabeledPoint</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.classification.RandomForestClassifier</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.ml.linalg.Vector</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.</span><span class="o">{</span><span class="nc">StringIndexer</span><span class="o">,</span><span class="nc">VectorAssembler</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.Pipeline</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.feature.LabeledPoint</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.classification.RandomForestClassifier</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.ml.linalg.Vector</span>
 
-<span class="n">val</span> <span class="n">transformers</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span>
-              <span class="n">new</span> <span class="n">StringIndexer</span><span class="p">()</span><span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&quot;label_id&quot;</span><span class="p">))</span>
+<span class="k">val</span> <span class="n">transformers</span> <span class="o">=</span> <span class="nc">Array</span><span class="o">(</span>
+              <span class="k">new</span> <span class="nc">StringIndexer</span><span class="o">().</span><span class="n">setInputCol</span><span class="o">(</span><span class="s">&quot;label&quot;</span><span class="o">).</span><span class="n">setOutputCol</span><span class="o">(</span><span class="s">&quot;label_id&quot;</span><span class="o">))</span>
 
-<span class="o">//</span> <span class="n">Train</span> <span class="n">a</span> <span class="n">RandomForest</span> <span class="n">model</span><span class="o">.</span>
-<span class="n">val</span> <span class="n">rf</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RandomForestClassifier</span><span class="p">()</span> 
-              <span class="o">.</span><span class="n">setLabelCol</span><span class="p">(</span><span class="s2">&quot;label_id&quot;</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setFeaturesCol</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setNumTrees</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setFeatureSubsetStrategy</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setImpurity</span><span class="p">(</span><span class="s2">&quot;gini&quot;</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setMaxDepth</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setMaxBins</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-              <span class="o">.</span><span class="n">setSeed</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
+<span class="c1">// Train a RandomForest model.</span>
+<span class="k">val</span> <span class="n">rf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RandomForestClassifier</span><span class="o">()</span> 
+              <span class="o">.</span><span class="n">setLabelCol</span><span class="o">(</span><span class="s">&quot;label_id&quot;</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setFeaturesCol</span><span class="o">(</span><span class="s">&quot;features&quot;</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setNumTrees</span><span class="o">(</span><span class="mi">500</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setFeatureSubsetStrategy</span><span class="o">(</span><span class="s">&quot;auto&quot;</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setImpurity</span><span class="o">(</span><span class="s">&quot;gini&quot;</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setMaxDepth</span><span class="o">(</span><span class="mi">20</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setMaxBins</span><span class="o">(</span><span class="mi">32</span><span class="o">)</span>
+              <span class="o">.</span><span class="n">setSeed</span><span class="o">(</span><span class="mi">12345</span><span class="o">)</span>
 
-<span class="n">val</span> <span class="n">model</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">setStages</span><span class="p">(</span><span class="n">transformers</span> <span class="p">:</span><span class="o">+</span> <span class="n">rf</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mergedTrainingData</span><span class="p">)</span>
+<span class="k">val</span> <span class="n">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Pipeline</span><span class="o">().</span><span class="n">setStages</span><span class="o">(</span><span class="n">transformers</span> <span class="o">:+</span> <span class="n">rf</span><span class="o">).</span><span class="n">fit</span><span class="o">(</span><span class="n">mergedTrainingData</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1531,39 +1500,39 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 </div>
 <div class="section" id="evaluation">
 <h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="kn">import</span> <span class="nn">org.apache.spark.mllib.evaluation.MulticlassMetrics</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.mllib.evaluation.MulticlassMetrics</span>
 
-<span class="k">def</span> <span class="nf">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">ml</span><span class="o">.</span><span class="n">PipelineModel</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">){</span>
-  <span class="n">val</span> <span class="n">predictionsOnData</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">predictionAndLabelsRdd</span> <span class="o">=</span> <span class="n">predictionsOnData</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;label_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="k">as</span><span class="p">[(</span><span class="n">Double</span><span class="p">,</span><span class="n">Double</span><span class="p">)]</span><span class="o">.</span><span class="n">rdd</span>
+<span class="k">def</span> <span class="n">evaluateModel</span><span class="o">(</span><span class="n">model</span><span class="k">:</span> <span class="kt">org.apache.spark.ml.PipelineModel</span><span class="o">,</span> <span class="n">df</span><span class="k">:</span> <span class="kt">org.apache.spark.sql.DataFrame</span><span class="o">){</span>
+  <span class="k">val</span> <span class="n">predictionsOnData</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">df</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">predictionAndLabelsRdd</span> <span class="o">=</span> <span class="n">predictionsOnData</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;prediction&quot;</span><span class="o">,</span> <span class="s">&quot;label_id&quot;</span><span class="o">).</span><span class="n">as</span><span class="o">[(</span><span class="kt">Double</span><span class="p">,</span><span class="kt">Double</span><span class="o">)].</span><span class="n">rdd</span>
 
-  <span class="n">val</span> <span class="n">metricsMulti</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MulticlassMetrics</span><span class="p">(</span><span class="n">predictionAndLabelsRdd</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">accuracy</span>
+  <span class="k">val</span> <span class="n">metricsMulti</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MulticlassMetrics</span><span class="o">(</span><span class="n">predictionAndLabelsRdd</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">accuracy</span>
   
-  <span class="n">val</span> <span class="n">fm0</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">fm1</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">fm2</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">fm3</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">fm4</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-  <span class="n">val</span> <span class="n">fm5</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">val</span> <span class="n">fm0</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">fm1</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">fm2</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">fm3</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">fm4</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">4</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">fm5</span> <span class="o">=</span> <span class="n">metricsMulti</span><span class="o">.</span><span class="n">fMeasure</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
   
-  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Confusion matrix:&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">metricsMulti</span><span class="o">.</span><span class="n">confusionMatrix</span><span class="p">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;Confusion matrix:&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">metricsMulti</span><span class="o">.</span><span class="n">confusionMatrix</span><span class="o">)</span>
   
-  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;Summary Statistics&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;Accuracy = $accuracy&quot;</span><span class="p">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;Summary Statistics&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;Accuracy = </span><span class="si">$accuracy</span><span class="s">&quot;</span><span class="o">)</span>
   
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm0 = $fm0&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm1 = $fm1&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm2 = $fm2&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm3 = $fm3&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm4 = $fm4&quot;</span><span class="p">)</span>
-  <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="s2">&quot;fm5 = $fm5&quot;</span><span class="p">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm0 = </span><span class="si">$fm0</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm1 = </span><span class="si">$fm1</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm2 = </span><span class="si">$fm2</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm3 = </span><span class="si">$fm3</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm4 = </span><span class="si">$fm4</span><span class="s">&quot;</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">s&quot;fm5 = </span><span class="si">$fm5</span><span class="s">&quot;</span><span class="o">)</span>
 
-<span class="p">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1572,8 +1541,8 @@ model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
 <h3>Evaluation Training data<a class="headerlink" href="#evaluation-training-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTrainingData</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">evaluateModel</span><span class="o">(</span><span class="n">model</span><span class="o">,</span> <span class="n">mergedTrainingData</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1602,8 +1571,8 @@ fm5 = 0.8114285714285714
 <h3>Evaluation Test data<a class="headerlink" href="#evaluation-test-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
-<span class="n">evaluateModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mergedTestData</span><span class="p">)</span>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">scala</span>
+<span class="n">evaluateModel</span><span class="o">(</span><span class="n">model</span><span class="o">,</span> <span class="n">mergedTestData</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -1640,16 +1609,16 @@ fm5 = 0.8301886792452831
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "scala212"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "scala212",
             path: "./000_0-sds-3-x-projects/student-project-09_group-TopicModeling"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'scala212'</script>
 
               </div>
               
