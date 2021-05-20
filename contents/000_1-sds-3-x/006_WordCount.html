@@ -1,0 +1,654 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>006_WordCount - ScaDaMaLe/sds-3.x</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/006_WordCount.html" class="active">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">007a_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">007b_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">007c_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">007d_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">007e_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">007f_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007g_PivotInSQL.html">007g_PivotInSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007_SparkSQLIntroBasics.html">007_SparkSQLIntroBasics</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">008_DiamondsPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">009_PowerPlantPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">010_wikipediaClickStream_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/033_OBO_LoadExtract.html">033_OBO_LoadExtract</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">033_OBO_PipedRDD_RigorousBayesianABTesting</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/035_LDA_CornellMovieDialogs.html">035_LDA_CornellMovieDialogs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">ScaDaMaLe/sds-3.x</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="word-count-on-us-state-of-the-union-sou-addresses"><a class="header" href="#word-count-on-us-state-of-the-union-sou-addresses">Word Count on US State of the Union (SoU) Addresses</a></h1>
+<ul>
+<li>Word Count in big data is the equivalent of <code>Hello World</code> in programming</li>
+<li>We count the number of occurences of each word in the first and last (2016) SoU addresses.</li>
+</ul>
+<p><strong>prerequisite</strong> see <strong>DO NOW</strong> below. You should have loaded data as instructed in <code>scalable-data-science/xtraResources/sdsDatasets</code>.</p>
+<h4 id="do-now-if-not-done-already"><a class="header" href="#do-now-if-not-done-already">DO NOW (if not done already)</a></h4>
+<p>In your databricks community edition:</p>
+<ol>
+<li>In your <code>WorkSpace</code> create a Folder named <code>scalable-data-science</code></li>
+<li><code>Import</code> the databricks archive file at the following URL:
+<ul>
+<li><a href="https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/2017/parts/xtraResources.dbc">https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/2017/parts/xtraResources.dbc</a></li>
+</ul>
+</li>
+<li>This should open a structure of directories in with path: <code>/Workspace/scalable-data-science/xtraResources/</code></li>
+</ol>
+</div>
+<div class="cell markdown">
+<p>An interesting analysis of the textual content of the <em>State of the Union (SoU)</em> addresses by all US presidents was done in:</p>
+<ul>
+<li><a href="http://www.pnas.org/content/112/35/10837.full">Alix Rule, Jean-Philippe Cointet, and Peter S. Bearman, Lexical shifts, substantive changes, and continuity in State of the Union discourse, 1790–2014, PNAS 2015 112 (35) 10837-10844; doi:10.1073/pnas.1512221112</a>.</li>
+</ul>
+<p><img src="http://www.pnas.org/content/112/35/10837/F5.large.jpg" alt="" /></p>
+<p><a href="http://www.pnas.org/content/112/35/10837.full">Fig. 5</a>. A river network captures the flow across history of US political discourse, as perceived by contemporaries. Time moves along the x axis. Clusters on semantic networks of 300 most frequent terms for each of 10 historical periods are displayed as vertical bars. Relations between clusters of adjacent periods are indexed by gray flows, whose density reflects their degree of connection. Streams that connect at any point in history may be considered to be part of the same system, indicated with a single color.</p>
+<h2 id="let-us-investigate-this-dataset-ourselves"><a class="header" href="#let-us-investigate-this-dataset-ourselves">Let us investigate this dataset ourselves!</a></h2>
+<ol>
+<li>We first get the source text data by scraping and parsing from <a href="http://stateoftheunion.onetwothree.net/texts/index.html">http://stateoftheunion.onetwothree.net/texts/index.html</a> as explained in <a href="/#workspace/scalable-data-science/xtraResources/sdsDatasets/scraperUSStateofUnionAddresses">scraping and parsing SoU addresses</a>.</li>
+</ol>
+<ul>
+<li>This data is already made available in DBFS, our distributed file system.</li>
+<li>We only do the simplest word count with this data in this notebook and will do more sophisticated analyses in the sequel (including topic modeling, etc).</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="key-data-management-concepts"><a class="header" href="#key-data-management-concepts">Key Data Management Concepts</a></h2>
+<h3 id="the-structure-spectrum"><a class="header" href="#the-structure-spectrum">The Structure Spectrum</a></h3>
+<p><strong>(watch now 1:10)</strong>:</p>
+<p><a href="https://www.youtube.com/watch?v=pMSGGZVSwqo?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=1&amp;end=70"><img src="http://img.youtube.com/vi/pMSGGZVSwqo/0.jpg" alt="Structure Spectrum by Anthony Joseph in BerkeleyX/CS100.1x" /></a></p>
+<p>Here we will be working with <strong>unstructured</strong> or <strong>schema-never</strong> data (plain text files). ***</p>
+<h3 id="files"><a class="header" href="#files">Files</a></h3>
+<p><strong>(watch later 1:43)</strong>:</p>
+<p><a href="https://www.youtube.com/watch?v=NJyBQ-cQ3Ac?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=1"><img src="http://img.youtube.com/vi/NJyBQ-cQ3Ac/0.jpg" alt="Files by Anthony Joseph in BerkeleyX/CS100.1x" /></a></p>
+</div>
+<div class="cell markdown">
+<h3 id="dbfs-and-dbutils---where-is-this-dataset-in-our-distributed-file-system"><a class="header" href="#dbfs-and-dbutils---where-is-this-dataset-in-our-distributed-file-system">DBFS and dbutils - where is this dataset in our distributed file system?</a></h3>
+<ul>
+<li>Since we are on the databricks cloud, it has a file system called DBFS</li>
+<li>DBFS is similar to HDFS, the Hadoop distributed file system</li>
+<li>dbutils allows us to interact with dbfs.</li>
+<li>The 'display' command displays the list of files in a given directory in the file system.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/sou&quot;)) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/sou&quot;)) // Cntrl+Enter to display the files in dbfs:/datasets/sou
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let us display the <em>head</em> or the first few lines of the file <code>dbfs:/datasets/sou/17900108.txt</code> to see what it contains using <code>dbutils.fs.head</code> method.
+<code>head(file: String, maxBytes: int = 65536): String</code> -&gt; Returns up to the first 'maxBytes' bytes of the given file as a String encoded in UTF-8 as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.head(&quot;dbfs:/datasets/sou/17900108.txt&quot;,673) // Cntrl+Enter to get the first 673 bytes of the file (which corresponds to the first five lines)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h5 id="you-try"><a class="header" href="#you-try">You Try!</a></h5>
+<p>Uncomment and modify <code>xxxx</code> in the cell below to read the first 1000 bytes from the file.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//dbutils.fs.head(&quot;dbfs:/datasets/sou/17900108.txt&quot;, xxxx) // Cntrl+Enter to get the first 1000 bytes of the file
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="read-the-file-into-spark-context-as-an-rdd-of-strings"><a class="header" href="#read-the-file-into-spark-context-as-an-rdd-of-strings">Read the file into Spark Context as an RDD of Strings</a></h3>
+<ul>
+<li>The <code>textFile</code> method on the available <code>SparkContext</code> <code>sc</code> can read the text file <code>dbfs:/datasets/sou/17900108.txt</code> into Spark and create an RDD of Strings
+<ul>
+<li>but this is done lazily until an action is taken on the RDD <code>sou17900108</code>!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val sou17900108 = sc.textFile(&quot;dbfs:/datasets/sou/17900108.txt&quot;) // Cntrl+Enter to read in the textfile as RDD[String]
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="perform-some-actions-on-the-rdd"><a class="header" href="#perform-some-actions-on-the-rdd">Perform some actions on the RDD</a></h3>
+<ul>
+<li>Each String in the RDD <code>sou17900108</code> represents one line of data from the file and can be made to perform one of the following actions:
+<ul>
+<li>count the number of elements in the RDD <code>sou17900108</code> (i.e., the number of lines in the text file <code>dbfs:/datasets/sou/17900108.txt</code>) using <code>sou17900108.count()</code></li>
+<li>display the contents of the RDD using <code>take</code> or <code>collect</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.count() // &lt;Shift+Enter&gt; to count the number of elements in the RDD
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.take(5) // &lt;Shift+Enter&gt; to display the first 5 elements of RDD
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.take(5).foreach(println) // &lt;Shift+Enter&gt; to display the first 5 elements of RDD line by line
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.collect // &lt;Cntrl+Enter&gt; to display all the elements of RDD
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="cache-the-rdd-in-distributed-memory-to-avoid-recreating-it-for-each-action"><a class="header" href="#cache-the-rdd-in-distributed-memory-to-avoid-recreating-it-for-each-action">Cache the RDD in (distributed) memory to avoid recreating it for each action</a></h3>
+<ul>
+<li>Above, every time we took an action on the same RDD, the RDD was reconstructed from the textfile.
+<ul>
+<li>Spark's advantage compared to Hadoop MapReduce is the ability to cache or store the RDD in distributed memory across the nodes.</li>
+</ul>
+</li>
+<li>Let's use <code>.cache()</code> after creating an RDD so that it is in memory after the first action (and thus avoid reconstruction for subsequent actions).
+<ul>
+<li>count the number of elements in the RDD <code>sou17900108</code> (i.e., the number of lines in the text file <code>dbfs:/datasets/sou/17900108.txt</code>) using <code>sou17900108.count()</code></li>
+<li>display the contents of the RDD using <code>take</code> or <code>collect</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Shift+Enter to read in the textfile as RDD[String] and cache it in distributed memory
+val sou17900108 = sc.textFile(&quot;dbfs:/datasets/sou/17900108.txt&quot;)
+sou17900108.cache() // cache the RDD in memory
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.count() // Shift+Enter during this count action the RDD is constructed from texfile and cached
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.count() // Shift+Enter during this count action the cached RDD is used (notice less time taken by the same command)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108.take(5) // &lt;Cntrl+Enter&gt; to display the first 5 elements of the cached RDD
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="lifecycle-of-a-spark-program"><a class="header" href="#lifecycle-of-a-spark-program">Lifecycle of a Spark Program</a></h4>
+<p><strong>(watch now 0:23)</strong>:</p>
+<p><a href="https://www.youtube.com/watch?v=HWZUqNYAJj4?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=1"><img src="http://img.youtube.com/vi/HWZUqNYAJj4/0.jpg" alt="Spark Program Lifecycle by Anthony Joseph in BerkeleyX/CS100.1x" /></a></p>
+<h5 id="summary"><a class="header" href="#summary">Summary</a></h5>
+<ul>
+<li>create RDDs from:
+<ul>
+<li>some external data source (such as a distributed file system)</li>
+<li>parallelized collection in your driver program</li>
+</ul>
+</li>
+<li>lazily transform these RDDs into new RDDs</li>
+<li>cache some of those RDDs for future reuse</li>
+<li>you perform actions to execute parallel computation to produce results</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="transform-lines-to-words"><a class="header" href="#transform-lines-to-words">Transform lines to words</a></h3>
+<ul>
+<li>We need to loop through each line and split the line into words</li>
+<li>For now, let us split using whitespace</li>
+<li>More sophisticated regular expressions can be used to split the line (as we will see soon)</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108
+.flatMap(line =&gt; line.split(&quot; &quot;))
+.take(100)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="naive-word-count"><a class="header" href="#naive-word-count">Naive word count</a></h3>
+<p>At a first glace, to do a word count of George Washingtons SoU address, we are templed to do the following:</p>
+<ul>
+<li>just break each line by the whitespace character &quot; &quot; and find the words using a <code>flatMap</code></li>
+<li>then do the <code>map</code> with the closure <code>word =&gt; (word, 1)</code> to initialize each <code>word</code> with a integer count of <code>1</code>
+<ul>
+<li>ie., transform each word to a <em>(key, value)</em> pair or <code>Tuple</code> such as <code>(word, 1)</code></li>
+</ul>
+</li>
+<li>then count all <em>value</em>s with the same <em>key</em> (<code>word</code> is the Key in our case) by doing a
+<ul>
+<li><code>reduceByKey(_+_)</code></li>
+</ul>
+</li>
+<li>and finally <code>collect()</code> to display the results.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou17900108
+.flatMap( line =&gt; line.split(&quot; &quot;) )
+.map( word =&gt; (word, 1) )
+.reduceByKey(_+_)
+.collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Unfortunately, as you can see from the <code>collect</code> above:</p>
+<ul>
+<li>the words have punctuations at the end which means that the same words are being counted as different words. Eg: importance</li>
+<li>empty words are being counted</li>
+</ul>
+<p>So we need a bit of <code>regex</code>'ing or regular-expression matching (all readily available from Scala via Java String types).</p>
+<p>We will cover the three things we want to do with a simple example from Middle Earth!</p>
+<ul>
+<li>replace all multiple whitespace characters with one white space character &quot; &quot;</li>
+<li>replace all punction characters we specify within <code>[</code> and <code>]</code> such as <code>[,?.!:;]</code> by the empty string <code>&quot;&quot;</code> (i.e., remove these punctuation characters)</li>
+<li>convert everything to lower-case.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val example = &quot;Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">example
+  .replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+  .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+  .toLowerCase() // converting to lower-case
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="more-sophisticated-word-count"><a class="header" href="#more-sophisticated-word-count">More sophisticated word count</a></h3>
+<p>We are now ready to do a word count of George Washington's SoU on January 8th 1790 as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wordCount_sou17900108 = 
+ sou17900108
+    .flatMap(line =&gt; 
+         line.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+             .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+             .toLowerCase() // converting to lower-case
+             .split(&quot; &quot;))
+    .map(x =&gt; (x, 1))
+    .reduceByKey(_+_)
+    
+wordCount_sou17900108.collect()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCount_sou17900108.sortBy(_._2, false).collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="doing-it-all-together-for-george-washington-and-barrack-obama"><a class="header" href="#doing-it-all-together-for-george-washington-and-barrack-obama">Doing it all together for George Washington and Barrack Obama</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//sc.textFile(&quot;dbfs:/datasets/sou/17900108.txt&quot;) // George Washington's first SoU
+sc.textFile(&quot;dbfs:/datasets/sou/20160112.txt&quot;)   // Barrack Obama's second SoU
+    .flatMap(line =&gt; 
+         line.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+             .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+             .toLowerCase() // converting to lower-case
+             .split(&quot; &quot;))
+    .map(x =&gt; (x,1))
+    .reduceByKey(_+_)
+    .sortBy(_._2, false)
+    .collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="reading-all-sous-at-once-using-wholetextfiles"><a class="header" href="#reading-all-sous-at-once-using-wholetextfiles">Reading all SoUs at once using <code>wholetextFiles</code></a></h3>
+<p>Let us next read all text files (ending with <code>.txt</code>) in the directory <code>dbfs:/datasets/sou/</code> at once!</p>
+<p><code>SparkContext.wholeTextFiles</code> lets you read a directory containing multiple small text files, and returns each of them as <code>(filename, content)</code> pairs of strings.</p>
+<p>This is in contrast with <code>textFile</code>, which would return one record per line in each file.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val souAll = sc.wholeTextFiles(&quot;dbfs:/datasets/sou/*.txt&quot;) // Shift+Enter to read all text files in dbfs:/datasets/sou/
+souAll.cache() // let's cache this RDD for efficient reuse
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souAll.count() // Shift+enter to count the number of entries in RDD[(String,String)]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souAll.count() // Cntrl+Enter to count the number of entries in cached RDD[(String,String)] again (much faster!)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's examine the first two elements of the RDD <code>souAll</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souAll.take(2) // Cntr+Enter to see the first two elements of souAll
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Clearly, the elements are a pair of Strings, where the first String gives the filename and the second String gives the contents in the file.</p>
+<p>this can be very helpful to simply loop through the files and take an action, such as counting the number of words per address, as folows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// this just collects the file names which is the first element of the tuple given by &quot;._1&quot; 
+souAll.map( fileContentsPair =&gt; fileContentsPair._1).collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let us find the number of words in each of the SoU addresses next (we need to work with Strings inside the closure!).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wcs = souAll.map( fileContentsPair =&gt; 
+  {
+    val wc = fileContentsPair._2
+                             .replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+                             .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+                             .toLowerCase() // converting to lower-case
+                             .split(&quot; &quot;) // split each word separated by white space
+                             .size // find the length of array
+    wc
+  }    
+)      
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wcs.collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="youtry-homework"><a class="header" href="#youtry-homework">YouTry: HOMEWORK</a></h2>
+<ul>
+<li>HOWEWORK WordCount 1: <code>sortBy</code></li>
+<li>HOMEWROK WordCount 2: <code>dbutils.fs</code></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h5 id="homework-wordcount-1-sortby"><a class="header" href="#homework-wordcount-1-sortby">HOMEWORK WordCount 1. <code>sortBy</code></a></h5>
+<p>Let's understand <code>sortBy</code> a bit more carefully.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val example = &quot;Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val words = example.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+       .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+       .toLowerCase() // converting to lower-case
+       .split(&quot; &quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddWords = sc.parallelize(words)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddWords.take(10)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wordCounts = rddWords
+                  .map(x =&gt; (x,1))
+                  .reduceByKey(_+_)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCounts.sortBy(_._2, false).take(10)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Make your code easy to read for other developers ;)
+Use 'case classes' with well defined variable names that everyone can understand</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCounts.sortBy({
+  case (word, count) =&gt; count
+}, false).take(10)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If you just want a total count of all words in the file</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddWords.count
+</code></pre>
+</div>
+<div class="cell markdown">
+<h5 id="youttry-homework-wordcount-2-dbutilsfs"><a class="header" href="#youttry-homework-wordcount-2-dbutilsfs">YoutTry: HOMEWORK WordCount 2: <code>dbutils.fs</code></a></h5>
+<p>Have a brief look at what other commands dbutils.fs supports. We will introduce them as needed.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.help // some of these were used to ETL this data into dbfs:/datasets/sou 
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="exercise-2-souwordcount"><a class="header" href="#exercise-2-souwordcount">Exercise 2: SouWordCount</a></h2>
+<p>Count the number of each word across all the &quot;dbfs:/datasets/sou/*.txt&quot; files and output the result as an Array of (word,count) tuples from the most frequent to the least frequent word.</p>
+<p>This is the same as <a href="https://github.com/lamastex/scalable-data-science/tree/master/_sds/basics/infrastructure/onpremise/dockerCompose/programs/exercises/sparkSubmit#exercise-2-souwordcount">Exercise 2 in the local environment</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// code in this cell the solution to the above exercise in the notebook environment
+//
+//
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_1-sds-3-x/006a_PipedRDD.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_1-sds-3-x/006a_PipedRDD.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

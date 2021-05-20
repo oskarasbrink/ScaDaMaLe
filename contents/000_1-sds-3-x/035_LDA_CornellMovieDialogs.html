@@ -1,0 +1,1431 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>035_LDA_CornellMovieDialogs - ScaDaMaLe/sds-3.x</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007a_SparkSQLProgGuide_HW.html">007a_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007b_SparkSQLProgGuide_HW.html">007b_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007c_SparkSQLProgGuide_HW.html">007c_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007d_SparkSQLProgGuide_HW.html">007d_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007e_SparkSQLProgGuide_HW.html">007e_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007f_SparkSQLProgGuide_HW.html">007f_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007g_PivotInSQL.html">007g_PivotInSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/007_SparkSQLIntroBasics.html">007_SparkSQLIntroBasics</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/008_DiamondsPipeline_01ETLEDA.html">008_DiamondsPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/009_PowerPlantPipeline_01ETLEDA.html">009_PowerPlantPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/010_wikipediaClickStream_01ETLEDA.html">010_wikipediaClickStream_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/033_OBO_LoadExtract.html">033_OBO_LoadExtract</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html">033_OBO_PipedRDD_RigorousBayesianABTesting</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x/035_LDA_CornellMovieDialogs.html" class="active">035_LDA_CornellMovieDialogs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">ScaDaMaLe/sds-3.x</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="topic-modeling-of-movie-dialogs-with-latent-dirichlet-allocation"><a class="header" href="#topic-modeling-of-movie-dialogs-with-latent-dirichlet-allocation">Topic Modeling of Movie Dialogs with Latent Dirichlet Allocation</a></h1>
+<p><strong>Let us cluster the conversations from different movies!</strong></p>
+<p>This notebook will provide a brief algorithm summary, links for further reading, and an example of how to use LDA for Topic Modeling.</p>
+<p><strong>not tested in Spark 2.2+ yet (see 034 notebook for syntactic issues, if any)</strong></p>
+</div>
+<div class="cell markdown">
+<h2 id="algorithm-summary"><a class="header" href="#algorithm-summary">Algorithm Summary</a></h2>
+<ul>
+<li><strong>Task</strong>: Identify topics from a collection of text documents</li>
+<li><strong>Input</strong>: Vectors of word counts</li>
+<li><strong>Optimizers</strong>:
+<ul>
+<li>EMLDAOptimizer using <a href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">Expectation Maximization</a></li>
+<li>OnlineLDAOptimizer using Iterative Mini-Batch Sampling for <a href="https://www.cs.princeton.edu/%7Eblei/papers/HoffmanBleiBach2010b.pdf">Online Variational Bayes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="links"><a class="header" href="#links">Links</a></h2>
+<ul>
+<li>Spark API docs
+<ul>
+<li>Scala: <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.clustering.LDA">LDA</a></li>
+<li>Python: <a href="https://spark.apache.org/docs/latest/api/python/pyspark.mllib.html#pyspark.mllib.clustering.LDA">LDA</a></li>
+</ul>
+</li>
+<li><a href="http://spark.apache.org/docs/latest/mllib-clustering.html#latent-dirichlet-allocation-lda">MLlib Programming Guide</a></li>
+<li><a href="http://spark.apache.org/docs/latest/ml-features.html">ML Feature Extractors &amp; Transformers</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">Wikipedia: Latent Dirichlet Allocation</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="readings-for-lda"><a class="header" href="#readings-for-lda">Readings for LDA</a></h2>
+<ul>
+<li>A high-level introduction to the topic from Communications of the ACM
+<ul>
+<li><a href="http://www.cs.columbia.edu/%7Eblei/papers/Blei2012.pdf">http://www.cs.columbia.edu/~blei/papers/Blei2012.pdf</a></li>
+</ul>
+</li>
+<li>A very good high-level humanities introduction to the topic (recommended by Chris Thomson in English Department at UC, Ilam):
+<ul>
+<li><a href="http://journalofdigitalhumanities.org/2-1/topic-modeling-and-digital-humanities-by-david-m-blei/">http://journalofdigitalhumanities.org/2-1/topic-modeling-and-digital-humanities-by-david-m-blei/</a></li>
+</ul>
+</li>
+</ul>
+<p>Also read the methodological and more formal papers cited in the above links if you want to know more.</p>
+</div>
+<div class="cell markdown">
+<p>Let's get a bird's eye view of LDA from http://www.cs.columbia.edu/~blei/papers/Blei2012.pdf next.</p>
+<ul>
+<li>See pictures (hopefully you read the paper last night!)</li>
+<li>Algorithm of the generative model (this is unsupervised clustering)</li>
+<li>For a careful introduction to the topic see Section 27.3 and 27.4 (pages 950-970) pf Murphy's <em>Machine Learning: A Probabilistic Perspective, MIT Press, 2012</em>.</li>
+<li>We will be quite application focussed or applied here!</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
+//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
+//Example usage:
+// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;http://journalofdigitalhumanities.org/2-1/topic-modeling-and-digital-humanities-by-david-m-blei/&quot;,900))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Model&quot;,600))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Mathematical_definition&quot;,910))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="probabilistic-topic-modeling-example"><a class="header" href="#probabilistic-topic-modeling-example">Probabilistic Topic Modeling Example</a></h2>
+<p>This is an outline of our Topic Modeling workflow. Feel free to jump to any subtopic to find out more.</p>
+<ul>
+<li>Step 0. Dataset Review</li>
+<li>Step 1. Downloading and Loading Data into DBFS
+<ul>
+<li>(Step 1. only needs to be done once per shard - see details at the end of the notebook for Step 1.)</li>
+</ul>
+</li>
+<li>Step 2. Loading the Data and Data Cleaning</li>
+<li>Step 3. Text Tokenization</li>
+<li>Step 4. Remove Stopwords</li>
+<li>Step 5. Vector of Token Counts</li>
+<li>Step 6. Create LDA model with Online Variational Bayes</li>
+<li>Step 7. Review Topics</li>
+<li>Step 8. Model Tuning - Refilter Stopwords</li>
+<li>Step 9. Create LDA model with Expectation Maximization</li>
+<li>Step 10. Visualize Results</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="step-0-dataset-review"><a class="header" href="#step-0-dataset-review">Step 0. Dataset Review</a></h2>
+<p>In this example, we will use the <a href="https://people.mpi-sws.org/%7Ecristian/Cornell_Movie-Dialogs_Corpus.html">Cornell Movie Dialogs Corpus</a>.</p>
+<p>Here is the <code>README.txt</code>:</p>
+<hr />
+<hr />
+<p>Cornell Movie-Dialogs Corpus</p>
+<p>Distributed together with:</p>
+<p>&quot;Chameleons in imagined conversations: A new approach to understanding coordination of linguistic style in dialogs&quot; Cristian Danescu-Niculescu-Mizil and Lillian Lee Proceedings of the Workshop on Cognitive Modeling and Computational Linguistics, ACL 2011.</p>
+<p>(this paper is included in this zip file)</p>
+<p>NOTE: If you have results to report on these corpora, please send email to cristian@cs.cornell.edu or llee@cs.cornell.edu so we can add you to our list of people using this data. Thanks!</p>
+<p>Contents of this README:</p>
+<pre><code>    A) Brief description
+    B) Files description
+    C) Details on the collection procedure
+    D) Contact
+</code></pre>
+<p>A) Brief description:</p>
+<p>This corpus contains a metadata-rich collection of fictional conversations extracted from raw movie scripts:</p>
+<ul>
+<li>220,579 conversational exchanges between 10,292 pairs of movie characters</li>
+<li>involves 9,035 characters from 617 movies</li>
+<li>in total 304,713 utterances</li>
+<li>movie metadata included: - genres - release year - IMDB rating - number of IMDB votes - IMDB rating</li>
+<li>character metadata included: - gender (for 3,774 characters) - position on movie credits (3,321 characters)</li>
+</ul>
+<p>B) Files description:</p>
+<p>In all files the field separator is &quot; +++$+++ &quot;</p>
+<ul>
+<li>
+<p>movie<em>titles</em>metadata.txt - contains information about each movie title - fields: - movieID, - movie title, - movie year, - IMDB rating, - no. IMDB votes, - genres in the format ['genre1','genre2',...,'genreN']</p>
+</li>
+<li>
+<p>movie<em>characters</em>metadata.txt - contains information about each movie character - fields: - characterID - character name - movieID - movie title - gender (&quot;?&quot; for unlabeled cases) - position in credits (&quot;?&quot; for unlabeled cases)</p>
+</li>
+<li>
+<p>movie_lines.txt - contains the actual text of each utterance - fields: - lineID - characterID (who uttered this phrase) - movieID - character name - text of the utterance</p>
+</li>
+<li>
+<p>movie<em>conversations.txt - the structure of the conversations - fields - characterID of the first character involved in the conversation - characterID of the second character involved in the conversation - movieID of the movie in which the conversation occurred - list of the utterances that make the conversation, in chronological order: ['lineID1','lineID2',...,'lineIDN'] has to be matched with movie</em>lines.txt to reconstruct the actual content</p>
+</li>
+<li>
+<p>raw<em>script</em>urls.txt - the urls from which the raw sources were retrieved</p>
+</li>
+</ul>
+<p>C) Details on the collection procedure:</p>
+<p>We started from raw publicly available movie scripts (sources acknowledged in raw<em>script</em>urls.txt). In order to collect the metadata necessary for this study and to distinguish between two script versions of the same movie, we automatically matched each script with an entry in movie database provided by IMDB (The Internet Movie Database; data interfaces available at http://www.imdb.com/interfaces). Some amount of manual correction was also involved. When more than one movie with the same title was found in IMBD, the match was made with the most popular title (the one that received most IMDB votes)</p>
+<p>After discarding all movies that could not be matched or that had less than 5 IMDB votes, we were left with 617 unique titles with metadata including genre, release year, IMDB rating and no. of IMDB votes and cast distribution. We then identified the pairs of characters that interact and separated their conversations automatically using simple data processing heuristics. After discarding all pairs that exchanged less than 5 conversational exchanges there were 10,292 left, exchanging 220,579 conversational exchanges (304,713 utterances). After automatically matching the names of the 9,035 involved characters to the list of cast distribution, we used the gender of each interpreting actor to infer the fictional gender of a subset of 3,321 movie characters (we raised the number of gendered 3,774 characters through manual annotation). Similarly, we collected the end credit position of a subset of 3,321 characters as a proxy for their status.</p>
+<p>D) Contact:</p>
+<p>Please email any questions to: cristian@cs.cornell.edu (Cristian Danescu-Niculescu-Mizil)</p>
+<hr />
+<hr />
+</div>
+<div class="cell markdown">
+<h2 id="step-2-loading-the-data-and-data-cleaning"><a class="header" href="#step-2-loading-the-data-and-data-cleaning">Step 2. Loading the Data and Data Cleaning</a></h2>
+<p>We have already used the wget command to download the file, and put it in our distributed file system (this process takes about 1 minute). To repeat these steps or to download data from another source follow the steps at the bottom of this worksheet on <strong>Step 1. Downloading and Loading Data into DBFS</strong>.</p>
+<p>Let's make sure these files are in dbfs now:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// this is where the data resides in dbfs (see below to download it first, if you go to a new shard!)
+display(dbutils.fs.ls(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/&quot;)) 
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="conversations-data"><a class="header" href="#conversations-data">Conversations Data</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_conversations.txt&quot;).top(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Load text file, leave out file paths, convert all strings to lowercase
+val conversationsRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_conversations.txt&quot;).zipWithIndex()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Review first 5 lines to get a sense for the data format.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversationsRaw.top(5).foreach(println) // the first five Strings in the RDD
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversationsRaw.count // there are over 83,000 conversations in total
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.util.{Failure, Success}
+
+val regexConversation = &quot;&quot;&quot;\s*(\w+)\s+(\+{3}\$\+{3})\s*(\w+)\s+(\2)\s*(\w+)\s+(\2)\s*(\[.*\]\s*$)&quot;&quot;&quot;.r
+
+case class conversationLine(a: String, b: String, c: String, d: String)
+
+val conversationsRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_conversations.txt&quot;)
+ .zipWithIndex()
+  .map(x =&gt; 
+          {
+            val id:Long = x._2
+            val line = x._1
+            val pLine = regexConversation.findFirstMatchIn(line)
+                               .map(m =&gt; conversationLine(m.group(1), m.group(3), m.group(5), m.group(7))) 
+                                  match {
+                                    case Some(l) =&gt; Success(l)
+                                    case None =&gt; Failure(new Exception(s&quot;Non matching input: $line&quot;))
+                                  }
+              (id,pLine)
+           }
+  )
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversationsRaw.filter(x =&gt; x._2.isSuccess).count()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversationsRaw.filter(x =&gt; x._2.isFailure).count()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The conversation number and line numbers of each conversation are in one line in <code>conversationsRaw</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversationsRaw.filter(x =&gt; x._2.isSuccess).take(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's create <code>conversations</code> that have just the coversation id and line-number with order information.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val conversations 
+    = conversationsRaw
+      .filter(x =&gt; x._2.isSuccess)
+      .flatMap { 
+        case (id,Success(l))  
+                  =&gt; { val conv = l.d.replace(&quot;[&quot;,&quot;&quot;).replace(&quot;]&quot;,&quot;&quot;).replace(&quot;'&quot;,&quot;&quot;).replace(&quot; &quot;,&quot;&quot;)
+                       val convLinesIndexed = conv.split(&quot;,&quot;).zipWithIndex
+                       convLinesIndexed.map( cLI =&gt; (id, cLI._2, cLI._1))
+                      }
+       }.toDF(&quot;conversationID&quot;,&quot;intraConversationID&quot;,&quot;lineID&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversations.show(15)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="movie-titles"><a class="header" href="#movie-titles">Movie Titles</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val moviesMetaDataRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_titles_metadata.txt&quot;)
+moviesMetaDataRaw.top(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">moviesMetaDataRaw.count() // number of movies
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.util.{Failure, Success}
+
+/*  - contains information about each movie title
+  - fields:
+          - movieID,
+          - movie title,
+          - movie year,
+          - IMDB rating,
+          - no. IMDB votes,
+          - genres in the format ['genre1','genre2',...,'genreN']
+          */
+val regexMovieMetaData = &quot;&quot;&quot;\s*(\w+)\s+(\+{3}\$\+{3})\s*(.+)\s+(\2)\s+(.+)\s+(\2)\s+(.+)\s+(\2)\s+(.+)\s+(\2)\s+(\[.*\]\s*$)&quot;&quot;&quot;.r
+
+case class lineInMovieMetaData(movieID: String, movieTitle: String, movieYear: String, IMDBRating: String, NumIMDBVotes: String, genres: String)
+
+val moviesMetaDataRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_titles_metadata.txt&quot;)
+  .map(line =&gt; 
+          {
+            val pLine = regexMovieMetaData.findFirstMatchIn(line)
+                               .map(m =&gt; lineInMovieMetaData(m.group(1), m.group(3), m.group(5), m.group(7), m.group(9), m.group(11))) 
+                                  match {
+                                    case Some(l) =&gt; Success(l)
+                                    case None =&gt; Failure(new Exception(s&quot;Non matching input: $line&quot;))
+                                  }
+              pLine
+           }
+  )
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">moviesMetaDataRaw.count
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">moviesMetaDataRaw.filter(x =&gt; x.isSuccess).count()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">moviesMetaDataRaw.filter(x =&gt; x.isSuccess).take(10).foreach(println)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//moviesMetaDataRaw.filter(x =&gt; x.isFailure).take(10).foreach(println) // to regex refine for casting
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val moviesMetaData 
+    = moviesMetaDataRaw
+      .filter(x =&gt; x.isSuccess)
+      .map { case Success(l) =&gt; l }
+      .toDF().select(&quot;movieID&quot;,&quot;movieTitle&quot;,&quot;movieYear&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">moviesMetaData.show(10,false)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="lines-data"><a class="header" href="#lines-data">Lines Data</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val linesRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_lines.txt&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.count() // number of lines making up the conversations
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Review first 5 lines to get a sense for the data format.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.top(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>To see 5 random lines in the <code>lines.txt</code> evaluate the following cell.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.takeSample(false, 5).foreach(println)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.util.{Failure, Success}
+
+/*  field in line.txt are:
+          - lineID
+          - characterID (who uttered this phrase)
+          - movieID
+          - character name
+          - text of the utterance
+          */
+val regexLine = &quot;&quot;&quot;\s*(\w+)\s+(\+{3}\$\+{3})\s*(\w+)\s+(\2)\s*(\w+)\s+(\2)\s*(.+)\s+(\2)\s*(.*$)&quot;&quot;&quot;.r
+
+case class lineInMovie(lineID: String, characterID: String, movieID: String, characterName: String, text: String)
+
+val linesRaw = sc.textFile(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_lines.txt&quot;)
+  .map(line =&gt; 
+          {
+            val pLine = regexLine.findFirstMatchIn(line)
+                               .map(m =&gt; lineInMovie(m.group(1), m.group(3), m.group(5), m.group(7), m.group(9))) 
+                                  match {
+                                    case Some(l) =&gt; Success(l)
+                                    case None =&gt; Failure(new Exception(s&quot;Non matching input: $line&quot;))
+                                  }
+              pLine
+           }
+  )
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.filter(x =&gt; x.isSuccess).count()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.filter(x =&gt; x.isFailure).count()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">linesRaw.filter(x =&gt; x.isSuccess).take(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's make a DataFrame out of the successfully parsed line.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val lines 
+    = linesRaw
+      .filter(x =&gt; x.isSuccess)
+      .map { case Success(l) =&gt; l }
+      .toDF()
+      .join(moviesMetaData, &quot;movieID&quot;) // and join it to get movie meta data
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lines.show(5)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="dialogs-with-lines"><a class="header" href="#dialogs-with-lines">Dialogs with Lines</a></h2>
+<p>Let's join ght two DataFrames on <code>lineID</code> next.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val convLines = conversations.join(lines, &quot;lineID&quot;).sort($&quot;conversationID&quot;, $&quot;intraConversationID&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">convLines.count
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">conversations.count
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(convLines)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's amalgamate the texts utered in the same conversations together.</p>
+<p>By doing this we loose all the information in the order of utterance.</p>
+<p>But this is fine as we are going to do LDA with just the <em>first-order information of words uttered in each conversation</em> by anyone involved in the dialogue.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions.{collect_list, udf, lit, concat_ws}
+
+val corpusDF = convLines.groupBy($&quot;conversationID&quot;,$&quot;movieID&quot;)
+  .agg(concat_ws(&quot; :-()-: &quot;,collect_list($&quot;text&quot;)).alias(&quot;corpus&quot;))
+  .join(moviesMetaData, &quot;movieID&quot;) // and join it to get movie meta data
+  .select($&quot;conversationID&quot;.as(&quot;id&quot;),$&quot;corpus&quot;,$&quot;movieTitle&quot;,$&quot;movieYear&quot;)
+  .cache()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">corpusDF.count()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">corpusDF.take(5).foreach(println)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(corpusDF)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="feature-extraction-and-transformation-apis"><a class="header" href="#feature-extraction-and-transformation-apis">Feature extraction and transformation APIs</a></h2>
+</div>
+<div class="cell markdown">
+<p>We will use the convenient <a href="http://spark.apache.org/docs/latest/ml-features.html">Feature extraction and transformation APIs</a>.</p>
+</div>
+<div class="cell markdown">
+<h2 id="step-3-text-tokenization"><a class="header" href="#step-3-text-tokenization">Step 3. Text Tokenization</a></h2>
+<p>We will use the RegexTokenizer to split each document into tokens. We can setMinTokenLength() here to indicate a minimum token length, and filter away all tokens that fall below the minimum. See:</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/ml-features.html#tokenizer">http://spark.apache.org/docs/latest/ml-features.html#tokenizer</a>.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.RegexTokenizer
+
+// Set params for RegexTokenizer
+val tokenizer = new RegexTokenizer()
+.setPattern(&quot;[\\W_]+&quot;) // break by white space character(s)
+.setMinTokenLength(4) // Filter away tokens with length &lt; 4
+.setInputCol(&quot;corpus&quot;) // name of the input column
+.setOutputCol(&quot;tokens&quot;) // name of the output column
+
+// Tokenize document
+val tokenized_df = tokenizer.transform(corpusDF)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(tokenized_df.sample(false,0.001,1234L)) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(tokenized_df.sample(false,0.001,123L).select(&quot;tokens&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-4-remove-stopwords"><a class="header" href="#step-4-remove-stopwords">Step 4. Remove Stopwords</a></h2>
+<p>We can easily remove stopwords using the StopWordsRemover(). See:</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/ml-features.html#stopwordsremover">http://spark.apache.org/docs/latest/ml-features.html#stopwordsremover</a>.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>If a list of stopwords is not provided, the StopWordsRemover() will use <a href="http://ir.dcs.gla.ac.uk/resources/linguistic_utils/stop_words">this list of stopwords</a>, also shown below, by default.</p>
+<p><code>a,about,above,across,after,afterwards,again,against,all,almost,alone,along,already,also,although,always,am,among,amongst,amoungst,amount,an,and,another,any,anyhow,anyone,anything,anyway,anywhere, are,around,as,at,back,be,became,because,become,becomes,becoming,been,before,beforehand,behind,being,below,beside,besides,between,beyond,bill,both,bottom,but,by,call,can,cannot,cant,co,computer,con,could, couldnt,cry,de,describe,detail,do,done,down,due,during,each,eg,eight,either,eleven,else,elsewhere,empty,enough,etc,even,ever,every,everyone,everything,everywhere,except,few,fifteen,fify,fill,find,fire,first, five,for,former,formerly,forty,found,four,from,front,full,further,get,give,go,had,has,hasnt,have,he,hence,her,here,hereafter,hereby,herein,hereupon,hers,herself,him,himself,his,how,however,hundred,i,ie,if, in,inc,indeed,interest,into,is,it,its,itself,keep,last,latter,latterly,least,less,ltd,made,many,may,me,meanwhile,might,mill,mine,more,moreover,most,mostly,move,much,must,my,myself,name,namely,neither,never, nevertheless,next,nine,no,nobody,none,noone,nor,not,nothing,now,nowhere,of,off,often,on,once,one,only,onto,or,other,others,otherwise,our,ours,ourselves,out,over,own,part,per,perhaps,please,put,rather,re,same, see,seem,seemed,seeming,seems,serious,several,she,should,show,side,since,sincere,six,sixty,so,some,somehow,someone,something,sometime,sometimes,somewhere,still,such,system,take,ten,than,that,the,their,them, themselves,then,thence,there,thereafter,thereby,therefore,therein,thereupon,these,they,thick,thin,third,this,those,though,three,through,throughout,thru,thus,to,together,too,top,toward,towards,twelve,twenty,two, un,under,until,up,upon,us,very,via,was,we,well,were,what,whatever,when,whence,whenever,where,whereafter,whereas,whereby,wherein,whereupon,wherever,whether,which,while,whither,who,whoever,whole,whom,whose,why,will, with,within,without,would,yet,you,your,yours,yourself,yourselves</code></p>
+<p>You can use <code>getStopWords()</code> to see the list of stopwords that will be used.</p>
+<p>In this example, we will specify a list of stopwords for the StopWordsRemover() to use. We do this so that we can add on to the list later on.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/tmp/stopwords&quot;)) // check if the file already exists from earlier wget and dbfs-load
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If the file <code>dbfs:/tmp/stopwords</code> already exists then skip the next two cells, otherwise download and load it into DBFS by uncommenting and evaluating the next two cells.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">wget http://ir.dcs.gla.ac.uk/resources/linguistic_utils/stop_words -O /tmp/stopwords # uncomment '//' at the beginning and repeat only if needed again
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">cp file:/tmp/stopwords dbfs:/tmp/stopwords 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// List of stopwords
+val stopwords = sc.textFile(&quot;/tmp/stopwords&quot;).collect()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">stopwords.length // find the number of stopwords in the scala Array[String]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Finally, we can just remove the stopwords using the <code>StopWordsRemover</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.StopWordsRemover
+
+// Set params for StopWordsRemover
+val remover = new StopWordsRemover()
+.setStopWords(stopwords) // This parameter is optional
+.setInputCol(&quot;tokens&quot;)
+.setOutputCol(&quot;filtered&quot;)
+
+// Create new DF with Stopwords removed
+val filtered_df = remover.transform(tokenized_df)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-5-vector-of-token-counts"><a class="header" href="#step-5-vector-of-token-counts">Step 5. Vector of Token Counts</a></h2>
+<p>LDA takes in a vector of token counts as input. We can use the <code>CountVectorizer()</code> to easily convert our text documents into vectors of token counts.</p>
+<p>The <code>CountVectorizer</code> will return <code>(VocabSize, Array(Indexed Tokens), Array(Token Frequency))</code>.</p>
+<p>Two handy parameters to note:</p>
+<ul>
+<li><code>setMinDF</code>: Specifies the minimum number of different documents a term must appear in to be included in the vocabulary.</li>
+<li><code>setMinTF</code>: Specifies the minimum number of times a term has to appear in a document to be included in the vocabulary.</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/ml-features.html#countvectorizer">http://spark.apache.org/docs/latest/ml-features.html#countvectorizer</a>.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.CountVectorizer
+
+// Set params for CountVectorizer
+val vectorizer = new CountVectorizer()
+.setInputCol(&quot;filtered&quot;)
+.setOutputCol(&quot;features&quot;)
+.setVocabSize(10000) 
+.setMinDF(5) // the minimum number of different documents a term must appear in to be included in the vocabulary.
+.fit(filtered_df)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create vector of token counts
+val countVectors = vectorizer.transform(filtered_df).select(&quot;id&quot;, &quot;features&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// see the first countVectors
+countVectors.take(1)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>To use the LDA algorithm in the MLlib library, we have to convert the DataFrame back into an RDD.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Convert DF to RDD - ideally we should use ml for everything an not ml and mllib ; DAN
+import org.apache.spark.ml.feature.{CountVectorizer, RegexTokenizer, StopWordsRemover}
+import org.apache.spark.ml.linalg.{Vector =&gt; MLVector}
+import org.apache.spark.mllib.clustering.{LDA, OnlineLDAOptimizer}
+import org.apache.spark.mllib.linalg.Vectors
+import org.apache.spark.sql.{Row, SparkSession}
+
+val lda_countVector = countVectors.map { case Row(id: Long, countVector: MLVector) =&gt; (id, Vectors.fromML(countVector)) }.rdd
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// format: Array(id, (VocabSize, Array(indexedTokens), Array(Token Frequency)))
+lda_countVector.take(1)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="lets-get-an-overview-of-lda-in-sparks-mllib"><a class="header" href="#lets-get-an-overview-of-lda-in-sparks-mllib">Let's get an overview of LDA in Spark's MLLIB</a></h2>
+<p>See:</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/mllib-clustering.html#latent-dirichlet-allocation-lda">http://spark.apache.org/docs/latest/mllib-clustering.html#latent-dirichlet-allocation-lda</a>.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="create-lda-model-with-online-variational-bayes"><a class="header" href="#create-lda-model-with-online-variational-bayes">Create LDA model with Online Variational Bayes</a></h2>
+<p>We will now set the parameters for LDA. We will use the OnlineLDAOptimizer() here, which implements Online Variational Bayes.</p>
+<p>Choosing the number of topics for your LDA model requires a bit of domain knowledge. As we do not know the number of &quot;topics&quot;, we will set numTopics to be 20.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val numTopics = 20
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We will set the parameters needed to build our LDA model. We can also setMiniBatchFraction for the OnlineLDAOptimizer, which sets the fraction of corpus sampled and used at each iteration. In this example, we will set this to 0.8.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.clustering.{LDA, OnlineLDAOptimizer}
+
+// Set LDA params
+val lda = new LDA()
+.setOptimizer(new OnlineLDAOptimizer().setMiniBatchFraction(0.8))
+.setK(numTopics)
+.setMaxIterations(3)
+.setDocConcentration(-1) // use default values
+.setTopicConcentration(-1) // use default values
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Create the LDA model with Online Variational Bayes.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ldaModel = lda.run(lda_countVector)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Watch <strong>Online Learning for Latent Dirichlet Allocation</strong> in NIPS2010 by Matt Hoffman (right click and open in new tab)</p>
+<p><a href="http://videolectures.net/nips2010_hoffman_oll/thumb.jpg">![Matt Hoffman's NIPS 2010 Talk Online LDA]</a>](http://videolectures.net/nips2010<em>hoffman</em>oll/)</p>
+<p>Also see the paper on <em>Online varioational Bayes</em> by Matt linked for more details (from the above URL): <a href="http://videolectures.net/site/normal_dl/tag=83534/nips2010_1291.pdf">http://videolectures.net/site/normal<em>dl/tag=83534/nips2010</em>1291.pdf</a></p>
+</div>
+<div class="cell markdown">
+<p>Note that using the OnlineLDAOptimizer returns us a <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.clustering.LocalLDAModel">LocalLDAModel</a>, which stores the inferred topics of your corpus.</p>
+</div>
+<div class="cell markdown">
+<h2 id="review-topics"><a class="header" href="#review-topics">Review Topics</a></h2>
+<p>We can now review the results of our LDA model. We will print out all 20 topics with their corresponding term probabilities.</p>
+<p>Note that you will get slightly different results every time you run an LDA model since LDA includes some randomization.</p>
+<p>Let us review results of LDA model with Online Variational Bayes, step by step.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topicIndices = ldaModel.describeTopics(maxTermsPerTopic = 5)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val vocabList = vectorizer.vocabulary
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topics = topicIndices.map { case (terms, termWeights) =&gt;
+  terms.map(vocabList(_)).zip(termWeights)
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Feel free to take things apart to understand!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">topicIndices(0)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">topicIndices(0)._1
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">topicIndices(0)._1(0)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vocabList(topicIndices(0)._1(0))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Review Results of LDA model with Online Variational Bayes - Doing all four steps earlier at once.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topicIndices = ldaModel.describeTopics(maxTermsPerTopic = 5)
+val vocabList = vectorizer.vocabulary
+val topics = topicIndices.map { case (terms, termWeights) =&gt;
+  terms.map(vocabList(_)).zip(termWeights)
+}
+println(s&quot;$numTopics topics:&quot;)
+topics.zipWithIndex.foreach { case (topic, i) =&gt;
+  println(s&quot;TOPIC $i&quot;)
+  topic.foreach { case (term, weight) =&gt; println(s&quot;$term\t$weight&quot;) }
+  println(s&quot;==========&quot;)
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Going through the results, you may notice that some of the topic words returned are actually stopwords that are specific to our dataset (for eg: &quot;writes&quot;, &quot;article&quot;...). Let's try improving our model.</p>
+</div>
+<div class="cell markdown">
+<h2 id="step-8-model-tuning---refilter-stopwords"><a class="header" href="#step-8-model-tuning---refilter-stopwords">Step 8. Model Tuning - Refilter Stopwords</a></h2>
+<p>We will try to improve the results of our model by identifying some stopwords that are specific to our dataset. We will filter these stopwords out and rerun our LDA model to see if we get better results.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val add_stopwords = Array(&quot;whatever&quot;) // add  more stop-words like the name of your company!
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Combine newly identified stopwords to our exising list of stopwords
+val new_stopwords = stopwords.union(add_stopwords)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.StopWordsRemover
+
+// Set Params for StopWordsRemover with new_stopwords
+val remover = new StopWordsRemover()
+.setStopWords(new_stopwords)
+.setInputCol(&quot;tokens&quot;)
+.setOutputCol(&quot;filtered&quot;)
+
+// Create new df with new list of stopwords removed
+val new_filtered_df = remover.transform(tokenized_df)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Set Params for CountVectorizer
+val vectorizer = new CountVectorizer()
+.setInputCol(&quot;filtered&quot;)
+.setOutputCol(&quot;features&quot;)
+.setVocabSize(10000)
+.setMinDF(5)
+.fit(new_filtered_df)
+
+// Create new df of countVectors
+val new_countVectors = vectorizer.transform(new_filtered_df).select(&quot;id&quot;, &quot;features&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Convert DF to RDD
+val new_lda_countVector = new_countVectors.map { case Row(id: Long, countVector: MLVector) =&gt; (id, Vectors.fromML(countVector)) }.rdd
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We will also increase MaxIterations to 10 to see if we get better results.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Set LDA parameters
+val new_lda = new LDA()
+.setOptimizer(new OnlineLDAOptimizer().setMiniBatchFraction(0.8))
+.setK(numTopics)
+.setMaxIterations(10)
+.setDocConcentration(-1) // use default values
+.setTopicConcentration(-1) // use default values
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="how-to-find-what-the-default-values-are"><a class="header" href="#how-to-find-what-the-default-values-are">How to find what the default values are?</a></h4>
+<p>Dive into the source!!!</p>
+<ol>
+<li>Let's find the default value for <code>docConcentration</code> now.</li>
+<li>Got to Apache Spark package Root: <a href="https://spark.apache.org/docs/latest/api/scala/#package">https://spark.apache.org/docs/latest/api/scala/#package</a></li>
+</ol>
+<ul>
+<li>
+<p>search for 'ml' in the search box on the top left (ml is for ml library)</p>
+</li>
+<li>
+<p>Then find the <code>LDA</code> by scrolling below on the left to mllib's <code>clustering</code> methods and click on <code>LDA</code></p>
+</li>
+<li>
+<p>Then click on the source code link which should take you here:</p>
+<ul>
+<li><a href="https://github.com/apache/spark/blob/v1.6.1/mllib/src/main/scala/org/apache/spark/ml/clustering/LDA.scala">https://github.com/apache/spark/blob/v1.6.1/mllib/src/main/scala/org/apache/spark/ml/clustering/LDA.scala</a></li>
+<li>Now, simply go to the right function and see the following comment block:</li>
+</ul>
+<p>``` /**</p>
+<ul>
+<li>
+<p>Concentration parameter (commonly named &quot;alpha&quot;) for the prior placed on documents'</p>
+</li>
+<li>
+<p>distributions over topics (&quot;theta&quot;).</p>
+</li>
+<li></li>
+<li>
+<p>This is the parameter to a Dirichlet distribution, where larger values mean more smoothing</p>
+</li>
+<li>
+<p>(more regularization).</p>
+</li>
+<li></li>
+<li>
+<p>If not set by the user, then docConcentration is set automatically. If set to</p>
+</li>
+<li>
+<p>singleton vector [alpha], then alpha is replicated to a vector of length k in fitting.</p>
+</li>
+<li>
+<p>Otherwise, the [[docConcentration]] vector must be length k.</p>
+</li>
+<li>
+<p>(default = automatic)</p>
+</li>
+<li></li>
+<li>
+<p>Optimizer-specific parameter settings:</p>
+</li>
+<li>
+<ul>
+<li>EM</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Currently only supports symmetric distributions, so all values in the vector should be</li>
+</ul>
+</li>
+<li>
+<pre><code>the same.
+</code></pre>
+</li>
+<li>
+<ul>
+<li>Values should be &gt; 1.0</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>default = uniformly (50 / k) + 1, where 50/k is common in LDA libraries and +1 follows</li>
+</ul>
+</li>
+<li>
+<pre><code>from Asuncion et al. (2009), who recommend a +1 adjustment for EM.
+</code></pre>
+</li>
+<li>
+<ul>
+<li>Online</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Values should be &gt;= 0</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>default = uniformly (1.0 / k), following the implementation from</li>
+</ul>
+</li>
+<li>
+<pre><code>[[https://github.com/Blei-Lab/onlineldavb]].
+</code></pre>
+</li>
+<li>
+<p>@group param */ ```</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p><strong>HOMEWORK:</strong> Try to find the default value for <code>TopicConcentration</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create LDA model with stopwords refiltered
+val new_ldaModel = new_lda.run(new_lda_countVector)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topicIndices = new_ldaModel.describeTopics(maxTermsPerTopic = 5)
+val vocabList = vectorizer.vocabulary
+val topics = topicIndices.map { case (terms, termWeights) =&gt;
+  terms.map(vocabList(_)).zip(termWeights)
+}
+println(s&quot;$numTopics topics:&quot;)
+topics.zipWithIndex.foreach { case (topic, i) =&gt;
+  println(s&quot;TOPIC $i&quot;)
+  topic.foreach { case (term, weight) =&gt; println(s&quot;$term\t$weight&quot;) }
+  println(s&quot;==========&quot;)
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-9-create-lda-model-with-expectation-maximization"><a class="header" href="#step-9-create-lda-model-with-expectation-maximization">Step 9. Create LDA model with Expectation Maximization</a></h2>
+<p>Let's try creating an LDA model with Expectation Maximization on the data that has been refiltered for additional stopwords. We will also increase MaxIterations here to 100 to see if that improves results. See:</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/mllib-clustering.html#latent-dirichlet-allocation-lda">http://spark.apache.org/docs/latest/mllib-clustering.html#latent-dirichlet-allocation-lda</a>.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.clustering.EMLDAOptimizer
+
+// Set LDA parameters
+val em_lda = new LDA()
+.setOptimizer(new EMLDAOptimizer())
+.setK(numTopics)
+.setMaxIterations(100)
+.setDocConcentration(-1) // use default values
+.setTopicConcentration(-1) // use default values
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val em_ldaModel = em_lda.run(new_lda_countVector) // takes a long long time 22 minutes
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.clustering.DistributedLDAModel;
+val em_DldaModel = em_ldaModel.asInstanceOf[DistributedLDAModel]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10ConversationsPerTopic = em_DldaModel.topDocumentsPerTopic(10)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">top10ConversationsPerTopic.length // number of topics
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//em_DldaModel.topicDistributions.take(10).foreach(println)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Note that the EMLDAOptimizer produces a DistributedLDAModel, which stores not only the inferred topics but also the full training corpus and topic distributions for each document in the training corpus.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topicIndices = em_ldaModel.describeTopics(maxTermsPerTopic = 5)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val vocabList = vectorizer.vocabulary
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vocabList.size
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topics = topicIndices.map { case (terms, termWeights) =&gt;
+  terms.map(vocabList(_)).zip(termWeights)
+}
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vocabList(47) // 47 is the index of the term 'university' or the first term in topics - this may change due to randomness in algorithm
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>This is just doing it all at once.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val topicIndices = em_ldaModel.describeTopics(maxTermsPerTopic = 5)
+val vocabList = vectorizer.vocabulary
+val topics = topicIndices.map { case (terms, termWeights) =&gt;
+  terms.map(vocabList(_)).zip(termWeights)
+}
+println(s&quot;$numTopics topics:&quot;)
+topics.zipWithIndex.foreach { case (topic, i) =&gt;
+  println(s&quot;TOPIC $i&quot;)
+  topic.foreach { case (term, weight) =&gt; println(s&quot;$term\t$weight&quot;) }
+  println(s&quot;==========&quot;)
+}
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">top10ConversationsPerTopic(2)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">top10ConversationsPerTopic(2)._1
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val scenesForTopic2 = sc.parallelize(top10ConversationsPerTopic(2)._1).toDF(&quot;id&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(scenesForTopic2.join(corpusDF,&quot;id&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.parallelize(top10ConversationsPerTopic(2)._1).toDF(&quot;id&quot;).join(corpusDF,&quot;id&quot;).show(10,false)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.parallelize(top10ConversationsPerTopic(5)._1).toDF(&quot;id&quot;).join(corpusDF,&quot;id&quot;).show(10,false)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">corpusDF.show(5)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We've managed to get some good results here. For example, we can easily infer that Topic 2 is about space, Topic 3 is about israel, etc.</p>
+<p>We still get some ambiguous results like Topic 0.</p>
+</div>
+<div class="cell markdown">
+<p>To improve our results further, we could employ some of the below methods:</p>
+<ul>
+<li>Refilter data for additional data-specific stopwords</li>
+<li>Use Stemming or Lemmatization to preprocess data</li>
+<li>Experiment with a smaller number of topics, since some of these topics in the 20 Newsgroups are pretty similar</li>
+<li>Increase model's MaxIterations</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="visualize-results"><a class="header" href="#visualize-results">Visualize Results</a></h2>
+<p>We will try visualizing the results obtained from the EM LDA model with a d3 bubble chart.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Zip topic terms with topic IDs
+val termArray = topics.zipWithIndex
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Transform data into the form (term, probability, topicId)
+val termRDD = sc.parallelize(termArray)
+val termRDD2 =termRDD.flatMap( (x: (Array[(String, Double)], Int)) =&gt; {
+  val arrayOfTuple = x._1
+  val topicId = x._2
+  arrayOfTuple.map(el =&gt; (el._1, el._2, topicId))
+})
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create DF with proper column names
+val termDF = termRDD2.toDF.withColumnRenamed(&quot;_1&quot;, &quot;term&quot;).withColumnRenamed(&quot;_2&quot;, &quot;probability&quot;).withColumnRenamed(&quot;_3&quot;, &quot;topicId&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(termDF)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We will convert the DataFrame into a JSON format, which will be passed into d3.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create JSON data
+val rawJson = termDF.toJSON.collect().mkString(&quot;,\n&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We are now ready to use D3 on the rawJson data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">displayHTML(s&quot;&quot;&quot;
+&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+
+circle {
+  fill: rgb(31, 119, 180);
+  fill-opacity: 0.5;
+  stroke: rgb(31, 119, 180);
+  stroke-width: 1px;
+}
+
+.leaf circle {
+  fill: #ff7f0e;
+  fill-opacity: 1;
+}
+
+text {
+  font: 14px sans-serif;
+}
+
+&lt;/style&gt;
+&lt;body&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var json = {
+ &quot;name&quot;: &quot;data&quot;,
+ &quot;children&quot;: [
+  {
+     &quot;name&quot;: &quot;topics&quot;,
+     &quot;children&quot;: [
+      ${rawJson}
+     ]
+    }
+   ]
+};
+
+var r = 1500,
+    format = d3.format(&quot;,d&quot;),
+    fill = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([r, r])
+    .padding(1.5);
+
+var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, r)
+    .attr(&quot;height&quot;, r)
+    .attr(&quot;class&quot;, &quot;bubble&quot;);
+
+  
+var node = vis.selectAll(&quot;g.node&quot;)
+    .data(bubble.nodes(classes(json))
+    .filter(function(d) { return !d.children; }))
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
+    color = d3.scale.category20();
+  
+  node.append(&quot;title&quot;)
+      .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
+
+  node.append(&quot;circle&quot;)
+      .attr(&quot;r&quot;, function(d) { return d.r; })
+      .style(&quot;fill&quot;, function(d) {return color(d.topicName);});
+
+var text = node.append(&quot;text&quot;)
+    .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
+    .attr(&quot;dy&quot;, &quot;.3em&quot;)
+    .text(function(d) { return d.className.substring(0, d.r / 3)});
+  
+  text.append(&quot;tspan&quot;)
+      .attr(&quot;dy&quot;, &quot;1.2em&quot;)
+      .attr(&quot;x&quot;, 0)
+      .text(function(d) {return Math.ceil(d.value * 10000) /10000; });
+
+// Returns a flattened hierarchy containing all leaf nodes under the root.
+function classes(root) {
+  var classes = [];
+
+  function recurse(term, node) {
+    if (node.children) node.children.forEach(function(child) { recurse(node.term, child); });
+    else classes.push({topicName: node.topicId, className: node.term, value: node.probability});
+  }
+
+  recurse(null, root);
+  return {children: classes};
+}
+&lt;/script&gt;
+&quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-1-downloading-and-loading-data-into-dbfs"><a class="header" href="#step-1-downloading-and-loading-data-into-dbfs">Step 1. Downloading and Loading Data into DBFS</a></h2>
+<p>Here are the steps taken for downloading and saving data to the distributed file system. Uncomment them for repeating this process on your databricks cluster or for downloading a new source of data.</p>
+<p>Unfortunately, the original data at:</p>
+<ul>
+<li><a href="http://www.mpi-sws.org/%7Ecristian/data/cornell_movie_dialogs_corpus.zip">http://www.mpi-sws.org/~cristian/data/cornell<em>movie</em>dialogs_corpus.zip</a></li>
+</ul>
+<p>is not suited for manipulation and loading into dbfs easily. So the data has been downloaded, directory renamed without white spaces, superfluous OS-specific files removed, <code>dos2unix</code>'d, <code>tar -zcvf</code>'d and uploaded to the following URL for an easily dbfs-loadable download:</p>
+<ul>
+<li><a href="http://lamastex.org/datasets/public/nlp/cornell_movie_dialogs_corpus.tgz">http://lamastex.org/datasets/public/nlp/cornell<em>movie</em>dialogs_corpus.tgz</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">wget http://lamastex.org/datasets/public/nlp/cornell_movie_dialogs_corpus.tgz
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Untar the file.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">tar zxvf cornell_movie_dialogs_corpus.tgz
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let us list and load all the files into dbfs after <code>dbfs.fs.mkdirs(...)</code> to create the directory <code>dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">pwd &amp;&amp; ls -al cornell_movie_dialogs_corpus
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.rm(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/&quot;,true)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/movie_characters_metadata.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_characters_metadata.txt&quot;)
+dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/movie_conversations.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_conversations.txt&quot;)
+dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/movie_lines.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_lines.txt&quot;)
+dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/movie_titles_metadata.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/movie_titles_metadata.txt&quot;)
+dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/raw_script_urls.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/raw_script_urls.txt&quot;)
+dbutils.fs.cp(&quot;file:///databricks/driver/cornell_movie_dialogs_corpus/README.txt&quot;,&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/README.txt&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/sds/nlp/cornell_movie_dialogs_corpus/&quot;))
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_1-sds-3-x/033_OBO_PipedRDD_RigorousBayesianABTesting.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
