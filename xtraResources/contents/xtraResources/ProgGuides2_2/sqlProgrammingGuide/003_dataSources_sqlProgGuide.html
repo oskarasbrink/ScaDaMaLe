@@ -1,0 +1,893 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>003_dataSources_sqlProgGuide - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../../../favicon.png">
+        
+        <link rel="stylesheet" href="../../../../css/variables.css">
+        <link rel="stylesheet" href="../../../../css/general.css">
+        <link rel="stylesheet" href="../../../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../../highlight.css">
+        <link rel="stylesheet" href="../../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../../contents/000_1-sds-3-x/033_OBO_LoadExtract.html">033_OBO_LoadExtract</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/000_2-sds-3-x-ml/033_OBO_LoadExtract.html">033_OBO_LoadExtract</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/LinearAlgebra/LAlgCheatSheet.html">LAlgCheatSheet</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/000_MLlibProgGuide.html">000_MLlibProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/000_dataTypesProgGuide.html">000_dataTypesProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/001_LocalVector.html">001_LocalVector</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/002_LabeledPoint.html">002_LabeledPoint</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/003_LocalMatrix.html">003_LocalMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/004_DistributedMatrix.html">004_DistributedMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/005_RowMatrix.html">005_RowMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/006_IndexedRowMatrix.html">006_IndexedRowMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/007_CoordinateMatrix.html">007_CoordinateMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/008_BlockMatrix.html">008_BlockMatrix</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/000_sqlProgGuide.html">000_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/001_overview_sqlProgGuide.html">001_overview_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/002_gettingStarted_sqlProgGuide.html">002_gettingStarted_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/003_dataSources_sqlProgGuide.html" class="active">003_dataSources_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/004_performanceTuning_sqlProgGuide.html">004_performanceTuning_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/005_distributedSqlEngine_sqlProgGuide.html">005_distributedSqlEngine_sqlProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/sdsDatasets/scraperUSStateofUnionAddresses.html">scraperUSStateofUnionAddresses</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/support/sdsFunctions.html">sdsFunctions</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/guide.html">guide</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/actions/collect.html">collect</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/actions/getNumPartitions.html">getNumPartitions</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/actions/reduce.html">reduce</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/coalesce.html">coalesce</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/distinct.html">distinct</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/filter.html">filter</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/flatMap.html">flatMap</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/groupByKey.html">groupByKey</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/groupBy.html">groupBy</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/join.html">join</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/keyBy.html">keyBy</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/map.html">map</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/mapPartitions.html">mapPartitions</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/mapPartitionsWithIndex.html">mapPartitionsWithIndex</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/partitionBy.html">partitionBy</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/reduceByKey.html">reduceByKey</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/sample.html">sample</a></li><li class="chapter-item expanded affix "><a href="../../../../contents/xtraResources/visualRDDApi/recall/transformations/union.html">union</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="a-hrefhttpslamastexgithubioscalable-data-sciencesds22sds-22-scalable-data-sciencea"><a class="header" href="#a-hrefhttpslamastexgithubioscalable-data-sciencesds22sds-22-scalable-data-sciencea"><a href="https://lamastex.github.io/scalable-data-science/sds/2/2/">SDS-2.2, Scalable Data Science</a></a></h1>
+</div>
+<div class="cell markdown">
+<p>This is an elaboration of the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">Apache Spark 2.2 sql-progamming-guide</a>.</p>
+<h1 id="a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide003_datasources_sqlprogguidedata-sourcesa"><a class="header" href="#a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide003_datasources_sqlprogguidedata-sourcesa"><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/003_dataSources_sqlProgGuide">Data Sources</a></a></h1>
+<h2 id="a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide000_sqlprogguidespark-sql-programming-guidea"><a class="header" href="#a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide000_sqlprogguidespark-sql-programming-guidea"><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/000_sqlProgGuide">Spark Sql Programming Guide</a></a></h2>
+<ul>
+<li><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/001_overview_sqlProgGuide">Overview</a>
+<ul>
+<li>SQL</li>
+<li>DataFrames</li>
+<li>Datasets</li>
+</ul>
+</li>
+<li><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/002_gettingStarted_sqlProgGuide">Getting Started</a>
+<ul>
+<li>Starting Point: SQLContext</li>
+<li>Creating DataFrames</li>
+<li>DataFrame Operations</li>
+<li>Running SQL Queries Programmatically</li>
+<li>Creating Datasets</li>
+<li>Interoperating with RDDs
+<ul>
+<li>Inferring the Schema Using Reflection</li>
+<li>Programmatically Specifying the Schema</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/003_dataSources_sqlProgGuide">Data Sources</a>
+<ul>
+<li>Generic Load/Save Functions
+<ul>
+<li>Manually Specifying Options</li>
+<li>Run SQL on files directly</li>
+<li>Save Modes</li>
+<li>Saving to Persistent Tables</li>
+</ul>
+</li>
+<li>Parquet Files
+<ul>
+<li>Loading Data Programmatically</li>
+<li>Partition Discovery</li>
+<li>Schema Merging</li>
+<li>Hive metastore Parquet table conversion
+<ul>
+<li>Hive/Parquet Schema Reconciliation</li>
+<li>Metadata Refreshing</li>
+</ul>
+</li>
+<li>Configuration</li>
+</ul>
+</li>
+<li>JSON Datasets</li>
+<li>Hive Tables
+<ul>
+<li>Interacting with Different Versions of Hive Metastore</li>
+</ul>
+</li>
+<li>JDBC To Other Databases</li>
+<li>Troubleshooting</li>
+</ul>
+</li>
+<li><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/004_performanceTuning_sqlProgGuide">Performance Tuning</a>
+<ul>
+<li>Caching Data In Memory</li>
+<li>Other Configuration Options</li>
+</ul>
+</li>
+<li><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/005_distributedSqlEngine_sqlProgGuide">Distributed SQL Engine</a>
+<ul>
+<li>Running the Thrift JDBC/ODBC server</li>
+<li>Running the Spark SQL CLI</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide003_datasources_sqlprogguidedata-sourcesa-1"><a class="header" href="#a-hrefworkspacescalable-data-sciencextraresourcesprogguides1_6sqlprogrammingguide003_datasources_sqlprogguidedata-sourcesa-1"><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides1_6/sqlProgrammingGuide/003_dataSources_sqlProgGuide">Data Sources</a></a></h1>
+<p>Spark SQL supports operating on a variety of data sources through the <code>DataFrame</code> or <code>DataFrame</code> interfaces. A Dataset can be operated on as normal RDDs and can also be registered as a temporary table. Registering a Dataset as a table allows you to run SQL queries over its data. But from time to time you would need to either load or save Dataset. Spark SQL provides built-in data sources as well as Data Source API to define your own data source and use it read / write data into Spark.</p>
+</div>
+<div class="cell markdown">
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Spark provides some built-in datasources that you can use straight out of the box, such as <a href="https://parquet.apache.org/">Parquet</a>, <a href="http://www.json.org/">JSON</a>, <a href="https://en.wikipedia.org/wiki/Java_Database_Connectivity">JDBC</a>, <a href="https://orc.apache.org/">ORC</a> (available with enabled Hive Support, but this is changing, and ORC will not require Hive support and will work with default Spark session starting from next release), and Text (since Spark 1.6) and CSV (since Spark 2.0, before that it is accessible as a package).</p>
+<h2 id="third-party-datasource-packages"><a class="header" href="#third-party-datasource-packages">Third-party datasource packages</a></h2>
+<p>Community also have built quite a few datasource packages to provide easy access to the data from other formats. You can find list of those packages on http://spark-packages.org/, e.g. <a href="http://spark-packages.org/package/databricks/spark-avro">Avro</a>, <a href="http://spark-packages.org/package/databricks/spark-csv">CSV</a>, <a href="http://spark-packages.org/package/databricks/spark-redshift">Amazon Redshit</a> (for Spark &lt; 2.0), <a href="http://spark-packages.org/package/HyukjinKwon/spark-xml">XML</a>, <a href="http://spark-packages.org/package/sadikovi/spark-netflow">NetFlow</a> and many others.</p>
+</div>
+<div class="cell markdown">
+<h2 id="generic-loadsave-functions"><a class="header" href="#generic-loadsave-functions">Generic Load/Save functions</a></h2>
+<p>In order to load or save DataFrame you have to call either <code>read</code> or <code>write</code>. This will return <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameReader">DataFrameReader</a> or <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameWriter">DataFrameWriter</a> depending on what you are trying to achieve. Essentially these classes are entry points to the reading / writing actions. They allow you to specify writing mode or provide additional options to read data source.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// This will return DataFrameReader to read data source
+println(spark.read)
+
+val df = spark.range(0, 10)
+
+// This will return DataFrameWriter to save DataFrame
+println(df.write)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>org.apache.spark.sql.DataFrameReader@7e7dee07
+org.apache.spark.sql.DataFrameWriter@1f45f4b
+df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Saving Parquet table in Scala
+val df_save = spark.table(&quot;social_media_usage&quot;).select(&quot;platform&quot;, &quot;visits&quot;)
+df_save.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/platforms.parquet&quot;)
+
+// Loading Parquet table in Scala
+val df = spark.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+df.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+------+
+|  platform|visits|
++----------+------+
+|       SMS| 61652|
+|       SMS| 44547|
+|    Flickr|  null|
+|Newsletter|  null|
+|   Twitter|   389|
++----------+------+
+only showing top 5 rows
+
+df_save: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Loading Parquet table in Python
+dfPy = spark.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+dfPy.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+------+
+|  platform|visits|
++----------+------+
+|       SMS| 61652|
+|       SMS| 44547|
+|    Flickr|  null|
+|Newsletter|  null|
+|   Twitter|   389|
++----------+------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Saving JSON dataset in Scala
+val df_save = spark.table(&quot;social_media_usage&quot;).select(&quot;platform&quot;, &quot;visits&quot;)
+df_save.write.json(&quot;/tmp/platforms.json&quot;)
+
+// Loading JSON dataset in Scala
+val df = spark.read.json(&quot;/tmp/platforms.json&quot;)
+df.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+------+
+|  platform|visits|
++----------+------+
+|       SMS| 61652|
+|       SMS| 44547|
+|    Flickr|  null|
+|Newsletter|  null|
+|   Twitter|   389|
++----------+------+
+only showing top 5 rows
+
+df_save: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+df: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Loading JSON dataset in Python
+dfPy = spark.read.json(&quot;/tmp/platforms.json&quot;)
+dfPy.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+------+
+|  platform|visits|
++----------+------+
+|       SMS| 61652|
+|       SMS| 44547|
+|    Flickr|  null|
+|Newsletter|  null|
+|   Twitter|   389|
++----------+------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="manually-specifying-options"><a class="header" href="#manually-specifying-options">Manually Specifying Options</a></h3>
+<p>You can also manually specify the data source that will be used along with any extra options that you would like to pass to the data source. Data sources are specified by their fully qualified name (i.e., <code>org.apache.spark.sql.parquet</code>), but for built-in sources you can also use their short names (<code>json</code>, <code>parquet</code>, <code>jdbc</code>). DataFrames of any type can be converted into other types using this syntax.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">val json = sqlContext.read.format(&quot;json&quot;).load(&quot;/tmp/platforms.json&quot;)
+json.select(&quot;platform&quot;).show(10)
+
+val parquet = sqlContext.read.format(&quot;parquet&quot;).load(&quot;/tmp/platforms.parquet&quot;)
+parquet.select(&quot;platform&quot;).show(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+
+|  platform|
++----------+
+|       SMS|
+|       SMS|
+|    Flickr|
+|Newsletter|
+|   Twitter|
+|   Twitter|
+|   Android|
+|   Android|
+|   Android|
+|Broadcastr|
++----------+
+only showing top 10 rows
+
++----------+
+|  platform|
++----------+
+|       SMS|
+|       SMS|
+|    Flickr|
+|Newsletter|
+|   Twitter|
+|   Twitter|
+|   Android|
+|   Android|
+|   Android|
+|Broadcastr|
++----------+
+only showing top 10 rows
+
+json: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
+parquet: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="run-sql-on-files-directly"><a class="header" href="#run-sql-on-files-directly">Run SQL on files directly</a></h3>
+<p>Instead of using read API to load a file into DataFrame and query it, you can also query that file directly with SQL.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df = sqlContext.sql(&quot;SELECT * FROM parquet.`/tmp/platforms.parquet`&quot;)
+df.printSchema()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- platform: string (nullable = true)
+ |-- visits: integer (nullable = true)
+
+df: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="save-modes"><a class="header" href="#save-modes">Save Modes</a></h3>
+<p>Save operations can optionally take a <code>SaveMode</code>, that specifies how to handle existing data if present. It is important to realize that these save modes do not utilize any locking and are not atomic. Additionally, when performing a <code>Overwrite</code>, the data will be deleted before writing out the new data.</p>
+<table><thead><tr><th>Scala/Java</th><th>Any language</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>SaveMode.ErrorIfExists</code> (default)</td><td><code>&quot;error&quot;</code> (default)</td><td>When saving a DataFrame to a data source, if data already exists, an exception is expected to be thrown.</td></tr>
+<tr><td><code>SaveMode.Append</code></td><td><code>&quot;append&quot;</code></td><td>When saving a DataFrame to a data source, if data/table already exists, contents of the DataFrame are expected to be appended to existing data.</td></tr>
+<tr><td><code>SaveMode.Overwrite</code></td><td><code>&quot;overwrite&quot;</code></td><td>Overwrite mode means that when saving a DataFrame to a data source, if data/table already exists, existing data is expected to be overwritten by the contents of the DataFrame.</td></tr>
+<tr><td><code>SaveMode.Ignore</code></td><td><code>&quot;ignore&quot;</code></td><td>Ignore mode means that when saving a DataFrame to a data source, if data already exists, the save operation is expected to not save the contents of the DataFrame and to not change the existing data. This is similar to a <code>CREATE TABLE IF NOT EXISTS</code> in SQL.</td></tr>
+</tbody></table>
+</div>
+<div class="cell markdown">
+<h3 id="saving-to-persistent-tables"><a class="header" href="#saving-to-persistent-tables">Saving to Persistent Tables</a></h3>
+<p><code>DataFrame</code> and <code>Dataset</code> can also be saved as persistent tables using the <code>saveAsTable</code> command. Unlike the <code>createOrReplaceTempView</code> command, <code>saveAsTable</code> will materialize the contents of the dataframe and create a pointer to the data in the metastore. Persistent tables will still exist even after your Spark program has restarted, as long as you maintain your connection to the same metastore. A DataFrame for a persistent table can be created by calling the <code>table</code> method on a <code>SparkSession</code> with the name of the table.</p>
+<p>By default <code>saveAsTable</code> will create a “managed table”, meaning that the location of the data will be controlled by the metastore. Managed tables will also have their data deleted automatically when a table is dropped.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// First of all list tables to see that table we are about to create does not exist
+spark.catalog.listTables.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------+--------+-----------+---------+-----------+
+|                name|database|description|tableType|isTemporary|
++--------------------+--------+-----------+---------+-----------+
+|          cities_csv| default|       null| EXTERNAL|      false|
+|       cleaned_taxes| default|       null|  MANAGED|      false|
+|commdettrumpclint...| default|       null|  MANAGED|      false|
+|   donaldtrumptweets| default|       null| EXTERNAL|      false|
+|             linkage| default|       null| EXTERNAL|      false|
+|             nations| default|       null| EXTERNAL|      false|
+|           newmplist| default|       null| EXTERNAL|      false|
+|       ny_baby_names| default|       null|  MANAGED|      false|
+|       nzmpsandparty| default|       null| EXTERNAL|      false|
+|    pos_neg_category| default|       null| EXTERNAL|      false|
+|                 rna| default|       null|  MANAGED|      false|
+|                samh| default|       null| EXTERNAL|      false|
+|  social_media_usage| default|       null| EXTERNAL|      false|
+|              table1| default|       null| EXTERNAL|      false|
+|          test_table| default|       null| EXTERNAL|      false|
+|             uscites| default|       null| EXTERNAL|      false|
++--------------------+--------+-----------+---------+-----------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">drop table if exists simple_range
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df = spark.range(0, 100)
+df.write.saveAsTable(&quot;simple_range&quot;)
+
+// Verify that table is saved and it is marked as persistent (&quot;isTemporary&quot; value should be &quot;false&quot;)
+spark.catalog.listTables.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------+--------+-----------+---------+-----------+
+|                name|database|description|tableType|isTemporary|
++--------------------+--------+-----------+---------+-----------+
+|          cities_csv| default|       null| EXTERNAL|      false|
+|       cleaned_taxes| default|       null|  MANAGED|      false|
+|commdettrumpclint...| default|       null|  MANAGED|      false|
+|   donaldtrumptweets| default|       null| EXTERNAL|      false|
+|             linkage| default|       null| EXTERNAL|      false|
+|             nations| default|       null| EXTERNAL|      false|
+|           newmplist| default|       null| EXTERNAL|      false|
+|       ny_baby_names| default|       null|  MANAGED|      false|
+|       nzmpsandparty| default|       null| EXTERNAL|      false|
+|    pos_neg_category| default|       null| EXTERNAL|      false|
+|                 rna| default|       null|  MANAGED|      false|
+|                samh| default|       null| EXTERNAL|      false|
+|        simple_range| default|       null|  MANAGED|      false|
+|  social_media_usage| default|       null| EXTERNAL|      false|
+|              table1| default|       null| EXTERNAL|      false|
+|          test_table| default|       null| EXTERNAL|      false|
+|             uscites| default|       null| EXTERNAL|      false|
++--------------------+--------+-----------+---------+-----------+
+
+df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="parquet-files"><a class="header" href="#parquet-files">Parquet Files</a></h2>
+<p><a href="http://parquet.io">Parquet</a> is a columnar format that is supported by many other data processing systems. Spark SQL provides support for both reading and writing Parquet files that automatically preserves the schema of the original data. When writing Parquet files, all columns are automatically converted to be nullable for compatibility reasons.</p>
+</div>
+<div class="cell markdown">
+<h3 id="more-on-parquet"><a class="header" href="#more-on-parquet">More on Parquet</a></h3>
+<p><a href="https://parquet.apache.org/">Apache Parquet</a> is a <a href="http://en.wikipedia.org/wiki/Column-oriented_DBMS">columnar storage</a> format available to any project in the Hadoop ecosystem, regardless of the choice of data processing framework, data model or programming language. It is a more efficient way to store data frames.</p>
+<ul>
+<li>To understand the ideas read <a href="http://research.google.com/pubs/pub36632.html">Dremel: Interactive Analysis of Web-Scale Datasets, Sergey Melnik, Andrey Gubarev, Jing Jing Long, Geoffrey Romer, Shiva Shivakumar, Matt Tolton and Theo Vassilakis,Proc. of the 36th Int'l Conf on Very Large Data Bases (2010), pp. 330-339</a>, whose Abstract is as follows:
+<ul>
+<li>Dremel is a scalable, interactive ad-hoc query system for analysis of read-only nested data. By combining multi-level execution trees and columnar data layouts it is <strong>capable of running aggregation queries over trillion-row tables in seconds</strong>. The system <strong>scales to thousands of CPUs and petabytes of data, and has thousands of users at Google</strong>. In this paper, we describe the architecture and implementation of Dremel, and explain how it complements MapReduce-based computing. We present a novel columnar storage representation for nested records and discuss experiments on few-thousand node instances of the system.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://parquet.apache.org/documentation/latest/"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/ml-features.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="loading-data-programmatically"><a class="header" href="#loading-data-programmatically">Loading Data Programmatically</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Read in the parquet file created above. Parquet files are self-describing so the schema is preserved.
+// The result of loading a Parquet file is also a DataFrame.
+val parquetFile = sqlContext.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+
+// Parquet files can also be registered as tables and then used in SQL statements.
+parquetFile.createOrReplaceTempView(&quot;parquetFile&quot;)
+val platforms = sqlContext.sql(&quot;SELECT platform FROM parquetFile WHERE visits &gt; 0&quot;)
+platforms.distinct.map(t =&gt; &quot;Name: &quot; + t(0)).collect().foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Name: Flickr
+Name: iPhone
+Name: YouTube
+Name: WordPress
+Name: SMS
+Name: iPhone App
+Name: Youtube
+Name: Instagram
+Name: iPhone app
+Name: Linked-In
+Name: Twitter
+Name: TOTAL
+Name: Tumblr
+Name: Newsletter
+Name: Pinterest
+Name: Android
+Name: Foursquare
+Name: Google+
+Name: Foursquare (Badge Unlock)
+Name: Facebook
+parquetFile: org.apache.spark.sql.DataFrame = [platform: string, visits: int]
+platforms: org.apache.spark.sql.DataFrame = [platform: string]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="partition-discovery"><a class="header" href="#partition-discovery">Partition Discovery</a></h3>
+<p>Table partitioning is a common optimization approach used in systems like Hive. In a partitioned table, data are usually stored in different directories, with partitioning column values encoded in the path of each partition directory. The Parquet data source is now able to discover and infer partitioning information automatically. For example, we can store all our previously used population data (from the programming guide example!) into a partitioned table using the following directory structure, with two extra columns, <code>gender</code> and <code>country</code> as partitioning columns:</p>
+<pre><code>    path
+    └── to
+        └── table
+            ├── gender=male
+            │   ├── ...
+            │   │
+            │   ├── country=US
+            │   │   └── data.parquet
+            │   ├── country=CN
+            │   │   └── data.parquet
+            │   └── ...
+            └── gender=female
+                ├── ...
+                │
+                ├── country=US
+                │   └── data.parquet
+                ├── country=CN
+                │   └── data.parquet
+                └── ...
+</code></pre>
+<p>By passing <code>path/to/table</code> to either <code>SparkSession.read.parquet</code> or <code>SparkSession.read.load</code>, Spark SQL will automatically extract the partitioning information from the paths. Now the schema of the returned DataFrame becomes:</p>
+<pre><code>    root
+    |-- name: string (nullable = true)
+    |-- age: long (nullable = true)
+    |-- gender: string (nullable = true)
+    |-- country: string (nullable = true)
+</code></pre>
+<p>Notice that the data types of the partitioning columns are automatically inferred. Currently, numeric data types and string type are supported. Sometimes users may not want to automatically infer the data types of the partitioning columns. For these use cases, the automatic type inference can be configured by <code>spark.sql.sources.partitionColumnTypeInference.enabled</code>, which is default to <code>true</code>. When type inference is disabled, string type will be used for the partitioning columns.</p>
+<p>Starting from Spark 1.6.0, partition discovery only finds partitions under the given paths by default. For the above example, if users pass <code>path/to/table/gender=male</code> to either <code>SparkSession.read.parquet</code> or <code>SparkSession.read.load</code>, <code>gender</code> will not be considered as a partitioning column. If users need to specify the base path that partition discovery should start with, they can set <code>basePath</code> in the data source options. For example, when <code>path/to/table/gender=male</code> is the path of the data and users set <code>basePath</code> to <code>path/to/table/</code>, <code>gender</code> will be a partitioning column.</p>
+</div>
+<div class="cell markdown">
+<h3 id="schema-merging"><a class="header" href="#schema-merging">Schema Merging</a></h3>
+<p>Like ProtocolBuffer, Avro, and Thrift, Parquet also supports schema evolution. Users can start with a simple schema, and gradually add more columns to the schema as needed. In this way, users may end up with multiple Parquet files with different but mutually compatible schemas. The Parquet data source is now able to automatically detect this case and merge schemas of all these files.</p>
+<p>Since schema merging is a relatively expensive operation, and is not a necessity in most cases, we turned it off by default starting from 1.5.0. You may enable it by: 1. setting data source option <code>mergeSchema</code> to <code>true</code> when reading Parquet files (as shown in the examples below), or 2. setting the global SQL option <code>spark.sql.parquet.mergeSchema</code> to <code>true</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create a simple DataFrame, stored into a partition directory
+val df1 = sc.parallelize(1 to 5).map(i =&gt; (i, i * 2)).toDF(&quot;single&quot;, &quot;double&quot;)
+df1.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/data/test_table/key=1&quot;)
+
+// Create another DataFrame in a new partition directory, adding a new column and dropping an existing column
+val df2 = sc.parallelize(6 to 10).map(i =&gt; (i, i * 3)).toDF(&quot;single&quot;, &quot;triple&quot;)
+df2.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/data/test_table/key=2&quot;)
+
+// Read the partitioned table
+val df3 = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;/tmp/data/test_table&quot;)
+df3.printSchema()
+
+// The final schema consists of all 3 columns in the Parquet files together
+// with the partitioning column appeared in the partition directory paths.
+// root
+//  |-- single: integer (nullable = true)
+//  |-- double: integer (nullable = true)
+//  |-- triple: integer (nullable = true)
+//  |-- key: integer (nullable = true))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- single: integer (nullable = true)
+ |-- double: integer (nullable = true)
+ |-- triple: integer (nullable = true)
+ |-- key: integer (nullable = true)
+
+df1: org.apache.spark.sql.DataFrame = [single: int, double: int]
+df2: org.apache.spark.sql.DataFrame = [single: int, triple: int]
+df3: org.apache.spark.sql.DataFrame = [single: int, double: int ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="hive-metastore-parquet-table-conversion"><a class="header" href="#hive-metastore-parquet-table-conversion">Hive metastore Parquet table conversion</a></h3>
+<p>When reading from and writing to Hive metastore Parquet tables, Spark SQL will try to use its own Parquet support instead of Hive SerDe for better performance. This behavior is controlled by the <code>spark.sql.hive.convertMetastoreParquet</code> configuration, and is turned on by default.</p>
+<h4 id="hiveparquet-schema-reconciliation"><a class="header" href="#hiveparquet-schema-reconciliation">Hive/Parquet Schema Reconciliation</a></h4>
+<p>There are two key differences between Hive and Parquet from the perspective of table schema processing. 1. Hive is case insensitive, while Parquet is not 2. Hive considers all columns nullable, while nullability in Parquet is significant</p>
+<p>Due to this reason, we must reconcile Hive metastore schema with Parquet schema when converting a Hive metastore Parquet table to a Spark SQL Parquet table. The reconciliation rules are: 1. Fields that have the same name in both schema must have the same data type regardless of nullability. The reconciled field should have the data type of the Parquet side, so that nullability is respected. 2. The reconciled schema contains exactly those fields defined in Hive metastore schema. - Any fields that only appear in the Parquet schema are dropped in the reconciled schema. - Any fileds that only appear in the Hive metastore schema are added as nullable field in the reconciled schema.</p>
+<h4 id="metadata-refreshing"><a class="header" href="#metadata-refreshing">Metadata Refreshing</a></h4>
+<p>Spark SQL caches Parquet metadata for better performance. When Hive metastore Parquet table conversion is enabled, metadata of those converted tables are also cached. If these tables are updated by Hive or other external tools, you need to refresh them manually to ensure consistent metadata.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// should refresh table metadata
+spark.catalog.refreshTable(&quot;simple_range&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">-- Or you can use SQL to refresh table
+REFRESH TABLE simple_range;
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="configuration"><a class="header" href="#configuration">Configuration</a></h3>
+<p>Configuration of Parquet can be done using the <code>setConf</code> method on <code>SQLContext</code> or by running <code>SET key=value</code> commands using SQL.</p>
+<table><thead><tr><th>Property Name</th><th>Default</th><th>Meaning</th><th></th></tr></thead><tbody>
+<tr><td><code>spark.sql.parquet.binaryAsString</code></td><td>false</td><td>Some other Parquet-producing systems, in particular Impala, Hive, and older versions of Spark SQL, do not differentiate between binary data and strings when writing out the Parquet schema. This flag tells Spark SQL to interpret binary data as a string to provide compatibility with these systems.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.int96AsTimestamp</code></td><td>true</td><td>Some Parquet-producing systems, in particular Impala and Hive, store Timestamp into INT96. This flag tells Spark SQL to interpret INT96 data as a timestamp to provide compatibility with these systems.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.cacheMetadata</code></td><td>true</td><td>Turns on caching of Parquet schema metadata. Can speed up querying of static data.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.compression.codec</code></td><td>gzip</td><td>Sets the compression codec use when writing Parquet files. Acceptable values include: uncompressed, snappy, gzip, lzo.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.filterPushdown</code></td><td>true</td><td>Enables Parquet filter push-down optimization when set to true.</td><td></td></tr>
+<tr><td><code>spark.sql.hive.convertMetastoreParquet</code></td><td>true</td><td>When set to false, Spark SQL will use the Hive SerDe for parquet tables instead of the built in support.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.output.committer.class</code></td><td><code>org.apache.parquet.hadoop.ParquetOutputCommitter</code></td><td>The output committer class used by Parquet. The specified class needs to be a subclass of <code>org.apache.hadoop.mapreduce.OutputCommitter</code>. Typically, it's also a subclass of <code>org.apache.parquet.hadoop.ParquetOutputCommitter</code>. Spark SQL comes with a builtin <code>org.apache.spark.sql.parquet.DirectParquetOutputCommitter</code>, which can be more efficient then the default Parquet output committer when writing data to S3.</td><td></td></tr>
+<tr><td><code>spark.sql.parquet.mergeSchema</code></td><td><code>false</code></td><td>When true, the Parquet data source merges schemas collected from all data files, otherwise the schema is picked from the summary file or a random data file if no summary file is available.</td><td></td></tr>
+</tbody></table>
+</div>
+<div class="cell markdown">
+<h2 id="json-datasets"><a class="header" href="#json-datasets">JSON Datasets</a></h2>
+<p>Spark SQL can automatically infer the schema of a JSON dataset and load it as a DataFrame. This conversion can be done using <code>SparkSession.read.json()</code> on either an RDD of String, or a JSON file.</p>
+<p>Note that the file that is offered as <em>a json file</em> is not a typical JSON file. Each line must contain a separate, self-contained valid JSON object. As a consequence, a regular multi-line JSON file will most often fail.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">// A JSON dataset is pointed to by path.
+// The path can be either a single text file or a directory storing text files.
+val path = &quot;/tmp/platforms.json&quot;
+val platforms = spark.read.json(path)
+
+// The inferred schema can be visualized using the printSchema() method.
+platforms.printSchema()
+// root
+//  |-- platform: string (nullable = true)
+//  |-- visits: long (nullable = true)
+
+// Register this DataFrame as a table.
+platforms.createOrReplaceTempView(&quot;platforms&quot;)
+
+// SQL statements can be run by using the sql methods provided by sqlContext.
+val facebook = spark.sql(&quot;SELECT platform, visits FROM platforms WHERE platform like 'Face%k'&quot;)
+facebook.show()
+
+// Alternatively, a DataFrame can be created for a JSON dataset represented by
+// an RDD[String] storing one JSON object per string.
+val rdd = sc.parallelize(&quot;&quot;&quot;{&quot;name&quot;:&quot;IWyn&quot;,&quot;address&quot;:{&quot;city&quot;:&quot;Columbus&quot;,&quot;state&quot;:&quot;Ohio&quot;}}&quot;&quot;&quot; :: Nil)
+val anotherPlatforms = spark.read.json(rdd)
+anotherPlatforms.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- platform: string (nullable = true)
+ |-- visits: long (nullable = true)
+
++--------+------+
+|platform|visits|
++--------+------+
+|Facebook|     3|
+|Facebook|    36|
+|Facebook|    47|
+|Facebook|    90|
+|Facebook|   105|
+|Facebook|   123|
+|Facebook|   119|
+|Facebook|   148|
+|Facebook|   197|
+|Facebook|   179|
+|Facebook|   200|
+|Facebook|   200|
+|Facebook|   183|
+|Facebook|   190|
+|Facebook|   227|
+|Facebook|   194|
+|Facebook|   243|
+|Facebook|   237|
+|Facebook|   234|
+|Facebook|   238|
++--------+------+
+only showing top 20 rows
+
++---------------+----+
+|        address|name|
++---------------+----+
+|[Columbus,Ohio]|IWyn|
++---------------+----+
+
+&lt;console&gt;:63: warning: method json in class DataFrameReader is deprecated: Use json(Dataset[String]) instead.
+val anotherPlatforms = spark.read.json(rdd)
+                                  ^
+path: String = /tmp/platforms.json
+platforms: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
+facebook: org.apache.spark.sql.DataFrame = [platform: string, visits: bigint]
+rdd: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[23304] at parallelize at &lt;console&gt;:62
+anotherPlatforms: org.apache.spark.sql.DataFrame = [address: struct&lt;city: string, state: string&gt;, name: string]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="hive-tables"><a class="header" href="#hive-tables">Hive Tables</a></h2>
+<p>Spark SQL also supports reading and writing data stored in <a href="http://hive.apache.org/">Apache Hive</a>. However, since Hive has a large number of dependencies, it is not included in the default Spark assembly. Hive support is enabled by adding the <code>-Phive</code> and <code>-Phive-thriftserver</code> flags to Spark’s build. This command builds a new assembly jar that includes Hive. Note that this Hive assembly jar must also be present on all of the worker nodes, as they will need access to the Hive serialization and deserialization libraries (SerDes) in order to access data stored in Hive.</p>
+<p>Configuration of Hive is done by placing your <code>hive-site.xml</code>, <code>core-site.xml</code> (for security configuration), <code>hdfs-site.xml</code> (for HDFS configuration) file in <code>conf/</code>. Please note when running the query on a YARN cluster (<code>cluster</code> mode), the <code>datanucleus</code> jars under the <code>lib_managed/jars</code> directory and <code>hive-site.xml</code> under <code>conf/</code> directory need to be available on the driver and all executors launched by the YARN cluster. The convenient way to do this is adding them through the <code>--jars</code> option and <code>--file</code> option of the <code>spark-submit</code> command.</p>
+<p>When working with Hive one must construct a <code>HiveContext</code>, which inherits from <code>SQLContext</code>, and adds support for finding tables in the MetaStore and writing queries using HiveQL. Users who do not have an existing Hive deployment can still create a <code>HiveContext</code>. When not configured by the hive-site.xml, the context automatically creates <code>metastore_db</code> in the current directory and creates <code>warehouse</code> directory indicated by HiveConf, which defaults to <code>/user/hive/warehouse</code>. Note that you may need to grant write privilege on <code>/user/hive/warehouse</code> to the user who starts the spark application.</p>
+<pre><code class="language-scala">val spark = SparkSession.builder.enableHiveSupport().getOrCreate()
+
+spark.sql(&quot;CREATE TABLE IF NOT EXISTS src (key INT, value STRING)&quot;)
+spark.sql(&quot;LOAD DATA LOCAL INPATH 'examples/src/main/resources/kv1.txt' INTO TABLE src&quot;)
+
+// Queries are expressed in HiveQL
+spark.sql(&quot;FROM src SELECT key, value&quot;).collect().foreach(println)
+</code></pre>
+<h3 id="interacting-with-different-versions-of-hive-metastore"><a class="header" href="#interacting-with-different-versions-of-hive-metastore">Interacting with Different Versions of Hive Metastore</a></h3>
+<p>One of the most important pieces of Spark SQL’s Hive support is interaction with Hive metastore, which enables Spark SQL to access metadata of Hive tables. Starting from Spark 1.4.0, a single binary build of Spark SQL can be used to query different versions of Hive metastores, using the configuration described below. Note that independent of the version of Hive that is being used to talk to the metastore, internally Spark SQL will compile against Hive 1.2.1 and use those classes for internal execution (serdes, UDFs, UDAFs, etc).</p>
+<p>The following options can be used to configure the version of Hive that is used to retrieve metadata:</p>
+<table><thead><tr><th>Property Name</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>spark.sql.hive.metastore.version</code></td><td><code>1.2.1</code></td><td>Version of the Hive metastore. Available options are <code>0.12.0</code> through <code>1.2.1</code>.</td></tr>
+<tr><td><code>spark.sql.hive.metastore.jars</code></td><td><code>builtin</code></td><td>Location of the jars that should be used to instantiate the HiveMetastoreClient. This property can be one of three options: <code>builtin</code>, <code>maven</code>, a classpath in the standard format for the JVM. This classpath must include all of Hive and its dependencies, including the correct version of Hadoop. These jars only need to be present on the driver, but if you are running in yarn cluster mode then you must ensure they are packaged with you application.</td></tr>
+<tr><td><code>spark.sql.hive.metastore.sharedPrefixes</code></td><td><code>com.mysql.jdbc,org.postgresql,com.microsoft.sqlserver,oracle.jdbc</code></td><td>A comma separated list of class prefixes that should be loaded using the classloader that is shared between Spark SQL and a specific version of Hive. An example of classes that should be shared is JDBC drivers that are needed to talk to the metastore. Other classes that need to be shared are those that interact with classes that are already shared. For example, custom appenders that are used by log4j.</td></tr>
+<tr><td><code>spark.sql.hive.metastore.barrierPrefixes</code></td><td><code>(empty)</code></td><td>A comma separated list of class prefixes that should explicitly be reloaded for each version of Hive that Spark SQL is communicating with. For example, Hive UDFs that are declared in a prefix that typically would be shared (i.e. <code>org.apache.spark.*</code>).</td></tr>
+</tbody></table>
+</div>
+<div class="cell markdown">
+<h2 id="jdbc-to-other-databases"><a class="header" href="#jdbc-to-other-databases">JDBC To Other Databases</a></h2>
+<p>Spark SQL also includes a data source that can read data from other databases using JDBC. This functionality should be preferred over using <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.JdbcRDD">JdbcRDD</a>. This is because the results are returned as a DataFrame and they can easily be processed in Spark SQL or joined with other data sources. The JDBC data source is also easier to use from Java or Python as it does not require the user to provide a ClassTag. (Note that this is different than the Spark SQL JDBC server, which allows other applications to run queries using Spark SQL).</p>
+<p>To get started you will need to include the JDBC driver for you particular database on the spark classpath. For example, to connect to postgres from the Spark Shell you would run the following command:</p>
+<pre><code class="language-scala">SPARK_CLASSPATH=postgresql-9.3-1102-jdbc41.jar bin/spark-shell
+</code></pre>
+<p>Tables from the remote database can be loaded as a DataFrame or Spark SQL Temporary table using the Data Sources API. The following options are supported:</p>
+<table><thead><tr><th>Property Name</th><th>Meaning</th><th></th></tr></thead><tbody>
+<tr><td><code>url</code></td><td>The JDBC URL to connect to.</td><td></td></tr>
+<tr><td><code>dbtable</code></td><td>The JDBC table that should be read. Note that anything that is valid in a <code>FROM</code> clause of a SQL query can be used. For example, instead of a full table you could also use a subquery in parentheses.</td><td></td></tr>
+<tr><td><code>driver</code></td><td>The class name of the JDBC driver needed to connect to this URL. This class will be loaded on the master and workers before running an JDBC commands to allow the driver to register itself with the JDBC subsystem.</td><td></td></tr>
+<tr><td><code>partitionColumn, lowerBound, upperBound, numPartitions</code></td><td>These options must all be specified if any of them is specified. They describe how to partition the table when reading in parallel from multiple workers. <code>partitionColumn</code> must be a numeric column from the table in question. Notice that <code>lowerBound</code> and <code>upperBound</code> are just used to decide the partition stride, not for filtering the rows in table. So all rows in the table will be partitioned and returned.</td><td></td></tr>
+<tr><td><code>fetchSize</code></td><td>The JDBC fetch size, which determines how many rows to fetch per round trip. This can help performance on JDBC drivers which default to low fetch size (eg. Oracle with 10 rows).</td><td></td></tr>
+</tbody></table>
+<pre><code class="language-scala">// Example of using JDBC datasource
+val jdbcDF = spark.read.format(&quot;jdbc&quot;).options(Map(&quot;url&quot; -&gt; &quot;jdbc:postgresql:dbserver&quot;, &quot;dbtable&quot; -&gt; &quot;schema.tablename&quot;)).load()
+</code></pre>
+<pre><code class="language-sql">-- Or using JDBC datasource in SQL
+CREATE TEMPORARY TABLE jdbcTable
+USING org.apache.spark.sql.jdbc
+OPTIONS (
+  url &quot;jdbc:postgresql:dbserver&quot;,
+  dbtable &quot;schema.tablename&quot;
+)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h3>
+<ul>
+<li>The JDBC driver class must be visible to the primordial class loader on the client session and on all executors. This is because Java’s DriverManager class does a security check that results in it ignoring all drivers not visible to the primordial class loader when one goes to open a connection. One convenient way to do this is to modify compute_classpath.sh on all worker nodes to include your driver JARs.</li>
+<li>Some databases, such as H2, convert all names to upper case. You’ll need to use upper case to refer to those names in Spark SQL.</li>
+</ul>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/002_gettingStarted_sqlProgGuide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/004_performanceTuning_sqlProgGuide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/002_gettingStarted_sqlProgGuide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../../contents/xtraResources/ProgGuides2_2/sqlProgrammingGuide/004_performanceTuning_sqlProgGuide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>01_trend_calculus_showcase - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000a_finance_utils.html">000a_finance_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000b_gdelt_utils.html">000b_gdelt_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000_TrendsInFinancialStocksAndNewsEvents.html">000_TrendsInFinancialStocksAndNewsEvents</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00a_FX1M.html">00a_FX1M</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html">00b_yfinance</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html" class="active">01_trend_calculus_showcase</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html">02_streamable_trend_calculus</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html">03_streamable_trend_calculus_estimators</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html">030_Spark_GDELT_project_001</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html">030a_gdelt_EOI_detection</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/images/images.html">images</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="finding-trends-in-oil-price-data"><a class="header" href="#finding-trends-in-oil-price-data">Finding trends in oil price data.</a></h1>
+<p>Johannes Graner (<a href="https://www.linkedin.com/in/johannes-graner-475677129/">LinkedIn</a>), Albert Nilsson (<a href="https://www.linkedin.com/in/albert-nilsson-09b62b191/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2020, Uppsala, Sweden</p>
+<p>This project was supported by Combient Mix AB through summer internships at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+<hr />
+<p><strong>Resources</strong></p>
+<p>This builds on the following library and its antecedents therein to find trends in historical oil prices:</p>
+<ul>
+<li><a href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></li>
+</ul>
+<p><strong>This work was inspired by:</strong></p>
+<ul>
+<li>Antoine Aamennd's <a href="https://github.com/aamend/texata-r2-2017">texata-2017</a></li>
+<li>Andrew Morgan's <a href="https://github.com/ByteSumoLtd/TrendCalculus-lua">Trend Calculus Library</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./000a_finance_utils&quot;
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>When dealing with time series, it can be difficult to find a good way to find and analyze trends in the data.</p>
+<p>One approach is by using the Trend Calculus algorithm invented by Andrew Morgan. More information about Trend Calculus can be found at <a href="https://lamastex.github.io/spark-trend-calculus-examples/">https://lamastex.github.io/spark-trend-calculus-examples/</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object TrendUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.lamastex.spark.trendcalculus._
+import spark.implicits._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import java.sql.Timestamp
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.lamastex.spark.trendcalculus._
+import spark.implicits._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import java.sql.Timestamp
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<p>The input to the algorithm is data in the format (ticker, time, value). In this example, ticker is <code>&quot;BCOUSD&quot;</code> (Brent Crude Oil), time is given in minutes and value is the closing price for Brent Crude Oil during that minute.</p>
+<p>This data is historical data from 2010 to 2019 taken from <a href="https://www.histdata.com/">https://www.histdata.com/</a> using methods from <a href="https://github.com/philipperemy/FX-1-Minute-Data">FX-1-Minute-Data</a> by Philippe Remy. In this notebook, everything is done on static dataframes. We will soon see examples on streaming dataframes.</p>
+<p>There are gaps in the data, notably during the weekends when no trading takes place, but this does not affect the algorithm as it is does not place any assumptions on the data other than that time is monotonically increasing.</p>
+<p>The window size is set to 2, which is minimal, because we want to retain as much information as possible.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val windowSize = 2
+val dataRootPath = TrendUtils.getFx1mPath
+val oilDS = spark.read.fx1m(dataRootPath + &quot;bcousd/*.csv.gz&quot;).toDF.withColumn(&quot;ticker&quot;, lit(&quot;BCOUSD&quot;)).select($&quot;ticker&quot;, $&quot;time&quot; as &quot;x&quot;, $&quot;close&quot; as &quot;y&quot;).as[TickerPoint].orderBy(&quot;x&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If we want to look at long term trends, we can use the output time series as input for another iteration. The output contains the points of the input where the trend changes (reversals). This can be repeated several times, resulting in longer term trends.</p>
+<p>Here, we look at (up to) 15 iterations of the algorithm. It is no problem if the output of some iteration is too small to find a reversal in the next iteration, since the output will just be an empty dataframe in that case.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val numReversals = 15
+val dfWithReversals = new TrendCalculus2(oilDS, windowSize, spark).nReversalsJoinedWithMaxRev(numReversals)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>numReversals: Int = 15
+dfWithReversals: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp ... 17 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dfWithReversals.show(20, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+-----+---------+---------+---------+---------+---------+---------+---------+---------+---------+----------+----------+----------+----------+----------+----------+------+
+|ticker|x                  |y    |reversal1|reversal2|reversal3|reversal4|reversal5|reversal6|reversal7|reversal8|reversal9|reversal10|reversal11|reversal12|reversal13|reversal14|reversal15|maxRev|
++------+-------------------+-----+---------+---------+---------+---------+---------+---------+---------+---------+---------+----------+----------+----------+----------+----------+----------+------+
+|BCOUSD|2010-11-14 20:15:00|86.74|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:17:00|86.75|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:18:00|86.76|-1       |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |1     |
+|BCOUSD|2010-11-14 20:19:00|86.74|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:21:00|86.74|1        |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |1     |
+|BCOUSD|2010-11-14 20:24:00|86.75|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:26:00|86.77|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:27:00|86.75|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:28:00|86.79|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:32:00|86.81|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:33:00|86.81|-1       |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |1     |
+|BCOUSD|2010-11-14 20:34:00|86.81|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:35:00|86.79|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:36:00|86.8 |null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:37:00|86.79|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:38:00|86.79|1        |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |1     |
+|BCOUSD|2010-11-14 20:39:00|86.79|null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:40:00|86.8 |null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:41:00|86.8 |null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
+|BCOUSD|2010-11-14 20:42:00|86.8 |null     |null     |null     |null     |null     |null     |null     |null     |null     |null      |null      |null      |null      |null      |null      |0     |
++------+-------------------+-----+---------+---------+---------+---------+---------+---------+---------+---------+---------+----------+----------+----------+----------+----------+----------+------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The number of reversals decrease rapidly as more iterations are done.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dfWithReversals.cache.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: Long = 2859310
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">(1 to numReversals).foreach( i =&gt; println(dfWithReversals.filter(s&quot;reversal$i is not null&quot;).count))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>775283
+253258
+93804
+37068
+15397
+6595
+2858
+1240
+530
+230
+96
+45
+25
+11
+6
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We write the resulting dataframe to parquet in order to produce visualizations using Python.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val checkPointPath = TrendUtils.getTrendCalculusCheckpointPath
+dfWithReversals.write.mode(SaveMode.Overwrite).parquet(checkPointPath + &quot;joinedDSWithMaxRev_new&quot;)
+dfWithReversals.unpersist
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Visualization</strong></p>
+<p>The Python library plotly is used to make interactive visualizations.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from plotly.offline import plot
+from plotly.graph_objs import *
+from datetime import *
+checkPointPath = TrendUtils.getTrendCalculusCheckpointPath()
+joinedDS = spark.read.parquet(checkPointPath + &quot;joinedDSWithMaxRev_new&quot;).orderBy(&quot;x&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We check the size of the dataframe to see if it possible to handle locally since plotly is not available for distributed data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">joinedDS.count()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Almost 3 million rows might be too much for the driver! The timeseries has to be thinned out in order to display locally.</p>
+<p>No information about higher order trend reversals is lost since every higher order reversal is also a lower order reversal and the lowest orders of reversal are on the scale of minutes (maybe hours) and that is probably not very interesting considering that the data stretches over roughly 10 years!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">joinedDS.filter(&quot;maxRev &gt; 2&quot;).count()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Just shy of 100k rows is no problem for the driver.</p>
+<p>We select the relevant information in the dataframe for visualization.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">fullTS = joinedDS.filter(&quot;maxRev &gt; 2&quot;).select(&quot;x&quot;,&quot;y&quot;,&quot;maxRev&quot;).collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Picking an interval to focus on.</p>
+<p>Start and end dates as (year, month, day, hour, minute, second). Only year, month and day are required. The interval from years 1800 to 2200 ensures all data is selected.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">startDate = datetime(1800,1,1)
+endDate= datetime(2200,12,31)
+TS = [row for row in fullTS if startDate &lt;= row['x'] and row['x'] &lt;= endDate]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Setting up the visualization.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">numReversals = 15
+startReversal = 7
+
+allData = {'x': [row['x'] for row in TS], 'y': [row['y'] for row in TS], 'maxRev': [row['maxRev'] for row in TS]}
+revTS = [row for row in TS if row[2] &gt;= startReversal]
+colorList = ['rgba(' + str(tmp) + ',' + str(255-tmp) + ',' + str(255-tmp) + ',1)' for tmp in [int(i*255/(numReversals-startReversal+1)) for i in range(1,numReversals-startReversal+2)]]
+
+def getRevTS(tsWithRevMax, revMax):
+  x = [row[0] for row in tsWithRevMax if row[2] &gt;= revMax]
+  y = [row[1] for row in tsWithRevMax if row[2] &gt;= revMax]
+  return x,y,revMax
+
+reducedData = [getRevTS(revTS, i) for i in range(startReversal, numReversals+1)]
+
+markerPlots = [Scattergl(x=x, y=y, mode='markers', marker=dict(color=colorList[i-startReversal], size=i), name='Reversal ' + str(i)) for (x,y,i) in [getRevTS(revTS, i) for i in range(startReversal, numReversals+1)]]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Plotting result as plotly graph</strong></p>
+<p>The graph is interactive, one can drag to zoom in on an area (double-click to get back) and click on the legend to hide or show different series.</p>
+<p>Note that we have left out many of the lower order reversals in order to not make the graph too cluttered. The seventh order reversal (the lowest order shown) is still on the scale of hours to a few days.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">p = plot(
+  [Scattergl(x=allData['x'], y=allData['y'], mode='lines', name='Oil Price')] + markerPlots
+  ,
+  output_type='div'
+)
+
+displayHTML(p)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><img src="https://github.com/lamastex/spark-trend-calculus-examples/blob/master/images/trend_calculus_oil.png?raw=true" alt="trendcalculusoil" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

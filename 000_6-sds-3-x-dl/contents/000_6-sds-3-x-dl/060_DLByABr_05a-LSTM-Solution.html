@@ -1,0 +1,1139 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>060_DLByABr_05a-LSTM-Solution - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/000_6-sds-3-x-dl.html">000_6-sds-3-x-dl</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/049_DeepLearningIntro.html">049_DeepLearningIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/050_DLbyABr_01-Intro.html">050_DLbyABr_01-Intro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/051_DLbyABr_02-Neural-Networks.html">051_DLbyABr_02-Neural-Networks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/052_DLbyABr_02a-Keras-DFFN.html">052_DLbyABr_02a-Keras-DFFN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/053_DLbyABr_03-HelloTensorFlow.html">053_DLbyABr_03-HelloTensorFlow</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/054_DLbyABr_03a-BatchTensorFlowWithMatrices.html">054_DLbyABr_03a-BatchTensorFlowWithMatrices</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/055_DLbyABr_04-ConvolutionalNetworks.html">055_DLbyABr_04-ConvolutionalNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/056_DLbyABr_04a-Hands-On-MNIST-MLP.html">056_DLbyABr_04a-Hands-On-MNIST-MLP</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/057_DLbyABr_04b-Hands-On-MNIST-CNN.html">057_DLbyABr_04b-Hands-On-MNIST-CNN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/058_DLbyABr_04c-CIFAR-10.html">058_DLbyABr_04c-CIFAR-10</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/059_DLbyABr_05-RecurrentNetworks.html">059_DLbyABr_05-RecurrentNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/060_DLByABr_05a-LSTM-Solution.html" class="active">060_DLByABr_05a-LSTM-Solution</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/061_DLByABr_05b-LSTM-Language.html">061_DLByABr_05b-LSTM-Language</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/062_DLbyABr_06-GenerativeNetworks.html">062_DLbyABr_06-GenerativeNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/063_DLbyABr_07-ReinforcementLearning.html">063_DLbyABr_07-ReinforcementLearning</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064_DLbyABr_08-Operations.html">064_DLbyABr_08-Operations</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification.html">064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+<p>This is a 2019-2021 augmentation and update of <a href="https://www.linkedin.com/in/adbreind">Adam Breindel</a>'s initial notebooks.</p>
+<p><em>Thanks to <a href="https://www.linkedin.com/in/christianvonkoch/">Christian von Koch</a> and <a href="https://www.linkedin.com/in/william-anz%C3%A9n-b52003199/">William Anzén</a> for their contributions towards making these materials Spark 3.0.1 and Python 3+ compliant.</em></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-python">import numpy
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.utils import np_utils
+
+alphabet = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;
+char_to_int = dict((c, i) for i, c in enumerate(alphabet))
+int_to_char = dict((i, c) for i, c in enumerate(alphabet))
+
+seq_length = 3
+dataX = []
+dataY = []
+for i in range(0, len(alphabet) - seq_length, 1):
+	seq_in = alphabet[i:i + seq_length]
+	seq_out = alphabet[i + seq_length]
+	dataX.append([char_to_int[char] for char in seq_in])
+	dataY.append(char_to_int[seq_out])
+	print (seq_in, '-&gt;', seq_out)
+
+# reshape X to be [samples, time steps, features]
+X = numpy.reshape(dataX, (len(dataX), seq_length, 1))
+X = X / float(len(alphabet))
+y = np_utils.to_categorical(dataY)
+
+model = Sequential()
+model.add(LSTM(32, input_shape=(X.shape[1], X.shape[2])))
+model.add(Dense(y.shape[1], activation='softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.fit(X, y, epochs=400, batch_size=1, verbose=2)
+
+scores = model.evaluate(X, y)
+print(&quot;Model Accuracy: %.2f%%&quot; % (scores[1]*100))
+
+for pattern in ['WBC', 'WKL', 'WTU', 'DWF', 'MWO', 'VWW', 'GHW', 'JKW', 'PQW']:
+	pattern = [char_to_int[c] for c in pattern]
+	x = numpy.reshape(pattern, (1, len(pattern), 1))
+	x = x / float(len(alphabet))
+	prediction = model.predict(x, verbose=0)
+	index = numpy.argmax(prediction)
+	result = int_to_char[index]
+	seq_in = [int_to_char[value] for value in pattern]
+	print (seq_in, &quot;-&gt;&quot;, result)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Using TensorFlow backend.
+ABC -&gt; D
+BCD -&gt; E
+CDE -&gt; F
+DEF -&gt; G
+EFG -&gt; H
+FGH -&gt; I
+GHI -&gt; J
+HIJ -&gt; K
+IJK -&gt; L
+JKL -&gt; M
+KLM -&gt; N
+LMN -&gt; O
+MNO -&gt; P
+NOP -&gt; Q
+OPQ -&gt; R
+PQR -&gt; S
+QRS -&gt; T
+RST -&gt; U
+STU -&gt; V
+TUV -&gt; W
+UVW -&gt; X
+VWX -&gt; Y
+WXY -&gt; Z
+WARNING:tensorflow:From /databricks/python/lib/python3.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING:tensorflow:From /databricks/python/lib/python3.7/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+Epoch 1/400
+ - 1s - loss: 3.2607 - acc: 0.0435
+Epoch 2/400
+ - 0s - loss: 3.2471 - acc: 0.0435
+Epoch 3/400
+ - 0s - loss: 3.2406 - acc: 0.0435
+Epoch 4/400
+ - 0s - loss: 3.2340 - acc: 0.0435
+Epoch 5/400
+ - 0s - loss: 3.2268 - acc: 0.0435
+Epoch 6/400
+ - 0s - loss: 3.2188 - acc: 0.0435
+Epoch 7/400
+ - 0s - loss: 3.2119 - acc: 0.0000e+00
+Epoch 8/400
+ - 0s - loss: 3.2032 - acc: 0.0000e+00
+Epoch 9/400
+ - 0s - loss: 3.1923 - acc: 0.0000e+00
+Epoch 10/400
+ - 0s - loss: 3.1813 - acc: 0.0000e+00
+Epoch 11/400
+ - 0s - loss: 3.1704 - acc: 0.0000e+00
+Epoch 12/400
+ - 0s - loss: 3.1563 - acc: 0.0000e+00
+Epoch 13/400
+ - 0s - loss: 3.1418 - acc: 0.0435
+Epoch 14/400
+ - 0s - loss: 3.1271 - acc: 0.0000e+00
+Epoch 15/400
+ - 0s - loss: 3.1095 - acc: 0.0435
+Epoch 16/400
+ - 0s - loss: 3.0919 - acc: 0.0435
+Epoch 17/400
+ - 0s - loss: 3.0732 - acc: 0.0435
+Epoch 18/400
+ - 0s - loss: 3.0534 - acc: 0.0435
+Epoch 19/400
+ - 0s - loss: 3.0314 - acc: 0.0435
+Epoch 20/400
+ - 0s - loss: 3.0114 - acc: 0.0000e+00
+Epoch 21/400
+ - 0s - loss: 2.9832 - acc: 0.0000e+00
+Epoch 22/400
+ - 0s - loss: 2.9516 - acc: 0.0435
+Epoch 23/400
+ - 0s - loss: 2.9206 - acc: 0.0870
+Epoch 24/400
+ - 0s - loss: 2.8855 - acc: 0.1304
+Epoch 25/400
+ - 0s - loss: 2.8390 - acc: 0.0435
+Epoch 26/400
+ - 0s - loss: 2.7914 - acc: 0.0435
+Epoch 27/400
+ - 0s - loss: 2.7509 - acc: 0.0435
+Epoch 28/400
+ - 0s - loss: 2.6969 - acc: 0.0870
+Epoch 29/400
+ - 0s - loss: 2.6545 - acc: 0.0435
+Epoch 30/400
+ - 0s - loss: 2.6108 - acc: 0.0870
+Epoch 31/400
+ - 0s - loss: 2.5731 - acc: 0.0435
+Epoch 32/400
+ - 0s - loss: 2.5345 - acc: 0.0870
+Epoch 33/400
+ - 0s - loss: 2.5017 - acc: 0.0435
+Epoch 34/400
+ - 0s - loss: 2.4686 - acc: 0.1304
+Epoch 35/400
+ - 0s - loss: 2.4437 - acc: 0.0870
+Epoch 36/400
+ - 0s - loss: 2.4134 - acc: 0.1304
+Epoch 37/400
+ - 0s - loss: 2.3951 - acc: 0.1304
+Epoch 38/400
+ - 0s - loss: 2.3646 - acc: 0.1304
+Epoch 39/400
+ - 0s - loss: 2.3386 - acc: 0.1304
+Epoch 40/400
+ - 0s - loss: 2.3184 - acc: 0.1739
+Epoch 41/400
+ - 0s - loss: 2.2917 - acc: 0.1304
+Epoch 42/400
+ - 0s - loss: 2.2671 - acc: 0.1304
+Epoch 43/400
+ - 0s - loss: 2.2335 - acc: 0.2174
+Epoch 44/400
+ - 0s - loss: 2.2171 - acc: 0.1739
+Epoch 45/400
+ - 0s - loss: 2.1917 - acc: 0.1739
+Epoch 46/400
+ - 0s - loss: 2.1575 - acc: 0.1739
+Epoch 47/400
+ - 0s - loss: 2.1401 - acc: 0.1739
+Epoch 48/400
+ - 0s - loss: 2.1176 - acc: 0.0870
+Epoch 49/400
+ - 0s - loss: 2.0948 - acc: 0.2174
+Epoch 50/400
+ - 0s - loss: 2.0782 - acc: 0.2174
+Epoch 51/400
+ - 0s - loss: 2.0612 - acc: 0.2174
+Epoch 52/400
+ - 0s - loss: 2.0398 - acc: 0.3043
+Epoch 53/400
+ - 0s - loss: 2.0150 - acc: 0.2174
+Epoch 54/400
+ - 0s - loss: 1.9948 - acc: 0.2609
+Epoch 55/400
+ - 0s - loss: 1.9834 - acc: 0.2609
+Epoch 56/400
+ - 0s - loss: 1.9608 - acc: 0.3478
+Epoch 57/400
+ - 0s - loss: 1.9438 - acc: 0.2609
+Epoch 58/400
+ - 0s - loss: 1.9316 - acc: 0.3913
+Epoch 59/400
+ - 0s - loss: 1.9126 - acc: 0.2609
+Epoch 60/400
+ - 0s - loss: 1.9025 - acc: 0.3043
+Epoch 61/400
+ - 0s - loss: 1.8868 - acc: 0.2609
+Epoch 62/400
+ - 0s - loss: 1.8789 - acc: 0.2174
+Epoch 63/400
+ - 0s - loss: 1.8545 - acc: 0.2174
+Epoch 64/400
+ - 0s - loss: 1.8475 - acc: 0.3043
+Epoch 65/400
+ - 0s - loss: 1.8338 - acc: 0.2609
+Epoch 66/400
+ - 0s - loss: 1.8265 - acc: 0.3478
+Epoch 67/400
+ - 0s - loss: 1.8118 - acc: 0.3043
+Epoch 68/400
+ - 0s - loss: 1.7896 - acc: 0.3478
+Epoch 69/400
+ - 0s - loss: 1.7823 - acc: 0.3043
+Epoch 70/400
+ - 0s - loss: 1.7655 - acc: 0.4783
+Epoch 71/400
+ - 0s - loss: 1.7583 - acc: 0.4348
+Epoch 72/400
+ - 0s - loss: 1.7516 - acc: 0.3478
+Epoch 73/400
+ - 0s - loss: 1.7415 - acc: 0.3043
+Epoch 74/400
+ - 0s - loss: 1.7327 - acc: 0.4348
+Epoch 75/400
+ - 0s - loss: 1.7153 - acc: 0.3913
+Epoch 76/400
+ - 0s - loss: 1.7080 - acc: 0.3478
+Epoch 77/400
+ - 0s - loss: 1.6930 - acc: 0.3478
+Epoch 78/400
+ - 0s - loss: 1.6934 - acc: 0.4348
+Epoch 79/400
+ - 0s - loss: 1.6783 - acc: 0.4348
+Epoch 80/400
+ - 0s - loss: 1.6727 - acc: 0.4783
+Epoch 81/400
+ - 0s - loss: 1.6616 - acc: 0.4348
+Epoch 82/400
+ - 0s - loss: 1.6524 - acc: 0.4348
+Epoch 83/400
+ - 0s - loss: 1.6392 - acc: 0.5652
+Epoch 84/400
+ - 0s - loss: 1.6321 - acc: 0.6522
+Epoch 85/400
+ - 0s - loss: 1.6241 - acc: 0.5217
+Epoch 86/400
+ - 0s - loss: 1.6140 - acc: 0.6522
+Epoch 87/400
+ - 0s - loss: 1.6054 - acc: 0.5652
+Epoch 88/400
+ - 0s - loss: 1.5969 - acc: 0.6087
+Epoch 89/400
+ - 0s - loss: 1.5884 - acc: 0.5652
+Epoch 90/400
+ - 0s - loss: 1.5831 - acc: 0.5217
+Epoch 91/400
+ - 0s - loss: 1.5750 - acc: 0.5652
+Epoch 92/400
+ - 0s - loss: 1.5625 - acc: 0.6522
+Epoch 93/400
+ - 0s - loss: 1.5559 - acc: 0.6957
+Epoch 94/400
+ - 0s - loss: 1.5512 - acc: 0.6957
+Epoch 95/400
+ - 0s - loss: 1.5378 - acc: 0.6957
+Epoch 96/400
+ - 0s - loss: 1.5266 - acc: 0.7391
+Epoch 97/400
+ - 0s - loss: 1.5172 - acc: 0.6522
+Epoch 98/400
+ - 0s - loss: 1.5146 - acc: 0.6522
+Epoch 99/400
+ - 0s - loss: 1.5055 - acc: 0.6522
+Epoch 100/400
+ - 0s - loss: 1.4920 - acc: 0.6957
+Epoch 101/400
+ - 0s - loss: 1.4909 - acc: 0.7826
+Epoch 102/400
+ - 0s - loss: 1.4820 - acc: 0.6957
+Epoch 103/400
+ - 0s - loss: 1.4706 - acc: 0.6957
+Epoch 104/400
+ - 0s - loss: 1.4739 - acc: 0.7391
+Epoch 105/400
+ - 0s - loss: 1.4650 - acc: 0.6957
+Epoch 106/400
+ - 0s - loss: 1.4545 - acc: 0.7391
+Epoch 107/400
+ - 0s - loss: 1.4526 - acc: 0.7391
+Epoch 108/400
+ - 0s - loss: 1.4383 - acc: 0.7391
+Epoch 109/400
+ - 0s - loss: 1.4341 - acc: 0.6957
+Epoch 110/400
+ - 0s - loss: 1.4214 - acc: 0.6957
+Epoch 111/400
+ - 0s - loss: 1.4173 - acc: 0.7826
+Epoch 112/400
+ - 0s - loss: 1.4146 - acc: 0.7391
+Epoch 113/400
+ - 0s - loss: 1.4028 - acc: 0.6957
+Epoch 114/400
+ - 0s - loss: 1.3965 - acc: 0.7391
+Epoch 115/400
+ - 0s - loss: 1.3840 - acc: 0.6957
+Epoch 116/400
+ - 0s - loss: 1.3815 - acc: 0.6957
+Epoch 117/400
+ - 0s - loss: 1.3780 - acc: 0.6957
+Epoch 118/400
+ - 0s - loss: 1.3642 - acc: 0.7826
+Epoch 119/400
+ - 0s - loss: 1.3611 - acc: 0.6957
+Epoch 120/400
+ - 0s - loss: 1.3554 - acc: 0.8261
+Epoch 121/400
+ - 0s - loss: 1.3459 - acc: 0.7826
+Epoch 122/400
+ - 0s - loss: 1.3397 - acc: 0.6957
+Epoch 123/400
+ - 0s - loss: 1.3315 - acc: 0.7391
+Epoch 124/400
+ - 0s - loss: 1.3299 - acc: 0.7391
+Epoch 125/400
+ - 0s - loss: 1.3273 - acc: 0.6957
+Epoch 126/400
+ - 0s - loss: 1.3126 - acc: 0.7391
+Epoch 127/400
+ - 0s - loss: 1.3127 - acc: 0.8261
+Epoch 128/400
+ - 0s - loss: 1.3052 - acc: 0.7826
+Epoch 129/400
+ - 0s - loss: 1.3013 - acc: 0.7826
+Epoch 130/400
+ - 0s - loss: 1.2956 - acc: 0.8261
+Epoch 131/400
+ - 0s - loss: 1.2823 - acc: 0.8261
+Epoch 132/400
+ - 0s - loss: 1.2840 - acc: 0.7826
+Epoch 133/400
+ - 0s - loss: 1.2661 - acc: 0.7826
+Epoch 134/400
+ - 0s - loss: 1.2652 - acc: 0.7826
+Epoch 135/400
+ - 0s - loss: 1.2592 - acc: 0.8696
+Epoch 136/400
+ - 0s - loss: 1.2529 - acc: 0.8261
+Epoch 137/400
+ - 0s - loss: 1.2499 - acc: 0.8261
+Epoch 138/400
+ - 0s - loss: 1.2379 - acc: 0.8261
+Epoch 139/400
+ - 0s - loss: 1.2483 - acc: 0.8261
+Epoch 140/400
+ - 0s - loss: 1.2352 - acc: 0.8261
+Epoch 141/400
+ - 0s - loss: 1.2215 - acc: 0.8261
+Epoch 142/400
+ - 0s - loss: 1.2234 - acc: 0.7826
+Epoch 143/400
+ - 0s - loss: 1.2134 - acc: 0.8261
+Epoch 144/400
+ - 0s - loss: 1.2076 - acc: 0.8261
+Epoch 145/400
+ - 0s - loss: 1.2023 - acc: 0.8261
+Epoch 146/400
+ - 0s - loss: 1.1932 - acc: 0.8261
+Epoch 147/400
+ - 0s - loss: 1.1943 - acc: 0.8696
+Epoch 148/400
+ - 0s - loss: 1.1852 - acc: 0.8696
+Epoch 149/400
+ - 0s - loss: 1.1806 - acc: 0.7826
+Epoch 150/400
+ - 0s - loss: 1.1755 - acc: 0.8261
+Epoch 151/400
+ - 0s - loss: 1.1730 - acc: 0.8696
+Epoch 152/400
+ - 0s - loss: 1.1625 - acc: 0.8261
+Epoch 153/400
+ - 0s - loss: 1.1569 - acc: 0.9130
+Epoch 154/400
+ - 0s - loss: 1.1530 - acc: 0.8261
+Epoch 155/400
+ - 0s - loss: 1.1432 - acc: 0.8261
+Epoch 156/400
+ - 0s - loss: 1.1481 - acc: 0.8261
+Epoch 157/400
+ - 0s - loss: 1.1401 - acc: 0.8696
+Epoch 158/400
+ - 0s - loss: 1.1241 - acc: 0.8696
+Epoch 159/400
+ - 0s - loss: 1.1240 - acc: 0.9130
+Epoch 160/400
+ - 0s - loss: 1.1125 - acc: 0.9130
+Epoch 161/400
+ - 0s - loss: 1.1103 - acc: 0.8696
+Epoch 162/400
+ - 0s - loss: 1.1038 - acc: 0.8696
+Epoch 163/400
+ - 0s - loss: 1.0996 - acc: 0.8696
+Epoch 164/400
+ - 0s - loss: 1.0889 - acc: 0.8696
+Epoch 165/400
+ - 0s - loss: 1.0917 - acc: 0.8261
+Epoch 166/400
+ - 0s - loss: 1.0825 - acc: 0.8261
+Epoch 167/400
+ - 0s - loss: 1.0885 - acc: 0.8261
+Epoch 168/400
+ - 0s - loss: 1.0763 - acc: 0.8696
+Epoch 169/400
+ - 0s - loss: 1.0647 - acc: 0.8696
+Epoch 170/400
+ - 0s - loss: 1.0602 - acc: 0.8696
+Epoch 171/400
+ - 0s - loss: 1.0542 - acc: 0.8696
+Epoch 172/400
+ - 0s - loss: 1.0479 - acc: 0.8261
+Epoch 173/400
+ - 0s - loss: 1.0519 - acc: 0.8696
+Epoch 174/400
+ - 0s - loss: 1.0456 - acc: 0.9130
+Epoch 175/400
+ - 0s - loss: 1.0316 - acc: 0.9130
+Epoch 176/400
+ - 0s - loss: 1.0308 - acc: 0.9130
+Epoch 177/400
+ - 0s - loss: 1.0253 - acc: 0.9130
+Epoch 178/400
+ - 0s - loss: 1.0219 - acc: 0.9130
+Epoch 179/400
+ - 0s - loss: 1.0136 - acc: 0.9130
+Epoch 180/400
+ - 0s - loss: 1.0060 - acc: 0.9130
+Epoch 181/400
+ - 0s - loss: 1.0015 - acc: 0.9130
+Epoch 182/400
+ - 0s - loss: 1.0028 - acc: 0.8696
+Epoch 183/400
+ - 0s - loss: 0.9979 - acc: 0.8696
+Epoch 184/400
+ - 0s - loss: 0.9935 - acc: 0.9130
+Epoch 185/400
+ - 0s - loss: 0.9851 - acc: 0.9130
+Epoch 186/400
+ - 0s - loss: 0.9750 - acc: 0.8696
+Epoch 187/400
+ - 0s - loss: 0.9704 - acc: 0.8696
+Epoch 188/400
+ - 0s - loss: 0.9661 - acc: 0.9130
+Epoch 189/400
+ - 0s - loss: 0.9695 - acc: 0.8696
+Epoch 190/400
+ - 0s - loss: 0.9577 - acc: 0.9130
+Epoch 191/400
+ - 0s - loss: 0.9603 - acc: 0.9130
+Epoch 192/400
+ - 0s - loss: 0.9503 - acc: 0.9130
+Epoch 193/400
+ - 0s - loss: 0.9416 - acc: 0.8696
+Epoch 194/400
+ - 0s - loss: 0.9378 - acc: 0.9130
+Epoch 195/400
+ - 0s - loss: 0.9346 - acc: 0.8696
+Epoch 196/400
+ - 0s - loss: 0.9361 - acc: 0.9130
+Epoch 197/400
+ - 0s - loss: 0.9275 - acc: 0.8261
+Epoch 198/400
+ - 0s - loss: 0.9279 - acc: 0.8696
+Epoch 199/400
+ - 0s - loss: 0.9258 - acc: 0.9130
+Epoch 200/400
+ - 0s - loss: 0.9116 - acc: 0.9130
+Epoch 201/400
+ - 0s - loss: 0.9087 - acc: 0.9130
+Epoch 202/400
+ - 0s - loss: 0.9065 - acc: 0.8696
+Epoch 203/400
+ - 0s - loss: 0.8957 - acc: 0.9130
+Epoch 204/400
+ - 0s - loss: 0.8991 - acc: 0.9130
+Epoch 205/400
+ - 0s - loss: 0.8937 - acc: 0.9130
+Epoch 206/400
+ - 0s - loss: 0.8840 - acc: 0.9130
+Epoch 207/400
+ - 0s - loss: 0.8844 - acc: 0.9130
+Epoch 208/400
+ - 0s - loss: 0.8731 - acc: 0.9130
+Epoch 209/400
+ - 0s - loss: 0.8804 - acc: 0.9130
+Epoch 210/400
+ - 0s - loss: 0.8659 - acc: 0.9565
+Epoch 211/400
+ - 0s - loss: 0.8685 - acc: 0.9565
+Epoch 212/400
+ - 0s - loss: 0.8635 - acc: 0.9130
+Epoch 213/400
+ - 0s - loss: 0.8611 - acc: 0.9130
+Epoch 214/400
+ - 0s - loss: 0.8532 - acc: 0.9130
+Epoch 215/400
+ - 0s - loss: 0.8483 - acc: 0.8696
+Epoch 216/400
+ - 0s - loss: 0.8428 - acc: 0.8696
+Epoch 217/400
+ - 0s - loss: 0.8376 - acc: 0.9130
+Epoch 218/400
+ - 0s - loss: 0.8372 - acc: 0.9130
+Epoch 219/400
+ - 0s - loss: 0.8347 - acc: 0.9130
+Epoch 220/400
+ - 0s - loss: 0.8289 - acc: 0.8696
+Epoch 221/400
+ - 0s - loss: 0.8210 - acc: 0.9565
+Epoch 222/400
+ - 0s - loss: 0.8175 - acc: 0.9565
+Epoch 223/400
+ - 0s - loss: 0.8194 - acc: 0.9130
+Epoch 224/400
+ - 0s - loss: 0.8044 - acc: 0.8696
+Epoch 225/400
+ - 0s - loss: 0.8063 - acc: 0.8696
+Epoch 226/400
+ - 0s - loss: 0.8011 - acc: 0.9130
+Epoch 227/400
+ - 0s - loss: 0.7963 - acc: 0.9130
+Epoch 228/400
+ - 0s - loss: 0.7921 - acc: 0.9130
+Epoch 229/400
+ - 0s - loss: 0.7878 - acc: 0.9130
+Epoch 230/400
+ - 0s - loss: 0.7911 - acc: 0.8696
+Epoch 231/400
+ - 0s - loss: 0.7852 - acc: 0.9130
+Epoch 232/400
+ - 0s - loss: 0.7812 - acc: 0.9130
+Epoch 233/400
+ - 0s - loss: 0.7741 - acc: 0.9130
+Epoch 234/400
+ - 0s - loss: 0.7719 - acc: 0.8696
+Epoch 235/400
+ - 0s - loss: 0.7711 - acc: 0.9130
+Epoch 236/400
+ - 0s - loss: 0.7593 - acc: 0.9565
+Epoch 237/400
+ - 0s - loss: 0.7581 - acc: 0.9130
+Epoch 238/400
+ - 0s - loss: 0.7562 - acc: 0.9130
+Epoch 239/400
+ - 0s - loss: 0.7577 - acc: 0.9130
+Epoch 240/400
+ - 0s - loss: 0.7453 - acc: 0.8696
+Epoch 241/400
+ - 0s - loss: 0.7404 - acc: 0.9130
+Epoch 242/400
+ - 0s - loss: 0.7340 - acc: 0.9130
+Epoch 243/400
+ - 0s - loss: 0.7358 - acc: 0.9565
+Epoch 244/400
+ - 0s - loss: 0.7353 - acc: 0.9130
+Epoch 245/400
+ - 0s - loss: 0.7353 - acc: 0.9565
+Epoch 246/400
+ - 0s - loss: 0.7292 - acc: 0.9130
+Epoch 247/400
+ - 0s - loss: 0.7270 - acc: 0.9565
+Epoch 248/400
+ - 0s - loss: 0.7298 - acc: 0.9130
+Epoch 249/400
+ - 0s - loss: 0.7172 - acc: 0.9130
+Epoch 250/400
+ - 0s - loss: 0.7166 - acc: 0.9130
+Epoch 251/400
+ - 0s - loss: 0.7117 - acc: 0.9565
+Epoch 252/400
+ - 0s - loss: 0.7037 - acc: 0.9130
+Epoch 253/400
+ - 0s - loss: 0.7029 - acc: 0.9565
+Epoch 254/400
+ - 0s - loss: 0.6932 - acc: 0.9565
+Epoch 255/400
+ - 0s - loss: 0.6989 - acc: 0.9130
+Epoch 256/400
+ - 0s - loss: 0.6965 - acc: 0.9130
+Epoch 257/400
+ - 0s - loss: 0.6896 - acc: 0.9130
+Epoch 258/400
+ - 0s - loss: 0.6913 - acc: 0.9565
+Epoch 259/400
+ - 0s - loss: 0.6849 - acc: 0.9130
+Epoch 260/400
+ - 0s - loss: 0.6786 - acc: 0.9565
+Epoch 261/400
+ - 0s - loss: 0.6836 - acc: 0.8696
+Epoch 262/400
+ - 0s - loss: 0.6725 - acc: 0.8696
+Epoch 263/400
+ - 0s - loss: 0.6712 - acc: 0.9130
+Epoch 264/400
+ - 0s - loss: 0.6651 - acc: 0.9130
+Epoch 265/400
+ - 0s - loss: 0.6574 - acc: 0.9565
+Epoch 266/400
+ - 0s - loss: 0.6620 - acc: 0.9130
+Epoch 267/400
+ - 0s - loss: 0.6564 - acc: 0.9565
+Epoch 268/400
+ - 0s - loss: 0.6523 - acc: 0.9565
+Epoch 269/400
+ - 0s - loss: 0.6537 - acc: 0.9130
+Epoch 270/400
+ - 0s - loss: 0.6547 - acc: 0.9565
+Epoch 271/400
+ - 0s - loss: 0.6499 - acc: 0.9130
+Epoch 272/400
+ - 0s - loss: 0.6469 - acc: 0.8696
+Epoch 273/400
+ - 0s - loss: 0.6391 - acc: 0.9565
+Epoch 274/400
+ - 0s - loss: 0.6390 - acc: 0.9565
+Epoch 275/400
+ - 0s - loss: 0.6343 - acc: 0.9130
+Epoch 276/400
+ - 0s - loss: 0.6300 - acc: 0.9130
+Epoch 277/400
+ - 0s - loss: 0.6300 - acc: 0.9565
+Epoch 278/400
+ - 0s - loss: 0.6331 - acc: 0.9130
+Epoch 279/400
+ - 0s - loss: 0.6311 - acc: 0.9130
+Epoch 280/400
+ - 0s - loss: 0.6272 - acc: 0.9130
+Epoch 281/400
+ - 0s - loss: 0.6205 - acc: 0.9130
+Epoch 282/400
+ - 0s - loss: 0.6135 - acc: 0.9130
+Epoch 283/400
+ - 0s - loss: 0.6132 - acc: 0.9130
+Epoch 284/400
+ - 0s - loss: 0.6079 - acc: 0.9565
+Epoch 285/400
+ - 0s - loss: 0.6115 - acc: 0.9130
+Epoch 286/400
+ - 0s - loss: 0.6090 - acc: 0.8696
+Epoch 287/400
+ - 0s - loss: 0.6026 - acc: 0.9130
+Epoch 288/400
+ - 0s - loss: 0.5981 - acc: 0.9130
+Epoch 289/400
+ - 0s - loss: 0.5947 - acc: 0.9565
+Epoch 290/400
+ - 0s - loss: 0.5904 - acc: 0.9130
+Epoch 291/400
+ - 0s - loss: 0.5904 - acc: 0.9130
+Epoch 292/400
+ - 0s - loss: 0.5871 - acc: 0.9130
+Epoch 293/400
+ - 0s - loss: 0.5827 - acc: 0.9130
+Epoch 294/400
+ - 0s - loss: 0.5773 - acc: 0.9130
+Epoch 295/400
+ - 0s - loss: 0.5772 - acc: 0.9130
+Epoch 296/400
+ - 0s - loss: 0.5729 - acc: 0.9565
+Epoch 297/400
+ - 0s - loss: 0.5747 - acc: 0.9130
+Epoch 298/400
+ - 0s - loss: 0.5716 - acc: 0.8696
+Epoch 299/400
+ - 0s - loss: 0.5679 - acc: 0.9130
+Epoch 300/400
+ - 0s - loss: 0.5679 - acc: 0.9565
+Epoch 301/400
+ - 0s - loss: 0.5658 - acc: 0.9565
+Epoch 302/400
+ - 0s - loss: 0.5644 - acc: 0.9565
+Epoch 303/400
+ - 0s - loss: 0.5600 - acc: 0.9565
+Epoch 304/400
+ - 0s - loss: 0.5549 - acc: 0.9565
+Epoch 305/400
+ - 0s - loss: 0.5510 - acc: 0.9565
+Epoch 306/400
+ - 0s - loss: 0.5513 - acc: 0.9565
+Epoch 307/400
+ - 0s - loss: 0.5472 - acc: 0.9565
+Epoch 308/400
+ - 0s - loss: 0.5464 - acc: 0.9130
+Epoch 309/400
+ - 0s - loss: 0.5446 - acc: 0.8696
+Epoch 310/400
+ - 0s - loss: 0.5411 - acc: 0.9565
+Epoch 311/400
+ - 0s - loss: 0.5372 - acc: 0.9565
+Epoch 312/400
+ - 0s - loss: 0.5379 - acc: 0.9130
+Epoch 313/400
+ - 0s - loss: 0.5337 - acc: 0.9130
+Epoch 314/400
+ - 0s - loss: 0.5371 - acc: 0.9130
+Epoch 315/400
+ - 0s - loss: 0.5290 - acc: 0.9130
+Epoch 316/400
+ - 0s - loss: 0.5274 - acc: 0.9130
+Epoch 317/400
+ - 0s - loss: 0.5197 - acc: 0.8696
+Epoch 318/400
+ - 0s - loss: 0.5299 - acc: 0.9130
+Epoch 319/400
+ - 0s - loss: 0.5251 - acc: 0.9565
+Epoch 320/400
+ - 0s - loss: 0.5215 - acc: 0.9130
+Epoch 321/400
+ - 0s - loss: 0.5203 - acc: 0.9565
+Epoch 322/400
+ - 0s - loss: 0.5182 - acc: 0.9130
+Epoch 323/400
+ - 0s - loss: 0.5135 - acc: 0.9565
+Epoch 324/400
+ - 0s - loss: 0.5142 - acc: 0.8696
+Epoch 325/400
+ - 0s - loss: 0.5101 - acc: 0.9565
+Epoch 326/400
+ - 0s - loss: 0.5012 - acc: 0.9565
+Epoch 327/400
+ - 0s - loss: 0.5000 - acc: 0.9565
+Epoch 328/400
+ - 0s - loss: 0.4999 - acc: 0.9565
+Epoch 329/400
+ - 0s - loss: 0.4978 - acc: 0.9565
+Epoch 330/400
+ - 0s - loss: 0.4955 - acc: 0.9130
+Epoch 331/400
+ - 0s - loss: 0.4916 - acc: 0.9130
+Epoch 332/400
+ - 0s - loss: 0.4904 - acc: 0.9565
+Epoch 333/400
+ - 0s - loss: 0.4870 - acc: 0.9130
+Epoch 334/400
+ - 0s - loss: 0.4878 - acc: 0.9130
+Epoch 335/400
+ - 0s - loss: 0.4846 - acc: 0.9130
+Epoch 336/400
+ - 0s - loss: 0.4838 - acc: 0.8696
+Epoch 337/400
+ - 0s - loss: 0.4833 - acc: 0.9130
+Epoch 338/400
+ - 0s - loss: 0.4807 - acc: 0.8696
+Epoch 339/400
+ - 0s - loss: 0.4764 - acc: 0.9130
+Epoch 340/400
+ - 0s - loss: 0.4760 - acc: 0.9565
+Epoch 341/400
+ - 0s - loss: 0.4800 - acc: 0.9130
+Epoch 342/400
+ - 0s - loss: 0.4741 - acc: 0.9565
+Epoch 343/400
+ - 0s - loss: 0.4706 - acc: 1.0000
+Epoch 344/400
+ - 0s - loss: 0.4670 - acc: 1.0000
+Epoch 345/400
+ - 0s - loss: 0.4660 - acc: 0.9130
+Epoch 346/400
+ - 0s - loss: 0.4626 - acc: 0.9130
+Epoch 347/400
+ - 0s - loss: 0.4616 - acc: 0.9130
+Epoch 348/400
+ - 0s - loss: 0.4610 - acc: 0.9565
+Epoch 349/400
+ - 0s - loss: 0.4540 - acc: 0.9130
+Epoch 350/400
+ - 0s - loss: 0.4575 - acc: 0.9565
+Epoch 351/400
+ - 0s - loss: 0.4511 - acc: 0.9565
+Epoch 352/400
+ - 0s - loss: 0.4551 - acc: 0.9130
+Epoch 353/400
+ - 0s - loss: 0.4520 - acc: 0.9565
+Epoch 354/400
+ - 0s - loss: 0.4468 - acc: 0.9565
+Epoch 355/400
+ - 0s - loss: 0.4560 - acc: 0.9565
+Epoch 356/400
+ - 0s - loss: 0.4442 - acc: 0.9565
+Epoch 357/400
+ - 0s - loss: 0.4432 - acc: 0.9130
+Epoch 358/400
+ - 0s - loss: 0.4408 - acc: 0.9130
+Epoch 359/400
+ - 0s - loss: 0.4396 - acc: 0.9565
+Epoch 360/400
+ - 0s - loss: 0.4364 - acc: 0.9565
+Epoch 361/400
+ - 0s - loss: 0.4306 - acc: 0.9565
+Epoch 362/400
+ - 0s - loss: 0.4337 - acc: 0.9565
+Epoch 363/400
+ - 0s - loss: 0.4315 - acc: 0.9565
+Epoch 364/400
+ - 0s - loss: 0.4252 - acc: 0.9565
+Epoch 365/400
+ - 0s - loss: 0.4291 - acc: 0.9565
+Epoch 366/400
+ - 0s - loss: 0.4274 - acc: 0.9130
+Epoch 367/400
+ - 0s - loss: 0.4264 - acc: 0.9130
+Epoch 368/400
+ - 0s - loss: 0.4245 - acc: 0.9130
+Epoch 369/400
+ - 0s - loss: 0.4270 - acc: 0.9565
+Epoch 370/400
+ - 0s - loss: 0.4252 - acc: 0.9130
+Epoch 371/400
+ - 0s - loss: 0.4296 - acc: 1.0000
+Epoch 372/400
+ - 0s - loss: 0.4262 - acc: 0.9565
+Epoch 373/400
+ - 0s - loss: 0.4189 - acc: 0.9565
+Epoch 374/400
+ - 0s - loss: 0.4171 - acc: 0.9130
+Epoch 375/400
+ - 0s - loss: 0.4085 - acc: 0.9130
+Epoch 376/400
+ - 0s - loss: 0.4077 - acc: 0.9565
+Epoch 377/400
+ - 0s - loss: 0.4039 - acc: 0.9565
+Epoch 378/400
+ - 0s - loss: 0.4024 - acc: 0.9565
+Epoch 379/400
+ - 0s - loss: 0.4016 - acc: 0.9565
+Epoch 380/400
+ - 0s - loss: 0.4024 - acc: 0.9130
+Epoch 381/400
+ - 0s - loss: 0.3991 - acc: 1.0000
+Epoch 382/400
+ - 0s - loss: 0.3974 - acc: 0.9565
+Epoch 383/400
+ - 0s - loss: 0.3954 - acc: 0.9130
+Epoch 384/400
+ - 0s - loss: 0.3988 - acc: 0.9565
+Epoch 385/400
+ - 0s - loss: 0.3927 - acc: 0.9565
+Epoch 386/400
+ - 0s - loss: 0.3928 - acc: 1.0000
+Epoch 387/400
+ - 0s - loss: 0.3945 - acc: 1.0000
+Epoch 388/400
+ - 0s - loss: 0.3926 - acc: 0.9565
+Epoch 389/400
+ - 0s - loss: 0.3907 - acc: 0.9130
+Epoch 390/400
+ - 0s - loss: 0.3883 - acc: 0.9565
+Epoch 391/400
+ - 0s - loss: 0.3824 - acc: 0.9130
+Epoch 392/400
+ - 0s - loss: 0.3811 - acc: 0.9565
+Epoch 393/400
+ - 0s - loss: 0.3794 - acc: 0.9565
+Epoch 394/400
+ - 0s - loss: 0.3830 - acc: 0.9565
+Epoch 395/400
+ - 0s - loss: 0.3786 - acc: 1.0000
+Epoch 396/400
+ - 0s - loss: 0.3767 - acc: 1.0000
+Epoch 397/400
+ - 0s - loss: 0.3764 - acc: 0.9565
+Epoch 398/400
+ - 0s - loss: 0.3751 - acc: 0.9565
+Epoch 399/400
+ - 0s - loss: 0.3719 - acc: 1.0000
+Epoch 400/400
+ - 0s - loss: 0.3684 - acc: 1.0000
+
+23/23 [==============================] - 0s 4ms/step
+Model Accuracy: 100.00%
+['W', 'B', 'C'] -&gt; Z
+['W', 'K', 'L'] -&gt; Z
+['W', 'T', 'U'] -&gt; Z
+['D', 'W', 'F'] -&gt; I
+['M', 'W', 'O'] -&gt; Q
+['V', 'W', 'W'] -&gt; Y
+['G', 'H', 'W'] -&gt; J
+['J', 'K', 'W'] -&gt; M
+['P', 'Q', 'W'] -&gt; S
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_6-sds-3-x-dl/059_DLbyABr_05-RecurrentNetworks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_6-sds-3-x-dl/061_DLByABr_05b-LSTM-Language.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_6-sds-3-x-dl/059_DLbyABr_05-RecurrentNetworks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_6-sds-3-x-dl/061_DLByABr_05b-LSTM-Language.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

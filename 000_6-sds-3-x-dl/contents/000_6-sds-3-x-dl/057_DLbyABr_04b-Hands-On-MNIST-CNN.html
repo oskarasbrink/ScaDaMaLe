@@ -1,0 +1,754 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>057_DLbyABr_04b-Hands-On-MNIST-CNN - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/000_6-sds-3-x-dl.html">000_6-sds-3-x-dl</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/049_DeepLearningIntro.html">049_DeepLearningIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/050_DLbyABr_01-Intro.html">050_DLbyABr_01-Intro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/051_DLbyABr_02-Neural-Networks.html">051_DLbyABr_02-Neural-Networks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/052_DLbyABr_02a-Keras-DFFN.html">052_DLbyABr_02a-Keras-DFFN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/053_DLbyABr_03-HelloTensorFlow.html">053_DLbyABr_03-HelloTensorFlow</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/054_DLbyABr_03a-BatchTensorFlowWithMatrices.html">054_DLbyABr_03a-BatchTensorFlowWithMatrices</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/055_DLbyABr_04-ConvolutionalNetworks.html">055_DLbyABr_04-ConvolutionalNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/056_DLbyABr_04a-Hands-On-MNIST-MLP.html">056_DLbyABr_04a-Hands-On-MNIST-MLP</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/057_DLbyABr_04b-Hands-On-MNIST-CNN.html" class="active">057_DLbyABr_04b-Hands-On-MNIST-CNN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/058_DLbyABr_04c-CIFAR-10.html">058_DLbyABr_04c-CIFAR-10</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/059_DLbyABr_05-RecurrentNetworks.html">059_DLbyABr_05-RecurrentNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/060_DLByABr_05a-LSTM-Solution.html">060_DLByABr_05a-LSTM-Solution</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/061_DLByABr_05b-LSTM-Language.html">061_DLByABr_05b-LSTM-Language</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/062_DLbyABr_06-GenerativeNetworks.html">062_DLbyABr_06-GenerativeNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/063_DLbyABr_07-ReinforcementLearning.html">063_DLbyABr_07-ReinforcementLearning</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064_DLbyABr_08-Operations.html">064_DLbyABr_08-Operations</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification.html">064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+<p>This is a 2019-2021 augmentation and update of <a href="https://www.linkedin.com/in/adbreind">Adam Breindel</a>'s initial notebooks.</p>
+<p><em>Thanks to <a href="https://www.linkedin.com/in/christianvonkoch/">Christian von Koch</a> and <a href="https://www.linkedin.com/in/william-anz%C3%A9n-b52003199/">William Anzén</a> for their contributions towards making these materials Spark 3.0.1 and Python 3+ compliant.</em></p>
+</div>
+<div class="cell markdown">
+<p>Try out the first ConvNet -- the one we looked at earlier.</p>
+<p>This code is the same, but we'll run to 20 epochs so we can get a better feel for fitting/validation/overfitting trend.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from keras.utils import to_categorical
+import sklearn.datasets
+
+train_libsvm = &quot;/dbfs/databricks-datasets/mnist-digits/data-001/mnist-digits-train.txt&quot;
+test_libsvm = &quot;/dbfs/databricks-datasets/mnist-digits/data-001/mnist-digits-test.txt&quot;
+
+X_train, y_train = sklearn.datasets.load_svmlight_file(train_libsvm, n_features=784)
+X_train = X_train.toarray()
+
+X_test, y_test = sklearn.datasets.load_svmlight_file(test_libsvm, n_features=784)
+X_test = X_test.toarray()
+
+X_train = X_train.reshape( (X_train.shape[0], 28, 28, 1) )
+X_train = X_train.astype('float32')
+X_train /= 255
+y_train = to_categorical(y_train, num_classes=10)
+
+X_test = X_test.reshape( (X_test.shape[0], 28, 28, 1) )
+X_test = X_test.astype('float32')
+X_test /= 255
+y_test = to_categorical(y_test, num_classes=10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Using TensorFlow backend.
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-python">from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
+
+model = Sequential()
+
+model.add(Conv2D(8, # number of kernels 
+				(4, 4), # kernel size
+                padding='valid', # no padding; output will be smaller than input
+                input_shape=(28, 28, 1)))
+
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Flatten())
+model.add(Dense(128))
+model.add(Activation('relu')) # alternative syntax for applying activation
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+history = model.fit(X_train, y_train, batch_size=128, epochs=20, verbose=2, validation_split=0.1)
+
+scores = model.evaluate(X_test, y_test, verbose=1)
+
+print
+for i in range(len(model.metrics_names)):
+	print(&quot;%s: %f&quot; % (model.metrics_names[i], scores[i]))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>WARNING:tensorflow:From /databricks/python/lib/python3.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING:tensorflow:From /databricks/python/lib/python3.7/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+Train on 54000 samples, validate on 6000 samples
+Epoch 1/20
+ - 43s - loss: 0.2952 - acc: 0.9172 - val_loss: 0.1003 - val_acc: 0.9703
+Epoch 2/20
+ - 43s - loss: 0.0869 - acc: 0.9739 - val_loss: 0.0626 - val_acc: 0.9837
+Epoch 3/20
+ - 42s - loss: 0.0613 - acc: 0.9814 - val_loss: 0.0589 - val_acc: 0.9833
+Epoch 4/20
+ - 41s - loss: 0.0474 - acc: 0.9859 - val_loss: 0.0540 - val_acc: 0.9857
+Epoch 5/20
+ - 44s - loss: 0.0394 - acc: 0.9878 - val_loss: 0.0480 - val_acc: 0.9862
+Epoch 6/20
+ - 48s - loss: 0.0315 - acc: 0.9906 - val_loss: 0.0483 - val_acc: 0.9870
+Epoch 7/20
+ - 48s - loss: 0.0276 - acc: 0.9913 - val_loss: 0.0535 - val_acc: 0.9873
+Epoch 8/20
+ - 55s - loss: 0.0223 - acc: 0.9932 - val_loss: 0.0455 - val_acc: 0.9868
+Epoch 9/20
+ - 58s - loss: 0.0179 - acc: 0.9947 - val_loss: 0.0521 - val_acc: 0.9873
+Epoch 10/20
+ - 57s - loss: 0.0172 - acc: 0.9946 - val_loss: 0.0462 - val_acc: 0.9887
+Epoch 11/20
+ - 56s - loss: 0.0150 - acc: 0.9953 - val_loss: 0.0469 - val_acc: 0.9887
+Epoch 12/20
+ - 57s - loss: 0.0124 - acc: 0.9962 - val_loss: 0.0479 - val_acc: 0.9887
+Epoch 13/20
+ - 57s - loss: 0.0099 - acc: 0.9969 - val_loss: 0.0528 - val_acc: 0.9873
+Epoch 14/20
+ - 57s - loss: 0.0091 - acc: 0.9973 - val_loss: 0.0607 - val_acc: 0.9827
+Epoch 15/20
+ - 53s - loss: 0.0072 - acc: 0.9981 - val_loss: 0.0548 - val_acc: 0.9887
+Epoch 16/20
+ - 51s - loss: 0.0071 - acc: 0.9979 - val_loss: 0.0525 - val_acc: 0.9892
+Epoch 17/20
+ - 52s - loss: 0.0055 - acc: 0.9982 - val_loss: 0.0512 - val_acc: 0.9877
+Epoch 18/20
+ - 52s - loss: 0.0073 - acc: 0.9977 - val_loss: 0.0559 - val_acc: 0.9885
+Epoch 19/20
+ - 52s - loss: 0.0037 - acc: 0.9990 - val_loss: 0.0522 - val_acc: 0.9893
+Epoch 20/20
+ - 51s - loss: 0.0073 - acc: 0.9976 - val_loss: 0.0938 - val_acc: 0.9792
+
+   32/10000 [..............................] - ETA: 5s
+  128/10000 [..............................] - ETA: 5s
+  224/10000 [..............................] - ETA: 5s
+  352/10000 [&gt;.............................] - ETA: 5s
+  448/10000 [&gt;.............................] - ETA: 5s
+  576/10000 [&gt;.............................] - ETA: 4s
+  704/10000 [=&gt;............................] - ETA: 4s
+  832/10000 [=&gt;............................] - ETA: 4s
+  960/10000 [=&gt;............................] - ETA: 4s
+ 1056/10000 [==&gt;...........................] - ETA: 4s
+ 1152/10000 [==&gt;...........................] - ETA: 4s
+ 1248/10000 [==&gt;...........................] - ETA: 4s
+ 1312/10000 [==&gt;...........................] - ETA: 4s
+ 1440/10000 [===&gt;..........................] - ETA: 4s
+ 1568/10000 [===&gt;..........................] - ETA: 4s
+ 1632/10000 [===&gt;..........................] - ETA: 4s
+ 1760/10000 [====&gt;.........................] - ETA: 4s
+ 1888/10000 [====&gt;.........................] - ETA: 4s
+ 2016/10000 [=====&gt;........................] - ETA: 4s
+ 2144/10000 [=====&gt;........................] - ETA: 4s
+ 2240/10000 [=====&gt;........................] - ETA: 4s
+ 2368/10000 [======&gt;.......................] - ETA: 4s
+ 2464/10000 [======&gt;.......................] - ETA: 4s
+ 2560/10000 [======&gt;.......................] - ETA: 4s
+ 2624/10000 [======&gt;.......................] - ETA: 4s
+ 2752/10000 [=======&gt;......................] - ETA: 4s
+ 2848/10000 [=======&gt;......................] - ETA: 4s
+ 2944/10000 [=======&gt;......................] - ETA: 4s
+ 3072/10000 [========&gt;.....................] - ETA: 4s
+ 3168/10000 [========&gt;.....................] - ETA: 3s
+ 3264/10000 [========&gt;.....................] - ETA: 3s
+ 3328/10000 [========&gt;.....................] - ETA: 3s
+ 3456/10000 [=========&gt;....................] - ETA: 3s
+ 3584/10000 [=========&gt;....................] - ETA: 3s
+ 3744/10000 [==========&gt;...................] - ETA: 3s
+ 3840/10000 [==========&gt;...................] - ETA: 3s
+ 3968/10000 [==========&gt;...................] - ETA: 3s
+ 4064/10000 [===========&gt;..................] - ETA: 3s
+ 4160/10000 [===========&gt;..................] - ETA: 3s
+ 4256/10000 [===========&gt;..................] - ETA: 3s
+ 4352/10000 [============&gt;.................] - ETA: 3s
+ 4448/10000 [============&gt;.................] - ETA: 3s
+ 4544/10000 [============&gt;.................] - ETA: 3s
+ 4672/10000 [=============&gt;................] - ETA: 3s
+ 4800/10000 [=============&gt;................] - ETA: 2s
+ 4928/10000 [=============&gt;................] - ETA: 2s
+ 5024/10000 [==============&gt;...............] - ETA: 2s
+ 5120/10000 [==============&gt;...............] - ETA: 2s
+ 5248/10000 [==============&gt;...............] - ETA: 2s
+ 5376/10000 [===============&gt;..............] - ETA: 2s
+ 5504/10000 [===============&gt;..............] - ETA: 2s
+ 5600/10000 [===============&gt;..............] - ETA: 2s
+ 5696/10000 [================&gt;.............] - ETA: 2s
+ 5856/10000 [================&gt;.............] - ETA: 2s
+ 5984/10000 [================&gt;.............] - ETA: 2s
+ 6080/10000 [=================&gt;............] - ETA: 2s
+ 6176/10000 [=================&gt;............] - ETA: 2s
+ 6272/10000 [=================&gt;............] - ETA: 2s
+ 6400/10000 [==================&gt;...........] - ETA: 1s
+ 6528/10000 [==================&gt;...........] - ETA: 1s
+ 6624/10000 [==================&gt;...........] - ETA: 1s
+ 6720/10000 [===================&gt;..........] - ETA: 1s
+ 6816/10000 [===================&gt;..........] - ETA: 1s
+ 6944/10000 [===================&gt;..........] - ETA: 1s
+ 7104/10000 [====================&gt;.........] - ETA: 1s
+ 7168/10000 [====================&gt;.........] - ETA: 1s
+ 7296/10000 [====================&gt;.........] - ETA: 1s
+ 7424/10000 [=====================&gt;........] - ETA: 1s
+ 7552/10000 [=====================&gt;........] - ETA: 1s
+ 7616/10000 [=====================&gt;........] - ETA: 1s
+ 7744/10000 [======================&gt;.......] - ETA: 1s
+ 7840/10000 [======================&gt;.......] - ETA: 1s
+ 7968/10000 [======================&gt;.......] - ETA: 1s
+ 8064/10000 [=======================&gt;......] - ETA: 1s
+ 8192/10000 [=======================&gt;......] - ETA: 0s
+ 8288/10000 [=======================&gt;......] - ETA: 0s
+ 8384/10000 [========================&gt;.....] - ETA: 0s
+ 8512/10000 [========================&gt;.....] - ETA: 0s
+ 8640/10000 [========================&gt;.....] - ETA: 0s
+ 8736/10000 [=========================&gt;....] - ETA: 0s
+ 8864/10000 [=========================&gt;....] - ETA: 0s
+ 8960/10000 [=========================&gt;....] - ETA: 0s
+ 9088/10000 [==========================&gt;...] - ETA: 0s
+ 9216/10000 [==========================&gt;...] - ETA: 0s
+ 9344/10000 [===========================&gt;..] - ETA: 0s
+ 9472/10000 [===========================&gt;..] - ETA: 0s
+ 9568/10000 [===========================&gt;..] - ETA: 0s
+ 9664/10000 [===========================&gt;..] - ETA: 0s
+ 9760/10000 [============================&gt;.] - ETA: 0s
+ 9856/10000 [============================&gt;.] - ETA: 0s
+ 9952/10000 [============================&gt;.] - ETA: 0s
+10000/10000 [==============================] - 6s 551us/step
+loss: 0.092008
+acc: 0.978300
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+fig.set_size_inches((5,5))
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+display(fig)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Next, let's try adding another convolutional layer:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-python">model = Sequential()
+
+model.add(Conv2D(8, # number of kernels 
+						(4, 4), # kernel size
+                        padding='valid',
+                        input_shape=(28, 28, 1)))
+
+model.add(Activation('relu'))
+
+model.add(Conv2D(8, (4, 4))) # &lt;-- additional Conv layer
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Flatten())
+model.add(Dense(128))
+model.add(Activation('relu'))
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+history = model.fit(X_train, y_train, batch_size=128, epochs=15, verbose=2, validation_split=0.1)
+
+scores = model.evaluate(X_test, y_test, verbose=1)
+
+print
+for i in range(len(model.metrics_names)):
+	print(&quot;%s: %f&quot; % (model.metrics_names[i], scores[i]))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Train on 54000 samples, validate on 6000 samples
+Epoch 1/15
+ - 104s - loss: 0.2522 - acc: 0.9276 - val_loss: 0.0790 - val_acc: 0.9803
+Epoch 2/15
+ - 103s - loss: 0.0719 - acc: 0.9780 - val_loss: 0.0605 - val_acc: 0.9827
+Epoch 3/15
+ - 103s - loss: 0.0488 - acc: 0.9848 - val_loss: 0.0586 - val_acc: 0.9842
+Epoch 4/15
+ - 95s - loss: 0.0393 - acc: 0.9879 - val_loss: 0.0468 - val_acc: 0.9885
+Epoch 5/15
+ - 86s - loss: 0.0309 - acc: 0.9903 - val_loss: 0.0451 - val_acc: 0.9888
+Epoch 6/15
+ - 94s - loss: 0.0252 - acc: 0.9923 - val_loss: 0.0449 - val_acc: 0.9883
+Epoch 7/15
+ - 91s - loss: 0.0195 - acc: 0.9938 - val_loss: 0.0626 - val_acc: 0.9875
+Epoch 8/15
+ - 93s - loss: 0.0146 - acc: 0.9954 - val_loss: 0.0500 - val_acc: 0.9885
+Epoch 9/15
+ - 94s - loss: 0.0122 - acc: 0.9964 - val_loss: 0.0478 - val_acc: 0.9897
+Epoch 10/15
+ - 95s - loss: 0.0113 - acc: 0.9962 - val_loss: 0.0515 - val_acc: 0.9895
+Epoch 11/15
+ - 96s - loss: 0.0085 - acc: 0.9971 - val_loss: 0.0796 - val_acc: 0.9860
+Epoch 12/15
+ - 94s - loss: 0.0091 - acc: 0.9967 - val_loss: 0.0535 - val_acc: 0.9878
+Epoch 13/15
+ - 94s - loss: 0.0066 - acc: 0.9979 - val_loss: 0.0672 - val_acc: 0.9873
+Epoch 14/15
+ - 95s - loss: 0.0064 - acc: 0.9977 - val_loss: 0.0594 - val_acc: 0.9883
+Epoch 15/15
+ - 88s - loss: 0.0055 - acc: 0.9983 - val_loss: 0.0679 - val_acc: 0.9877
+
+   32/10000 [..............................] - ETA: 6s
+  128/10000 [..............................] - ETA: 6s
+  224/10000 [..............................] - ETA: 6s
+  320/10000 [..............................] - ETA: 5s
+  448/10000 [&gt;.............................] - ETA: 5s
+  512/10000 [&gt;.............................] - ETA: 6s
+  608/10000 [&gt;.............................] - ETA: 6s
+  704/10000 [=&gt;............................] - ETA: 6s
+  768/10000 [=&gt;............................] - ETA: 6s
+  864/10000 [=&gt;............................] - ETA: 6s
+  960/10000 [=&gt;............................] - ETA: 6s
+ 1056/10000 [==&gt;...........................] - ETA: 6s
+ 1120/10000 [==&gt;...........................] - ETA: 6s
+ 1184/10000 [==&gt;...........................] - ETA: 6s
+ 1312/10000 [==&gt;...........................] - ETA: 6s
+ 1408/10000 [===&gt;..........................] - ETA: 6s
+ 1472/10000 [===&gt;..........................] - ETA: 6s
+ 1568/10000 [===&gt;..........................] - ETA: 5s
+ 1664/10000 [===&gt;..........................] - ETA: 5s
+ 1728/10000 [====&gt;.........................] - ETA: 5s
+ 1824/10000 [====&gt;.........................] - ETA: 5s
+ 1920/10000 [====&gt;.........................] - ETA: 5s
+ 1984/10000 [====&gt;.........................] - ETA: 5s
+ 2080/10000 [=====&gt;........................] - ETA: 5s
+ 2176/10000 [=====&gt;........................] - ETA: 5s
+ 2240/10000 [=====&gt;........................] - ETA: 5s
+ 2336/10000 [======&gt;.......................] - ETA: 5s
+ 2400/10000 [======&gt;.......................] - ETA: 5s
+ 2464/10000 [======&gt;.......................] - ETA: 5s
+ 2560/10000 [======&gt;.......................] - ETA: 5s
+ 2656/10000 [======&gt;.......................] - ETA: 5s
+ 2752/10000 [=======&gt;......................] - ETA: 5s
+ 2848/10000 [=======&gt;......................] - ETA: 5s
+ 2976/10000 [=======&gt;......................] - ETA: 4s
+ 3072/10000 [========&gt;.....................] - ETA: 4s
+ 3168/10000 [========&gt;.....................] - ETA: 4s
+ 3232/10000 [========&gt;.....................] - ETA: 4s
+ 3296/10000 [========&gt;.....................] - ETA: 4s
+ 3392/10000 [=========&gt;....................] - ETA: 4s
+ 3488/10000 [=========&gt;....................] - ETA: 4s
+ 3552/10000 [=========&gt;....................] - ETA: 4s
+ 3616/10000 [=========&gt;....................] - ETA: 4s
+ 3712/10000 [==========&gt;...................] - ETA: 4s
+ 3808/10000 [==========&gt;...................] - ETA: 4s
+ 3904/10000 [==========&gt;...................] - ETA: 4s
+ 3968/10000 [==========&gt;...................] - ETA: 4s
+ 4064/10000 [===========&gt;..................] - ETA: 4s
+ 4160/10000 [===========&gt;..................] - ETA: 4s
+ 4256/10000 [===========&gt;..................] - ETA: 4s
+ 4352/10000 [============&gt;.................] - ETA: 4s
+ 4448/10000 [============&gt;.................] - ETA: 3s
+ 4544/10000 [============&gt;.................] - ETA: 3s
+ 4640/10000 [============&gt;.................] - ETA: 3s
+ 4736/10000 [=============&gt;................] - ETA: 3s
+ 4832/10000 [=============&gt;................] - ETA: 3s
+ 4928/10000 [=============&gt;................] - ETA: 3s
+ 5024/10000 [==============&gt;...............] - ETA: 3s
+ 5120/10000 [==============&gt;...............] - ETA: 3s
+ 5216/10000 [==============&gt;...............] - ETA: 3s
+ 5344/10000 [===============&gt;..............] - ETA: 3s
+ 5408/10000 [===============&gt;..............] - ETA: 3s
+ 5504/10000 [===============&gt;..............] - ETA: 3s
+ 5600/10000 [===============&gt;..............] - ETA: 3s
+ 5696/10000 [================&gt;.............] - ETA: 2s
+ 5760/10000 [================&gt;.............] - ETA: 2s
+ 5856/10000 [================&gt;.............] - ETA: 2s
+ 5952/10000 [================&gt;.............] - ETA: 2s
+ 6048/10000 [=================&gt;............] - ETA: 2s
+ 6144/10000 [=================&gt;............] - ETA: 2s
+ 6240/10000 [=================&gt;............] - ETA: 2s
+ 6304/10000 [=================&gt;............] - ETA: 2s
+ 6400/10000 [==================&gt;...........] - ETA: 2s
+ 6496/10000 [==================&gt;...........] - ETA: 2s
+ 6592/10000 [==================&gt;...........] - ETA: 2s
+ 6688/10000 [===================&gt;..........] - ETA: 2s
+ 6784/10000 [===================&gt;..........] - ETA: 2s
+ 6848/10000 [===================&gt;..........] - ETA: 2s
+ 6944/10000 [===================&gt;..........] - ETA: 2s
+ 7008/10000 [====================&gt;.........] - ETA: 2s
+ 7072/10000 [====================&gt;.........] - ETA: 2s
+ 7168/10000 [====================&gt;.........] - ETA: 1s
+ 7264/10000 [====================&gt;.........] - ETA: 1s
+ 7360/10000 [=====================&gt;........] - ETA: 1s
+ 7456/10000 [=====================&gt;........] - ETA: 1s
+ 7552/10000 [=====================&gt;........] - ETA: 1s
+ 7648/10000 [=====================&gt;........] - ETA: 1s
+ 7744/10000 [======================&gt;.......] - ETA: 1s
+ 7840/10000 [======================&gt;.......] - ETA: 1s
+ 7936/10000 [======================&gt;.......] - ETA: 1s
+ 8032/10000 [=======================&gt;......] - ETA: 1s
+ 8128/10000 [=======================&gt;......] - ETA: 1s
+ 8224/10000 [=======================&gt;......] - ETA: 1s
+ 8320/10000 [=======================&gt;......] - ETA: 1s
+ 8416/10000 [========================&gt;.....] - ETA: 1s
+ 8512/10000 [========================&gt;.....] - ETA: 1s
+ 8576/10000 [========================&gt;.....] - ETA: 0s
+ 8672/10000 [=========================&gt;....] - ETA: 0s
+ 8768/10000 [=========================&gt;....] - ETA: 0s
+ 8864/10000 [=========================&gt;....] - ETA: 0s
+ 8960/10000 [=========================&gt;....] - ETA: 0s
+ 9056/10000 [==========================&gt;...] - ETA: 0s
+ 9152/10000 [==========================&gt;...] - ETA: 0s
+ 9248/10000 [==========================&gt;...] - ETA: 0s
+ 9344/10000 [===========================&gt;..] - ETA: 0s
+ 9440/10000 [===========================&gt;..] - ETA: 0s
+ 9536/10000 [===========================&gt;..] - ETA: 0s
+ 9632/10000 [===========================&gt;..] - ETA: 0s
+ 9728/10000 [============================&gt;.] - ETA: 0s
+ 9824/10000 [============================&gt;.] - ETA: 0s
+ 9920/10000 [============================&gt;.] - ETA: 0s
+ 9984/10000 [============================&gt;.] - ETA: 0s
+10000/10000 [==============================] - 7s 683us/step
+loss: 0.046070
+acc: 0.988900
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="still-overfitting"><a class="header" href="#still-overfitting">Still Overfitting</a></h3>
+<p>We're making progress on our test error -- about 99% -- but just a bit for all the additional time, due to the network overfitting the data.</p>
+<p>There are a variety of techniques we can take to counter this -- forms of regularization.</p>
+<p>Let's try a relatively simple solution that works surprisingly well: add a pair of <code>Dropout</code> filters, a layer that randomly omits a fraction of neurons from each training batch (thus exposing each neuron to only part of the training data).</p>
+<p>We'll add more convolution kernels but shrink them to 3x3 as well.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-python">model = Sequential()
+
+model.add(Conv2D(32, # number of kernels 
+						(3, 3), # kernel size
+                        padding='valid',
+                        input_shape=(28, 28, 1)))
+
+model.add(Activation('relu'))
+
+model.add(Conv2D(32, (3, 3)))
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Dropout(rate=1-0.25)) #new parameter rate added (rate=1-keep_prob)
+model.add(Flatten())
+model.add(Dense(128))
+model.add(Activation('relu'))
+
+model.add(Dropout(rate=1-0.5)) #new parameter rate added (rate=1-keep_prob)
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+history = model.fit(X_train, y_train, batch_size=128, epochs=15, verbose=2)
+
+scores = model.evaluate(X_test, y_test, verbose=2)
+
+print
+for i in range(len(model.metrics_names)):
+	print(&quot;%s: %f&quot; % (model.metrics_names[i], scores[i]))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>WARNING:tensorflow:From /databricks/python/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:3733: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+Epoch 1/15
+ - 339s - loss: 0.3906 - acc: 0.8762
+Epoch 2/15
+ - 334s - loss: 0.1601 - acc: 0.9516
+Epoch 3/15
+ - 271s - loss: 0.1282 - acc: 0.9610
+Epoch 4/15
+ - 248s - loss: 0.1108 - acc: 0.9664
+Epoch 5/15
+ - 245s - loss: 0.0972 - acc: 0.9705
+Epoch 6/15
+ - 249s - loss: 0.0903 - acc: 0.9720
+Epoch 7/15
+ - 245s - loss: 0.0859 - acc: 0.9737
+Epoch 8/15
+ - 245s - loss: 0.0828 - acc: 0.9742
+Epoch 9/15
+ - 249s - loss: 0.0786 - acc: 0.9756
+Epoch 10/15
+ - 247s - loss: 0.0763 - acc: 0.9764
+Epoch 11/15
+ - 247s - loss: 0.0752 - acc: 0.9765
+Epoch 12/15
+ - 244s - loss: 0.0694 - acc: 0.9782
+Epoch 13/15
+ - 247s - loss: 0.0693 - acc: 0.9786
+Epoch 14/15
+ - 171s - loss: 0.0655 - acc: 0.9802
+Epoch 15/15
+ - 157s - loss: 0.0647 - acc: 0.9801
+loss: 0.023367
+acc: 0.992200
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="lab-wrapup"><a class="header" href="#lab-wrapup"><em>Lab Wrapup</em></a></h2>
+<p>From the last lab, you should have a test accuracy of over 99.1%</p>
+<p>For one more activity, try changing the optimizer to old-school &quot;sgd&quot; -- just to see how far we've come with these modern gradient descent techniques in the last few years.</p>
+<p>Accuracy will end up noticeably worse ... about 96-97% test accuracy. Two key takeaways:</p>
+<ul>
+<li>Without a good optimizer, even a very powerful network design may not achieve results</li>
+<li>In fact, we could replace the word &quot;optimizer&quot; there with
+<ul>
+<li>initialization</li>
+<li>activation</li>
+<li>regularization</li>
+<li>(etc.)</li>
+</ul>
+</li>
+<li>All of these elements we've been working with operate together in a complex way to determine final performance</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_6-sds-3-x-dl/056_DLbyABr_04a-Hands-On-MNIST-MLP.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_6-sds-3-x-dl/058_DLbyABr_04c-CIFAR-10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_6-sds-3-x-dl/056_DLbyABr_04a-Hands-On-MNIST-MLP.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_6-sds-3-x-dl/058_DLbyABr_04c-CIFAR-10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

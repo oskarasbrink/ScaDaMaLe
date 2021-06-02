@@ -1,0 +1,644 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>02_privacyPreservingDataScience_pseudonomyzation - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/01_privacyPreservingDataScience.html">01_privacyPreservingDataScience</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/02_privacyPreservingDataScience_pseudonomyzation.html" class="active">02_privacyPreservingDataScience_pseudonomyzation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/03_privacyPreservingDataScience_Differential_Privacy.html">03_privacyPreservingDataScience_Differential_Privacy</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="a-hrefhttpslamastexgithubioscalable-data-sciencesds2xsds-2x-scalable-data-engineering-sciencea"><a class="header" href="#a-hrefhttpslamastexgithubioscalable-data-sciencesds2xsds-2x-scalable-data-engineering-sciencea"><a href="https://lamastex.github.io/scalable-data-science/sds/2/x/">SDS-2.x, Scalable Data Engineering Science</a></a></h1>
+</div>
+<div class="cell markdown">
+<h3 id="a-hrefhttpswwwlinkedincominchristoffer-lc3a5ngstrc3b6m-7a460514bchristoffer-långströma"><a class="header" href="#a-hrefhttpswwwlinkedincominchristoffer-lc3a5ngstrc3b6m-7a460514bchristoffer-långströma"><a href="https://www.linkedin.com/in/christoffer-l%C3%A5ngstr%C3%B6m-7a460514b/">Christoffer Långström</a></a></h3>
+<p>This section aims to recreate &amp; elaborate on the material presented in the following talk at the 2018 Spark AI summit by Sim Semeonov &amp; Slater Victoroff. Following the advent of the General Data Protection Regulation in the EU, many data scientists are concerned about how this legislation will impact them &amp; what steps they should take in order to protect their data and themselves (as holders of the data) in terms of privacy. Here we focus on two vital aspects of GDPR compliant learning, keeping only pseudonymous identifiers and ensuring that subjects can ask what data is being kept about them.</p>
+<p>Watch the video below to see the full talk:</p>
+<h2 id="a-hrefhttpsdatabrickscomsessiongreat-models-with-great-privacy-optimizing-ml-ai-under-gdprgreat-models-with-great-privacy-optimizing-ml-and-ai-under-gdpr-by-sim-simeonov--slater-victoroffa"><a class="header" href="#a-hrefhttpsdatabrickscomsessiongreat-models-with-great-privacy-optimizing-ml-ai-under-gdprgreat-models-with-great-privacy-optimizing-ml-and-ai-under-gdpr-by-sim-simeonov--slater-victoroffa"><a href="https://databricks.com/session/great-models-with-great-privacy-optimizing-ml-ai-under-gdpr">Great Models with Great Privacy: Optimizing ML and AI Under GDPR by Sim Simeonov &amp; Slater Victoroff</a></a></h2>
+<p><a href="https://www.youtube.com/watch?v=DMzhTY891io"><img src="https://img.youtube.com/vi/DMzhTY891io/0.jpg" alt="XX" /></a></p>
+<h3 id="why-do-we-need-pseudonymization"><a class="header" href="#why-do-we-need-pseudonymization">Why Do We Need Pseudonymization?</a></h3>
+<p>We want to have identifiers for our data, but personal identifiers (name, social numbers) are to sensitive to store. By storing (strong) pseudonyms we satisfy this requirement. However, the GDPR stipulates that we must be able to answer the question &quot;What data do you have on me?&quot; from any individual in the data set (The Right To Know)</p>
+</div>
+<div class="cell markdown">
+<h4 id="what-we-need"><a class="header" href="#what-we-need">What we need:</a></h4>
+<ul>
+<li>Consistent serialization of data</li>
+<li>Assign a unique ID to each subject in the database</li>
+<li>Be able to identify individuals in the set, given their identifiers</li>
+<li>Ensure that adversarial parties may not decode these IDs</li>
+</ul>
+<p>Below is a flowchart showing the process at a high level. Each step is explained later in the guide.</p>
+</div>
+<div class="cell markdown">
+<img src="http://i.imgur.com/jSfzKzq.png" alt="drawing" width="1000"/>
+</div>
+<div class="cell markdown">
+<h3 id="1-data-serialization--randomization"><a class="header" href="#1-data-serialization--randomization">1) Data serialization &amp; Randomization</a></h3>
+<p>All data is not formatted equally, and if we wish any processing procedure to be consistent it is important to ensure proper formating. The formating employed here is for a row with fields firstname, lastname, gender, date of birth which is serialized according to the rule: firstname, lastname, gender, dob --&gt; Firstname|Lastname|M/F|YYYY-MM-DD. All of this information will be used in generating the pseudonymous ID, which will help prevent collisions caused by people having the same name, etc.</p>
+<p>An important point to be made here is that there should also be some random shuffling of the rows, to decrease further the possibility of adversaries using additional information to divulge sensitive attributes from your table. If the original data set is in alphabetical order, and the output (even thought it has been treated) remains in the same order, we would be vulnerable to attacks if someone compared alphabetical lists of names run through common hash functions.</p>
+<h6 id="note"><a class="header" href="#note">Note:</a></h6>
+<p>It is often necessary to &quot;fuzzy&quot; the data to some extent in the sense that we decrease the level of accuracy by, for instance, reducing a day of birth to year of birth to decrease the power of quasi-identifiers. As mentioned in part 1, quasi-identifiers are fields that do not individually provide sensitive information but can be utilized together to identify a member of the set. This is discussed further in the next section, for now we implement a basic version of distilling a date of birth to a year of birth. Similar approaches would be to only store initials of names, cities instead of adresses, or dropping information all together (such as genders).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions.rand
+
+// Define the class for pii
+case class pii(firstName: String, lastName: String, gender: String, dob: String)
+
+&quot;&quot;&quot;
+firstName,lastName,gender,dob
+Howard,Philips,M,1890-08-20
+Edgar,Allan,M,1809-01-19
+Arthur,Ignatius,M,1859-05-22
+Mary,Wollstonecraft,F,1797-08-30
+&quot;&quot;&quot;
+// Read the data from a csv file, then convert to dataset // /FileStore/tables/demo_pii.txt was uploaded
+val IDs = spark.read.option(&quot;header&quot;, &quot;true&quot;).csv(&quot;/FileStore/tables/demo_pii.txt&quot;).orderBy(rand())
+val ids = IDs.as[pii]
+ids.show
+ 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+--------------+------+----------+
+|firstName|      lastName|gender|       dob|
++---------+--------------+------+----------+
+|     Mary|Wollstonecraft|     F|1797-08-30|
+|    Edgar|         Allan|     M|1809-01-19|
+|   Arthur|      Ignatius|     M|1859-05-22|
+|   Howard|       Philips|     M|1890-08-20|
++---------+--------------+------+----------+
+
+notebook:6: warning: a pure expression does nothing in statement position; you may be omitting necessary parentheses
+&quot;&quot;&quot;
+^
+import org.apache.spark.sql.functions.rand
+defined class pii
+IDs: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [firstName: string, lastName: string ... 2 more fields]
+ids: org.apache.spark.sql.Dataset[pii] = [firstName: string, lastName: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions.rand
+
+// Define the class for pii
+case class pii(firstName: String, lastName: String, gender: String, dob: String)
+
+&quot;&quot;&quot;
+firstName,lastName,gender,dob
+Howard,Philips,M,1890-08-20
+Edgar,Allan,M,1809-01-19
+Arthur,Ignatius,M,1859-05-22
+Mary,Wollstonecraft,F,1797-08-30
+&quot;&quot;&quot;
+// Read the data from a csv file, then convert to dataset // /FileStore/tables/demo_pii.txt was uploaded
+val IDs = spark.read.option(&quot;header&quot;, &quot;true&quot;).csv(&quot;/FileStore/tables/demo_pii.txt&quot;).orderBy(rand())
+val ids = IDs.as[pii]
+ids.show
+ 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+--------------+------+----------+
+|firstName|      lastName|gender|       dob|
++---------+--------------+------+----------+
+|   Arthur|      Ignatius|     M|1859-05-22|
+|   Howard|       Philips|     M|1890-08-20|
+|    Edgar|         Allan|     M|1809-01-19|
+|     Mary|Wollstonecraft|     F|1797-08-30|
++---------+--------------+------+----------+
+
+notebook:6: warning: a pure expression does nothing in statement position; you may be omitting necessary parentheses
+&quot;&quot;&quot;
+^
+import org.apache.spark.sql.functions.rand
+defined class pii
+IDs: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [firstName: string, lastName: string ... 2 more fields]
+ids: org.apache.spark.sql.Dataset[pii] = [firstName: string, lastName: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ol start="2">
+<li>Hashing</li>
+</ol>
+<hr />
+<p><a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">Hash functions</a> apply mathematical algorithms to map abitrary size inputs to fixed length bit string (referred to as &quot;the hash&quot;), and cryptographic hash functions do so in a one-way fashion, i.e it is not possible to reverse this procedure. This makes them good candidates for generating pseudo-IDs since they cannot be reverse engineered but we may easily hash any given identifier and search for it in the database. However, the procedure is not completely satisfactory in terms of safety. Creating good hash functions is very hard, and so commonly a standard hash function is used such as the SHA series. This means unfortunately that anyone can hash common names, passwords, etc using these standard hash functions and then search for them in our database in what is known as a <a href="https://en.wikipedia.org/wiki/Rainbow_table">rainbow attack</a>.</p>
+<p>A realistic way of solving this problem is then to encrypt the resulting hashes using a strong encryption algorithm, making them safe for storage by the database holder.</p>
+<p>It is important to choose a secure destructive hash function, MD5, SHA-1 and SHA-2 are all vulnerable to <a href="https://en.wikipedia.org/wiki/Length_extension_attack">length extension attacks</a>, for a concrete example see <a href="https://blog.skullsecurity.org/2012/everything-you-need-to-know-about-hash-length-extension-attacks">here</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import java.security.MessageDigest
+import java.util.Base64
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.{IntegerType}
+
+// Perform SHA-256 hashin
+def sha_256(in: String): String = {
+  val md: MessageDigest = MessageDigest.getInstance(&quot;SHA-256&quot;)  // Instantiate MD with algo SHA-256
+  new String(Base64.getEncoder.encode(md.digest(in.getBytes)),&quot;UTF-8&quot;) // Encode the resulting byte array as a base64 string
+}
+
+// Generate UDFs from the above functions (not directly evaluated functions) 
+// If you wish to call these functions directly then use the names in parenthesis, if you wish to use them in a transform use the udf() names. 
+val sha__256 = udf(sha_256 _)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import java.security.MessageDigest
+import java.util.Base64
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.IntegerType
+sha_256: (in: String)String
+sha__256: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val myStr = &quot;Hello!&quot;  // Input is a string
+val myHash = sha_256(myStr)
+println(myHash) // The basic function takes a strings and outputs a string of bits in base64 (&quot;=&quot; represents padding becuse of the block based hashes)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>M00Bb3Vc1txYxTqG4YOIL47BT1L7BTRYh8il7dQsh7c=
+myStr: String = Hello!
+myHash: String = M00Bb3Vc1txYxTqG4YOIL47BT1L7BTRYh8il7dQsh7c=
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Concantination with a pipe character
+val p = lit(&quot;|&quot;)
+
+// Define our serialization rules as a column
+val rules: Column = {
+    //Use all of the pii for the pseudo ID   
+    concat(upper('firstName), p, upper('lastName), p, upper('gender), p,'dob)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>p: org.apache.spark.sql.Column = |
+rules: org.apache.spark.sql.Column = concat(upper(firstName), |, upper(lastName), |, upper(gender), |, dob)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="3-encryption"><a class="header" href="#3-encryption">3) Encryption</a></h3>
+<p>Encrypting our hashed IDs via a symmetric key cipher ensures that the data holder can encrypt the hashed identifiers for storage and avoid the hash table attacks discussed above, and can decrypt the values at will to lookup entries. The choice of encryption standard for these implementations is AES-128. When provided with a key (a 128 bit string in our case), the AES algorithm encrypts the data into a sequence of bits, traditionally formated in base 64 binary to text encoding. The key should be pseudorandomly generated, which is a standard functionality in Java implementions.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import javax.crypto.KeyGenerator
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+
+var myKey: String = &quot;&quot;
+
+// Perform AES-128 encryption
+def encrypt(in: String): String = {
+  val raw = KeyGenerator.getInstance(&quot;AES&quot;).generateKey.getEncoded()      //Initiates a key generator object of type AES, generates the key, and encodes &amp; returns the key 
+  myKey = new String(Base64.getEncoder.encode(raw),&quot;UTF-8&quot;)       //String representation of the key for decryption
+  val skeySpec = new SecretKeySpec(raw, &quot;AES&quot;)      //Creates a secret key object from our generated key
+  val cipher = Cipher.getInstance(&quot;AES&quot;)      //Initate a cipher object of type AES
+  cipher.init(Cipher.ENCRYPT_MODE, skeySpec)  // Initialize the cipher with our secret key object, specify encryption
+  new String(Base64.getEncoder.encode(cipher.doFinal(in.getBytes)),&quot;UTF-8&quot;)  // Encode the resulting byte array as a base64 string
+}
+
+// Perform AES-128 decryption
+def decrypt(in: String): String = {
+  val k = new SecretKeySpec(Base64.getDecoder.decode(myKey.getBytes), &quot;AES&quot;)    //Decode the key from base 64 representation
+  val cipher = Cipher.getInstance(&quot;AES&quot;)       //Initate a cipher object of type AES
+  cipher.init(Cipher.DECRYPT_MODE, k)       // Initialize the cipher with our secret key object, specify decryption
+  new String((cipher.doFinal(Base64.getDecoder.decode(in))),&quot;UTF-8&quot;)      // Encode the resulting byte array as a base64 string
+}
+
+val myEnc = udf(encrypt _)
+val myDec = udf(decrypt _)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import javax.crypto.KeyGenerator
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+myKey: String = &quot;&quot;
+encrypt: (in: String)String
+decrypt: (in: String)String
+myEnc: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+myDec: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val secretStr = encrypt(myStr) //Output is a bit array encoded as a string in base64
+println(&quot;Encrypted: &quot;.concat(secretStr))  
+println(&quot;Decrypted: &quot;.concat(decrypt(secretStr)))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Encrypted: qrg96tS/xhbWAKymqZQd+w==
+Decrypted: Hello!
+secretStr: String = qrg96tS/xhbWAKymqZQd+w==
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="4-define-mappings"><a class="header" href="#4-define-mappings">4) Define Mappings</a></h3>
+<p>Now we are ready to define the mappings that make up our pseudonymization procedure:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val psids = {
+  //Serialize -&gt; Hash -&gt; Encrypt
+    myEnc(
+       sha__256(
+        rules)
+  ).as(s&quot;pseudoID&quot;)       
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>psids: org.apache.spark.sql.Column = UDF(UDF(concat(upper(firstName), |, upper(lastName), |, upper(gender), |, dob))) AS `pseudoID`
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="next-we-define-what-we-mean-by-a-quasi-id-column-and-fuzzy-the-data-by-reducing-the-date-of-birth-into-a-year-of-birth"><a class="header" href="#next-we-define-what-we-mean-by-a-quasi-id-column-and-fuzzy-the-data-by-reducing-the-date-of-birth-into-a-year-of-birth">Next, we define what we mean by a quasi-id column, and &quot;fuzzy&quot; the data by reducing the date of birth into a year of birth</a></h5>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val quasiIdCols: Seq[Column] = Seq(
+  //Fuzzify data
+  'gender,
+  'dob.substr(1, 4).cast(IntegerType).as(&quot;yob&quot;)
+)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>quasiIdCols: Seq[org.apache.spark.sql.Column] = List(gender, CAST(substring(dob, 1, 4) AS INT) AS `yob`)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Here we define the PII transformation to be applied to our dataset, which outputs a dataframe modified according to our specifications. 
+
+def removePII(ds: Dataset[_]): DataFrame = 
+  ds.toDF.select(quasiIdCols ++ Seq(psids): _*)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>removePII: (ds: org.apache.spark.sql.Dataset[_])org.apache.spark.sql.DataFrame
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="5-pseudonymize-the-data"><a class="header" href="#5-pseudonymize-the-data">5) Pseudonymize the Data</a></h3>
+<p>Here we perform the actual transformation, saving the output in a new dataframe. This is the data we should be storing in our databases for future use.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val masterIds = ids.transform(removePII)
+display(masterIds)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>gender</th>
+<th>yob</th>
+<th>pseudoID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M</td>
+<td>1859.0</td>
+<td>b48AjgbsA4w7SWIhkpBVVVYORZksKJeCF/CF/xIdGkmneOYVr4HlKeh2N5YjE24M</td>
+</tr>
+<tr class="even">
+<td>M</td>
+<td>1890.0</td>
+<td>04AG3WaElWdPv7g6thR7KqiPcrDD6uwGzMvNyzkmbwXvw5b5X10bZdliUr4Ts0cx</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>1809.0</td>
+<td>7sJpA5IjhYN5C+nqDCf5pT602OhTvClenIJ1DX3HeMLkc1JoAuplHNguAK1S8WAG</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>1797.0</td>
+<td>bOc7c9e3bl5tF9EdlEFJmtnmv0HSUC+vEx3fo4v3LS4goGRx47/iQpT8ARrTyvuq</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="6-partner-specific-encoding"><a class="header" href="#6-partner-specific-encoding">6) Partner Specific Encoding</a></h3>
+<p>In practice it may be desirable to, as the trusted data holder, send out partial data sets to different partners. Here, the main concern is that if we send two partial data sets to two different partners, those two partners may merge their data sets together without our knowledge, and obtain more information than we intended. This issue is discussed further in the next part, where attacks to divulge sensitive information from pseudonymized data sets is handled, but for now we will show how to limit the dangers using partner specific encoding.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// If we do not need partner specific passwords, it is sufficient to simply call the transform twice since the randomized key will be different each time. 
+
+val partnerIdsA = ids.transform(removePII)
+val partnerIdsB = ids.transform(removePII)
+
+display(partnerIdsB)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>gender</th>
+<th>yob</th>
+<th>pseudoID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M</td>
+<td>1859.0</td>
+<td>ZXfGvFpVfvrsqYcWlyKZ/R9OZIgGq7IAeaN4ZUdVEOkwsOCr0iLZkyYpNF9s+ycx</td>
+</tr>
+<tr class="even">
+<td>M</td>
+<td>1890.0</td>
+<td>npQ386CleB7dL3BM9E513SPzvd9jMFlTtN0rC27m6eFOTwPsDrUGJmZ9L4DgAN58</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>1809.0</td>
+<td>1Gyh7ynu2lwz43YfCyiu9jFiONehWZF11qzM1d9g2XWTl8y1VXpn80IJ29jEUHA8</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>1797.0</td>
+<td>zi0ZYjYUX5g254CRANgeLtwt4zZDz9n9DrQ8h5tsLBrQQXSSr/P1T0zpJxxJHdXD</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(partnerIdsA)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>gender</th>
+<th>yob</th>
+<th>pseudoID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M</td>
+<td>1859.0</td>
+<td>3XwROq3GyPYJdiO3ZN+OuUowX4jRix6J+NNmkEMuOqTu2k3QssXp9b7Bi0O/LXAZ</td>
+</tr>
+<tr class="even">
+<td>M</td>
+<td>1890.0</td>
+<td>XwLU5HKLQFGefeq2EX+GwhF9tEyeU/Q6/aKgy8ZMYJ0AD/3aBPyi1/k/NrP8Su1j</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>1809.0</td>
+<td>E3RQ+PodF86W4AOMRcoNL1OoXDB1PmFsyXj+ynlK6rl0XkJFeDz8nfVYAX7+6MHu</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>1797.0</td>
+<td>wbS+eZ4QgpW6SONneBm9+jTPHE2J3bWba/ZwL3+iWZo5K+kElhmFm7DjpFyAmp37</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>The data set above is now pseudonymized, but is still vulnerable to other forms of privacy breaches. For instance, since there is only one female in the set, an adversary who only knows that their target is in the set and is a woman, her information is still subject to attacks. For more information see <a href="https://en.wikipedia.org/wiki/K-anonymity">K-anonymity</a>, see also the <a href="https://epic.org/privacy/reidentification/Sweeney_Article.pdf">original paper</a></p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_8-sds-3-x-pri/01_privacyPreservingDataScience.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_8-sds-3-x-pri/03_privacyPreservingDataScience_Differential_Privacy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_8-sds-3-x-pri/01_privacyPreservingDataScience.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_8-sds-3-x-pri/03_privacyPreservingDataScience_Differential_Privacy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

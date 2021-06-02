@@ -1,0 +1,542 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>02_streamable_trend_calculus - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000a_finance_utils.html">000a_finance_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000b_gdelt_utils.html">000b_gdelt_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000_TrendsInFinancialStocksAndNewsEvents.html">000_TrendsInFinancialStocksAndNewsEvents</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00a_FX1M.html">00a_FX1M</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html">00b_yfinance</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html">01_trend_calculus_showcase</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html" class="active">02_streamable_trend_calculus</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html">03_streamable_trend_calculus_estimators</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html">030_Spark_GDELT_project_001</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html">030a_gdelt_EOI_detection</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/images/images.html">images</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="streaming-trend-calculus-with-maximum-necessary-reversals"><a class="header" href="#streaming-trend-calculus-with-maximum-necessary-reversals">Streaming Trend Calculus with Maximum Necessary Reversals</a></h2>
+<p>Johannes Graner (<a href="https://www.linkedin.com/in/johannes-graner-475677129/">LinkedIn</a>), Albert Nilsson (<a href="https://www.linkedin.com/in/albert-nilsson-09b62b191/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2020, Uppsala, Sweden</p>
+<p>This project was supported by Combient Mix AB through summer internships at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+<hr />
+<p><strong>Resources</strong></p>
+<p>This builds on the following library and its antecedents therein:</p>
+<ul>
+<li><a href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></li>
+</ul>
+<p><strong>This work was inspired by:</strong></p>
+<ul>
+<li>Antoine Aamennd's <a href="https://github.com/aamend/texata-r2-2017">texata-2017</a></li>
+<li>Andrew Morgan's <a href="https://github.com/ByteSumoLtd/TrendCalculus-lua">Trend Calculus Library</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./000a_finance_utils&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<p>We use the spark-trend-calculus library and Spark structured streams over delta.io files to obtain a representation of the complete time series of trends with their k-th order reversal.</p>
+<p>This representation is a sufficient statistic for a Markov model of trends that we show in the next notebook.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object TrendUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import java.sql.Timestamp
+import io.delta.tables._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode, Trigger}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
+import org.lamastex.spark.trendcalculus._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import java.sql.Timestamp
+import io.delta.tables._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode, Trigger}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
+import org.lamastex.spark.trendcalculus._
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Input data in s3. The data contains oil price data from 2010 to last month and gold price data from 2009 to last month.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rootPath = &quot;s3a://XXXXX/summerinterns2020/johannes/streamable-trend-calculus/&quot;
+val oilGoldPath = rootPath + &quot;oilGoldDelta&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.read.format(&quot;delta&quot;).load(oilGoldPath).orderBy(&quot;x&quot;).show(20,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------+
+|ticker|x                  |y     |
++------+-------------------+------+
+|XAUUSD|2009-03-15 17:00:00|929.6 |
+|XAUUSD|2009-03-15 18:00:00|926.05|
+|XAUUSD|2009-03-15 18:01:00|925.9 |
+|XAUUSD|2009-03-15 18:02:00|925.9 |
+|XAUUSD|2009-03-15 18:03:00|926.95|
+|XAUUSD|2009-03-15 18:04:00|925.8 |
+|XAUUSD|2009-03-15 18:05:00|926.35|
+|XAUUSD|2009-03-15 18:06:00|925.8 |
+|XAUUSD|2009-03-15 18:07:00|925.6 |
+|XAUUSD|2009-03-15 18:08:00|925.7 |
+|XAUUSD|2009-03-15 18:09:00|925.4 |
+|XAUUSD|2009-03-15 18:10:00|925.75|
+|XAUUSD|2009-03-15 18:11:00|925.7 |
+|XAUUSD|2009-03-15 18:12:00|925.65|
+|XAUUSD|2009-03-15 18:13:00|925.65|
+|XAUUSD|2009-03-15 18:14:00|925.75|
+|XAUUSD|2009-03-15 18:15:00|925.75|
+|XAUUSD|2009-03-15 18:16:00|925.65|
+|XAUUSD|2009-03-15 18:17:00|925.6 |
+|XAUUSD|2009-03-15 18:18:00|925.85|
++------+-------------------+------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Reading the data from s3 as a Structured Stream to simulate streaming.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val input = spark
+  .readStream
+  .format(&quot;delta&quot;)
+  .load(oilGoldPath)
+  .as[TickerPoint]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>input: org.apache.spark.sql.Dataset[org.lamastex.spark.trendcalculus.TickerPoint] = [ticker: string, x: timestamp ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Using the trendcalculus library to 1. Apply Trend Calculus to the streaming dataset. - Save the result as a delta table. - Read the result as a stream. - Repeat from 1. using the latest result as input. Stop when result is empty.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val windowSize = 2
+
+// Initializing variables for while loop.
+var i = 1
+var prevSinkPath = &quot;&quot;
+var sinkPath = rootPath + &quot;multiSinks/reversal&quot; + (i)
+var chkptPath = rootPath + &quot;multiSinks/checkpoint/&quot; + (i)
+
+// The first order reversal.
+var stream = new TrendCalculus2(input, windowSize, spark)
+  .reversals
+  .select(&quot;tickerPoint.ticker&quot;, &quot;tickerPoint.x&quot;, &quot;tickerPoint.y&quot;, &quot;reversal&quot;)
+  .as[FlatReversal]
+  .writeStream
+  .format(&quot;delta&quot;)
+  .option(&quot;path&quot;, sinkPath)
+  .option(&quot;checkpointLocation&quot;, chkptPath)
+  .trigger(Trigger.Once())
+  .start
+
+stream.processAllAvailable
+
+i += 1
+
+var lastReversalSeries = spark.emptyDataset[TickerPoint]
+while (!spark.read.format(&quot;delta&quot;).load(sinkPath).isEmpty) {
+  
+  prevSinkPath = rootPath + &quot;multiSinks/reversal&quot; + (i-1)
+  sinkPath = rootPath + &quot;multiSinks/reversal&quot; + (i)
+  chkptPath = rootPath + &quot;multiSinks/checkpoint/&quot; + (i)
+  
+  // Reading last result as stream
+  lastReversalSeries = spark
+    .readStream
+    .format(&quot;delta&quot;)
+    .load(prevSinkPath)
+    .drop(&quot;reversal&quot;)
+    .as[TickerPoint]
+
+  // Writing next result
+  stream = new TrendCalculus2(lastReversalSeries, windowSize, spark)
+    .reversals
+    .select(&quot;tickerPoint.ticker&quot;, &quot;tickerPoint.x&quot;, &quot;tickerPoint.y&quot;, &quot;reversal&quot;)
+    .as[FlatReversal]
+    .map( rev =&gt; rev.copy(reversal=i*rev.reversal))
+    .writeStream
+    .format(&quot;delta&quot;)
+    .option(&quot;path&quot;, sinkPath)
+    .option(&quot;checkpointLocation&quot;, chkptPath)
+    .partitionBy(&quot;ticker&quot;)
+    .trigger(Trigger.Once())
+    .start
+  
+  stream.processAllAvailable()
+  
+  i += 1
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Checking the total number of reversals written. The last sink is empty so the highest order reversal is \[\text{number of sinks} - 1\].</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val i = dbutils.fs.ls(rootPath + &quot;multiSinks&quot;).length - 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>i: Int = 18
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The written delta tables can be read as streams but for now we read them as static datasets to be able to join them together.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val sinkPaths = (1 to i-1).map(rootPath + &quot;multiSinks/reversal&quot; + _)
+val maxRevPath = rootPath + &quot;maxRev&quot;
+val revTables = sinkPaths.map(DeltaTable.forPath(_).toDF.as[FlatReversal])
+val oilGoldTable = DeltaTable.forPath(oilGoldPath).toDF.as[TickerPoint]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The number of reversals decrease rapidly as the reversal order increases.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">revTables.map(_.cache.count)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res6: scala.collection.immutable.IndexedSeq[Long] = Vector(1954849, 677939, 262799, 108202, 46992, 21154, 9703, 4427, 1992, 890, 404, 183, 83, 35, 15, 7, 2)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Joining all results to get a dataset with all reversals in a single column.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def maxByAbs(a: Int, b: Int): Int = {
+  Seq(a,b).maxBy(math.abs)
+}
+
+val maxByAbsUDF = udf((a: Int, b: Int) =&gt; maxByAbs(a,b))
+
+val maxRevDS = revTables.foldLeft(oilGoldTable.toDF.withColumn(&quot;reversal&quot;, lit(0)).as[FlatReversal]){ (acc: Dataset[FlatReversal], ds: Dataset[FlatReversal]) =&gt; 
+  acc
+    .toDF
+    .withColumnRenamed(&quot;reversal&quot;, &quot;oldMaxRev&quot;)
+    .join(ds.select($&quot;ticker&quot; as &quot;tmpt&quot;, $&quot;x&quot; as &quot;tmpx&quot;, $&quot;reversal&quot; as &quot;newRev&quot;), $&quot;ticker&quot; === $&quot;tmpt&quot; &amp;&amp; $&quot;x&quot; === $&quot;tmpx&quot;, &quot;left&quot;)
+    .drop(&quot;tmpt&quot;, &quot;tmpx&quot;)
+    .na.fill(0,Seq(&quot;newRev&quot;))
+    .withColumn(&quot;reversal&quot;, maxByAbsUDF($&quot;oldMaxRev&quot;, $&quot;newRev&quot;))
+    .select(&quot;ticker&quot;, &quot;x&quot;, &quot;y&quot;, &quot;reversal&quot;)
+    .as[FlatReversal]    
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>maxByAbs: (a: Int, b: Int)Int
+maxByAbsUDF: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$9089/155868360@d163ce5,IntegerType,List(Some(class[value[0]: int]), Some(class[value[0]: int])),None,false,true)
+maxRevDS: org.apache.spark.sql.Dataset[org.lamastex.spark.trendcalculus.FlatReversal] = [ticker: string, x: timestamp ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Writing result as delta table.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">maxRevDS.write.format(&quot;delta&quot;).partitionBy(&quot;ticker&quot;).save(maxRevPath)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The reversal column in the joined dataset contains the information of all orders of reversals.</p>
+<p><code>0</code> indicates that no reversal happens while a non-zero value indicates that this is a reversal point for that order and every lower order.</p>
+<p>For example, row 33 contains the value <code>-4</code>, meaning that this point is trend reversal downwards for orders 1, 2, 3, and 4.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">DeltaTable.forPath(maxRevPath).toDF.as[FlatReversal].filter(&quot;ticker == 'BCOUSD'&quot;).orderBy(&quot;x&quot;).show(35, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+-----+--------+
+|ticker|x                  |y    |reversal|
++------+-------------------+-----+--------+
+|BCOUSD|2010-11-14 20:15:00|86.74|0       |
+|BCOUSD|2010-11-14 20:17:00|86.75|0       |
+|BCOUSD|2010-11-14 20:18:00|86.76|-1      |
+|BCOUSD|2010-11-14 20:19:00|86.74|0       |
+|BCOUSD|2010-11-14 20:21:00|86.74|1       |
+|BCOUSD|2010-11-14 20:24:00|86.75|0       |
+|BCOUSD|2010-11-14 20:26:00|86.77|0       |
+|BCOUSD|2010-11-14 20:27:00|86.75|0       |
+|BCOUSD|2010-11-14 20:28:00|86.79|0       |
+|BCOUSD|2010-11-14 20:32:00|86.81|0       |
+|BCOUSD|2010-11-14 20:33:00|86.81|-1      |
+|BCOUSD|2010-11-14 20:34:00|86.81|0       |
+|BCOUSD|2010-11-14 20:35:00|86.79|0       |
+|BCOUSD|2010-11-14 20:36:00|86.8 |0       |
+|BCOUSD|2010-11-14 20:37:00|86.79|0       |
+|BCOUSD|2010-11-14 20:38:00|86.79|1       |
+|BCOUSD|2010-11-14 20:39:00|86.79|0       |
+|BCOUSD|2010-11-14 20:40:00|86.8 |0       |
+|BCOUSD|2010-11-14 20:41:00|86.8 |0       |
+|BCOUSD|2010-11-14 20:42:00|86.8 |0       |
+|BCOUSD|2010-11-14 20:43:00|86.82|0       |
+|BCOUSD|2010-11-14 20:44:00|86.81|0       |
+|BCOUSD|2010-11-14 20:47:00|86.84|0       |
+|BCOUSD|2010-11-14 20:48:00|86.82|0       |
+|BCOUSD|2010-11-14 20:49:00|86.84|-1      |
+|BCOUSD|2010-11-14 20:50:00|86.82|0       |
+|BCOUSD|2010-11-14 20:51:00|86.83|0       |
+|BCOUSD|2010-11-14 20:52:00|86.82|1       |
+|BCOUSD|2010-11-14 20:53:00|86.83|0       |
+|BCOUSD|2010-11-14 20:54:00|86.84|0       |
+|BCOUSD|2010-11-14 20:58:00|86.88|0       |
+|BCOUSD|2010-11-14 20:59:00|86.89|0       |
+|BCOUSD|2010-11-14 21:00:00|86.9 |-4      |
+|BCOUSD|2010-11-14 21:03:00|86.87|0       |
+|BCOUSD|2010-11-14 21:04:00|86.87|0       |
++------+-------------------+-----+--------+
+only showing top 35 rows
+</code></pre>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

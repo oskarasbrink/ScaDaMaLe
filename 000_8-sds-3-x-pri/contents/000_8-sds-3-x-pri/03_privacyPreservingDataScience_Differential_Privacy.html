@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>03_privacyPreservingDataScience_Differential_Privacy - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/01_privacyPreservingDataScience.html">01_privacyPreservingDataScience</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/02_privacyPreservingDataScience_pseudonomyzation.html">02_privacyPreservingDataScience_pseudonomyzation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_8-sds-3-x-pri/03_privacyPreservingDataScience_Differential_Privacy.html" class="active">03_privacyPreservingDataScience_Differential_Privacy</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="a-hrefhttpslamastexgithubioscalable-data-sciencesds2xsds-2x-scalable-data-engineering-sciencea"><a class="header" href="#a-hrefhttpslamastexgithubioscalable-data-sciencesds2xsds-2x-scalable-data-engineering-sciencea"><a href="https://lamastex.github.io/scalable-data-science/sds/2/x/">SDS-2.x, Scalable Data Engineering Science</a></a></h1>
+</div>
+<div class="cell markdown">
+<h6 id="by-a-hrefhttpswwwlinkedincominchristoffer-lc3a5ngstrc3b6m-7a460514bchristoffer-långströma"><a class="header" href="#by-a-hrefhttpswwwlinkedincominchristoffer-lc3a5ngstrc3b6m-7a460514bchristoffer-långströma">by <a href="https://www.linkedin.com/in/christoffer-l%C3%A5ngstr%C3%B6m-7a460514b/">Christoffer Långström</a></a></h6>
+<p>This is part 3 of the in a series of notebooks discussing different aspects on privacy preserving methods in data science.</p>
+<p>Differential privacy, originally proposed by Cynthia Dwork et. al (2006) treats the problem of privacy from the perspective that simply being included in a data set is a risk. The solution proposed through diffential privacy is to make it so that a data set that contains a certain individual is not meaningfully differentiable from the same data set with that person removed.</p>
+<p>The proposal was to make it so that a random algorithm could be considered epsilon diff. private if the distribution of the estimator does not &quot;change much&quot; with the inclusion/exclusion of any particular individual, with epsilon being the &quot;privacy factor&quot; that quantifies to what extent the distributions differ. See below for more details.</p>
+<p>The advantage of this approach is that we can now quantify the degree of privacy of a random algorithm, and start to develop methods that enforce a desired level of privacy in an algorithm. Further, there is research being done (Duchi et. al) on <em>local</em> differential privacy, where the true data is kept hidden from even the data scientist working on it, by applying differentially private mechanisms to the data, before any statistics is computed. The type of privacy preserving mechanism that is applied depends on the application, where min/max optimal estimators are found for several canonical statistical problems.</p>
+<h3 id="links"><a class="header" href="#links">Links:</a></h3>
+<ul>
+<li>
+<p>Introduction to DP in the context of network protocols:
+<a href="https://www.youtube.com/watch?v=PlSX-o36Wus&amp;feature=youtu.be&amp;t=3809">Diffential Privacy at IETF104 by Amelia Andersdotter and Christoffer Långström</a></p>
+</li>
+<li>
+<p>Locally private statistical procedures:
+<a href="https://arxiv.org/abs/1604.02390">Minimax Optimal Procedures for Locally Private Estimation</a></p>
+</li>
+<li>
+<p>Original DP paper:
+<a href="http://people.csail.mit.edu/asmith/PS/sensitivity-tcc-final.pdf">Cynthia Dwork et. al</a></p>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Differential_privacy#Definition_of_ε-differential_privacy"
+ width="95%" height="350"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>One of the first suggested approaches to enforcing e-differential privacy was by introducing &quot;noise&quot; to the ouput of estimators. This approach works as thus: For a dataset <em>X</em>, compute the statistic <em>T(X)</em>, generate some noise <em>W</em>, return <em>T(X) + W</em> as the result. If <em>W</em> is symmetric noise, and chosen in such a way that it does not greatly distort the data, the goal is to achieve reasonably good estimates that cannot be meaningfully reversed engineered to reveal information on the people included in the data set.</p>
+<h4 id="the-laplace-mechanism"><a class="header" href="#the-laplace-mechanism">The Laplace Mechanism</a></h4>
+<p>This approach to adding noisy data involves adding samples from a standard laplace distribution, with the scale parameter chosen depending on the sensitivity of the data and the desired privacy level. The laplace distribution is a symmetric &quot;double exponential&quot; distribution with slim tails and a sharp center, here taken to be at the origin. The algorithm for applying laplace noise to a data set is as follows:</p>
+<p>Let <em>D</em> be a data set and <em>T</em> a statistic to be computed, and <em>epsilon</em> the desired degree of privacy. * Compute the sensitivity \(\Delta(T(D))\) of the statistic T to changes in the data set D * Generate noise W = \(Laplace(\Delta(T(D))/ \epsilon)\) * Compute &amp; return the result \(T'(D) = T(D) + W\)</p>
+<p>The statistic <em>T'</em> is now an \(\epsilon\)- differentially private version of <em>T</em>, as defined above.</p>
+<h5 id="some-notes"><a class="header" href="#some-notes">Some notes:</a></h5>
+<ul>
+<li>
+<p>For small values of \(\epsilon\) (i.e high degrees of privacy) significant levels of noise is added and so the values of <em>T'</em> will exhibit large variance for repeated queries and may provide unaccetably poor performance in most applications.</p>
+</li>
+<li>
+<p>This approach only protects against information being divulged from the output of T by an adversiarl party, the data still needs to be stored safely by a trusted holder. This is the problem adressed by local DP, discussed below.</p>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-r">#  Generate a data set
+n = 200
+heights = rnorm(n, 180, 5)
+
+# Compute Sensitivity: 
+#-------------------------------------------------------
+f = rep(0, n)
+for(i in 2:n-1){
+    a = 1:(i-1)
+    b = (i+1):n
+    heights2 = c(heights[a], heights[b]) 
+    f[i] = abs(mean(heights) - mean(heights2)) 
+}
+
+sensitivity = max(f)
+print(max(f))
+#-------------------------------------------------------
+
+# Add noise: 
+#-------------------------------------------------------
+install.packages(&quot;rmutil&quot;)
+install.packages(&quot;ggplot2&quot;)
+require(rmutil)
+require(ggplot2)
+
+epsilon1 = 1
+epsilon2 = 0.25
+mse1 = rep(0,n)
+mse2 = rep(0,n)
+
+for(i in 1:n){
+  dat = heights[1:i]
+  out1 = mean(dat) + rlaplace(1, 0, sensitivity/epsilon1)
+  out2 = mean(dat) + rlaplace(1, 0, sensitivity/epsilon2)
+  mse1[i] = (180 - out1)^2
+  mse2[i] = (180 - out2)^2
+}
+
+# Plot the results
+x = 1:n
+df = data.frame(x, mse1, mse2)
+
+p = ggplot(df, aes(x)) +                    # basic graphical object
+  geom_line(aes(y=mse1), colour= &quot;blue&quot;) +  # first layer
+  geom_line(aes(y=mse2), colour= &quot;orange&quot;) # second layer
+p + labs(title = &quot;Effect of Laplace Noise on MSE(Sample Size)&quot;) + xlab(&quot;Sample Size&quot;) + ylab(&quot;MSE&quot;)
+
+
+#-------------------------------------------------------
+</code></pre>
+</div>
+<div class="cell markdown">
+<img src="http://i.imgur.com/eMoJkND.png" alt="drawing" width="500"/>
+<h4 id="read-more-in-the-paper"><a class="header" href="#read-more-in-the-paper">Read More in the paper:</a></h4>
+<p><a href="https://arxiv.org/abs/1607.00133">Additive Noise Models in Deep Learning</a></p>
+</div>
+<div class="cell markdown">
+<p>This approach, as suggested by Duchi, Jordan, et. al, is based on privatizing the data before any statistics are computed, effectively meaning that the data is hidden even from the data scientist. Their suggestion is to apply a differentially private mechanism to the data and provide such mechanisms for some canonical problems.</p>
+<h4 id="add-more-details"><a class="header" href="#add-more-details">Add more details</a></h4>
+</div>
+<div class="cell markdown">
+<h4 id="experiment-setup"><a class="header" href="#experiment-setup">Experiment setup:</a></h4>
+<p>As an example application, <a href="https://arxiv.org/abs/1604.02390">Duchi et. al</a> considers the problem of estimating means of drug use related hospitalizations. In the original problem, they have records of hospitalization of the form (drugs, year, # of hospitalizations) where the number of hospitalizations denotes how many people that year where admitted and used a certain drug. Many of the admitted individuals used several drugs, as the number of drugs were vastly larger than the number of admittances. We will use this information to generate a data set of measurements of the form \(X_i \in {0,1}^d\) representing one admission; a component <em>j</em> is 1 if the patient used drug <em>j</em> and 0 else. The usage frequency will be uniformly distributed over the samples generated, with only the constraint that the total number of admittances using drug <em>j</em> matches a preset number. This means that if there were <em>n</em> patients and <em>k</em> of them used drug <em>j</em> then \(X_ij = 1\) with probability <em>k/n</em>.</p>
+<h4 id="methods"><a class="header" href="#methods">Methods:</a></h4>
+<p>We have N = 1000 measurements of \(X_i \in {0,1}^d\) for <em>d = 27</em>, with a preset vector of admittance frequency. The problem is to estimate the mean of this population, \(\theta = E(X)\) and we will use three different approaches: * Non-private estimation * Min/Max optimal local privacy mechanism * Local Laplace Noise</p>
+<p>Non-private estimation is simply the sample mean of the raw data, which is the &quot;gold standard&quot; of estimates that private methods are necesserally worse than. The min/max locally private mechanism consists of generating a new sample from the raw data which is sequentially dependent, in such a way that the new sample is differntially private and min/max optimal w.r.t to an arbitray loss function. This can be compared by the theoretical lower bound obtained in the paper. Lastly, one can compare this to a &quot;naive&quot; local privacy mechanism of adding <em>laplace(epsilon/d)</em> distributed noise to the data before estimation. Each method is analyzed through the l-infinity norm of the deviation from the full sample mean, as a function of the sample size.</p>
+</div>
+<div class="cell markdown">
+<img src="http://i.imgur.com/oimTT7o.png" alt="drawing" width="750"/>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-r">#l-infinity sampling based privacy mechanism, as suggested by
+l_inf_samp = function(X, alpha){
+
+  n = length(X[,1])
+  d = length(X[1,])
+  samples = matrix(c(rep(0, n*d)), ncol = d, nrow = n)
+  sample = rep(0,d)
+  for(j in 1:n){
+    x = X[j,]
+    r = max(abs(x)) 
+    x_hat = rep(0,d)
+
+    for(i in 1:d){
+      p = 0.5 + x[i]/(2*(r+(r==0)))
+      y = rbinom(1, 1, p)
+      x_hat[i] = (y==1)*r - (y==0)*r
+    }
+    
+    A = 2^(d-1)
+    
+    if(d%%2 == 1){
+      C = (1/A)*choose(d-1, 0.5*(d-1))
+    } else{
+      C = 1/(A+0.5*choose(d, 0.5*d))*choose(d-1, 0.5*d)
+    }
+    
+    B = r*((exp(alpha)+1)/(exp(alpha)-1))*(1/C)
+    
+    pi_alph = exp(alpha)/(exp(alpha) + 1)
+    T_alph = rbinom(1, 1, pi_alph)
+    accept = FALSE
+    
+    while(!accept){
+      z = runif(d, -B, B)
+      dot = sum(z*x_hat)
+      if((dot &gt;= 0)&amp;&amp;(T_alph == 1)){
+        sample = z
+        accept = TRUE
+      }
+      else if((dot &lt;= 0)&amp;&amp;(T_alph == 0)){
+        sample = z 
+        accept = TRUE
+      }
+    }
+    samples[j,] = sample
+  }
+  return(samples)
+}
+
+
+my_mean = function(X){
+  v_sum = rep(0,d)
+  N = length(X[,1])
+  for(i in 1:N){
+    v_sum = v_sum + X[i,]  
+  }
+  return(v_sum/N)
+}
+
+
+gen_data = function(N,d,prop){
+  X = matrix(c(rep(0,d*N)), ncol=d, nrow=N)
+  for(i in 1:d){
+    count = 0
+    while(count &lt; prop[i]){
+      idx = floor(runif(1,1,N))
+      if(X[idx,i] == 0){
+        X[idx,i] = 1
+        count = count + 1
+      }
+    }
+  }
+  return(X)
+}
+
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-r">library(rmutil)
+library(ggplot2)
+
+# Set Parameters 
+d = 27
+alpha = 0.5
+
+N_max = 1000
+N_low = 100
+
+# Initialize storage
+error1 = rep(0, N_max-N_low)
+error2 = rep(0, N_max-N_low)
+error3 = rep(0, N_max-N_low)
+low_bound = rep(0, N_max-N_low)
+
+# Generate Data 
+proportions = c(6, 2, 4, 2, 1, 1, 2, 6, 5, 4, 1, 9, 2, 6, 2, 1, 6, 2, 8, 5, 2, 8, 7, 5, 6, 4, 2)*N_max/15
+X = gen_data(N_max, d, proportions)
+theta_true = my_mean(X)
+
+for(i in N_low:N_max){
+  N = i
+  
+  X_n = X[1:i,]
+  Z = l_inf_samp(X_n, alpha)
+  
+  W = matrix(rlaplace(N*d, 0, d/alpha), ncol = d, nrow = N)
+  
+  theta1 = my_mean(X_n)
+  theta2 = my_mean(Z)
+  theta3 = my_mean(X_n + W)
+  
+  error1[i-N_low+1] = max(abs(theta_true - theta1))
+  error2[i-N_low+1] = max(abs(theta_true - theta2)) 
+  error3[i-N_low+1] = max(abs(theta_true - theta3)) 
+
+  a = d*log(2*d)
+  b = (exp(alpha)-1)^2
+  low_bound[i-N_low+1]  = sqrt(a/(N*b))
+}
+
+# Plot the results
+x = N_low:(N_max)
+df = data.frame(x, error2, error3)
+
+p = ggplot(df, aes(x)) +                    # basic graphical object
+  geom_line(aes(y=error1), colour= &quot;red&quot;) +  # Non-private estimate
+  geom_line(aes(y=error2), colour= &quot;blue&quot;) + # Locally Private estimate
+  geom_line(aes(y=error3), colour= &quot;orange&quot;) + # Laplace Mechanism
+  geom_line(aes(y=low_bound), colour= &quot;black&quot;)  # Min/Max optimal bound
+
+p +  ggtitle(&quot;L-inf Error of different estimation methods as a function of sample size&quot;) +
+  xlab(&quot;Sample Size&quot;) + ylab(&quot;l-inf Error&quot;) + labs()
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_8-sds-3-x-pri/02_privacyPreservingDataScience_pseudonomyzation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_8-sds-3-x-pri/02_privacyPreservingDataScience_pseudonomyzation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

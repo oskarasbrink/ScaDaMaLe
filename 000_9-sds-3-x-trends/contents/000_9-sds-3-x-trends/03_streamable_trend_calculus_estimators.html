@@ -1,0 +1,992 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>03_streamable_trend_calculus_estimators - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000a_finance_utils.html">000a_finance_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000b_gdelt_utils.html">000b_gdelt_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000_TrendsInFinancialStocksAndNewsEvents.html">000_TrendsInFinancialStocksAndNewsEvents</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00a_FX1M.html">00a_FX1M</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html">00b_yfinance</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html">01_trend_calculus_showcase</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html">02_streamable_trend_calculus</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html" class="active">03_streamable_trend_calculus_estimators</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html">030_Spark_GDELT_project_001</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html">030a_gdelt_EOI_detection</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/images/images.html">images</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="markov-model-for-trend-calculus"><a class="header" href="#markov-model-for-trend-calculus">Markov Model for Trend Calculus</a></h2>
+<p>Johannes Graner (<a href="https://www.linkedin.com/in/johannes-graner-475677129/">LinkedIn</a>), Albert Nilsson (<a href="https://www.linkedin.com/in/albert-nilsson-09b62b191/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2020, Uppsala, Sweden</p>
+<p>This project was supported by Combient Mix AB through summer internships at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+<hr />
+<p>We use the dataset generated in the last notebook to build a simple, proof of concept Markov model for predicting trends.</p>
+<p>This is merely to verify using a simple model if there is indeed any predictive value in the trends and their reversals that many real-worl traders bet on every instant in the market.</p>
+<p><strong>Resources</strong></p>
+<p>This builds on the following library and its antecedents therein:</p>
+<ul>
+<li><a href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></li>
+</ul>
+<p><strong>This work was inspired by:</strong></p>
+<ul>
+<li>Antoine Aamennd's <a href="https://github.com/aamend/texata-r2-2017">texata-2017</a></li>
+<li>Andrew Morgan's <a href="https://github.com/ByteSumoLtd/TrendCalculus-lua">Trend Calculus Library</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./000a_finance_utils&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import java.sql.Timestamp
+import io.delta.tables._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode, Trigger}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
+import org.lamastex.spark.trendcalculus._
+import scala.util.Random
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import java.sql.Timestamp
+import io.delta.tables._
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode, Trigger}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
+import org.lamastex.spark.trendcalculus._
+import scala.util.Random
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object TrendUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<p>Reading the joined dataset from the last notebook.</p>
+<p>We train the model using both oil and gold data and predict trends in oil data. We show that this yields better results than just training on the oil data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rootPath = TrendUtils.getStreamableTrendCalculusPath
+val maxRevPath = rootPath + &quot;maxRev&quot;
+val maxRevDS = spark.read.format(&quot;delta&quot;).load(maxRevPath).as[FlatReversal]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We want to predict what the trend of the next data point will be given the trend reversals we have observed.</p>
+<p>For this, we use an m-th order Markov model. We look at the reversal state of the last <code>m</code> points and use this to predict the trends in the next <code>n</code> points. <code>k</code> is the maximum order of reversal that is considered when training the model.</p>
+<p><code>trainingRatio</code> is the ratio of the data used for training the model, the rest is used for testing.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val modelPath = rootPath + &quot;estimators/&quot;
+val maxRevDSWithLagCountPath = modelPath + &quot;maxRevDSWithLag&quot;
+
+val numPartitions = 10
+val partialModelPaths = (1 to numPartitions).map( i =&gt; modelPath + s&quot;partialModel${i}&quot; )
+val fullModelPath = modelPath + &quot;fullModel&quot;
+
+val m = 10
+val n = 1
+val k = 18
+val trainingRatio = 0.7
+type FinalModel = Map[Seq[Int], Map[Seq[Int], Double]]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def truncRev(k: Int)(rev: Int): Int = {
+  if (math.abs(rev) &gt; k) k*rev.signum else rev
+}
+val truncRevUDF = udf{ rev: Int =&gt; rev.signum }
+def truncRevsUDF(k: Int) = udf{ revs: Seq[Int] =&gt; revs.map(truncRev(k)) }
+
+def lagColumn(df: DataFrame, orderColumnName: String, lagKeyName: String, lagValueName: String, m: Int, n: Int): DataFrame = {
+  val windowSpec = Window.partitionBy(&quot;ticker&quot;).orderBy(orderColumnName)
+  val laggedKeyColNames = (1 to m).map( i =&gt; s&quot;lagKey$i&quot; ).toSeq
+  val laggedValueColNames = (1 to n).map( i =&gt; s&quot;lagValue$i&quot; ).toSeq
+  val dfWithLaggedKeyColumns = (n+1 to m+n)
+    .foldLeft(df)( (df: DataFrame, i: Int) =&gt; df.withColumn(laggedKeyColNames(i-n-1), lag(lagKeyName, i-1, Int.MaxValue).over(windowSpec)) )
+  val dfWithLaggedKeyValueColumns = (1 to n)
+    .foldLeft(dfWithLaggedKeyColumns)( (df: DataFrame, i: Int) =&gt; df.withColumn(laggedValueColNames(i-1), lag(lagValueName, i-1, Int.MaxValue).over(windowSpec)) )
+  
+  dfWithLaggedKeyValueColumns
+    .withColumn(&quot;lagKey&quot;, array(laggedKeyColNames.reverse.take(m).map(col(_)):_*))
+    .withColumn(&quot;lagValue&quot;, array(laggedValueColNames.reverse.takeRight(n).map(col(_)):_*))
+    .withColumn(&quot;lagKeyFirst&quot;, col(laggedKeyColNames.last))
+    .filter($&quot;lagKeyFirst&quot; =!= Int.MaxValue)
+    .drop(&quot;lagKeyFirst&quot;)
+    .drop(laggedKeyColNames:_*)
+    .drop(laggedValueColNames:_*)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>truncRev: (k: Int)(rev: Int)Int
+truncRevUDF: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$9209/1126103335@6b64702c,IntegerType,List(Some(class[value[0]: int])),None,false,true)
+truncRevsUDF: (k: Int)org.apache.spark.sql.expressions.UserDefinedFunction
+lagColumn: (df: org.apache.spark.sql.DataFrame, orderColumnName: String, lagKeyName: String, lagValueName: String, m: Int, n: Int)org.apache.spark.sql.DataFrame
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The trend at each point can be extracted from the trend reversals by taking the sum of all previous 1-st order trend reversals. This sum will always be either 0 (up trend) or -1 (down trend) and 0 is therefore mapped to 1 to get (1, -1) as (up, down).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val maxRevDSWithLag = lagColumn(
+  maxRevDS
+    .orderBy(&quot;x&quot;)
+    .toDF
+    .withColumn(&quot;truncRev&quot;, truncRevUDF($&quot;reversal&quot;))
+    .withColumn(
+      &quot;tmpTrend&quot;,
+      sum(&quot;truncRev&quot;).over(
+        Window
+          .partitionBy(&quot;ticker&quot;)
+          .orderBy(&quot;x&quot;)
+          .rowsBetween(Window.unboundedPreceding, Window.currentRow)
+      )
+    )
+    .withColumn(&quot;trend&quot;, when($&quot;tmpTrend&quot; === 0, 1).otherwise(-1))
+    .drop(&quot;truncRev&quot;, &quot;tmpTrend&quot;),
+  &quot;x&quot;, 
+  &quot;reversal&quot;,
+  &quot;trend&quot;,
+  m, 
+  n
+)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>maxRevDSWithLag: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp ... 5 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We now want to predict <code>lagValue</code> from <code>lagKey</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">maxRevDSWithLag.show(20, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------+--------+-----+--------------------------------+--------+
+|ticker|x                  |y     |reversal|trend|lagKey                          |lagValue|
++------+-------------------+------+--------+-----+--------------------------------+--------+
+|XAUUSD|2009-03-15 18:09:00|925.4 |4       |1    |[-6, 0, 0, 1, -1, 0, 0, 0, 0, 0]|[1]     |
+|XAUUSD|2009-03-15 18:10:00|925.75|-2      |-1   |[0, 0, 1, -1, 0, 0, 0, 0, 0, 4] |[-1]    |
+|XAUUSD|2009-03-15 18:11:00|925.7 |0       |-1   |[0, 1, -1, 0, 0, 0, 0, 0, 4, -2]|[-1]    |
+|XAUUSD|2009-03-15 18:12:00|925.65|1       |1    |[1, -1, 0, 0, 0, 0, 0, 4, -2, 0]|[1]     |
+|XAUUSD|2009-03-15 18:13:00|925.65|0       |1    |[-1, 0, 0, 0, 0, 0, 4, -2, 0, 1]|[1]     |
+|XAUUSD|2009-03-15 18:14:00|925.75|0       |1    |[0, 0, 0, 0, 0, 4, -2, 0, 1, 0] |[1]     |
+|XAUUSD|2009-03-15 18:15:00|925.75|-1      |-1   |[0, 0, 0, 0, 4, -2, 0, 1, 0, 0] |[-1]    |
+|XAUUSD|2009-03-15 18:16:00|925.65|0       |-1   |[0, 0, 0, 4, -2, 0, 1, 0, 0, -1]|[-1]    |
+|XAUUSD|2009-03-15 18:17:00|925.6 |2       |1    |[0, 0, 4, -2, 0, 1, 0, 0, -1, 0]|[1]     |
+|XAUUSD|2009-03-15 18:18:00|925.85|0       |1    |[0, 4, -2, 0, 1, 0, 0, -1, 0, 2]|[1]     |
+|XAUUSD|2009-03-15 18:19:00|926.05|0       |1    |[4, -2, 0, 1, 0, 0, -1, 0, 2, 0]|[1]     |
+|XAUUSD|2009-03-15 18:20:00|925.95|0       |1    |[-2, 0, 1, 0, 0, -1, 0, 2, 0, 0]|[1]     |
+|XAUUSD|2009-03-15 18:21:00|926.55|0       |1    |[0, 1, 0, 0, -1, 0, 2, 0, 0, 0] |[1]     |
+|XAUUSD|2009-03-15 18:22:00|926.95|0       |1    |[1, 0, 0, -1, 0, 2, 0, 0, 0, 0] |[1]     |
+|XAUUSD|2009-03-15 18:23:00|927.25|0       |1    |[0, 0, -1, 0, 2, 0, 0, 0, 0, 0] |[1]     |
+|XAUUSD|2009-03-15 18:24:00|927.45|-4      |-1   |[0, -1, 0, 2, 0, 0, 0, 0, 0, 0] |[-1]    |
+|XAUUSD|2009-03-15 18:25:00|927.2 |0       |-1   |[-1, 0, 2, 0, 0, 0, 0, 0, 0, -4]|[-1]    |
+|XAUUSD|2009-03-15 18:26:00|926.85|0       |-1   |[0, 2, 0, 0, 0, 0, 0, 0, -4, 0] |[-1]    |
+|XAUUSD|2009-03-15 18:27:00|926.7 |0       |-1   |[2, 0, 0, 0, 0, 0, 0, -4, 0, 0] |[-1]    |
+|XAUUSD|2009-03-15 18:28:00|926.5 |0       |-1   |[0, 0, 0, 0, 0, 0, -4, 0, 0, 0] |[-1]    |
++------+-------------------+------+--------+-----+--------------------------------+--------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Cleaning up last run and writing model training input to delta tables.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.rm(maxRevDSWithLagCountPath, recurse=true)
+
+maxRevDSWithLag
+  .withColumn(&quot;count&quot;, lit(1L))
+  .write
+  .format(&quot;delta&quot;)
+  .mode(&quot;overwrite&quot;)
+  .save(maxRevDSWithLagCountPath)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val divUDF = udf{ (a: Long, b: Long) =&gt; a.toDouble/b }
+val maxRevDSWithLagCount = spark.read.format(&quot;delta&quot;).load(maxRevDSWithLagCountPath)
+val numberOfRows = maxRevDSWithLagCount.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>divUDF: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$9266/71459450@6a0e8651,DoubleType,List(Some(class[value[0]: bigint]), Some(class[value[0]: bigint])),None,false,true)
+maxRevDSWithLagCount: org.apache.spark.sql.DataFrame = [ticker: string, x: timestamp ... 6 more fields]
+numberOfRows: Long = 6845798
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The data is split into training and testing data. This is <em>not</em> done randomly as there is a dependence on previous data points. We don't want to train on data that is dependent on the testing data and therefore the training data consists of the first (for example) 70% of the data and the last 30% is saved for testing. This also reflects how the model would be used since we can only train on data points that have already been observed.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val tickers = maxRevDSWithLagCount.select(&quot;ticker&quot;).distinct.as[String].collect.toSeq
+val tickerDFs = tickers.map( ticker =&gt; maxRevDSWithLagCount.filter($&quot;ticker&quot; === ticker))
+val trainingDF = tickerDFs.map( df =&gt; df.limit((df.count*trainingRatio).toInt) ).reduce( _.union(_) ).orderBy(&quot;x&quot;)
+val trainingRows = trainingDF.count
+
+val testingDF = maxRevDSWithLagCount.except(trainingDF)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>tickers: Seq[String] = WrappedArray(XAUUSD, BCOUSD)
+tickerDFs: Seq[org.apache.spark.sql.Dataset[org.apache.spark.sql.Row]] = ArrayBuffer([ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields])
+trainingDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+trainingRows: Long = 4792058
+testingDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Create <code>numTrainingSets</code> training set of increasing size to get snapshots of how a partially trained model looks like. The sizes are spaced logarithmically since the improvement in the model is fastest in the beginning.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rowsInPartitions = (1 to numPartitions).map{ i: Int =&gt; (math.exp(math.log(trainingRows)*i/numPartitions)).toInt }//.scanLeft(0.0)(_-_)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rowsInPartitions: scala.collection.immutable.IndexedSeq[Int] = Vector(4, 21, 100, 470, 2189, 10193, 47464, 221012, 1029129, 4792058)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Model is trained by counting how many times each (<code>lagKey</code>, <code>lagValue</code>) pair is observed and dividing by how many times <code>lagKey</code> is observed to get an estimation of the transition probabilities.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val keyValueCountPartialDFs = rowsInPartitions.map(
+  trainingDF
+    .limit(_)
+    .withColumn(&quot;keyValueObs&quot;, sum(&quot;count&quot;).over(Window.partitionBy($&quot;lagKey&quot;, $&quot;lagValue&quot;)))
+    .withColumn(&quot;totalKeyObs&quot;, sum(&quot;count&quot;).over(Window.partitionBy($&quot;lagKey&quot;)))
+    .drop(&quot;count&quot;)
+)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>keyValueCountPartialDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields], [ticker: string, x: timestamp ... 7 more fields])
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">keyValueCountPartialDFs.last.orderBy($&quot;keyValueObs&quot;.desc).show(20,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------+--------+-----+------------------------------+--------+-----------+-----------+
+|ticker|x                  |y     |reversal|trend|lagKey                        |lagValue|keyValueObs|totalKeyObs|
++------+-------------------+------+--------+-----+------------------------------+--------+-----------+-----------+
+|XAUUSD|2009-03-15 19:41:00|926.55|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-17 05:27:00|921.73|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 04:51:00|928.75|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 04:52:00|928.7 |0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 04:53:00|928.68|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 06:24:00|925.1 |-5      |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 09:19:00|917.73|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 09:20:00|917.83|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 09:21:00|917.0 |0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 14:47:00|922.9 |0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 14:48:00|922.88|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 14:49:00|922.93|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 14:50:00|922.83|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 22:49:00|922.28|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 22:50:00|922.25|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 22:51:00|922.13|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-16 22:52:00|922.08|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-17 05:11:00|923.8 |-1      |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-17 05:24:00|922.23|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
+|XAUUSD|2009-03-17 05:25:00|922.03|0       |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]|[-1]    |53544      |106773     |
++------+-------------------+------+--------+-----+------------------------------+--------+-----------+-----------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">keyValueCountPartialDFs
+  .map( df =&gt;
+    df
+      .withColumn(&quot;probability&quot;, divUDF($&quot;keyValueObs&quot;, $&quot;totalKeyObs&quot;))
+      .drop(&quot;keyValueObs&quot;, &quot;totalKeyObs&quot;)
+  )
+  .zip(partialModelPaths).map{ case (df: DataFrame, path: String) =&gt;
+    df.write.mode(&quot;overwrite&quot;).format(&quot;delta&quot;).save(path)  
+  }
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val probDFs = partialModelPaths.map(spark.read.format(&quot;delta&quot;).load(_))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>probDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields], [ticker: string, x: timestamp ... 6 more fields])
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">probDFs.last.orderBy(&quot;probability&quot;).show(20,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+-------+--------+-----+---------------------------------+--------+--------------------+
+|ticker|x                  |y      |reversal|trend|lagKey                           |lagValue|probability         |
++------+-------------------+-------+--------+-----+---------------------------------+--------+--------------------+
+|BCOUSD|2011-04-29 11:59:00|125.61 |2       |1    |[0, -4, 0, 0, 0, 1, 0, 0, 0, -1] |[1]     |0.007142857142857143|
+|XAUUSD|2015-07-31 00:05:00|1084.69|-1      |-1   |[-2, 0, 0, 0, 1, -1, 0, 0, 0, 3] |[-1]    |0.013513513513513514|
+|XAUUSD|2016-09-07 11:09:00|1344.18|-2      |-1   |[0, 0, 0, 0, 6, 0, 0, 0, -1, 1]  |[-1]    |0.014492753623188406|
+|XAUUSD|2015-11-06 00:05:00|1108.14|-1      |-1   |[0, 4, 0, 0, -1, 0, 0, 0, 0, 1]  |[-1]    |0.014705882352941176|
+|XAUUSD|2010-05-13 01:54:00|1237.83|2       |1    |[-3, 0, 0, 1, 0, 0, 0, 0, 0, -1] |[1]     |0.01639344262295082 |
+|BCOUSD|2011-04-05 16:30:00|121.63 |-3      |-1   |[-2, 0, 0, 0, 0, 1, 0, -1, 0, 3] |[-1]    |0.016666666666666666|
+|XAUUSD|2009-09-30 22:16:00|1006.65|1       |1    |[0, 0, 0, 0, 1, 0, 0, -1, 1, -1] |[1]     |0.016666666666666666|
+|XAUUSD|2010-11-05 04:43:00|1386.98|1       |1    |[0, 0, 0, 0, 1, 0, 0, -1, 1, -1] |[1]     |0.016666666666666666|
+|XAUUSD|2010-11-19 15:13:00|1351.4 |-1      |-1   |[0, 0, 0, 0, 0, 1, -1, 0, 0, 5]  |[-1]    |0.017094017094017096|
+|BCOUSD|2012-10-10 14:23:00|114.27 |-1      |-1   |[0, 0, 0, 0, 0, 1, -1, 0, 0, 5]  |[-1]    |0.017094017094017096|
+|XAUUSD|2015-06-28 19:18:00|1185.37|2       |1    |[-4, 0, 0, 0, 1, 0, 0, 0, 0, -1] |[1]     |0.017241379310344827|
+|BCOUSD|2015-10-15 01:18:00|49.75  |2       |1    |[0, -3, 0, 1, 0, -1, 0, 0, 1, -1]|[1]     |0.017543859649122806|
+|XAUUSD|2012-02-27 20:23:00|1767.83|1       |1    |[0, -5, 0, 0, 0, 1, 0, 0, 0, -1] |[1]     |0.01818181818181818 |
+|BCOUSD|2015-04-27 23:58:00|63.96  |-1      |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 8]   |[-1]    |0.0196078431372549  |
+|XAUUSD|2009-04-08 15:54:00|880.88 |-1      |-1   |[0, 0, 0, 0, 0, 0, 0, 0, 0, 8]   |[-1]    |0.0196078431372549  |
+|BCOUSD|2015-09-11 11:06:00|47.27  |-1      |-1   |[0, 0, 0, 0, 1, -1, 0, 0, 0, 6]  |[-1]    |0.0196078431372549  |
+|XAUUSD|2012-01-24 23:36:00|1666.11|1       |1    |[0, 1, 0, 0, 0, -1, 0, 1, 0, -4] |[1]     |0.02040816326530612 |
+|XAUUSD|2009-12-28 23:56:00|1104.68|-1      |-1   |[0, -2, 2, 0, 0, 0, 0, -1, 0, 1] |[-1]    |0.020833333333333332|
+|BCOUSD|2014-03-12 09:33:00|107.74 |-3      |-1   |[0, 0, 7, 0, 0, 0, 0, -1, 0, 1]  |[-1]    |0.020833333333333332|
+|XAUUSD|2016-04-06 09:50:00|1221.57|2       |1    |[0, -1, 0, 1, -3, 0, 0, 0, 1, -1]|[1]     |0.02127659574468085 |
++------+-------------------+-------+--------+-----+---------------------------------+--------+--------------------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The prediction is given by taking</p>
+<p>\[ V \in argmax(P_K(V)) \]</p>
+<p>where *P_K(V)* is the probability that <em>V</em> is the next trend when the last <code>m</code> points have had reversals <em>K</em>. If there are more than one elements in argmax, an element is chosen uniformly at random.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val aggWindow = Window.partitionBy(&quot;lagKey&quot;).orderBy('probability desc)
+val testedDFs = probDFs
+  .map { df =&gt;
+     val predictionDF = df
+      .select(&quot;lagKey&quot;, &quot;lagValue&quot;, &quot;probability&quot;)
+      .distinct
+      .withColumn(&quot;rank&quot;, rank().over(aggWindow))
+      .filter(&quot;rank == 1&quot;)
+      .groupBy(&quot;lagKey&quot;)
+      .agg(collect_list(&quot;lagValue&quot;))
+    
+    testingDF
+      .filter($&quot;ticker&quot; === &quot;BCOUSD&quot;)
+      .join(predictionDF, Seq(&quot;lagKey&quot;), &quot;left&quot;)
+      .withColumnRenamed(&quot;collect_list(lagValue)&quot;, &quot;test&quot;)
+  }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>warning: there was one feature warning; for details, enable `:setting -feature' or `:replay -feature'
+aggWindow: org.apache.spark.sql.expressions.WindowSpec = org.apache.spark.sql.expressions.WindowSpec@2dbd5c17
+testedDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 7 more fields])
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We use a binary loss function that indicates if the prediction was correct or not.</p>
+<p><code>getRandomUDF</code> is used to choose an element at random in argmax(P_K(V)). <code>safeArr</code> is used since we might see patterns in the test data that were not present in the training data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val getRandomUDF = udf( (arr: Seq[Seq[Int]]) =&gt; {
+  val safeArr = Option(arr).getOrElse(Seq[Seq[Int]]())
+  if (safeArr.isEmpty) Seq[Int]() else safeArr(Random.nextInt(safeArr.size))
+} )
+
+val lossUDF = udf{ (value: Seq[Int], pred: Seq[Int]) =&gt;
+  if (value == pred) 0 else 1
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>getRandomUDF: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$9416/1051216045@79bf6d73,ArrayType(IntegerType,false),List(Some(class[value[0]: array&lt;array&lt;int&gt;&gt;])),None,true,true)
+lossUDF: org.apache.spark.sql.expressions.UserDefinedFunction = SparkUserDefinedFunction($Lambda$9417/777777096@6e1c4ce7,IntegerType,List(Some(class[value[0]: array&lt;int&gt;]), Some(class[value[0]: array&lt;int&gt;])),None,false,true)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val lossDFs = testedDFs.map(_.withColumn(&quot;prediction&quot;, getRandomUDF($&quot;test&quot;)).withColumn(&quot;loss&quot;, lossUDF($&quot;lagValue&quot;, $&quot;prediction&quot;)))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>lossDFs: scala.collection.immutable.IndexedSeq[org.apache.spark.sql.DataFrame] = Vector([lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields], [lagKey: array&lt;int&gt;, ticker: string ... 9 more fields])
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Already on line 2 we see a case where <code>lagKey</code> was previously not observed (indicated by <code>null</code> in test column).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lossDFs.last.show(20,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------------------------------+------+-------------------+-----+--------+-----+--------+-----+------+----------+----+
+|lagKey                           |ticker|x                  |y    |reversal|trend|lagValue|count|test  |prediction|loss|
++---------------------------------+------+-------------------+-----+--------+-----+--------+-----+------+----------+----+
+|[0, 0, 0, 0, 0, 0, -2, 0, 0, 0]  |BCOUSD|2017-10-02 02:03:00|56.56|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[-4, 0, 1, 0, 0, 0, -1, 0, 0, 0] |BCOUSD|2017-10-03 07:07:00|56.0 |1       |1    |[1]     |1    |[[-1]]|[-1]      |1   |
+|[0, 1, 0, -1, 3, -1, 0, 1, 0, 0] |BCOUSD|2017-10-03 13:23:00|55.92|-2      |-1   |[-1]    |1    |[[1]] |[1]       |1   |
+|[0, 2, 0, 0, -2, 0, 0, 0, 0, 1]  |BCOUSD|2017-10-13 06:59:00|57.43|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, 0, 0, 0, 1, -1, 2, 0, 0, -2] |BCOUSD|2017-10-18 07:21:00|58.21|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[0, 0, 0, -1, 0, 0, 0, 2, 0, 0]  |BCOUSD|2017-10-25 06:08:00|58.21|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, -4, 1, 0, -1, 1, 0, -1, 0, 0]|BCOUSD|2017-10-31 08:44:00|60.52|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[0, 0, -1, 0, 1, 0, -1, 0, 1, 0] |BCOUSD|2017-11-15 12:35:00|61.96|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, 0, 0, 0, 0, 0, 0, 0, -4, 0]  |BCOUSD|2017-11-15 13:28:00|62.02|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[1, 0, -1, 0, 2, -2, 0, 0, 0, 0] |BCOUSD|2017-11-16 11:37:00|61.7 |0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[0, 0, 0, -2, 0, 0, 0, 2, 0, 0]  |BCOUSD|2017-12-08 09:10:00|63.37|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, 0, 0, -1, 0, 0, 2, 0, 0, 0]  |BCOUSD|2017-12-15 06:19:00|63.45|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]   |BCOUSD|2017-12-19 01:46:00|63.56|0       |1    |[1]     |1    |[[-1]]|[-1]      |1   |
+|[1, 0, -1, 0, 0, 0, 0, 0, 3, 0]  |BCOUSD|2017-12-21 07:09:00|64.39|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[-1, 0, 0, 0, 0, 0, 0, 1, 0, -1] |BCOUSD|2017-12-22 13:50:00|65.18|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[0, 1, 0, -1, 0, 0, 0, 0, 0, 1]  |BCOUSD|2017-12-27 14:51:00|65.92|-1      |-1   |[-1]    |1    |[[1]] |[1]       |1   |
+|[0, 0, 0, 0, 1, 0, 0, -2, 1, -1] |BCOUSD|2018-01-03 22:15:00|67.91|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[0, 0, 0, -3, 0, 0, 1, 0, -1, 0] |BCOUSD|2018-01-08 10:17:00|67.72|0       |-1   |[-1]    |1    |[[-1]]|[-1]      |0   |
+|[-1, 0, 1, 0, 0, 0, -1, 0, 1, 0] |BCOUSD|2018-01-23 16:24:00|70.15|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
+|[0, 0, 1, 0, -1, 0, 0, 2, 0, 0]  |BCOUSD|2018-01-30 07:53:00|69.02|0       |1    |[1]     |1    |[[1]] |[1]       |0   |
++---------------------------------+------+-------------------+-----+--------+-----+--------+-----+------+----------+----+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val testLength = testingDF.count
+val oilTestDF = testingDF.filter($&quot;ticker&quot; === &quot;BCOUSD&quot;)
+val oilTestLength = oilTestDF.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>testLength: Long = 2053732
+oilTestDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [ticker: string, x: timestamp ... 6 more fields]
+oilTestLength: Long = 857750
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Out of roughly 2 million observations, about 860k were oil price.</p>
+</div>
+<div class="cell markdown">
+<p>We find the mean loss for each training dataset of increasing size. As one can see, the loss decreases as more data is supplied.</p>
+<p>Further, training on both oil and gold data yields a better result than just oil, suggesting that trends behave similarly in the two commodities.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val losses = lossDFs.map( _.agg(sum(&quot;loss&quot;)).select($&quot;sum(loss)&quot;.as(&quot;totalLoss&quot;)).collect.head.getLong(0).toDouble/oilTestLength )
+// Data up to 2019
+// k=max, m=2 ,n=1: (0.5489615950080244, 0.4014721726541194, 0.3660973816818738, 0.36497087640146797, 0.36485163238050344)
+// k=max, m=10,n=1: (0.9812730246821787, 0.8523390131056561, 0.5819573469954631, 0.3552177121357085, 0.2807503135425113)
+// k=max,m=100,n=1: (1.0, 1.0, 1.0, 1.0, 1.0)
+// k=5  , m=10,n=1: (0.9812730246821787, 0.8522267831239777, 0.5820597568537447, 0.3550507700379618, 0.2806352778112909)
+// k=1  , m=10,n=1: (0.9812730246821787, 0.852200128503329, 0.5821242890932098, 0.3553383593660128, 0.2806549180580846)
+
+// k=max, m=10,n=2: (0.9879380657977248, 0.9049354606556204, 0.7243136776273427, 0.5472986906951395, 0.4783823708897465)
+
+// k=max(17), m=10,n=1, 10 training sets: (0.9977203284971564, 0.9812730246821787, 0.9455375956409875, 0.8523810993487855, 0.7183644724769999, 0.5819320952495854, 0.44607349380350214, 0.35513915114853356, 0.3029480010437388, 0.280629666312207)
+
+// Data up to last month
+// k=max(18), m=10,n=1, 10 training sets: (0.9973104051296998, 0.9843882250072865, 0.9510789857184494, 0.8574351501020111, 0.7515744680851064, 0.6360547945205479, 0.5099656076945497, 0.4249921305741766, 0.3735668901194987, 0.34609501603031184)
+// Could the difference be due to Corona?
+
+// Trained on both oil and gold. testing on oil as previously.
+// k=max(18), m=10,n=1, 10 training sets: (0.9999778490236083, 0.9980728650539201, 0.9527158262897114, 0.8921317400174876, 0.7559988341591373, 0.5820915185077237, 0.46675488195861264, 0.3923101136694841, 0.3574876129408336, 0.3355837948120082)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>losses: scala.collection.immutable.IndexedSeq[Double] = Vector(0.9999778490236083, 0.9980728650539201, 0.9528044301952784, 0.8921084232002332, 0.7558216263480035, 0.5819551151267852, 0.4666686097347712, 0.3920524628388225, 0.35745380355581463, 0.3355488195861265)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Visualizing the improvement of the model as the size of training data increases.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val trainingSizes = probDFs.map(_.count)
+val lossesDS = sc
+  .parallelize(losses.zip(trainingSizes))
+  .toDF(&quot;loss&quot;, &quot;size&quot;)
+  .withColumn(&quot;training&quot;, lit(&quot;Oil and Gold&quot;))
+  .union(
+    sc
+      .parallelize(Seq(0.9973104051296998, 0.9843882250072865, 0.9510789857184494, 0.8574351501020111, 0.7515744680851064, 0.6360547945205479, 0.5099656076945497, 0.4249921305741766, 0.3735668901194987, 0.34609501603031184).zip(Seq(4, 18, 77, 331, 1414, 6036, 25759, 109918, 469036, 2001430)))
+      .toDF(&quot;loss&quot;, &quot;size&quot;)
+      .withColumn(&quot;training&quot;, lit(&quot;Oil&quot;))
+  )
+  .as[(Double,Long,String)]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>trainingSizes: scala.collection.immutable.IndexedSeq[Long] = Vector(4, 21, 100, 470, 2189, 10193, 47464, 221012, 1029129, 4792058)
+lossesDS: org.apache.spark.sql.Dataset[(Double, Long, String)] = [loss: double, size: bigint ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">display(lossesDS)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>loss</th>
+<th>size</th>
+<th>training</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.9999778490236083</td>
+<td>4.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="even">
+<td>0.9980728650539201</td>
+<td>21.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="odd">
+<td>0.9528044301952784</td>
+<td>100.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="even">
+<td>0.8921084232002332</td>
+<td>470.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="odd">
+<td>0.7558216263480035</td>
+<td>2189.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="even">
+<td>0.5819551151267852</td>
+<td>10193.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="odd">
+<td>0.4666686097347712</td>
+<td>47464.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="even">
+<td>0.3920524628388225</td>
+<td>221012.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="odd">
+<td>0.35745380355581463</td>
+<td>1029129.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="even">
+<td>0.3355488195861265</td>
+<td>4792058.0</td>
+<td>Oil and Gold</td>
+</tr>
+<tr class="odd">
+<td>0.9973104051296998</td>
+<td>4.0</td>
+<td>Oil</td>
+</tr>
+<tr class="even">
+<td>0.9843882250072865</td>
+<td>18.0</td>
+<td>Oil</td>
+</tr>
+<tr class="odd">
+<td>0.9510789857184494</td>
+<td>77.0</td>
+<td>Oil</td>
+</tr>
+<tr class="even">
+<td>0.8574351501020111</td>
+<td>331.0</td>
+<td>Oil</td>
+</tr>
+<tr class="odd">
+<td>0.7515744680851064</td>
+<td>1414.0</td>
+<td>Oil</td>
+</tr>
+<tr class="even">
+<td>0.6360547945205479</td>
+<td>6036.0</td>
+<td>Oil</td>
+</tr>
+<tr class="odd">
+<td>0.5099656076945497</td>
+<td>25759.0</td>
+<td>Oil</td>
+</tr>
+<tr class="even">
+<td>0.4249921305741766</td>
+<td>109918.0</td>
+<td>Oil</td>
+</tr>
+<tr class="odd">
+<td>0.3735668901194987</td>
+<td>469036.0</td>
+<td>Oil</td>
+</tr>
+<tr class="even">
+<td>0.34609501603031184</td>
+<td>2001430.0</td>
+<td>Oil</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p><img src="https://github.com/lamastex/spark-trend-calculus-examples/blob/master/images/trend_calculus_mc_model_performance.png?raw=true" alt="trendcalculusmcmodelperformance" /></p>
+</div>
+<div class="cell markdown">
+<p>The series using only oil data is very similar to the one with both oil and gold data. The final data point has a loss of about 0.35, meaning that the model accuracy is around 65% for predicting the the trend of the next point in the time series.</p>
+</div>
+<div class="cell markdown">
+<p>To better understand the difference between the different (partially trained) models, we want to calculate the total variation distance between them.</p>
+<p>The first step is to collect the models and work with them locally.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val partialModels = probDFs.map{df =&gt; 
+  val tmpMap = df
+    .select(&quot;lagKey&quot;, &quot;lagValue&quot;, &quot;probability&quot;)
+    .distinct
+    .collect
+    .map{ r =&gt; 
+      (r.getAs[Seq[Int]](0), r.getAs[Seq[Int]](1), r.getDouble(2))
+    }
+    .groupBy(_._1) // Grouping by lagKey
+    .mapValues(_.map(tup =&gt; Map(tup._2 -&gt; tup._3)).flatten.toMap)
+  
+  tmpMap: FinalModel
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If a <code>lagKey</code> sequence only belongs to one of the models we are comparing, the variation distance is maximal, i.e. 1. Otherwise, we compute the total variation distance between the probabilities of observing a sequence of <code>n</code> trends, following the sequence of trends <code>lagKey</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def totalVarDist(m1: FinalModel, m2: FinalModel): Map[Seq[Int], Double] = {
+  val allKeys = m1.keys.toSet.union(m2.keys.toSet)
+  val sharedKeys = m1.keys.toSet.intersect(m2.keys.toSet)
+  val totalVarDists = allKeys.toSeq.map{ key =&gt;
+    if (!sharedKeys.contains(key)) {
+      1.0
+    } else {
+      val val1 = m1.getOrElse(key, Map())
+      val val2 = m2.getOrElse(key, Map())
+      val allValKeys = val1.keys.toSet.union(val2.keys.toSet)
+      allValKeys.map( valKey =&gt; 0.5*math.abs(val1.getOrElse(valKey, 0.0) - val2.getOrElse(valKey, 0.0)) ).sum
+    }
+  }
+  allKeys.zip(totalVarDists).toMap
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>totalVarDist: (m1: FinalModel, m2: FinalModel)Map[Seq[Int],Double]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Computing the variation distance for all possible pairs of partially trained models.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val totalVariationDistances = partialModels.map( m1 =&gt; partialModels.map( m2 =&gt; totalVarDist(m1,m2) ) )
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>totalVariationDistances: scala.collection.immutable.IndexedSeq[scala.collection.immutable.IndexedSeq[Map[Seq[Int],Double]]] = Vector(Vector(Map(WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0), Map(WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0), Map(WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(2, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(1, -1, 3, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 1, -1, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 3, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 2, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(3, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0), Map(WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 6, -2) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, -1, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 5, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(6, -2, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -5, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, -2, 3, -1, 1) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 3, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(-1, 1, -2, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 2, -2, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(-2, 3, -1, 1, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 1, -2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(3, -1, 1, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 3) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 2, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(3, 0, -1, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, 0, 0, -3, 1) -&gt; 1.0, WrappedArray(0, -3, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 6, -2, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 6, -2, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 3, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 6, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 1, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 6, -2, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 2, 0, -1, 0, 1, 0, -3, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 1, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 1, -2, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -2, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, -1, 0, 2, -2) -&gt; 1.0, WrappedArray(-4, 0, 1, 0, -1, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, 0, -3, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -2, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -3, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -2, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -5, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(2, -2, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(3, -1, 0, 1, 0, 0, -3, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 5, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 4, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 3, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 4, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-2, 0, 2, 0, -1, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 3, -1, 0, 1, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(4, -2, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 0, 4) -&gt; 0.0, WrappedArray(0, 3, 0, -1, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -1, 1, -2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(2, -2, 3, -1, 1, 0, 0, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 5, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, -2, 3, -1, 1, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 4, -2, 0) -&gt; 0.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 5, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 6, -2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -5, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 0, 6) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -3, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(-1, 1, -1, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 1, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 2, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 1, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -5, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 5, 0) -&gt; 1.0, WrappedArray(0, 0, 6, -2, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-3, 1, 0, 0, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 1, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(1, -1, 3, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, -3, 1, 0, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 3, -1, 0, 1, 0, 0, -3, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 4, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -4, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 2, 0, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 2, -2, 3, -1, 1, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, -2, 1) -&gt; 1.0, WrappedArray(0, 0, -3, 1, 0, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, -2, 3, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 1, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 1, -1, 3) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -1, 0, 2, -2, 3, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 5) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 5, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, -2, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 4, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 4, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, -1, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, 0, -1, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 3, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 2, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 1, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 2, -2, 3, -1, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 4, -2, 0, 1) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -3, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 1, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 6, -2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(3, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -3, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, -2, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(5, 0, 0, 0, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 4, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0), Map(WrappedArray(-1, 0, 2, -1, 0, 0, 0, 1, -3, 3) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, 0, -3) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, -4) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-1, 1, 0, -2, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 5, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 2, 0, -1, 0, 1, 0, -3) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 6, -2) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, -2, 0, 6, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 1, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, 0, -6) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 3, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 0, 0, 2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -1, 2, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 1, -1, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 4, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 1, 0, -1, 0, 2, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-2, 0, 1, -1, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, -1, 0, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 0, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 2, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 1, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 2, -2, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -2, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -1, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 2, -2, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -4, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 1, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 1, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -3, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 6, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 5, -1, 0) -&gt; 1.0, WrappedArray(0, -1, 1, 0, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(4, 0, 0, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 2, 0, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(-6, 0, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 0, 0, -2, 2, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -4, 0, 1, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 5, 0, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 5, -1, 1) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 4, -2, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 6, 0, 0, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 1, -2, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 5, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 1, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 1, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, -3, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 1, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(0, 6, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 3, 0, -2, 2, 0, -1, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-3, 1, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 2, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, -1, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 3, -1, 0, 1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(6, -2, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, -3, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 1, -1, 3, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 3, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, -2, 0, 2, 0, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, -1, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 0, 1, -1, 0, 1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-4, 0, 1, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -4, 0, 0, 4, 0, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 2, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 1, -1, 0, 0, 4) -&gt; 1.0, WrappedArray(-1, 2, 0, 0, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 2, -2, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 0, 2, -2, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, -3, 0, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, 0, -5, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -4, 0, 2, -1, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -2, 0, 1, -1, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 1, -1, 3, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -1, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -5, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -4, 0, 0, 4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 5, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 0, 2, -2, 3, -1, 1) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -1, 0, 1, -3, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, -4, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 1, 0, -3, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 6, 0, 0, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 1, -1, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, 0, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 2, -1, 0, 0, 0, 1, -3, 3, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 2, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(-2, 2, 0, -1, 0, 1, -1, 0, 1, -3) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 1, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, -1, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 5, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 2, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 1, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, -2, 0, 1, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -1, 0, 1, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 4, 0, 0, -3, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(5, -1, 1, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -6, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -2, 0, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 7, 0, 0, -1, 1, 0) -&gt; 1.0, WrappedArray(3, 0, 0, -2, 0, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 1, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(-3, 0, 1, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 1, 0, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 3, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 0, 4, -2) -&gt; 0.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(-1, 1, -2, 0, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, 0, 0, -2, 0, 0, 2, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 1, 0, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 7, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 2, -2, 3) -&gt; 1.0, WrappedArray(0, -1, 1, -2, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 3, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, -3, 0, 3, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -2, 0, 2, 0, -1) -&gt; 1.0, WrappedArray(0, 0, -1, 1, -2, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, 0, -4, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -1, 1, 0, 0, -2, 0, 2) -&gt; 1.0, WrappedArray(-2, 3, -1, 1, 0, 0, -3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 1, -1, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, 0, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 0, 1, -1, 2, 0, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 2, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 5, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, -2, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 2, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(1, 0, -3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 0, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 2, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, -2, 0, 2, 0) -&gt; 1.0, WrappedArray(-5, 0, 0, 0, 0, 0, 2, 0, -2, 1) -&gt; 1.0, WrappedArray(1, 0, 0, -1, 2, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(2, -1, 0, 0, 0, 1, 0, -2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -1, 1, -2) -&gt; 1.0, WrappedArray(0, 0, 2, -2, 0, 1, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 3, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 1, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, 0, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(1, 0, -2, 1, 0, -1, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(2, -1, 0, 1, 0, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 2, -2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -4, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 1, 0, -1, 0, 0, 0, 2) -&gt; 1.0, WrappedArray(3, -1, 1, 0, 0, -3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 4, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -1, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 1, 0, 0, -4, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, 0, 0, -2, 1, -1, 0, 2, -1) -&gt; 1.0, WrappedArray(0, 0, -3, 0, 0, 2, -2, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 3, 0, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 3, 0, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, -4, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 2, 0, 0, 0, 0, 0, 0, -4) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 1, -6, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 1, -1, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -2, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 1, -1, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 1, 0, -1, 0, 0, 3, -1) -&gt; 1.0, WrappedArray(0, 1, -3, 0, 0, 0, 0, 0, 3, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 1, 0, 0, -4) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 1, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 1, 0, -1, 1, 0, -1) -&gt; 1.0, WrappedArray(-1, 0, 3, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -2, 0, 0, 1, -1, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 1, 0, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 2, 0, 0, -3, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 0, 1, -1, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 4, -2, 0, 1, 0, 0, -1, 0, 2) -&gt; 1.0, WrappedArray(0, 1, 0, -2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(2, 0, 0, 0, 0, -2, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 2, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, -2, 1, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 1, -2, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(6, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 0, 0, -5, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 4, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(-3, 0, 0, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -4, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -1, 0, 0, 2, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, -2, 2, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, -4, 0, 0, 4) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, -1, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, -3, 0, 0, 2) -&gt; 1.0, WrappedArray(0, -1, 0, 1, 0, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -2, 0, 0, 2) -&gt; 1.0, WrappedArray(-2, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 4, -2, 0, 1, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 2, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, -1, 2, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(1, 0, 0, 0, 0, -2, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 0, 2, -1) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(1, 0, -2, 0, 2, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, 0, -2, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 2, -2, 0, 6, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 0, 2, 0, 0) -&gt; 1.0, WrappedArray(-2, 1, 0, -1, 0, 0, 0, 3, 0, -1) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 0, 0, 3, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 1, 0, 0, 0, 0, -1, 1, -2, 1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 5, 0, -1, 1, -2, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, -2, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 7, 0, 0) -&gt; 1.0, WrappedArray(3, 0, -1, 1, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, 0, 0, 0, -5, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, -2, 2, 0, 0, -1, 1, 0, 0) -&gt; 1.0, WrappedArray(-2, 0, 0, 0, 0, 0, 0, 0, 0, 3) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -6, 0, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 1, -1, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 1, -1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 1, 0, 0, -4, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 0, 1, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 3, -1, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, -2) -&gt; 1.0, WrappedArray(0, 1, -1, 0, 1, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 1, 0, 0, 0, 0, -1, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, 0, -2, 0, 1, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 1, 0, -1, 0, 0, 2) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 1, 0, -2, 0, 1) -&gt; 1.0, WrappedArray(0, -4, 0, 0, 0, 0, 2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 2, 0, 0, 0, 0, -2, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 3, 0, 0, -2, 0, 0, 1) -&gt; 1.0, WrappedArray(0, 0, 2, 0, -1, 1, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 1, 0, 0, -2, 0, 0, 0, 1) -&gt; 1.0, WrappedArray(0, -1, 1, -6, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 0, 0, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -2, 0, 1, -1, 2, 0) -&gt; 1.0, WrappedArray(0, 0, -4, 0, 1, 0, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 1, 0, 0, 0, -1, 0, 1, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 1, -1, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 1, -1, 0, 0, 0, 0, 4) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 1, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 0, 1, -1, 0, 2, -2, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 2, -1, 0, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(1, 0, -1, 0, 0, 0, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 1, 0, -2, 0, 1, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 0, 0, 1, 0, 0, 0, -1) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 1, -2, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 2, -1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 2, 0, 0, 0, 0, -2) -&gt; 1.0, WrappedArray(-1, 4, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 2, 0, -1, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 3, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 1, 0, -1, 0, 0, 1, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 1, 0, -1, 0, 3, 0) -&gt; 1.0, WrappedArray(2, 0, -1, 1, 0, 0, 0, -1, 0, 0) -&gt; 1.0, WrappedArray(0, -2, 0, 0, 0, 0, 0, 3, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 1, 0, -1, 0, 0, 0, 1, -1) -&gt; 1.0, WrappedArray(-1, 0, 1, -1, 0, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -2, 2, -1, 0, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, -1, 0, 0, 1, 0, 0) -&gt; 1.0, WrappedArray(-4, 0, 0, 1, 0, 0, 0, 0, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 3, -1, 0, 1, 0, 0, -3, 1) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 4) -&gt; 1.0, WrappedArray(0, -6, 0, 0, 0, 0, 0, 4, 0, 0) -&gt; 1.0, WrappedArray(0, -3, 0, 1, 0, -1, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, -1, 0, 0, 2, -1, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 0, 0, -5) -&gt; 1.0, WrappedArray(-1, 3, 0, 0, 0, 0, 0, 0, -2, 0) -&gt; 1.0, WrappedArray(0, 0, 1, -1, 0, 2, 0, 0, 0, -3) -&gt; 1.0, WrappedArray(0, 0, 0, 1, 0, -1, 0, 0, 1, 0) -&gt; 1.0, WrappedArray(-1, 0, 0, 4, 0, 0, -2, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 0, 2, 0, 0, 0, 0, -2, 1, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, -5, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 3, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 0, 0, 0, 0, 4, 0, 0, 0) -&gt; 1.0, WrappedArray(1, -1, 1, -1, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(0, 5, 0, -1, 1, -2, 0, 0, 2, 0) -&gt; 1.0, WrappedArray(0, -1, 0, 1, -2, 0, 0, 0, 0, 0) -&gt; 1.0, WrappedArray(0, 0, 0, 0, 0, 0, 0, 1, -1, 0) -&gt; 1.0, WrappedArray(-8, 0, 0, 0, 0, 0, 0, 0, 0, 0) -&gt; ...
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def aggToMatrix(totalVarDists: Seq[Seq[Map[Seq[Int],Double]]], aggFunc: Seq[Double] =&gt; Double): Seq[Seq[Double]] = {
+  totalVariationDistances.map(_.map( t =&gt; aggFunc(t.values.toSeq)))
+}
+
+def printMatrix(mat: Seq[Seq[Double]]): Unit = {
+  mat.map( s =&gt; { s.map( a =&gt; print(f&quot;$a%2.3f &quot;) ); println() } )
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>aggToMatrix: (totalVarDists: Seq[Seq[Map[Seq[Int],Double]]], aggFunc: Seq[Double] =&gt; Double)Seq[Seq[Double]]
+printMatrix: (mat: Seq[Seq[Double]])Unit
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We compute three different metrics of the total variation distances.</p>
+<ul>
+<li><code>maxDists</code> is the <em>maximal</em> total variation distance over the different <code>lagKey</code>s.</li>
+<li><code>minDists</code> is the <em>minimal</em> total variation distance over the different <code>lagKey</code>s.</li>
+<li><code>meanDists</code> is an estimate of the average total variation distance over the different <code>lagKey</code>s.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val maxDists = aggToMatrix(totalVariationDistances, s =&gt; s.max)
+val minDists = aggToMatrix(totalVariationDistances, s =&gt; s.min)
+val meanDists = aggToMatrix(totalVariationDistances, s =&gt; s.sum/s.size)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>maxDists: Seq[Seq[Double]] = Vector(Vector(0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0), Vector(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0))
+minDists: Seq[Seq[Double]] = Vector(Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1111111111111111), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Vector(0.1111111111111111, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
+meanDists: Seq[Seq[Double]] = Vector(Vector(0.0, 0.8095238095238095, 0.9595959595959596, 0.9902676399026764, 0.9975932611311673, 0.9992509363295881, 0.999785112600997, 0.9999212988949179, 0.9999637822897781, 0.9999828303297199), Vector(0.8095238095238095, 0.0, 0.7878787878787878, 0.948905109489051, 0.9879412354592861, 0.9962818797931157, 0.9988235824354509, 0.9995277161089322, 0.9997797200520187, 0.9999006682605777), Vector(0.9595959595959596, 0.7878787878787878, 0.0, 0.7675182481751823, 0.9456465498353374, 0.9839165434703036, 0.9949339063117071, 0.9979342365055828, 0.9990263999070653, 0.9995453963182023), Vector(0.9902676399026764, 0.948905109489051, 0.7675182481751823, 0.0, 0.76569626045364, 0.9313390461281573, 0.9778513135067101, 0.9912980359273889, 0.9959874223204074, 0.998122961240012), Vector(0.9975932611311673, 0.9879412354592861, 0.9456465498353374, 0.76569626045364, 0.0, 0.709855350171288, 0.9069532060773262, 0.9635540738278638, 0.9834585383266629, 0.992240400344003), Vector(0.9992509363295881, 0.9962818797931157, 0.9839165434703036, 0.9313390461281573, 0.709855350171288, 0.0, 0.6846310864524279, 0.8780374739844375, 0.9450969813814848, 0.9743411917827652), Vector(0.999785112600997, 0.9988235824354509, 0.9949339063117071, 0.9778513135067101, 0.9069532060773262, 0.6846310864524279, 0.0, 0.6217124078957903, 0.8326361431674983, 0.9226862715145945), Vector(0.9999212988949179, 0.9995277161089322, 0.9979342365055828, 0.9912980359273889, 0.9635540738278638, 0.8780374739844375, 0.6217124078957903, 0.0, 0.57277338181383, 0.8064805024139434), Vector(0.9999637822897781, 0.9997797200520187, 0.9990263999070653, 0.9959874223204074, 0.9834585383266629, 0.9450969813814848, 0.8326361431674983, 0.57277338181383, 0.0, 0.5653338124646969), Vector(0.9999828303297199, 0.9999006682605777, 0.9995453963182023, 0.998122961240012, 0.992240400344003, 0.9743411917827652, 0.9226862715145945, 0.8064805024139434, 0.5653338124646969, 0.0))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Each model is a mapping <code>{key: {value: probability}}</code> where <code>key</code> (<code>lagKey</code>) is a sequence of reversals and non-reversals of length <code>m</code>, <code>value</code> is a sequence of trends of length <code>n</code> and <code>probability</code> is the estimated probability that <code>value</code> is observed immediately following <code>key</code>.</p>
+<p>Hence, for any two models A and B, we can calculate the total variation distance between the mappings <code>{value: probability}</code> for a given key in the union of the keys for A and B. If a key is not present in one of the models, the total variation distance is 1 for that key.</p>
+<p>In the matrix below, the (i,j)-th position is the arithmetic mean of the total variation distances for all keys in the union of the keysets. The matrix is symmetric with the smallest model in the top row and leftmost column and the largest model in the bottom row and rightmost column. All diagonal elements are 0 since the total variation distance from one model to itself is always 0.</p>
+<p>If there are three models labeled M<em>1, M</em>2, M<em>3 and V</em>i_j is the arithmetic mean described above, the matrix is</p>
+<p>\[ \begin{matrix} V_{1,1} &amp; V_{1,2} &amp; V_{1,3} \end{matrix} \] \[ \begin{matrix} V_{2,1} &amp; V_{2,2} &amp; V_{2,3} \end{matrix} \] \[ \begin{matrix} V_{3,1} &amp; V_{3,2} &amp; V_{3,3} \end{matrix} \]</p>
+<p>As one can see, the models differ a lot from each other, suggesting that the estimate can still be improved given more data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">printMatrix(meanDists)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>0.000 0.810 0.960 0.990 0.998 0.999 1.000 1.000 1.000 1.000 
+0.810 0.000 0.788 0.949 0.988 0.996 0.999 1.000 1.000 1.000 
+0.960 0.788 0.000 0.768 0.946 0.984 0.995 0.998 0.999 1.000 
+0.990 0.949 0.768 0.000 0.766 0.931 0.978 0.991 0.996 0.998 
+0.998 0.988 0.946 0.766 0.000 0.710 0.907 0.964 0.983 0.992 
+0.999 0.996 0.984 0.931 0.710 0.000 0.685 0.878 0.945 0.974 
+1.000 0.999 0.995 0.978 0.907 0.685 0.000 0.622 0.833 0.923 
+1.000 1.000 0.998 0.991 0.964 0.878 0.622 0.000 0.573 0.806 
+1.000 1.000 0.999 0.996 0.983 0.945 0.833 0.573 0.000 0.565 
+1.000 1.000 1.000 0.998 0.992 0.974 0.923 0.806 0.565 0.000 
+</code></pre>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
