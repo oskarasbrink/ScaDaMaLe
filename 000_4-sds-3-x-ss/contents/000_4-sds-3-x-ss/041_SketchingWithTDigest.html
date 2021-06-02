@@ -1,0 +1,3725 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>041_SketchingWithTDigest - sds-3.x/ScaDaMaLe</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/037a_AnimalNamesStructStreamingFiles.html">037a_AnimalNamesStructStreamingFiles</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/037b_Mix2NormalsStructStreamingFiles.html">037b_Mix2NormalsStructStreamingFiles</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/037c_Mix2RandomGraphStructStreamingFiles.html">037c_Mix2RandomGraphStructStreamingFiles</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/038_StructuredStreamingProgGuide.html">038_StructuredStreamingProgGuide</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/039_StructuredStreamingFromJSONFileStream.html">039_StructuredStreamingFromJSONFileStream</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/040a_TDigestInputStream.html">040a_TDigestInputStream</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/040_Sketching.html">040_Sketching</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/041_SketchingWithTDigest.html" class="active">041_SketchingWithTDigest</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_4-sds-3-x-ss/042_streamingWithTDigest_TODO.html">042_streamingWithTDigest_TODO</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="sketching-with-t-digest-for-quantiles"><a class="header" href="#sketching-with-t-digest-for-quantiles">Sketching with T-digest for quantiles</a></h1>
+<h2 id="a-toy-anomaly-detector"><a class="header" href="#a-toy-anomaly-detector">A Toy Anomaly Detector</a></h2>
+<p>Fisher noticed the fundamental computational difference between mean, covariance, etc. and median, quantiles, in early 1900s.</p>
+<p>The former ones are today called recursively computable statistics. When you take the memory footprint needed to keep these statistics updated then we get into the world of probabilistic datastructures...</p>
+<p>The basic idea of sketching is formally conveyed in Chapter 6 of <a href="https://www.cs.cornell.edu/jeh/book.pdf">Foundations of data Science</a>.</p>
+<p>Let's get a more informal view form the following sources.</p>
+</div>
+<div class="cell markdown">
+<p>Here we focus on a specific sketch called <strong>T-Digest</strong> for approximating extreme quantiles:</p>
+<p><strong>Pointers:</strong></p>
+<ul>
+<li>READ White Paper: <a href="https://arxiv.org/pdf/1902.04023.pdf">https://arxiv.org/pdf/1902.04023.pdf</a></li>
+<li>WATCH Spark/AI/Data Summit Talks:
+<ul>
+<li><a href="https://databricks.com/session/sketching-data-with-t-digest-in-apache-spark">https://databricks.com/session/sketching-data-with-t-digest-in-apache-spark</a></li>
+<li><a href="https://databricks.com/session/one-pass-data-science-in-apache-spark-with-generative-t-digests">https://databricks.com/session/one-pass-data-science-in-apache-spark-with-generative-t-digests</a></li>
+</ul>
+</li>
+<li>GLANCE Blogs:
+<ul>
+<li><a href="https://medium.com/@muppal/probabilistic-data-structures-in-the-big-data-world-code-b9387cff0c55">https://medium.com/@muppal/probabilistic-data-structures-in-the-big-data-world-code-b9387cff0c55</a></li>
+<li><a href="https://medium.com/@mani./t-digest-an-interesting-datastructure-to-estimate-quantiles-accurately-b99a50eaf4f7">https://medium.com/@mani./t-digest-an-interesting-datastructure-to-estimate-quantiles-accurately-b99a50eaf4f7</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>NOTE:</strong></p>
+<ul>
+<li>Once you could see Ted Dunning's explanation of t-digest here:
+<ul>
+<li>https://www.youtube.com/watch?v=B0dMc0t7K1g</li>
+<li>But, unfortunately, since 2020 this video has become a private property with this warning: <em>Private video Sign in if you've been granted access to this video</em></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="demonstration-of-t-digest-to-detect-anomalous-scores"><a class="header" href="#demonstration-of-t-digest-to-detect-anomalous-scores">Demonstration of t-digest to detect anomalous scores</a></h1>
+</div>
+<div class="cell markdown">
+<p>Let us import the following scala implementation of t-digest:</p>
+<ul>
+<li>for Spark 3.0.1 use maven coordinates: <code>org.isarnproject:isarn-sketches-spark_2.12:0.5.0-sp3.0</code></li>
+</ul>
+<p>See the library: <a href="https://github.com/isarn/isarn-sketches-spark">https://github.com/isarn/isarn-sketches-spark</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.isarnproject.sketches.java.TDigest
+import org.isarnproject.sketches.spark.tdigest._
+import scala.util.Random
+import scala.util.Random._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.isarnproject.sketches.java.TDigest
+import org.isarnproject.sketches.spark.tdigest._
+import scala.util.Random
+import scala.util.Random._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// make a sample to produce a mixture of two normal RVs with standard deviation 1 but with different location or mean parameters
+def myMixtureOf2Normals( normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: Random) : Double = {
+  val sample = if (r.nextDouble &lt;= normalWeight) {r.nextGaussian+normalLocation } 
+               else {r.nextGaussian + abnormalLocation} 
+  return sample
+   }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myMixtureOf2Normals: (normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: scala.util.Random)Double
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Here is a quick overview of the simple mixture of two Normal or Gaussian random variables we will be simulating from.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val r = new Random(1L)
+println(myMixtureOf2Normals(1.0, 10.0, 0.99, r), myMixtureOf2Normals(1.0, 10.0, 0.99, r))
+// should always produce (0.5876430182311466,-0.34037937678788865) when seed = 1L
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>(0.5876430182311466,-0.34037937678788865)
+r: scala.util.Random = scala.util.Random@2ac6c652
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val r = new Random(12345L)
+val data = sc.parallelize(Vector.fill(10000){myMixtureOf2Normals(1.0, 10.0, 0.99, r)}).toDF.as[Double]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>r: scala.util.Random = scala.util.Random@568f8382
+data: org.apache.spark.sql.Dataset[Double] = [value: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">data.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------+
+|               value|
++--------------------+
+|  0.2576188264990721|
+|-0.13149698512045327|
+|  1.4139063973267458|
+|-0.02383387596851...|
+|  0.7274784426774964|
++--------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">display(data)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.2576188264990721</td>
+</tr>
+<tr class="even">
+<td>-0.13149698512045327</td>
+</tr>
+<tr class="odd">
+<td>1.4139063973267458</td>
+</tr>
+<tr class="even">
+<td>-2.3833875968513496e-2</td>
+</tr>
+<tr class="odd">
+<td>0.7274784426774964</td>
+</tr>
+<tr class="even">
+<td>-1.0658630481235276</td>
+</tr>
+<tr class="odd">
+<td>0.746959841932221</td>
+</tr>
+<tr class="even">
+<td>0.30477096247050206</td>
+</tr>
+<tr class="odd">
+<td>-6.407620682061621e-2</td>
+</tr>
+<tr class="even">
+<td>1.8464307210258604</td>
+</tr>
+<tr class="odd">
+<td>2.0786529531264355</td>
+</tr>
+<tr class="even">
+<td>0.685838993990332</td>
+</tr>
+<tr class="odd">
+<td>2.3056211153362485</td>
+</tr>
+<tr class="even">
+<td>-0.7435548094085835</td>
+</tr>
+<tr class="odd">
+<td>-0.36946067155650786</td>
+</tr>
+<tr class="even">
+<td>1.1178132434092503</td>
+</tr>
+<tr class="odd">
+<td>1.0672400098827672</td>
+</tr>
+<tr class="even">
+<td>2.403799182291664</td>
+</tr>
+<tr class="odd">
+<td>2.7905949803662926</td>
+</tr>
+<tr class="even">
+<td>2.3901047303648846</td>
+</tr>
+<tr class="odd">
+<td>2.2391322699010967</td>
+</tr>
+<tr class="even">
+<td>0.7102559487906945</td>
+</tr>
+<tr class="odd">
+<td>-0.1875570296359037</td>
+</tr>
+<tr class="even">
+<td>2.0036998039560725</td>
+</tr>
+<tr class="odd">
+<td>2.028162246705019</td>
+</tr>
+<tr class="even">
+<td>-1.1084782237141253</td>
+</tr>
+<tr class="odd">
+<td>2.7320985336302965</td>
+</tr>
+<tr class="even">
+<td>1.7953021498619885</td>
+</tr>
+<tr class="odd">
+<td>1.3332433299615185</td>
+</tr>
+<tr class="even">
+<td>1.2842120504662247</td>
+</tr>
+<tr class="odd">
+<td>2.0013530061962186</td>
+</tr>
+<tr class="even">
+<td>1.2596569236824775</td>
+</tr>
+<tr class="odd">
+<td>2.46479668588018</td>
+</tr>
+<tr class="even">
+<td>-0.7015927727061835</td>
+</tr>
+<tr class="odd">
+<td>-0.510611131534981</td>
+</tr>
+<tr class="even">
+<td>0.9403812557496112</td>
+</tr>
+<tr class="odd">
+<td>2.2306482205877427</td>
+</tr>
+<tr class="even">
+<td>-0.29781070820511246</td>
+</tr>
+<tr class="odd">
+<td>4.107241990001628</td>
+</tr>
+<tr class="even">
+<td>0.7420568724108764</td>
+</tr>
+<tr class="odd">
+<td>1.4652231673746594</td>
+</tr>
+<tr class="even">
+<td>0.8793849318247119</td>
+</tr>
+<tr class="odd">
+<td>1.7671614106752898</td>
+</tr>
+<tr class="even">
+<td>1.1995772213743607</td>
+</tr>
+<tr class="odd">
+<td>1.1351566745099897</td>
+</tr>
+<tr class="even">
+<td>0.16150528245701323</td>
+</tr>
+<tr class="odd">
+<td>2.459849452657596</td>
+</tr>
+<tr class="even">
+<td>1.0796739450956971</td>
+</tr>
+<tr class="odd">
+<td>-1.2079899446434252</td>
+</tr>
+<tr class="even">
+<td>0.7019279468450133</td>
+</tr>
+<tr class="odd">
+<td>-2.5906759976580096e-2</td>
+</tr>
+<tr class="even">
+<td>1.025799236502406</td>
+</tr>
+<tr class="odd">
+<td>2.423754193708396</td>
+</tr>
+<tr class="even">
+<td>1.0100073192180106</td>
+</tr>
+<tr class="odd">
+<td>1.2308412912433588</td>
+</tr>
+<tr class="even">
+<td>2.2142939785873326</td>
+</tr>
+<tr class="odd">
+<td>9.639219241219372</td>
+</tr>
+<tr class="even">
+<td>0.8964067897832677</td>
+</tr>
+<tr class="odd">
+<td>2.583753664296168</td>
+</tr>
+<tr class="even">
+<td>1.7326439212827238</td>
+</tr>
+<tr class="odd">
+<td>0.7516388863094139</td>
+</tr>
+<tr class="even">
+<td>0.8725633940449549</td>
+</tr>
+<tr class="odd">
+<td>-0.9407676766254014</td>
+</tr>
+<tr class="even">
+<td>1.0542712925875175</td>
+</tr>
+<tr class="odd">
+<td>0.794535189312687</td>
+</tr>
+<tr class="even">
+<td>0.5813794557982226</td>
+</tr>
+<tr class="odd">
+<td>0.4891368786472011</td>
+</tr>
+<tr class="even">
+<td>2.3296394918008474</td>
+</tr>
+<tr class="odd">
+<td>1.425296303524094</td>
+</tr>
+<tr class="even">
+<td>1.9276679925454094</td>
+</tr>
+<tr class="odd">
+<td>0.6178050147872097</td>
+</tr>
+<tr class="even">
+<td>1.135269636375052</td>
+</tr>
+<tr class="odd">
+<td>1.3074367248762568</td>
+</tr>
+<tr class="even">
+<td>0.6105659268751382</td>
+</tr>
+<tr class="odd">
+<td>1.7812955395572572</td>
+</tr>
+<tr class="even">
+<td>-1.3547368916771827</td>
+</tr>
+<tr class="odd">
+<td>1.580412775615275</td>
+</tr>
+<tr class="even">
+<td>1.5731144914401023</td>
+</tr>
+<tr class="odd">
+<td>-5.725067553082108e-2</td>
+</tr>
+<tr class="even">
+<td>0.19580347035995105</td>
+</tr>
+<tr class="odd">
+<td>-2.1501122555202867e-2</td>
+</tr>
+<tr class="even">
+<td>1.5783579658949254</td>
+</tr>
+<tr class="odd">
+<td>1.371796305513024</td>
+</tr>
+<tr class="even">
+<td>0.648919899258448</td>
+</tr>
+<tr class="odd">
+<td>-0.7875773550339058</td>
+</tr>
+<tr class="even">
+<td>1.3233945353130716</td>
+</tr>
+<tr class="odd">
+<td>2.5685224032022127</td>
+</tr>
+<tr class="even">
+<td>2.7331317575905807</td>
+</tr>
+<tr class="odd">
+<td>0.2521381731074053</td>
+</tr>
+<tr class="even">
+<td>2.2408918489807905</td>
+</tr>
+<tr class="odd">
+<td>1.4924862197354933</td>
+</tr>
+<tr class="even">
+<td>1.194657083531184</td>
+</tr>
+<tr class="odd">
+<td>0.7067352811215412</td>
+</tr>
+<tr class="even">
+<td>2.7701718519244745e-2</td>
+</tr>
+<tr class="odd">
+<td>0.279797547315617</td>
+</tr>
+<tr class="even">
+<td>-0.21953266770586133</td>
+</tr>
+<tr class="odd">
+<td>1.1402931320647434</td>
+</tr>
+<tr class="even">
+<td>0.904724947360263</td>
+</tr>
+<tr class="odd">
+<td>0.6677145203694429</td>
+</tr>
+<tr class="even">
+<td>2.019977647420342</td>
+</tr>
+<tr class="odd">
+<td>-0.5190278662580565</td>
+</tr>
+<tr class="even">
+<td>1.2549405940975034</td>
+</tr>
+<tr class="odd">
+<td>2.4267606721380233</td>
+</tr>
+<tr class="even">
+<td>0.21858105660909444</td>
+</tr>
+<tr class="odd">
+<td>1.7701229392924476</td>
+</tr>
+<tr class="even">
+<td>8.326770280505069e-2</td>
+</tr>
+<tr class="odd">
+<td>11.539205812425335</td>
+</tr>
+<tr class="even">
+<td>0.612370126029857</td>
+</tr>
+<tr class="odd">
+<td>1.299073306785623</td>
+</tr>
+<tr class="even">
+<td>2.6939073650678083</td>
+</tr>
+<tr class="odd">
+<td>2.5320627406973344</td>
+</tr>
+<tr class="even">
+<td>2.781337457744293e-2</td>
+</tr>
+<tr class="odd">
+<td>0.3272489908510584</td>
+</tr>
+<tr class="even">
+<td>-0.9427386544836929</td>
+</tr>
+<tr class="odd">
+<td>0.9364640268126377</td>
+</tr>
+<tr class="even">
+<td>1.919225736153371</td>
+</tr>
+<tr class="odd">
+<td>0.38826998132506296</td>
+</tr>
+<tr class="even">
+<td>-0.38655650387475715</td>
+</tr>
+<tr class="odd">
+<td>1.0433731216978939</td>
+</tr>
+<tr class="even">
+<td>1.1500718903613745</td>
+</tr>
+<tr class="odd">
+<td>-0.3661280681150447</td>
+</tr>
+<tr class="even">
+<td>0.883444064705467</td>
+</tr>
+<tr class="odd">
+<td>-0.9126173899348853</td>
+</tr>
+<tr class="even">
+<td>0.3838114564837034</td>
+</tr>
+<tr class="odd">
+<td>0.7935189081504388</td>
+</tr>
+<tr class="even">
+<td>1.928137393349846</td>
+</tr>
+<tr class="odd">
+<td>4.7092811957255676e-2</td>
+</tr>
+<tr class="even">
+<td>0.4684849965794433</td>
+</tr>
+<tr class="odd">
+<td>0.6745536358089256</td>
+</tr>
+<tr class="even">
+<td>2.100439331925503</td>
+</tr>
+<tr class="odd">
+<td>1.0053957395581328</td>
+</tr>
+<tr class="even">
+<td>1.1651633690031988</td>
+</tr>
+<tr class="odd">
+<td>1.1620631665685186</td>
+</tr>
+<tr class="even">
+<td>0.5686294459758102</td>
+</tr>
+<tr class="odd">
+<td>5.4695916815372114e-2</td>
+</tr>
+<tr class="even">
+<td>0.3673527645506809</td>
+</tr>
+<tr class="odd">
+<td>1.1825682382920246</td>
+</tr>
+<tr class="even">
+<td>2.590900208851957</td>
+</tr>
+<tr class="odd">
+<td>0.9580677196122074</td>
+</tr>
+<tr class="even">
+<td>0.14058634902492095</td>
+</tr>
+<tr class="odd">
+<td>1.835715236145623</td>
+</tr>
+<tr class="even">
+<td>1.0262133311924941</td>
+</tr>
+<tr class="odd">
+<td>2.3956360313411276</td>
+</tr>
+<tr class="even">
+<td>-0.42622276533874537</td>
+</tr>
+<tr class="odd">
+<td>1.532866051791267</td>
+</tr>
+<tr class="even">
+<td>0.33837135147986275</td>
+</tr>
+<tr class="odd">
+<td>0.5993221970260502</td>
+</tr>
+<tr class="even">
+<td>0.5268259369536397</td>
+</tr>
+<tr class="odd">
+<td>0.9338448405595184</td>
+</tr>
+<tr class="even">
+<td>1.5020324977316601</td>
+</tr>
+<tr class="odd">
+<td>-0.21633343524824378</td>
+</tr>
+<tr class="even">
+<td>0.8387080531274844</td>
+</tr>
+<tr class="odd">
+<td>1.3278878139665884e-2</td>
+</tr>
+<tr class="even">
+<td>1.3291762275434373</td>
+</tr>
+<tr class="odd">
+<td>0.4837833343304839</td>
+</tr>
+<tr class="even">
+<td>0.4918446444728072</td>
+</tr>
+<tr class="odd">
+<td>1.354678573169704</td>
+</tr>
+<tr class="even">
+<td>0.2524216007924791</td>
+</tr>
+<tr class="odd">
+<td>0.5965026762340784</td>
+</tr>
+<tr class="even">
+<td>2.000850130836448</td>
+</tr>
+<tr class="odd">
+<td>2.217169275505519</td>
+</tr>
+<tr class="even">
+<td>0.6876140376775531</td>
+</tr>
+<tr class="odd">
+<td>1.0508210912529563</td>
+</tr>
+<tr class="even">
+<td>1.65676102704454</td>
+</tr>
+<tr class="odd">
+<td>2.155047641017994</td>
+</tr>
+<tr class="even">
+<td>1.0866488363653375</td>
+</tr>
+<tr class="odd">
+<td>1.0691398773308363</td>
+</tr>
+<tr class="even">
+<td>0.6120836384011098</td>
+</tr>
+<tr class="odd">
+<td>0.24914099314834415</td>
+</tr>
+<tr class="even">
+<td>2.8691481936548744</td>
+</tr>
+<tr class="odd">
+<td>0.7633561289177443</td>
+</tr>
+<tr class="even">
+<td>1.4483835248568062</td>
+</tr>
+<tr class="odd">
+<td>2.6108825545691863</td>
+</tr>
+<tr class="even">
+<td>1.2751533422561458</td>
+</tr>
+<tr class="odd">
+<td>1.0131179898567302</td>
+</tr>
+<tr class="even">
+<td>0.46308679994249036</td>
+</tr>
+<tr class="odd">
+<td>0.7793261962344651</td>
+</tr>
+<tr class="even">
+<td>1.1671037114122738</td>
+</tr>
+<tr class="odd">
+<td>2.143874895015684</td>
+</tr>
+<tr class="even">
+<td>1.2344250301306705</td>
+</tr>
+<tr class="odd">
+<td>1.7402355361851662</td>
+</tr>
+<tr class="even">
+<td>1.0396911219696297</td>
+</tr>
+<tr class="odd">
+<td>1.8089030277370215</td>
+</tr>
+<tr class="even">
+<td>2.1235708326267533</td>
+</tr>
+<tr class="odd">
+<td>-0.33938888075466234</td>
+</tr>
+<tr class="even">
+<td>1.090463095441436</td>
+</tr>
+<tr class="odd">
+<td>1.3101016219338661</td>
+</tr>
+<tr class="even">
+<td>-0.6251493773996968</td>
+</tr>
+<tr class="odd">
+<td>1.7223308331307168</td>
+</tr>
+<tr class="even">
+<td>1.0299845635585438</td>
+</tr>
+<tr class="odd">
+<td>1.962846046162154</td>
+</tr>
+<tr class="even">
+<td>-1.8537289273720337e-2</td>
+</tr>
+<tr class="odd">
+<td>0.7977254725466605</td>
+</tr>
+<tr class="even">
+<td>-0.21427479370557312</td>
+</tr>
+<tr class="odd">
+<td>-1.6661289018266037</td>
+</tr>
+<tr class="even">
+<td>1.144457447997468</td>
+</tr>
+<tr class="odd">
+<td>0.6503516296653954</td>
+</tr>
+<tr class="even">
+<td>6.581335919503728e-2</td>
+</tr>
+<tr class="odd">
+<td>1.5478749815243467</td>
+</tr>
+<tr class="even">
+<td>1.5497411627601851</td>
+</tr>
+<tr class="odd">
+<td>0.21791376679544772</td>
+</tr>
+<tr class="even">
+<td>1.1291967445604012e-2</td>
+</tr>
+<tr class="odd">
+<td>-0.30293144696154806</td>
+</tr>
+<tr class="even">
+<td>0.4303254534802833</td>
+</tr>
+<tr class="odd">
+<td>1.5521304466388752</td>
+</tr>
+<tr class="even">
+<td>2.2910302464408394</td>
+</tr>
+<tr class="odd">
+<td>0.4374695472538803</td>
+</tr>
+<tr class="even">
+<td>0.4085186427342812</td>
+</tr>
+<tr class="odd">
+<td>-6.531316403553289e-2</td>
+</tr>
+<tr class="even">
+<td>6.39812257122474e-3</td>
+</tr>
+<tr class="odd">
+<td>0.24840501087934996</td>
+</tr>
+<tr class="even">
+<td>-1.021974709142702</td>
+</tr>
+<tr class="odd">
+<td>-9.233941622902653e-2</td>
+</tr>
+<tr class="even">
+<td>0.41027379764960337</td>
+</tr>
+<tr class="odd">
+<td>1.864567223228712</td>
+</tr>
+<tr class="even">
+<td>1.5393474896194466</td>
+</tr>
+<tr class="odd">
+<td>1.124907339909468</td>
+</tr>
+<tr class="even">
+<td>2.0206475875654997</td>
+</tr>
+<tr class="odd">
+<td>-0.7058862229186389</td>
+</tr>
+<tr class="even">
+<td>1.2344926787652002</td>
+</tr>
+<tr class="odd">
+<td>1.1406194673922239</td>
+</tr>
+<tr class="even">
+<td>1.4084552620839659</td>
+</tr>
+<tr class="odd">
+<td>0.739931161380885</td>
+</tr>
+<tr class="even">
+<td>0.29958396894640427</td>
+</tr>
+<tr class="odd">
+<td>-0.9379262816791101</td>
+</tr>
+<tr class="even">
+<td>0.8259556704405835</td>
+</tr>
+<tr class="odd">
+<td>-0.3199802616466474</td>
+</tr>
+<tr class="even">
+<td>1.9656420693625898</td>
+</tr>
+<tr class="odd">
+<td>0.8789984776053141</td>
+</tr>
+<tr class="even">
+<td>2.4965042040211793</td>
+</tr>
+<tr class="odd">
+<td>1.714778861431627</td>
+</tr>
+<tr class="even">
+<td>0.8669641143187272</td>
+</tr>
+<tr class="odd">
+<td>1.0757413525008879</td>
+</tr>
+<tr class="even">
+<td>1.9658378382249264e-2</td>
+</tr>
+<tr class="odd">
+<td>0.7165095911306543</td>
+</tr>
+<tr class="even">
+<td>1.2251547673860115</td>
+</tr>
+<tr class="odd">
+<td>1.5869187313570912</td>
+</tr>
+<tr class="even">
+<td>0.3928727449886338</td>
+</tr>
+<tr class="odd">
+<td>1.7722759642539445</td>
+</tr>
+<tr class="even">
+<td>1.0350331272239843</td>
+</tr>
+<tr class="odd">
+<td>-1.4234008750858624</td>
+</tr>
+<tr class="even">
+<td>0.6054572828043063</td>
+</tr>
+<tr class="odd">
+<td>0.3024585268617903</td>
+</tr>
+<tr class="even">
+<td>2.9432999768948087e-2</td>
+</tr>
+<tr class="odd">
+<td>0.9382472473173075</td>
+</tr>
+<tr class="even">
+<td>2.11287419383702</td>
+</tr>
+<tr class="odd">
+<td>1.0876022969280528</td>
+</tr>
+<tr class="even">
+<td>0.36548993902899596</td>
+</tr>
+<tr class="odd">
+<td>-2.005053653271253</td>
+</tr>
+<tr class="even">
+<td>2.0367928918435894</td>
+</tr>
+<tr class="odd">
+<td>9.261254419611942e-2</td>
+</tr>
+<tr class="even">
+<td>2.156248406806113</td>
+</tr>
+<tr class="odd">
+<td>-0.5295405173638772</td>
+</tr>
+<tr class="even">
+<td>2.452318995994742</td>
+</tr>
+<tr class="odd">
+<td>0.8636413385915132</td>
+</tr>
+<tr class="even">
+<td>0.31460938814139794</td>
+</tr>
+<tr class="odd">
+<td>-2.0257131370059023e-2</td>
+</tr>
+<tr class="even">
+<td>1.3213739526626505</td>
+</tr>
+<tr class="odd">
+<td>0.9463001869917488</td>
+</tr>
+<tr class="even">
+<td>0.986171393681171</td>
+</tr>
+<tr class="odd">
+<td>0.12492672949874628</td>
+</tr>
+<tr class="even">
+<td>0.9908400692267174</td>
+</tr>
+<tr class="odd">
+<td>1.0695623856543282</td>
+</tr>
+<tr class="even">
+<td>1.0221220766637027</td>
+</tr>
+<tr class="odd">
+<td>2.8492797946693904</td>
+</tr>
+<tr class="even">
+<td>1.0609742751901396</td>
+</tr>
+<tr class="odd">
+<td>1.6409490831011158</td>
+</tr>
+<tr class="even">
+<td>1.5427085071446491</td>
+</tr>
+<tr class="odd">
+<td>1.7312859942989034</td>
+</tr>
+<tr class="even">
+<td>1.2947069326850533</td>
+</tr>
+<tr class="odd">
+<td>0.3756138591369289</td>
+</tr>
+<tr class="even">
+<td>1.4349084022701803</td>
+</tr>
+<tr class="odd">
+<td>0.37649651121290106</td>
+</tr>
+<tr class="even">
+<td>0.7071860096564935</td>
+</tr>
+<tr class="odd">
+<td>1.5065536846394356</td>
+</tr>
+<tr class="even">
+<td>0.15009861698305105</td>
+</tr>
+<tr class="odd">
+<td>3.5084734586888766e-2</td>
+</tr>
+<tr class="even">
+<td>1.9474563946729155</td>
+</tr>
+<tr class="odd">
+<td>9.423175513609095</td>
+</tr>
+<tr class="even">
+<td>2.4871634825039015</td>
+</tr>
+<tr class="odd">
+<td>2.8472676324820685</td>
+</tr>
+<tr class="even">
+<td>1.5999488876250578</td>
+</tr>
+<tr class="odd">
+<td>-0.2693864675719999</td>
+</tr>
+<tr class="even">
+<td>1.6304414331783441</td>
+</tr>
+<tr class="odd">
+<td>0.39324529792831353</td>
+</tr>
+<tr class="even">
+<td>0.4053253263569069</td>
+</tr>
+<tr class="odd">
+<td>0.9270234970247857</td>
+</tr>
+<tr class="even">
+<td>1.4509585503273819</td>
+</tr>
+<tr class="odd">
+<td>0.8878267401905819</td>
+</tr>
+<tr class="even">
+<td>1.1883024549090635</td>
+</tr>
+<tr class="odd">
+<td>1.0163155722641077</td>
+</tr>
+<tr class="even">
+<td>-0.8003099498427713</td>
+</tr>
+<tr class="odd">
+<td>-0.9483216075980454</td>
+</tr>
+<tr class="even">
+<td>1.0437451610964232</td>
+</tr>
+<tr class="odd">
+<td>2.19837214407137</td>
+</tr>
+<tr class="even">
+<td>2.070797890483533</td>
+</tr>
+<tr class="odd">
+<td>1.2067096088561005</td>
+</tr>
+<tr class="even">
+<td>0.5043809533024068</td>
+</tr>
+<tr class="odd">
+<td>0.3683130512293926</td>
+</tr>
+<tr class="even">
+<td>1.0968506619209946</td>
+</tr>
+<tr class="odd">
+<td>-0.6602896123630477</td>
+</tr>
+<tr class="even">
+<td>6.829641971377687e-2</td>
+</tr>
+<tr class="odd">
+<td>1.5578597945995134</td>
+</tr>
+<tr class="even">
+<td>0.9822629073468155</td>
+</tr>
+<tr class="odd">
+<td>-0.7900771590527182</td>
+</tr>
+<tr class="even">
+<td>1.1194124344742182</td>
+</tr>
+<tr class="odd">
+<td>1.1239015052468448</td>
+</tr>
+<tr class="even">
+<td>1.9447892371838207</td>
+</tr>
+<tr class="odd">
+<td>2.0854603958592985</td>
+</tr>
+<tr class="even">
+<td>0.17341117815802976</td>
+</tr>
+<tr class="odd">
+<td>1.5971150699056031</td>
+</tr>
+<tr class="even">
+<td>0.35646629992342993</td>
+</tr>
+<tr class="odd">
+<td>1.8107324499508701</td>
+</tr>
+<tr class="even">
+<td>3.463539114641669</td>
+</tr>
+<tr class="odd">
+<td>0.8683263379823365</td>
+</tr>
+<tr class="even">
+<td>1.2642821462325637</td>
+</tr>
+<tr class="odd">
+<td>1.0099560176390794</td>
+</tr>
+<tr class="even">
+<td>1.1930381560126895</td>
+</tr>
+<tr class="odd">
+<td>0.5433757598192581</td>
+</tr>
+<tr class="even">
+<td>1.0213782743479625</td>
+</tr>
+<tr class="odd">
+<td>1.5049231054950472</td>
+</tr>
+<tr class="even">
+<td>0.22101559200796428</td>
+</tr>
+<tr class="odd">
+<td>1.8743753391414122</td>
+</tr>
+<tr class="even">
+<td>0.6050230742039573</td>
+</tr>
+<tr class="odd">
+<td>0.6939669876285336</td>
+</tr>
+<tr class="even">
+<td>1.5379566524515602</td>
+</tr>
+<tr class="odd">
+<td>-0.6869579758877387</td>
+</tr>
+<tr class="even">
+<td>-0.4823865565169676</td>
+</tr>
+<tr class="odd">
+<td>2.577388594447341</td>
+</tr>
+<tr class="even">
+<td>0.9323745950234809</td>
+</tr>
+<tr class="odd">
+<td>-0.25032440836547454</td>
+</tr>
+<tr class="even">
+<td>1.1141701800611599</td>
+</tr>
+<tr class="odd">
+<td>1.1577408343996396</td>
+</tr>
+<tr class="even">
+<td>0.4735089125920344</td>
+</tr>
+<tr class="odd">
+<td>-1.5559289264558278</td>
+</tr>
+<tr class="even">
+<td>-0.11080485473390023</td>
+</tr>
+<tr class="odd">
+<td>0.1536430200356127</td>
+</tr>
+<tr class="even">
+<td>1.2851073161790278</td>
+</tr>
+<tr class="odd">
+<td>-0.9717966387140513</td>
+</tr>
+<tr class="even">
+<td>0.4604981927819666</td>
+</tr>
+<tr class="odd">
+<td>0.4825924627571432</td>
+</tr>
+<tr class="even">
+<td>1.8907687599342153</td>
+</tr>
+<tr class="odd">
+<td>1.5027092114554406</td>
+</tr>
+<tr class="even">
+<td>0.4892227077808574</td>
+</tr>
+<tr class="odd">
+<td>2.2742380779964306</td>
+</tr>
+<tr class="even">
+<td>5.93203161994782e-3</td>
+</tr>
+<tr class="odd">
+<td>0.9357077683018076</td>
+</tr>
+<tr class="even">
+<td>1.6452901327178684</td>
+</tr>
+<tr class="odd">
+<td>2.5989481778450294</td>
+</tr>
+<tr class="even">
+<td>3.1233030636814103</td>
+</tr>
+<tr class="odd">
+<td>2.14412876458466</td>
+</tr>
+<tr class="even">
+<td>0.8645332371791754</td>
+</tr>
+<tr class="odd">
+<td>1.7396751361758789</td>
+</tr>
+<tr class="even">
+<td>3.406726808728102</td>
+</tr>
+<tr class="odd">
+<td>0.27592904706426413</td>
+</tr>
+<tr class="even">
+<td>-0.47288172874607715</td>
+</tr>
+<tr class="odd">
+<td>3.1581200247451022</td>
+</tr>
+<tr class="even">
+<td>2.3502844371874003</td>
+</tr>
+<tr class="odd">
+<td>2.3604518998272104</td>
+</tr>
+<tr class="even">
+<td>2.875582435906723</td>
+</tr>
+<tr class="odd">
+<td>1.802101533727158</td>
+</tr>
+<tr class="even">
+<td>2.158082491464444</td>
+</tr>
+<tr class="odd">
+<td>-0.5284223682158626</td>
+</tr>
+<tr class="even">
+<td>1.929919317533868e-2</td>
+</tr>
+<tr class="odd">
+<td>1.948485504832782</td>
+</tr>
+<tr class="even">
+<td>0.49379467644006303</td>
+</tr>
+<tr class="odd">
+<td>0.33811694243690293</td>
+</tr>
+<tr class="even">
+<td>1.332171769010618</td>
+</tr>
+<tr class="odd">
+<td>0.6994701270153069</td>
+</tr>
+<tr class="even">
+<td>-0.413721820026016</td>
+</tr>
+<tr class="odd">
+<td>-1.5522089380783108</td>
+</tr>
+<tr class="even">
+<td>2.161396170492705</td>
+</tr>
+<tr class="odd">
+<td>2.333496950423164e-2</td>
+</tr>
+<tr class="even">
+<td>-0.10913840839170796</td>
+</tr>
+<tr class="odd">
+<td>1.1299228472291496</td>
+</tr>
+<tr class="even">
+<td>2.4274358384176584</td>
+</tr>
+<tr class="odd">
+<td>1.9359707345891741</td>
+</tr>
+<tr class="even">
+<td>3.487722218477596</td>
+</tr>
+<tr class="odd">
+<td>0.9990127159196325</td>
+</tr>
+<tr class="even">
+<td>-1.0398429191328207</td>
+</tr>
+<tr class="odd">
+<td>0.3005833334887211</td>
+</tr>
+<tr class="even">
+<td>-0.7334628100431295</td>
+</tr>
+<tr class="odd">
+<td>0.4835865602253189</td>
+</tr>
+<tr class="even">
+<td>0.5246945471836175</td>
+</tr>
+<tr class="odd">
+<td>0.8469783573593253</td>
+</tr>
+<tr class="even">
+<td>0.8359162587262456</td>
+</tr>
+<tr class="odd">
+<td>0.7772016511976113</td>
+</tr>
+<tr class="even">
+<td>-0.39849883029666944</td>
+</tr>
+<tr class="odd">
+<td>1.8703097604547239</td>
+</tr>
+<tr class="even">
+<td>2.682932324516024</td>
+</tr>
+<tr class="odd">
+<td>0.46996888720103236</td>
+</tr>
+<tr class="even">
+<td>-7.881388366585762e-2</td>
+</tr>
+<tr class="odd">
+<td>2.1043645061434084</td>
+</tr>
+<tr class="even">
+<td>0.6195230903468327</td>
+</tr>
+<tr class="odd">
+<td>-0.23170755440676594</td>
+</tr>
+<tr class="even">
+<td>0.3918168388047796</td>
+</tr>
+<tr class="odd">
+<td>0.22086080450987344</td>
+</tr>
+<tr class="even">
+<td>1.5182059037248368</td>
+</tr>
+<tr class="odd">
+<td>1.6442851975073318</td>
+</tr>
+<tr class="even">
+<td>0.3979663516003099</td>
+</tr>
+<tr class="odd">
+<td>2.0531657985840983</td>
+</tr>
+<tr class="even">
+<td>1.7928797637680196</td>
+</tr>
+<tr class="odd">
+<td>2.9329556976986013</td>
+</tr>
+<tr class="even">
+<td>1.1087520027663345</td>
+</tr>
+<tr class="odd">
+<td>1.2115868818351045</td>
+</tr>
+<tr class="even">
+<td>1.9163661519192294</td>
+</tr>
+<tr class="odd">
+<td>1.6917128257752045</td>
+</tr>
+<tr class="even">
+<td>1.0095879056962782</td>
+</tr>
+<tr class="odd">
+<td>-0.13611276130309613</td>
+</tr>
+<tr class="even">
+<td>2.2939319088848023</td>
+</tr>
+<tr class="odd">
+<td>1.0723690693732042</td>
+</tr>
+<tr class="even">
+<td>2.1452154961792393</td>
+</tr>
+<tr class="odd">
+<td>0.7259078662420231</td>
+</tr>
+<tr class="even">
+<td>2.6599123456452727</td>
+</tr>
+<tr class="odd">
+<td>0.2519779820647646</td>
+</tr>
+<tr class="even">
+<td>2.1670014817546175</td>
+</tr>
+<tr class="odd">
+<td>0.10506784220981513</td>
+</tr>
+<tr class="even">
+<td>2.018185302480656</td>
+</tr>
+<tr class="odd">
+<td>1.1665983169452525</td>
+</tr>
+<tr class="even">
+<td>0.33284879429952463</td>
+</tr>
+<tr class="odd">
+<td>0.3531339079979545</td>
+</tr>
+<tr class="even">
+<td>2.1004784012229245</td>
+</tr>
+<tr class="odd">
+<td>1.282680965361929</td>
+</tr>
+<tr class="even">
+<td>1.2270715852857979</td>
+</tr>
+<tr class="odd">
+<td>0.858598096986649</td>
+</tr>
+<tr class="even">
+<td>2.5040344133072407</td>
+</tr>
+<tr class="odd">
+<td>1.6541952933075013</td>
+</tr>
+<tr class="even">
+<td>0.5329588210461834</td>
+</tr>
+<tr class="odd">
+<td>2.1274892552565134</td>
+</tr>
+<tr class="even">
+<td>1.4668875035709574</td>
+</tr>
+<tr class="odd">
+<td>1.5382758818248594</td>
+</tr>
+<tr class="even">
+<td>1.7428172106530586</td>
+</tr>
+<tr class="odd">
+<td>1.4727771685178368</td>
+</tr>
+<tr class="even">
+<td>1.6023481462981235</td>
+</tr>
+<tr class="odd">
+<td>1.6577898477375492</td>
+</tr>
+<tr class="even">
+<td>5.892056976555449e-2</td>
+</tr>
+<tr class="odd">
+<td>2.7754262543475523</td>
+</tr>
+<tr class="even">
+<td>1.2200523142327606</td>
+</tr>
+<tr class="odd">
+<td>1.5903756890326521</td>
+</tr>
+<tr class="even">
+<td>-1.49547625208842</td>
+</tr>
+<tr class="odd">
+<td>0.8523817097750093</td>
+</tr>
+<tr class="even">
+<td>0.5057853403549346</td>
+</tr>
+<tr class="odd">
+<td>0.5683629007876065</td>
+</tr>
+<tr class="even">
+<td>1.6479513379049497</td>
+</tr>
+<tr class="odd">
+<td>1.2148679515188867</td>
+</tr>
+<tr class="even">
+<td>0.6222019509815193</td>
+</tr>
+<tr class="odd">
+<td>1.3255067306263184</td>
+</tr>
+<tr class="even">
+<td>0.4983375954130155</td>
+</tr>
+<tr class="odd">
+<td>-8.802709440091383e-2</td>
+</tr>
+<tr class="even">
+<td>0.13831985322805507</td>
+</tr>
+<tr class="odd">
+<td>-0.5487242466777436</td>
+</tr>
+<tr class="even">
+<td>-0.32058114510029334</td>
+</tr>
+<tr class="odd">
+<td>1.8950590840214767</td>
+</tr>
+<tr class="even">
+<td>1.0062190610750874</td>
+</tr>
+<tr class="odd">
+<td>-0.9934439161367286</td>
+</tr>
+<tr class="even">
+<td>0.3671557383587293</td>
+</tr>
+<tr class="odd">
+<td>0.19986189782147756</td>
+</tr>
+<tr class="even">
+<td>-0.49653972053539497</td>
+</tr>
+<tr class="odd">
+<td>0.6848255848767759</td>
+</tr>
+<tr class="even">
+<td>1.5219606199148406</td>
+</tr>
+<tr class="odd">
+<td>1.455086538348867</td>
+</tr>
+<tr class="even">
+<td>2.883109155648917</td>
+</tr>
+<tr class="odd">
+<td>1.8164694435868296</td>
+</tr>
+<tr class="even">
+<td>0.6742710281863775</td>
+</tr>
+<tr class="odd">
+<td>0.5441958963393487</td>
+</tr>
+<tr class="even">
+<td>1.0517397813571259</td>
+</tr>
+<tr class="odd">
+<td>0.8356831003190489</td>
+</tr>
+<tr class="even">
+<td>0.8227690076487093</td>
+</tr>
+<tr class="odd">
+<td>1.4570119880481842</td>
+</tr>
+<tr class="even">
+<td>-0.297581775651637</td>
+</tr>
+<tr class="odd">
+<td>-7.206180041345078e-2</td>
+</tr>
+<tr class="even">
+<td>-0.8739444049086391</td>
+</tr>
+<tr class="odd">
+<td>2.2604530979343074</td>
+</tr>
+<tr class="even">
+<td>2.3872947344763027</td>
+</tr>
+<tr class="odd">
+<td>3.3685772895980124</td>
+</tr>
+<tr class="even">
+<td>2.013534739447639</td>
+</tr>
+<tr class="odd">
+<td>3.368251328412311</td>
+</tr>
+<tr class="even">
+<td>0.8953451648220483</td>
+</tr>
+<tr class="odd">
+<td>9.545874578601765e-2</td>
+</tr>
+<tr class="even">
+<td>0.7718477167244377</td>
+</tr>
+<tr class="odd">
+<td>1.0629106168204554</td>
+</tr>
+<tr class="even">
+<td>0.5518190802821734</td>
+</tr>
+<tr class="odd">
+<td>2.9939679918505853</td>
+</tr>
+<tr class="even">
+<td>1.8726021041818661</td>
+</tr>
+<tr class="odd">
+<td>0.2653885457840085</td>
+</tr>
+<tr class="even">
+<td>1.9872672471653996</td>
+</tr>
+<tr class="odd">
+<td>-0.553166557898946</td>
+</tr>
+<tr class="even">
+<td>1.5640591286122745</td>
+</tr>
+<tr class="odd">
+<td>2.52680639118602</td>
+</tr>
+<tr class="even">
+<td>1.80742439492357</td>
+</tr>
+<tr class="odd">
+<td>2.1955997975781347</td>
+</tr>
+<tr class="even">
+<td>0.5980285235875027</td>
+</tr>
+<tr class="odd">
+<td>-0.2658797956060317</td>
+</tr>
+<tr class="even">
+<td>-0.49719135472382137</td>
+</tr>
+<tr class="odd">
+<td>1.180607461695498</td>
+</tr>
+<tr class="even">
+<td>-0.10430878902480734</td>
+</tr>
+<tr class="odd">
+<td>0.823892717854915</td>
+</tr>
+<tr class="even">
+<td>1.666382974377688</td>
+</tr>
+<tr class="odd">
+<td>3.748395965408928</td>
+</tr>
+<tr class="even">
+<td>1.7921581120532326e-2</td>
+</tr>
+<tr class="odd">
+<td>0.7499355222636435</td>
+</tr>
+<tr class="even">
+<td>2.3386705969751205</td>
+</tr>
+<tr class="odd">
+<td>0.4946954139770775</td>
+</tr>
+<tr class="even">
+<td>2.7985296324540565</td>
+</tr>
+<tr class="odd">
+<td>1.5356765186629966</td>
+</tr>
+<tr class="even">
+<td>-0.33706316690289584</td>
+</tr>
+<tr class="odd">
+<td>-1.0348117718002703e-2</td>
+</tr>
+<tr class="even">
+<td>1.8281804903673144</td>
+</tr>
+<tr class="odd">
+<td>0.3172404416132534</td>
+</tr>
+<tr class="even">
+<td>0.5893972598101371</td>
+</tr>
+<tr class="odd">
+<td>1.5326653373112777</td>
+</tr>
+<tr class="even">
+<td>0.8539589801933155</td>
+</tr>
+<tr class="odd">
+<td>2.092892033666929</td>
+</tr>
+<tr class="even">
+<td>0.6296940385798598</td>
+</tr>
+<tr class="odd">
+<td>8.99959554980265</td>
+</tr>
+<tr class="even">
+<td>1.3401791716063445</td>
+</tr>
+<tr class="odd">
+<td>0.1625728478606363</td>
+</tr>
+<tr class="even">
+<td>1.1023716302273685</td>
+</tr>
+<tr class="odd">
+<td>1.3244294511594552</td>
+</tr>
+<tr class="even">
+<td>1.9717106308848458</td>
+</tr>
+<tr class="odd">
+<td>2.0935027130112918</td>
+</tr>
+<tr class="even">
+<td>0.5540124632067691</td>
+</tr>
+<tr class="odd">
+<td>2.8390489237342758</td>
+</tr>
+<tr class="even">
+<td>1.2584888592967522</td>
+</tr>
+<tr class="odd">
+<td>0.8378223664277132</td>
+</tr>
+<tr class="even">
+<td>-3.705953427792741e-2</td>
+</tr>
+<tr class="odd">
+<td>-1.125595126556278e-2</td>
+</tr>
+<tr class="even">
+<td>1.8829278782190024</td>
+</tr>
+<tr class="odd">
+<td>2.0192085492627894</td>
+</tr>
+<tr class="even">
+<td>1.9386320044059204</td>
+</tr>
+<tr class="odd">
+<td>1.651530725699678</td>
+</tr>
+<tr class="even">
+<td>0.8017983775095935</td>
+</tr>
+<tr class="odd">
+<td>-3.514905095054344e-2</td>
+</tr>
+<tr class="even">
+<td>0.8155367784375459</td>
+</tr>
+<tr class="odd">
+<td>-0.5552596097915619</td>
+</tr>
+<tr class="even">
+<td>1.8705605094803621</td>
+</tr>
+<tr class="odd">
+<td>10.174199861232976</td>
+</tr>
+<tr class="even">
+<td>1.4536718681041976</td>
+</tr>
+<tr class="odd">
+<td>2.1062700105302996</td>
+</tr>
+<tr class="even">
+<td>0.475922933272229</td>
+</tr>
+<tr class="odd">
+<td>1.0817390501017392</td>
+</tr>
+<tr class="even">
+<td>2.2796321965842496</td>
+</tr>
+<tr class="odd">
+<td>0.23323897979804842</td>
+</tr>
+<tr class="even">
+<td>1.0183686887164103</td>
+</tr>
+<tr class="odd">
+<td>-0.7554454183477253</td>
+</tr>
+<tr class="even">
+<td>1.3019096488805835</td>
+</tr>
+<tr class="odd">
+<td>0.3374802783657267</td>
+</tr>
+<tr class="even">
+<td>-0.5146418960525585</td>
+</tr>
+<tr class="odd">
+<td>-6.048075364364469e-2</td>
+</tr>
+<tr class="even">
+<td>-5.967451256405276e-2</td>
+</tr>
+<tr class="odd">
+<td>1.233114706332717</td>
+</tr>
+<tr class="even">
+<td>1.7406224225514757</td>
+</tr>
+<tr class="odd">
+<td>0.5238094364159517</td>
+</tr>
+<tr class="even">
+<td>-4.455639893554597e-2</td>
+</tr>
+<tr class="odd">
+<td>0.6178805181179535</td>
+</tr>
+<tr class="even">
+<td>-0.8510251471391128</td>
+</tr>
+<tr class="odd">
+<td>1.308052246786863</td>
+</tr>
+<tr class="even">
+<td>0.3268079413606899</td>
+</tr>
+<tr class="odd">
+<td>-1.3025175142774486</td>
+</tr>
+<tr class="even">
+<td>0.5320039005955481</td>
+</tr>
+<tr class="odd">
+<td>0.12387407754502777</td>
+</tr>
+<tr class="even">
+<td>2.6101947374495293</td>
+</tr>
+<tr class="odd">
+<td>1.5224492462759098</td>
+</tr>
+<tr class="even">
+<td>1.236244816444764</td>
+</tr>
+<tr class="odd">
+<td>1.4954016347946228</td>
+</tr>
+<tr class="even">
+<td>0.5281503216531209</td>
+</tr>
+<tr class="odd">
+<td>0.8463329768741992</td>
+</tr>
+<tr class="even">
+<td>1.1634091418265289</td>
+</tr>
+<tr class="odd">
+<td>1.7554480003839843</td>
+</tr>
+<tr class="even">
+<td>1.8947204310797423</td>
+</tr>
+<tr class="odd">
+<td>0.7506627891160538</td>
+</tr>
+<tr class="even">
+<td>-0.22423697078143956</td>
+</tr>
+<tr class="odd">
+<td>0.927732550621745</td>
+</tr>
+<tr class="even">
+<td>2.784360564469151</td>
+</tr>
+<tr class="odd">
+<td>3.542787218532106</td>
+</tr>
+<tr class="even">
+<td>0.432227325280209</td>
+</tr>
+<tr class="odd">
+<td>-0.9685039345572555</td>
+</tr>
+<tr class="even">
+<td>1.610702352432787</td>
+</tr>
+<tr class="odd">
+<td>0.25225428913555614</td>
+</tr>
+<tr class="even">
+<td>0.6318605835098334</td>
+</tr>
+<tr class="odd">
+<td>0.24784246074544614</td>
+</tr>
+<tr class="even">
+<td>1.3125827737308564</td>
+</tr>
+<tr class="odd">
+<td>1.76027763070149</td>
+</tr>
+<tr class="even">
+<td>1.604542790844651</td>
+</tr>
+<tr class="odd">
+<td>0.9391947816971199</td>
+</tr>
+<tr class="even">
+<td>2.0113202394281036</td>
+</tr>
+<tr class="odd">
+<td>0.6833889165055331</td>
+</tr>
+<tr class="even">
+<td>0.7828049531781445</td>
+</tr>
+<tr class="odd">
+<td>1.525206927196617</td>
+</tr>
+<tr class="even">
+<td>0.4555978800663196</td>
+</tr>
+<tr class="odd">
+<td>2.158504891725925</td>
+</tr>
+<tr class="even">
+<td>0.5497336163750275</td>
+</tr>
+<tr class="odd">
+<td>1.108152719515001</td>
+</tr>
+<tr class="even">
+<td>2.229598024152815</td>
+</tr>
+<tr class="odd">
+<td>-0.30715895940514804</td>
+</tr>
+<tr class="even">
+<td>-0.4963457195725012</td>
+</tr>
+<tr class="odd">
+<td>0.6317891104976874</td>
+</tr>
+<tr class="even">
+<td>0.9404446092196193</td>
+</tr>
+<tr class="odd">
+<td>0.5824240745249956</td>
+</tr>
+<tr class="even">
+<td>0.9522827784866549</td>
+</tr>
+<tr class="odd">
+<td>0.5747278460881767</td>
+</tr>
+<tr class="even">
+<td>2.3228717276929878</td>
+</tr>
+<tr class="odd">
+<td>-0.12232857339482872</td>
+</tr>
+<tr class="even">
+<td>10.442627838980057</td>
+</tr>
+<tr class="odd">
+<td>-0.9613909203767632</td>
+</tr>
+<tr class="even">
+<td>2.360115785393865</td>
+</tr>
+<tr class="odd">
+<td>10.460772141286911</td>
+</tr>
+<tr class="even">
+<td>-0.15127677602688205</td>
+</tr>
+<tr class="odd">
+<td>-0.7430747891693794</td>
+</tr>
+<tr class="even">
+<td>1.1166522423684635</td>
+</tr>
+<tr class="odd">
+<td>0.9764807692690883</td>
+</tr>
+<tr class="even">
+<td>1.0545546293851562</td>
+</tr>
+<tr class="odd">
+<td>1.4217770365949636</td>
+</tr>
+<tr class="even">
+<td>0.8472372480230154</td>
+</tr>
+<tr class="odd">
+<td>1.9293695381886482</td>
+</tr>
+<tr class="even">
+<td>1.224477650092793</td>
+</tr>
+<tr class="odd">
+<td>-0.576902390274286</td>
+</tr>
+<tr class="even">
+<td>1.327683339856686</td>
+</tr>
+<tr class="odd">
+<td>2.3294636041468753</td>
+</tr>
+<tr class="even">
+<td>1.0508125817809573</td>
+</tr>
+<tr class="odd">
+<td>0.6893104376174488</td>
+</tr>
+<tr class="even">
+<td>0.25055576676244107</td>
+</tr>
+<tr class="odd">
+<td>0.9140712539798914</td>
+</tr>
+<tr class="even">
+<td>1.9321126051060917</td>
+</tr>
+<tr class="odd">
+<td>0.26607474319516033</td>
+</tr>
+<tr class="even">
+<td>1.5039430223830939</td>
+</tr>
+<tr class="odd">
+<td>2.4155724118245736e-2</td>
+</tr>
+<tr class="even">
+<td>2.9529975781223285</td>
+</tr>
+<tr class="odd">
+<td>2.525931295222416</td>
+</tr>
+<tr class="even">
+<td>3.0184656376604537</td>
+</tr>
+<tr class="odd">
+<td>1.3686271300712956</td>
+</tr>
+<tr class="even">
+<td>0.4798723250356388</td>
+</tr>
+<tr class="odd">
+<td>-1.008710689163618</td>
+</tr>
+<tr class="even">
+<td>1.5701794389127253</td>
+</tr>
+<tr class="odd">
+<td>0.19978829057056857</td>
+</tr>
+<tr class="even">
+<td>0.9240761354395062</td>
+</tr>
+<tr class="odd">
+<td>0.19521466746159932</td>
+</tr>
+<tr class="even">
+<td>1.2744043502827374</td>
+</tr>
+<tr class="odd">
+<td>-0.5431195983133648</td>
+</tr>
+<tr class="even">
+<td>0.1974591476352352</td>
+</tr>
+<tr class="odd">
+<td>0.7430949008871768</td>
+</tr>
+<tr class="even">
+<td>0.8988725739330019</td>
+</tr>
+<tr class="odd">
+<td>1.6597416237841465</td>
+</tr>
+<tr class="even">
+<td>1.7417674159020793</td>
+</tr>
+<tr class="odd">
+<td>2.4088293700031693</td>
+</tr>
+<tr class="even">
+<td>1.143581580663996</td>
+</tr>
+<tr class="odd">
+<td>1.4082585153064164</td>
+</tr>
+<tr class="even">
+<td>0.47069873985209143</td>
+</tr>
+<tr class="odd">
+<td>-1.1580364942293953</td>
+</tr>
+<tr class="even">
+<td>1.0732710931019263</td>
+</tr>
+<tr class="odd">
+<td>1.5509982425379119</td>
+</tr>
+<tr class="even">
+<td>1.7677585939234246</td>
+</tr>
+<tr class="odd">
+<td>-1.1941141421872046</td>
+</tr>
+<tr class="even">
+<td>0.21105300062231513</td>
+</tr>
+<tr class="odd">
+<td>0.6529477393919702</td>
+</tr>
+<tr class="even">
+<td>-0.34988928270936226</td>
+</tr>
+<tr class="odd">
+<td>0.5444265493743319</td>
+</tr>
+<tr class="even">
+<td>2.251577733100331</td>
+</tr>
+<tr class="odd">
+<td>0.16913394323406872</td>
+</tr>
+<tr class="even">
+<td>11.260505056159252</td>
+</tr>
+<tr class="odd">
+<td>0.7864958296725808</td>
+</tr>
+<tr class="even">
+<td>1.091593382604825</td>
+</tr>
+<tr class="odd">
+<td>0.7471169918052949</td>
+</tr>
+<tr class="even">
+<td>0.36078054843777674</td>
+</tr>
+<tr class="odd">
+<td>1.4284182466312578</td>
+</tr>
+<tr class="even">
+<td>0.3641673471149427</td>
+</tr>
+<tr class="odd">
+<td>-1.0360349861808262</td>
+</tr>
+<tr class="even">
+<td>0.38230293118496894</td>
+</tr>
+<tr class="odd">
+<td>1.8786902260733145</td>
+</tr>
+<tr class="even">
+<td>-0.7366326071049587</td>
+</tr>
+<tr class="odd">
+<td>2.0194567072200393</td>
+</tr>
+<tr class="even">
+<td>0.5111298609273971</td>
+</tr>
+<tr class="odd">
+<td>1.947809368661851</td>
+</tr>
+<tr class="even">
+<td>2.628034116556221</td>
+</tr>
+<tr class="odd">
+<td>0.10041127309972464</td>
+</tr>
+<tr class="even">
+<td>-0.9914516842653798</td>
+</tr>
+<tr class="odd">
+<td>0.42604512187698185</td>
+</tr>
+<tr class="even">
+<td>0.8384351974667634</td>
+</tr>
+<tr class="odd">
+<td>0.9068232484596871</td>
+</tr>
+<tr class="even">
+<td>0.5738655218292824</td>
+</tr>
+<tr class="odd">
+<td>1.9264618723701152</td>
+</tr>
+<tr class="even">
+<td>1.5761237325879685</td>
+</tr>
+<tr class="odd">
+<td>1.626292107129501</td>
+</tr>
+<tr class="even">
+<td>2.0849065606469557</td>
+</tr>
+<tr class="odd">
+<td>-0.11343769134229165</td>
+</tr>
+<tr class="even">
+<td>0.1025048999056456</td>
+</tr>
+<tr class="odd">
+<td>1.053052626678512</td>
+</tr>
+<tr class="even">
+<td>-0.24007907992011845</td>
+</tr>
+<tr class="odd">
+<td>0.1382201206040784</td>
+</tr>
+<tr class="even">
+<td>1.8910416626489552</td>
+</tr>
+<tr class="odd">
+<td>2.8345096657368556</td>
+</tr>
+<tr class="even">
+<td>2.583170811237836</td>
+</tr>
+<tr class="odd">
+<td>-0.3893702721041865</td>
+</tr>
+<tr class="even">
+<td>1.3520108244803342</td>
+</tr>
+<tr class="odd">
+<td>-0.12593338576537327</td>
+</tr>
+<tr class="even">
+<td>-0.9808107291023687</td>
+</tr>
+<tr class="odd">
+<td>1.4015364735733753</td>
+</tr>
+<tr class="even">
+<td>1.695547239092475</td>
+</tr>
+<tr class="odd">
+<td>1.3489569585825598</td>
+</tr>
+<tr class="even">
+<td>0.8360821611908951</td>
+</tr>
+<tr class="odd">
+<td>0.33683162328320115</td>
+</tr>
+<tr class="even">
+<td>-1.260138655228694</td>
+</tr>
+<tr class="odd">
+<td>1.6662817407344905</td>
+</tr>
+<tr class="even">
+<td>2.273339646058636</td>
+</tr>
+<tr class="odd">
+<td>2.1408145302279262</td>
+</tr>
+<tr class="even">
+<td>1.1532315762716479</td>
+</tr>
+<tr class="odd">
+<td>0.792000410181182</td>
+</tr>
+<tr class="even">
+<td>2.617286787875776</td>
+</tr>
+<tr class="odd">
+<td>0.1827575511422984</td>
+</tr>
+<tr class="even">
+<td>-0.9059473522304451</td>
+</tr>
+<tr class="odd">
+<td>-0.31032406628601605</td>
+</tr>
+<tr class="even">
+<td>1.487891710861818</td>
+</tr>
+<tr class="odd">
+<td>-0.19990519218780256</td>
+</tr>
+<tr class="even">
+<td>1.5228011808161672</td>
+</tr>
+<tr class="odd">
+<td>1.091160988784999</td>
+</tr>
+<tr class="even">
+<td>-0.5446290704848642</td>
+</tr>
+<tr class="odd">
+<td>0.5171720764854166</td>
+</tr>
+<tr class="even">
+<td>1.3467504967289186</td>
+</tr>
+<tr class="odd">
+<td>0.5028941713981121</td>
+</tr>
+<tr class="even">
+<td>1.6926426850928427</td>
+</tr>
+<tr class="odd">
+<td>2.737520065317047</td>
+</tr>
+<tr class="even">
+<td>-0.6337974959768131</td>
+</tr>
+<tr class="odd">
+<td>1.8334664621031571</td>
+</tr>
+<tr class="even">
+<td>1.1752071580242511</td>
+</tr>
+<tr class="odd">
+<td>1.7663153320810179</td>
+</tr>
+<tr class="even">
+<td>-3.287929610234186e-2</td>
+</tr>
+<tr class="odd">
+<td>0.9776991082096643</td>
+</tr>
+<tr class="even">
+<td>0.7572719681136401</td>
+</tr>
+<tr class="odd">
+<td>2.0252498233787533</td>
+</tr>
+<tr class="even">
+<td>2.0549863976236282</td>
+</tr>
+<tr class="odd">
+<td>0.28876880002288263</td>
+</tr>
+<tr class="even">
+<td>0.7795217487076926</td>
+</tr>
+<tr class="odd">
+<td>0.5157176523746317</td>
+</tr>
+<tr class="even">
+<td>1.2531709070474009</td>
+</tr>
+<tr class="odd">
+<td>2.814127875620211</td>
+</tr>
+<tr class="even">
+<td>1.1251332829763616</td>
+</tr>
+<tr class="odd">
+<td>-0.8742006368438211</td>
+</tr>
+<tr class="even">
+<td>3.525681357968375</td>
+</tr>
+<tr class="odd">
+<td>-0.6125196383989251</td>
+</tr>
+<tr class="even">
+<td>-1.028539893085076</td>
+</tr>
+<tr class="odd">
+<td>1.944129606903108</td>
+</tr>
+<tr class="even">
+<td>0.4230304057405415</td>
+</tr>
+<tr class="odd">
+<td>0.6337892280346704</td>
+</tr>
+<tr class="even">
+<td>-0.6826244579330205</td>
+</tr>
+<tr class="odd">
+<td>0.4137789790932437</td>
+</tr>
+<tr class="even">
+<td>2.133348714505998</td>
+</tr>
+<tr class="odd">
+<td>1.6093325024482905</td>
+</tr>
+<tr class="even">
+<td>0.1403062548964249</td>
+</tr>
+<tr class="odd">
+<td>0.9977662561095119</td>
+</tr>
+<tr class="even">
+<td>1.6154705922157153</td>
+</tr>
+<tr class="odd">
+<td>1.5325103216966767</td>
+</tr>
+<tr class="even">
+<td>1.6480988802470689</td>
+</tr>
+<tr class="odd">
+<td>1.5457471122768636</td>
+</tr>
+<tr class="even">
+<td>0.9278397921261037</td>
+</tr>
+<tr class="odd">
+<td>0.5346075472347933</td>
+</tr>
+<tr class="even">
+<td>-0.3366100838774142</td>
+</tr>
+<tr class="odd">
+<td>1.544130227285287</td>
+</tr>
+<tr class="even">
+<td>0.36057447512773</td>
+</tr>
+<tr class="odd">
+<td>3.1190339889208265</td>
+</tr>
+<tr class="even">
+<td>0.5642439359943654</td>
+</tr>
+<tr class="odd">
+<td>3.6032355486391277e-2</td>
+</tr>
+<tr class="even">
+<td>1.217657470850345</td>
+</tr>
+<tr class="odd">
+<td>1.3708372094771342</td>
+</tr>
+<tr class="even">
+<td>1.6204088991501409</td>
+</tr>
+<tr class="odd">
+<td>1.8068635367597905</td>
+</tr>
+<tr class="even">
+<td>0.6836982699156782</td>
+</tr>
+<tr class="odd">
+<td>2.416660438805482</td>
+</tr>
+<tr class="even">
+<td>1.435090083978466</td>
+</tr>
+<tr class="odd">
+<td>-0.6957004139189842</td>
+</tr>
+<tr class="even">
+<td>2.796032650243188</td>
+</tr>
+<tr class="odd">
+<td>1.263889553950158</td>
+</tr>
+<tr class="even">
+<td>-0.24234558620465552</td>
+</tr>
+<tr class="odd">
+<td>0.4126133154078948</td>
+</tr>
+<tr class="even">
+<td>0.48194295180327873</td>
+</tr>
+<tr class="odd">
+<td>-4.239311593641104e-2</td>
+</tr>
+<tr class="even">
+<td>2.131857833197308</td>
+</tr>
+<tr class="odd">
+<td>-0.15570995063363013</td>
+</tr>
+<tr class="even">
+<td>0.7854482141700682</td>
+</tr>
+<tr class="odd">
+<td>1.8430551242641047</td>
+</tr>
+<tr class="even">
+<td>-0.30696087051905785</td>
+</tr>
+<tr class="odd">
+<td>1.0556256557163515</td>
+</tr>
+<tr class="even">
+<td>0.6908168936931991</td>
+</tr>
+<tr class="odd">
+<td>0.8953437823585769</td>
+</tr>
+<tr class="even">
+<td>1.3572533765348747</td>
+</tr>
+<tr class="odd">
+<td>0.11398684036386209</td>
+</tr>
+<tr class="even">
+<td>1.6619698080507603</td>
+</tr>
+<tr class="odd">
+<td>1.665250946590736</td>
+</tr>
+<tr class="even">
+<td>0.8975920127377776</td>
+</tr>
+<tr class="odd">
+<td>2.2911345789955044</td>
+</tr>
+<tr class="even">
+<td>0.9992259266914368</td>
+</tr>
+<tr class="odd">
+<td>-0.4298332988614957</td>
+</tr>
+<tr class="even">
+<td>2.856688086679865</td>
+</tr>
+<tr class="odd">
+<td>9.905282503779972</td>
+</tr>
+<tr class="even">
+<td>0.4160546198968119</td>
+</tr>
+<tr class="odd">
+<td>1.3074428261508197</td>
+</tr>
+<tr class="even">
+<td>0.12330796113292308</td>
+</tr>
+<tr class="odd">
+<td>-8.208866462136077e-2</td>
+</tr>
+<tr class="even">
+<td>0.43041154874660903</td>
+</tr>
+<tr class="odd">
+<td>-0.26805738332282525</td>
+</tr>
+<tr class="even">
+<td>0.24248755197881344</td>
+</tr>
+<tr class="odd">
+<td>0.4672444655763044</td>
+</tr>
+<tr class="even">
+<td>0.7429087035211764</td>
+</tr>
+<tr class="odd">
+<td>1.4882911024620438</td>
+</tr>
+<tr class="even">
+<td>2.444968952436855</td>
+</tr>
+<tr class="odd">
+<td>-0.8041993598535895</td>
+</tr>
+<tr class="even">
+<td>1.208622081250596</td>
+</tr>
+<tr class="odd">
+<td>8.898983802592564e-2</td>
+</tr>
+<tr class="even">
+<td>1.8374497912460765</td>
+</tr>
+<tr class="odd">
+<td>2.770255925243865</td>
+</tr>
+<tr class="even">
+<td>-0.8251005403922271</td>
+</tr>
+<tr class="odd">
+<td>-0.31615303993603194</td>
+</tr>
+<tr class="even">
+<td>-6.680911706266524e-2</td>
+</tr>
+<tr class="odd">
+<td>-0.5060055961402281</td>
+</tr>
+<tr class="even">
+<td>-0.10993772270902569</td>
+</tr>
+<tr class="odd">
+<td>-1.7858062514118545</td>
+</tr>
+<tr class="even">
+<td>0.38124537958478155</td>
+</tr>
+<tr class="odd">
+<td>3.343016296304274</td>
+</tr>
+<tr class="even">
+<td>3.200888498150916</td>
+</tr>
+<tr class="odd">
+<td>1.6539706630340567</td>
+</tr>
+<tr class="even">
+<td>1.0358929561627934</td>
+</tr>
+<tr class="odd">
+<td>0.7349519148503848</td>
+</tr>
+<tr class="even">
+<td>-0.5558335228136968</td>
+</tr>
+<tr class="odd">
+<td>0.8033111443298455</td>
+</tr>
+<tr class="even">
+<td>1.0199590698825889</td>
+</tr>
+<tr class="odd">
+<td>1.3413895470645456</td>
+</tr>
+<tr class="even">
+<td>1.7812455522573842</td>
+</tr>
+<tr class="odd">
+<td>0.5566880617934874</td>
+</tr>
+<tr class="even">
+<td>2.3484161679464695</td>
+</tr>
+<tr class="odd">
+<td>1.1721286969240714</td>
+</tr>
+<tr class="even">
+<td>1.985537497377007</td>
+</tr>
+<tr class="odd">
+<td>0.5028248990186489</td>
+</tr>
+<tr class="even">
+<td>1.126187102927933</td>
+</tr>
+<tr class="odd">
+<td>1.098065463397298</td>
+</tr>
+<tr class="even">
+<td>1.0022339510207767</td>
+</tr>
+<tr class="odd">
+<td>0.6524600640259166</td>
+</tr>
+<tr class="even">
+<td>0.9129989416782233</td>
+</tr>
+<tr class="odd">
+<td>-4.072646036731209e-2</td>
+</tr>
+<tr class="even">
+<td>-0.4997127716196892</td>
+</tr>
+<tr class="odd">
+<td>3.427010275934218</td>
+</tr>
+<tr class="even">
+<td>-1.0592305386912666</td>
+</tr>
+<tr class="odd">
+<td>0.2158285556706534</td>
+</tr>
+<tr class="even">
+<td>0.514825837851193</td>
+</tr>
+<tr class="odd">
+<td>1.8458680276815647</td>
+</tr>
+<tr class="even">
+<td>0.6489366461843191</td>
+</tr>
+<tr class="odd">
+<td>1.4264428618420764</td>
+</tr>
+<tr class="even">
+<td>1.8853463069064655</td>
+</tr>
+<tr class="odd">
+<td>0.9353141249181827</td>
+</tr>
+<tr class="even">
+<td>-0.768007390555169</td>
+</tr>
+<tr class="odd">
+<td>-0.2825922690641738</td>
+</tr>
+<tr class="even">
+<td>-0.11644476731169018</td>
+</tr>
+<tr class="odd">
+<td>1.5527313352517889</td>
+</tr>
+<tr class="even">
+<td>1.361096472043486</td>
+</tr>
+<tr class="odd">
+<td>1.595550522072551</td>
+</tr>
+<tr class="even">
+<td>0.7928138591830576</td>
+</tr>
+<tr class="odd">
+<td>2.4014413844006057</td>
+</tr>
+<tr class="even">
+<td>0.9357181425237647</td>
+</tr>
+<tr class="odd">
+<td>1.0321537115844546</td>
+</tr>
+<tr class="even">
+<td>1.017467185134316</td>
+</tr>
+<tr class="odd">
+<td>0.7544499732365095</td>
+</tr>
+<tr class="even">
+<td>3.2914090464924084</td>
+</tr>
+<tr class="odd">
+<td>-0.30115720611734975</td>
+</tr>
+<tr class="even">
+<td>1.1053894805207805</td>
+</tr>
+<tr class="odd">
+<td>0.24699783640458162</td>
+</tr>
+<tr class="even">
+<td>-0.5754508908317295</td>
+</tr>
+<tr class="odd">
+<td>-0.7653405793793806</td>
+</tr>
+<tr class="even">
+<td>2.551152606418246</td>
+</tr>
+<tr class="odd">
+<td>2.002335507569091</td>
+</tr>
+<tr class="even">
+<td>2.873768745568216</td>
+</tr>
+<tr class="odd">
+<td>2.4779420958282303</td>
+</tr>
+<tr class="even">
+<td>0.9919751607449626</td>
+</tr>
+<tr class="odd">
+<td>0.26553883660973165</td>
+</tr>
+<tr class="even">
+<td>1.5810534545434005</td>
+</tr>
+<tr class="odd">
+<td>0.4363020620988478</td>
+</tr>
+<tr class="even">
+<td>0.4208482016324523</td>
+</tr>
+<tr class="odd">
+<td>1.801337254210524</td>
+</tr>
+<tr class="even">
+<td>0.7282927824660008</td>
+</tr>
+<tr class="odd">
+<td>2.370482819434382</td>
+</tr>
+<tr class="even">
+<td>2.2689908454614955</td>
+</tr>
+<tr class="odd">
+<td>1.8992484787681332</td>
+</tr>
+<tr class="even">
+<td>1.1345675892485614</td>
+</tr>
+<tr class="odd">
+<td>0.6800326573416028</td>
+</tr>
+<tr class="even">
+<td>0.8256537442772758</td>
+</tr>
+<tr class="odd">
+<td>0.8771603935244864</td>
+</tr>
+<tr class="even">
+<td>-1.0434719594542736</td>
+</tr>
+<tr class="odd">
+<td>0.8516519961407986</td>
+</tr>
+<tr class="even">
+<td>2.185092193636852</td>
+</tr>
+<tr class="odd">
+<td>0.20653003088418287</td>
+</tr>
+<tr class="even">
+<td>1.0609626373137258</td>
+</tr>
+<tr class="odd">
+<td>1.6312654872266645</td>
+</tr>
+<tr class="even">
+<td>-0.10993816750885665</td>
+</tr>
+<tr class="odd">
+<td>2.511242528714717</td>
+</tr>
+<tr class="even">
+<td>0.44520543525892353</td>
+</tr>
+<tr class="odd">
+<td>1.3189873412126392</td>
+</tr>
+<tr class="even">
+<td>1.4382931017594118</td>
+</tr>
+<tr class="odd">
+<td>1.2450171964918337</td>
+</tr>
+<tr class="even">
+<td>0.1075552521924854</td>
+</tr>
+<tr class="odd">
+<td>1.640701165992256</td>
+</tr>
+<tr class="even">
+<td>1.5615637324174714</td>
+</tr>
+<tr class="odd">
+<td>0.8670086589057957</td>
+</tr>
+<tr class="even">
+<td>-0.5321458051266028</td>
+</tr>
+<tr class="odd">
+<td>-3.0490144428005905e-3</td>
+</tr>
+<tr class="even">
+<td>1.155437571970963</td>
+</tr>
+<tr class="odd">
+<td>2.0317104875172864</td>
+</tr>
+<tr class="even">
+<td>0.10380445370650004</td>
+</tr>
+<tr class="odd">
+<td>1.5267461286865376</td>
+</tr>
+<tr class="even">
+<td>9.102639076417908</td>
+</tr>
+<tr class="odd">
+<td>0.11175944316229147</td>
+</tr>
+<tr class="even">
+<td>2.605816329847464</td>
+</tr>
+<tr class="odd">
+<td>-0.31757356268646797</td>
+</tr>
+<tr class="even">
+<td>1.938296237870294</td>
+</tr>
+<tr class="odd">
+<td>2.623630455719459</td>
+</tr>
+<tr class="even">
+<td>-0.17930511974208407</td>
+</tr>
+<tr class="odd">
+<td>0.22653773264797206</td>
+</tr>
+<tr class="even">
+<td>0.7738024281145457</td>
+</tr>
+<tr class="odd">
+<td>0.8303926211791302</td>
+</tr>
+<tr class="even">
+<td>3.8144763777667077</td>
+</tr>
+<tr class="odd">
+<td>0.2892406024466241</td>
+</tr>
+<tr class="even">
+<td>0.279787632770216</td>
+</tr>
+<tr class="odd">
+<td>1.9176201484359812</td>
+</tr>
+<tr class="even">
+<td>2.508246019756138</td>
+</tr>
+<tr class="odd">
+<td>1.4202553258576178</td>
+</tr>
+<tr class="even">
+<td>0.8725425712951034</td>
+</tr>
+<tr class="odd">
+<td>2.590931954493854</td>
+</tr>
+<tr class="even">
+<td>-0.6083285430052974</td>
+</tr>
+<tr class="odd">
+<td>0.3155829148992413</td>
+</tr>
+<tr class="even">
+<td>0.9716424879068793</td>
+</tr>
+<tr class="odd">
+<td>-1.933633148749392e-2</td>
+</tr>
+<tr class="even">
+<td>0.416940875088748</td>
+</tr>
+<tr class="odd">
+<td>0.9075871303206937</td>
+</tr>
+<tr class="even">
+<td>-0.18322964916243012</td>
+</tr>
+<tr class="odd">
+<td>0.49834578143129415</td>
+</tr>
+<tr class="even">
+<td>1.1523265845585398</td>
+</tr>
+<tr class="odd">
+<td>0.16862160117832925</td>
+</tr>
+<tr class="even">
+<td>0.22112613360304012</td>
+</tr>
+<tr class="odd">
+<td>0.8542929631268784</td>
+</tr>
+<tr class="even">
+<td>2.1065267442021933</td>
+</tr>
+<tr class="odd">
+<td>8.716744674485033e-2</td>
+</tr>
+<tr class="even">
+<td>1.8741906276937679</td>
+</tr>
+<tr class="odd">
+<td>-0.8800017423117874</td>
+</tr>
+<tr class="even">
+<td>0.985677419800145</td>
+</tr>
+<tr class="odd">
+<td>1.7814889560835554</td>
+</tr>
+<tr class="even">
+<td>2.110674163627958</td>
+</tr>
+<tr class="odd">
+<td>0.6068631467692929</td>
+</tr>
+<tr class="even">
+<td>2.010892494531559</td>
+</tr>
+<tr class="odd">
+<td>0.182773938051226</td>
+</tr>
+<tr class="even">
+<td>0.9818670611842848</td>
+</tr>
+<tr class="odd">
+<td>1.5106418585391912</td>
+</tr>
+<tr class="even">
+<td>0.27457120930224954</td>
+</tr>
+<tr class="odd">
+<td>3.131668044566185</td>
+</tr>
+<tr class="even">
+<td>1.426032519824096</td>
+</tr>
+<tr class="odd">
+<td>2.756853957923013</td>
+</tr>
+<tr class="even">
+<td>-8.337312101971261e-2</td>
+</tr>
+<tr class="odd">
+<td>-1.2512930084219307</td>
+</tr>
+<tr class="even">
+<td>1.994731189314644</td>
+</tr>
+<tr class="odd">
+<td>1.5010954171753113</td>
+</tr>
+<tr class="even">
+<td>1.6160885909571072</td>
+</tr>
+<tr class="odd">
+<td>0.997576086981748</td>
+</tr>
+<tr class="even">
+<td>2.290454085433865</td>
+</tr>
+<tr class="odd">
+<td>1.5282322334484473</td>
+</tr>
+<tr class="even">
+<td>0.9423457650293142</td>
+</tr>
+<tr class="odd">
+<td>-0.6929312351526271</td>
+</tr>
+<tr class="even">
+<td>1.2117261668663954</td>
+</tr>
+<tr class="odd">
+<td>1.04304142983433</td>
+</tr>
+<tr class="even">
+<td>9.191415024846095e-2</td>
+</tr>
+<tr class="odd">
+<td>-0.1856239446441006</td>
+</tr>
+<tr class="even">
+<td>1.6459370551496064</td>
+</tr>
+<tr class="odd">
+<td>1.5887750906532614</td>
+</tr>
+<tr class="even">
+<td>0.5153567867710697</td>
+</tr>
+<tr class="odd">
+<td>-0.5317451085692393</td>
+</tr>
+<tr class="even">
+<td>1.2883518590500194</td>
+</tr>
+<tr class="odd">
+<td>-0.7231095994748975</td>
+</tr>
+<tr class="even">
+<td>0.14806012859804774</td>
+</tr>
+<tr class="odd">
+<td>-1.1482141379213884</td>
+</tr>
+<tr class="even">
+<td>-0.3327423570689081</td>
+</tr>
+<tr class="odd">
+<td>1.7898218176905512</td>
+</tr>
+<tr class="even">
+<td>0.9371146998642512</td>
+</tr>
+<tr class="odd">
+<td>0.3889248981364597</td>
+</tr>
+<tr class="even">
+<td>1.2257589408359904</td>
+</tr>
+<tr class="odd">
+<td>5.216316163565138e-2</td>
+</tr>
+<tr class="even">
+<td>-3.2779385011159734e-2</td>
+</tr>
+<tr class="odd">
+<td>0.9614097586524999</td>
+</tr>
+<tr class="even">
+<td>4.39269909553782</td>
+</tr>
+<tr class="odd">
+<td>-0.291144125748688</td>
+</tr>
+<tr class="even">
+<td>1.2868205085801738</td>
+</tr>
+<tr class="odd">
+<td>0.1096371776044478</td>
+</tr>
+<tr class="even">
+<td>1.0358811391307199</td>
+</tr>
+<tr class="odd">
+<td>5.805861249302269e-2</td>
+</tr>
+<tr class="even">
+<td>0.8985406306915447</td>
+</tr>
+<tr class="odd">
+<td>0.3622980657724947</td>
+</tr>
+<tr class="even">
+<td>7.799859986587844</td>
+</tr>
+<tr class="odd">
+<td>-0.32465244606923727</td>
+</tr>
+<tr class="even">
+<td>-0.11398647870671152</td>
+</tr>
+<tr class="odd">
+<td>2.507893114732872</td>
+</tr>
+<tr class="even">
+<td>1.064845371081416</td>
+</tr>
+<tr class="odd">
+<td>0.5365179326980457</td>
+</tr>
+<tr class="even">
+<td>1.7351202994151347</td>
+</tr>
+<tr class="odd">
+<td>0.8109120435203592</td>
+</tr>
+<tr class="even">
+<td>0.3353686164143178</td>
+</tr>
+<tr class="odd">
+<td>0.4575130713351897</td>
+</tr>
+<tr class="even">
+<td>1.544495758400612</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's t-digest this <code>data</code> using a user-defined function <code>udf</code> evaluated below.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val udf = TDigestAggregator.udf[Double](compression = 0.2, maxDiscrete = 25)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>udf: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedAggregator(org.isarnproject.sketches.spark.tdigest.TDigestAggregator@4ff546b7,class[value[0]: double],None,true,true)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can <code>agg</code> or aggregate the <code>data</code> DataFrame's <code>value</code> column of <code>Double</code>s that contain our data as follows.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val agg = data.agg(udf($&quot;value&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>agg: org.apache.spark.sql.DataFrame = [tdigestaggregator(value): tdigest]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Next, let's get the t-digest of the aggregation as <code>td</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val td = agg.first.getAs[TDigest](0) // t-digest
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>td: org.isarnproject.sketches.java.TDigest = TDigest(-2.795387521721169 -&gt; (1.0, 1.0), -2.5827462010549587 -&gt; (1.0, 2.0), -2.5483614528075127 -&gt; (1.0, 3.0), -2.477169648218326 -&gt; (1.0, 4.0), -2.3989148382735106 -&gt; (1.0, 5.0), -2.3621428788859387 -&gt; (1.0, 6.0), -2.3148374687684097 -&gt; (1.0, 7.0), -2.3118179023740413 -&gt; (1.0, 8.0), -2.287613401306727 -&gt; (1.6985517872440687, 9.69855178724407), -2.2636971919621813 -&gt; (0.30144821275593126, 10.0), -2.0993694077900718 -&gt; (1.0, 11.0), -2.0241191135970116 -&gt; (1.698067286443337, 12.698067286443337), -2.003553685010365 -&gt; (0.5043915481076007, 13.202458834550937), -1.9902316558965267 -&gt; (2.7624647600316936, 15.96492359458263), -1.9799895567671855 -&gt; (0.03507640541736867, 16.0), -1.9544570681791966 -&gt; (1.2983022641753663, 17.298302264175366), -1.949427679786941 -&gt; (0.7016977358246337, 18.0), -1.907719117411431 -&gt; (1.697097354468562, 19.69709735446856), -1.8732175304590568 -&gt; (2.302902645531438, 22.0), -1.7834073726649238 -&gt; (4.0, 26.0), -1.6919174552402663 -&gt; (1.0975606232594757, 27.097560623259476), -1.6703272354126013 -&gt; (2.6632081832738317, 29.760768806533306), -1.6589610792385319 -&gt; (2.643090879929395, 32.4038596864627), -1.623299585167854 -&gt; (3.5068289300613555, 35.910688616524055), -1.6069889994292688 -&gt; (3.028777317662718, 38.93946593418678), -1.5892489007898511 -&gt; (5.4762426700006355, 44.415708604187415) ...)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can evaluate the t-digest <code>td</code> as a cummulative distribution function or CDF at <code>x</code> via the <code>.cdf(x)</code> method.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">td.cdf(1.0)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res28: Double = 0.4995238927606277
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can also get the inverse CDF at any <code>u</code> in the unit interval to get quantiles as follows.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val cutOff = td.cdfInverse(0.99)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>cutOff: Double = 8.75686052913737
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's flag those points that cross the threshold determine dby the <code>cutOff</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val dataFlagged = data.withColumn(&quot;anomalous&quot;,$&quot;value&quot;&gt;cutOff)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>dataFlagged: org.apache.spark.sql.DataFrame = [value: double, anomalous: boolean]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's show and display the anomalous points.</p>
+<p>We are not interested in word-wars over anomalies and outliers here (at the end of the day we are really only interested in the real problem that these arithmetic and syntactic expressions will be used to solve, such as,:</p>
+<ul>
+<li>keep a washing machine running longer by shutting it down before it will break down (predictive maintenance)</li>
+<li>keep a network from being attacked by bots/malware/etc by flagging any unusual events worth escalating to the network security opes teams (without annoying them constantly!)</li>
+<li>etc.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">data.withColumn(&quot;anomalous&quot;,$&quot;value&quot;&gt;cutOff).filter(&quot;anomalous&quot;).show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------------------+---------+
+|             value|anomalous|
++------------------+---------+
+| 9.639219241219372|     true|
+|11.539205812425335|     true|
+| 9.423175513609095|     true|
+|  8.99959554980265|     true|
+|10.174199861232976|     true|
++------------------+---------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dataFlagged)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h1 id="apply-the-batch-learnt-t-digest-on-a-new-stream-of-data"><a class="header" href="#apply-the-batch-learnt-t-digest-on-a-new-stream-of-data">Apply the batch-learnt T-Digest on a new stream of data</a></h1>
+<p>First let's simulate historical data for batch-processing.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.util.Random
+import scala.util.Random._
+
+// simulate 5 bursts of historical data - emulate batch processing
+
+// make a sample to produce a mixture of two normal RVs with standard deviation 1 but with different location or mean parameters
+def myMixtureOf2Normals( normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: Random) : (String, Double) = {
+  val sample = if (r.nextDouble &lt;= normalWeight) {r.nextGaussian+normalLocation } 
+               else {r.nextGaussian + abnormalLocation} 
+  Thread.sleep(5L) // sleep 5 milliseconds
+  val now = (new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;)).format(new java.util.Date())
+  return (now,sample)
+   }
+   
+ dbutils.fs.rm(&quot;/datasets/batchFiles/&quot;,true) // this is to delete the directory before staring a job
+ 
+val r = new Random(123454321L)
+var a = 0;
+// for loop execution to write files to distributed fs
+for( a &lt;- 1 to 5){
+  val data = sc.parallelize(Vector.fill(100){myMixtureOf2Normals(1.0, 10.0, 0.99, r)}).coalesce(1).toDF.as[(String,Double)]
+  val minute = (new java.text.SimpleDateFormat(&quot;mm&quot;)).format(new java.util.Date())
+  val second = (new java.text.SimpleDateFormat(&quot;ss&quot;)).format(new java.util.Date())
+  data.write.mode(SaveMode.Overwrite).csv(&quot;/datasets/batchFiles/&quot; + minute +&quot;_&quot; + second + &quot;.csv&quot;)
+  Thread.sleep(10L) // sleep 10 milliseconds
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import scala.util.Random
+import scala.util.Random._
+myMixtureOf2Normals: (normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: scala.util.Random)(String, Double)
+r: scala.util.Random = scala.util.Random@5bdb120b
+a: Int = 0
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/datasets/batchFiles/&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/batchFiles/09_29.csv/</td>
+<td>09_29.csv/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/batchFiles/09_31.csv/</td>
+<td>09_31.csv/</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/batchFiles/09_32.csv/</td>
+<td>09_32.csv/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/batchFiles/09_33.csv/</td>
+<td>09_33.csv/</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/batchFiles/09_35.csv/</td>
+<td>09_35.csv/</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now let's use a static DataFrame to process these files with t-digest and get the 0.99-th quantile based Cut-off.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Read all the csv files written atomically in a directory
+import org.apache.spark.sql.types._
+
+val timedScore = new StructType().add(&quot;time&quot;, &quot;timestamp&quot;).add(&quot;score&quot;, &quot;Double&quot;)
+
+import java.sql.{Date, Timestamp}
+case class timedScoreCC(time: Timestamp, score: Double)
+
+//val streamingLines = sc.textFile(&quot;/datasets/streamingFiles/*&quot;).toDF.as[String]
+val staticLinesDS = spark
+  .read
+  .option(&quot;sep&quot;, &quot;,&quot;)
+  .schema(timedScore)      // Specify schema of the csv files
+  .csv(&quot;/datasets/batchFiles/*&quot;).as[timedScoreCC]
+
+
+val udaf = TDigestAggregator.udf[Double](compression = 0.2, maxDiscrete = 25)
+
+
+val batchLearntCutOff99 = staticLinesDS
+                  .agg(udf($&quot;score&quot;).as(&quot;td&quot;))
+                  .first.getAs[TDigest](0)
+                  .cdfInverse(0.99)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.types._
+timedScore: org.apache.spark.sql.types.StructType = StructType(StructField(time,TimestampType,true), StructField(score,DoubleType,true))
+import java.sql.{Date, Timestamp}
+defined class timedScoreCC
+staticLinesDS: org.apache.spark.sql.Dataset[timedScoreCC] = [time: timestamp, score: double]
+udaf: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedAggregator(org.isarnproject.sketches.spark.tdigest.TDigestAggregator@53b818de,class[value[0]: double],None,true,true)
+batchLearntCutOff99: Double = 8.65009597030763
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We will next execute the companion notebook <code>040a_TDigestInputStream</code> in order to generate the files with the Gaussian mixture for streaming jobs.</p>
+<p>The code in the companion notebook is as follows for convenience (you could just copy-paste this code into another notebook in the same cluster with the same distributed file system):</p>
+<pre><code class="language-%scala">import scala.util.Random
+import scala.util.Random._
+
+// make a sample to produce a mixture of two normal RVs with standard deviation 1 but with different location or mean parameters
+def myMixtureOf2Normals( normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: Random) : (String, Double) = {
+  val sample = if (r.nextDouble &lt;= normalWeight) {r.nextGaussian+normalLocation } 
+               else {r.nextGaussian + abnormalLocation} 
+  Thread.sleep(5L) // sleep 5 milliseconds
+  val now = (new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;)).format(new java.util.Date())
+  return (now,sample)
+   }
+   
+ dbutils.fs.rm(&quot;/datasets/streamingFiles/&quot;,true) // this is to delete the directory before staring a job
+ 
+val r = new Random(12345L)
+var a = 0;
+// for loop execution to write files to distributed fs
+for( a &lt;- 1 to 20){
+  val data = sc.parallelize(Vector.fill(100){myMixtureOf2Normals(1.0, 10.0, 0.99, r)}).coalesce(1).toDF.as[(String,Double)]
+  val minute = (new java.text.SimpleDateFormat(&quot;mm&quot;)).format(new java.util.Date())
+  val second = (new java.text.SimpleDateFormat(&quot;ss&quot;)).format(new java.util.Date())
+  data.write.mode(SaveMode.Overwrite).csv(&quot;/datasets/streamingFiles/&quot; + minute +&quot;_&quot; + second + &quot;.csv&quot;)
+  Thread.sleep(5000L) // sleep 5 seconds
+}
+</code></pre>
+<p>We will simply apply the batch-learnt t-digest as the threshold for determining if the streaming data is anomalous or not.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.types._
+import java.sql.{Date, Timestamp}
+
+val timedScore = new StructType().add(&quot;time&quot;, &quot;timestamp&quot;).add(&quot;score&quot;, &quot;Double&quot;)
+case class timedScoreCC(time: Timestamp, score: Double)
+
+val streamingLinesDS = spark
+  .readStream
+  .option(&quot;sep&quot;, &quot;,&quot;)
+  .schema(timedScore)      // Specify schema of the csv files
+  .csv(&quot;/datasets/streamingFiles/*&quot;).as[timedScoreCC]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.types._
+import java.sql.{Date, Timestamp}
+timedScore: org.apache.spark.sql.types.StructType = StructType(StructField(time,TimestampType,true), StructField(score,DoubleType,true))
+defined class timedScoreCC
+streamingLinesDS: org.apache.spark.sql.Dataset[timedScoreCC] = [time: timestamp, score: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//display(streamingLinesDS)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now, we can apply this batch-learnt cut-off from the static DataSet to the streaming DataSet.</p>
+<p>This is a simple example of learning in batch mode (say overnight or every few hours) and applying it to live streaming data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Start running the query that prints the running counts to the console
+val dataFalgged = streamingLinesDS
+      .withColumn(&quot;anomalous&quot;,$&quot;score&quot; &gt; batchLearntCutOff99).filter($&quot;anomalous&quot;)
+      .writeStream
+      //.outputMode(&quot;complete&quot;)
+      .format(&quot;console&quot;)
+      .start()
+
+dataFalgged.awaitTermination() // hit cancel to terminate
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>-------------------------------------------
+Batch: 0
+-------------------------------------------
++--------------------+------------------+---------+
+|                time|             score|anomalous|
++--------------------+------------------+---------+
+|2020-11-16 13:12:...| 9.858438409632281|     true|
+|2020-11-16 13:12:...| 10.45683581285141|     true|
+|2020-11-16 13:11:...| 9.423175513609095|     true|
+|2020-11-16 13:11:...|10.442627838980057|     true|
+|2020-11-16 13:11:...|10.460772141286911|     true|
+|2020-11-16 13:11:...|11.260505056159252|     true|
+|2020-11-16 13:12:...| 9.454926349089147|     true|
+|2020-11-16 13:12:...| 10.02254460606071|     true|
+|2020-11-16 13:12:...| 9.311690918035534|     true|
+|2020-11-16 13:12:...| 9.695132992174205|     true|
+|2020-11-16 13:12:...|10.439052640762693|     true|
+|2020-11-16 13:11:...|11.539205812425335|     true|
+|2020-11-16 13:12:...| 9.102639076417908|     true|
+|2020-11-16 13:11:...| 9.905282503779972|     true|
+|2020-11-16 13:11:...| 9.639219241219372|     true|
+|2020-11-16 13:11:...|  8.99959554980265|     true|
+|2020-11-16 13:11:...|10.174199861232976|     true|
+|2020-11-16 13:13:...| 9.311726779124077|     true|
+|2020-11-16 13:13:...| 8.994959541314255|     true|
+|2020-11-16 13:12:...|  9.87803253322451|     true|
++--------------------+------------------+---------+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Although the above pattern of estimating the 99% Cut-Off periodically by batch-processing static DataSets from historical data and then applying these Cut-Offs to filter anamolous data points that are currently streaming at us is <em>good enough</em> for several applications, we may want to do <em>online estimation/learning</em> of the Cut-Off based on the 99% of all the data up to present time and use this <em>live</em> Cut-off to decide which point is anamolous now.</p>
+<p>For this we need to use more delicate parts of Structured Streaming.</p>
+</div>
+<div class="cell markdown">
+<h1 id="streaming-t-digest---online-updating-of-the-cut-off"><a class="header" href="#streaming-t-digest---online-updating-of-the-cut-off">Streaming T-Digest - Online Updating of the Cut-Off</a></h1>
+<p>To impelment a streaming t-digest of the data that keeps the current threshold and a current t-digest, we need to get into more delicate parts of structured streaming and implement our own <code>flatMapgroupsWithState</code>.</p>
+<p>Here are some starting points for diving deeper in this direction of <em>arbitrary stateful processing</em>:</p>
+<ul>
+<li><a href="https://databricks.com/blog/2017/10/17/arbitrary-stateful-processing-in-apache-sparks-structured-streaming.html">https://databricks.com/blog/2017/10/17/arbitrary-stateful-processing-in-apache-sparks-structured-streaming.html</a>.</li>
+<li>Spark Summit EU Dublin 2017 Deep Dive: <a href="https://databricks.com/session/deep-dive-stateful-stream-processing">https://databricks.com/session/deep-dive-stateful-stream-processing</a></li>
+<li>See <a href="https://youtu.be/JAb4FIheP28">https://youtu.be/JAb4FIheP28</a></li>
+<li>Official <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#arbitrary-stateful-operations">docs and examples of arbitrary stateful operations</a>
+<ul>
+<li>doc: <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.streaming.GroupState">https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.streaming.GroupState</a></li>
+</ul>
+</li>
+<li>See <a href="http://blog.madhukaraphatak.com/introduction-to-spark-structured-streaming-part-14/">Part 14</a> of <a href="http://blog.madhukaraphatak.com/categories/introduction-structured-streaming/">the 14-part series on structured streaming series in Madhukar's blog</a></li>
+</ul>
+<h1 id="streaming-machine-learning-and-structured-streaming"><a class="header" href="#streaming-machine-learning-and-structured-streaming">Streaming Machine Learning and Structured Streaming</a></h1>
+<p>Ultimately we want to use structured streaming for online machine learning algorithms and not just sketching.</p>
+<ul>
+<li>See Spark Summit 2016 video on streaming ML (streaming logistic regression): <a href="https://youtu.be/r0hyjmLMMOc">https://youtu.be/r0hyjmLMMOc</a></li>
+<li><a href="https://github.com/holdenk/spark-structured-streaming-ml/tree/master/src/main/scala/com/high-performance-spark-examples/structuredstreaming">Holden Karau's codes from High Performance Spark Book</a></li>
+</ul>
+<h1 id="data-engineering-science-pointers"><a class="header" href="#data-engineering-science-pointers">Data Engineering Science Pointers</a></h1>
+<p>Using kafka, Cassandra and Spark Structured Streaming</p>
+<ul>
+<li><a href="https://github.com/ansrivas/spark-structured-streaming">https://github.com/ansrivas/spark-structured-streaming</a></li>
+<li><a href="https://github.com/polomarcus/Spark-Structured-Streaming-Examples">https://github.com/polomarcus/Spark-Structured-Streaming-Examples</a></li>
+</ul>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../contents/000_4-sds-3-x-ss/040_Sketching.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../contents/000_4-sds-3-x-ss/042_streamingWithTDigest_TODO.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../contents/000_4-sds-3-x-ss/040_Sketching.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../contents/000_4-sds-3-x-ss/042_streamingWithTDigest_TODO.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
