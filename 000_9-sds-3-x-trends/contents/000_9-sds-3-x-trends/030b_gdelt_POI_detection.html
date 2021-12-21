@@ -1,0 +1,1040 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>030b_gdelt_POI_detection - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000a_finance_utils.html">000a_finance_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000b_gdelt_utils.html">000b_gdelt_utils</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/000_TrendsInFinancialStocksAndNewsEvents.html">000_TrendsInFinancialStocksAndNewsEvents</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00a_FX1M.html">00a_FX1M</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/00b_yfinance.html">00b_yfinance</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/01_trend_calculus_showcase.html">01_trend_calculus_showcase</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/02_streamable_trend_calculus.html">02_streamable_trend_calculus</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html">030a_gdelt_EOI_detection</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030b_gdelt_POI_detection.html" class="active">030b_gdelt_POI_detection</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html">030_Spark_GDELT_project_001</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/03_streamable_trend_calculus_estimators.html">03_streamable_trend_calculus_estimators</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_9-sds-3-x-trends/images/images.html">images</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="detecting-persons-of-interest-to-oilgas-price-trends"><a class="header" href="#detecting-persons-of-interest-to-oilgas-price-trends">Detecting Persons of Interest to OIL/GAS Price Trends</a></h1>
+<p>Johannes Graner (<a href="https://www.linkedin.com/in/johannes-graner-475677129/">LinkedIn</a>), Albert Nilsson (<a href="https://www.linkedin.com/in/albert-nilsson-09b62b191/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2020, Uppsala, Sweden</p>
+<p>This project was supported by Combient Mix AB through summer internships at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+<hr />
+<p>Here we will build a pipeline to investigate possible persons, organisations and other entities related to oil and gas that are reported in mass media around the world and their possible co-occurrence with certain trends and trend-reversals in oil price.</p>
+<p><em><strong>Steps:</strong></em></p>
+<ul>
+<li>Step 0. Setting up and loading GDELT delta.io tables</li>
+<li>Step 1. Create a graph of persons related to gas and oil</li>
+<li>Step 2. Extract communties</li>
+<li>Step 3. Find key Influencers</li>
+<li>Step 4. Visualisation</li>
+</ul>
+<p><strong>Resources:</strong></p>
+<p>This builds on the following libraries and its antecedents therein:</p>
+<ul>
+<li><a href="https://github.com/aamend/spark-gdelt">https://github.com/aamend/spark-gdelt</a></li>
+<li><a href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></li>
+</ul>
+<p><strong>This work was inspired by:</strong></p>
+<ul>
+<li>Antoine Aamennd's <a href="https://github.com/aamend/texata-r2-2017">texata-2017</a></li>
+<li>Andrew Morgan's <a href="https://github.com/ByteSumoLtd/TrendCalculus-lua">Trend Calculus Library</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="step-0-setting-up-and-loading-gdelt-deltaio-tables"><a class="header" href="#step-0-setting-up-and-loading-gdelt-deltaio-tables">Step 0. Setting up and loading GDELT delta.io tables</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import spark.implicits._
+import io.delta.tables._
+import com.aamend.spark.gdelt._
+import org.apache.spark.sql.{Dataset,DataFrame,SaveMode}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.expressions._
+import org.graphframes.GraphFrame 
+import org.apache.spark.sql.SparkSession
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./000b_gdelt_utils&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rootPath = GdeltUtils.getGdeltV1Path
+val rootCheckpointPath = GdeltUtils.getPOICheckpointPath
+val gkgPath = rootPath+&quot;gkg&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object GdeltUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val gkg_v1 = spark.read.format(&quot;delta&quot;).load(gkgPath).as[GKGEventV1]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val gkg_v1_filt = gkg_v1.filter($&quot;publishDate&quot;&gt;&quot;2013-04-01 00:00:00&quot; &amp;&amp; $&quot;publishDate&quot;&lt;&quot;2019-12-31 00:00:00&quot;)
+
+val oil_gas_themeGKG = gkg_v1_filt.filter(c =&gt;c.themes.contains(&quot;ENV_GAS&quot;) || c.themes.contains(&quot;ENV_OIL&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-1-create-a-graph-of-people-related-to-gas-and-oil"><a class="header" href="#step-1-create-a-graph-of-people-related-to-gas-and-oil">Step 1. Create a graph of people related to gas and oil</a></h2>
+</div>
+<div class="cell markdown">
+<p>The first step is to create a graph between people releated to gas and oil where the edges are number of articles that they are mentioned in together.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Create the GraphFrame of Interest</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val edges = oil_gas_themeGKG.select($&quot;persons&quot;,$&quot;numArticles&quot;)
+                          .withColumn(&quot;src&quot;,explode($&quot;persons&quot;))
+                          .withColumn(&quot;dst&quot;,explode($&quot;persons&quot;))
+                          .filter($&quot;src&quot;.notEqual($&quot;dst&quot;) &amp;&amp; $&quot;src&quot; =!= &quot;&quot; &amp;&amp; $&quot;dst&quot; =!= &quot;&quot;)
+                          .groupBy($&quot;src&quot;,$&quot;dst&quot;)
+                          .agg(sum(&quot;numArticles&quot;).as(&quot;count&quot;))
+                          .toDF()
+
+val vertices = oil_gas_themeGKG.select($&quot;persons&quot;,$&quot;numArticles&quot;)
+                          .withColumn(&quot;id&quot;,explode($&quot;persons&quot;))
+                          .filter($&quot;id&quot; =!= &quot;&quot;)
+                          .drop($&quot;persons&quot;)
+                          .groupBy($&quot;id&quot;)
+                          .agg(sum(&quot;numArticles&quot;).as(&quot;numArticles&quot;))
+                          .toDF()
+val pers_graph = GraphFrame(vertices,edges)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Count how many vertices and edges there is in our graph</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(&quot;vertex count: &quot; +pers_graph.vertices.count())
+println(&quot;edge count: &quot; + pers_graph.edges.count())
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>vertex count: 3422103
+edge count: 133703116
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val fil_pers_graph = pers_graph.filterEdges($&quot;count&quot; &gt;10).dropIsolatedVertices()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Count how many vertices and edges are in our graph after being filtered</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(&quot;filtered vertex count: &quot; +fil_pers_graph.vertices.count())
+println(&quot;filtered edge count: &quot; + fil_pers_graph.edges.count())
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>filtered vertex count: 214514
+filtered edge count: 4525828
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.setCheckpointDir(rootCheckpointPath)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Compute the connected components</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val comp_vertices = fil_pers_graph.connectedComponents.run()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Checkpoint</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">comp_vertices.write.parquet(rootCheckpointPath+&quot;comp_vertices&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val comp_vertices = spark.read.parquet(rootCheckpointPath+&quot;comp_vertices&quot;)
+val comp_graph = GraphFrame(comp_vertices,fil_pers_graph.edges)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Note that almost all edges and vertices are in the connected component labelled 0, our giant component.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">comp_graph.vertices.groupBy($&quot;component&quot;).agg(count(&quot;component&quot;).as(&quot;count&quot;)).orderBy(desc(&quot;count&quot;)).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------------+------+
+|   component| count|
++------------+------+
+|           0|195316|
+|  8589935254|    97|
+| 34359738385|    23|
+|        1084|    22|
+|         150|    21|
+| 94489280677|    20|
+| 94489280553|    19|
+| 60129543033|    19|
+|395136991484|    19|
+|180388626903|    17|
+|146028888838|    17|
+| 25769804801|    16|
+| 17179869819|    16|
+|231928234487|    16|
+|146028888649|    15|
+| 51539608679|    15|
+| 51539607916|    15|
+| 60129543026|    15|
+| 42949673514|    15|
+|  8589935379|    15|
++------------+------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out the graph to only focus on the giant component</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val big_comp_graph = comp_graph.filterVertices($&quot;component&quot; === 0)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>big_comp_graph: org.graphframes.GraphFrame = GraphFrame(v:[id: string, numArticles: bigint ... 1 more field], e:[src: string, dst: string ... 1 more field])
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="step-2-extract-communities"><a class="header" href="#step-2-extract-communities">Step 2. Extract communities</a></h2>
+<p>Next, let us extract communities within the giant component.</p>
+<p>There are many algorithms for community structure detection:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Community_structure">https://en.wikipedia.org/wiki/Community_structure</a></li>
+</ul>
+<p>We use a simple scalable one via label propagation here.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Apply label propagation to find interesting community structures</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val label_vertices = big_comp_graph.labelPropagation.maxIter(10).run()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>label_vertices: org.apache.spark.sql.DataFrame = [id: string, numArticles: bigint ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Checkpoint</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">label_vertices.write.parquet(rootCheckpointPath+&quot;label_vertices&quot;)
+big_comp_graph.edges.write.parquet(rootCheckpointPath+&quot;label_edges&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val label_vertices = spark.read.parquet(rootCheckpointPath+&quot;label_vertices&quot;)
+val label_edges = spark.read.parquet(rootCheckpointPath+&quot;label_edges&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val label_graph = GraphFrame(label_vertices,label_edges)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-3-find-key-influencers"><a class="header" href="#step-3-find-key-influencers">Step 3. Find key Influencers</a></h2>
+<p><strong>Apply page rank to find the key influencers</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val com_rank_graph =label_graph.pageRank.resetProbability(0.15).tol(0.015).run()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>com_rank_graph: org.graphframes.GraphFrame = GraphFrame(v:[id: string, numArticles: bigint ... 3 more fields], e:[src: string, dst: string ... 2 more fields])
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Checkpoint</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">com_rank_graph.vertices.write.parquet(rootCheckpointPath+&quot;com_rank_vertices&quot;)
+com_rank_graph.edges.write.parquet(rootCheckpointPath+&quot;com_rank_edges&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val com_rank_vertices = spark.read.parquet(rootCheckpointPath+&quot;com_rank_vertices&quot;)
+val com_rank_edges =spark.read.parquet(rootCheckpointPath+&quot;com_rank_edges&quot;)
+val com_rank_graph = GraphFrame(com_rank_vertices,com_rank_edges)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">com_rank_graph.vertices.groupBy($&quot;label&quot;).agg(count($&quot;label&quot;).as(&quot;count&quot;)).orderBy(desc(&quot;count&quot;)).show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-4-visualisation"><a class="header" href="#step-4-visualisation">Step 4. Visualisation</a></h2>
+<p><strong>Look at the top three communities</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel1 = com_rank_graph.filterVertices($&quot;label&quot; === 1520418423783L)
+val toplabel2 = com_rank_graph.filterVertices($&quot;label&quot; === 8589934959L)
+val toplabel3 =com_rank_graph.filterVertices($&quot;label&quot; === 1580547965452L)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out the top 100 according to pagerank score</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel1Filt =  toplabel1.filterVertices($&quot;pagerank&quot; &gt;=55.47527731815801)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out edges to make the graph more comprehensive</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel1FiltE = toplabel1Filt.filterEdges($&quot;count&quot;&gt;2000).dropIsolatedVertices()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>In the interactive d3 graph below, the size of circle correlates with pagerank score.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class Edge(src: String, dst: String, count: Long)
+
+case class Node(name: String,importance: Double)
+case class Link(source: Int, target: Int, value: Long)
+case class Graph(nodes: Seq[Node], links: Seq[Link])
+
+object graphs {
+
+val sqlContext = SparkSession.builder().getOrCreate().sqlContext
+import sqlContext.implicits._
+  
+def force(vertices: Dataset[Node],clicks: Dataset[Edge], height: Int = 100, width: Int = 960): Unit = {
+  val data = clicks.collect()
+  val nodes = vertices.collect()
+  val links = data.map { t =&gt;
+    Link(nodes.indexWhere(_.name == t.src.replaceAll(&quot;_&quot;, &quot; &quot;)), nodes.indexWhere(_.name == t.dst.replaceAll(&quot;_&quot;, &quot; &quot;)), t.count / 20 + 1)
+  }
+  showGraph(height, width, Seq(Graph(nodes, links)).toDF().toJSON.first())
+}
+
+/**
+ * Displays a force directed graph using d3
+ * input: {&quot;nodes&quot;: [{&quot;name&quot;: &quot;...&quot;}], &quot;links&quot;: [{&quot;source&quot;: 1, &quot;target&quot;: 2, &quot;value&quot;: 0}]}
+ */
+def showGraph(height: Int, width: Int, graph: String): Unit = {
+
+displayHTML(s&quot;&quot;&quot;
+&lt;style&gt;
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: &quot;Helvetica Neue&quot;,&quot;Helvetica&quot;,&quot;Arial&quot;,sans-serif;
+  font-size: function(d) {return (d.importance)+ &quot;px&quot;};
+  font-weight: 200;
+}
+
+&lt;/style&gt;
+
+&lt;div id=&quot;clicks-graph&quot;&gt;
+&lt;script src=&quot;//d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var graph = $graph;
+
+var width = $width,
+    height = $height;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-200)
+    .linkDistance(350)
+    .size([width, height]);
+
+var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+    
+force
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+var link = svg.selectAll(&quot;.link&quot;)
+    .data(graph.links)
+    .enter().append(&quot;line&quot;)
+    .attr(&quot;class&quot;, &quot;link&quot;)
+    .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value)/10; });
+
+var node = svg.selectAll(&quot;.node&quot;)
+    .data(graph.nodes)
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .call(force.drag);
+
+node.append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, function(d) { return Math.sqrt(d.importance); })
+    .style(&quot;fill&quot;, function (d) {
+    if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})
+
+node.append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, function(d) { return (Math.sqrt(d.importance)*30)/Math.sqrt(1661.1815574713858); })
+      .attr(&quot;dy&quot;, &quot;.35em&quot;)
+      .text(function(d) { return d.name });
+      
+//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+    link.attr(&quot;x1&quot;, function (d) {
+        return d.source.x;
+    })
+        .attr(&quot;y1&quot;, function (d) {
+        return d.source.y;
+    })
+        .attr(&quot;x2&quot;, function (d) {
+        return d.target.x;
+    })
+        .attr(&quot;y2&quot;, function (d) {
+        return d.target.y;
+    });
+    d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;cy&quot;, function (d) {
+        return d.y;
+    });
+    d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;y&quot;, function (d) {
+        return d.y;
+    });
+});
+&lt;/script&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;)
+}
+  
+  def help() = {
+displayHTML(&quot;&quot;&quot;
+&lt;p&gt;
+Produces a force-directed graph given a collection of edges of the following form:&lt;/br&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;case class&lt;/font&gt; &lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;(&lt;font color=&quot;#ed6a43&quot;&gt;src&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;dest&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;count&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;Long&lt;/font&gt;)&lt;/tt&gt;
+&lt;/p&gt;
+&lt;p&gt;Usage:&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;import&lt;/font&gt; &lt;font color=&quot;#ed6a43&quot;&gt;d3._&lt;/font&gt;&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#795da3&quot;&gt;graphs.force&lt;/font&gt;(&lt;/br&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;height&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;width&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;clicks&lt;/font&gt;: &lt;font color=&quot;#795da3&quot;&gt;Dataset&lt;/font&gt;[&lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;])&lt;/tt&gt;
+&lt;/p&gt;&quot;&quot;&quot;)
+  }
+}
+graphs.force(
+  height = 800,
+  width = 1200,
+  clicks = toplabel1FiltE.edges.as[Edge],
+  vertices = toplabel1FiltE.vertices.select($&quot;id&quot;.as(&quot;name&quot;),$&quot;pagerank&quot;.as(&quot;importance&quot;)).as[Node]
+  )
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><img src="https://github.com/lamastex/spark-gdelt-examples/blob/master/images/usa_cluster.png?raw=true" alt="usa_cluster" /></p>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out the top 100 according to pagerank score</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel2Filt =  toplabel2.filterVertices($&quot;pagerank&quot; &gt;=7.410990956624706)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out edges to and vertices with small amount of edges to make the graph more comprehensive</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel2FiltE = toplabel2Filt.filterEdges($&quot;count&quot;&gt;136).dropIsolatedVertices()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Nigerian cluster</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class Edge(src: String, dst: String, count: Long)
+
+case class Node(name: String,importance: Double)
+case class Link(source: Int, target: Int, value: Long)
+case class Graph(nodes: Seq[Node], links: Seq[Link])
+
+object graphs {
+// val sqlContext = SQLContext.getOrCreate(org.apache.spark.SparkContext.getOrCreate())  /// fix
+val sqlContext = SparkSession.builder().getOrCreate().sqlContext
+import sqlContext.implicits._
+  
+def force(vertices: Dataset[Node],clicks: Dataset[Edge], height: Int = 100, width: Int = 960): Unit = {
+  val data = clicks.collect()
+  val nodes = vertices.collect()
+  val links = data.map { t =&gt;
+    Link(nodes.indexWhere(_.name == t.src.replaceAll(&quot;_&quot;, &quot; &quot;)), nodes.indexWhere(_.name == t.dst.replaceAll(&quot;_&quot;, &quot; &quot;)), t.count / 20 + 1)
+  }
+  showGraph(height, width, Seq(Graph(nodes, links)).toDF().toJSON.first())
+}
+
+/**
+ * Displays a force directed graph using d3
+ * input: {&quot;nodes&quot;: [{&quot;name&quot;: &quot;...&quot;}], &quot;links&quot;: [{&quot;source&quot;: 1, &quot;target&quot;: 2, &quot;value&quot;: 0}]}
+ */
+def showGraph(height: Int, width: Int, graph: String): Unit = {
+
+displayHTML(s&quot;&quot;&quot;
+&lt;style&gt;
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: &quot;Helvetica Neue&quot;,&quot;Helvetica&quot;,&quot;Arial&quot;,sans-serif;
+  font-size: function(d) {return (d.importance)+ &quot;px&quot;};
+  font-weight: 200;
+}
+
+&lt;/style&gt;
+
+&lt;div id=&quot;clicks-graph&quot;&gt;
+&lt;script src=&quot;//d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var graph = $graph;
+
+var width = $width,
+    height = $height;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-200)
+    .linkDistance(350)
+    .size([width, height]);
+
+var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+    
+force
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+var link = svg.selectAll(&quot;.link&quot;)
+    .data(graph.links)
+    .enter().append(&quot;line&quot;)
+    .attr(&quot;class&quot;, &quot;link&quot;)
+    .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value)/10; });
+
+var node = svg.selectAll(&quot;.node&quot;)
+    .data(graph.nodes)
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .call(force.drag);
+
+node.append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, function(d) { return Math.sqrt(d.importance); })
+    .style(&quot;fill&quot;, function (d) {
+    if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})
+
+node.append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, function(d) { return (Math.sqrt(d.importance)*30)/Math.sqrt(453.6031403843406); })
+      .attr(&quot;dy&quot;, &quot;.35em&quot;)
+      .text(function(d) { return d.name });
+      
+//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+    link.attr(&quot;x1&quot;, function (d) {
+        return d.source.x;
+    })
+        .attr(&quot;y1&quot;, function (d) {
+        return d.source.y;
+    })
+        .attr(&quot;x2&quot;, function (d) {
+        return d.target.x;
+    })
+        .attr(&quot;y2&quot;, function (d) {
+        return d.target.y;
+    });
+    d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;cy&quot;, function (d) {
+        return d.y;
+    });
+    d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;y&quot;, function (d) {
+        return d.y;
+    });
+});
+&lt;/script&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;)
+}
+  
+  def help() = {
+displayHTML(&quot;&quot;&quot;
+&lt;p&gt;
+Produces a force-directed graph given a collection of edges of the following form:&lt;/br&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;case class&lt;/font&gt; &lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;(&lt;font color=&quot;#ed6a43&quot;&gt;src&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;dest&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;count&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;Long&lt;/font&gt;)&lt;/tt&gt;
+&lt;/p&gt;
+&lt;p&gt;Usage:&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;import&lt;/font&gt; &lt;font color=&quot;#ed6a43&quot;&gt;d3._&lt;/font&gt;&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#795da3&quot;&gt;graphs.force&lt;/font&gt;(&lt;/br&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;height&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;width&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;clicks&lt;/font&gt;: &lt;font color=&quot;#795da3&quot;&gt;Dataset&lt;/font&gt;[&lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;])&lt;/tt&gt;
+&lt;/p&gt;&quot;&quot;&quot;)
+  }
+}
+graphs.force(
+  height = 800,
+  width = 1200,
+  clicks = toplabel2FiltE.edges.as[Edge],
+  vertices = toplabel2FiltE.vertices.select($&quot;id&quot;.as(&quot;name&quot;),$&quot;pagerank&quot;.as(&quot;importance&quot;)).as[Node]
+  )
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><img src="https://github.com/lamastex/spark-gdelt-examples/blob/master/images/nigerian_cluster.png?raw=true" alt="nigerian_cluster" /></p>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out the top 100 according to pagerank score</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel3Filt =  toplabel3.filterVertices($&quot;pagerank&quot; &gt;=3.160183413696083).filterEdges($&quot;count&quot;&gt;4*18).dropIsolatedVertices()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Filter out edges to and vertices with small amount of edges to make the graph more comprehensive</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val toplabel3FiltE = toplabel3Filt.filterEdges($&quot;count&quot;&gt;50).dropIsolatedVertices()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Malaysian cluster</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class Edge(src: String, dst: String, count: Long)
+
+case class Node(name: String,importance: Double)
+case class Link(source: Int, target: Int, value: Long)
+case class Graph(nodes: Seq[Node], links: Seq[Link])
+
+object graphs {
+// val sqlContext = SQLContext.getOrCreate(org.apache.spark.SparkContext.getOrCreate())  /// fix
+val sqlContext = SparkSession.builder().getOrCreate().sqlContext
+import sqlContext.implicits._
+  
+def force(vertices: Dataset[Node],clicks: Dataset[Edge], height: Int = 100, width: Int = 960): Unit = {
+  val data = clicks.collect()
+  val nodes = vertices.collect()
+  val links = data.map { t =&gt;
+    Link(nodes.indexWhere(_.name == t.src.replaceAll(&quot;_&quot;, &quot; &quot;)), nodes.indexWhere(_.name == t.dst.replaceAll(&quot;_&quot;, &quot; &quot;)), t.count / 20 + 1)
+  }
+  showGraph(height, width, Seq(Graph(nodes, links)).toDF().toJSON.first())
+}
+
+/**
+ * Displays a force directed graph using d3
+ * input: {&quot;nodes&quot;: [{&quot;name&quot;: &quot;...&quot;}], &quot;links&quot;: [{&quot;source&quot;: 1, &quot;target&quot;: 2, &quot;value&quot;: 0}]}
+ */
+def showGraph(height: Int, width: Int, graph: String): Unit = {
+
+displayHTML(s&quot;&quot;&quot;
+&lt;style&gt;
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: &quot;Helvetica Neue&quot;,&quot;Helvetica&quot;,&quot;Arial&quot;,sans-serif;
+  font-size: function(d) {return (d.importance)+ &quot;px&quot;};
+  font-weight: 200;
+}
+
+&lt;/style&gt;
+
+&lt;div id=&quot;clicks-graph&quot;&gt;
+&lt;script src=&quot;//d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var graph = $graph;
+
+var width = $width,
+    height = $height;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-200)
+    .linkDistance(300)
+    .size([width, height]);
+
+var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+    
+force
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+var link = svg.selectAll(&quot;.link&quot;)
+    .data(graph.links)
+    .enter().append(&quot;line&quot;)
+    .attr(&quot;class&quot;, &quot;link&quot;)
+    .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value)/3; });
+
+var node = svg.selectAll(&quot;.node&quot;)
+    .data(graph.nodes)
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .call(force.drag);
+
+node.append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, function(d) { return (Math.sqrt(d.importance)*30)/Math.sqrt(98.7695771886648); })
+    .style(&quot;fill&quot;, function (d) {
+    if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})
+
+node.append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, function(d) { return (Math.sqrt(d.importance)*30)/Math.sqrt(26.343032735543023); })
+      .attr(&quot;dy&quot;, &quot;.35em&quot;)
+      .text(function(d) { return d.name });
+      
+//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+    link.attr(&quot;x1&quot;, function (d) {
+        return d.source.x;
+    })
+        .attr(&quot;y1&quot;, function (d) {
+        return d.source.y;
+    })
+        .attr(&quot;x2&quot;, function (d) {
+        return d.target.x;
+    })
+        .attr(&quot;y2&quot;, function (d) {
+        return d.target.y;
+    });
+    d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;cy&quot;, function (d) {
+        return d.y;
+    });
+    d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;y&quot;, function (d) {
+        return d.y;
+    });
+});
+&lt;/script&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;)
+}
+  
+  def help() = {
+displayHTML(&quot;&quot;&quot;
+&lt;p&gt;
+Produces a force-directed graph given a collection of edges of the following form:&lt;/br&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;case class&lt;/font&gt; &lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;(&lt;font color=&quot;#ed6a43&quot;&gt;src&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;dest&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;count&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;Long&lt;/font&gt;)&lt;/tt&gt;
+&lt;/p&gt;
+&lt;p&gt;Usage:&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;import&lt;/font&gt; &lt;font color=&quot;#ed6a43&quot;&gt;d3._&lt;/font&gt;&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#795da3&quot;&gt;graphs.force&lt;/font&gt;(&lt;/br&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;height&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;width&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;clicks&lt;/font&gt;: &lt;font color=&quot;#795da3&quot;&gt;Dataset&lt;/font&gt;[&lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;])&lt;/tt&gt;
+&lt;/p&gt;&quot;&quot;&quot;)
+  }
+}
+graphs.force(
+  height = 800,
+  width = 1200,
+  clicks = toplabel3FiltE.edges.as[Edge],
+  vertices = toplabel3FiltE.vertices.select($&quot;id&quot;.as(&quot;name&quot;),$&quot;pagerank&quot;.as(&quot;importance&quot;)).as[Node]
+  )
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><img src="https://github.com/lamastex/spark-gdelt-examples/blob/master/images/malaysian_cluster.png?raw=true" alt="malaysian_cluster" /></p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_9-sds-3-x-trends/030a_gdelt_EOI_detection.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_9-sds-3-x-trends/030_Spark_GDELT_project_001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
