@@ -1,0 +1,654 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>024_SparkStreamingIntro - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/024_SparkStreamingIntro.html" class="active">024_SparkStreamingIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/025_0_getTwitterDeveloperCredentials.html">025_0_getTwitterDeveloperCredentials</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/025_a_extendedTwitterUtils2run.html">025_a_extendedTwitterUtils2run</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/025_b_TTTDFfunctions.html">025_b_TTTDFfunctions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/025_c_extendedTwitterUtils2runWithLangs.html">025_c_extendedTwitterUtils2runWithLangs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/026_TweetCollector.html">026_TweetCollector</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/027_TweetCollectorTrackAndFollow.html">027_TweetCollectorTrackAndFollow</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/028_TweetHashtagCount.html">028_TweetHashtagCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_TweetLanguageClassifier.html">029_TweetLanguageClassifier</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_0_TwitterInteractiveVizualisations.html">029_Viz_0_TwitterInteractiveVizualisations</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_1_GraphNetworkTimeline.html">029_Viz_1_GraphNetworkTimeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_2_CoSENSE_EmotionalDimensions.html">029_Viz_2_CoSENSE_EmotionalDimensions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_x_VizGraphFunction.html">029_Viz_x_VizGraphFunction</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_x_VizNetworkFunction.html">029_Viz_x_VizNetworkFunction</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_3-sds-3-x-st/029_Viz_x_VizTimelineFunction.html">029_Viz_x_VizTimelineFunction</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="introduction-to-spark-streaming"><a class="header" href="#introduction-to-spark-streaming">Introduction to Spark Streaming</a></h1>
+<p>Spark Streaming is an extension of the core Spark API that enables scalable, high-throughput, fault-tolerant stream processing of live data streams.</p>
+<p>This is a walk-through of excerpts from the following resources:</p>
+<ul>
+<li>the Databricks Guide:
+<ul>
+<li><a href="https://docs.databricks.com/spark/latest/rdd-streaming/index.html">Spark Streaming - RDD-based</a> and</li>
+<li><a href="https://docs.databricks.com/spark/latest/structured-streaming/index.html#structured-streaming">Structured Streaming - DatFrame/Dataset-Based</a></li>
+</ul>
+</li>
+<li>Spark programming guide:
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/streaming-programming-guide.html">http://spark.apache.org/docs/latest/streaming-programming-guide.html</a></li>
+<li><a href="http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Spark Streaming is an extension of the core Spark API that enables scalable, high-throughput, fault-tolerant stream processing of live data streams.</p>
+<p>Data can be ingested from many sources like</p>
+<ul>
+<li><a href="http://kafka.apache.org/documentation.html#introduction">Kafka</a>,</li>
+<li><a href="https://flume.apache.org/">Flume</a>,</li>
+<li><a href="https://twitter.com/">Twitter</a> <a href="https://dev.twitter.com/streaming/overview">Streaming</a> and <a href="https://dev.twitter.com/rest/public">REST</a> APIs,</li>
+<li><a href="http://zeromq.org/">ZeroMQ</a>,</li>
+<li><a href="https://aws.amazon.com/kinesis/streams/">Amazon Kinesis</a>, or</li>
+<li><a href="http://www.gnu.org/software/mit-scheme/documentation/mit-scheme-ref/TCP-Sockets.html">TCP sockets</a>,</li>
+<li>etc</li>
+</ul>
+<p>and can be processed using complex algorithms expressed with high-level functions like <code>map</code>, <code>reduce</code>, <code>join</code> and <code>window</code>.</p>
+<p>Finally, processed data can be pushed out to filesystems, databases, and live dashboards. In fact, you can apply Spark's</p>
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/mllib-guide.html">machine learning</a> and</li>
+<li><a href="http://spark.apache.org/docs/latest/graphx-programming-guide.html">graph processing</a> algorithms on data streams.</li>
+</ul>
+<p><img src="http://spark.apache.org/docs/latest/img/streaming-arch.png" alt="Spark Streaming architecture" /></p>
+<p><strong>Internally, it works as follows:</strong></p>
+<ul>
+<li>Spark Streaming receives live input data streams and</li>
+<li>divides the data into batches,</li>
+<li>which are then processed by the Spark engine</li>
+<li>to generate the final stream of results in batches.</li>
+</ul>
+<p><img src="http://spark.apache.org/docs/latest/img/streaming-flow.png" alt="Spark Streaming data flow" /></p>
+<h2 id="discretized-streams-dstreams"><a class="header" href="#discretized-streams-dstreams">Discretized Streams (DStreams)</a></h2>
+<p><strong>Discretized Stream</strong> or <strong>DStream</strong> is the basic abstraction provided by Spark Streaming. It represents a continuous stream of data, either the input data stream received from source (for eg. Kafka, Flume, and Kinesis) or the processed data stream generated by transforming the input stream. Internally, a DStream is represented by a continuous series of RDDs, which is Spark's abstraction of an immutable, distributed dataset (see <a href="http://spark.apache.org/docs/latest/programming-guide.html#resilient-distributed-datasets-rdds">Spark Programming Guide</a> for more details). Each RDD in a DStream contains data from a certain interval, as shown in the following figure.</p>
+<p><img src="http://spark.apache.org/docs/latest/img/streaming-dstream.png" alt="Spark Streaming" title="Spark Streaming data flow" /></p>
+<hr />
+<p>This guide shows you how to start writing Spark Streaming programs with DStreams. You can write Spark Streaming programs in Scala, Java or Python (introduced in Spark 1.2), all of which are presented in this <a href="http://spark.apache.org/docs/latest/streaming-programming-guide.html">guide</a>.</p>
+<p>Here, we will focus on Streaming in Scala.</p>
+<hr />
+<p><strong>Spark Streaming</strong> is a near-real-time micro-batch stream processing engine as opposed to other real-time stream processing frameworks like <a href="http://storm.apache.org/">Apache Storm</a>. Typically 'near-real-time' in Spark Streaming can be in the order of seconds as opposed to milliseconds, for example.</p>
+</div>
+<div class="cell markdown">
+<h1 id="three-quick-examples"><a class="header" href="#three-quick-examples">Three Quick Examples</a></h1>
+<p>Before we go into the details of how to write your own Spark Streaming program, let us take a quick look at what a simple Spark Streaming program looks like.</p>
+<p>We will choose the first two examples in Databricks notebooks below.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Spark Streaming Hello World Examples</strong></p>
+<p>These are adapted from several publicly available Databricks Notebooks</p>
+<ol>
+<li>Streaming Word Count (Scala)</li>
+</ol>
+<ul>
+<li>Tweet Collector for Capturing Live Tweets</li>
+<li>Twitter Hashtag Count (Scala)</li>
+</ul>
+<p>Other examples we won't try here:</p>
+<ul>
+<li>Kinesis Word Count (Scala)</li>
+<li>Kafka Word Count (Scala)</li>
+<li>FileStream Word Count (Python)</li>
+<li>etc.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<ol>
+<li>Streaming Word Count</li>
+</ol>
+<hr />
+<p>This is a <em>hello world</em> example of Spark Streaming which counts words on 1 second batches of streaming data.</p>
+<p>It uses an in-memory string generator as a dummy source for streaming data.</p>
+<h3 id="setting-up-a-streaming-source"><a class="header" href="#setting-up-a-streaming-source">Setting up a streaming source</a></h3>
+</div>
+<div class="cell markdown">
+<p><strong>Configurations</strong></p>
+<p>Configurations that control the streaming app in the notebook</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// === Configuration to control the flow of the application ===
+val stopActiveContext = true	 
+// &quot;true&quot;  = stop if any existing StreamingContext is running;              
+// &quot;false&quot; = dont stop, and let it run undisturbed, but your latest code may not be used
+
+// === Configurations for Spark Streaming ===
+val batchIntervalSeconds = 1 
+val eventsPerSecond = 1000    // For the dummy source
+
+// Verify that the attached Spark cluster is 1.4.0+
+require(sc.version.replace(&quot;.&quot;, &quot;&quot;).toInt &gt;= 140, &quot;Spark 1.4.0+ is required to run this notebook. Please attach it to a Spark 1.4.0+ cluster.&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>stopActiveContext: Boolean = true
+batchIntervalSeconds: Int = 1
+eventsPerSecond: Int = 1000
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Imports</strong></p>
+<p>Import all the necessary libraries. If you see any error here, you have to make sure that you have attached the necessary libraries to the attached cluster.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Setup: Define the function that sets up the StreamingContext</strong></p>
+<p>In this we will do two things.</p>
+<ul>
+<li>
+<p>Define a custom receiver as the dummy source (no need to understand this)</p>
+<ul>
+<li>this custom receiver will have lines that end with a random number between 0 and 9 and read:</li>
+</ul>
+<!-- -->
+<pre><code>I am a dummy source 2
+I am a dummy source 8
+...
+</code></pre>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>This is the dummy source implemented as a custom receiver. <strong>No need to understand this now.</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// This is the dummy source implemented as a custom receiver. No need to fully understand this.
+
+import scala.util.Random
+import org.apache.spark.streaming.receiver._
+
+class DummySource(ratePerSec: Int) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) {
+
+  def onStart() {
+    // Start the thread that receives data over a connection
+    new Thread(&quot;Dummy Source&quot;) {
+      override def run() { receive() }
+    }.start()
+  }
+
+  def onStop() {
+   // There is nothing much to do as the thread calling receive()
+   // is designed to stop by itself isStopped() returns false
+  }
+
+  /** Create a socket connection and receive data until receiver is stopped */
+  private def receive() {
+    while(!isStopped()) {      
+      store(&quot;I am a dummy source &quot; + Random.nextInt(10))
+      Thread.sleep((1000.toDouble / ratePerSec).toInt)
+    }
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import scala.util.Random
+import org.apache.spark.streaming.receiver._
+defined class DummySource
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="transforming-and-acting-on-the-dstream-of-lines"><a class="header" href="#transforming-and-acting-on-the-dstream-of-lines">Transforming and Acting on the DStream of lines</a></h3>
+<p>Any operation applied on a DStream translates to operations on the underlying RDDs. For converting a stream of lines to words, the <code>flatMap</code> operation is applied on each RDD in the <code>lines</code> DStream to generate the RDDs of the <code>wordStream</code> DStream. This is shown in the following figure.</p>
+<p><img src="http://spark.apache.org/docs/latest/img/streaming-dstream-ops.png" alt="Spark Streaming" title="Spark Streaming data flow" /></p>
+<p>These underlying RDD transformations are computed by the Spark engine. The DStream operations hide most of these details and provide the developer with a higher-level API for convenience.</p>
+<p>Next <code>reduceByKey</code> is used to get <code>wordCountStream</code> that counts the words in <code>wordStream</code>.</p>
+<p>Finally, this is registered as a temporary table for each RDD in the DStream.</p>
+</div>
+<div class="cell markdown">
+<p>Let's try to understand the following <code>creatingFunc</code> to create a new StreamingContext and setting it up for word count and registering it as temp table for each batch of 1000 lines per second in the stream.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">batchIntervalSeconds
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">var newContextCreated = false      // Flag to detect whether new context was created or not
+
+// Function to create a new StreamingContext and set it up
+def creatingFunc(): StreamingContext = {
+    
+  // Create a StreamingContext - starting point for a Spark Streaming job
+  val ssc = new StreamingContext(sc, Seconds(batchIntervalSeconds))
+  
+  // Create a stream that generates 1000 lines per second
+  val stream = ssc.receiverStream(new DummySource(eventsPerSecond))  
+  
+  // Split the lines into words, and then do word count
+  val wordStream = stream.flatMap { _.split(&quot; &quot;)  }
+  val wordCountStream = wordStream.map(word =&gt; (word, 1)).reduceByKey(_ + _)
+
+  // Create temp table at every batch interval
+  wordCountStream.foreachRDD { rdd =&gt; 
+    rdd.toDF(&quot;word&quot;, &quot;count&quot;).createOrReplaceTempView(&quot;batch_word_count&quot;)    
+  }
+  
+  stream.foreachRDD { rdd =&gt;
+    System.out.println(&quot;# events = &quot; + rdd.count())
+    System.out.println(&quot;\t &quot; + rdd.take(10).mkString(&quot;, &quot;) + &quot;, ...&quot;)
+  }
+  
+  ssc.remember(Minutes(1))  // To make sure data is not deleted by the time we query it interactively
+  
+  println(&quot;Creating function called to create new StreamingContext&quot;)
+  newContextCreated = true  
+  ssc
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>newContextCreated: Boolean = false
+creatingFunc: ()org.apache.spark.streaming.StreamingContext
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="start-streaming-job"><a class="header" href="#start-streaming-job">Start Streaming Job</a></h3>
+<p>First it is important to <strong>stop existing StreamingContext if any</strong> and then start/restart the new one.</p>
+<p>Here we are going to use the configurations at the top of the notebook to decide whether to stop any existing StreamingContext, and start a new one, or recover one from existing checkpoints.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Stop any existing StreamingContext 
+// The getActive function is proviced by Databricks to access active Streaming Contexts
+if (stopActiveContext) {	
+  StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) }
+} 
+
+// Get or create a streaming context
+val ssc = StreamingContext.getActiveOrCreate(creatingFunc)
+if (newContextCreated) {
+  println(&quot;New context created from currently defined creating function&quot;) 
+} else {
+  println(&quot;Existing context running or recovered from checkpoint, may not be running currently defined creating function&quot;)
+}
+
+// Start the streaming context in the background.
+ssc.start()
+
+// This is to ensure that we wait for some time before the background streaming job starts. This will put this cell on hold for 5 times the batchIntervalSeconds.
+ssc.awaitTerminationOrTimeout(batchIntervalSeconds * 5 * 1000)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Creating function called to create new StreamingContext
+New context created from currently defined creating function
+# events = 0
+	 , ...
+# events = 803
+	 I am a dummy source 6, I am a dummy source 6, I am a dummy source 5, I am a dummy source 3, I am a dummy source 7, I am a dummy source 2, I am a dummy source 8, I am a dummy source 1, I am a dummy source 7, I am a dummy source 5, ...
+# events = 879
+	 I am a dummy source 7, I am a dummy source 5, I am a dummy source 3, I am a dummy source 0, I am a dummy source 2, I am a dummy source 3, I am a dummy source 1, I am a dummy source 2, I am a dummy source 7, I am a dummy source 7, ...
+# events = 888
+	 I am a dummy source 9, I am a dummy source 0, I am a dummy source 1, I am a dummy source 2, I am a dummy source 7, I am a dummy source 3, I am a dummy source 3, I am a dummy source 0, I am a dummy source 1, I am a dummy source 9, ...
+# events = 883
+	 I am a dummy source 6, I am a dummy source 5, I am a dummy source 4, I am a dummy source 6, I am a dummy source 4, I am a dummy source 2, I am a dummy source 3, I am a dummy source 6, I am a dummy source 1, I am a dummy source 6, ...
+ssc: org.apache.spark.streaming.StreamingContext = org.apache.spark.streaming.StreamingContext@50c3571
+res2: Boolean = false
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="interactive-querying"><a class="header" href="#interactive-querying">Interactive Querying</a></h3>
+<p>Now let's try querying the table. You can run this command again and again, you will find the numbers changing.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">select * from batch_word_count
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>word</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8</td>
+<td>107.0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>100.0</td>
+</tr>
+<tr class="odd">
+<td>dummy</td>
+<td>890.0</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td>890.0</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>890.0</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>70.0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>89.0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>87.0</td>
+</tr>
+<tr class="odd">
+<td>source</td>
+<td>890.0</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>91.0</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>79.0</td>
+</tr>
+<tr class="even">
+<td>am</td>
+<td>890.0</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>96.0</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>82.0</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>89.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>Try again for current table.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">select * from batch_word_count 
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>word</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8</td>
+<td>109.0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>77.0</td>
+</tr>
+<tr class="odd">
+<td>dummy</td>
+<td>888.0</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td>888.0</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>888.0</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>84.0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>85.0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>89.0</td>
+</tr>
+<tr class="odd">
+<td>source</td>
+<td>888.0</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>86.0</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>91.0</td>
+</tr>
+<tr class="even">
+<td>am</td>
+<td>888.0</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>74.0</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>84.0</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>109.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="go-to-spark-ui-now-and-see-streaming-job-running"><a class="header" href="#go-to-spark-ui-now-and-see-streaming-job-running">Go to Spark UI now and see Streaming job running</a></h3>
+</div>
+<div class="cell markdown">
+<p>Finally, if you want stop the StreamingContext, you can uncomment and execute the following code:</p>
+<p><code>StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) }</code></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) } // please do this if you are done!
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Next two examples Spark Streaming is with live tweets.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next" href="../../contents/000_3-sds-3-x-st/025_0_getTwitterDeveloperCredentials.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next" href="../../contents/000_3-sds-3-x-st/025_0_getTwitterDeveloperCredentials.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
