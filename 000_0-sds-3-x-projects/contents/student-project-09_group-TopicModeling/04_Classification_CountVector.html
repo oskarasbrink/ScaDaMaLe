@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>04_Classification_CountVector - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/00_download_data.html"><strong aria-hidden="true">1.</strong> Student-project-01_group_TheTwoCultures_00_download_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/01_load_data.html"><strong aria-hidden="true">1.1.</strong> 01_load_data</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/01b_show_data.html"><strong aria-hidden="true">1.2.</strong> 01b_show_data</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/02_logisticregression.html"><strong aria-hidden="true">1.3.</strong> 02_logisticregression</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/03_word2vec.html"><strong aria-hidden="true">1.4.</strong> 03_word2vec</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-01_group-TheTwoCultures/04_LDA.html"><strong aria-hidden="true">1.5.</strong> 04_LDA</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-02_group-LiUUmeaSceneGraphMotifs/01_SceneGraphMotifs.html"><strong aria-hidden="true">2.</strong> Student-project-02_group_LiUUmeaSceneGraphMotifs_01_SceneGraphMotifs</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-03_group-GuangyiZhang/01_triads.html"><strong aria-hidden="true">3.</strong> Student-project-03_group_GuangyiZhang_01_triads</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-04_group-DistributedLinearAlgebra/01_DistributedSVD.html"><strong aria-hidden="true">4.</strong> Student-project-04_group_DistributedLinearAlgebra_01_DistributedSVD</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-04_group-DistributedLinearAlgebra/02_CollaborativeFiltering.html"><strong aria-hidden="true">4.1.</strong> 02_CollaborativeFiltering</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-05_group-LundDirichletAnalysts/01_Wikipedia_LDA_Analysis.html"><strong aria-hidden="true">5.</strong> Student-project-05_group_LundDirichletAnalysts_01_Wikipedia_LDA_Analysis</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/00_Introduction.html"><strong aria-hidden="true">6.</strong> Student-project-06_group-ParticleClustering_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/01_data_and_preprocessing.html"><strong aria-hidden="true">6.1.</strong> 01_data_and_preprocessing</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/02_dl_single_machine.html"><strong aria-hidden="true">6.2.</strong> 02_dl_single_machine</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/03_dl_horovod.html"><strong aria-hidden="true">6.3.</strong> 03_dl_horovod</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/04_evaluate.html"><strong aria-hidden="true">6.4.</strong> 04_evaluate</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-06_group-ParticleClustering/TF1version.html"><strong aria-hidden="true">6.5.</strong> TF1version</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-07_group-MathAtKTH/01_Coding_Motifs.html"><strong aria-hidden="true">7.</strong> Student-project-07_group-MathAtKTH_01_Coding_Motifs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-07_group-MathAtKTH/02_Data_Processing.html"><strong aria-hidden="true">7.1.</strong> 02_Data_Processing</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-07_group-MathAtKTH/03_graph_string_converter.html"><strong aria-hidden="true">7.2.</strong> 03_graph_string_converter</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-08_group-DistributedEnsemble/00_project.html"><strong aria-hidden="true">8.</strong> Student-project-08_group-DistributedEnsemble_00_project</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/01_Introduction.html"><strong aria-hidden="true">9.</strong> Student-project-09_group-TopicModeling_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/02_Data_Processing.html"><strong aria-hidden="true">9.1.</strong> 02_Data_Processing</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/03_LDA.html"><strong aria-hidden="true">9.2.</strong> 03_LDA</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/04_Classification_CountVector.html" class="active"><strong aria-hidden="true">9.3.</strong> 04_Classification_CountVector</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/05_Classification.html"><strong aria-hidden="true">9.4.</strong> 05_Classification</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-09_group-TopicModeling/06_Results.html"><strong aria-hidden="true">9.5.</strong> 06_Results</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/01_Introduction.html"><strong aria-hidden="true">10.</strong> Student-project-10_group-Geosmus_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/02_ClusteringEmoticonsBasedOnTweets.html"><strong aria-hidden="true">10.1.</strong> 02_ClusteringEmoticonsBasedOnTweets</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/03_Dynamic_Tweet_Maps.html"><strong aria-hidden="true">10.2.</strong> 03_Dynamic_Tweet_Maps</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/04_conclusion.html"><strong aria-hidden="true">10.3.</strong> 04_conclusion</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/05_appendix_get-cc-data.html"><strong aria-hidden="true">10.4.</strong> 05_appendix_get-cc-data</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/06_appendix_tweet_carto_functions.html"><strong aria-hidden="true">10.5.</strong> 06_appendix_tweet_carto_functions</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/07_a_appendix_extendedTwitterUtils2run.html"><strong aria-hidden="true">10.6.</strong> 07_a_appendix_extendedTwitterUtils2run</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-10_group-Geosmus/07_b_appendix_TTTDFfunctions.html"><strong aria-hidden="true">10.7.</strong> 07_b_appendix_TTTDFfunctions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-11_group-Sketchings/00_QuantileEstimation.html"><strong aria-hidden="true">11.</strong> Student-project-11_group-Sketchings_00_QuantileEstimation</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/00_ProjectDescriptionAndPlanning.html"><strong aria-hidden="true">12.</strong> Student-project-12_group-CovidPandemic_00_ProjectDescriptionAndPlanning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/01_DownloadFilesPeriodicallyScript.html"><strong aria-hidden="true">12.1.</strong> 01_DownloadFilesPeriodicallyScript</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/01_StreamToFile.html"><strong aria-hidden="true">12.2.</strong> 01_StreamToFile</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/02_DataPreprocess.html"><strong aria-hidden="true">12.3.</strong> 02_DataPreprocess</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/021_DataPreprocess_Explain.html"><strong aria-hidden="true">12.4.</strong> 021_DataPreprocess_Explain</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/03_ExplosiveAnalysis.html"><strong aria-hidden="true">12.5.</strong> 03_ExplosiveAnalysis</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/04_DataVisualize.html"><strong aria-hidden="true">12.6.</strong> 04_DataVisualize</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/05_Clustering.html"><strong aria-hidden="true">12.7.</strong> 05_Clustering</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/06_DataPredicton_LR.html"><strong aria-hidden="true">12.8.</strong> 06_DataPredicton_LR</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/07_DataPredicton_ARIMA.html"><strong aria-hidden="true">12.9.</strong> 07_DataPredicton_ARIMA</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-12_group-CovidPandemic/08_DataPrediction_GP.html"><strong aria-hidden="true">12.10.</strong> 08_DataPrediction_GP</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-13_group-Genomics/01_1000genomes.html"><strong aria-hidden="true">13.</strong> Student-project-13_group-Genomics_01_1000genomes</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-14_group-NullHypothesisEvaluationCriteria/00_distributed_combinatorial_bandit.html"><strong aria-hidden="true">14.</strong> Student-project-14_group-NullHypothesisEvaluationCriteria_00_distributed_combinatorial_bandit</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-15_group-FinancialDataStreams/00_video.html"><strong aria-hidden="true">15.</strong> Student-project-15_group-FinancialDataStreams_00_video</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-15_group-FinancialDataStreams/01_rl_intraday_trading.html"><strong aria-hidden="true">15.1.</strong> 01_rl_intraday_trading</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-15_group-FinancialDataStreams/02_rl_intraday_trading_elephas.html"><strong aria-hidden="true">15.2.</strong> 02_rl_intraday_trading_elephas</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-15_group-FinancialDataStreams/03_resources.html"><strong aria-hidden="true">15.3.</strong> 03_resources</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-16_group-IntrusionDetection/00_Introduction.html"><strong aria-hidden="true">16.</strong> Student-project-16_group-IntrusionDetection_00_Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-17_group-TowardsScalableTDA/00_introduction.html"><strong aria-hidden="true">17.</strong> Student-project-17_group-TowardsScalableTDA_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-17_group-TowardsScalableTDA/01_methodology.html"><strong aria-hidden="true">17.1.</strong> 01_methodology</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-17_group-TowardsScalableTDA/02_gaussian_analysis.html"><strong aria-hidden="true">17.2.</strong> 02_gaussian_analysis</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-17_group-TowardsScalableTDA/03_robotics_dataset.html"><strong aria-hidden="true">17.3.</strong> 03_robotics_dataset</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-18_group-ProjectRL/00_Problem_Description.html"><strong aria-hidden="true">18.</strong> Student-project-18_group-ProjectRL_00_Problem_Description</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-18_group-ProjectRL/01_The_ALS_method.html"><strong aria-hidden="true">18.1.</strong> 01_The_ALS_method</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-18_group-ProjectRL/02_Extensions.html"><strong aria-hidden="true">18.2.</strong> 02_Extensions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-19_group-Featuring/01_FundamentalMatrix.html"><strong aria-hidden="true">19.</strong> Student-project-19_group-Featuring_01_FundamentalMatrix</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../contents/student-project-20_group-Generalization/01_Background.html"><strong aria-hidden="true">20.</strong> Student-project-20_group-Generalization_01_Background</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-20_group-Generalization/02_Random_Forest.html"><strong aria-hidden="true">20.1.</strong> 02_Random_Forest</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-20_group-Generalization/03_CNN_MNIST.html"><strong aria-hidden="true">20.2.</strong> 03_CNN_MNIST</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-20_group-Generalization/04_CNN_Intel_Image.html"><strong aria-hidden="true">20.3.</strong> 04_CNN_Intel_Image</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-20_group-Generalization/05_Horovod_test.html"><strong aria-hidden="true">20.4.</strong> 05_Horovod_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-21_group-GraphSpectralAnalysis/00_introduction.html"><strong aria-hidden="true">21.</strong> Student-project-21_group-GraphSpectralAnalysis_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-21_group-GraphSpectralAnalysis/01_preprocess_data.html"><strong aria-hidden="true">21.1.</strong> 01_preprocess_data</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-21_group-GraphSpectralAnalysis/02_generate_graphs.html"><strong aria-hidden="true">21.2.</strong> 02_generate_graphs</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-21_group-GraphSpectralAnalysis/03_compute_rsvd.html"><strong aria-hidden="true">21.3.</strong> 03_compute_rsvd.</a></li><li class="chapter-item expanded "><a href="../../contents/student-project-21_group-GraphSpectralAnalysis/04_analyse_eigenvalues.html"><strong aria-hidden="true">21.4.</strong> 04_analyse_eigenvalues</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/student-project-22_group-SwapWithDDP/00_Introduction.html"><strong aria-hidden="true">22.</strong> Student-project-22_group-SwapWithDDP_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/student-project-22_group-SwapWithDDP/01_SWAP_with_DDP.html"><strong aria-hidden="true">22.1.</strong> 01_SWAP_with_DDP</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/00_Introduction.html"><strong aria-hidden="true">23.</strong> Voluntary-student-project-01_group-DDLInMining_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/01_ImageSegmentation_UNet.html"><strong aria-hidden="true">23.1.</strong> 01_ImageSegmentation_UNet</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/02_ImageSegmenation_PSPNet.html"><strong aria-hidden="true">23.2.</strong> 02_ImageSegmenation_PSPNet</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/03_ICNet_Function.html"><strong aria-hidden="true">23.3.</strong> 03_ICNet_Function</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/04_ICNet_Function_hvd.html"><strong aria-hidden="true">23.4.</strong> 04_ICNet_Function_hvd</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/05_ICNet_Function_Tuning_parallel.html"><strong aria-hidden="true">23.5.</strong> 05_ICNet_Function_Tuning_parallel</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/XX_ICNet_Class.html"><strong aria-hidden="true">23.6.</strong> XX_ICNet_Class</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/XX_ICNet_Function_hvd_tuning.html"><strong aria-hidden="true">23.7.</strong> XX_ICNet_Function_hvd_tuning</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/XX_ImageSegmentation_ICNet.html"><strong aria-hidden="true">23.8.</strong> XX_ImageSegmentation_ICNet</a></li><li class="chapter-item expanded "><a href="../../contents/voluntary-student-project-01_group-DDLInMining/XXNOTWORKING_ICNet_Function_Tuning.html"><strong aria-hidden="true">23.9.</strong> XXNOTWORKING_ICNet_Function_Tuning</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="classification-countvector"><a class="header" href="#classification-countvector">Classification CountVector</a></h1>
+</div>
+<div class="cell markdown">
+<h4 id="load-processed-data"><a class="header" href="#load-processed-data">Load processed data</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val k_mers_df_train = spark.read.parquet(&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train&quot;).cache()
+val k_mers_df_test = spark.read.parquet(&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test&quot;).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val k_mers_df_train = spark.read.parquet(&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_train_nonoverlapping&quot;).cache()
+val k_mers_df_test = spark.read.parquet(&quot;dbfs:/FileStore/shared_uploads/caylak@kth.se/data_test_nonoverlapping&quot;).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>k_mers_df_train: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+k_mers_df_test: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [genome: string, label: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="format-data"><a class="header" href="#format-data">Format data</a></h4>
+<p>Generate word count vectors</p>
+</div>
+<div class="cell markdown">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.RegexTokenizer
+
+// Set params for RegexTokenizer
+val tokenizer = new RegexTokenizer()
+.setPattern(&quot;[\\W_]+&quot;) // break by white space character(s)  - try to remove emails and other patterns
+.setInputCol(&quot;genome&quot;) // name of the input column
+.setOutputCol(&quot;tokens&quot;) // name of the output column
+
+// Tokenize document
+val tokenized_df_train = tokenizer.transform(k_mers_df_train)
+val tokenized_df_test = tokenizer.transform(k_mers_df_test)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.ml.feature.RegexTokenizer
+tokenizer: org.apache.spark.ml.feature.RegexTokenizer = RegexTokenizer: uid=regexTok_5df744efa843, minTokenLength=1, gaps=true, pattern=[\W_]+, toLowercase=true
+tokenized_df_train: org.apache.spark.sql.DataFrame = [genome: string, label: string ... 2 more fields]
+tokenized_df_test: org.apache.spark.sql.DataFrame = [genome: string, label: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(tokenized_df_train.select(&quot;tokens&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.CountVectorizer
+val vectorizer = new CountVectorizer()
+      .setInputCol(&quot;tokens&quot;)
+      .setOutputCol(&quot;features&quot;)
+      .setMinDF(10)
+      .fit(tokenized_df_train)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.ml.feature.CountVectorizer
+vectorizer: org.apache.spark.ml.feature.CountVectorizerModel = CountVectorizerModel: uid=cntVec_9226a16a835f, vocabularySize=241
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val vocabList = vectorizer.vocabulary
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>vocabList: Array[String] = Array(ttt, tgt, aaa, tta, aca, ttg, taa, att, aat, ctt, caa, tga, gtt, atg, act, aga, tat, tac, aac, tgg, tgc, aag, tca, cta, ttc, tct, gtg, agt, gaa, cat, gct, ctg, cac, gta, ata, tag, gat, ggt, cag, acc, gca, cca, atc, agg, gac, cct, agc, gag, gga, ctc, gtc, ggc, tcc, gcc, acg, cgt, ggg, ccc, tcg, cgc, cga, gcg, cgg, ccg, nnn, nna, naa, ntt, tnn, cnn, gnn, ann, nnt, nng, nnc, agn, ttn, aan, acn, tan, nat, tcn, ngt, nct, can, gtn, ctn, nta, atn, tgn, ana, nca, ggn, nga, tna, nac, ntg, gcn, gan, tgk, ngc, ccn, ncc, ngg, tnt, ntc, nag, agk, yta, cnt, ktt, aya, gkt, kta, gnt, nan, ytt, ktg, gkc, tty, ayt, tay, yaa, acy, gsc, aay, tgy, ggk, ant, tyt, yac, tya, yat, anc, ang, cay, tkt, cak, cna, cng, rcc, akt, ggw, aty, cgn, gyt, tng, acw, aak, cyt, ytg, raa, yca, ntn, gay, gna, kat, kct, gnc, ngn, cty, tkg, tnc, yag, ayc, kca, aka, tyg, gka, ygt, cnc, cya, ttk, ayg, tka, gng, maa, tth, yga, ncn, ama, aar, kag, ytc, gtk, cch, ncg, kaa, ctk, gty, yct, ara, rtg, ckt, tar, gya, kac, tgr, crc, ccy, tkc, tak, akg, tyc, grt, gcy, trt, ggr, ygg, gak, gcr, kgt, ygc, cgk, wga, wtc, tma, tck, atr, waa, vcc, cwt, tcy, tgs, rgc, rac, agy, kgc, gam, haa, agr, rgt, tha, cyc, atk, gtr, tra, nam, gkg, gwg, cra)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vocabList.size
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res17: Int = 241
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create vector of token counts
+val countVectors_train = vectorizer.transform(tokenized_df_train).select(&quot;id&quot;, &quot;features&quot;)
+val countVectors_test = vectorizer.transform(tokenized_df_test).select(&quot;id&quot;, &quot;features&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>countVectors_train: org.apache.spark.sql.DataFrame = [id: bigint, features: vector]
+countVectors_test: org.apache.spark.sql.DataFrame = [id: bigint, features: vector]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.linalg.{Vector =&gt; MLVector}
+import org.apache.spark.mllib.{linalg =&gt; mllib}
+import org.apache.spark.ml.{linalg =&gt; ml}
+
+val lda_countVector_train = countVectors_train.map { case Row(id: Long, countVector: MLVector) =&gt; (id, mllib.Vectors.fromML(countVector)) }.cache()
+val lda_countVector_test = countVectors_test.map { case Row(id: Long, countVector: MLVector) =&gt; (id, mllib.Vectors.fromML(countVector)) }.cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.ml.linalg.{Vector=&gt;MLVector}
+import org.apache.spark.mllib.{linalg=&gt;mllib}
+import org.apache.spark.ml.{linalg=&gt;ml}
+lda_countVector_train: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib.linalg.Vector)] = [_1: bigint, _2: vector]
+lda_countVector_test: org.apache.spark.sql.Dataset[(Long, org.apache.spark.mllib.linalg.Vector)] = [_1: bigint, _2: vector]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.linalg.{Vectors =&gt; OldVectors}
+import org.apache.spark.ml.linalg.{Vectors =&gt; NewVectors}
+
+
+val lda_countVector_train_1 = lda_countVector_train.map({case (a,b) =&gt;(a,b.asML)})
+val lda_countVector_test_1 = lda_countVector_test.map({case (a,b) =&gt;(a,b.asML)})
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.mllib.linalg.{Vectors=&gt;OldVectors}
+import org.apache.spark.ml.linalg.{Vectors=&gt;NewVectors}
+lda_countVector_train_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.linalg.Vector)] = [_1: bigint, _2: vector]
+lda_countVector_test_1: org.apache.spark.sql.Dataset[(Long, org.apache.spark.ml.linalg.Vector)] = [_1: bigint, _2: vector]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val trainDF = lda_countVector_train_1.toDF()
+val testDF = lda_countVector_test_1.toDF()
+
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>trainDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
+testDF: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.conf.set(&quot;spark.sql.autoBroadcastJoinThreshold&quot;, -1)
+
+val mergedTrainingData = trainDF.join(k_mers_df_train,trainDF(&quot;_1&quot;) === k_mers_df_train(&quot;id&quot;),&quot;inner&quot;).withColumnRenamed(&quot;_2&quot;,&quot;features&quot;).drop(&quot;_1&quot;)
+val mergedTestData = testDF.join(k_mers_df_test,testDF(&quot;_1&quot;) === k_mers_df_test(&quot;id&quot;),&quot;inner&quot;).withColumnRenamed(&quot;_2&quot;,&quot;features&quot;).drop(&quot;_1&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>mergedTrainingData: org.apache.spark.sql.DataFrame = [features: vector, genome: string ... 2 more fields]
+mergedTestData: org.apache.spark.sql.DataFrame = [features: vector, genome: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="classification"><a class="header" href="#classification">Classification</a></h3>
+<p>The count vectors are used as features for classification</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.feature.{StringIndexer,VectorAssembler}
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.feature.LabeledPoint
+import org.apache.spark.ml.classification.RandomForestClassifier
+import org.apache.spark.ml.linalg.Vector
+
+val transformers = Array(
+              new StringIndexer().setInputCol(&quot;label&quot;).setOutputCol(&quot;label_id&quot;))
+
+// Train a RandomForest model.
+val rf = new RandomForestClassifier() 
+              .setLabelCol(&quot;label_id&quot;)
+              .setFeaturesCol(&quot;features&quot;)
+              .setNumTrees(500)
+              .setFeatureSubsetStrategy(&quot;auto&quot;)
+              .setImpurity(&quot;gini&quot;)
+              .setMaxDepth(20)
+              .setMaxBins(32)
+              .setSeed(12345)
+
+val model = new Pipeline().setStages(transformers :+ rf).fit(mergedTrainingData)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.feature.LabeledPoint
+import org.apache.spark.ml.classification.RandomForestClassifier
+import org.apache.spark.ml.linalg.Vector
+transformers: Array[org.apache.spark.ml.feature.StringIndexer] = Array(strIdx_e8cf65204547)
+rf: org.apache.spark.ml.classification.RandomForestClassifier = rfc_0a45a46b7366
+model: org.apache.spark.ml.PipelineModel = pipeline_14ad91398432
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.evaluation.MulticlassMetrics
+
+def evaluateModel(model: org.apache.spark.ml.PipelineModel, df: org.apache.spark.sql.DataFrame){
+  val predictionsOnData = model.transform(df)
+  val predictionAndLabelsRdd = predictionsOnData.select(&quot;prediction&quot;, &quot;label_id&quot;).as[(Double,Double)].rdd
+
+  val metricsMulti = new MulticlassMetrics(predictionAndLabelsRdd)
+  val accuracy = metricsMulti.accuracy
+  
+  val fm0 = metricsMulti.fMeasure(0)
+  val fm1 = metricsMulti.fMeasure(1)
+  val fm2 = metricsMulti.fMeasure(2)
+  val fm3 = metricsMulti.fMeasure(3)
+  val fm4 = metricsMulti.fMeasure(4)
+  val fm5 = metricsMulti.fMeasure(5)
+  
+  println(&quot;Confusion matrix:&quot;)
+  println(metricsMulti.confusionMatrix)
+  
+  println(&quot;Summary Statistics&quot;)
+  println(s&quot;Accuracy = $accuracy&quot;)
+  
+  println(s&quot;fm0 = $fm0&quot;)
+  println(s&quot;fm1 = $fm1&quot;)
+  println(s&quot;fm2 = $fm2&quot;)
+  println(s&quot;fm3 = $fm3&quot;)
+  println(s&quot;fm4 = $fm4&quot;)
+  println(s&quot;fm5 = $fm5&quot;)
+
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<h6 id="evaluation-training-data"><a class="header" href="#evaluation-training-data">Evaluation Training data</a></h6>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">evaluateModel(model, mergedTrainingData)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Confusion matrix:
+12776.0  0.0     0.0     0.0    0.0    0.0   
+70.0     6955.0  3.0     0.0    0.0    0.0   
+139.0    1.0     1002.0  1.0    0.0    0.0   
+133.0    0.0     4.0     756.0  0.0    0.0   
+36.0     0.0     0.0     0.0    175.0  0.0   
+33.0     0.0     0.0     0.0    0.0    71.0  
+Summary Statistics
+Accuracy = 0.981042654028436
+fm0 = 0.9841697800716405
+fm1 = 0.99470823798627
+fm2 = 0.9312267657992566
+fm3 = 0.9163636363636364
+fm4 = 0.9067357512953368
+fm5 = 0.8114285714285714
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="evaluation-test-data"><a class="header" href="#evaluation-test-data">Evaluation Test data</a></h5>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">evaluateModel(model, mergedTestData)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Confusion matrix:
+5450.0  8.0     6.0    4.0    0.0   0.0   
+140.0   2743.0  8.0    0.0    0.0   0.0   
+189.0   7.0     314.0  6.0    0.0   0.0   
+116.0   1.0     7.0    269.0  0.0   0.0   
+44.0    2.0     1.0    3.0    46.0  0.0   
+9.0     0.0     0.0    0.0    0.0   22.0  
+Summary Statistics
+Accuracy = 0.9413517828632251
+fm0 = 0.9548002803083393
+fm1 = 0.9706298655343242
+fm2 = 0.7370892018779341
+fm3 = 0.7970370370370371
+fm4 = 0.647887323943662
+fm5 = 0.8301886792452831
+</code></pre>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/student-project-09_group-TopicModeling/03_LDA.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/student-project-09_group-TopicModeling/05_Classification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/student-project-09_group-TopicModeling/03_LDA.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/student-project-09_group-TopicModeling/05_Classification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
