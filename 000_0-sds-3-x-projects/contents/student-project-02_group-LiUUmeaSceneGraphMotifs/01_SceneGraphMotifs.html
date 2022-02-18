@@ -238,35 +238,35 @@ def json_to_vertices_edges(graph_json, scene_graph_id, include_object_attributes
   vertices = []
   edges = []
   obj_id_to_name = {}
-  
+
   vertex_ids = graph_json['objects']
-  
+
   for vertex_id in vertex_ids:   
     vertex_obj = graph_json['objects'][vertex_id]
     name = vertex_obj['name']
     vertices_data = [scene_graph_id, vertex_id, name]
-    
+
     if vertex_id not in obj_id_to_name:
       obj_id_to_name[vertex_id] = name
-      
+
     if include_object_attributes:
       attributes = vertex_obj['attributes']  
       vertices_data.append(attributes)
-      
+
     vertices.append(tuple(vertices_data))
-    
+
     for relation in vertex_obj['relations']:
         src = vertex_id
         dst = relation['object']
         name = relation['name']
         edges.append([src, dst, name])
-        
+
   for i in range(len(edges)):
     src_type = obj_id_to_name[edges[i][0]]
     dst_type = obj_id_to_name[edges[i][1]]
     edges[i].append(src_type)
     edges[i].append(dst_type)
-    
+
   return (vertices, edges)
 </code></pre>
 </div>
@@ -274,18 +274,18 @@ def json_to_vertices_edges(graph_json, scene_graph_id, include_object_attributes
 <pre><code class="language-python">def parse_scene_graphs(scene_graphs_json, vertex_schema, edge_schema):  
   vertices = []
   edges = []
-  
+
   # if vertice_schema has a field for attributes:
   include_object_attributes = len(vertex_schema) == 4
-     
+
   for scene_graph_id in scene_graphs_json:
     vs, es = json_to_vertices_edges(scene_graphs_json[scene_graph_id], scene_graph_id, include_object_attributes)
     vertices += vs
     edges += es
-    
+
   vertices = spark.createDataFrame(vertices, vertex_schema)
   edges = spark.createDataFrame(edges, edge_schema)
-  
+
   return GraphFrame(vertices, edges)
 </code></pre>
 </div>
@@ -298,9 +298,9 @@ vertex_schema = StructType([
 ])
 
 vertex_schema_with_attr  = StructType([
-  StructField(&quot;graph_id&quot;, StringType(), False), 
-  StructField(&quot;id&quot;, StringType(), False), 
-  StructField(&quot;object_name&quot;, StringType(), False), 
+  StructField(&quot;graph_id&quot;, StringType(), False),
+  StructField(&quot;id&quot;, StringType(), False),
+  StructField(&quot;object_name&quot;, StringType(), False),
   StructField(&quot;attributes&quot;, ArrayType(StringType()), True)
 ])
 
@@ -397,7 +397,7 @@ Relations: 3795907
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_1.JPG?raw=true" alt="2_1" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_1.JPG?raw=true" alt="2_1" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="finding-most-common-attributes"><a class="header" href="#finding-most-common-attributes">Finding most common attributes</a></h3>
@@ -428,7 +428,7 @@ display(topAttributes.count().sort(&quot;count&quot;, ascending=False))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_2.JPG?raw=true" alt="2_2" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_2.JPG?raw=true" alt="2_2" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">topAttributes = explodedAttributes.groupBy(&quot;attribute&quot;)
@@ -436,7 +436,7 @@ display(topAttributes.count().sort(&quot;count&quot;, ascending=False))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_3.JPG?raw=true" alt="2_3" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_3.JPG?raw=true" alt="2_3" /></p>
 </div>
 <div class="cell markdown">
 <ul>
@@ -458,14 +458,14 @@ display(topObjects.sort(&quot;count&quot;, ascending=False))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_4.JPG?raw=true" alt="2_4" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_4.JPG?raw=true" alt="2_4" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(topObjects.sort(&quot;count&quot;, ascending=True))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_5.JPG?raw=true" alt="2_5" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_5.JPG?raw=true" alt="2_5" /></p>
 </div>
 <div class="cell markdown">
 <ul>
@@ -557,7 +557,7 @@ display(topPairs.count().sort(&quot;count&quot;, ascending=False))
 # from pyspark.sql.functions import udf
 #from pyspark.sql.types import BooleanType
 
-#filtered_df = spark_df.filter(udf(lambda target: target.startswith('good'), 
+#filtered_df = spark_df.filter(udf(lambda target: target.startswith('good'),
 #                                  BooleanType())(spark_df.target))
 
 topPairs = scene_graphs_train.edges.filter(&quot;(relation_name NOT LIKE 'to the%') and (relation_name NOT LIKE '%on') and (relation_name NOT LIKE '%in') and (relation_name NOT LIKE '% of')&quot;).groupBy(&quot;src_type&quot;, &quot;relation_name&quot;, &quot;dst_type&quot;)
@@ -565,7 +565,7 @@ display(topPairs.count().sort(&quot;count&quot;, ascending=False))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_6.JPG?raw=true" alt="2_6" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_6.JPG?raw=true" alt="2_6" /></p>
 </div>
 <div class="cell markdown">
 <ul>
@@ -735,7 +735,7 @@ display(sorted_ranks)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_7.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_7.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val val_graphs_without_attributes = GraphFrame(rank_graph_val.vertices.select(&quot;graph_id&quot;, &quot;id&quot;, &quot;object_name&quot;), rank_graph_val.edges)
@@ -749,7 +749,7 @@ display(val_sorted_ranks)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_8.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/2_8.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val graph_pagerank_sums_objects = ranks.vertices.groupBy(&quot;object_name&quot;).sum(&quot;pagerank&quot;)
@@ -910,7 +910,7 @@ display(merged_edges)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_1.JPG?raw=true" alt="" /># display(scene<em>graphs</em>merged.vertices)</p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_1.JPG?raw=true" alt="" /># display(scene<em>graphs</em>merged.vertices)</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(scene_graphs_merged.edges)

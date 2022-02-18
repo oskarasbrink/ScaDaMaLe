@@ -206,7 +206,7 @@ display(df_ncworld)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// define dataframe summing up the new deaths smoothed for each date
@@ -215,7 +215,7 @@ display(df_ndworld)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_2.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_2.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Add a time index for the date
@@ -345,7 +345,7 @@ class GPDataSet():
   def __init__(self, df_train, df_test, datacol, filterloc = None, add_input = None):
     &quot;&quot;&quot;
       class for processing input data to GP. As similar code is reused, this class enables some code reuse.
-      
+
       param: 'df_train', training data dataframe
       param: 'df_test', test data dataframe
       param: 'datacol', data column in dataframe to perform predictions on, e.g. 'new_cases_smoothed'
@@ -359,7 +359,7 @@ class GPDataSet():
     self.add_input = add_input
     self.num_xdim = None    
 
-        
+
   def convert_to_numpy(self):
     &quot;&quot;&quot;
       convert dataframe to numpy arrays. This process may takes a while.
@@ -371,16 +371,16 @@ class GPDataSet():
       y_train_np = np.array(self.df_train.orderBy(&quot;time_idx&quot;).select(self.datacol).rdd.map(lambda x: x[0]).collect())    
       y_test_np = np.array(self.df_test.orderBy(&quot;time_idx&quot;).select(self.datacol).rdd.map(lambda x: x[0]).collect())    
       num_xdim = 1      
-      
+
     # if a filter for location is specified
     else:
       if self.add_input is None:
         x_train_np = np.array(self.df_train.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(&quot;time_idx&quot;).rdd.map(lambda x: x[0]).collect())
         x_test_np = np.array(self.df_test.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(&quot;time_idx&quot;).rdd.map(lambda x: x[0]).collect())
         num_xdim = 1        
-     
+
       # if prediction should add additional input from e.g. a neighbouring country
-      else: 
+      else:
         x_train_time = np.array(self.df_train.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(&quot;time_idx&quot;).rdd.map(lambda x: x[0]).collect())
         x_test_time = np.array(self.df_test.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(&quot;time_idx&quot;).rdd.map(lambda x: x[0]).collect())       
         x_train_add = np.array(self.df_train.filter(col(&quot;location&quot;) == self.add_input).orderBy(&quot;time_idx&quot;).select(self.datacol).rdd.map(lambda x: x[0]).collect())
@@ -390,20 +390,20 @@ class GPDataSet():
         x_train_np = np.moveaxis(x_train, 1, 0)
         x_test_np = np.moveaxis(x_test, 1, 0)
         num_xdim = 2
-                 
-      # output data 
+
+      # output data
       y_train_np = np.array(self.df_train.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(self.datacol).rdd.map(lambda x: x[0]).collect())
       y_test_np = np.array(self.df_test.filter(col(&quot;location&quot;) == self.filterloc).orderBy(&quot;time_idx&quot;).select(self.datacol).rdd.map(lambda x: x[0]).collect())
-      
+
     self.x_train_np = x_train_np
     self.x_test_np = x_test_np
     self.y_train_np = y_train_np
     self.y_test_np = y_test_np
     self.num_xdim = num_xdim
-      
+
   def plot_numpy_data(self):
-    &quot;&quot;&quot; 
-      plot numpy arrays 
+    &quot;&quot;&quot;
+      plot numpy arrays
     &quot;&quot;&quot;   
     if self.num_xdim == 2:
       fig, (ax1, ax2) = plt.subplots(1,2, figsize=(12,6))
@@ -427,7 +427,7 @@ class GPDataSet():
       ax.set_ylabel('output')
       ax.set_title('training data')
       ax.grid()      
-        
+
   def get_train_length(self):
       if self.num_xdim == 2:
         return len(self.x_train_np[:,0])
@@ -436,7 +436,7 @@ class GPDataSet():
 
   def process_numpy_data(self, nth_subsample = 4, window_red = 0.8):
     &quot;&quot;&quot;
-      reduction of data by subsampling data and reducing length of data window. 
+      reduction of data by subsampling data and reducing length of data window.
     &quot;&quot;&quot;
     assert window_red &gt; 0 and window_red &lt;= 1, &quot;please adjust 'window_red' parameter to be between 0 and 1&quot;
     start_idx = int((self.get_train_length())*window_red)
@@ -445,7 +445,7 @@ class GPDataSet():
     self.y_train = th.tensor(self.y_train_np[start_idx::nth_subsample], dtype=th.float)
     self.y_test = th.tensor(self.y_test_np, dtype=th.float)    
     self.normalize()
-    
+
   def set_time_to_zero(self):
     &quot;&quot;&quot;
       sets the time vector to start at time zero
@@ -458,13 +458,13 @@ class GPDataSet():
       self.x_train_min = self.x_train.min()
       self.x_train = self.x_train - self.x_train_min
       self.x_test = self.x_test - self.x_train_min
-      
+
   def normalize(self):
     &quot;&quot;&quot;
       normalize the data to improve predictions
     &quot;&quot;&quot;
     self.set_time_to_zero()
-    
+
     self.x_train_mean = self.x_train.mean()
     self.x_train_std = self.x_train.std()
     self.x_train = (self.x_train - self.x_train_mean) / self.x_train_std
@@ -473,10 +473,10 @@ class GPDataSet():
     self.y_train_mean = self.y_train.mean()
     self.y_train_std = self.y_train.std()
     self.y_train = (self.y_train - self.y_train_mean) / self.y_train_std
-    self.y_test = (self.y_test - self.y_train_mean) / self.y_train_std 
+    self.y_test = (self.y_test - self.y_train_mean) / self.y_train_std
     self.data_normalized = True
 
-      
+
   def plot_reduced_data(self):
     &quot;&quot;&quot;
       plots the reduced training data
@@ -504,7 +504,7 @@ class GPDataSet():
         ax.set_ylabel('output')
         ax.set_title('training data')
         ax.grid()     
-        
+
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -525,14 +525,14 @@ ds_ndworld.convert_to_numpy()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_3.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_3.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndworld.plot_numpy_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_4.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_4.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Process data by subsampling, reducing data window and normalize data. The gaussian process model is a so called non parametric model and will be mainly based on the data points. As such, to reduce the computation and the complexity of the model, we subsample and reduce the number of datapoints.</p>
@@ -550,14 +550,14 @@ ds_ndworld.process_numpy_data(nth_subsample = 4, window_red = 0.8)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_5.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_5.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndworld.plot_reduced_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_6.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_6.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Define gaussian process classes using Gpytorch and different kernels.</p>
@@ -569,22 +569,22 @@ class GPLinearRBF(gpth.models.ExactGP):
     super(GPLinearRBF, self).__init__(train_x, train_y, likelihood)
     self.mean_module = gpth.means.ConstantMean()
     self.covar_module = gpth.kernels.ScaleKernel(gpth.kernels.LinearKernel() + gpth.kernels.RBFKernel())
-    
+
   def forward(self, x):
     x_mean = self.mean_module(x)
     x_covar = self.covar_module(x)
     return gpth.distributions.MultivariateNormal(x_mean, x_covar)    
-  
+
 class GPLinearMatern(gpth.models.ExactGP):
   def __init__(self, train_x, train_y, likelihood):
     super(GPLinearMatern, self).__init__(train_x, train_y, likelihood)
     self.mean_module = gpth.means.ConstantMean()
     self.covar_module = gpth.kernels.ScaleKernel(gpth.kernels.LinearKernel() + gpth.kernels.MaternKernel())
-    
+
   def forward(self, x):
     x_mean = self.mean_module(x)
     x_covar = self.covar_module(x)
-    return gpth.distributions.MultivariateNormal(x_mean, x_covar) 
+    return gpth.distributions.MultivariateNormal(x_mean, x_covar)
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -598,9 +598,9 @@ from sklearn.metrics import mean_absolute_error
 
 class GPTrainer():
   def __init__(self, gp_model, x_train, x_train_min, x_train_mean, x_train_std, x_test, y_train, y_test, y_train_mean, y_train_std, device='cpu', train_iter = 300, lr=0.1, verbose = True):
-    &quot;&quot;&quot; 
+    &quot;&quot;&quot;
       class to manage training and prediction of data
-     
+
       param: 'gp_model', name of gaussian process model including kernel to use
       param: 'x_train', pytorch tensor (sequence, dim), normalized input training data, starting at time zero
       param: 'x_train_min', pytorch tensor, start time of input training data
@@ -609,37 +609,37 @@ class GPTrainer():
       param: 'x_test', pytorch tensor, normalized input test data, starting at time zero
       param: 'y_train', pytorch tensor, normalized output training data      
       param: 'y_train_mean', pytorch tensor, mean used when normalizing output training data
-      param: 'y_train_std', pytorch tensor, std deviation used when normalizing output training data 
+      param: 'y_train_std', pytorch tensor, std deviation used when normalizing output training data
       param: 'y_test', pytorch tensor, normalized output test data     
       param: 'device', cpu or cuda. currently only tested for cpu.
       param: 'train_iter', number of training iterations to fit kernel parameters to data
       param: 'lr', learning rate
       param: 'verbose', print information such as loss during training
     &quot;&quot;&quot;
-    
+
     # data
     self.x_train = x_train.to(device)
     self.x_train_min = x_train_min
     self.x_train_mean = x_train_mean
     self.x_train_std = x_train_std    
     self.x_test = x_test.to(device)
-    self.x_cat = th.cat((x_train,x_test),dim=0).to(device) 
+    self.x_cat = th.cat((x_train,x_test),dim=0).to(device)
     self.y_train = y_train.to(device)
     self.y_train_mean = y_train_mean
     self.y_train_std = y_train_std
     self.y_test = y_test.to(device)
     self.preds = None
-    
+
     # define GP likelihood
     self.likelihood = gpth.likelihoods.GaussianLikelihood()    
-    
+
     # GP model selection and init
     assert gp_model == 'GPLinearRBF' or 'GPLinearMatern', &quot;Error: GP model selected is not defined&quot;
     if gp_model == 'GPLinearRBF':
       self.model = GPLinearRBF(self.x_train, self.y_train, self.likelihood).to(device)
     if gp_model == 'GPLinearMatern':
       self.model = GPLinearMatern(self.x_train, self.y_train, self.likelihood).to(device)
-      
+
     # training param
     self.train_iter = train_iter
     self.lr = lr
@@ -647,18 +647,18 @@ class GPTrainer():
     self.optimizer = th.optim.Adam(self.model.parameters(), lr=self.lr)
     self.loss_fn = gpth.mlls.ExactMarginalLogLikelihood(self.likelihood, self.model)   
     self.verbose = verbose
-    
+
     # plots
     self.fig = None
     self.ax = None
-      
+
   def train(self):
     &quot;&quot;&quot;
       training of gaussian process model to fit kernel parameters to data
     &quot;&quot;&quot;
     self.model.train()
     self.likelihood.train()
-    
+
     for iter_idx in range(1,self.train_iter+1):
       self.optimizer.zero_grad()
       out = self.model(self.x_train)
@@ -667,7 +667,7 @@ class GPTrainer():
       self.optimizer.step()
       if iter_idx % 10 == 0 and self.verbose is True:
         print(f&quot;Iter: {iter_idx}, train_loss: {loss.item()}&quot;)
-        
+
   def prediction(self):
     &quot;&quot;&quot;
       predict data
@@ -676,25 +676,25 @@ class GPTrainer():
     self.likelihood.eval()
     with th.no_grad(): #, gpth.settings.fast_pred_var():  
       self.preds = self.likelihood(self.model(self.x_cat))
-      
+
   def denormalize_y(self, data):
     &quot;&quot;&quot;
       denormalize the output data
     &quot;&quot;&quot;
     return data*self.y_train_std + self.y_train_mean
-  
+
   def denormalize_x(self, data):
     &quot;&quot;&quot;
       denormalize the input data
     &quot;&quot;&quot;
     return data*self.x_train_std + self.x_train_mean  
-      
+
   def plot(self):
     &quot;&quot;&quot;
       plot the data
     &quot;&quot;&quot;
     with th.no_grad():
-      
+
       # extract time index dimension
       xdim = None
       try:
@@ -709,7 +709,7 @@ class GPTrainer():
         x_train = self.denormalize_x(self.x_train)[:,0]
         x_test = self.denormalize_x(self.x_test)[:,0]
         x_cat = self.denormalize_x(self.x_cat)[:,0]
-        
+
       # plot
       self.fig, self.ax = plt.subplots(1,1, figsize=(12,6))
       lower = self.denormalize_y(self.preds.mean - self.preds.variance.sqrt() * 1.96)
@@ -723,7 +723,7 @@ class GPTrainer():
       self.ax.set_ylabel('prediction')
       self.ax.set_title('prediction')
       self.ax.grid()     
-      
+
   def print_data_dim(self):
     &quot;&quot;&quot;
       print shapes for debug purpose
@@ -745,9 +745,9 @@ class GPTrainer():
     &quot;&quot;&quot;
     with th.no_grad():
       # data to evaluate
-      test_data = self.denormalize_y(self.y_test) 
+      test_data = self.denormalize_y(self.y_test)
       predictions = self.denormalize_y(self.preds.mean[-len(self.y_test):])
-      
+
       # evaluate
       error_mse = mean_squared_error(test_data, predictions)
       error_rmse = math.sqrt(error_mse)
@@ -755,7 +755,7 @@ class GPTrainer():
       avg_gt = test_data.sum() / len(test_data)
       mse_percentage = error_rmse / avg_gt * 100
       abs_percentage = error_abs / avg_gt * 100
-      
+
       # print
       print('Average of groundtruth: %.3f' % avg_gt)
       print('Test MSE: %.3f' % error_mse)
@@ -795,7 +795,7 @@ pred_ncworld.ax.set_title('new cases smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_7.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_7.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">pred_ndworld.prediction()
@@ -805,7 +805,7 @@ pred_ndworld.ax.set_title('new deaths smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_8.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_8.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="32-world-onestep-prediction"><a class="header" href="#32-world-onestep-prediction">3.2 World onestep prediction</a></h3>
@@ -817,18 +817,18 @@ pred_ndworld.ax.set_title('new deaths smoothed')
 <pre><code class="language-python">def onestep_prediction(dataset):
   onestep = th.cat((dataset.y_train, dataset.y_test), dim=0) # output vector
   for idx in range(len(dataset.y_test)):
-    
+
     # define training and test data. Training data is iteratively, step by step, expanded by the use of test data
     x_train = th.cat((dataset.x_train, dataset.x_test[:idx]), dim=0)
     x_test = dataset.x_test[idx:]
     y_train = th.cat((dataset.y_train, dataset.y_test[:idx]), dim=0)
     y_test = dataset.y_test[idx:]
-    
+
     # create a gaussian process model, train and make predictions
     pred_model = GPTrainer(gp_model='GPLinearRBF', x_train=x_train, x_train_min=dataset.x_train_min, x_train_mean=dataset.x_train_mean, x_train_std=dataset.x_train_std, x_test=x_test, y_train=y_train, y_test=y_test, y_train_mean=dataset.y_train_mean, y_train_std=dataset.y_train_std, verbose=False)
     pred_model.train()
     pred_model.prediction()
-    
+
     # store one step predictions
     onestep[len(dataset.y_train) + idx] = pred_model.preds.mean[len(dataset.x_train)+idx]
 
@@ -840,7 +840,7 @@ pred_ndworld.ax.set_title('new deaths smoothed')
   ax.set_ylabel('prediction mean')
   ax.set_title('one step ahead prediction')
   ax.grid()   
-  
+
   # return onestep prediction
   return onestep
 </code></pre>
@@ -853,14 +853,14 @@ pred_ndworld.ax.set_title('new deaths smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_99.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_99.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">onestep_pred_ndworld = onestep_prediction(ds_ndworld)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_9.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_9.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="33-sweden-multistep-prediction"><a class="header" href="#33-sweden-multistep-prediction">3.3 Sweden multistep prediction</a></h3>
@@ -881,14 +881,14 @@ ds_ndswe.convert_to_numpy()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_10.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_10.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndswe.plot_numpy_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_11.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_11.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Process data by subsampling, reducing data window and normalize data. The gaussian process model is a so called non parametric model and will be mainly based on the data points. As such, to reduce the computation and the complexity of the model, we subsample and reduce the number of datapoints.</p>
@@ -906,14 +906,14 @@ ds_ndswe.process_numpy_data(nth_subsample = 4, window_red = 0.8)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_12.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_12.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndswe.plot_reduced_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_13.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_13.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Init the training class for the Gaussian Process models</p>
@@ -945,7 +945,7 @@ pred_ncswe.ax.set_title('new cases smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_14.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_14.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">pred_ndswe.prediction()
@@ -955,7 +955,7 @@ pred_ndswe.ax.set_title('new deaths smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_15.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_15.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="34-sweden-onestep-prediction"><a class="header" href="#34-sweden-onestep-prediction">3.4 Sweden onestep prediction</a></h3>
@@ -965,14 +965,14 @@ pred_ndswe.ax.set_title('new deaths smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_199.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_199.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">onestep_pred_ndswe = onestep_prediction(ds_ndswe)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_16.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_16.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="35-sweden-multistep-prediction-with-additional-data-input-from-neighbouring-country"><a class="header" href="#35-sweden-multistep-prediction-with-additional-data-input-from-neighbouring-country">3.5 Sweden multistep prediction with additional data input from neighbouring country</a></h3>
@@ -996,14 +996,14 @@ ds_ndswex.convert_to_numpy()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_17.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_17.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndswex.plot_numpy_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_18.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_18.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Process data by subsampling, reducing data window and normalize data. The gaussian process model is a so called non parametric model and will be mainly based on the data points. As such, to reduce the computation and the complexity of the model, we subsample and reduce the number of datapoints.</p>
@@ -1021,14 +1021,14 @@ ds_ndswex.process_numpy_data(nth_subsample = 4, window_red = 0.8)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_19.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_19.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">ds_ndswex.plot_reduced_data()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_20.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_20.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Init the training class for the Gaussian Process models</p>
@@ -1057,7 +1057,7 @@ pred_ncswex.ax.set_title('new cases smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_21.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_21.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">pred_ndswex.prediction()
@@ -1067,7 +1067,7 @@ pred_ndswex.ax.set_title('new deaths smoothed')
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_22.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/12_08_22.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <ol start="4">
@@ -1133,7 +1133,7 @@ ABS percentage error: 30.846 %
     print('Test RMSE: %.3f' % error_rmse)
     print('RMSE percentage error: %.3f' % mse_percentage, '%')
     print('Test ABS: %.3f' % error_abs)
-    print('ABS percentage error: %.3f' % abs_percentage, '%') 
+    print('ABS percentage error: %.3f' % abs_percentage, '%')
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -1141,7 +1141,7 @@ ABS percentage error: 30.846 %
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># data to evaluate
-test = pred_ncworld.denormalize_y(ds_ncworld.y_test) 
+test = pred_ncworld.denormalize_y(ds_ncworld.y_test)
 preds = pred_ncworld.denormalize_y(onestep_pred_ncworld[-len(ds_ncworld.y_test):])
 evaluate(test, preds)
 </code></pre>
@@ -1160,7 +1160,7 @@ ABS percentage error: 0.792 %
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># data to evaluate
-test = pred_ndworld.denormalize_y(ds_ndworld.y_test) 
+test = pred_ndworld.denormalize_y(ds_ndworld.y_test)
 preds = pred_ndworld.denormalize_y(onestep_pred_ndworld[-len(ds_ndworld.y_test):])
 evaluate(test, preds)
 </code></pre>
@@ -1217,7 +1217,7 @@ ABS percentage error: 85.540 %
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># data to evaluate
-test = pred_ncswe.denormalize_y(ds_ncswe.y_test) 
+test = pred_ncswe.denormalize_y(ds_ncswe.y_test)
 preds = pred_ncswe.denormalize_y(onestep_pred_ncswe[-len(ds_ncswe.y_test):])
 evaluate(test, preds)
 </code></pre>
@@ -1236,7 +1236,7 @@ ABS percentage error: 5.564 %
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># data to evaluate
-test = pred_ndswe.denormalize_y(ds_ndswe.y_test) 
+test = pred_ndswe.denormalize_y(ds_ndswe.y_test)
 preds = pred_ndswe.denormalize_y(onestep_pred_ndswe[-len(ds_ndswe.y_test):])
 evaluate(test, preds)
 </code></pre>

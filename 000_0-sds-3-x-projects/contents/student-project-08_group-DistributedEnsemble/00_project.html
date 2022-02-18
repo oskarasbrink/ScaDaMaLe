@@ -169,7 +169,7 @@
 <p>Considering that the ensemble members are independent models, they never need to communicate during the training phase. Hence, training ensemble members in a way that requires the otherwise independent training processes to integrate or synchronize, would cause unnecessary costs, for example since the training processes all need to communicate through the driver node. The same holds for prediction; no communication is needed between ensemble members except at the very end when the predictions are aggregated.</p>
 <p>To avoid unnecessary communication, we distribute the <em>ensemble members</em> and train them on separate worker nodes such that we - are able to train several ensemble members in parallell (limited by the number of nodes in our cluster) and independently - avoid communication between worker nodes</p>
 <p>To achieve this, we implement our own training processes below. In addition, we implement our own MLP class with the help of PyTorch. MLP objects and their training data are then distributed on worker nodes using Spark. This is not only to avoid distributing the training data over several nodes during training but also to package the ensemble members in a way that makes it possible for us to send them between the driver and the worker nodes prior to and at the end of training.</p>
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_4.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_4.png?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h2 id="imports"><a class="header" href="#imports">Imports</a></h2>
@@ -205,49 +205,49 @@ from matplotlib import pyplot as plt
 <pre><code class="language-python">def create_gaussian_RDD(means, variances, num_observations, class_proportions, train_test_split=False):
   &quot;&quot;&quot;Create toy Gaussian classification data
   Let C := number of clusters/classes and P := number of data features
-  
-  Args: 
+
+  Args:
     means (np.array[float]): mean vector of shape (C, P)
     variances (np.array[float]): vector of variances, shape (C, P)
     num_observations (scalar[int]): the total number of observations in the final data set
     class_proportions (np.array[float]): vector of class proportions, length C
     train_test_split: whether to split the data into train/test sets or not
-    
+
   Returns:
     Gaussian data, RDD of tuples (list(features), int(label))
   &quot;&quot;&quot;
-  
+
   assert means.shape[0] == variances.shape[0]
   assert means.shape[1] == variances.shape[1]
   assert class_proportions.sum() == 1
-    
+
   num_classes = means.shape[0]
   num_features = means.shape[1]
-  
-  data_rdd = sc.emptyRDD() 
+
+  data_rdd = sc.emptyRDD()
   for k in range(num_classes):
-    
+
     # Generate standard normal data
     class_size = int(num_observations * class_proportions[k])
     class_rdd = RandomRDDs.normalVectorRDD(sc, numRows=class_size, numCols=num_features, numPartitions=1) #, seed=123)
 
     # Map to true distribution
     class_rdd_transformed = class_rdd.map(lambda v: means[k, :] + (variances[k, :]**0.5) * v)
-    
+
     # Add labels
-    class_rdd_w_label = class_rdd_transformed.map(lambda v: (v, k)) 
-    
+    class_rdd_w_label = class_rdd_transformed.map(lambda v: (v, k))
+
     data_rdd = data_rdd.union(class_rdd_w_label)
-    
+
   # We will shuffle and repartition the data
   num_partitions = 10
   shuffled_rdd =  data_rdd.sortBy(lambda v: randrange(num_observations)).repartition(num_partitions)
   final_rdd = shuffled_rdd.map(tuple).map(lambda v: (list(v[0]), int(v[1])))
-  
+
   if train_test_split:
     train_rdd, test_rdd = final_rdd.randomSplit(weights=[0.8, 0.2], seed=12)
     final_rdd = (train_rdd, test_rdd)
-    
+
   return final_rdd                                   
 </code></pre>
 </div>
@@ -272,13 +272,13 @@ from matplotlib import pyplot as plt
   Args:
      file_location: file location from which to load the data
      train_test_split: whether to split the data into train/test sets or not
-  
+
   Returns:
      Firewall data, RDD of tuples (list(features), int(label))
   &quot;&quot;&quot;
-  
+
   # File location and type
-  # file_location = &quot;/FileStore/shared_uploads/amanda.olmin@liu.se/fire_wall_data.csv&quot; 
+  # file_location = &quot;/FileStore/shared_uploads/amanda.olmin@liu.se/fire_wall_data.csv&quot;
   file_type = &quot;csv&quot;
 
   # CSV options
@@ -292,7 +292,7 @@ from matplotlib import pyplot as plt
       .option(&quot;header&quot;, first_row_is_header) \
       .option(&quot;sep&quot;, delimiter) \
       .load(file_location)
-  
+
   # Preprocess data
   col_num = [&quot;Source Port&quot;, &quot;Destination Port&quot;, &quot;NAT Source Port&quot;, &quot;NAT Destination Port&quot;, &quot;Bytes&quot;, &quot;Bytes Sent&quot;, &quot;Bytes Received&quot;, &quot;Packets&quot;, &quot;Elapsed Time (sec)&quot;, &quot;pkts_sent&quot;, &quot;pkts_received&quot;]
 
@@ -300,16 +300,16 @@ from matplotlib import pyplot as plt
   indexer = StringIndexer(inputCol = &quot;Action&quot;, outputCol = &quot;label&quot;)
 
   # Scale numerical features
-  va = VectorAssembler(inputCols = col_num, outputCol = &quot;numerical_features&quot;) 
+  va = VectorAssembler(inputCols = col_num, outputCol = &quot;numerical_features&quot;)
   scaler = StandardScaler(inputCol = &quot;numerical_features&quot;, outputCol = &quot;features&quot;)
-  
-  # Apply pipeline 
+
+  # Apply pipeline
   pipeline = Pipeline(stages=[indexer, va, scaler])
-  final_df = pipeline.fit(df).transform(df).select(&quot;features&quot;, &quot;label&quot;) 
-  
+  final_df = pipeline.fit(df).transform(df).select(&quot;features&quot;, &quot;label&quot;)
+
   # Convert to RDD
   final_rdd = final_df.rdd.map(tuple).map(lambda v: (list(v[0]), int(v[1])))
-  
+
   if train_test_split:
     train_rdd, test_rdd = final_rdd.randomSplit(weights=[0.8, 0.2], seed=12)
     final_rdd = (train_rdd, test_rdd)
@@ -323,15 +323,15 @@ from matplotlib import pyplot as plt
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def get_partitioned_rdd(input_rdd, partition_size=1000):
-  &quot;&quot;&quot;Partition RDD 
-  
+  &quot;&quot;&quot;Partition RDD
+
   Args:
     input_rdd: RDD to be partitioned
-  
+
   Returns:
     Partitioned RDD
   &quot;&quot;&quot;
-  
+
   return input_rdd.mapPartitions(lambda partition: partition_all(partition_size, partition))
 </code></pre>
 </div>
@@ -347,30 +347,30 @@ from matplotlib import pyplot as plt
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">#Feedforward network for classification
 class MLP(nn.Module):
-  
+
   def __init__(self,shape):
     #shape: number of neurons in each layer (including the input and output layers)
     super(MLP,self).__init__()
-    
+
     self.units=nn.ModuleList()
     for i in range(len(shape)-1):
       self.units.append(nn.Linear(shape[i],shape[i+1]))
-    
+
     self._shape=shape
     self._nlayers=len(shape)
-  
+
   def forward(self,x):
-    
+
     y=x
-    
+
     for i,layer in enumerate(self.units):
       if i&lt;self._nlayers-2:
         y=nn.functional.tanh(layer(y))
       else:
         y=nn.functional.softmax(layer(y),dim=1)
-    
+
     return y
-  
+
   #constructing an instance of this class based on a state dictionary (network parameters)
   @staticmethod
   def from_state_dict(state_dict):
@@ -414,36 +414,36 @@ class DataSet(torch.utils.data.Dataset):
 
 #The main training function (is run on worker nodes)
 def Train(net_params,x,y):
-  #net_params: initial parameters of the feedforward network (state dictionary) 
+  #net_params: initial parameters of the feedforward network (state dictionary)
   #x,y: training data (pytorch tensors)
 
   n_epochs=100
   batchsize=10
-  
+
   net=MLP.from_state_dict(net_params)
-  
+
   train_data = DataSet(x, y)
   dataloader = torch.utils.data.DataLoader(train_data, batch_size=batchsize)
-  
+
   opt=optim.Adam(net.parameters())
   loss=nn.CrossEntropyLoss()
 
   for i in range(n_epochs):
     for batch in dataloader:
-      
+
       opt.zero_grad()
-      
+
       xb,yb=batch
-      
+
       yhat=net(xb)
       err=loss(yhat,yb)
       err.backward()
-  
+
       opt.step()
-  
+
   err=loss(net(x),y)
   lossval=float(err.detach().numpy())
-  
+
   #returns parameters of the trained network and loss
   return (net.state_dict(),lossval)
 
@@ -458,12 +458,12 @@ def Predict(net_params, x):
 #Reshaping and converting the tuples stored in a dataset RDD into input and target tensors
 def Totensor(d):
   #d: the dataset (list of tuples)
-  
+
   x=[v[0] for v in d]
   y=[v[1] for v in d]
   x=torch.tensor(x,dtype=torch.float)
   y=torch.tensor(y,dtype=torch.long)
-  
+
   return (x,y)
 
 def make_prediction(state_dict, x):
@@ -483,7 +483,7 @@ def make_prediction(state_dict, x):
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def train_ensemble(n_models, inputdims, nclasses, max_layers, min_neurons, max_neurons, data_iterator):
   &quot;&quot;&quot;Constructing and training a distributed ensemble of feedforward networks
-  
+
     Args:
       n_models: number of the ensemble memebrs
       inputdims: number of features dimesnions
@@ -494,7 +494,7 @@ def make_prediction(state_dict, x):
 
     Returns: a list of state dictionaries of the trained networks
   &quot;&quot;&quot;
-  
+
   # initialization
   model_data=[] # pairs of model parameters and their training data
   for i in range(n_models):
@@ -504,24 +504,24 @@ def make_prediction(state_dict, x):
     for k in range(nhidden):
       shape.append(random.randint(min_neurons, max_neurons))
     shape.append(nclasses)
-    
+
     net=MLP(shape)
-    
+
     #fetch the next part of data
     d=next(data_iterator)
     x=d[0]
     y=d[1]
-  
+
     model_data.append((net.state_dict(),x,y))
 
   # distribute the array
   model_data_par= sc.parallelize(model_data)
   # execute the train function on the worker nodes
   models_trained = model_data_par.map(lambda t: Train(*t))
-  
+
   #transfer the trained models and loss values to the driver
   models_trained=models_trained.collect()
-  
+
   #print the training loss values
   print(&quot;training losses:&quot;)
   print([v[1] for v in models_trained])
@@ -537,7 +537,7 @@ def make_prediction(state_dict, x):
 <pre><code class="language-python">def save_models_distr(models, dir_, model_names=None):
   dir_ = Path(dir_)
   dir_.mkdir(exist_ok=True, parents=True)
-  
+
   if model_names is None:
     model_names = [f&quot;m{idx}.pt&quot; for idx in range(0, models.count())]
   assert len(model_names) == models.count()
@@ -548,14 +548,14 @@ def make_prediction(state_dict, x):
 def save_models(models, dir_, model_names=None):
   dir_ = Path(dir_)
   dir_.mkdir(exist_ok=True, parents=True)
-  
+
   if model_names is None:
     model_names = [f&quot;m{idx}.pt&quot; for idx in range(0, len(models))]
   assert len(model_names) == len(models)
   model_paths = [dir_ / model_name for model_name in model_names]
   for state_dict, path in zip(models, model_paths):
     torch.save(state_dict, path)
-  
+
 def load_models(model_names, dir_):
   dir_ = Path(dir_)
   model_paths = [dir_ / model_name for model_name in model_names]
@@ -590,11 +590,11 @@ def load_models(model_names, dir_):
   &quot;&quot;&quot;Distributed ensemble predictions
   Takes a set of models and test data and makes distributed predictions
   Let N := number of data points and D_x := the dimension of a single datapoint x
-  
+
   Args:
     models (list[state_dict]): set of models represented as a list (state_dict, shape)
     test_x (torch.Tensor): Tensor of size (N, D_x)
-  
+
   Returns:
     Distributed iterator over the predictions. E.g. an iterator over probability vectors in the case of a classifier ens.
   &quot;&quot;&quot;
@@ -605,12 +605,12 @@ def ens_preds_reduced(models, test_x, red_fn):
   &quot;&quot;&quot;Reduced/aggregated ensemble predictions
   Takes a set of models and test data and makes distributed predictions and reduces them with a provided `red_fn`
   Let N := number of data points and D_x := the dimension of a single datapoint x
-  
+
   Args:
     models (list[state_dict]): set of models represented as a list (state_dict, shape)
     test_x (torch.Tensor): Tensor of size (N, D_x)
     red_fn function: f: R^D_x x R^D_x --&gt; R^D_x
-  
+
   Returns:
     Single reduced/aggregated prediction of the whole ensemble
   &quot;&quot;&quot;
@@ -621,7 +621,7 @@ def ens_metrics(models, test_x, test_y, metrics):
   Takes a set of models and test data, predicts probability vectors and calculates the provided metrics
   given true labels `test_y`
   Let N := number of data points and D_x := the dimension of a single datapoint x
-  
+
   Args:
     models (list[state_dict]): set of models represented as a list (state_dict, shape)
     test_x (torch.Tensor): Tensor of size (N, D_x)
@@ -634,7 +634,7 @@ def ens_metrics(models, test_x, test_y, metrics):
 def _pred_models_iter(models, test_x):
   &quot;&quot;&quot;Helper function to generate a distributed iterator over models and test data
   NB: the same `test_x` is given to all elements in the iterator
-  
+
   Args:
     models (list[state_dict]): set of models represented as a list (state_dict, shape)
     test_x (torch.Tensor): Tensor of size (N, D_x)
@@ -650,11 +650,11 @@ def _pred_models_iter(models, test_x):
 def avg_accuracy(prob_vecs, labels):
   &quot;&quot;&quot;Example metrics function: average accuracy
   Let N := number of data points and C := the number of classes
-  
+
   Args:
     prob_vecs (torch.Tensor): Tensor of size (N, C)
     labels (torch.Tensor): Tensor of size (N), hard labels, with classes corresponding to indices 0, ..., C-1
-  
+
   Returns:
     torch.Tensor: Tensor of size (N), average accuracy over all datapoints.
   &quot;&quot;&quot;
@@ -744,7 +744,7 @@ plt.show()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h1 id="application-example-out-of-distribution-detection"><a class="header" href="#application-example-out-of-distribution-detection">Application example: Out of distribution detection</a></h1>
@@ -763,7 +763,7 @@ models_trained=train_ensemble(n_models,
                               max_layers=4,
                               min_neurons=5,
                               max_neurons=15,
-                              data_iterator=data_iterator) 
+                              data_iterator=data_iterator)
 saved_models_dir = Path(&quot;saved_models/firewall&quot;)
 save_models(models_trained, saved_models_dir)
 </code></pre>
@@ -781,7 +781,7 @@ save_models(models_trained, saved_models_dir)
   ood_x, _ = Totensor(create_gaussian_RDD(random_mean, random_cov, num_test_samples, np.array([1.0]), train_test_split=False).collect())
   return ood_x
 
-  
+
 data = data_test.collect()
 batch_size = -1
 batch = data[0:batch_size]
@@ -820,14 +820,14 @@ def _plot_hist(ax, counts, n_bins, label, color, upper_x_bound):
     ax.set_xbound(lower = 0.0, upper = upper_x_bound)
     ax.set_ylabel(&quot;rel freq&quot;)
     ax.legend()
-  
+
 n_bins = 100
 entropy_bound = 0.15
 entropy_hist(entropy_id, entropy_ood, n_bins, entropy_bound)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_2.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_2.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p><strong>Evaluation of the OOD detection in terms of ROC curve and area under this curve (AUROC)</strong></p>
@@ -867,7 +867,7 @@ ax.set_title(&quot;ROC&quot;)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_3.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/8_3.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">print(f&quot;AUROC: {np.trapz(tpr, fpr)}&quot;)

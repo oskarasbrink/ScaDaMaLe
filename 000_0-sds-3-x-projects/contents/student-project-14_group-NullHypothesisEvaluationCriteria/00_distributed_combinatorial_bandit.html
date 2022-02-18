@@ -325,8 +325,8 @@ import org.apache.spark.graphx._
  * vertex attribute is a map containing the shortest-path distance to each reachable landmark.
  * Currently supports only Graph of [VD, Double], where VD is an arbitrary vertex type.
  *
- * The object also include a function which transforms the resulting graph into a path_graph between a 
- * specific starting node and goal node. Each edge in the path_grpah is either 1 or 0 depending if it is 
+ * The object also include a function which transforms the resulting graph into a path_graph between a
+ * specific starting node and goal node. Each edge in the path_grpah is either 1 or 0 depending if it is
  * the shortest path or not.
  *
  */
@@ -334,42 +334,42 @@ object ShortestPath extends Serializable {
 
   // When finding the shortest path each node stores a map from the itself to each goal node.
   // The map returns an array includeing the total distance to the goal node as well as the
-  // next node pn the shortest path to the goal node. The last value in the array is only 
-  // populated with the nodes own id and is only used for computational convenience. 
+  // next node pn the shortest path to the goal node. The last value in the array is only
+  // populated with the nodes own id and is only used for computational convenience.
   type SPMap = Map[VertexId, Tuple3[Double, VertexId, VertexId]]
-  
+
   // PN holds the information of the path nodes which are used for creating a path graph
   // PN = ('Distance left to goal node', 'Next path node id', 'Goal node', 'Is on path')
-  type PN = Tuple4[Double, VertexId, VertexId, Boolean] 
-  
+  type PN = Tuple4[Double, VertexId, VertexId, Boolean]
+
   private val INITIAL_DIST = 0.0
   private val DEFAULT_ID = -1L
   private val INFINITY = Int.MaxValue.toDouble
 
   private def makeMap(x: (VertexId, Tuple3[Double, VertexId, VertexId])*) = Map(x: _*)
-  
-  //private def incrementMap(spmap: SPMap, delta: Double, id: VertexId): SPMap = { 
+
+  //private def incrementMap(spmap: SPMap, delta: Double, id: VertexId): SPMap = {
   //  spmap.map { case (v, d) =&gt; v -&gt; (Tuple3(d._1 + delta, d._3, id)) }
   //}
-  private def incrementMap(spmap: SPMap, delta: Double, srcId: VertexId, dstId: VertexId): SPMap = { 
+  private def incrementMap(spmap: SPMap, delta: Double, srcId: VertexId, dstId: VertexId): SPMap = {
     spmap.map { case (v, d) =&gt; v -&gt; (Tuple3(d._1 + delta, dstId, srcId)) }
   }
 
   private def addMaps(spmap1: SPMap, spmap2: SPMap): SPMap = {
     (spmap1.keySet ++ spmap2.keySet).map {
     k =&gt;{
-        if (spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1 &lt; spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1) 
-                k -&gt; (Tuple3(spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1, 
-                             spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._2, 
+        if (spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1 &lt; spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1)
+                k -&gt; (Tuple3(spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1,
+                             spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._2,
                              spmap1.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._3))
-        else 
-                k -&gt; (Tuple3(spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1, 
-                             spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._2, 
+        else
+                k -&gt; (Tuple3(spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._1,
+                             spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._2,
                              spmap2.getOrElse(k, Tuple3(INFINITY, DEFAULT_ID, DEFAULT_ID))._3))
         }
     }.toMap
   }
-  
+
   // at this point it does not really matter what vertex type is
   def run[VD](graph: Graph[VD, Double], landmarks: Seq[VertexId]): Graph[SPMap, Double] = {
     val spGraph = graph.mapVertices { (vid, attr) =&gt;
@@ -391,7 +391,7 @@ object ShortestPath extends Serializable {
 
     Pregel(spGraph, initMaps)(vProg, sendMsg, addMaps)
   }
-  
+
   def create_path_graph[VD](graph: Graph[SPMap, Double], goalId: VertexId, startId: VertexId): Graph[PN, Int] = {
     // For a given goal node we remove the lookup map and extend the state to a Tuple5 with the goal id and a boolean
     val path = graph.mapEdges(e =&gt; 0)
@@ -414,12 +414,12 @@ object ShortestPath extends Serializable {
         // Check that the current node is the one adressed in the message
         if (id == msg)
           (attr._1, attr._2, attr._3, true)
-        else // If the message is not addressed to the current node (happens for inital message), use the old value 
+        else // If the message is not addressed to the current node (happens for inital message), use the old value
           attr
       }
       def sendMsg(triplet: EdgeTriplet[PN, Int]): Iterator[(VertexId, VertexId)] = {
         // If dstId is the next node on the path and has not yet been activated
-        if (triplet.srcAttr._2 == triplet.dstId &amp;&amp; triplet.srcAttr._4 &amp;&amp; !triplet.dstAttr._4) 
+        if (triplet.srcAttr._2 == triplet.dstId &amp;&amp; triplet.srcAttr._4 &amp;&amp; !triplet.dstAttr._4)
           Iterator((triplet.dstId, triplet.dstId))// Send next msg
         else
           Iterator.empty// Do nothing
@@ -476,7 +476,7 @@ shortestPath: (srcId: Long, dstId: Long, graph: org.apache.spark.graphx.Graph[Lo
 
 // # Merge edge attributes of two (identical in structure) graphs
 def mergeEdgeAttributes[ED1 : ClassTag, ED2 : ClassTag](firstGraph : Graph[Long, ED1], secondGraph : Graph[Long, ED2]) : Graph[Long, (ED1, ED2)] = {
-  return Graph(firstGraph.vertices, firstGraph.edges.innerJoin(secondGraph.edges) {(id1, id2, first, second) =&gt; (first, second)}) 
+  return Graph(firstGraph.vertices, firstGraph.edges.innerJoin(secondGraph.edges) {(id1, id2, first, second) =&gt; (first, second)})
 }
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
@@ -497,7 +497,7 @@ def graphRandomGaussian(graph : Graph[Long, (Double, Double)], seed : Int, eps :
   } else {
     return graph.mapEdges(e =&gt; scala.math.max(eps, e.attr._1 + Random.nextGaussian() * scala.math.sqrt(e.attr._2)))
   }
-} 
+}
 
 def graphRandomGaussian(graph : Graph[Long, (Double, Double)], seed : Int, eps : Double) : Graph[Long, Double] = {
   return graphRandomGaussian(graph, seed, eps, true)
@@ -591,20 +591,20 @@ var allActions = env.mapEdges(e =&gt; Array[Double](0))
 // # Run experiment for N iterations
 for (t &lt;- 0 until N) {
   printf(&quot;Iteration %d, elapsed time: %d ms&quot;, t, System.currentTimeMillis() - startTime)
-  
+
   // # Checkpoint to break lineage graph
   allActions = locallyCheckpointedGraph(allActions)
   posterior = locallyCheckpointedGraph(posterior)
-  
+
   // # Find action (super arm) using posterior sampling
   val sampledParameters = graphRandomGaussian(posterior, seed+t*2+1, eps)
   val action = shortestPath(srcId, dstId, sampledParameters)
   lastAction = action
-  
+
   // # Apply action on environments (assuming path is indicated by 1-valued edge attributes) and observe realized costs
   val realizedEnv = graphRandomGaussian(env, seed+t*2+2, eps)
   val observation = mergeEdgeAttributes(action, realizedEnv).mapEdges(e =&gt; e.attr._1 * e.attr._2)
-  
+
   // # Update posterior
   posterior = mergeEdgeAttributes(env, mergeEdgeAttributes(action, mergeEdgeAttributes(observation, posterior))).mapEdges(e =&gt; {
     val trueVar = e.attr._1._2
@@ -619,7 +619,7 @@ for (t &lt;- 0 until N) {
       (pMean, pVar)
     }  
   })
-  
+
   // # Calculate regret
   allActions = mergeEdgeAttributes(allActions, action).mapEdges(e =&gt; e.attr._1 :+ e.attr._2)
   printf(&quot;\n&quot;)
@@ -667,7 +667,7 @@ object graphs {
 // val sqlContext = SQLContext.getOrCreate(org.apache.spark.SparkContext.getOrCreate())  /// fix
 val sqlContext = SparkSession.builder().getOrCreate().sqlContext
 import sqlContext.implicits._
-  
+
 def force(clicks: Dataset[Edge], height: Int = 100, width: Int = 960): Unit = {
   val data = clicks.collect()
   val nodes = (data.map(_.src) ++ data.map(_.dest)).map(_.replaceAll(&quot;_&quot;, &quot; &quot;)).toSet.toSeq.map(Node)
@@ -739,7 +739,7 @@ var force = d3.layout.force()
 var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
     .attr(&quot;width&quot;, width)
     .attr(&quot;height&quot;, height);
-    
+
 force
     .nodes(graph.nodes)
     .links(graph.links)
@@ -767,7 +767,7 @@ node.append(&quot;text&quot;)
       .attr(&quot;dx&quot;, 10)
       .attr(&quot;dy&quot;, &quot;.35em&quot;)
       .text(function(d) { return d.name });
-      
+
 //Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
 force.on(&quot;tick&quot;, function () {
     link.attr(&quot;x1&quot;, function (d) {
@@ -799,7 +799,7 @@ force.on(&quot;tick&quot;, function () {
 &lt;/div&gt;
 &quot;&quot;&quot;)
 }
-  
+
   def help() = {
 displayHTML(&quot;&quot;&quot;
 &lt;p&gt;
@@ -836,7 +836,7 @@ d3.graphs.force(
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We can also visualize the shortest path in the graph.</p>
@@ -851,7 +851,7 @@ d3.graphs.force(
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_2.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_2.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Now we visualize the instant regret. We should see a lot ot spikes in the beginning of the graph but the general trend should be that the curve decrease to zero while having fewer spikes as the algorithm gets closer to the optimal solutions. Note that there will always be some spikes as these corresponds to &quot;exploratory&quot; actions.</p>
@@ -862,7 +862,7 @@ display(df)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_3.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_3.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We can also show the cumulative regret. As the algorithm reaches a final solution, the instantaneous regret should decrease and the cumulative regret should reach a plateau.</p>
@@ -874,7 +874,7 @@ display(df)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_4.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/14_4.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h2 id="references"><a class="header" href="#references">References</a></h2>

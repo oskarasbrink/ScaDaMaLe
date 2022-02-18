@@ -329,7 +329,7 @@ try
 {
   // -nc prevents download if already exist. !! converts wget output to string.
   s&quot;wget -nc -O${local} ${remote}&quot; !!
-} 
+}
 catch
 {
   case e: Throwable =&gt; println(&quot;Exception: &quot; + e)
@@ -418,7 +418,7 @@ val remote = wp_zip_remote
 try
 {
   s&quot;wget -nc -O${local} ${remote}&quot; !!
-} 
+}
 catch
 {
   case e: Throwable =&gt; println(&quot;Exception: &quot; + e)
@@ -429,13 +429,13 @@ catch
 <p>Extract the .xml-file</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// Unpack bz2 to xml. 
+<pre><code class="language-scala">// Unpack bz2 to xml.
 val local = s&quot;${dir_local}${wp_file}.bz2&quot;
 try
 {
   // -d unpack, -k keep source file, -v activate some output. !! converts output to string.
   s&quot;bzip2 -dk -f -v ${local}&quot; !!
-} 
+}
 catch
 {
   case e: Throwable =&gt; println(&quot;Exception: &quot; + e)
@@ -561,10 +561,10 @@ import scala.util.matching.UnanchoredRegex
   val conf = new Configuration()
   conf.set(XmlInputFormat.START_TAG_KEY, &quot;&lt;page&gt;&quot;)
   conf.set(XmlInputFormat.END_TAG_KEY, &quot;&lt;/page&gt;&quot;)
-  val rdd = sc.newAPIHadoopFile(file, 
-                                classOf[XmlInputFormat], 
-                                classOf[LongWritable], 
-                                classOf[Text], 
+  val rdd = sc.newAPIHadoopFile(file,
+                                classOf[XmlInputFormat],
+                                classOf[LongWritable],
+                                classOf[Text],
                                 conf)
   rdd.map{case (k,v) =&gt; (new String(v.copyBytes()))}
 }
@@ -678,9 +678,9 @@ res11: Array[String] = Array(Amager, Afrika, Amerika, Abbekås, Alingsås)
   val noQuot = raw&quot;&amp;quot;&quot;.r.replaceAllIn(noNbsp, &quot;&quot;)
   val noLt = raw&quot;&amp;lt;&quot;.r.replaceAllIn(noQuot, &quot;&lt;&quot;)
   val noGt = raw&quot;&amp;gt;&quot;.r.replaceAllIn(noLt, &quot;&gt;&quot;)
-  
-    
-  
+
+
+
   val tags = Seq(&quot;id&quot;, &quot;ns&quot;, &quot;parentid&quot;, &quot;timestamp&quot;, &quot;contributor&quot;, &quot;comment&quot;, &quot;model&quot;, &quot;format&quot;, &quot;sha1&quot;)
   var current = noGt
   for (tag &lt;- tags) {
@@ -706,9 +706,9 @@ res11: Array[String] = Array(Amager, Afrika, Amerika, Abbekås, Alingsås)
   current
   }
 
-  
+
 val filtered_xml = labelled_articles.map({ case(id, title, source) =&gt; (id, title, filter_xml(source)) })
-  
+
 filtered_xml.take(5)
 </code></pre>
 </div>
@@ -751,7 +751,7 @@ sanitized_xml: org.apache.spark.rdd.RDD[(Long, String, String)] = MapPartitionsR
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">def filterMarkup(source: String) : String = {
-  
+
   // Loop to remove some specific sections
   val sections = Seq(&quot;Se även&quot;, &quot;Referenser&quot;, &quot;Noter&quot;, &quot;Källor&quot;, &quot;Externa länkar&quot;)
   var current = source
@@ -773,25 +773,25 @@ sanitized_xml: org.apache.spark.rdd.RDD[(Long, String, String)] = MapPartitionsR
       current = pre + post
     }
   }
-  
+
   // Unnamed internal links appear in figure captions, confusing later matching
   val noUnnamedInternalLinks = raw&quot;\[\[([^\|\]]*)\]\]&quot;.r.replaceAllIn(current, m =&gt; m.group(1))
 
   // Loop to remove internal links and their properties
   current = noUnnamedInternalLinks
-  val regexp = raw&quot;\[\[[^\|\[]*\|([^\[\]]*)\]\]&quot;.r 
+  val regexp = raw&quot;\[\[[^\|\[]*\|([^\[\]]*)\]\]&quot;.r
   while (regexp.findAllIn(current).hasNext) {
     val len = current.length
     current = regexp.replaceAllIn(current, m =&gt; &quot;[[&quot; + m.group(1) + &quot;]]&quot;)
     assert (current.length &lt; len)
   }
   val noNamedInternalLinks = current
-  
+
   val noInternalLinks = raw&quot;\[\[([^\]]*)\]\]&quot;.r.replaceAllIn(noNamedInternalLinks, m =&gt; m.group(1))
   val noNamedExternalLinks = raw&quot;\[[^ \[]*\ ([^\]]*)\]&quot;.r.replaceAllIn(noInternalLinks, m =&gt; m.group(1))
   val noExternalLinks = raw&quot;\[([^\]]*)\]&quot;.r.replaceAllIn(noNamedExternalLinks, m =&gt; m.group(1))
-  
-  
+
+
  val lowerCase = noExternalLinks.toLowerCase  
 
   val noQuoteChars = raw&quot;'&quot;.r.replaceAllIn(lowerCase, &quot;&quot;)
@@ -851,7 +851,7 @@ def parse_line(s : String) = {
   val nextComma = afterId.indexOf(&quot;,&quot;)
   val title = afterId.substring(0, nextComma)
   val contents = afterId.substring(nextComma+1, afterId.length-1)
-          
+
   assert (afterId(afterId.length-1) == ')')
   (id, title.replaceAllLiterally(&quot;**COMMA**&quot;, &quot;,&quot;), contents.replaceAllLiterally(&quot;**NEWLINE**&quot;, &quot;\n&quot;))
 }
@@ -896,7 +896,7 @@ n_articles: Long = 813245
 // Set params for RegexTokenizer
 val tokenizer = new RegexTokenizer()
   .setGaps(true) // pattern below identifies non-word alphabet
-  .setPattern(&quot;[^a-zåäö]+&quot;) // break word and remove any detected non-word character(s). 
+  .setPattern(&quot;[^a-zåäö]+&quot;) // break word and remove any detected non-word character(s).
   .setMinTokenLength(4) // Filter away tokens with length &lt; 4
   .setInputCol(&quot;contents&quot;) // name of the input column
   .setOutputCol(&quot;tokens&quot;) // name of the output column
@@ -936,7 +936,7 @@ val stopwords = swedish_stopwords.union(wikipedia_stopwords)
 <pre><code class="language-scala">import org.apache.spark.ml.feature.StopWordsRemover
 
 val remover = new StopWordsRemover()
-  .setStopWords(stopwords) 
+  .setStopWords(stopwords)
   .setInputCol(&quot;tokens&quot;)
   .setOutputCol(&quot;filtered&quot;)
 
@@ -965,7 +965,7 @@ filtered_df: org.apache.spark.sql.DataFrame = [id: bigint, title: string ... 3 m
 val vectorizer = new CountVectorizer()
   .setInputCol(&quot;filtered&quot;)
   .setOutputCol(&quot;features&quot;)
-  .setVocabSize(10000) 
+  .setVocabSize(10000)
   .setMinDF(5) // the minimum number of different documents a term must appear in to be included in the vocabulary.
   .fit(filtered_df)
 </code></pre>
@@ -1081,7 +1081,7 @@ lda: org.apache.spark.mllib.clustering.LDA = org.apache.spark.mllib.clustering.L
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Save the model to file for later use.
 dbutils.fs.rm(lda_model_store, recurse=true)
-ldaModel.save(sc, lda_model_store) 
+ldaModel.save(sc, lda_model_store)
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -1208,7 +1208,7 @@ var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
     .attr(&quot;height&quot;, r)
     .attr(&quot;class&quot;, &quot;bubble&quot;);
 
-  
+
 var node = vis.selectAll(&quot;g.node&quot;)
     .data(bubble.nodes(classes(json))
     .filter(function(d) { return !d.children; }))
@@ -1216,7 +1216,7 @@ var node = vis.selectAll(&quot;g.node&quot;)
     .attr(&quot;class&quot;, &quot;node&quot;)
     .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
     color = d3.scale.category20();
-  
+
   node.append(&quot;title&quot;)
       .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
 
@@ -1228,7 +1228,7 @@ var text = node.append(&quot;text&quot;)
     .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
     .attr(&quot;dy&quot;, &quot;.3em&quot;)
     .text(function(d) { return d.className.substring(0, d.r / 3)});
-  
+
   text.append(&quot;tspan&quot;)
       .attr(&quot;dy&quot;, &quot;1.2em&quot;)
       .attr(&quot;x&quot;, 0)
@@ -1251,7 +1251,7 @@ function classes(root) {
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/5_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/5_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="finding-articles"><a class="header" href="#finding-articles">Finding Articles</a></h3>
@@ -1317,7 +1317,7 @@ allTopicProbs: org.apache.spark.rdd.RDD[(Long, org.apache.spark.mllib.linalg.Vec
   val top5ids = top5articles.map(_._1)
   val top5titles = filtered.filter({case(id, title, contents) =&gt; top5ids.contains(id) }).map({case(id, title, contents) =&gt; (title)}).collect
   println(s&quot;Top 5 articles on the same topic as ${title}:&quot;)
-  
+
   for (t &lt;- top5titles) println(s&quot; * ${t}&quot;)
   println(&quot;&quot;)
 }

@@ -268,7 +268,7 @@ for datapoint in dataset['train']:
   img, mask = resize_image4(img_orig, mask_orig)
   train4_mask[count]=(mask)
   count+=1
-  
+
 test_orig = np.ndarray(shape=(3669,128,128,3))
 test_orig_mask = np.ndarray(shape=(3669,128,128,1))
 test_orig_img = np.ndarray(shape=(3669,128,128,3))
@@ -295,7 +295,7 @@ for datapoint in dataset['test']:
   test4_img[count]=(img)
   count+=1
 
-  
+
 def display(display_list):
   plt.figure(figsize=(15, 15))
 
@@ -326,7 +326,7 @@ display([sample_image, sample_mask])
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_1.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_1.png?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">test_dataset = dataset['test'].map(load_image_test)
@@ -364,7 +364,7 @@ test4_img = np.split(test4_img[0:3648], 114)
                image_height,
                pooling_factor,
                activation):
-  
+
   strides = [int(np.round(float(image_width)/pooling_factor)),
             int(np.round(float(image_height)/pooling_factor))]
   pooling_size = strides
@@ -375,7 +375,7 @@ test4_img = np.split(test4_img[0:3648], 114)
   x = tf.keras.layers.experimental.preprocessing.Resizing(
     image_height, image_width, interpolation=&quot;bilinear&quot;)(x) # Resizing images to correct shape for future concat
   return x
-  
+
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -498,7 +498,7 @@ PSP.summary()
   y = BatchNormalization(name='C4_block6_bn3')(y)
   y = Add(name='C4_skip6')([y_,y])
   y_ = Activation('relu', name='C4_block6_act3')(y)
-  
+
   #Conv
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block1_conv1')(y_)
   y = BatchNormalization(name='C5_block1_bn1')(y)
@@ -512,7 +512,7 @@ PSP.summary()
   y = BatchNormalization(name='C5_block1_bn3')(y)
   y = Add(name='C5_skip1')([y_,y])
   y_ = Activation('relu', name='C5_block1_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block2_conv1')(y_)
   y = BatchNormalization(name='C5_block2_bn1')(y)
@@ -524,7 +524,7 @@ PSP.summary()
   y = BatchNormalization(name='C5_block2_bn3')(y)
   y = Add(name='C5_skip2')([y_,y])
   y_ = Activation('relu', name='C5_block2_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block3_conv1')(y_)
   y = BatchNormalization(name='C5_block3_bn1')(y)
@@ -536,9 +536,9 @@ PSP.summary()
   y = BatchNormalization(name='C5_block3_bn3')(y)
   y = Add(name='C5_skip3')([y_,y])
   y_ = Activation('relu', name='C5_block3_act3')(y)
-  
+
   return(y_)
-        
+
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -557,7 +557,7 @@ PSP.summary()
   intermediate_f_sum = Add(name=&quot;add_intermediates_{}&quot;.format(stage))([intermediate_f_small_bn,intermediate_f_large_bn])
   intermediate_f_relu = Activation('relu', name=&quot;activation_CFF_{}&quot;.format(stage))(intermediate_f_sum)
   return F_aux, intermediate_f_relu
-                
+
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -596,7 +596,7 @@ def ICNet(image_width: int,
   last_layer = PSPModel.get_layer('conv4_block3_out').output
   PSPModel_2_4 = tf.keras.models.Model(inputs=PSPModel.input, outputs=last_layer, name=&quot;JointResNet_2_4&quot;)
   ICNet_Model4 = PSPModel_2_4(input_obj_4)
-  ICNet_Model2 = PSPModel_2_4(input_obj_2) 
+  ICNet_Model2 = PSPModel_2_4(input_obj_2)
   ICNet_4_rest = PSP_rest(ICNet_Model4)
   out1, last_layer = CFF(1, ICNet_4_rest, ICNet_Model2, n_classes, image_width//32, image_height//32)
   out2, last_layer = CFF(2, last_layer, ICNet_Model1, n_classes, image_width//16, image_height//16)
@@ -623,7 +623,7 @@ imgplot = plt.imshow(img)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_2.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_2.png?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-sh">ls /dbfs/FileStore
@@ -654,12 +654,12 @@ def show_predictions(dataset=None, num=1):
   else:
     display([sample_image, sample_mask,
              create_mask(model.predict(sample_image[tf.newaxis, ...])[2])])
-    
+
 show_predictions()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_3.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_3.png?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-sh">ls
@@ -672,19 +672,19 @@ mlflow.tensorflow.autolog()
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def batch_generator(X, Y16, Y8, Y4, batch_size = BATCH_SIZE):
-  indices = np.arange(len(X)) 
+  indices = np.arange(len(X))
   batch=[]
   while True:
   # it might be a good idea to shuffle your data before each epoch
-    np.random.shuffle(indices) 
+    np.random.shuffle(indices)
     for i in indices:
       batch.append(i)
       if len(batch)==batch_size:
         yield X[batch], {'ClassifierConv_1': Y16[batch], 'ClassifierConv_2': Y8[batch], 'ClassifierConv_final_prediction': Y4[batch]}
         batch=[]
-        
+
 def batch_generator_eval(X, Y16, Y8, Y4, batch_size = BATCH_SIZE):
-  indices = np.arange(len(X)) 
+  indices = np.arange(len(X))
   batch=[]
   while True:
     for i in indices:
@@ -702,7 +702,7 @@ class MyCustomCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         res_eval_1.append(self.model.evaluate(test_orig, [test16_mask, test8_mask, test4_mask], batch_size=45, verbose=1))
         show_predictions()
-        
+
 TRAIN_LENGTH = info.splits['train'].num_examples
 BATCH_SIZE = 64
 BUFFER_SIZE = 1000
@@ -723,7 +723,7 @@ model_history =  model.fit(train_generator, epochs=EPOCHS,steps_per_epoch=STEPS_
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_4.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_5.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_6.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_7.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_8.png?raw=true" alt="" /><br></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_4.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_5.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_6.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_7.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_8.png?raw=true" alt="" /><br></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">print(res_eval_1)
@@ -778,7 +778,7 @@ plt.show()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_9.png?raw=true" alt="" /><br></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_09_9.png?raw=true" alt="" /><br></p>
 </div>
 
                     </main>

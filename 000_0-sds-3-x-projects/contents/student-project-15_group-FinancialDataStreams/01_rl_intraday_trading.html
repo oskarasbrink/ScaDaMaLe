@@ -185,7 +185,7 @@ val oilDS = spark.read.fx1m(&quot;dbfs:/FileStore/shared_uploads/fabiansi@kth.se
 
 // Add column with difference from previous close value (expected 'x', 'y' column names)
 val windowSpec = Window.orderBy(&quot;x&quot;)
-val oilDS1 = oilDS 
+val oilDS1 = oilDS
 .withColumn(&quot;diff_close&quot;, $&quot;y&quot; - when((lag(&quot;y&quot;, 1).over(windowSpec)).isNull, 0).otherwise(lag(&quot;y&quot;, 1).over(windowSpec)))
 
 // Rename variables
@@ -287,7 +287,7 @@ Last data point: 2019-06-20 23:59:00
 class MarketEnv(gym.Env):
     def __init__(self, full_data, start_date, end_date, episode_size=30*24*60, scope=60):
         self.episode_size = episode_size
-        self.actions = [&quot;LONG&quot;, &quot;SHORT&quot;] 
+        self.actions = [&quot;LONG&quot;, &quot;SHORT&quot;]
         self.action_space = gym.spaces.Discrete(len(self.actions))
         self.state_space = gym.spaces.Box(np.ones(scope) * -1, np.ones(scope))
 
@@ -298,7 +298,7 @@ class MarketEnv(gym.Env):
         self.num_ticks_train = np.shape(self.diff_close)[0]
 
         self.scope = scope # N values to be included in a state vector
-        self.time_index = self.scope  # start N steps in, to ensure that we have enough past values for history 
+        self.time_index = self.scope  # start N steps in, to ensure that we have enough past values for history
         self.episode_init_time = self.time_index  # initial time index of the episode
 
 
@@ -307,7 +307,7 @@ class MarketEnv(gym.Env):
         self.time_index += 1
         self.state = self.diff_close[self.time_index - self.scope:self.time_index]
         self.reward = float( - (2 * action - 1) * self.state[-1] )
-        
+
         # Check if done
         if self.time_index - self.episode_init_time &gt; self.episode_size:
             self.done = True
@@ -319,14 +319,14 @@ class MarketEnv(gym.Env):
     def reset(self, random_starttime=True):
         self.done = False
         self.reward = 0.
-        self.time_index = self.scope 
+        self.time_index = self.scope
         self.state = self.diff_close[self.time_index - self.scope:self.time_index]
-        
+
         if random_starttime:
             self.time_index += random.randint(0, self.num_ticks_train - self.scope)
-        
+
         self.episode_init_time = self.time_index
-        
+
         return self.state
 
     def seed(self):
@@ -388,7 +388,7 @@ display(fig)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>To illustarte how the reward works, we can look at timestep 9, where there is a large negative reward because the agent shorted (red) and at step 10 the stock went up. Conversely, at timestep 27 there is a large positive reward, since the agent decided to short and in the next timestep (28), the stock went down.</p>
@@ -491,10 +491,10 @@ for e in range(1, episodes):
     counter = 0
     reward_sum = 0.
     done = False
-    
+
     state = env.reset()
-    input_t = state.reshape(1, sequence_scope, 1) 
-    
+    input_t = state.reshape(1, sequence_scope, 1)
+
     while not done:     
         counter += 1
         input_tm1 = input_t
@@ -516,8 +516,8 @@ for e in range(1, episodes):
         # adapt model
         inputs, targets = exp_replay.get_batch(model, batch_size=batch_size)
         loss += model.train_on_batch(inputs, targets)
-    
-    
+
+
     print(&quot;Episode {:03d}/{:d} | Average Loss {:.4f} | Cumulative Reward {:.4f}&quot;.format(e, episodes, loss / counter, reward_sum))
     epsilon = max(min_epsilon, epsilon * 0.99)
     returns.append(reward_sum)
@@ -533,7 +533,7 @@ display(fig)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_2.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_2.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We have trained our model for 500 episodes and the returns are plotted above. Note that the loss was still quite high at the end of training, which indicates that the algorithm hasn't converged. A possible explanation for this is that RL algorithms typically require significantly more steps to converge. Further, considering the size of the tranining dataset, the neural network used is very small. Besides that, DQN is known to be quite unstable and prone to diverge, which is why several new versions of this algorithm have been proposed since it was first introduced. A very common implementation consists of the Double DQN, which introduced a target Q-network used to compute the actions, which is updated at a lower rate than the main Q-network. In our implementation, the max operator uses the same network both to select and to evaluate an action. This may lead to wrongly selecting overestimated values. Having a separate target network can help prevent this, by decoupling the selection from the evaluation.</p>
@@ -598,7 +598,7 @@ display(fig)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_3.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_3.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We can see that the policy converged to always shorting, meaning that the agent never buys any stock. While abstaining from investments in fossil fuels may be good advice, the result is not very useful for our intended application. Nevertherless, reaching a successful automatic intraday trading bot in the short time we spent implementing this project would be a high bar. After all, this is more or less the holy grail of computational economy.</p>
@@ -619,13 +619,13 @@ display(fig)
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val windowSize = 2
-val numReversals = 1 // we look at 1 iteration of the algorithm. 
+val numReversals = 1 // we look at 1 iteration of the algorithm.
 
 val dfWithReversals = new TrendCalculus2(oilDS, windowSize, spark).nReversalsJoinedWithMaxRev(numReversals)
 display(dfWithReversals)
 
 val windowSpec = Window.orderBy(&quot;x&quot;)
-val dfWithReversalsDiff = dfWithReversals 
+val dfWithReversalsDiff = dfWithReversals
 .withColumn(&quot;diff_close&quot;, $&quot;y&quot; - when((lag(&quot;y&quot;, 1).over(windowSpec)).isNull, 0).otherwise(lag(&quot;y&quot;, 1).over(windowSpec)))
 
 // Store loaded data as temp view, to be accessible in Python
@@ -677,7 +677,7 @@ display(fig)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_4.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/15_01_4.JPG?raw=true" alt="" /></p>
 </div>
 
                     </main>

@@ -229,62 +229,62 @@ def resize_image4(img, mask, wanted_height: int, wanted_width: int):
   dataset, info = tfds.load('oxford_iiit_pet:3.*.*', with_info=True)
   n_train = info.splits['train'].num_examples
   n_test = info.splits['test'].num_examples
-  
+
   #Creating the ndarray in the correct shapes for training data
   train_original_img = np.ndarray(shape=(n_train, wanted_height, wanted_width, 3), dtype=np.float32)
-  
+
   train_original_mask = np.ndarray(shape=(n_train, wanted_height, wanted_width, 1), dtype=np.float32)
   train16_mask = np.ndarray(shape=(n_train, wanted_height//16, wanted_width//16, 1), dtype=np.float32)
   train8_mask = np.ndarray(shape=(n_train, wanted_height//8, wanted_width//8, 1), dtype=np.float32)
   train4_mask = np.ndarray(shape=(n_train, wanted_height//4, wanted_width//4, 1), dtype=np.float32)
-  
-  #Loading the data into the arrays 
+
+  #Loading the data into the arrays
   count = 0
   for datapoint in dataset['train']:
     img_orig, mask_orig = load_image_train_noTf(datapoint, wanted_height, wanted_width)
     train_original_img[count]=img_orig
     train_original_mask[count]=mask_orig
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     train16_mask[count]=(mask16)
-    
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     train8_mask[count]=(mask8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     train4_mask[count]=(mask4)
     count+=1
-  
+
   #Creating the ndarrays in the correct shapes for test data  
   test_original_img = np.ndarray(shape=(n_test,wanted_height,wanted_width,3), dtype=np.float32)
-  
+
   test_original_mask = np.ndarray(shape=(n_test,wanted_height,wanted_width,1), dtype=np.float32)
   test16_mask = np.ndarray(shape=(n_test,wanted_height//16,wanted_width//16,1), dtype=np.float32)
   test8_mask = np.ndarray(shape=(n_test,wanted_height//8,wanted_width//8,1), dtype=np.float32)
   test4_mask = np.ndarray(shape=(n_test,wanted_height//4,wanted_width//4,1), dtype=np.float32)
-  
+
   #Loading the data into the arrays
   count=0
   for datapoint in dataset['test']:
     img_orig, mask_orig = load_image_test(datapoint, wanted_height, wanted_width)
     test_original_img[count]=(img_orig)
     test_original_mask[count]=(mask_orig)
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     test16_mask[count]=(mask16)
-     
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     test8_mask[count]=(mask8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     test4_mask[count]=(mask4)
-    
+
     count+=1
-    
+
   train_dataset = [train_original_img, train16_mask, train8_mask, train4_mask, train_original_mask]
   orig_test_dataset = [test_original_img, test16_mask, test8_mask, test4_mask, test_original_mask]
-  
-  
+
+
   return train_dataset, orig_test_dataset, train_original_mask[0], train_original_img[0], n_train, n_test
 </code></pre>
 </div>
@@ -317,7 +317,7 @@ display([sample_image, sample_mask])
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_05_1.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_05_1.png?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Defining the functions needed for the PSPNet module.</p>
@@ -329,7 +329,7 @@ def pool_block(cur_tensor,
                image_height,
                pooling_factor,
                activation):
-  
+
   strides = [int(np.round(float(image_width)/pooling_factor)),
             int(np.round(float(image_height)/pooling_factor))]
   pooling_size = strides
@@ -354,7 +354,7 @@ def modify_ResNet_Dilation(model):
   return new_model
 
 
-# Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function, 
+# Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function,
 # input image width and height and a boolean for knowing if the module is part of the ICNet or not.
 def PSPNet(n_classes: int,
            n_filters: int,
@@ -468,7 +468,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C4_block6_bn3')(y)
   y = Add(name='C4_skip6')([y_,y])
   y_ = Activation('relu', name='C4_block6_act3')(y)
-  
+
   #Stage 5
   #Conv
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block1_conv1')(y_)
@@ -483,7 +483,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block1_bn3')(y)
   y = Add(name='C5_skip1')([y_,y])
   y_ = Activation('relu', name='C5_block1_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block2_conv1')(y_)
   y = BatchNormalization(name='C5_block2_bn1')(y)
@@ -495,7 +495,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block2_bn3')(y)
   y = Add(name='C5_skip2')([y_,y])
   y_ = Activation('relu', name='C5_block2_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block3_conv1')(y_)
   y = BatchNormalization(name='C5_block3_bn1')(y)
@@ -507,7 +507,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block3_bn3')(y)
   y = Add(name='C5_skip3')([y_,y])
   y_ = Activation('relu', name='C5_block3_act3')(y)
-  
+
   return(y_)
 
 # Function for the CFF module in the ICNet architecture. The inputs are which stage (1 or 2), the output from the smaller branch, the output from the
@@ -536,7 +536,7 @@ def ICNet_1(input_obj,
   return temp  
 
 # Function for creating the ICNet model. The inputs are the width and height of the images to be used by the model, number of classes, number of filters, kernel size and
-# desired activation function. 
+# desired activation function.
 def ICNet(image_width: int,
          image_height: int,
          n_classes: int,
@@ -554,7 +554,7 @@ def ICNet(image_width: int,
   last_layer = PSPModel.get_layer('conv4_block3_out').output
   PSPModel_2_4 = tf.keras.models.Model(inputs=PSPModel.input, outputs=last_layer, name=&quot;JointResNet_2_4&quot;)
   ICNet_Model4 = PSPModel_2_4(input_obj_4)
-  ICNet_Model2 = PSPModel_2_4(input_obj_2) 
+  ICNet_Model2 = PSPModel_2_4(input_obj_2)
   ICNet_4_rest = PSP_rest(ICNet_Model4)
   out1, last_layer = CFF(1, ICNet_4_rest, ICNet_Model2, n_classes, image_width//32, image_height//32)
   out2, last_layer = CFF(2, last_layer, ICNet_Model1, n_classes, image_width//16, image_height//16)
@@ -580,19 +580,19 @@ def ICNet(image_width: int,
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def batch_generator(batch_size):
-  indices = np.arange(len(train_dataset[0])) 
+  indices = np.arange(len(train_dataset[0]))
   batch=[]
   while True:
   # it might be a good idea to shuffle your data before each epoch
-    np.random.shuffle(indices) 
+    np.random.shuffle(indices)
     for i in indices:
       batch.append(i)
       if len(batch)==batch_size:
         yield train_dataset[0][batch], {'CC_1': train_dataset[1][batch], 'CC_2': train_dataset[2][batch], 'CC_fin': train_dataset[3][batch], 'final_output': train_dataset[4][batch]}
         batch=[]
-        
+
 def batch_generator_eval(batch_size):
-  indices = np.arange(len(train_dataset[0])) 
+  indices = np.arange(len(train_dataset[0]))
   batch=[]
   while True:
     for i in indices:
@@ -612,7 +612,7 @@ def batch_generator_eval(batch_size):
   &quot;&quot;&quot;
   An example train method that calls into HorovodRunner.
   This method is passed to hyperopt.fmin().
-  
+
   :param params: hyperparameters. Its structure is consistent with how search space is defined. See below.
   :return: dict with fields 'loss' (scalar loss) and 'status' (success/failure status of run)
   &quot;&quot;&quot;
@@ -620,10 +620,10 @@ def batch_generator_eval(batch_size):
   model.compile(optimizer=tfa.optimizers.AdamW(learning_rate=params['learning_rate'], weight_decay=0.0001),
               loss=tf.keras.losses.SparseCategoricalCrossentropy(), loss_weights=[0.4,0.4,1,0],
               metrics=&quot;acc&quot;)
-  
+
   train_dataset_temp = batch_generator(BATCH_SIZE)
   test_dataset = batch_generator_eval(BATCH_SIZE)
-  
+
   model_history =  model.fit(train_dataset_temp, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[early_stopping])
   loss = model.evaluate(test_dataset, steps=VALIDATION_STEPS)[4]
   del model, train_dataset_temp, test_dataset, model_history

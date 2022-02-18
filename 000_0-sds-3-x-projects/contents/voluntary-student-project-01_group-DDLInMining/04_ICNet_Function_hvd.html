@@ -260,70 +260,70 @@ def resize_image4(img, mask, wanted_height: int, wanted_width: int):
   dataset, info = tfds.load('oxford_iiit_pet:3.*.*', data_dir='Oxford-%d' % rank, with_info=True)
   n_train = info.splits['train'].num_examples
   n_test = info.splits['test'].num_examples
-  
+
   #Creating the ndarray in the correct shapes for training data
   train_original_img = np.ndarray(shape=(n_train, wanted_height, wanted_width, 3))
-  
+
   train_original_mask = np.ndarray(shape=(n_train, wanted_height, wanted_width, 1))
   train16_mask = np.ndarray(shape=(n_train, wanted_height//16, wanted_width//16, 1))
   train8_mask = np.ndarray(shape=(n_train, wanted_height//8, wanted_width//8, 1))
   train4_mask = np.ndarray(shape=(n_train, wanted_height//4, wanted_width//4, 1))
-  
-  #Loading the data into the arrays 
+
+  #Loading the data into the arrays
   count = 0
   for datapoint in dataset['train']:
     img_orig, mask_orig = load_image_train_noTf(datapoint, wanted_height, wanted_width)
     train_original_img[count]=img_orig
     train_original_mask[count]=mask_orig
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     train16_mask[count]=(mask16)
-    
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     train8_mask[count]=(mask8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     train4_mask[count]=(mask4)
     count+=1
-  
+
   #Creating the ndarrays in the correct shapes for test data  
   test_original_img = np.ndarray(shape=(n_test,wanted_height,wanted_width,3))
-  
+
   test_original_mask = np.ndarray(shape=(n_test,wanted_height,wanted_width,1))
   test16_mask = np.ndarray(shape=(n_test,wanted_height//16,wanted_width//16,1))
   test8_mask = np.ndarray(shape=(n_test,wanted_height//8,wanted_width//8,1))
   test4_mask = np.ndarray(shape=(n_test,wanted_height//4,wanted_width//4,1))
-  
+
   #Loading the data into the arrays
   count=0
   for datapoint in dataset['test']:
     img_orig, mask_orig = load_image_test(datapoint, wanted_height, wanted_width)
     test_original_img[count]=(img_orig)
     test_original_mask[count]=(mask_orig)
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     test16_mask[count]=(mask16)
     #test16_img[count]=(img16)
-    
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     test8_mask[count]=(mask8)
     #test8_img[count]=(img8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     test4_mask[count]=(mask4)
     #test4_img[count]=(img4)
     count+=1
-    
-  
+
+
   train_dataset = tf.data.Dataset.from_tensor_slices((train_original_img[rank::size], {'CC_1': train16_mask[rank::size], 'CC_2': train8_mask[rank::size], 'CC_fin': train4_mask[rank::size], 'final_output': train_original_mask[rank::size]}))
   orig_test_dataset = tf.data.Dataset.from_tensor_slices((test_original_img[rank::size], {'CC_1': test16_mask[rank::size], 'CC_2': test8_mask[rank::size], 'CC_fin': test4_mask[rank::size], 'final_output': test_original_mask[rank::size]}))
   train_dataset = train_dataset.shuffle(BUFFER_SIZE).cache().batch(BATCH_SIZE).repeat()
   train_dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
   test_dataset = orig_test_dataset.batch(BATCH_SIZE)
-  
-  
-  
-  
+
+
+
+
   return train_dataset, test_dataset, train_original_mask[0], train_original_img[0], orig_test_dataset, n_train, n_test
 </code></pre>
 </div>
@@ -337,7 +337,7 @@ def pool_block(cur_tensor,
                image_height,
                pooling_factor,
                activation):
-  
+
   strides = [int(np.round(float(image_width)/pooling_factor)),
             int(np.round(float(image_height)/pooling_factor))]
   pooling_size = strides
@@ -362,7 +362,7 @@ def modify_ResNet_Dilation(model):
   return new_model
 
 
-# Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function, 
+# Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function,
 # input image width and height and a boolean for knowing if the module is part of the ICNet or not.
 def PSPNet(n_classes: int,
            n_filters: int,
@@ -476,7 +476,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C4_block6_bn3')(y)
   y = Add(name='C4_skip6')([y_,y])
   y_ = Activation('relu', name='C4_block6_act3')(y)
-  
+
   #Stage 5
   #Conv
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block1_conv1')(y_)
@@ -491,7 +491,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block1_bn3')(y)
   y = Add(name='C5_skip1')([y_,y])
   y_ = Activation('relu', name='C5_block1_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block2_conv1')(y_)
   y = BatchNormalization(name='C5_block2_bn1')(y)
@@ -503,7 +503,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block2_bn3')(y)
   y = Add(name='C5_skip2')([y_,y])
   y_ = Activation('relu', name='C5_block2_act3')(y)
-  
+
   #ID
   y = Conv2D(512, 1, dilation_rate=4,padding='same', name='C5_block3_conv1')(y_)
   y = BatchNormalization(name='C5_block3_bn1')(y)
@@ -515,7 +515,7 @@ def PSP_rest(input_prev: tf.Tensor):
   y = BatchNormalization(name='C5_block3_bn3')(y)
   y = Add(name='C5_skip3')([y_,y])
   y_ = Activation('relu', name='C5_block3_act3')(y)
-  
+
   return(y_)
 
 # Function for the CFF module in the ICNet architecture. The inputs are which stage (1 or 2), the output from the smaller branch, the output from the
@@ -544,7 +544,7 @@ def ICNet_1(input_obj,
   return temp  
 
 # Function for creating the ICNet model. The inputs are the width and height of the images to be used by the model, number of classes, number of filters, kernel size and
-# desired activation function. 
+# desired activation function.
 def ICNet(image_width: int,
          image_height: int,
          n_classes: int,
@@ -562,7 +562,7 @@ def ICNet(image_width: int,
   last_layer = PSPModel.get_layer('conv4_block3_out').output
   PSPModel_2_4 = tf.keras.models.Model(inputs=PSPModel.input, outputs=last_layer, name=&quot;JointResNet_2_4&quot;)
   ICNet_Model4 = PSPModel_2_4(input_obj_4)
-  ICNet_Model2 = PSPModel_2_4(input_obj_2) 
+  ICNet_Model2 = PSPModel_2_4(input_obj_2)
   ICNet_4_rest = PSP_rest(ICNet_Model4)
   out1, last_layer = CFF(1, ICNet_4_rest, ICNet_Model2, n_classes, image_width//32, image_height//32)
   out2, last_layer = CFF(2, last_layer, ICNet_Model1, n_classes, image_width//16, image_height//16)
@@ -592,7 +592,7 @@ def ICNet(image_width: int,
     tf.config.experimental.set_memory_growth(gpu, True)
   if gpus:
     tf.config.experimental.set_visible_devices(gpus[hvd.local_rank()], 'GPU')
-    
+
   # Including MLflow
   import mlflow
   import mlflow.tensorflow
@@ -608,13 +608,13 @@ def ICNet(image_width: int,
   # Call the get_dataset function you created, this time with the Horovod rank and size
   train_dataset, test_dataset, sample_mask, sample_image, orig_test_dataset, n_train, n_test = create_datasets_hvd(128,128, batch_size, buffer_size, hvd.rank(), hvd.size())
   model = ICNet(128,128,3)
-  
+
   STEPS_PER_EPOCH = n_train // batch_size
 
   EPOCHS = 20
   VAL_SUBSPLITS = 5
   VALIDATION_STEPS = n_test//batch_size//VAL_SUBSPLITS
-  
+
   # Adjust learning rate based on number of GPUs
   optimizer = tfa.optimizers.AdamW(lr=learning_rate * hvd.size(), weight_decay=0.0001)
 
@@ -635,12 +635,12 @@ def ICNet(image_width: int,
   if hvd.rank() == 0:
       callbacks.append(tf.keras.callbacks.ModelCheckpoint(checkpoint_dir + '/checkpoint-{epoch}.ckpt', save_weights_only = True, monitor='val_final_output_loss', save_best_only=True))
       mlflow.tensorflow.autolog(every_n_iter=1)
-        
-  model_history =  model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, 
+
+  model_history =  model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH,
                            validation_steps=VALIDATION_STEPS, validation_data=test_dataset, callbacks=callbacks)
-  
-      
-  
+
+
+
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -705,7 +705,7 @@ plt.show()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_1.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_2.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_3.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_4.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_5.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_6.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_7.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_8.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_9.png?raw=true" alt="" /><br> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_10.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_1.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_2.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_3.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_4.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_5.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_6.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_7.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_8.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_9.png?raw=true" alt="" /><br> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_04_10.png?raw=true" alt="" /></p>
 </div>
 
                     </main>

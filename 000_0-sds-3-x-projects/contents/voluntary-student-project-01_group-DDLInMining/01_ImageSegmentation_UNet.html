@@ -217,7 +217,7 @@ display([sample_image, sample_mask])
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>Now that the dataset has been loaded into memory, the model can further be defined.</p>
@@ -232,7 +232,7 @@ def encoder_VGG16(input_shape):
   layers=[layer.output for layer in base_model.layers]
   base_model = tf.keras.Model(inputs=base_model.input, outputs=layers[-2])
   base_model.summary()
-  
+
   x = []
   fourth_layer = base_model.get_layer('block1_conv1').output
   x.append(fourth_layer)
@@ -271,12 +271,12 @@ def encoder_VGG16(input_shape):
     intermediate_model = tf.keras.layers.ReLU()(intermediate_model)
     intermediate_model = Conv2D(filters=next_filters, kernel_size=3, activation ='relu', padding='same')(intermediate_model)
     intermediate_model = Conv2D(filters=next_filters, kernel_size=3, activation ='relu', padding='same')(intermediate_model)
-    
+
   outputs=Conv2D(filters=n_classes,kernel_size=(1,1),strides=(1),padding='same')(intermediate_model)
   x = Reshape((image_heigth*image_width, n_classes))(outputs)
   x = Activation(tf.nn.softmax)(x)
   outputs = Reshape((image_heigth,image_width, n_classes))(x)
-  
+
   print(outputs.shape[2])
   final_model=tf.keras.models.Model(inputs=encoded_model.input ,outputs=[outputs])
   return(final_model)
@@ -308,12 +308,12 @@ def show_predictions(dataset=None, num=1):
   else:
     display([sample_image, sample_mask,
              create_mask(this_model.predict(sample_image[tf.newaxis, ...]))])
-    
+
 show_predictions()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_2.JPG?raw=true" alt="1042" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_2.JPG?raw=true" alt="1042" /></p>
 </div>
 <div class="cell markdown">
 <p>Below, the model is fitted against the training data and validated on the validation set after each epoch. A validation accuracy of 84.5 % is achieved after one epoch.</p>
@@ -342,7 +342,7 @@ model_history = this_model.fit(train_dataset, epochs=EPOCHS,
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_1.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_2.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_3.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_4.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_5.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_6.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_7.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_8.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_9.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_10.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_1.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_2.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_3.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_4.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_5.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_6.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_7.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_8.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_9.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_3_10.png?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">loss = model_history.history['loss']
@@ -362,7 +362,7 @@ plt.show()
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_4.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_01_4.JPG?raw=true" alt="" /></p>
 </div>
 
                     </main>
