@@ -326,7 +326,7 @@ history: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [rating: doubl
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/18_02_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/18_02_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h2 id="create-a-system-that-takes-user-info-and-outputs-suggestions"><a class="header" href="#create-a-system-that-takes-user-info-and-outputs-suggestions">Create a system that takes user info and outputs suggestions.</a></h2>
@@ -395,7 +395,7 @@ res94: org.apache.spark.rdd.RDD[Unit] = MapPartitionsRDD[21969] at map at comman
                                      =&gt; ((user, product), rate)
     }
 
-  val ratesAndPreds = newTest.map { case Rating(user, product, rate) 
+  val ratesAndPreds = newTest.map { case Rating(user, product, rate)
                                      =&gt; ((user, product), rate)
                                    }.join(predictions)
 
@@ -663,7 +663,7 @@ numRatings: Long = 22080
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// Create train, test, and evaluation dataset and print some statistics 
+<pre><code class="language-scala">// Create train, test, and evaluation dataset and print some statistics
 val Array(temp_trainingRDD, temp_validationRDD, temp_testRDD) = genre_rdd.randomSplit(Array(0.60, 0.20, 0.20), 0L)
 
 // let's find the exact sizes we have next
@@ -695,7 +695,7 @@ maptestRDD: org.apache.spark.rdd.RDD[org.apache.spark.mllib.recommendation.Ratin
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Build the recommendation model using ALS by fitting to the training data (with Hyperparameter tuning)
 // trying different hyper-parameter (rank) values to optimise over
-val ranks = List(2, 4, 8, 16, 32, 64, 128, 256); 
+val ranks = List(2, 4, 8, 16, 32, 64, 128, 256);
 var rank=0;
 
 for ( rank &lt;- ranks ){
@@ -716,10 +716,10 @@ for ( rank &lt;- ranks ){
     }
 
   // find the actual ratings and join with predictions
-  val ratesAndPreds = mapvalidationRDD.map { case Rating(user, product, rate) 
+  val ratesAndPreds = mapvalidationRDD.map { case Rating(user, product, rate)
                                      =&gt; ((user, product), rate)
                                    }.join(predictions)
-  
+
 
   val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) =&gt;
     val err = (r1 - r2)

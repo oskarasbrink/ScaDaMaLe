@@ -191,7 +191,7 @@ def get_lda(df: org.apache.spark.sql.DataFrame,  // Main function to do LDA
             minDF: Int,            
             numTopics: Int,
             maxIter: Int,
-            stopWords: Array[String]) = { 
+            stopWords: Array[String]) = {
 
   val corpus_df = df.select(&quot;w&quot;, &quot;thread_id&quot;).withColumn(&quot;thread_id&quot;,col(&quot;thread_id&quot;).cast(LongType)) // From the whole dataframe we take out each thread
 
@@ -200,34 +200,34 @@ def get_lda(df: org.apache.spark.sql.DataFrame,  // Main function to do LDA
   .setMinTokenLength(min_token) // Filter away tokens with length &lt; min_token
   .setInputCol(&quot;w&quot;) // name of the input column
   .setOutputCol(&quot;tokens&quot;) // name of the output column
-  
-  val remover = new StopWordsRemover() 
+
+  val remover = new StopWordsRemover()
   .setStopWords(stopWords)
   .setInputCol(tokenizer.getOutputCol)
   .setOutputCol(&quot;filtered&quot;)
-  
+
   val tokenized_df = tokenizer.transform(corpus_df) // Removes uninteresting words from each thread
-  val filtered_df = remover.transform(tokenized_df).select(&quot;thread_id&quot;,&quot;filtered&quot;) // Chosing only the filtered threads 
-  
+  val filtered_df = remover.transform(tokenized_df).select(&quot;thread_id&quot;,&quot;filtered&quot;) // Chosing only the filtered threads
+
   val vectorizer = new CountVectorizer() // Creates dictionary and counts the occurences of different words
    .setInputCol(remover.getOutputCol)
    .setOutputCol(&quot;features&quot;)
    .setVocabSize(vocabSize) // Size of dictonary
    .setMinDF(minDF)
    .fit(filtered_df) // returns CountVectorizerModel
-  
+
   val lda = new LDA() // Creates LDA Model with some user defined choice of parameters
   .setOptimizer(new OnlineLDAOptimizer().setMiniBatchFraction(0.8))
   .setK(numTopics)
   .setMaxIterations(maxIter)
   .setDocConcentration(-1) // use default values
   .setTopicConcentration(-1)
-  
+
   val countVectors = vectorizer.transform(filtered_df).select(&quot;thread_id&quot;, &quot;features&quot;)
 
   val lda_countVector = countVectors.map { case Row(id: Long, countVector: Vector) =&gt; (id, countVector) }
   val lda_countVector_mllib = lda_countVector.map { case (id, vector) =&gt; (id, org.apache.spark.mllib.linalg.Vectors.fromML(vector)) }.rdd
-  
+
   val lda_model = lda.run(lda_countVector_mllib)
   (lda_model, vectorizer)
 }
@@ -292,7 +292,7 @@ val file_path_FL = &quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv
 val file_path_FB = &quot;dbfs:/datasets/student-project-01/flashback/flashback-ekonomi_df&quot;
 //val file_path_FL = &quot;dbfs:/datasets/student-project-01/familjeliv/familjeliv-sexsamlevnad_df&quot;
 //val file_path_FB = &quot;dbfs:/datasets/student-project-01/flashback/flashback-sex_df&quot;
-  
+
 val df_FL = load_df(file_path_FL)
 val df_FB = load_df(file_path_FB)
 </code></pre>
@@ -479,7 +479,7 @@ var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
     .attr(&quot;height&quot;, r)
     .attr(&quot;class&quot;, &quot;bubble&quot;);
 
-  
+
 var node = vis.selectAll(&quot;g.node&quot;)
     .data(bubble.nodes(classes(json))
     .filter(function(d) { return !d.children; }))
@@ -487,7 +487,7 @@ var node = vis.selectAll(&quot;g.node&quot;)
     .attr(&quot;class&quot;, &quot;node&quot;)
     .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
     color = d3.scale.category20();
-  
+
   node.append(&quot;title&quot;)
       .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
 
@@ -499,7 +499,7 @@ var text = node.append(&quot;text&quot;)
     .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
     .attr(&quot;dy&quot;, &quot;.3em&quot;)
     .text(function(d) { return d.className.substring(0, d.r / 3)});
-  
+
   text.append(&quot;tspan&quot;)
       .attr(&quot;dy&quot;, &quot;1.2em&quot;)
       .attr(&quot;x&quot;, 0)
@@ -522,7 +522,7 @@ function classes(root) {
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_1.JPG?raw=true" alt="1041" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_1.JPG?raw=true" alt="1041" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="true">
 <pre><code class="language-scala">// Similar as above but for FL
@@ -610,7 +610,7 @@ var vis = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
     .attr(&quot;height&quot;, r)
     .attr(&quot;class&quot;, &quot;bubble&quot;);
 
-  
+
 var node = vis.selectAll(&quot;g.node&quot;)
     .data(bubble.nodes(classes(json))
     .filter(function(d) { return !d.children; }))
@@ -618,7 +618,7 @@ var node = vis.selectAll(&quot;g.node&quot;)
     .attr(&quot;class&quot;, &quot;node&quot;)
     .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
     color = d3.scale.category20();
-  
+
   node.append(&quot;title&quot;)
       .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
 
@@ -630,7 +630,7 @@ var text = node.append(&quot;text&quot;)
     .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
     .attr(&quot;dy&quot;, &quot;.3em&quot;)
     .text(function(d) { return d.className.substring(0, d.r / 3)});
-  
+
   text.append(&quot;tspan&quot;)
       .attr(&quot;dy&quot;, &quot;1.2em&quot;)
       .attr(&quot;x&quot;, 0)
@@ -653,7 +653,7 @@ function classes(root) {
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_2.JPG?raw=true" alt="1042" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_2.JPG?raw=true" alt="1042" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="true">
 <pre><code class="language-scala">def rawJson(lda_model: org.apache.spark.mllib.clustering.LDAModel, vectorizer: org.apache.spark.ml.feature.CountVectorizerModel): String = {
@@ -745,7 +745,7 @@ var vis1 = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
     .attr(&quot;height&quot;, r1)
     .attr(&quot;class&quot;, &quot;bubble1&quot;);
 
-  
+
 var node = vis1.selectAll(&quot;g.node&quot;)
     .data(bubble1.nodes(classes(json_FL))
     .filter(function(d) { return !d.children; }))
@@ -753,7 +753,7 @@ var node = vis1.selectAll(&quot;g.node&quot;)
     .attr(&quot;class&quot;, &quot;node&quot;)
     .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
     color = d3.scale.category20();
-  
+
   node.append(&quot;title&quot;)
       .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
 
@@ -765,7 +765,7 @@ var text = node.append(&quot;text&quot;)
     .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
     .attr(&quot;dy&quot;, &quot;.3em&quot;)
     .text(function(d) { return d.className.substring(0, d.r / 3)});
-  
+
   text.append(&quot;tspan&quot;)
       .attr(&quot;dy&quot;, &quot;1.2em&quot;)
       .attr(&quot;x&quot;, 0)
@@ -797,7 +797,7 @@ var vis2 = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
     .attr(&quot;height&quot;, r2)
     .attr(&quot;class&quot;, &quot;bubble1&quot;);
 
-  
+
 var node = vis2.selectAll(&quot;g.node&quot;)
     .data(bubble1.nodes(classes(json_FB))
     .filter(function(d) { return !d.children; }))
@@ -805,7 +805,7 @@ var node = vis2.selectAll(&quot;g.node&quot;)
     .attr(&quot;class&quot;, &quot;node&quot;)
     .attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + d.x + &quot;,&quot; + d.y + &quot;)&quot;; })
     color = d3.scale.category20();
-  
+
   node.append(&quot;title&quot;)
       .text(function(d) { return d.className + &quot;: &quot; + format(d.value); });
 
@@ -817,7 +817,7 @@ var text = node.append(&quot;text&quot;)
     .attr(&quot;text-anchor&quot;, &quot;middle&quot;)
     .attr(&quot;dy&quot;, &quot;.3em&quot;)
     .text(function(d) { return d.className.substring(0, d.r / 3)});
-  
+
   text.append(&quot;tspan&quot;)
       .attr(&quot;dy&quot;, &quot;1.2em&quot;)
       .attr(&quot;x&quot;, 0)
@@ -843,7 +843,7 @@ function classes(root) {
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_3.JPG?raw=true" alt="1043" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/1_04_3.JPG?raw=true" alt="1043" /></p>
 </div>
 
                     </main>

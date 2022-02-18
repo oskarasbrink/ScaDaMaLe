@@ -154,7 +154,7 @@
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
 <div class="output execute_result html_result" execution_count="1">
-<iframe 
+<iframe
  src="https://en.wikipedia.org/wiki/Emoticons_(Unicode_block)#Descriptions"
  width="95%" height="350"
  sandbox>
@@ -208,7 +208,7 @@ d(e_1, e_2) = 1 - \frac{\# (e_1\wedge e_2)}{\# (e_1) + \# (e_2) - \# (e_1\wedge 
 <pre><code class="language-scala">def emoticonPairToIndex (a : Int, b : Int) : Int = { // helper function for indexing
   val i = if (a &lt; b) a else b // makes sure j &gt;= i
   val j = if (a &lt; b) b else a
-  return i*nbrEmoticons - (i * (i+1))/2 + j 
+  return i*nbrEmoticons - (i * (i+1))/2 + j
 }
 
 def createEmoticonIterator (s : String) : scala.util.matching.Regex.MatchIterator = { // helper function for iterating through the emoticons in a string s
@@ -221,7 +221,7 @@ def createEmoticonMatrix (s : String) : Array[Int] = { // The pair (i, j) will b
   // sets m to 1 for each index corresponding to a pair of emoticons present in the string s (very hacky code...)
   emoticonIterator.zipWithIndex.foreach(em_pair =&gt; // iterate over emoticons in s
                                         (createEmoticonIterator(s).drop(em_pair._2)).foreach( // iterate over remaining emoticons in s
-                                          second_em =&gt; 
+                                          second_em =&gt;
                                             (m(emoticonPairToIndex(
                                                 emoticonsMap(em_pair._1),
                                                 emoticonsMap(second_em))
@@ -256,7 +256,7 @@ emoticonsList.zipWithIndex.foreach({case (e, i) =&gt; println(e + &quot;, &quot;
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">def jaccardDistance (e1 : Int, e2 : Int) : Double = { // specify the emojis in terms of their indices in the list
-  return 1.0 - 1.0 * emoticonsMatrix(emoticonPairToIndex(e1, e2)) / 
+  return 1.0 - 1.0 * emoticonsMatrix(emoticonPairToIndex(e1, e2)) /
     (emoticonsMatrix(emoticonPairToIndex(e1, e1)) +  emoticonsMatrix(emoticonPairToIndex(e2, e2)) - emoticonsMatrix(emoticonPairToIndex(e1, e2)))
 }
 </code></pre>
@@ -338,7 +338,7 @@ print(emoticonsList)
 <pre><code class="language-python">def emoticonPairToIndex(a, b): # same helper function as already defined in scala previously
   i = min(a, b) # makes sure j &gt;= i
   j = max(a, b)
-  return i * nbrEmoticons - (i * (i+1))//2 + j 
+  return i * nbrEmoticons - (i * (i+1))//2 + j
 
 fullDistanceMatrix = np.zeros([nbrEmoticons, nbrEmoticons])
 for r in range(nbrEmoticons):
@@ -349,13 +349,13 @@ for r in range(nbrEmoticons):
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def scatterEmojis(emoticonsEmbedded):
   # This function plots a scatter plot of emoticons.
-  # emoticonsEmbedded should be an 80x2 array 
+  # emoticonsEmbedded should be an 80x2 array
   # containing 2D coordinates for each of the
   # 80 emoticons in the unicode emoticon block (in the correct order).
-  
+
   # standardize the embedding for nicer plotting:
   emoticonsEmbedded = emoticonsEmbedded - np.mean(emoticonsEmbedded)
-  emoticonsEmbedded = emoticonsEmbedded/np.std(emoticonsEmbedded) 
+  emoticonsEmbedded = emoticonsEmbedded/np.std(emoticonsEmbedded)
 
   # for proper emoji rendering change the font
   fpath = os.path.join(rcParams[&quot;datapath&quot;], &quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/unifont_upper-13.0.05.ttf&quot;)
@@ -374,7 +374,7 @@ for r in range(nbrEmoticons):
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
 <div class="output execute_result html_result" execution_count="1">
-<iframe 
+<iframe
  src="https://scikit-learn.org/stable/modules/manifold.html#locally-linear-embedding"
  width="95%" height="350"
  sandbox>
@@ -400,7 +400,7 @@ emoticonsEmbedded, err = locally_linear_embedding(emoticonsNeighbors, n_neighbor
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="t-distributed-stochastic-neighbor-embedding-t-sne"><a class="header" href="#t-distributed-stochastic-neighbor-embedding-t-sne">t-distributed Stochastic Neighbor Embedding (t-SNE)</a></h3>
@@ -408,7 +408,7 @@ emoticonsEmbedded, err = locally_linear_embedding(emoticonsNeighbors, n_neighbor
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
 <div class="output execute_result html_result" execution_count="1">
-<iframe 
+<iframe
  src="https://scikit-learn.org/stable/modules/manifold.html#t-sne"
  width="95%" height="350"
  sandbox>
@@ -433,7 +433,7 @@ emoticonsEmbedded, err = locally_linear_embedding(emoticonsNeighbors, n_neighbor
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_2.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_2.png?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="hierarchical-clustering"><a class="header" href="#hierarchical-clustering">Hierarchical clustering</a></h3>
@@ -471,7 +471,7 @@ ax.set_ylim([.85, 1.01])
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_3.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_3.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We identify six main clusters in the dendrogram above. From left to right:</p>
@@ -517,7 +517,7 @@ print(emoticonsDict)
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">import org.json4s.jackson.JsonMethods.parse
-val jsonString = scala.io.Source.fromFile(&quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/emoticonClusters.json&quot;).mkString 
+val jsonString = scala.io.Source.fromFile(&quot;/dbfs/datasets/ScaDaMaLe/twitter/student-project-10_group-Geosmus/emoticonClusters.json&quot;).mkString
 val emoticonClusters = parse(jsonString).values.asInstanceOf[Map[String, List[BigInt]]]
 emoticonClusters.foreach({case (key, list) =&gt; println(key + &quot;: &quot; + list.map(i =&gt; emoticonsList(i.toInt)).mkString)})
 </code></pre>
@@ -545,7 +545,7 @@ emoticonClusters: Map[String,List[BigInt]] = Map(prayer -&gt; List(76, 79, 10, 7
                                  $&quot;CurrentTweet&quot;.rlike(cluster.map(i =&gt; emoticonsList(i.toInt)).mkString(&quot;|&quot;))
                                                 .alias(name))) // rename new column
                                                 : _*) // expand list
-      
+
 emoticonDF.show(3)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
@@ -685,42 +685,42 @@ def createProps(clusterName):
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_4.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_4.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(createProps(&quot;notHappy&quot;))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_5.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_5.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(createProps(&quot;monkey&quot;))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_6.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_6.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(createProps(&quot;cat&quot;))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_7.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_7.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(createProps(&quot;SK&quot;))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_8.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_8.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">display(createProps(&quot;prayer&quot;))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_9.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/10_02_9.JPG?raw=true" alt="" /></p>
 </div>
 
                     </main>

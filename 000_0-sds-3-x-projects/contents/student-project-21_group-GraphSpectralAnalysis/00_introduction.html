@@ -156,12 +156,12 @@
 <div class="cell markdown">
 <h2 id="background-on-graphs"><a class="header" href="#background-on-graphs">Background on graphs</a></h2>
 <p>A graph can be represented by its incidence matrix <strong>B*0</strong>. Each row of <strong>B*0</strong> corresponds to an edge in the graph and each column to a node. Say that row <em>k</em> corresponds to edge <em>i</em> -&gt; <em>j</em>. Then element <em>i</em> of row <em>k</em> is <em>-1</em> and element <em>j</em> is <em>1</em>. All other elements are zero. See the figure below for an example of the indicence matrix with the corresponding graph.</p>
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/incidence_matrix.png?raw=true" alt="" /> <img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/simple_graph.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/incidence_matrix.png?raw=true" alt="" /> <img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/simple_graph.png?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h3 id="graph-laplacian"><a class="header" href="#graph-laplacian">Graph Laplacian</a></h3>
 <p>The Laplacian lies at the center of <em>specral graph theory</em>. Its spectrum (its eigenvalues) encodes the geometry of the graph and can be used in various applications ranging from computer graphics to machine learning. Therefore, one approximative approach for comparing graphs (a problem which is NP-hard) is to compare their spectra. Graphs with similar geometry are expected to have similar spectrum and vice-versa. Below is an example of the Laplacian for the graph seen in the cell above. The diagonal elements contain the degree of the corresponding node, while all other elements at index (<em>i</em>,<em>j</em>) are -1 if there is an edge between the nodes <em>i</em> and <em>j</em> and zero otherwise.</p>
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/simple_laplacian.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/simple_laplacian.png?raw=true" alt="" /></p>
 <p>The Laplacian can be constructed from the indicence matrix as \[ \mathbf{L} = \mathbf{B}_0^T \mathbf{B}_0 \] Thus, we can compute the top eigenvalues of <strong>L</strong> by instead computing the top singular values of **B_0**. This follows from the following: \[ \mathbf{B}_0 = \mathbf{U} \mathbf{D}^{1/2} \mathbf{V}^T \] \[ \mathbf{L}= \mathbf{V}  \mathbf{D}^{1/2} \mathbf{U}^T \mathbf{U} \mathbf{D}^{1/2} \mathbf{V}^T =  \mathbf{V}  \mathbf{D} \mathbf{V}^T \]</p>
 <h4 id="scaling-to-large-graphs-using-randomized-svd"><a class="header" href="#scaling-to-large-graphs-using-randomized-svd">Scaling to large graphs using randomized SVD</a></h4>
 <p>In the new age of big data, it is often interesting to analyze very large graphs of for example financial transactions. Doing the spectral graph analysis for these large graphs is challenging, since the full singular value decomposition of an <em>m x n</em> matrix scales as <em>O(m n min(m,n))</em>. To handle this, we turn to low rank approximations and specifically we use Randomized SVD.</p>
@@ -179,7 +179,7 @@
 <p>&quot;The basic idea behind R-MAT is to recursively subdivide the adjacency matrix into four equal-sized partitions, and distribute edges with in these partitions with unequal probabilities: starting off with an empty adjacency matrix, we &quot;drop&quot; edges into the matrix one at a time. Each edge chooses one of the four partitions with probabilities a; b; c; d respectively (see Figure1). Of course, a+b+c+d=1. The chosen partition is again subdivided into four smaller partitions, and the procedure is repeated until we reach a simplecell (=1 x 1 partition). This is the cell of the adjacency matrix occupied by the edge.&quot;</p>
 </blockquote>
 <p>This is visualized in the following image.</p>
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/rmat_picture.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/rmat_picture.png?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h2 id="project-specifications"><a class="header" href="#project-specifications">Project specifications</a></h2>

@@ -173,7 +173,7 @@ testData: org.apache.spark.sql.DataFrame = [_1: bigint, _2: vector]
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">//Merge data sources to get labels 
+<pre><code class="language-scala">//Merge data sources to get labels
 spark.conf.set(&quot;spark.sql.autoBroadcastJoinThreshold&quot;, -1)
 val mergedTrainingData = trainingData.join(k_mers_df_train,trainingData(&quot;_1&quot;) === k_mers_df_train(&quot;id&quot;),&quot;inner&quot;).withColumnRenamed(&quot;_2&quot;,&quot;features&quot;).drop(&quot;_1&quot;)
 val mergedTestData = testData.join(k_mers_df_test,testData(&quot;_1&quot;) === k_mers_df_test(&quot;id&quot;),&quot;inner&quot;).withColumnRenamed(&quot;_2&quot;,&quot;features&quot;).drop(&quot;_1&quot;)
@@ -266,7 +266,7 @@ display(df_feats.sample(true,0.5).orderBy(rand()))
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/9_05_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/9_05_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <h4 id="classification-1"><a class="header" href="#classification-1">Classification</a></h4>
@@ -282,7 +282,7 @@ val transformers = Array(
               new StringIndexer().setInputCol(&quot;label&quot;).setOutputCol(&quot;label_id&quot;))
 
 // Train a RandomForest model.
-val rf = new RandomForestClassifier() 
+val rf = new RandomForestClassifier()
               .setLabelCol(&quot;label_id&quot;)
               .setFeaturesCol(&quot;features&quot;)
               .setNumTrees(500)
@@ -317,7 +317,7 @@ def evaluateModel(model: org.apache.spark.ml.PipelineModel, df: org.apache.spark
   val predictionAndLabelsRdd = predictionsOnData.select(&quot;prediction&quot;, &quot;label_id&quot;).as[(Double,Double)].rdd
 
   val metricsMulti = new MulticlassMetrics(predictionAndLabelsRdd)
-  
+
   val accuracy = metricsMulti.accuracy
   val fm0 = metricsMulti.fMeasure(0)
   val fm1 = metricsMulti.fMeasure(1)
@@ -325,13 +325,13 @@ def evaluateModel(model: org.apache.spark.ml.PipelineModel, df: org.apache.spark
   val fm3 = metricsMulti.fMeasure(3)
   val fm4 = metricsMulti.fMeasure(4)
   val fm5 = metricsMulti.fMeasure(5)
-  
+
   println(&quot;Confusion matrix:&quot;)
   println(metricsMulti.confusionMatrix)
-  
+
   println(&quot;Summary Statistics&quot;)
   println(s&quot;Accuracy = $accuracy&quot;)
-  
+
   println(s&quot;fm0 = $fm0&quot;)
   println(s&quot;fm1 = $fm1&quot;)
   println(s&quot;fm2 = $fm2&quot;)

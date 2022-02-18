@@ -262,8 +262,8 @@ import org.apache.commons.math3.distribution.NormalDistribution
 // This code is taken from [041_SketchingWithTDigest]
 
 def myMixtureOf2Normals( normalLocation: Double, abnormalLocation: Double, normalWeight: Double, r: Random) : Double = {
-  val sample = if (r.nextDouble &lt;= normalWeight) {r.nextGaussian+normalLocation } 
-               else {r.nextGaussian + abnormalLocation} 
+  val sample = if (r.nextDouble &lt;= normalWeight) {r.nextGaussian+normalLocation }
+               else {r.nextGaussian + abnormalLocation}
   return sample
    }
 </code></pre>
@@ -280,7 +280,7 @@ def itrQuantEstimator[D](data:Dataset[D], target: Int): Double = {
   var x_old = 0.0
   var qfound=false
   var step = 1.0
-  var Na_old = data.filter($&quot;value&quot;&gt;x).count() 
+  var Na_old = data.filter($&quot;value&quot;&gt;x).count()
   var Na = Na_old
   var scale=1.0
   if (Na_old &lt; 10){scale= (-1)}
@@ -329,7 +329,7 @@ def itrQuantEstimator[D](data:Dataset[D], target: Int): Double = {
     // increase x
       scale= 1
     }
-  
+
   }
   return x
 }
@@ -340,7 +340,7 @@ def itrQuantEstimator[D](data:Dataset[D], target: Int): Double = {
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// Estimate quantiles in loop 
+<pre><code class="language-scala">// Estimate quantiles in loop
 
 val N = 100000 // samples per batch
 
@@ -363,12 +363,12 @@ var q_nf = 0.0 //filterd naive quantile estimate
 val T = 500 // time or number of batches
 var resMap = scala.collection.mutable.Map[Int,(Int,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double)]() // create an empty map for storing results
 var q_true = 0.0 // true quantile
-var Na_true = 0.0 // true number of 
+var Na_true = 0.0 // true number of
 var rr = 0.0 // realisation of anomalies
-var Na_t1 = 0.0 // number of anomalies using t-digest estimate from first batch 
-var Na_tf = 0.0 // number of anomalies using filtered t-digest estimate from current batch 
-var Na_n1 = 0.0 // number of anomalies using naive estimate from first batch 
-var Na_nf = 0.0 // number of anomalies using filtered naive estimate from current batch 
+var Na_t1 = 0.0 // number of anomalies using t-digest estimate from first batch
+var Na_tf = 0.0 // number of anomalies using filtered t-digest estimate from current batch
+var Na_n1 = 0.0 // number of anomalies using naive estimate from first batch
+var Na_nf = 0.0 // number of anomalies using filtered naive estimate from current batch
 var q_t1 = 0.0 // first QE with t-digets
 var q_n1 = 0.0 // first QE with naive QE
 var q_t = 0.0 // t-digest quantile estimate
@@ -390,30 +390,30 @@ for( t &lt;- 1 to T){
   {wN=1.0} // All data is normal
   else
   {wN=0.99} // 1% of data is anomalous
-  mu1=t.toDouble/1000.0 
+  mu1=t.toDouble/1000.0
   mu2=mu1 + 2
   val data = sc.parallelize(Vector.fill(N){myMixtureOf2Normals(mu1, mu2, wN, r)}).toDF.as[Double]
-  
-  
+
+
   //do t-digest
   val agg = data.agg(udf_tDigest($&quot;value&quot;))
-  val td = agg.first.getAs[TDigest](0) 
+  val td = agg.first.getAs[TDigest](0)
   q_t = td.cdfInverse(targetQ)
-  
+
   if( t == 1 ){q_t1 = q_t} // save first quantile estimate  
   if( t == 1 ){q_tf = q_t}else{q_tf = q_t*c + exp(-1.0/tau)*resMap(t-1)._5}   // if first batch use no filter weight
   Na_t1 = data.filter($&quot;value&quot;&gt;q_t1).count()
   Na_tf = data.filter($&quot;value&quot;&gt;q_tf).count()
-  
+
   //do naive QE
   q_n = itrQuantEstimator(data,Nmk)
-  
+
   if( t == 1 ){q_n1 = q_n} // save first quantile estimate  
   if( t == 1 ){q_nf = q_n}else{q_nf = q_n*c + exp(-1.0/tau)*resMap(t-1)._9}   // if first batch use no filter weight
   Na_n1 = data.filter($&quot;value&quot;&gt;q_n1).count()
   Na_nf = data.filter($&quot;value&quot;&gt;q_nf).count()
-  
-  //get true quantile and true number of anomalies (ignoring anomalies) 
+
+  //get true quantile and true number of anomalies (ignoring anomalies)
   val normalDataDistribution = new NormalDistribution(mu1, 1);
   q_true = normalDataDistribution.inverseCumulativeProbability(targetQ)
 
@@ -423,7 +423,7 @@ for( t &lt;- 1 to T){
 
   Na_true = N*wN*(1.0-cdf_N) + N*(1.0-wN)*(1.0-cdf_A)
 
-  
+
   // save results
   resMap += (t -&gt; (t,q_true,Na_true,q_t,q_tf,Na_t1,Na_tf,q_n,q_nf,Na_n1,Na_nf))
   println(&quot;Batch Number: &quot;+ t)
@@ -448,18 +448,18 @@ display(res_all)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/11_1.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/11_1.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>We see that the filtered quantiles are not affected by the bursts of anomalies, seen as spikes in the instantaneous estimates. We also note that the difference between quantiles using the t-digest and naive method is small. The number of iterations in each time step for the naive method varied between 4 and 18 with a mean of 10 iterations. This can be reduced by using the estimated quantile in step \(n-1\) as the initial guess in step \(n\).</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// Plot number of anomalies and true number of anomalies 
+<pre><code class="language-scala">// Plot number of anomalies and true number of anomalies
 display(res_all)
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/11_2.JPG?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/11_2.JPG?raw=true" alt="" /></p>
 </div>
 <div class="cell markdown">
 <p>If a fixed quantile is used the number of anomalies will increase with time due to the changing statistics of the data distribution. By properly filtering the estimates, the number of anomalies are kept at a constant level (10 in this case) in time slots with the normal distribution while still detecting the bursts of outliers (seen as spikes with 52.7 calculated anomaleties) in time slots with the abnormal distribution. The emperical mean relative errors for the quantile defined as</p>

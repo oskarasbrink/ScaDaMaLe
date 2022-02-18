@@ -233,76 +233,76 @@ def resize_image4(img, mask, wanted_height: int, wanted_width: int):
 def create_datasets(wanted_height:int, wanted_width:int, n_train:int, n_test:int, BATCH_SIZE:int = 64, BUFFER_SIZE:int = 1000):
   #Creating the ndarray in the correct shapes for training data
   train_original_img = np.ndarray(shape=(n_train, wanted_height, wanted_width, 3))
-  
+
   train_original_mask = np.ndarray(shape=(n_train, wanted_height, wanted_width, 1))
   train16_mask = np.ndarray(shape=(n_train, wanted_height//16, wanted_width//16, 1))
   train8_mask = np.ndarray(shape=(n_train, wanted_height//8, wanted_width//8, 1))
   train4_mask = np.ndarray(shape=(n_train, wanted_height//4, wanted_width//4, 1))
-  
-  #Loading the data into the arrays 
+
+  #Loading the data into the arrays
   count = 0
   for datapoint in dataset['train']:
     img_orig, mask_orig = load_image_train_noTf(datapoint, wanted_height, wanted_width)
     train_original_img[count]=img_orig
     train_original_mask[count]=mask_orig
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     train16_mask[count]=(mask16)
-    
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     train8_mask[count]=(mask8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     train4_mask[count]=(mask4)
     count+=1
-  
+
   #Saving all img / mask in separate lists
 
-  
+
   #Creating the ndarrays in the correct shapes for test data  
   test_original_img = np.ndarray(shape=(n_test,wanted_height,wanted_width,3))
 
   test16_mask = np.ndarray(shape=(n_test,wanted_height//16,wanted_width//16,1))
   test8_mask = np.ndarray(shape=(n_test,wanted_height//8,wanted_width//8,1))
   test4_mask = np.ndarray(shape=(n_test,wanted_height//4,wanted_width//4,1))
-  
+
   #Loading the data into the arrays
   count=0
   for datapoint in dataset['test']:
     img_orig, mask_orig = load_image_test(datapoint, wanted_height, wanted_width)
     test_original_img[count]=(img_orig)
     test_original_mask[count]=(mask_orig)
-    
+
     img16, mask16 = resize_image16(img_orig, mask_orig, wanted_height, wanted_width)
     test16_mask[count]=(mask16)
     #test16_img[count]=(img16)
-    
+
     img8, mask8 = resize_image8(img_orig, mask_orig, wanted_height, wanted_width)
     test8_mask[count]=(mask8)
     #test8_img[count]=(img8)
-    
+
     img4, mask4 = resize_image4(img_orig, mask_orig, wanted_height, wanted_width)
     test4_mask[count]=(mask4)
     #test4_img[count]=(img4)
     count+=1
-    
+
   #Saving all img / mask in separate lists
   #test_img = [test_original_img, test16_img, test8_img, test4_img]
   #test_img = test_original_img
   #test_mask = [test_original_mask, test16_mask, test8_mask, test4_mask]
   #test_mask = [test16_mask, test8_mask, test4_mask]
-  
+
   train_dataset = tf.data.Dataset.from_tensor_slices((train_original_img, {'output_1': train16_mask, 'output_2': train8_mask, 'output_3': train4_mask, 'output_4': train_original_mask}))
   test_dataset = tf.data.Dataset.from_tensor_slices((test_original_img, {'output_1': test16_mask, 'output_2': test8_mask, 'output_3': test4_mask, 'output_4': test_original_mask}))
   train_dataset = train_dataset.cache().shuffle(BUFFER_SIZE).batch(BATCH_SIZE).repeat()
   train_dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
   test_dataset = test_dataset.batch(BATCH_SIZE)
-  
+
   return train_dataset, test_dataset, train_original_mask[0], train_original_img[0]
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">dataset, n_train, n_test = load_transform_data(128,128) 
+<pre><code class="language-python">dataset, n_train, n_test = load_transform_data(128,128)
 
 train_dataset, test_dataset, sample_mask, sample_image = create_datasets(128,128,n_train,n_test, 64, 1000)
 </code></pre>
@@ -326,11 +326,11 @@ display([sample_image, sample_mask])
 </code></pre>
 </div>
 <div class="cell markdown">
-<p><img src="https://github.com/r-e-x-a-g-o-n/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_06_1.png?raw=true" alt="" /></p>
+<p><img src="https://github.com/lamastex/scalable-data-science/blob/master/images/ScaDaMaLe/000_0-sds-3-x-projects/v_06_1.png?raw=true" alt="" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">class ICNet_model(tf.keras.Model):
-  
+
   def __init__(self,
                encoder: tf.keras.Model,
                image_width: int,
@@ -348,7 +348,7 @@ display([sample_image, sample_mask])
     self.activation = activation
     self.image_width = image_width
     self.image_height = image_height
-    
+
     # Defining the network
     input_shape = (self.image_height, self.image_width, 3)
     inputs = tf.keras.Input(shape=input_shape, name=&quot;input_img_1&quot;)
@@ -361,14 +361,14 @@ display([sample_image, sample_mask])
     last_layer = PSP_Model.get_layer('conv3_block4_out').output
     PSPModel_2_4 = tf.keras.models.Model(inputs=PSP_Model.input, outputs=last_layer, name=&quot;JointResNet_2_4&quot;)
     ICNet_Model4 = PSPModel_2_4(input_obj_4)
-    ICNet_Model2 = PSPModel_2_4(input_obj_2) 
+    ICNet_Model2 = PSPModel_2_4(input_obj_2)
     ICNet_4_rest = self.PSP_rest(ICNet_Model4)
     out1, last_layer = self.CFF(1, ICNet_4_rest, ICNet_Model2, self.n_classes, self.image_width//32, self.image_height//32)
     out2, last_layer = self.CFF(2, last_layer, ICNet_Model1, self.n_classes, self.image_width//16, self.image_height//16)
     upsample_2 = UpSampling2D(2, interpolation='bilinear', name=&quot;Upsampling_final_prediction&quot;)(last_layer)
     output = Conv2D(self.n_classes, 1, name=&quot;output_3&quot;, activation='softmax')(upsample_2)
     self.network = tf.keras.models.Model(inputs=input_obj, outputs=[out1, out2, output])
-    
+
   # Function for the pooling module which takes the output of ResNet50 as input as well as its width and height and pool it with a factor.
   def pool_block(self,
                  cur_tensor,
@@ -389,10 +389,10 @@ display([sample_image, sample_mask])
     return x
 
 
-  
-  # Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function, 
+
+  # Function for creating the PSPNet model. The inputs is the number of classes to classify, number of filters to use, kernel_size, activation function,
   # input image width and height and a boolean for knowing if the module is part of the ICNet or not.
-  def PSPNet(self, 
+  def PSPNet(self,
              encoder: tf.keras.Model,
              n_classes: int,
              n_filters: int,
@@ -421,7 +421,7 @@ display([sample_image, sample_mask])
     final_layer=UpSampling2D(size=(8,8), data_format='channels_last', interpolation='bilinear')(output_layer)
     final_model=tf.keras.models.Model(inputs=encoder.input, outputs=final_layer)
     return final_model
-  
+
   # Function for adding stage 4 and 5 of ResNet50 to the 1/4 image size branch of the ICNet.
   def PSP_rest(self, input_prev: tf.Tensor):
 
@@ -551,7 +551,7 @@ display([sample_image, sample_mask])
     intermediate_f_sum = Add(name=&quot;add_intermediates_{}&quot;.format(stage))([intermediate_f_small_bn,intermediate_f_large_bn])
     intermediate_f_relu = Activation('relu', name=&quot;activation_CFF_{}&quot;.format(stage))(intermediate_f_sum)
     return F_aux, intermediate_f_relu
-  
+
 
   # Function for the high-res branch of ICNet where image is in scale 1:1. The inputs are the input image, number of filters, kernel size and desired activation function.
   def ICNet_1(self,
@@ -575,13 +575,13 @@ display([sample_image, sample_mask])
     last_layer = PSP_Model.get_layer('conv3_block4_out').output
     PSPModel_2_4 = tf.keras.models.Model(inputs=PSP_Model.input, outputs=last_layer, name=&quot;JointResNet_2_4&quot;)
     ICNet_Model4 = PSPModel_2_4(input_obj_4)
-    ICNet_Model2 = PSPModel_2_4(input_obj_2) 
+    ICNet_Model2 = PSPModel_2_4(input_obj_2)
     ICNet_4_rest = self.PSP_rest(ICNet_Model4)
     out1, last_layer = self.CFF(1, ICNet_4_rest, ICNet_Model2, self.n_classes, self.image_width//32, self.image_height//32)
     out2, last_layer = self.CFF(2, last_layer, ICNet_Model1, self.n_classes, self.image_width//16, self.image_height//16)
     upsample_2 = UpSampling2D(2, interpolation='bilinear', name=&quot;Upsampling_final_prediction&quot;)(last_layer)
     output = Conv2D(self.n_classes, 1, name=&quot;output_3&quot;, activation='softmax')(upsample_2)
-    return out1, out2, output 
+    return out1, out2, output
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -627,7 +627,7 @@ class MyCustomCallback(tf.keras.callbacks.Callback):
         show_predictions()
 
 
-model_history =  model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[MyCustomCallback()]) 
+model_history =  model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[MyCustomCallback()])
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
