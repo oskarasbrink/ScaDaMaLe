@@ -1,0 +1,987 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>007_SparkSQLIntroBasics</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007_SparkSQLIntroBasics.html">007_SparkSQLIntroBasics</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007a_SparkSQLProgGuide_HW.html">007a_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007b_SparkSQLProgGuide_HW.html">007b_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007c_SparkSQLProgGuide_HW.html">007c_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007d_SparkSQLProgGuide_HW.html">007d_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007e_SparkSQLProgGuide_HW.html">007e_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007f_SparkSQLProgGuide_HW.html">007f_SparkSQLProgGuide_HW</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/007g_PivotInSQL.html">007g_PivotInSQL</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/008_DiamondsPipeline_01ETLEDA.html">008_DiamondsPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/009_PowerPlantPipeline_01ETLEDA.html">009_PowerPlantPipeline_01ETLEDA</a></li><li class="chapter-item expanded affix "><a href="contents/000_1-sds-3-x-sql/010_wikipediaClickStream_01ETLEDA.html">010_wikipediaClickStream_01ETLEDA</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="introduction-to-spark-sql"><a class="header" href="#introduction-to-spark-sql">Introduction to Spark SQL</a></h1>
+<ul>
+<li>This notebook explains the motivation behind Spark SQL</li>
+<li>It introduces interactive SparkSQL queries and visualizations</li>
+<li>This notebook uses content from Databricks SparkSQL notebook and <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL programming guide</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<p><strong>Some resources on SQL</strong></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/SQL">https://en.wikipedia.org/wiki/SQL</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Apache_Hive">https://en.wikipedia.org/wiki/Apache_Hive</a></li>
+<li><a href="http://www.infoq.com/articles/apache-spark-sql">http://www.infoq.com/articles/apache-spark-sql</a></li>
+<li><a href="https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html">https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html</a></li>
+<li><a href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></li>
+<li><strong>READ</strong>: <a href="https://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf">https://people.csail.mit.edu/matei/papers/2015/sigmod<em>spark</em>sql.pdf</a></li>
+</ul>
+<p>Some of them are embedded below in-place for your convenience.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
+//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
+//Example usage:
+// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/SQL&quot;,500))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/SQL"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Apache_Hive#HiveQL&quot;,175))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Apache_Hive#HiveQL"
+ width="95%" height="175"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>READ - <a href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></p>
+</div>
+<div class="cell markdown">
+<p>This is an elaboration of the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">Apache Spark 2.2 sql-progamming-guide</a>.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Spark SQL is a Spark module for structured data processing. Unlike the basic Spark RDD API, the interfaces provided by Spark SQL provide Spark with more information about the structure of both the data and the computation being performed. Internally, Spark SQL uses this extra information to perform extra optimizations. There are several ways to interact with Spark SQL including SQL and the Dataset API. When computing a result the same execution engine is used, independent of which API/language you are using to express the computation. This unification means that developers can easily switch back and forth between different APIs based on which provides the most natural way to express a given transformation.</p>
+<p>All of the examples on this page use sample data included in the Spark distribution and can be run in the spark-shell, pyspark shell, or sparkR shell.</p>
+<h2 id="datasets-and-dataframes"><a class="header" href="#datasets-and-dataframes">Datasets and DataFrames</a></h2>
+<p>A Dataset is a distributed collection of data. Dataset is a new interface added in Spark 1.6 that provides the benefits of RDDs (strong typing, ability to use powerful lambda functions) with the benefits of Spark SQL’s optimized execution engine. A Dataset can be <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html#creating-datasets">constructed</a> from JVM objects and then manipulated using functional transformations (map, flatMap, filter, etc.). The Dataset API is available in <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala</a> and <a href="http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>. Python does not have the support for the Dataset API. But due to Python’s dynamic nature, many of the benefits of the Dataset API are already available (i.e. you can access the field of a row by name naturally <code>row.columnName</code>). The case for R is similar.</p>
+<p>A DataFrame is a Dataset organized into named columns. It is conceptually equivalent to a table in a relational database or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html#data-sources">sources</a> such as: structured data files, tables in Hive, external databases, or existing RDDs. The DataFrame API is available in Scala, Java, <a href="http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a>, and <a href="http://spark.apache.org/docs/latest/api/R/index.html">R</a>. In Scala and Java, a DataFrame is represented by a Dataset of Rows. In the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala API</a>, DataFrame is simply a type alias of Dataset[Row]. While, in Java API, users need to use <code>Dataset&lt;Row&gt;</code> to represent a DataFrame.</p>
+<p>Throughout this document, we will often refer to Scala/Java Datasets of <code>Rows</code> as DataFrames.</p>
+</div>
+<div class="cell markdown">
+<h1 id="getting-started-in-spark"><a class="header" href="#getting-started-in-spark">Getting Started in Spark</a></h1>
+<h2 id="starting-point-sparksession"><a class="header" href="#starting-point-sparksession">Starting Point: SparkSession</a></h2>
+<p>The entry point into all functionality in Spark is the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SparkSession">SparkSession</a>. To create a basic SparkSession in your scala Spark code, just use <code>SparkSession.builder()</code>:</p>
+<pre><code>import org.apache.spark.sql.SparkSession
+
+val spark = SparkSession
+  .builder()
+  .appName(&quot;Spark SQL basic example&quot;)
+  .config(&quot;spark.some.config.option&quot;, &quot;some-value&quot;)
+  .getOrCreate()
+
+// For implicit conversions like converting RDDs to DataFrames
+import spark.implicits._
+</code></pre>
+<p>Conveniently, in Databricks notebook (similar to <code>spark-shell</code>) <code>SparkSession</code> is already created for you and is available as <code>spark</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark // ready-made Spark-Session
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@37cbb5bf
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="creating-dataframes"><a class="header" href="#creating-dataframes">Creating DataFrames</a></h2>
+<p>With a <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SparkSession"><code>SparkSession</code></a> or <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.SQLContext"><code>SQLContext</code></a>, applications can create <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame"><code>DataFrame</code></a></p>
+<ul>
+<li>from an existing <code>RDD</code>,</li>
+<li>from a Hive table, or</li>
+<li>from various other data sources.</li>
+</ul>
+<h3 id="just-to-recap"><a class="header" href="#just-to-recap">Just to recap:</a></h3>
+<ul>
+<li>A DataFrame is a distributed collection of data organized into named columns (it is not strogly typed).</li>
+<li>You can think of it as being organized into table RDD of case class <code>Row</code> (which is not exactly true).</li>
+<li>DataFrames, in comparison to RDDs, are backed by rich optimizations, including:
+<ul>
+<li>tracking their own schema,</li>
+<li>adaptive query execution,</li>
+<li>code generation including whole stage codegen,</li>
+<li>extensible Catalyst optimizer, and</li>
+<li>project <a href="https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html">Tungsten</a> for optimized storage.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Note that performance for DataFrames is the same across languages Scala, Java, Python, and R. This is due to the fact that the only planning phase is language-specific (logical + physical SQL plan), not the actual execution of the SQL plan.</p>
+</blockquote>
+</div>
+<div class="cell markdown">
+<h2 id="dataframe-basics"><a class="header" href="#dataframe-basics">DataFrame Basics</a></h2>
+<h4 id="1-an-empty-dataframe"><a class="header" href="#1-an-empty-dataframe">1. An empty DataFrame</a></h4>
+<h4 id="2-dataframe-from-a-range"><a class="header" href="#2-dataframe-from-a-range">2. DataFrame from a range</a></h4>
+<h4 id="3-dataframe-from-an-rdd"><a class="header" href="#3-dataframe-from-an-rdd">3. DataFrame from an RDD</a></h4>
+<h4 id="4-dataframe-operations-aka-untyped-dataset-operations"><a class="header" href="#4-dataframe-operations-aka-untyped-dataset-operations">4. DataFrame Operations (aka Untyped Dataset Operations)</a></h4>
+<h4 id="5-running-sql-queries-programmatically"><a class="header" href="#5-running-sql-queries-programmatically">5. Running SQL Queries Programmatically</a></h4>
+<h4 id="6-creating-datasets"><a class="header" href="#6-creating-datasets">6. Creating Datasets</a></h4>
+</div>
+<div class="cell markdown">
+<h3 id="1-making-an-empty-dataframe"><a class="header" href="#1-making-an-empty-dataframe">1. Making an empty DataFrame</a></h3>
+<p>Spark has some of the pre-built methods to create simple DataFrames</p>
+<ul>
+<li>let us make an Empty DataFrame</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val emptyDF = spark.emptyDataFrame // Ctrl+Enter to make an empty DataFrame
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>emptyDF: org.apache.spark.sql.DataFrame = []
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Not really interesting, or is it?</p>
+<p><strong>You Try!</strong></p>
+<p>Uncomment the following cell, put your cursor after <code>emptyDF.</code> below and hit Tab to see what can be done with <code>emptyDF</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//emptyDF.
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="2-making-a-dataframe-from-a-range"><a class="header" href="#2-making-a-dataframe-from-a-range">2. Making a DataFrame from a range</a></h3>
+<p>Let us make a DataFrame next</p>
+<ul>
+<li>from a range of numbers, as follows:</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rangeDF = spark.range(0, 3).toDF() // Ctrl+Enter to make DataFrame with 0,1,2
+// sc.parallelize(1 to 3).toDF() 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rangeDF: org.apache.spark.sql.DataFrame = [id: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Note that Spark automatically names column as <code>id</code> and casts integers to type <code>bigint</code> for big integer or Long.</p>
+<p>In order to get a preview of data in DataFrame use <code>show()</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rangeDF.show() // Ctrl+Enter
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---+
+| id|
++---+
+|  0|
+|  1|
+|  2|
++---+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="3-making-a-dataframe-from-an-rdd"><a class="header" href="#3-making-a-dataframe-from-an-rdd">3. Making a DataFrame from an RDD</a></h3>
+<ul>
+<li>Make an RDD</li>
+<li>Conver the RDD into a DataFrame using the defualt <code>.toDF()</code> method</li>
+<li>Conver the RDD into a DataFrame using the non-default <code>.toDF(...)</code> method</li>
+<li>Do it all in one line</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>Let's first make an RDD using the <code>sc.parallelize</code> method, transform it by a <code>map</code> and perform the <code>collect</code> action to display it, as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rdd1 = sc.parallelize(1 to 5).map(i =&gt; (i, i*2))
+rdd1.collect() // Ctrl+Enter
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rdd1: org.apache.spark.rdd.RDD[(Int, Int)] = MapPartitionsRDD[816] at map at command-2971213210277924:1
+res4: Array[(Int, Int)] = Array((1,2), (2,4), (3,6), (4,8), (5,10))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Next, let us convert the RDD into DataFrame using the <code>.toDF()</code> method, as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df1 = rdd1.toDF() // Ctrl+Enter 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>df1: org.apache.spark.sql.DataFrame = [_1: int, _2: int]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>As it is clear, the DataFrame has columns named <code>_1</code> and <code>_2</code>, each of type <code>int</code>. Let us see its content using the <code>.show()</code> method next.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1.show() // Ctrl+Enter
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---+---+
+| _1| _2|
++---+---+
+|  1|  2|
+|  2|  4|
+|  3|  6|
+|  4|  8|
+|  5| 10|
++---+---+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Note that by default, i.e. without specifying any options as in <code>toDF()</code>, the column names are given by <code>_1</code> and <code>_2</code>.</p>
+<p>We can easily specify column names as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df1 = rdd1.toDF(&quot;once&quot;, &quot;twice&quot;) // Ctrl+Enter
+df1.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+
+df1: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Of course, we can do all of the above steps to make the DataFrame <code>df1</code> in one line and then show it, as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df1 = sc.parallelize(1 to 5)
+            .map(i =&gt; (i, i*2))
+            .toDF(&quot;once&quot;, &quot;twice&quot;) //Ctrl+enter
+df1.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+
+df1: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="4-dataframe-operations-aka-untyped-dataset-operations-1"><a class="header" href="#4-dataframe-operations-aka-untyped-dataset-operations-1">4. DataFrame Operations (aka Untyped Dataset Operations)</a></h3>
+<p>DataFrames provide a domain-specific language for structured data manipulation in <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala</a>, <a href="http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>, <a href="http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a> and <a href="http://spark.apache.org/docs/latest/api/R/SparkDataFrame.html">R</a>.</p>
+<p>As mentioned above, in Spark 2.0, DataFrames are just Dataset of Rows in Scala and Java API. These operations are also referred as “untyped transformations” in contrast to “typed transformations” come with strongly typed Scala/Java Datasets.</p>
+<p>Here we include some basic examples of structured data processing using Datasets:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// This import is needed to use the $-notation
+import spark.implicits._
+// Print the schema in a tree format
+df1.printSchema()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- once: integer (nullable = false)
+ |-- twice: integer (nullable = false)
+
+import spark.implicits._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Select only the &quot;name&quot; column
+df1.select(&quot;once&quot;).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+
+|once|
++----+
+|   1|
+|   2|
+|   3|
+|   4|
+|   5|
++----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Select both columns, but increment the double column by 1
+df1.select($&quot;once&quot;, $&quot;once&quot; + 1).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+----------+
+|once|(once + 1)|
++----+----------+
+|   1|         2|
+|   2|         3|
+|   3|         4|
+|   4|         5|
+|   5|         6|
++----+----------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Select both columns, but increment the double column by 1 and rename it as &quot;oncemore&quot;
+df1.select($&quot;once&quot;, ($&quot;once&quot; * 1).as(&quot;oncemore&quot;)).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+--------+
+|once|oncemore|
++----+--------+
+|   1|       1|
+|   2|       2|
+|   3|       3|
+|   4|       4|
+|   5|       5|
++----+--------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1.filter($&quot;once&quot; &gt; 2).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Count the number of distinct singles -  a bit boring
+df1.groupBy(&quot;once&quot;).count().show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|count|
++----+-----+
+|   1|    1|
+|   2|    1|
+|   3|    1|
+|   5|    1|
+|   4|    1|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's make a more interesting DataFrame for <code>groupBy</code> with repeated elements so that the <code>count</code> will be more than <code>1</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df11 = sc.parallelize(3 to 5).map(i =&gt; (i, i*2)).toDF(&quot;once&quot;, &quot;twice&quot;) // just make a small one
+df11.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+
+df11: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df111 = df1.union(df11) // let's take the unionAll of df1 and df11 into df111
+df111.show() // df111 is obtained by simply appending the rows of df11 to df1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+
+df111: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Count the number of distinct singles -  a bit less boring
+df111.groupBy(&quot;once&quot;).count().show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|count|
++----+-----+
+|   1|    1|
+|   2|    1|
+|   3|    2|
+|   5|    2|
+|   4|    2|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>For a complete list of the types of operations that can be performed on a Dataset refer to the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">API Documentation</a>.</p>
+<p>In addition to simple column references and expressions, Datasets also have a rich library of functions including string manipulation, date arithmetic, common math operations and more. The complete list is available in the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$">DataFrame Function Reference</a>.</p>
+</div>
+<div class="cell markdown">
+<p><strong>You Try!</strong></p>
+<p>Uncomment the two lines in the next cell, and then fill in the <code>???</code> below to get a DataFrame <code>df2</code> whose first two columns are the same as <code>df1</code> and whose third column named triple has values that are three times the values in the first column.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//val df2 = sc.parallelize(1 to 5).map(i =&gt; (i, i*2, i????)).toDF(&quot;single&quot;, &quot;double&quot;, &quot;triple&quot;) // Ctrl+enter after editing ???
+//df2.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="5-running-sql-queries-programmatically-1"><a class="header" href="#5-running-sql-queries-programmatically-1">5. Running SQL Queries Programmatically</a></h3>
+<p>The <code>sql</code> function on a <code>SparkSession</code> enables applications to run SQL queries programmatically and returns the result as a <code>DataFrame</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res23: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Register the DataFrame as a SQL temporary view
+df1.createOrReplaceTempView(&quot;sdtable&quot;)
+
+val sqlDF = spark.sql(&quot;SELECT * FROM sdtable&quot;)
+sqlDF.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+
+sqlDF: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.sql(&quot;SELECT * FROM SDTable WHERE once&gt;2&quot;).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">SELECT * FROM SDTable WHERE once&gt;2
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>once</th>
+<th>twice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3.0</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>10.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="5-using-sql-for-interactively-querying-a-table-is-very-powerful"><a class="header" href="#5-using-sql-for-interactively-querying-a-table-is-very-powerful">5. Using SQL for interactively querying a table is very powerful!</a></h3>
+<p>Note <code>-- comments</code> are how you add <code>comments</code> in SQL cells beginning with <code>%sql</code>.</p>
+<ul>
+<li>You can run SQL <code>select *</code> statement to see all columns of the table, as follows:
+<ul>
+<li>This is equivalent to the above `display(diamondsDF)' with the DataFrame</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">-- Ctrl+Enter to select all columns of the table
+select * from SDTable
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>once</th>
+<th>twice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>10.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">-- Ctrl+Enter to select all columns of the table
+-- note table names of registered tables are case-insensitive
+select * from sdtable
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>once</th>
+<th>twice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>10.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="global-temporary-view"><a class="header" href="#global-temporary-view">Global Temporary View</a></h4>
+<p>Temporary views in Spark SQL are session-scoped and will disappear if the session that creates it terminates. If you want to have a temporary view that is shared among all sessions and keep alive until the Spark application terminates, you can create a global temporary view. Global temporary view is tied to a system preserved database <code>global_temp</code>, and we must use the qualified name to refer it, e.g. <code>SELECT * FROM global_temp.view1</code>. See <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view">http://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view</a> for details.</p>
+</div>
+<div class="cell markdown">
+<ol start="6">
+<li>Creating Datasets</li>
+</ol>
+<hr />
+<p>Datasets are similar to RDDs, however, instead of using Java serialization or Kryo they use a specialized <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Encoder">Encoder</a> to serialize the objects for processing or transmitting over the network. While both encoders and standard serialization are responsible for turning an object into bytes, encoders are code generated dynamically and use a format that allows Spark to perform many operations like filtering, sorting and hashing without deserializing the bytes back into an object.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rangeDS = spark.range(0, 3) // Ctrl+Enter to make DataSet with 0,1,2; Note we added '.toDF()' to this to create a DataFrame
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rangeDS: org.apache.spark.sql.Dataset[Long] = [id: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rangeDS.show() // the column name 'id' is made by default here
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---+
+| id|
++---+
+|  0|
+|  1|
+|  2|
++---+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can have more complicated objects in a <code>DataSet</code> too.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Note: Case classes in Scala 2.10 can support only up to 22 fields. To work around this limit,
+// you can use custom classes that implement the Product interface
+case class Person(name: String, age: Long)
+
+// Encoders are created for case classes
+val caseClassDS = Seq(Person(&quot;Andy&quot;, 32), Person(&quot;Erik&quot;,44), Person(&quot;Anna&quot;, 15)).toDS()
+caseClassDS.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+---+
+|name|age|
++----+---+
+|Andy| 32|
+|Erik| 44|
+|Anna| 15|
++----+---+
+
+defined class Person
+caseClassDS: org.apache.spark.sql.Dataset[Person] = [name: string, age: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Encoders for most common types are automatically provided by importing spark.implicits._
+val primitiveDS = Seq(1, 2, 3).toDS()
+primitiveDS.map(_ + 1).collect() // Returns: Array(2, 3, 4)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>primitiveDS: org.apache.spark.sql.Dataset[Int] = [value: int]
+res32: Array[Int] = Array(2, 3, 4)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res34: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">df1.show
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// let's make a case class for our DF so we can convert it to Dataset
+case class singleAndDoubleIntegers(once: Integer, twice: Integer)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class singleAndDoubleIntegers
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ds1 = df1.as[singleAndDoubleIntegers]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ds1: org.apache.spark.sql.Dataset[singleAndDoubleIntegers] = [once: int, twice: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">ds1.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+-----+
+|once|twice|
++----+-----+
+|   1|    2|
+|   2|    4|
+|   3|    6|
+|   4|    8|
+|   5|   10|
++----+-----+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="go-through-the-databricks-introductions-now"><a class="header" href="#go-through-the-databricks-introductions-now">Go through the databricks Introductions Now</a></h2>
+<ul>
+<li>
+<p><a href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html</a></p>
+</li>
+<li>
+<p><a href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html</a></p>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="recommended-homework"><a class="header" href="#recommended-homework">Recommended Homework</a></h3>
+<p>This week's recommended homework is a deep dive into the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL programming guide</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next" href="contents/000_1-sds-3-x-sql/007a_SparkSQLProgGuide_HW.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next" href="contents/000_1-sds-3-x-sql/007a_SparkSQLProgGuide_HW.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
