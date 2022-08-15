@@ -1,0 +1,692 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/000_6-sds-3-x-dl.html">000_6-sds-3-x-dl</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/049_DeepLearningIntro.html">049_DeepLearningIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/050_DLbyABr_01-Intro.html">050_DLbyABr_01-Intro</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/051_DLbyABr_02-Neural-Networks.html">051_DLbyABr_02-Neural-Networks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/052_DLbyABr_02a-Keras-DFFN.html">052_DLbyABr_02a-Keras-DFFN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/053_DLbyABr_03-HelloTensorFlow.html">053_DLbyABr_03-HelloTensorFlow</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/054_DLbyABr_03a-BatchTensorFlowWithMatrices.html">054_DLbyABr_03a-BatchTensorFlowWithMatrices</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/055_DLbyABr_04-ConvolutionalNetworks.html">055_DLbyABr_04-ConvolutionalNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/056_DLbyABr_04a-Hands-On-MNIST-MLP.html">056_DLbyABr_04a-Hands-On-MNIST-MLP</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/057_DLbyABr_04b-Hands-On-MNIST-CNN.html">057_DLbyABr_04b-Hands-On-MNIST-CNN</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/058_DLbyABr_04c-CIFAR-10.html">058_DLbyABr_04c-CIFAR-10</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/059_DLbyABr_05-RecurrentNetworks.html">059_DLbyABr_05-RecurrentNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/060_DLByABr_05a-LSTM-Solution.html">060_DLByABr_05a-LSTM-Solution</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/061_DLByABr_05b-LSTM-Language.html">061_DLByABr_05b-LSTM-Language</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/062_DLbyABr_06-GenerativeNetworks.html">062_DLbyABr_06-GenerativeNetworks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/063_DLbyABr_07-ReinforcementLearning.html">063_DLbyABr_07-ReinforcementLearning</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064_DLbyABr_08-Operations.html">064_DLbyABr_08-Operations</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_6-sds-3-x-dl/064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification.html" class="active">064x_MLOps_with_Pytorch_and_MLflow_for_Image_Classification</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="tutorial-mlops"><a class="header" href="#tutorial-mlops">Tutorial MLOps</a></h1>
+<p>This is a redefined notebook made available on a webinar hosted by Databricks, going through the whole pipeline of MLOps using delta lakes and model serving. You can watch the webinar <a href="https://databricks.com/p/thank-you/webinar-operationalizing-machine-learning-at-scale-140431">here</a> (approx. 1h40m - this notebook demo starts after approx. 30 minutes).</p>
+<p><em>Thanks to <a href="https://www.linkedin.com/in/christianvonkoch/">Christian von Koch</a> and <a href="https://www.linkedin.com/in/william-anz%C3%A9n-b52003199/">William Anzén</a> for their contributions towards making these materials work on this particular Databricks Shard</em>.</p>
+<p><strong>Note</strong>: The steps for uploading data on the Databricks Shard can be found in the end of this notebook. The steps below starts from a point where the data is already uploaded to the Databricks Shard.</p>
+</div>
+<div class="cell markdown">
+<h1 id="from-x-rays-to-a-production-classifier-with-mlflow"><a class="header" href="#from-x-rays-to-a-production-classifier-with-mlflow">From X-rays to a Production Classifier with MLflow</a></h1>
+<p>This simple example will demonstrate how to build a chest X-Ray classifer with PyTorch Lightning, and explain its output, but more importantly, will demonstrate how to manage the model's deployment to production as a REST service with MLflow and its Model Registry.</p>
+<img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/shap.png" width="600"/>
+<p>The National Institute of Health (NIH) <a href="https://www.nih.gov/news-events/news-releases/nih-clinical-center-provides-one-largest-publicly-available-chest-x-ray-datasets-scientific-community">released a dataset</a> of 45,000 chest X-rays of patients who may suffer from some problem in the chest cavity, along with several of 14 possible diagnoses. This was accompanied by a <a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Wang_ChestX-ray8_Hospital-Scale_Chest_CVPR_2017_paper.pdf">paper</a> analyzing the data set and presenting a classification model.</p>
+<p>The task here is to train a classifier that learns to predict these diagnoses. Note that each image may have 0 or several 'labels'. This data set was the subject of a <a href="https://www.kaggle.com/nih-chest-xrays/data">Kaggle competition</a> as well.</p>
+</div>
+<div class="cell markdown">
+<h2 id="data-engineering"><a class="header" href="#data-engineering">Data Engineering</a></h2>
+<p>The image data is provided as a series of <a href="https://nihcc.app.box.com/v/ChestXray-NIHCC">compressed archives</a>. However they are also available <a href="https://www.kaggle.com/nih-chest-xrays/data">from Kaggle</a> with other useful information, like labels and bounding boxes. In this problem, only the images will be used, unpacked into an <code>.../images/</code> directory,, and the CSV file of label information <code>Data_Entry_2017.csv</code> at a <code>.../metadata/</code> path.</p>
+<p>The images can be read directly and browsed with Apache Spark:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">raw_image_df = spark.read.format(&quot;image&quot;).load(&quot;dbfs:/datasets/ScaDaMaLe/nih-chest-xrays/images/raw/&quot;) # This is the path where the xray images has been uploaded into dbfs.
+display(raw_image_df)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="managing-unstructured-data-with-delta-lake"><a class="header" href="#managing-unstructured-data-with-delta-lake">Managing Unstructured Data with Delta Lake</a></h3>
+<p>Although the images can be read directly as files, it will be useful to manage the data as a <a href="https://delta.io/">Delta</a> table:</p>
+<ul>
+<li>Delta provides transactional updates, so that the data set can be updated, and still read safely while being updated</li>
+<li>Delta provides <a href="https://docs.delta.io/latest/quick-start.html#read-older-versions-of-data-using-time-travel">&quot;time travel&quot;</a> to view previous states of the data set</li>
+<li>Reading batches of image data is more efficient from Delta than from many small files</li>
+<li>The image data needs some one-time preprocessing beforehand anyway</li>
+</ul>
+<p>In this case, the images are all 1024 x 1024 grayscale images, though some arrive as 4-channel RGBA. They are normalized to 224 x 224 single-channel image data:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.sql.types import BinaryType, StringType
+from PIL import Image
+import numpy as np
+
+def to_grayscale(data, channels):
+  np_array = np.array(data, dtype=np.uint8)
+  if channels == 1: # assume mode = 0
+    grayscale = np_array.reshape((1024,1024))
+  else: # channels == 4 and mode == 24
+    reshaped = np_array.reshape((1024,1024,4))
+    # Data is BGRA; ignore alpha and use ITU BT.709 luma conversion:
+    grayscale = (0.0722 * reshaped[:,:,0] + 0.7152 * reshaped[:,:,1] + 0.2126 * reshaped[:,:,2]).astype(np.uint8)
+  # Use PIL to resize to match DL model that it will feed
+  resized = Image.frombytes('L', (1024,1024), grayscale).resize((224,224), resample=Image.LANCZOS)
+  return np.asarray(resized, dtype=np.uint8).flatten().tobytes()
+
+to_grayscale_udf = udf(to_grayscale, BinaryType())
+to_filename_udf = udf(lambda f: f.split(&quot;/&quot;)[-1], StringType())
+
+image_df = raw_image_df.select(
+  to_filename_udf(&quot;image.origin&quot;).alias(&quot;origin&quot;),
+  to_grayscale_udf(&quot;image.data&quot;, &quot;image.nChannels&quot;).alias(&quot;image&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The file of metadata links the image file name to its labels. These are parsed and joined, written to a Delta table, and registered in the metastore:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">raw_metadata_df = spark.read.\
+  option(&quot;header&quot;, True).option(&quot;inferSchema&quot;, True).\
+  csv(&quot;dbfs:/datasets/ScaDaMaLe/nih-chest-xrays/metadata/&quot;).\
+  select(&quot;Image Index&quot;, &quot;Finding Labels&quot;)
+
+display(raw_metadata_df)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.sql.functions import explode, split
+from pyspark.sql.types import BooleanType, StructType, StructField
+
+distinct_findings = sorted([r[&quot;col&quot;] for r in raw_metadata_df.select(explode(split(&quot;Finding Labels&quot;, r&quot;\|&quot;))).distinct().collect() if r[&quot;col&quot;] != &quot;No Finding&quot;])
+encode_findings_schema = StructType([StructField(f.replace(&quot; &quot;, &quot;_&quot;), BooleanType(), False) for f in distinct_findings])
+
+def encode_finding(raw_findings):
+  findings = raw_findings.split(&quot;|&quot;)
+  return [f in findings for f in distinct_findings]
+
+encode_finding_udf = udf(encode_finding, encode_findings_schema)
+
+metadata_df = raw_metadata_df.withColumn(&quot;encoded_findings&quot;, encode_finding_udf(&quot;Finding Labels&quot;)).select(&quot;Image Index&quot;, &quot;encoded_findings.*&quot;)
+
+table_path = &quot;/tmp/nih-chest-xrays/image_table/&quot;
+metadata_df.join(image_df, metadata_df[&quot;Image Index&quot;] == image_df[&quot;origin&quot;]).drop(&quot;Image Index&quot;, &quot;origin&quot;).write.mode(&quot;overwrite&quot;).format(&quot;delta&quot;).save(table_path)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">CREATE DATABASE IF NOT EXISTS nih_xray;
+USE nih_xray;
+CREATE TABLE IF NOT EXISTS images USING DELTA LOCATION '/tmp/nih-chest-xrays/image_table/';
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now we optimize the newly created table so that fetching data is more efficient.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">OPTIMIZE images;
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="modeling-with-pytorch-lightning-and-mlflow"><a class="header" href="#modeling-with-pytorch-lightning-and-mlflow">Modeling with PyTorch Lightning and MLflow</a></h2>
+<p><a href="https://pytorch.org/">PyTorch</a> is of course one of the most popular tools for building deep learning models, and is well suited to build a convolutional neural net that works well as a multi-label classifier for these images. Below, other related tools like <a href="https://pytorch.org/docs/stable/torchvision/index.html"><code>torchvision</code></a> and <a href="https://www.pytorchlightning.ai/">PyTorch Lightning</a> are used to simplify expressing and building the classifier.</p>
+<p>The data set isn't that large once preprocessed - about 2.2GB. For simplicity, the data will be loaded and manipulated with <a href="https://pandas.pydata.org/"><code>pandas</code></a> from the Delta table, and model trained on one GPU. It's also quite possible to scale to multiple GPUs, or scale across machines with Spark and <a href="https://github.com/horovod/horovod">Horovod</a>, but it won't be necessary to add that complexity in this example.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+
+df = spark.read.table(&quot;nih_xray.images&quot;)
+display(df)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">train_pd, test_pd = train_test_split(df.toPandas(), test_size=0.1, random_state=42) # Need to increase spark.driver.maxResultSize to at least 8GB through pasting spark.driver.maxResultSize &lt;X&gt;g in cluster Spark config
+
+frac_positive = train_pd.drop(&quot;image&quot;, axis=1).sum().sum() / train_pd.drop(&quot;image&quot;, axis=1).size
+disease_names = df.drop(&quot;image&quot;).columns
+num_classes = len(disease_names)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><code>torchvision</code> provides utilities that make it simple to perform some model-specific transformation as part of the model. Here, a pre-trained network will be used which requires normalized 3-channel RGB data as PyTorch Tensors:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from torchvision import transforms
+
+transforms = transforms.Compose([
+  transforms.ToPILImage(),
+  transforms.Lambda(lambda image: image.convert('RGB')),
+  transforms.ToTensor(),
+  transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Define the <code>Dataset</code> and train/test <code>DataLoader</code>s for this data set in PyTorch:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from torch.utils.data import Dataset, DataLoader
+import numpy as np
+
+class XRayDataset(Dataset):
+  def __init__(self, data_pd, transforms):
+    self.data_pd = data_pd
+    self.transforms = transforms
+    
+  def __len__(self):
+    return len(self.data_pd)
+  
+  def __getitem__(self, idx):
+    image = np.frombuffer(self.data_pd[&quot;image&quot;].iloc[idx], dtype=np.uint8).reshape((224,224))
+    labels = self.data_pd.drop(&quot;image&quot;, axis=1).iloc[idx].values.astype(np.float32)
+    return self.transforms(image), labels
+
+train_loader = DataLoader(XRayDataset(train_pd, transforms), batch_size=64, num_workers=8, shuffle=True)
+test_loader = DataLoader(XRayDataset(test_pd, transforms), batch_size=64, num_workers=8)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Note that <a href="https://mlflow.org/">MLflow</a> natively supports <a href="https://mlflow.org/docs/latest/python_api/mlflow.pytorch.html#module-mlflow.pytorch">logging PyTorch models</a> of course, but, can also automatically log the output of models defined with PyTorch Lightning:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import mlflow.pytorch
+
+mlflow.pytorch.autolog()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Finally, the model is defined, and fit. For simple purposes here, the model itself is quite simple: it employs the pretrained <a href="https://pytorch.org/hub/pytorch_vision_densenet/">densenet121</a> layers to do most of the work (layers which are not further trained here), and simply adds some dropout and a dense layer on top to perform the classification. No attempt is made here to tune the network's architecture or parameters further.</p>
+<p>For those new to PyTorch Lightning, it is still &quot;PyTorch&quot;, but removes the need to write much of PyTorch's boilerplate code. Instead, a <code>LightningModule</code> class is implemented with key portions like model definition and fitting processes defined.</p>
+<p><em>Note: This section should be run on a GPU. An NVIDIA T4 GPU is recommended, though any modern GPU should work. This code can also be easily changed to train on CPUs or TPUs.</em></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import torch
+from torch.optim import Adam
+from torch.nn import Dropout, Linear
+from torch.nn.functional import binary_cross_entropy_with_logits
+from sklearn.metrics import log_loss
+import pytorch_lightning as pl
+from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+
+class XRayNNLightning(pl.LightningModule):
+  def __init__(self, learning_rate, pos_weights):
+    super(XRayNNLightning, self).__init__()
+    self.densenet = torch.hub.load('pytorch/vision:v0.6.0', 'densenet121', pretrained=True)
+    for param in self.densenet.parameters():
+      param.requires_grad = False
+    self.dropout = Dropout(0.5)
+    self.linear = Linear(1000, num_classes)
+    # No sigmoid here; output logits
+    self.learning_rate = learning_rate
+    self.pos_weights = pos_weights
+
+  def get_densenet():
+    return self.densenet
+    
+  def forward(self, x):
+    x = self.densenet(x)
+    x = self.dropout(x)
+    x = self.linear(x)
+    return x
+
+  def configure_optimizers(self):
+    return Adam(self.parameters(), lr=self.learning_rate)
+
+  def training_step(self, train_batch, batch_idx):
+    x, y = train_batch
+    output = self.forward(x)
+    # Outputting logits above lets us use binary_cross_entropy_with_logits for efficiency, but also, allows the use of
+    # pos_weight to express that positive labels should be given much more weight. 
+    # Note this was also proposed in the paper linked above.
+    loss = binary_cross_entropy_with_logits(output, y, pos_weight=torch.tensor(self.pos_weights).to(self.device))
+    self.log('train_loss', loss)
+    return loss
+
+  def validation_step(self, val_batch, batch_idx):
+    x, y = val_batch
+    output = self.forward(x)
+    val_loss = binary_cross_entropy_with_logits(output, y, pos_weight=torch.tensor(self.pos_weights).to(self.device))
+    self.log('val_loss', val_loss)
+
+model = XRayNNLightning(learning_rate=0.001, pos_weights=[[1.0 / frac_positive] * num_classes])
+
+# Let PyTorch handle learning rate, batch size tuning, as well as early stopping.
+# Change here to configure for CPUs or TPUs.
+trainer = pl.Trainer(gpus=1, max_epochs=20, 
+                     auto_scale_batch_size='binsearch',
+                     auto_lr_find=True,
+                     callbacks=[EarlyStopping(monitor='val_loss', patience=3, verbose=True)])
+trainer.fit(model, train_loader, test_loader)
+
+# As of version MLFlow 1.13.1, the framework seems to have trouble saving the pytorch lightning module through mlflow.pytorch.autolog() even though it should according to the documentation.
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>There seems to be a bug with MLFlow, not able to autolog model from Pytorch. Instead we save the trained model at a custom path instead, enabling us to load it in later stage.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">path_to_model = &quot;/dbfs/tmp/xray&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import os.path, shutil
+from os import path
+
+if path.exists(path_to_model):
+  print(&quot;A model already exists in this path. It will be overwritten...&quot;)
+  shutil.rmtree(path_to_model)
+  mlflow.pytorch.save_model(model, path_to_model)
+else:
+  mlflow.pytorch.save_model(model, path_to_model)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Although not shown here for brevity, this model's results are comparable to those cited in the <a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Wang_ChestX-ray8_Hospital-Scale_Chest_CVPR_2017_paper.pdf">paper</a> - about 0.6-0.7 AUC for each of the 14 classes. The auto-logged results are available in MLflow:</p>
+<p><img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/pytorch_params.png" width="600"/> <img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/pytorch_artifacts.png" width="600"/></p>
+</div>
+<div class="cell markdown">
+<h3 id="psa-dont-try-to-diagnose-chest-x-rays-at-home"><a class="header" href="#psa-dont-try-to-diagnose-chest-x-rays-at-home">PSA: Don't Try (To Diagnose Chest X-rays) At Home!</a></h3>
+<p>The author is not a doctor, and probably neither are you! It should be said that this is <em>not</em> necessarily the best model, and certainly should not be used to actually diagnose patients! It's just an example.</p>
+</div>
+<div class="cell markdown">
+<h2 id="serving-the-model-with-mlflow"><a class="header" href="#serving-the-model-with-mlflow">Serving the Model with MLflow</a></h2>
+<p>This auto-logged model is useful raw material. The goal is to deploy it as a REST API, and <a href="https://mlflow.org/docs/latest/models.html#deploy-mlflow-models">MLflow can create a REST API and Docker container</a> around a <code>pyfunc</code> model, and even deploy to Azure ML or AWS SageMaker for you. It can also be deployed within Databricks for testing.</p>
+<p>However, there are a few catches which mean we can't directly deploy the model above:</p>
+<ul>
+<li>It accepts images as input, but these can't be directly specified in the JSON request to the REST API</li>
+<li>Its output are logits, when probabilities (and label names) would be more useful</li>
+</ul>
+<p>It is however easy to define a custom <code>PythonModel</code> that will wrap the PyTorch model and perform additional pre- and post-processing. This model accepts a base64-encoded image file, and returns the probability each label:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import torch
+import pandas as pd
+import numpy as np
+import base64
+from io import BytesIO
+from PIL import Image
+from mlflow.pyfunc import PythonModel
+
+class XRayNNServingModel(PythonModel):
+  def __init__(self, model, transforms, disease_names):
+    self.model = model
+    self.transforms = transforms
+    self.disease_names = disease_names
+    
+  def get_model():
+    return self.model
+  
+  def get_transforms():
+    return self.transforms
+  
+  def get_disease_names():
+    return disease_names
+
+  def predict(self, context, model_input):
+    def infer(b64_string):
+      encoded_image = base64.decodebytes(bytearray(b64_string, encoding=&quot;utf8&quot;))
+      image = Image.open(BytesIO(encoded_image)).convert(mode='L').resize((224,224), resample=Image.LANCZOS)
+      image_bytes = np.asarray(image, dtype=np.uint8)
+      transformed = self.transforms(image_bytes).unsqueeze(dim=0)
+      output = self.model(transformed).squeeze()
+      return torch.sigmoid(output).tolist()
+    return pd.DataFrame(model_input.iloc[:,0].apply(infer).to_list(), columns=disease_names)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now the new wrapped model is logged with MLflow:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import mlflow.pyfunc
+import mlflow.pytorch
+import mlflow.models
+import pytorch_lightning as pl
+import PIL
+import torchvision
+
+# Load PyTorch Lightning model
+# Loading the model previously saved
+loaded_model = mlflow.pytorch.load_model(path_to_model, map_location='cpu') 
+
+with mlflow.start_run():
+  model_env = mlflow.pyfunc.get_default_conda_env()
+  # Record specific additional dependencies required by the serving model
+  model_env['dependencies'][-1]['pip'] += [
+    f'torch=={torch.__version__}',
+    f'torchvision=={torchvision.__version__}',
+    f'pytorch-lightning=={pl.__version__}',
+    f'pillow=={PIL.__version__}',
+  ]
+  # Log the model signature - just creates some dummy data of the right type to infer from
+  signature = mlflow.models.infer_signature(
+    pd.DataFrame([&quot;dummy&quot;], columns=[&quot;image&quot;]),
+    pd.DataFrame([[0.0] * num_classes], columns=disease_names))
+  python_model = XRayNNServingModel(loaded_model, transforms, disease_names)
+  mlflow.pyfunc.log_model(&quot;model&quot;, python_model=python_model, signature=signature, conda_env=model_env)  # This autolog worked. Seems to be an issue with autologging pytorch-lightning models...
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="registering-the-model-with-mlflow"><a class="header" href="#registering-the-model-with-mlflow">Registering the Model with MLflow</a></h3>
+<p>The <a href="https://databricks.com/product/mlflow-model-registry">MLflow Model Registry</a> provides workflow management for the model promotion process, from Staging to Production. The new run created above can be registered directly from the MLflow UI:</p>
+<img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/register_model.png" width="800"/>
+<p>It can then be transitioned into the Production state directly, for simple purposes here. After that, enabling serving within Databricks is as simple as turning it on in the models' Serving tab:</p>
+<img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/serving.png" width="800"/>
+</div>
+<div class="cell markdown">
+<h3 id="accessing-the-model-with-a-rest-request"><a class="header" href="#accessing-the-model-with-a-rest-request">Accessing the Model with a REST Request</a></h3>
+<p>Now, we can send images to the REST endpoint and observe its classifications. This could power a simple web application, but here, to demonstrate, it is called directly from a notebook.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+image_path = &quot;/dbfs/datasets/ScaDaMaLe/nih-chest-xrays/images/raw/00000001_000.png&quot;
+plt.imshow(mpimg.imread(image_path), cmap='gray')
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Note:</strong> In the next cell you need to use your Databricks token for accessing Databricks from the internet. It is best practice to use the Databricks Secrets CLI to avoid putting secret keys in notebooks. Please refer to <a href="https://docs.databricks.com/security/secrets/index.html">this guide</a> for setting it up through the Databricks CLI.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import base64
+import requests
+import pandas as pd
+
+with open(image_path, &quot;rb&quot;) as file:
+  content = file.read()
+
+dataset = pd.DataFrame([base64.encodebytes(content)], columns=[&quot;image&quot;])
+# Note that you will still need a Databricks access token to send with the request. This can/should be stored as a secret in the workspace:
+token = dbutils.secrets.get(&quot;databricksEducational&quot;, &quot;databricksCLIToken&quot;) # These are just examples of a Secret Scope and Secret Key. Please refer to guide in above cell...
+
+response = requests.request(method='POST',
+                            headers={'Authorization': f'Bearer {token}'}, 
+                            url='https://dbc-635ca498-e5f1.cloud.databricks.com/model/nih_xray/1/invocations',
+                            json=dataset.to_dict(orient='split'))
+pd.DataFrame(response.json())
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The model suggests that a doctor might examine this X-ray for Atelectasis and Infiltration, but a Hernia is unlikely, for example. But, why did the model think so? Fortunately there are tools that can explain the model's output in this case, and this will be demonstrated a little later.</p>
+</div>
+<div class="cell markdown">
+<h2 id="adding-webhooks-for-model-state-management"><a class="header" href="#adding-webhooks-for-model-state-management">Adding Webhooks for Model State Management</a></h2>
+<p><a href="https://databricks.com/blog/2020/11/19/mlflow-model-registry-on-databricks-simplifies-mlops-with-ci-cd-features.html">MLflow can now trigger webhooks</a> when Model Registry events happen. Webhooks are standard 'callbacks' which let applications signal one another. For example, a webhook can cause a CI/CD test job to start and run tests on a model. In this simple example, we'll just set up a webhook that posts a message to a Slack channel.</p>
+<p><em>Note</em>: the example below requires a <a href="https://api.slack.com/messaging/webhooks">registered Slack webhook</a>. Because the webhook URL is sensitive, it is stored as a secret in the workspace and not included inline.</p>
+</div>
+<div class="cell markdown">
+<p>The Slack Webhook part of the tutorial has not been tested. Feel free to try to set it up.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from mlflow.tracking.client import MlflowClient
+from mlflow.utils.rest_utils import http_request
+import json
+
+def mlflow_call_endpoint(endpoint, method, body = '{}'):
+  client = MlflowClient()
+  host_creds = client._tracking_client.store.get_host_creds()
+  if method == 'GET':
+    response = http_request(host_creds=host_creds, endpoint=f&quot;/api/2.0/mlflow/{endpoint}&quot;, method=method, params=json.loads(body))
+  else:
+    response = http_request(host_creds=host_creds, endpoint=f&quot;/api/2.0/mlflow/{endpoint}&quot;, method=method, json=json.loads(body))
+  return response.json()
+
+json_obj = {
+  &quot;model_name&quot;: &quot;nih_xray&quot;,
+  &quot;events&quot;: [&quot;MODEL_VERSION_CREATED&quot;, &quot;TRANSITION_REQUEST_CREATED&quot;, &quot;MODEL_VERSION_TRANSITIONED_STAGE&quot;, &quot;COMMENT_CREATED&quot;, &quot;MODEL_VERSION_TAG_SET&quot;],
+  &quot;http_url_spec&quot;: { &quot;url&quot;: dbutils.secrets.get(&quot;demo-token-sean.owen&quot;, &quot;slack_webhook&quot;) }
+}
+mlflow_call_endpoint(&quot;registry-webhooks/create&quot;, &quot;POST&quot;, body=json.dumps(json_obj))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>As model versions are added, transitioned among stages, commented on, etc. a webhook will fire.</p>
+<img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/slack.png" width="800"/>
+</div>
+<div class="cell markdown">
+<h2 id="explaining-predictions"><a class="header" href="#explaining-predictions">Explaining Predictions</a></h2>
+<p><a href="https://shap.readthedocs.io/en/latest/">SHAP</a> is a popular tool for explaining model predictions. It can explain virtually any classifier or regressor at the prediction level, and estimate how much each input feature contributed positively or negatively to the result, and by how much.</p>
+<p>In MLflow 1.12 and later, SHAP model explanations can be <a href="https://www.mlflow.org/docs/latest/python_api/mlflow.shap.html">logged automatically</a>:</p>
+<img src="https://www.mlflow.org/docs/latest/_images/shap-ui-screenshot.png" width="800"/>
+<p>However, this model's inputs are not simple scalar features, but an image. SHAP does have tools like <code>GradExplainer</code> and <code>DeepExplainer</code> that are specifically designed to explain neural nets' classification of images. To use this, we do have to use SHAP manually instead of via MLflow's automated tools. However the result can be, for example, logged with a model in MLflow.</p>
+<p>Here we explain the model's top classification, and generate a plot showing which parts of the image most strongly move the prediction positively (red) or negatively (blue). The explanation is traced back to an early intermediate layer of densenet121.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import numpy as np
+import torch
+import mlflow.pyfunc
+import shap
+
+# Load the latest production model and its components
+pyfunc_model = mlflow.pyfunc.load_model(&quot;models:/nih_xray/production&quot;)
+transforms = pyfunc_model._model_impl.python_model.transforms
+model = pyfunc_model._model_impl.python_model.model
+disease_names = pyfunc_model._model_impl.python_model.disease_names
+
+# Let's pick an example that definitely exhibits some affliction
+df = spark.read.table(&quot;nih_xray.images&quot;)
+first_row = df.filter(&quot;Infiltration&quot;).select(&quot;image&quot;).limit(1).toPandas()
+image = np.frombuffer(first_row[&quot;image&quot;].item(), dtype=np.uint8).reshape((224,224))
+
+# Only need a small sample for explanations
+sample = df.sample(0.02).select(&quot;image&quot;).toPandas()
+sample_tensor = torch.cat([transforms(np.frombuffer(sample[&quot;image&quot;].iloc[idx], dtype=np.uint8).reshape((224,224))).unsqueeze(dim=0) for idx in range(len(sample))])
+
+e = shap.GradientExplainer((model, model.densenet.features[6]), sample_tensor, local_smoothing=0.1)
+shap_values, indexes = e.shap_values(transforms(image).unsqueeze(dim=0), ranked_outputs=3, nsamples=300)
+
+shap.image_plot(shap_values[0][0].mean(axis=0, keepdims=True),
+                transforms(image).numpy().mean(axis=0, keepdims=True))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import pandas as pd
+
+pd.DataFrame(torch.sigmoid(model(transforms(image).unsqueeze(dim=0))).detach().numpy(), columns=disease_names).iloc[:,indexes.numpy()[0]]
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>This suggests that the small region at the top of left lung is more significant in causing the model to produce its positive classifications for Infiltration, Effusion and Cardiomegaly than most of the image, and the bottom of the left lung however contradicts those to some degree and is associated with lower probability of that classification.</p>
+</div>
+<div class="cell markdown">
+<h2 id="managing-notebooks-with-projects"><a class="header" href="#managing-notebooks-with-projects">Managing Notebooks with Projects</a></h2>
+<p>This notebook exists within a Project. This means it and any related notebooks are backed by a Git repository. The notebook can be committed, along with other notebooks, and observed in the source Git repository.</p>
+<img src="https://databricks-knowledge-repo-images.s3.us-east-2.amazonaws.com/ML/nih_xray/git.png" width="600"/>
+</div>
+<div class="cell markdown">
+<h2 id="uploading-data-to-databricks-shard-mac"><a class="header" href="#uploading-data-to-databricks-shard-mac">Uploading Data to Databricks Shard (Mac)</a></h2>
+<p><strong>Step 1:</strong> Download <a href="https://brew.sh/index_sv">Homebrew</a> - follow the instructions on the link.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 2:</strong> Download python with brew in order to get pip on your computer. Follow this guide <a href="https://docs.python-guide.org/starting/install3/osx/">here</a> for installing Python and adding it to your PATH.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 3:</strong> Install Databricks CLI</p>
+<p>Run the following command in your terminal to install the Databricks Command Line Interface:</p>
+<p><code>pip install databricks-cli</code></p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 4:</strong> Press your user symbol in the upper right of this page and press <em>User Settings</em>. Press <em>Access Tokens</em> and generate a new token with an appropriate name and appropriate lifetime. This is for connecting your local comuter to this specific Databricks shard.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 5:</strong> Follow the instructions for configuring your Databricks CLI with your generated token <a href="https://docs.databricks.com/dev-tools/cli/index.html">here</a>.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 6:</strong> Download the data from <a href="https://www.kaggle.com/nih-chest-xrays/data">Kaggle Chest X-rays</a>.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 7:</strong> Run the command below in your local terminal. <strong>Note:</strong> You might need to run multiple commands since the Kaggle images lies in different folders after download. In this case, separate each command with a <code>;</code>.</p>
+<p><code>dbfs cp -r &lt;Path to the folder with the Kaggle images&gt; dbfs:/datasets/&lt;Desired Path to the images on Databricks&gt;;</code> <code>dbfs cp -r &lt;Path to another folder with the Kaggle images&gt; dbfs:/datasets/&lt;Desired Path to the images on Databricks&gt;</code></p>
+</div>
+<div class="cell markdown">
+<p><strong>Step 8:</strong> After the commands have successfully completed, the images should lie within the Databricks shard in the following path:</p>
+<p><code>/dbfs/datasets/&lt;Desired Path to the images on Databricks&gt;</code></p>
+<p>You can verify this by running the following command in any notebook on the Databricks shard which you uploaded the images into:</p>
+<p><code>%sh ls /dbfs/datasets/</code></p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_6-sds-3-x-dl/064_DLbyABr_08-Operations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_6-sds-3-x-dl/064_DLbyABr_08-Operations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
