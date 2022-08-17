@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>0x_mnist-tensorflow-keras</title>
+        <title>0x_mnist-tensorflow-keras - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -142,390 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="cell markdown">
-<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
-<p>The following is from databricks blog with minor adaptations with help from Tilo Wiklund.</p>
-</div>
-<div class="cell markdown">
-<h1 id="distributed-deep-learning-training-using-tensorflow-and-keras-with-horovodrunner"><a class="header" href="#distributed-deep-learning-training-using-tensorflow-and-keras-with-horovodrunner">Distributed deep learning training using TensorFlow and Keras with HorovodRunner</a></h1>
-<p>This notebook demonstrates how to train a model for the MNIST dataset using the <code>tensorflow.keras</code> API. It first shows how to train the model on a single node, and then shows how to adapt the code using HorovodRunner for distributed training.</p>
-<p><strong>Requirements</strong></p>
-<ul>
-<li>This notebook runs on CPU or GPU clusters.</li>
-<li>To run the notebook, create a cluster with</li>
-<li>Two workers</li>
-<li>Databricks Runtime 6.3 ML or above</li>
-</ul>
-</div>
-<div class="cell markdown">
-<h2 id="cluster-specs-on-databricks"><a class="header" href="#cluster-specs-on-databricks">Cluster Specs on databricks</a></h2>
-<p>Run on <code>tiny-debug-cluster-(no)gpu</code> or another cluster with the following runtime specifications with CPU/non-GPU and GPU clusters, respectively:</p>
-<ul>
-<li>Runs on non-GPU cluster with 3 (or more) nodes on 7.4 ML runtime (nodes are 1+2 x m4.xlarge)</li>
-<li>Runs on GPU cluster with 3 (or more) nodes on 7.4 ML GPU runtime (nodes are 1+2 x g4dn.xlarge)</li>
-</ul>
-<p>You do not need to &quot;install&quot; anything else in databricks as everything needed is pre-installed in the runtime environment on the right nodes.</p>
-</div>
-<div class="cell markdown">
-<h2 id="set-up-checkpoint-location"><a class="header" href="#set-up-checkpoint-location">Set up checkpoint location</a></h2>
-<p>The next cell creates a directory for saved checkpoint models.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">import os
-import time
-
-checkpoint_dir = '/dbfs/ml/MNISTDemo/train/{}/'.format(time.time())
-
-os.makedirs(checkpoint_dir)
-</code></pre>
-</div>
-<div class="cell markdown">
-<h2 id="create-function-to-prepare-data"><a class="header" href="#create-function-to-prepare-data">Create function to prepare data</a></h2>
-<p>This following cell creates a function that prepares the data for training. This function takes in <code>rank</code> and <code>size</code> arguments so it can be used for both single-node and distributed training. In Horovod, <code>rank</code> is a unique process ID and <code>size</code> is the total number of processes.</p>
-<p>This function downloads the data from <code>keras.datasets</code>, distributes the data across the available nodes, and converts the data to shapes and types needed for training.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">def get_dataset(num_classes, rank=0, size=1):
-  from tensorflow import keras
-  
-  (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data('MNIST-data-%d' % rank)
-  x_train = x_train[rank::size]
-  y_train = y_train[rank::size]
-  x_test = x_test[rank::size]
-  y_test = y_test[rank::size]
-  x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
-  x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
-  x_train = x_train.astype('float32')
-  x_test = x_test.astype('float32')
-  x_train /= 255
-  x_test /= 255
-  y_train = keras.utils.to_categorical(y_train, num_classes)
-  y_test = keras.utils.to_categorical(y_test, num_classes)
-  return (x_train, y_train), (x_test, y_test)
-</code></pre>
-</div>
-<div class="cell markdown">
-<h2 id="create-function-to-train-model"><a class="header" href="#create-function-to-train-model">Create function to train model</a></h2>
-<p>The following cell defines the model using the <code>tensorflow.keras</code> API. This code is adapted from the <a href="https://keras.io/examples/vision/mnist_convnet/">Keras MNIST convnet example</a>. The model consists of 2 convolutional layers, a max-pooling layer, two dropout layers, and a final dense layer.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">def get_model(num_classes):
-  from tensorflow.keras import models
-  from tensorflow.keras import layers
-  
-  model = models.Sequential()
-  model.add(layers.Conv2D(32, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=(28, 28, 1)))
-  model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-  model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-  model.add(layers.Dropout(0.25))
-  model.add(layers.Flatten())
-  model.add(layers.Dense(128, activation='relu'))
-  model.add(layers.Dropout(0.5))
-  model.add(layers.Dense(num_classes, activation='softmax'))
-  return model
-</code></pre>
-</div>
-<div class="cell markdown">
-<h2 id="run-training-on-single-node"><a class="header" href="#run-training-on-single-node">Run training on single node</a></h2>
-</div>
-<div class="cell markdown">
-<p>At this point, you have created functions to load and preprocess the dataset and to create the model.
-This section illustrates single-node training code using <code>tensorflow.keras</code>.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python"># Specify training parameters
-batch_size = 128
-epochs = 5
-num_classes = 10        
-
-
-def train(learning_rate=1.0):
-  from tensorflow import keras
-  
-  (x_train, y_train), (x_test, y_test) = get_dataset(num_classes)
-  model = get_model(num_classes)
-
-  # Specify the optimizer (Adadelta in this example), using the learning rate input parameter of the function so that Horovod can adjust the learning rate during training
-  optimizer = keras.optimizers.Adadelta(lr=learning_rate)
-
-  model.compile(optimizer=optimizer,
-                loss='categorical_crossentropy',
-                metrics=['accuracy'])
-
-  model.fit(x_train, y_train,
-            batch_size=batch_size,
-            epochs=epochs,
-            verbose=2,
-            validation_data=(x_test, y_test))
-</code></pre>
-</div>
-<div class="cell markdown">
-<p>Run the <code>train</code> function you just created to train a model on the driver node. The process takes several minutes. The accuracy improves with each epoch.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python"># Runs in  23.67 seconds on 3-node     GPU
-# Runs in 418.8  seconds on 3-node non-GPU
-train(learning_rate=0.1)
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
-    8192/11490434 [..............................] - ETA: 0s  319488/11490434 [..............................] - ETA: 1s  679936/11490434 [&gt;.............................] - ETA: 1s 1024000/11490434 [=&gt;............................] - ETA: 1s 1409024/11490434 [==&gt;...........................] - ETA: 1s 1802240/11490434 [===&gt;..........................] - ETA: 1s 2195456/11490434 [====&gt;.........................] - ETA: 1s 2588672/11490434 [=====&gt;........................] - ETA: 1s 2981888/11490434 [======&gt;.......................] - ETA: 1s 3358720/11490434 [=======&gt;......................] - ETA: 1s 3866624/11490434 [=========&gt;....................] - ETA: 1s 4440064/11490434 [==========&gt;...................] - ETA: 0s 5160960/11490434 [============&gt;.................] - ETA: 0s 6094848/11490434 [==============&gt;...............] - ETA: 0s 7274496/11490434 [=================&gt;............] - ETA: 0s 8683520/11490434 [=====================&gt;........] - ETA: 0s10436608/11490434 [==========================&gt;...] - ETA: 0s11493376/11490434 [==============================] - 1s 0us/step
-Epoch 1/5
-469/469 - 3s - loss: 0.6257 - accuracy: 0.8091 - val_loss: 0.2157 - val_accuracy: 0.9345
-Epoch 2/5
-469/469 - 3s - loss: 0.2950 - accuracy: 0.9127 - val_loss: 0.1450 - val_accuracy: 0.9569
-Epoch 3/5
-469/469 - 3s - loss: 0.2145 - accuracy: 0.9373 - val_loss: 0.1035 - val_accuracy: 0.9695
-Epoch 4/5
-469/469 - 3s - loss: 0.1688 - accuracy: 0.9512 - val_loss: 0.0856 - val_accuracy: 0.9738
-Epoch 5/5
-469/469 - 3s - loss: 0.1379 - accuracy: 0.9600 - val_loss: 0.0701 - val_accuracy: 0.9788
-</code></pre>
-</div>
-</div>
-<div class="cell markdown">
-<h2 id="migrate-to-horovodrunner-for-distributed-training"><a class="header" href="#migrate-to-horovodrunner-for-distributed-training">Migrate to HorovodRunner for distributed training</a></h2>
-<p>This section shows how to modify the single-node code to use Horovod. For more information about Horovod, see the <a href="https://horovod.readthedocs.io/en/stable/">Horovod documentation</a>.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">def train_hvd(learning_rate=1.0):
-  # Import tensorflow modules to each worker
-  from tensorflow.keras import backend as K
-  from tensorflow.keras.models import Sequential
-  import tensorflow as tf
-  from tensorflow import keras
-  import horovod.tensorflow.keras as hvd
-  
-  # Initialize Horovod
-  hvd.init()
-
-  # Pin GPU to be used to process local rank (one GPU per process)
-  # These steps are skipped on a CPU cluster
-  gpus = tf.config.experimental.list_physical_devices('GPU')
-  for gpu in gpus:
-    tf.config.experimental.set_memory_growth(gpu, True)
-  if gpus:
-    tf.config.experimental.set_visible_devices(gpus[hvd.local_rank()], 'GPU')
-
-  # Call the get_dataset function you created, this time with the Horovod rank and size
-  (x_train, y_train), (x_test, y_test) = get_dataset(num_classes, hvd.rank(), hvd.size())
-  model = get_model(num_classes)
-
-  # Adjust learning rate based on number of GPUs
-  optimizer = keras.optimizers.Adadelta(lr=learning_rate * hvd.size())
-
-  # Use the Horovod Distributed Optimizer
-  optimizer = hvd.DistributedOptimizer(optimizer)
-
-  model.compile(optimizer=optimizer,
-                loss='categorical_crossentropy',
-                metrics=['accuracy'])
-
-  # Create a callback to broadcast the initial variable states from rank 0 to all other processes.
-  # This is required to ensure consistent initialization of all workers when training is started with random weights or restored from a checkpoint.
-  callbacks = [
-      hvd.callbacks.BroadcastGlobalVariablesCallback(0),
-  ]
-
-  # Save checkpoints only on worker 0 to prevent conflicts between workers
-  if hvd.rank() == 0:
-      callbacks.append(keras.callbacks.ModelCheckpoint(checkpoint_dir + '/checkpoint-{epoch}.ckpt', save_weights_only = True))
-
-  model.fit(x_train, y_train,
-            batch_size=batch_size,
-            callbacks=callbacks,
-            epochs=epochs,
-            verbose=2,
-            validation_data=(x_test, y_test))
-</code></pre>
-</div>
-<div class="cell markdown">
-<p>Now that you have defined a training function with Horovod, you can use HorovodRunner to distribute the work of training the model.</p>
-<p>The HorovodRunner parameter <code>np</code> sets the number of processes. This example uses a cluster with two workers, each with a single GPU, so set <code>np=2</code>. (If you use <code>np=-1</code>, HorovodRunner trains using a single process on the driver node.)</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="true">
-<pre><code class="language-python"># runs in  47.84 seconds on 3-node     GPU cluster
-# Runs in 316.8  seconds on 3-node non-GPU cluster
-from sparkdl import HorovodRunner
-
-hr = HorovodRunner(np=2)
-hr.run(train_hvd, learning_rate=0.1)
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>HorovodRunner will stream all training logs to notebook cell output. If there are too many logs, you
-can adjust the log level in your train method. Or you can set driver_log_verbosity to
-'log_callback_only' and use a HorovodRunner log  callback on the first worker to get concise
-progress updates.
-The global names read or written to by the pickled function are {'checkpoint_dir', 'num_classes', 'batch_size', 'epochs', 'get_model', 'get_dataset'}.
-The pickled object size is 3560 bytes.
-
-### How to enable Horovod Timeline? ###
-HorovodRunner has the ability to record the timeline of its activity with Horovod  Timeline. To
-record a Horovod Timeline, set the `HOROVOD_TIMELINE` environment variable  to the location of the
-timeline file to be created. You can then open the timeline file  using the chrome://tracing
-facility of the Chrome browser.
-
-Start training.
-Warning: Permanently added '10.149.233.216' (ECDSA) to the list of known hosts.
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:02.376337: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:02.562832: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:04.895002: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:04.896022: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:04.920620: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:04.921500: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:04.921493: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
-[1,1]&lt;stderr&gt;:pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
-[1,1]&lt;stderr&gt;:coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:04.921528: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:04.922411: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
-[1,0]&lt;stderr&gt;:pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
-[1,0]&lt;stderr&gt;:coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:04.922448: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:04.992378: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.013142: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.033189: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.042157: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.061824: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.072216: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.111672: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.120257: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.162596: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.174443: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.236402: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.236544: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.237464: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:05.238274: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-[1,1]&lt;stdout&gt;:Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.317271: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.317512: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.318510: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:05.319526: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-[1,0]&lt;stdout&gt;:Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz[1,0]&lt;stdout&gt;:
-[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;:    8192/11490434 [..............................] - ETA: 0s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;:  344064/11490434 [..............................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;:  688128/11490434 [&gt;.............................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;:    8192/11490434 [..............................] - ETA: 0s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 1056768/11490434 [=&gt;............................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;:  278528/11490434 [..............................][1,0]&lt;stdout&gt;: - ETA: 2s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 1458176/11490434 [==&gt;...........................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;:  622592/11490434 [&gt;.............................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 1867776/11490434 [===&gt;..........................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;:  950272/11490434 [=&gt;............................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 2293760/11490434 [====&gt;.........................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 1277952/11490434 [==&gt;...........................][1,0]&lt;stdout&gt;: - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 2703360/11490434 [======&gt;.......................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 1605632/11490434 [===&gt;..........................][1,0]&lt;stdout&gt;: - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 3112960/11490434 [=======&gt;......................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 1966080/11490434 [====&gt;.........................][1,0]&lt;stdout&gt;: - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 3522560/11490434 [========&gt;.....................] - ETA: 1s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 2310144/11490434 [=====&gt;........................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 3915776/11490434 [=========&gt;....................] - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 2670592/11490434 [=====&gt;........................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 4325376/11490434 [==========&gt;...................] - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 3031040/11490434 [======&gt;.......................][1,0]&lt;stdout&gt;: - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 4734976/11490434 [===========&gt;..................] - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 3375104/11490434 [=======&gt;......................][1,0]&lt;stdout&gt;: - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 5144576/11490434 [============&gt;.................] - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 3719168/11490434 [========&gt;.....................] - ETA: 1s[1,1]&lt;stdout&gt;:[1,1]&lt;stdout&gt;: 5554176/11490434 [=============&gt;................] - ETA: 0s[1,0]&lt;stdout&gt;...(truncated)
-[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 8339456/11490434 [====================&gt;.........][1,0]&lt;stdout&gt;: - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;: 9486336/11490434 [=======================&gt;......] - ETA: 0s[1,0]&lt;stdout&gt;:11026432/11490434 [===========================&gt;..][1,0]&lt;stdout&gt;: - ETA: 0s[1,0]&lt;stdout&gt;:[1,0]&lt;stdout&gt;:11493376/11490434 [==============================] - 1s 0us/step
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.811043: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
-[1,1]&lt;stderr&gt;:To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.845779: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2499995000 Hz
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.846130: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55aed63a8420 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.846166: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:06.935377: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
-[1,0]&lt;stderr&gt;:To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.943654: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.944591: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55aed4b73250 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.944627: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.945629: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946445: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
-[1,1]&lt;stderr&gt;:pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
-[1,1]&lt;stderr&gt;:coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946493: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946543: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946567: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946584: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946599: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946614: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946630: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.946720: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.947579: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.948369: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:06.949018: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:06.973106: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2499995000 Hz
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:06.973423: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55ee100218f0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:06.973452: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.069880: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.070799: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55ee0fa4d9d0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.070833: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.071991: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.072849: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
-[1,0]&lt;stderr&gt;:pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
-[1,0]&lt;stderr&gt;:coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.072902: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.072961: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.072988: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.073009: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.073038: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.073069: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.073095: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.073204: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.074061: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.074821: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:07.075888: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.153604: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.153659: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.153672: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.155162: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.156116: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.156943: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13943 MB memory) -&gt; physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
-[1,1]&lt;stdout&gt;:Epoch 1/5
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.485845: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.485903: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.485912: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.488817: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.489793: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:08.490644: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13943 MB memory) -&gt; physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
-[1,0]&lt;stdout&gt;:Epoch 1/5
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:08.803868: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:09.190762: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-[1,1]&lt;stderr&gt;:2021-01-12 15:03:09.348763: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,0]&lt;stderr&gt;:2021-01-12 15:03:09.857574: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Bootstrap : Using [0]eth0:10.149.236.86&lt;0&gt;
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
-[1,0]&lt;stdout&gt;:
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO NET/Socket : Using [0]eth0:10.149.236.86&lt;0&gt;
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Using network Socket
-[1,0]&lt;stdout&gt;:NCCL version 2.7.3+cuda10.1
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Bootstrap : Using [0]eth0:10.149.233.216&lt;0&gt;
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
-[1,1]&lt;stdout&gt;:
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO NET/Socket : Using [0]eth0:10.149.233.216&lt;0&gt;
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Using network Socket
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 00/02 :    0   1
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 01/02 :    0   1
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 8/8/64
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Trees [0] 1/-1/-1-&gt;0-&gt;-1|-1-&gt;0-&gt;1/-1/-1 [1] -1/-1/-1-&gt;0-&gt;1|1-&gt;0-&gt;-1/-1/-1
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 8/8/64
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Trees [0] -1/-1/-1-&gt;1-&gt;0|0-&gt;1-&gt;-1/-1/-1 [1] 0/-1/-1-&gt;1-&gt;-1|-1-&gt;1-&gt;0/-1/-1
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Channel 00 : 0[1e0] -&gt; 1[1e0] [receive] via NET/Socket/0
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 00 : 1[1e0] -&gt; 0[1e0] [receive] via NET/Socket/0
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Channel 00 : 1[1e0] -&gt; 0[1e0] [send] via NET/Socket/0
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 00 : 0[1e0] -&gt; 1[1e0] [send] via NET/Socket/0
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Channel 01 : 0[1e0] -&gt; 1[1e0] [receive] via NET/Socket/0
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 01 : 1[1e0] -&gt; 0[1e0] [receive] via NET/Socket/0
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO Channel 01 : 1[1e0] -&gt; 0[1e0] [send] via NET/Socket/0
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Channel 01 : 0[1e0] -&gt; 1[1e0] [send] via NET/Socket/0
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO 2 coll channels, 2 p2p channels, 1 p2p channels per peer
-[1,1]&lt;stdout&gt;:1120-144117-apses921-10-149-233-216:1035:1038 [0] NCCL INFO comm 0x7f408c300970 rank 1 nranks 2 cudaDev 0 busId 1e0 - Init COMPLETE
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO 2 coll channels, 2 p2p channels, 1 p2p channels per peer
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO comm 0x7f56e53be860 rank 0 nranks 2 cudaDev 0 busId 1e0 - Init COMPLETE
-[1,0]&lt;stdout&gt;:1120-144117-apses921-10-149-236-86:1010:1013 [0] NCCL INFO Launch mode Parallel
-[1,1]&lt;stdout&gt;:235/235 - 3s - loss: 0.5233 - accuracy: 0.8414 - val_loss: 0.1912 - val_accuracy: 0.9434
-[1,1]&lt;stdout&gt;:Epoch 2/5
-[1,0]&lt;stdout&gt;:235/235 - 5s - loss: 0.6732 - accuracy: 0.7913 - val_loss: 0.1872 - val_accuracy: 0.9434
-[1,0]&lt;stdout&gt;:Epoch 2/5
-[1,1]&lt;stdout&gt;:235/235 - 3s - loss: 0.1892 - accuracy: 0.9455 - val_loss: 0.1172 - val_accuracy: 0.9650
-[1,1]&lt;stdout&gt;:Epoch 3/5
-[1,0]&lt;stdout&gt;:235/235 - 5s - loss: 0.3207 - accuracy: 0.9024 - val_loss: 0.1168 - val_accuracy: 0.9650
-[1,0]&lt;stdout&gt;:Epoch 3/5
-[1,1]&lt;stdout&gt;:235/235 - 3s - loss: 0.1225 - accuracy: 0.9651 - val_loss: 0.0827 - val_accuracy: 0.9754
-[1,1]&lt;stdout&gt;:Epoch 4/5
-[1,0]&lt;stdout&gt;:235/235 - 5s - loss: 0.2330 - accuracy: 0.9303 - val_loss: 0.0795 - val_accuracy: 0.9750
-[1,0]&lt;stdout&gt;:Epoch 4/5
-[1,1]&lt;stdout&gt;:235/235 - 3s - loss: 0.0916 - accuracy: 0.9744 - val_loss: 0.0655 - val_accuracy: 0.9790
-[1,1]&lt;stdout&gt;:Epoch 5/5
-[1,0]&lt;stdout&gt;:235/235 - 5s - loss: 0.1812 - accuracy: 0.9448 - val_loss: 0.0624 - val_accuracy: 0.9794
-[1,0]&lt;stdout&gt;:Epoch 5/5
-[1,1]&lt;stdout&gt;:235/235 - 4s - loss: 0.0738 - accuracy: 0.9798 - val_loss: 0.0571 - val_accuracy: 0.9830
-[1,0]&lt;stdout&gt;:235/235 - 6s - loss: 0.1536 - accuracy: 0.9528 - val_loss: 0.0544 - val_accuracy: 0.9822
-</code></pre>
-</div>
-</div>
-<div class="cell markdown">
-<p>Under the hood, HorovodRunner takes a Python method that contains deep learning training code with Horovod hooks. HorovodRunner pickles the method on the driver and distributes it to Spark workers. A Horovod MPI job is embedded as a Spark job using the barrier execution mode. The first executor collects the IP addresses of all task executors using BarrierTaskContext and triggers a Horovod job using <code>mpirun</code>. Each Python MPI process loads the pickled user program, deserializes it, and runs it.</p>
-<p>For more information, see <a href="https://databricks.github.io/spark-deep-learning/#api-documentation">HorovodRunner API documentation</a>.</p>
-</div>
+                        <h1 id="0x_mnist-tensorflow-keras"><a class="header" href="#0x_mnist-tensorflow-keras">0x_mnist-tensorflow-keras</a></h1>
 
                     </main>
 
