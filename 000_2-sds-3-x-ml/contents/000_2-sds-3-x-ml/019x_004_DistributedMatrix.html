@@ -145,54 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="cell markdown">
-<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
-</div>
-<div class="cell markdown">
-<p>This is an elaboration of the <a href="http://spark.apache.org/docs/latest/mllib-data-types.html">Apache Spark mllib-progamming-guide on mllib-data-types</a>.</p>
-<h1 id="overview"><a class="header" href="#overview"><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/000_MLlibProgGuide">Overview</a></a></h1>
-<h2 id="data-types---mllib-programming-guide"><a class="header" href="#data-types---mllib-programming-guide"><a href="/#workspace/scalable-data-science/xtraResources/ProgGuides2_2/MLlibProgrammingGuide/dataTypes/000_dataTypesProgGuide">Data Types - MLlib Programming Guide</a></a></h2>
-<ul>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#local-vector">Local vector</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#labeled-point">Labeled point</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#local-matrix">Local matrix</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#distributed-matrix">Distributed matrix</a>
-<ul>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#rowmatrix">RowMatrix</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#indexedrowmatrix">IndexedRowMatrix</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#coordinatematrix">CoordinateMatrix</a></li>
-<li><a href="http://spark.apache.org/docs/latest/mllib-data-types.html#blockmatrix">BlockMatrix</a></li>
-</ul>
-</li>
-</ul>
-<p>MLlib supports local vectors and matrices stored on a single machine, as well as distributed matrices backed by one or more RDDs. Local vectors and local matrices are simple data models that serve as public interfaces. The underlying linear algebra operations are provided by <a href="http://www.scalanlp.org/">Breeze</a> and <a href="http://jblas.org/">jblas</a>. A training example used in supervised learning is called a “labeled point” in MLlib.</p>
-</div>
-<div class="cell markdown">
-<h2 id="distributed-matrix-in-scala"><a class="header" href="#distributed-matrix-in-scala">Distributed matrix in Scala</a></h2>
-<p>A distributed matrix has <strong>long-typed row and column indices</strong> and <strong>double-typed values</strong>, stored distributively in one or more RDDs.</p>
-<p>It is <strong>very important to choose the right format to store large and distributed matrices</strong>. Converting a distributed matrix to a different format may require a global shuffle, which is quite expensive.</p>
-<p>Three types of distributed matrices have been implemented so far.</p>
-<ol>
-<li>The basic type is called <code>RowMatrix</code>.</li>
-</ol>
-<ul>
-<li>A <code>RowMatrix</code> is a row-oriented distributed matrix without meaningful row indices, e.g., a collection of feature vectors. It is backed by an RDD of its rows, where each row is a local vector.</li>
-<li>We assume that the number of columns is not huge for a <code>RowMatrix</code> so that a single local vector can be reasonably communicated to the driver and can also be stored / operated on using a single node.</li>
-<li>An <code>IndexedRowMatrix</code> is similar to a <code>RowMatrix</code> but with row indices, which can be used for identifying rows and executing joins.</li>
-<li>A <code>CoordinateMatrix</code> is a distributed matrix stored in <a href="https://en.wikipedia.org/wiki/Sparse_matrix#Coordinate_list_.28COO.29">coordinate list (COO)</a> format, backed by an RDD of its entries.</li>
-</ul>
-<p><em><strong>Note</strong></em></p>
-<p>The underlying RDDs of a distributed matrix must be deterministic, because we cache the matrix size. In general the use of non-deterministic RDDs can lead to errors.</p>
-</div>
-<div class="cell markdown">
-<p><em><strong>Remark:</strong></em> there is a huge difference in the orders of magnitude between the maximum size of local versus distributed matrices!</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">print(Long.MaxValue.toDouble, Int.MaxValue.toDouble, Long.MaxValue.toDouble / Int.MaxValue.toDouble) // index ranges and ratio for local and distributed matrices
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-</div>
+                        <h1 id="019x_004_distributedmatrix"><a class="header" href="#019x_004_distributedmatrix">019x_004_DistributedMatrix</a></h1>
 
                     </main>
 
