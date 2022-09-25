@@ -1,0 +1,661 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>034_01_MapMatching_with_GeoMatch_UppsalaTiny - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html" class="active">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="map-matching-openstreetmap-nodes-to-openstreetmap-ways"><a class="header" href="#map-matching-openstreetmap-nodes-to-openstreetmap-ways">Map-matching OpenStreetMap Nodes to OpenStreetMap Ways</a></h1>
+<p>Stavroula Rafailia Vlachou (<a href="https://www.linkedin.com/in/stavroula-rafailia-vlachou/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>).</p>
+<pre><code>This project was supported by SENSMETRY through a Data Science Project Internship 
+between 2022-01-17 and 2022-06-05 to Stavroula R. Vlachou
+Databricks University Alliance with infrastructure credits from AWS to 
+Raazesh Sainudiin, Department of Mathematics, Uppsala University, Sweden.
+</code></pre>
+<p>2022, Uppsala, Sweden</p>
+</div>
+<div class="cell markdown">
+<h2 id="what-is-map-matching"><a class="header" href="#what-is-map-matching">What is map-matching?</a></h2>
+<p>Map matching is the problem of how to match recorded geographic coordinates to a logical model of the real world, typically using some form of Geographic Information System.</p>
+<p>See <a href="https://en.wikipedia.org/wiki/Map_matching">https://en.wikipedia.org/wiki/Map_matching</a>.</p>
+</div>
+<div class="cell markdown">
+<h2 id="map-matching-with-geomatch"><a class="header" href="#map-matching-with-geomatch">Map-Matching with GeoMatch</a></h2>
+<p><a href="https://ieeexplore.ieee.org/document/8622488">GeoMatch</a> is a novel, scalable, and efficient big-data pipeline for large-scale map-matching on Apache Spark. It improves existing spatial big data solutions by utilizing a novel spatial partitioning scheme inspired by Hilbert space-filling curves.</p>
+<p>The library can be found in the following git repository <a href="https://github.com/bdilab/GeoMatch">GeoMatch</a>.</p>
+<p>The necessary files to generate the jar for this work can be found in the following fork <a href="https://github.com/StavroulaVlachou/GeoMatch">https://github.com/StavroulaVlachou/GeoMatch</a>.</p>
+<p>Read <a href="https://eprints.lancs.ac.uk/id/eprint/129165/1/GeoMatch_IEEE_BigData_preprint.pdf">GeoMatch: Efficient Large-Scale Map Matching on Apache Spark</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
+<p><code>git clone git@github.com:StavroulaVlachou/GeoMatch.git</code></p>
+<p><code>cd Common</code></p>
+<p><code>mvn compile install</code></p>
+<p><code>cd ../GeoMatch</code></p>
+<p><code>mvn compile install</code></p>
+<p>The generated <code>jar</code> files can be found within the <code>target</code> directories. Then, 1. In Databricks choose Create -&gt; Library and upload the packaged jars. 2. Create a Spark 2.4.0 - Scala 2.11 cluster with the uploaded GeoMatch library installed or if you are alreadt running a cluster and installed the uploaded library to it you have to detach and re-attache any notebook currently using that cluster.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.serializer.KryoSerializer
+import org.cusp.bdi.gm.GeoMatch
+import org.cusp.bdi.gm.geom.GMPoint
+import org.cusp.bdi.gm.geom.GMLineString
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.serializer.KryoSerializer
+import org.cusp.bdi.gm.GeoMatch
+import org.cusp.bdi.gm.geom.GMPoint
+import org.cusp.bdi.gm.geom.GMLineString
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import crosby.binary.osmosis.OsmosisReader
+
+import org.apache.hadoop.mapreduce.{TaskAttemptContext, JobContext}
+import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.Path
+
+import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer
+import org.openstreetmap.osmosis.core.domain.v0_6._
+import org.openstreetmap.osmosis.core.task.v0_6.Sink
+
+import sqlContext.implicits._
+
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Map
+import scala.collection.JavaConversions._
+import org.apache.spark.graphx._
+import magellan.Point
+
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import crosby.binary.osmosis.OsmosisReader
+import org.apache.hadoop.mapreduce.{TaskAttemptContext, JobContext}
+import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.Path
+import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer
+import org.openstreetmap.osmosis.core.domain.v0_6._
+import org.openstreetmap.osmosis.core.task.v0_6.Sink
+import sqlContext.implicits._
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Map
+import scala.collection.JavaConversions._
+import org.apache.spark.graphx._
+import magellan.Point
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">ls /datasets/osm/uppsala
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.node.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.node.parquet.crc</td>
+<td>172.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.relation.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.relation.parquet.crc</td>
+<td>84.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.way.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.way.parquet.crc</td>
+<td>84.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf</td>
+<td>uppsalaTinyR.pbf</td>
+<td>17867.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.node.parquet</td>
+<td>uppsalaTinyR.pbf.node.parquet</td>
+<td>20829.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.relation.parquet</td>
+<td>uppsalaTinyR.pbf.relation.parquet</td>
+<td>9394.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.way.parquet</td>
+<td>uppsalaTinyR.pbf.way.parquet</td>
+<td>9542.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyV.osm.pbf</td>
+<td>uppsalaTinyV.osm.pbf</td>
+<td>30606.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>Run the following command only once per cluster</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">java -jar /dbfs/FileStore/jars/2706d711_3963_4d88_92e7_a8870d0164d1-osm_parquetizer_1_0_1_SNAPSHOT-80d25.jar /dbfs/datasets/osm/uppsala/uppsalaTinyR.pbf
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>2022-04-08 09:42:42 INFO  CodecPool:153 - Got brand-new compressor [.snappy]
+2022-04-08 09:42:47 INFO  CodecPool:153 - Got brand-new compressor [.snappy]
+2022-04-08 09:42:47 INFO  CodecPool:153 - Got brand-new compressor [.snappy]
+2022-04-08 09:42:53 INFO  App$MultiEntitySinkObserver:125 - Total entities processed: 896
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">ls /dbfs/datasets/osm/uppsala/
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uppsalaTinyR.pbf
+uppsalaTinyR.pbf.node.parquet
+uppsalaTinyR.pbf.relation.parquet
+uppsalaTinyR.pbf.way.parquet
+uppsalaTinyV.osm.pbf
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.conf.set(&quot;spark.sql.parquet.binaryAsString&quot;, true)
+
+val nodes_df = spark.read.parquet(&quot;dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.node.parquet&quot;)
+val ways_df = spark.read.parquet(&quot;dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.way.parquet&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>nodes_df: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 7 more fields]
+ways_df: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 6 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val allowableWays = Seq(
+  &quot;motorway&quot;,
+  &quot;motorway_link&quot;,
+  &quot;trunk&quot;,
+  &quot;trunk_link&quot;,
+  &quot;primary&quot;,
+  &quot;primary_link&quot;,
+  &quot;secondary&quot;,
+  &quot;secondary_link&quot;,
+  &quot;tertiary&quot;,
+  &quot;tertiary_link&quot;,
+  &quot;living_street&quot;,
+  &quot;residential&quot;,
+  &quot;road&quot;,
+  &quot;construction&quot;,
+  &quot;motorway_junction&quot;
+)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>allowableWays: Seq[String] = List(motorway, motorway_link, trunk, trunk_link, primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, living_street, residential, road, construction, motorway_junction)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert the nodes to Dataset containing the fields of interest
+
+case class NodeEntry(nodeId: Long, latitude: Double, longitude: Double, tags: Seq[String])
+
+val nodeDS = nodes_df.map(node =&gt; 
+  NodeEntry(node.getAs[Long](&quot;id&quot;),
+       node.getAs[Double](&quot;latitude&quot;),
+       node.getAs[Double](&quot;longitude&quot;),
+       node.getAs[Seq[Row]](&quot;tags&quot;).map{case Row(key:String, value:String) =&gt; value}
+)).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class NodeEntry
+nodeDS: org.apache.spark.sql.Dataset[NodeEntry] = [nodeId: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert the ways to Dataset containing the fields of interest
+
+case class WayEntry(wayId: Long, tags: Array[String], nodes: Array[Long])
+
+val wayDS = ways_df.flatMap(way =&gt; {
+        val tagSet = way.getAs[Seq[Row]](&quot;tags&quot;).map{case Row(key:String, value:String) =&gt;  value}.toArray
+        if (tagSet.intersect(allowableWays).nonEmpty ){
+            Array(WayEntry(way.getAs[Long](&quot;id&quot;),
+            tagSet,
+            way.getAs[Seq[Row]](&quot;nodes&quot;).map{case Row(index:Integer, nodeId:Long) =&gt;  nodeId}.toArray
+            ))
+        }
+        else { Array[WayEntry]()}
+}
+).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class WayEntry
+wayDS: org.apache.spark.sql.Dataset[WayEntry] = [wayId: bigint, tags: array&lt;string&gt; ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val distinctNodesWays = wayDS.flatMap(_.nodes).distinct //the distinct nodes within the ways 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>distinctNodesWays: org.apache.spark.sql.Dataset[Long] = [value: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wayNodes = nodeDS.as(&quot;nodes&quot;) //nodes that are in a way + nodes info from nodeDS
+  .joinWith(distinctNodesWays.as(&quot;ways&quot;), $&quot;ways.value&quot; === $&quot;nodes.nodeId&quot;)
+  .map(_._1).cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wayNodes: org.apache.spark.sql.Dataset[NodeEntry] = [nodeId: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.types.StringType
+import org.apache.spark.sql.functions.concat_ws
+import org.apache.spark.sql.functions._
+
+val nodes = wayDS.
+  select($&quot;wayId&quot;, $&quot;nodes&quot;).
+  withColumn(&quot;node&quot;, explode($&quot;nodes&quot;)).
+  drop(&quot;nodes&quot;)
+val wayNodesLocated = nodes.join(wayNodes, wayNodes.col(&quot;nodeId&quot;) === nodes.col(&quot;node&quot;)).select($&quot;wayId&quot;, $&quot;node&quot;, $&quot;latitude&quot;, $&quot;longitude&quot;).groupBy(&quot;wayId&quot;).agg(collect_list(concat($&quot;latitude&quot;,lit(&quot; &quot;), $&quot;longitude&quot;)).alias(&quot;list_of_coordinates&quot;)).withColumn(&quot;coordinates_str&quot;, concat_ws(&quot;,&quot; ,col(&quot;list_of_coordinates&quot;))).drop(&quot;list_of_coordinates&quot;)
+wayNodesLocated.show(1, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+----------------------------------------------------------+
+|wayId    |coordinates_str                                           |
++---------+----------------------------------------------------------+
+|393182257|59.8569759 17.644382,59.857381800000006 17.645299100000003|
++---------+----------------------------------------------------------+
+only showing top 1 row
+
+import org.apache.spark.sql.types.StringType
+import org.apache.spark.sql.functions.concat_ws
+import org.apache.spark.sql.functions._
+nodes: org.apache.spark.sql.DataFrame = [wayId: bigint, node: bigint]
+wayNodesLocated: org.apache.spark.sql.DataFrame = [wayId: bigint, coordinates_str: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Initializing...
+Java version : 1.8.0_282 (Azul Systems, Inc.) amd64
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def project_to_meters(lon: String, lat: String): String = { 
+    
+    if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+  
+    val initial_point = new Point(lon.toDouble, lat.toDouble, SpatialReference.create(4326)) //WGS84
+    val reprojection = GeometryEngine.project(initial_point, SpatialReference.create(3035))  //European Grid
+    reprojection.toString
+}
+spark.udf.register(&quot;project_to_meters&quot;, project_to_meters(_:String, _:String):String)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>project_to_meters: (lon: String, lat: String)String
+res9: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,StringType,Some(List(StringType, StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ways_reprojected = wayNodesLocated.rdd.map(line =&gt; line.toString.replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;)).map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(&quot;,&quot;);val arrCoords = parts.slice(1,parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');val reprojection = project_to_meters(xy(1).toString, xy(0).toString);val coords = reprojection.replaceAll(&quot;,&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).split(&quot; &quot;).slice(1,reprojection.length);val xy_new = coords(0).toString +&quot; &quot;+ coords(1).toString;xy_new});(&quot;LineString&quot;+&quot; &quot; +parts(0).toString, arrCoords)})
+val waysDF = ways_reprojected.toDF(&quot;LineStringId&quot;,&quot;coords&quot;)
+val ways_unpacked = waysDF.select(col(&quot;LineStringId&quot;),concat_ws(&quot;,&quot;,col(&quot;coords&quot;))).rdd.map(line =&gt; line.toString.replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;))
+ways_unpacked.take(1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ways_reprojected: org.apache.spark.rdd.RDD[(String, Array[String])] = MapPartitionsRDD[55] at map at command-4438247265478911:1
+waysDF: org.apache.spark.sql.DataFrame = [LineStringId: string, coords: array&lt;string&gt;]
+ways_unpacked: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[61] at map at command-4438247265478911:3
+res10: Array[String] = Array(LineString 393182257,4749494.332253 4107152.617124,4749540.389628 4107203.021679)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddFirst = ways_unpacked.mapPartitions(_.map(line =&gt;{val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(',');val arrCoords = parts.slice(1, parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');(xy(0).toDouble.toInt, xy(1).toDouble.toInt)});new GMLineString(parts(0), arrCoords)}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rddFirst: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMLineString] = MapPartitionsRDD[62] at mapPartitions at command-4438247265478912:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddFirst.take(1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res12: Array[org.cusp.bdi.gm.geom.GMLineString] = Array(GMLineString(LineString 393182257,[Lscala.Tuple2;@16eea034))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddFirstSet = sc.textFile(&quot;FileStore/tables/UUways.csv&quot;).mapPartitions(_.map(line =&gt;{val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(',');val arrCoords = parts.slice(1, parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');(xy(0).toDouble.toInt, xy(1).toDouble.toInt)});new GMLineString(parts(0), arrCoords)}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rddFirstSet: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMLineString] = MapPartitionsRDD[65] at mapPartitions at command-374221935645076:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddFirstSet.take(1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res13: Array[org.cusp.bdi.gm.geom.GMLineString] = Array(GMLineString(LineString 393182257,[Lscala.Tuple2;@2aa93df3))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddFirstSet.count() //9 ways 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res14: Long = 9
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddSecondSet = sc.textFile(&quot;FileStore/tables/UUnodes.csv&quot;).mapPartitions(_.map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(',');new GMPoint(parts(0), (parts(1).toDouble.toInt, parts(2).toDouble.toInt))}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rddSecondSet: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMPoint] = MapPartitionsRDD[68] at mapPartitions at command-432075383419156:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddSecondSet.take(1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res15: Array[org.cusp.bdi.gm.geom.GMPoint] = Array(GMPoint(Point 312352,(4749694,4107105)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddSecondSet.count() //626 nodes to be map-matched 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res16: Long = 626
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val geoMatch = new GeoMatch(false, 16, 150, (-1, -1, -1, -1)) //n(=dimension of the Hilber curve) should be a power of 2. 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>geoMatch: org.cusp.bdi.gm.GeoMatch = GeoMatch(false,16,150.0,(-1,-1,-1,-1))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val resultRDD = geoMatch.spatialJoinKNN(rddFirst, rddSecondSet, 1, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>resultRDD: org.apache.spark.rdd.RDD[(org.cusp.bdi.gm.geom.GMPoint, scala.collection.mutable.ListBuffer[org.cusp.bdi.gm.geom.GMLineString])] = MapPartitionsRDD[83] at mapPartitions at GeoMatch.scala:94
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">resultRDD.filter(element =&gt; (element._2.isEmpty)).count()  //number of nodes that are not matched successfully
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res19: Long = 44
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">resultRDD.map(element =&gt; (element._1.payload, element._2.map(_.payload))).filter(element =&gt; !(element._2.isEmpty)).toDF(&quot;pointId&quot;, &quot;matchId&quot;).show(5, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------------+----------------------+
+|pointId        |matchId               |
++---------------+----------------------+
+|Point 312363   |[LineString 263934971]|
+|Point 25724030 |[LineString 263934971]|
+|Point 25735257 |[LineString 263934973]|
+|Point 25812013 |[LineString 263934971]|
+|Point 390925129|[LineString 263934971]|
++---------------+----------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

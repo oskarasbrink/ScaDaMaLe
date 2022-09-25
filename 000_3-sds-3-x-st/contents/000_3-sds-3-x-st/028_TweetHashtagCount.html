@@ -145,7 +145,431 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="028_tweethashtagcount"><a class="header" href="#028_tweethashtagcount">028_TweetHashtagCount</a></h1>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="twitter-hashtag-count"><a class="header" href="#twitter-hashtag-count">Twitter Hashtag Count</a></h1>
+<p>Using Twitter Streaming is a great way to learn Spark Streaming if you don't have your streaming datasource and want a great rich input dataset to try Spark Streaming transformations on.</p>
+<p>In this example, we show how to calculate the top hashtags seen in the last X window of time every Y time unit.</p>
+<h2 id="top-hashtags-in-4-easy-steps"><a class="header" href="#top-hashtags-in-4-easy-steps">Top Hashtags in 4 Easy Steps</a></h2>
+<p>We will now show quickly how to compute the top hashtags in a few easy steps after running some utility functions and importing needed libraries.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./025_a_extendedTwitterUtils2run&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+
+
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<p><strong>Step 1: Enter your Twitter API Credentials.</strong></p>
+<ul>
+<li>Go to https://apps.twitter.com and look up your Twitter API Credentials, or create an app to create them.</li>
+<li>Run the code in a cell to Enter your own credentials.</li>
+</ul>
+<pre><code class="language-%scala">// put your own twitter developer credentials below instead of xxx
+// instead of the '%run &quot;.../secrets/026_secret_MyTwitterOAuthCredentials&quot;' below
+// you need to copy-paste the following code-block with your own Twitter credentials replacing XXXX
+
+
+// put your own twitter developer credentials below 
+
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+
+
+// These have been regenerated!!! - need to chane them
+
+def myAPIKey       = &quot;XXXX&quot; // APIKey 
+def myAPISecret    = &quot;XXXX&quot; // APISecretKey
+def myAccessToken          = &quot;XXXX&quot; // AccessToken
+def myAccessTokenSecret    = &quot;XXXX&quot; // AccessTokenSecret
+
+
+System.setProperty(&quot;twitter4j.oauth.consumerKey&quot;, myAPIKey)
+System.setProperty(&quot;twitter4j.oauth.consumerSecret&quot;, myAPISecret)
+System.setProperty(&quot;twitter4j.oauth.accessToken&quot;, myAccessToken)
+System.setProperty(&quot;twitter4j.oauth.accessTokenSecret&quot;, myAccessTokenSecret)
+
+println(&quot;twitter OAuth Credentials loaded&quot;)
+</code></pre>
+<p>The cell-below will not expose my Twitter API Credentials: <code>myAPIKey</code>, <code>myAPISecret</code>, <code>myAccessToken</code> and <code>myAccessTokenSecret</code>. Use the code above to enter your own credentials in a scala cell.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import twitter4j._
+import twitter4j.auth.Authorization
+import twitter4j.conf.ConfigurationBuilder
+import twitter4j.auth.OAuthAuthorization
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.dstream._
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.receiver.Receiver
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;Users/raazesh.sainudiin@math.uu.se/scalable-data-science/secrets/026_secret_MyTwitterOAuthCredentials&quot;
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Step 2: Configure where to output the top hashtags and how often to compute them.</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val outputDirectory = &quot;/datasets/tweetsStreamTmp&quot; // output directory
+
+//Recompute the top hashtags every N seconds. N=1
+val slideInterval = new Duration(10 * 1000) // 1000 milliseconds is 1 second!
+
+//Compute the top hashtags for the last M seconds. M=5
+val windowLength = new Duration(30 * 1000)
+
+// Wait W seconds before stopping the streaming job. W=100
+val timeoutJobLength = 20 * 1000
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>outputDirectory: String = /datasets/tweetsStreamTmp
+slideInterval: org.apache.spark.streaming.Duration = 10000 ms
+windowLength: org.apache.spark.streaming.Duration = 30000 ms
+timeoutJobLength: Int = 20000
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Step 3: Run the Twitter Streaming job.</strong></p>
+</div>
+<div class="cell markdown">
+<p>Go to SparkUI and see if a streaming job is already running. If so you need to terminate it before starting a new streaming job. Only one streaming job can be run on the DB CE.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// this will make sure all streaming job in the cluster are stopped
+StreamingContext.getActive.foreach{ _.stop(stopSparkContext = false) } 
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Clean up any old files.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/datasets/tweetsStreamTmp/&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/tweetsStreamTmp/&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let us write the function that creates the Streaming Context and sets up the streaming job.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">var newContextCreated = false
+var num = 0
+
+// This is a helper class used for ordering by the second value in a (String, Int) tuple
+import scala.math.Ordering
+object SecondValueOrdering extends Ordering[(String, Int)] {
+  def compare(a: (String, Int), b: (String, Int)) = {
+    a._2 compare b._2
+  }
+}
+
+// This is the function that creates the SteamingContext and sets up the Spark Streaming job.
+def creatingFunc(): StreamingContext = {
+  // Create a Spark Streaming Context.
+  val ssc = new StreamingContext(sc, slideInterval)
+  // Create a Twitter Stream for the input source. 
+  val auth = Some(new OAuthAuthorization(new ConfigurationBuilder().build()))
+  val twitterStream = ExtendedTwitterUtils.createStream(ssc, auth)
+  
+  // Parse the tweets and gather the hashTags.
+  val hashTagStream = twitterStream.map(_.getText).flatMap(_.split(&quot; &quot;)).filter(_.startsWith(&quot;#&quot;))
+  
+  // Compute the counts of each hashtag by window.
+  // reduceByKey on a window of length windowLength
+  // Once this is computed, slide the window by slideInterval and calculate reduceByKey again for the second window
+  val windowedhashTagCountStream = hashTagStream.map((_, 1)).reduceByKeyAndWindow((x: Int, y: Int) =&gt; x + y, windowLength, slideInterval)
+
+  // For each window, calculate the top hashtags for that time period.
+  windowedhashTagCountStream.foreachRDD(hashTagCountRDD =&gt; {
+    val topEndpoints = hashTagCountRDD.top(20)(SecondValueOrdering)
+    dbutils.fs.put(s&quot;${outputDirectory}/top_hashtags_${num}&quot;, topEndpoints.mkString(&quot;\n&quot;), true)
+    println(s&quot;------ TOP HASHTAGS For window ${num}&quot;)
+    println(topEndpoints.mkString(&quot;\n&quot;))
+    num = num + 1
+  })
+  
+  newContextCreated = true
+  ssc
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>newContextCreated: Boolean = false
+num: Int = 0
+import scala.math.Ordering
+defined object SecondValueOrdering
+creatingFunc: ()org.apache.spark.streaming.StreamingContext
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Create the StreamingContext using getActiveOrCreate, as required when starting a streaming job in Databricks.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ssc = StreamingContext.getActiveOrCreate(creatingFunc)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ssc: org.apache.spark.streaming.StreamingContext = org.apache.spark.streaming.StreamingContext@3961e605
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Start the Spark Streaming Context and return when the Streaming job exits or return with the specified timeout.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">ssc.start()
+ssc.awaitTerminationOrTimeout(timeoutJobLength)
+ssc.stop(stopSparkContext = false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Wrote 498 bytes.
+------ TOP HASHTAGS For window 0
+(#1212SHOPEESTRAYKIDS
+MAU,8)
+(#PS5,2)
+(#LifeGoesOnWithBTS,2)
+(#BTS_BE,2)
+(#아미트친소,1)
+(#rechtsterrorismus,1)
+(#EXO,1)
+(#Pourlamesse,,1)
+(#MeralAkşener,1)
+(#뷔,1)
+(#赤いヨーグリーナ発売記念
+#この冬の体調管理に​
+
+体調管理をして風邪など引かない様にしなきゃ😤,1)
+(#SoundCloud,1)
+(#weareoneEXO
+#开
+#음…,1)
+(#kilicdaroglu,1)
+(#Pride2020,1)
+(#icisleribakanlığı,1)
+(#Vialli?,1)
+(#Cuma,1)
+(#アリス・マーガトロイド,1)
+(#FridayVibes,1)
+Wrote 423 bytes.
+------ TOP HASHTAGS For window 1
+(#1212SHOPEESTRAYKIDS
+MAU,8)
+(#Monster 
+MONSTER,7)
+(#FridayLivestream
+
+SB19,4)
+(#BTS_BE,3)
+(#LifeGoesOnWithBTS,3)
+(#EXO,2)
+(#Unlock_GOLIVEINLIFE,2)
+(#PS5,2)
+(#redvelvet,2)
+(#SUNGHOON,1)
+(#omniscient_reader,1)
+(#小学5年生より賢いの,1)
+(#takasbükücüxhanthos
+#GLYHO,1)
+(#FCKNZS,1)
+(#DAMI,1)
+(#CHOICE,1)
+(#fahrettinkoca,1)
+(#FridayThoughts,1)
+(#Lausanne.,1)
+(#트레저
+@treasuremembers
+
+https://t.co/lo6QhtLCBB,1)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Check out the Clusters <code>Streaming</code> UI as the job is running.</p>
+</div>
+<div class="cell markdown">
+<p>It should automatically stop the streaming job after <code>timeoutJobLength</code>.</p>
+<p>If not, then stop any active Streaming Contexts, but don't stop the spark contexts they are attached to using the following command.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) }
+</code></pre>
+</div>
+<div class="cell markdown">
+<p><strong>Step 4: View the Results.</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(outputDirectory))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/tweetsStreamTmp/top_hashtags_0</td>
+<td>top_hashtags_0</td>
+<td>498.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/tweetsStreamTmp/top_hashtags_1</td>
+<td>top_hashtags_1</td>
+<td>423.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>There should be 100 intervals for each second and the top hashtags for each of them should be in the file <code>top_hashtags_N</code> for <code>N</code> in 0,1,2,...,99 and the top hashtags should be based on the past 5 seconds window.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.head(s&quot;${outputDirectory}/top_hashtags_0&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: String =
+(#1212SHOPEESTRAYKIDS
+MAU,8)
+(#PS5,2)
+(#LifeGoesOnWithBTS,2)
+(#BTS_BE,2)
+(#아미트친소,1)
+(#rechtsterrorismus,1)
+(#EXO,1)
+(#Pourlamesse,,1)
+(#MeralAkşener,1)
+(#뷔,1)
+(#赤いヨーグリーナ発売記念
+#この冬の体調管理に​
+
+体調管理をして風邪など引かない様にしなきゃ😤,1)
+(#SoundCloud,1)
+(#weareoneEXO
+#开
+#음…,1)
+(#kilicdaroglu,1)
+(#Pride2020,1)
+(#icisleribakanlığı,1)
+(#Vialli?,1)
+(#Cuma,1)
+(#アリス・マーガトロイド,1)
+(#FridayVibes,1)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class ExtendedTwitterReceiver
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class ExtendedTwitterInputDStream
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import twitter4j.Status
+import twitter4j.auth.Authorization
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.StreamingContext
+import org.apache.spark.streaming.dstream.{ReceiverInputDStream, DStream}
+defined object ExtendedTwitterUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>twitter OAuth Credentials loaded
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+myAPIKey: String
+myAPISecret: String
+myAccessToken: String
+myAccessTokenSecret: String
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>done running the extendedTwitterUtils2run notebook - ready to stream from twitter
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="lets-brainstorm"><a class="header" href="#lets-brainstorm">Let's brainstorm</a></h2>
+<p>What could you do with this type of streaming capability?</p>
+<ul>
+<li>marketing?</li>
+<li>pharmaceutical vigilance?</li>
+<li>linking twitter activity to mass media activity?</li>
+<li>data quality and integrity measures...</li>
+</ul>
+<p>Note that there are various Spark Streaming ML algorithms that one could easily throw at such <code>reduceByKeyAndWindow</code> tweet streams:</p>
+<ul>
+<li><a href="https://spark.apache.org/docs/latest/mllib-frequent-pattern-mining.html">Frequent Pattern Mining</a></li>
+<li><a href="https://databricks.com/blog/2015/01/28/introducing-streaming-k-means-in-spark-1-2.html">Streaming K-Means</a></li>
+<li><a href="https://spark.apache.org/docs/latest/ml-clustering.html#latent-dirichlet-allocation-lda">Latent Dirichlet Allocation - Topic Modeling</a></li>
+</ul>
+<p>Student Project or Volunteer for next Meetup - let's check it out now:</p>
+<p>HOME-WORK:</p>
+<ul>
+<li><a href="https://databricks.gitbooks.io/databricks-spark-reference-applications/content/twitter_classifier/index.html">Twitter Streaming Language Classifier</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="responsible-experiments"><a class="header" href="#responsible-experiments">Responsible Experiments</a></h2>
+<p>Extracting knowledge from tweets is &quot;easy&quot; using techniques shown here, but one has to take responsibility for the use of this knowledge and conform to the rules and policies linked below.</p>
+<p>Remeber that the use of twitter itself comes with various strings attached. Read:</p>
+<ul>
+<li><a href="https://twitter.com/rules">Twitter Rules</a></li>
+</ul>
+<p>Crucially, the use of the content from twitter by you (as done in this worksheet) comes with some strings. Read: - <a href="https://dev.twitter.com/overview/terms/agreement-and-policy">Developer Agreement &amp; Policy Twitter Developer Agreement</a></p>
+</div>
 
                     </main>
 

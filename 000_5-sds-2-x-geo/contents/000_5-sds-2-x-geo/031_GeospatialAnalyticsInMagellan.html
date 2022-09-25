@@ -1,0 +1,2536 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>031_GeospatialAnalyticsInMagellan - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html" class="active">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="note-for-spark-245"><a class="header" href="#note-for-spark-245">Note for Spark 2.4.5</a></h1>
+<p>The current (2022-02-01) latest maven coordinates for Magellan do not work for Spark 2.4+ and unsupported yet for spark 3.0+:</p>
+<ul>
+<li><a href="https://github.com/rahulbsw/magellan.git">https://github.com/rahulbsw/magellan.git</a></li>
+</ul>
+<p>Use the binary jar from <em><strong>NEW JAR TO BE UPLOAD!!</strong></em> <a href="https://github.com/lamastex/scalable-data-science/tree/master/custom-builds/jars/magellan/forks">https://github.com/lamastex/scalable-data-science/tree/master/custom-builds/jars/magellan/forks</a> on Databricks Runtime 6.6, Apache Spark 2.4.5, Scala 2.11 cluster.</p>
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
+<ol>
+<li>Download <em><strong>NEW JAR TO BE UPLOAD!!</strong></em> <a href="https://github.com/lamastex/scalable-data-science/raw/master/custom-builds/jars/magellan/forks/magellan_2.11-1.0.7-SNAPSHOT.jar">https://github.com/lamastex/scalable-data-science/raw/master/custom-builds/jars/magellan/forks/magellan_2.11-1.0.7-SNAPSHOT.jar</a> to your loacl machine.</li>
+<li>In Databricks choose <em>Create -&gt; Library</em> and upload the packaged jar.</li>
+<li>Create a spark 2.4.5 Scala 2.11 cluster with the uploaded Magellan library installed or if you are already running a cluster and installed the uploaded library to it you have to detach and re-attach any notebook currently using that cluster.</li>
+</ol>
+<p>NOTE: The magellan library's usual maven coordinates <code>harsha2010:magellan:1.0.6-s_2.11</code> may be outdated, but it is here for your future reference. You can follow instructions here to assemble the master jar if needed: * https://github.com/lamastex/scalable-data-science/raw/master/custom-builds/jars/magellan/master</p>
+</div>
+<div class="cell markdown">
+<h1 id="what-is-geospatial-analytics"><a class="header" href="#what-is-geospatial-analytics">What is Geospatial Analytics?</a></h1>
+<p><strong>(watch 3 minutes and 23 seconds: 111-314 seconds)</strong>:</p>
+<p><a href="https://www.youtube.com/watch?v=1lF1oSjxMT4?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=111&amp;end=314"><img src="http://img.youtube.com/vi/1lF1oSjxMT4/0.jpg" alt="Spark Summit East 2016 - What is Geospatial Analytics by Ram Sri Harsha" /></a></p>
+</div>
+<div class="cell markdown">
+<h1 id="some-concrete-examples-of-scalable-geospatial-analytics"><a class="header" href="#some-concrete-examples-of-scalable-geospatial-analytics">Some Concrete Examples of Scalable Geospatial Analytics</a></h1>
+<h3 id="let-us-check-out-cross-domain-data-fusion-in-msrs-urban-computing-group"><a class="header" href="#let-us-check-out-cross-domain-data-fusion-in-msrs-urban-computing-group">Let us check out cross-domain data fusion in MSR's Urban Computing Group</a></h3>
+<ul>
+<li>lots of interesting papers to read at <a href="http://research.microsoft.com/en-us/projects/urbancomputing/">http://research.microsoft.com/en-us/projects/urbancomputing/</a>.</li>
+</ul>
+<h2 id="several-sciences-are-naturally-geospatial"><a class="header" href="#several-sciences-are-naturally-geospatial">Several sciences are naturally geospatial</a></h2>
+<ul>
+<li>forestry,</li>
+<li>geography,</li>
+<li>geology,</li>
+<li>seismology,</li>
+<li>ecology,</li>
+<li>etc. etc.</li>
+</ul>
+<p>See for example the global EQ datastreams from US geological Service below.</p>
+<p>For a global data source, see US geological Service's Earthquake hazards Program <a href="http://earthquake.usgs.gov/data/">&quot;http://earthquake.usgs.gov/data/</a>.</p>
+</div>
+<div class="cell markdown">
+<p>REDO</p>
+<p>https://magellan.ghost.io/how-does-magellan-scale-geospatial-queries/</p>
+<h1 id="introduction-to-magellan-for-scalable-geospatial-analytics"><a class="header" href="#introduction-to-magellan-for-scalable-geospatial-analytics">Introduction to Magellan for Scalable Geospatial Analytics</a></h1>
+<p>This is a minor augmentation of Ram Harsha's Magellan code blogged here: * <a href="https://magellan.ghost.io/welcome-to-ghost/">magellan geospatial analytics in spark</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;https://magellan.ghost.io/how-does-magellan-scale-geospatial-queries/&quot;, 550))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://magellan.ghost.io/how-does-magellan-scale-geospatial-queries/"
+ width="95%" height="550"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="do-we-need-one-more-geospatial-analytics-library"><a class="header" href="#do-we-need-one-more-geospatial-analytics-library">Do we need one more geospatial analytics library?</a></h2>
+<p>From <a href="http://www.slideshare.net/SparkSummit/magellanspark-as-a-geospatial-analytics-engine-by-ram-sriharsha">Ram's slide 4 of this Spark Summit East 2016 talk at slideshare</a>:</p>
+<ul>
+<li>Spatial Analytics at scale is challenging
+<ul>
+<li>Simplicity + Scalability = Hard</li>
+</ul>
+</li>
+<li>Ancient Data Formats
+<ul>
+<li>metadata, indexing not handled well, inefficient storage</li>
+</ul>
+</li>
+<li>Geospatial Analytics is not simply Business Intelligence anymore
+<ul>
+<li>Statistical + Machine Learning being leveraged in geospatial</li>
+</ul>
+</li>
+<li>Now is the time to do it!
+<ul>
+<li>Explosion of mobile data</li>
+<li>Finer granularity of data collection for geometries</li>
+<li>Analytics stretching the limits of traditional approaches</li>
+<li>Spark SQL + Catalyst + Tungsten makes extensible SQL engines easier than ever before!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="nuts-and-bolts-of-magellan"><a class="header" href="#nuts-and-bolts-of-magellan">Nuts and Bolts of Magellan</a></h2>
+<p>This is an expansion oof of the following databricks notebook: * <a href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/137058993011870/882779309834027/6891974485343070/latest.html">https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/137058993011870/882779309834027/6891974485343070/latest.html</a></p>
+<p>and look at the magellan README in github: * <a href="https://github.com/harsha2010/magellan">https://github.com/harsha2010/magellan</a></p>
+<p><strong>HOMEWORK</strong>: Watch the <a href="https://spark-summit.org/east-2016/events/magellan-spark-as-a-geospatial-analytics-engine/">magellan presentation by Ram Harsha (Hortonworks) in Spark Summit East 2016</a>.</p>
+<p>Other resources for magellan: * <a href="http://hortonworks.com/blog/magellan-geospatial-analytics-in-spark/">Ram's blog in HortonWorks</a> and the <a href="https://www.zeppelinhub.com/viewer/notebooks/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hvcnRvbndvcmtzLWdhbGxlcnkvemVwcGVsaW4tbm90ZWJvb2tzL21hc3Rlci8yQjRUV0dDOE0vbm90ZS5qc29u">ZeppelinHub view of the demo code in video above</a> * <a href="http://spark-packages.org/package/harsha2010/magellan">Magellan as Spark project</a> and <a href="https://github.com/harsha2010/magellan">Magellan github source</a> * <a href="https://en.wikipedia.org/wiki/Shapefile">shape files</a> developed by Environmental Systems Research Institute <a href="https://en.wikipedia.org/wiki/Esri">(ESRI)</a>. See ESRI's <a href="https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf">what is a geospatial shape file?</a> * magellan builds on <a href="http://esri.github.io/">http://esri.github.io/</a> a leading opensource geospatial library</p>
+</div>
+<div class="cell markdown">
+<p>Let's get our hands dirty with basics in magellan.</p>
+<h3 id="spatial-data-structures"><a class="header" href="#spatial-data-structures">Spatial Data Structures</a></h3>
+<ul>
+<li>Points</li>
+<li>Polygons</li>
+<li>lines</li>
+<li>Polylines</li>
+</ul>
+<h3 id="users-view-of-spatial-data-structures-details-are-typically-invisible-to-user"><a class="header" href="#users-view-of-spatial-data-structures-details-are-typically-invisible-to-user">Users' View of Spatial Data Structures (details are typically &quot;invisible&quot; to user)</a></h3>
+<img src="https://raw.githubusercontent.com/NEONScience/NEON-Data-Skills/dev-aten/graphics/vector-general/pnt_line_poly.png" width=555>
+<h3 id="predicates"><a class="header" href="#predicates">Predicates</a></h3>
+<ul>
+<li>within</li>
+<li>intersects</li>
+<li>contains</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// create a points DataFrame
+val points = sc.parallelize(Seq((-1.0, -1.0), (-1.0, 1.0), (1.0, -1.0))).toDF(&quot;x&quot;, &quot;y&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>points: org.apache.spark.sql.DataFrame = [x: double, y: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// transform (lat,lon) into Point using custom user-defined function
+import magellan.Point // just Point
+import org.apache.spark.sql.functions.udf
+val toPointUDF = udf{(x:Double,y:Double) =&gt; Point(x,y) }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import magellan.Point
+import org.apache.spark.sql.functions.udf
+toPointUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,org.apache.spark.sql.types.PointUDT@37548d6,Some(List(DoubleType, DoubleType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// let's show the results of the DF with a new column called point
+points.withColumn(&quot;point&quot;, toPointUDF($&quot;x&quot;, $&quot;y&quot;)).show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+----+-----------------+
+|   x|   y|            point|
++----+----+-----------------+
+|-1.0|-1.0|Point(-1.0, -1.0)|
+|-1.0| 1.0| Point(-1.0, 1.0)|
+| 1.0|-1.0| Point(1.0, -1.0)|
++----+----+-----------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">points.show
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----+----+
+|   x|   y|
++----+----+
+|-1.0|-1.0|
+|-1.0| 1.0|
+| 1.0|-1.0|
++----+----+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Let's instead use the built-in expression to do the same - it's much faster on larger DataFrames due to code-gen
+import org.apache.spark.sql.magellan.dsl.expressions._
+val points = sc.parallelize(Seq((-1.0, -1.0), (-1.0, 1.0), (1.0, -1.0))).toDF(&quot;x&quot;, &quot;y&quot;).select(point($&quot;x&quot;, $&quot;y&quot;).as(&quot;point&quot;))
+
+points.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-----------------+
+|            point|
++-----------------+
+|Point(-1.0, -1.0)|
+| Point(-1.0, 1.0)|
+| Point(1.0, -1.0)|
++-----------------+
+
+import org.apache.spark.sql.magellan.dsl.expressions._
+points: org.apache.spark.sql.DataFrame = [point: point]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(points) // busted in bleeding-edge magellan we need for computing
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Point(-1.0, -1.0)</td>
+</tr>
+<tr class="even">
+<td>Point(-1.0, 1.0)</td>
+</tr>
+<tr class="odd">
+<td>Point(1.0, -1.0)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>The latest version of magellan seems to have issues with the databricks <code>display</code> function. We will ignore this convenience of display and continue with our analysis.</p>
+<p>This is a databricks display of magellan points when it is working properly in Spark 2.2.</p>
+<img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/_360-in-525/2018/03/images/databricksDisplayOfMagellanPoints.png">
+</div>
+<div class="cell markdown">
+<p>Let's verify empirically if it is indeed faster for larger DataFrames.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// to generate a sequence of pairs of random numbers we can do:
+import util.Random.nextDouble
+Seq.fill(10)((-1.0*nextDouble,+1.0*nextDouble))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import util.Random.nextDouble
+res7: Seq[(Double, Double)] = List((-0.4443119444291961,0.4405777408068594), (-0.3157738948550728,0.5017025352914497), (-0.9874637771136913,0.8519623151075828), (-0.9985464893592637,0.4278396438594432), (-0.3159292114428177,0.030487965422646535), (-0.7513798362079374,0.38194689908898793), (-0.507758712332592,0.7369770528847904), (-0.6697906990106479,0.6636420894550961), (-0.12535584996134563,0.6249808031956755), (-0.6102666766697349,0.6205652158691838))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// using the UDF method with 1 million points we can do a count action of the DF with point column
+// don't add too many zeros as it may crash your driver program
+sc.parallelize(Seq.fill(100000)((-1.0*nextDouble,+1.0*nextDouble)))
+  .toDF(&quot;x&quot;, &quot;y&quot;)
+  .withColumn(&quot;point&quot;, toPointUDF('x, 'y))
+  .count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: Long = 100000
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// it should be twice as fast with code-gen especially when we are ingesting from dbfs as opposed to 
+// using Seq.fill in the driver...
+sc.parallelize(Seq.fill(100000)((-1.0*nextDouble,+1.0*nextDouble)))
+  .toDF(&quot;x&quot;, &quot;y&quot;)
+  .withColumn(&quot;point&quot;, point('x, 'y))
+  .count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res9: Long = 100000
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Creating 100.000 points by using the <code>udf</code> method takes 3.12 seconds, while using the magellan's build in <code>point</code> method takes 1.35 seconds.</p>
+</div>
+<div class="cell markdown">
+<p>See https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html</p>
+</div>
+<div class="cell markdown">
+<p>Read the following for more on catalyst optimizer and whole-stage code generation.</p>
+<ul>
+<li><a href="https://jaceklaskowski.gitbooks.io/mastering-spark-sql/spark-sql-whole-stage-codegen.html">https://jaceklaskowski.gitbooks.io/mastering-spark-sql/spark-sql-whole-stage-codegen.html</a></li>
+<li><a href="https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html">https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html</a></li>
+<li><a href="https://databricks.com/blog/2016/05/23/apache-spark-as-a-compiler-joining-a-billion-rows-per-second-on-a-laptop.html">https://databricks.com/blog/2016/05/23/apache-spark-as-a-compiler-joining-a-billion-rows-per-second-on-a-laptop.html</a></li>
+</ul>
+<p>Try bench-marks here: * <a href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/6122906529858466/293651311471490/5382278320999420/latest.html">https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/6122906529858466/293651311471490/5382278320999420/latest.html</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create a Polygon DataFrame
+import magellan.Polygon
+
+case class PolygonExample(polygon: Polygon)
+
+// do this in your head / pencil-paper / black-board going counter-clockwise
+val ring = Array(Point(1.0, 1.0), Point(1.0, -1.0), Point(-1.0, -1.0), Point(-1.0, 1.0), Point(1.0, 1.0))
+val polygon = Polygon(Array(0), ring)
+
+val polygons = sc.parallelize(Seq(
+  PolygonExample(Polygon(Array(0), ring))
+)).toDF()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import magellan.Polygon
+defined class PolygonExample
+ring: Array[magellan.Point] = Array(Point(1.0, 1.0), Point(1.0, -1.0), Point(-1.0, -1.0), Point(-1.0, 1.0), Point(1.0, 1.0))
+polygon: magellan.Polygon = magellan.Polygon@427f1ce6
+polygons: org.apache.spark.sql.DataFrame = [polygon: polygon]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">polygons.show(false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-------------------------+
+|polygon                  |
++-------------------------+
+|magellan.Polygon@fc63bb26|
++-------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(polygons) // not much can be seen as its in the object
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>polygon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>magellan.Polygon@63336515</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>This is a databricks display of magellan polygon when it is working properly in Spark 2.2 on another databricks run-time.</p>
+<img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/_360-in-525/2018/03/images/databricksDisplayOfMagellanPolygon.png">
+</div>
+<div class="cell markdown">
+<h1 id="predicates-1"><a class="header" href="#predicates-1">Predicates</a></h1>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.types._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.types._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// join points with polygons upon intersection
+points.join(polygons)
+      .where($&quot;point&quot; intersects $&quot;polygon&quot;)
+      .count() 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res13: Long = 3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">points.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-----------------+
+|            point|
++-----------------+
+|Point(-1.0, -1.0)|
+| Point(-1.0, 1.0)|
+| Point(1.0, -1.0)|
++-----------------+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Pop Quiz:</strong></p>
+<p>What are the three points intersect the polygon?</p>
+</div>
+<div class="cell markdown">
+<p>More generally we can have more complex queries as the generic polygon need not even be a <a href="https://en.wikipedia.org/wiki/Convex_set">convex set</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Convex_set"
+ width="95%" height="400"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>This is not an uncommon polygon - think of shapes of parks or lakes on a map.</p>
+</div>
+<div class="cell markdown">
+<p>A bounding box for a non-covex polygon</p>
+<img src="https://magellan.ghost.io/content/images/2017/08/boundingbox-2.png">
+</div>
+<div class="cell markdown">
+<p>Let us consider our simple <code>points</code> and <code>polygons</code> we just made and consider the following <code>points within polygon</code> join query.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// join points with polygons upon within or containment
+points.join(polygons)
+      .where($&quot;point&quot; within $&quot;polygon&quot;)
+      .count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res17: Long = 0
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="line"><a class="header" href="#line">Line</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//creating line from two points
+import magellan.Line
+
+case class LineExample(line: Line)
+
+val line = Line(Point(1.0, 1.0), Point(1.0, -1.0))
+
+val lines = sc.parallelize(Seq(
+      LineExample(line)
+    )).toDF()
+
+lines.show(false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------------------------------------+
+|line                                   |
++---------------------------------------+
+|Line(Point(1.0, 1.0), Point(1.0, -1.0))|
++---------------------------------------+
+
+import magellan.Line
+defined class LineExample
+line: magellan.Line = Line(Point(1.0, 1.0), Point(1.0, -1.0))
+lines: org.apache.spark.sql.DataFrame = [line: line]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(lines)
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>line</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Line(Point(1.0, 1.0), Point(1.0, -1.0))</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<p>This is a databricks display of magellan lines when it is working properly!</p>
+<img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/_360-in-525/2018/03/images/databricksDisplayOfMagellanLines.png">
+</div>
+<div class="cell markdown">
+<h2 id="polyline"><a class="header" href="#polyline">PolyLine</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// creating polyline
+import magellan.PolyLine
+
+case class PolyLineExample(polyline: PolyLine)
+
+val ring = Array(Point(1.0, 1.0), Point(1.0, -1.0),
+      Point(-1.0, -1.0), Point(-1.0, 1.0))
+
+val polylines = sc.parallelize(Seq(
+      PolyLineExample(PolyLine(Array(0), ring))
+    )).toDF()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import magellan.PolyLine
+defined class PolyLineExample
+ring: Array[magellan.Point] = Array(Point(1.0, 1.0), Point(1.0, -1.0), Point(-1.0, -1.0), Point(-1.0, 1.0))
+polylines: org.apache.spark.sql.DataFrame = [polyline: polyline]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">polylines.show(false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------------+
+|polyline                  |
++--------------------------+
+|magellan.PolyLine@6cc77052|
++--------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>This is a databricks display of magellan polyline when it is working properly!</p>
+<img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/_360-in-525/2018/03/images/databricksDisplayOfMagellanPolylines.png">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// now let's make a polyline with two or more lines out of the same ring
+val polylines2 = sc.parallelize(Seq(
+  PolyLineExample(PolyLine(Array(0,2), ring)) // first line starts at index 0 and second one starts at index 2
+)).toDF()
+
+polylines2.show(false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------------+
+|polyline                  |
++--------------------------+
+|magellan.PolyLine@43efee0d|
++--------------------------+
+
+polylines2: org.apache.spark.sql.DataFrame = [polyline: polyline]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="you-can-do-a-bit-with-magellan-and-esri-under-its-hood"><a class="header" href="#you-can-do-a-bit-with-magellan-and-esri-under-its-hood">You can do a bit with magellan and esri under its hood</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import magellan.Point
+
+val p = Point(1.0, -1.0)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import magellan.Point
+p: magellan.Point = Point(1.0, -1.0)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//p. // uncomment line and put the cursor next to the . and hit TAB to see available methods on the magellan Point p
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">(p.getX, p.getY) // for example we can getX and getY values of the Point p
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res26: (Double, Double) = (1.0,-1.0)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val pc = Point(0.0,0.0)
+p.withinCircle(pc, 5.0) // check if Point p iswith circle of radius 5.0 around Point pc
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>pc: magellan.Point = Point(0.0, 0.0)
+res27: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">p.boundingBox // find the bounding box of p
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res28: magellan.BoundingBox = BoundingBox(1.0,-1.0,1.0,-1.0)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import magellan.Point
+
+// create a radius 0.5 buffered polygon about the centre given by Point(0.0, 1.0)
+val aBufferedPolygon = Point(0.0, 1.0).buffer(0.5) 
+
+
+magellan.esri.ESRIUtil.toESRIGeometry(aBufferedPolygon)
+
+println(aBufferedPolygon)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>magellan.Polygon@9f249027
+import magellan.Point
+aBufferedPolygon: magellan.Polygon = magellan.Polygon@9f249027
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Dive here for more on magellan Point:</p>
+<ul>
+<li>https://github.com/harsha2010/magellan/blob/master/src/main/scala/magellan/Point.scala</li>
+</ul>
+<p>Knock yourself out on other Data Structures in the source.</p>
+</div>
+<div class="cell markdown">
+<h2 id="uber-trajectories-in-san-francisco"><a class="header" href="#uber-trajectories-in-san-francisco">Uber Trajectories in San Francisco</a></h2>
+<h4 id="dataset-for-the-demo-done-by-ram-sri-harsha-in-europe-spark-summit-2015"><a class="header" href="#dataset-for-the-demo-done-by-ram-sri-harsha-in-europe-spark-summit-2015">Dataset for the Demo done by Ram Sri Harsha in Europe Spark Summit 2015</a></h4>
+<p><strong>First</strong> the datasets have to be loaded into distributed file store.</p>
+<ul>
+<li>See <strong>Step 0: Downloading datasets and loading into dbfs</strong> below for doing this anew (This only needs to be done once if the data is persisted in the distributed file system).</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>After downloading the data, we expect to have the following files in distributed file system (dbfs):</p>
+<ul>
+<li><code>all.tsv</code> is the file of all uber trajectories</li>
+<li><code>SFNbhd</code> is the directory containing SF neighborhood shape files.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// display the contents of the dbfs directory &quot;dbfs:/datasets/magellan/&quot;
+// - if you don't see files here then go to Step 0 below as explained above!
+display(dbutils.fs.ls(&quot;dbfs:/datasets/magellan/&quot;)) 
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/</td>
+<td>SFNbhd/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/all.tsv</td>
+<td>all.tsv</td>
+<td>6.0947802e7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">ls /dbfs/datasets
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>alexandria
+beijing
+magellan
+maps
+mobile_sample
+osm
+sou
+t-drive-trips
+t-drive-trips-magellan
+taxis
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>First five lines or rows of the uber data containing: tripID, timestamp, Lon, Lat</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.textFile(&quot;dbfs:/datasets/magellan/all.tsv&quot;).take(5).foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>00001	2007-01-07T10:54:50+00:00	37.782551	-122.445368
+00001	2007-01-07T10:54:54+00:00	37.782745	-122.444586
+00001	2007-01-07T10:54:58+00:00	37.782842	-122.443688
+00001	2007-01-07T10:55:02+00:00	37.782919	-122.442815
+00001	2007-01-07T10:55:06+00:00	37.782992	-122.442112
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The neighborhood shape files for Sanfrancisco will form the polygons of interest to us.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Shapefile"
+ width="95%" height="400"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>The shapefile format can spatially describe vector features: <code>points</code>, <code>lines</code>, and <code>polygons</code>, representing, for example, water wells, rivers, and lakes. Each item usually has <code>attributes</code> that describe it, such as name or temperature.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/magellan/SFNbhd&quot;)) // legacy shape files - used in various sectors
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.dbf</td>
+<td>planning_neighborhoods.dbf</td>
+<td>1028.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.prj</td>
+<td>planning_neighborhoods.prj</td>
+<td>567.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.sbn</td>
+<td>planning_neighborhoods.sbn</td>
+<td>516.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.sbx</td>
+<td>planning_neighborhoods.sbx</td>
+<td>164.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shp</td>
+<td>planning_neighborhoods.shp</td>
+<td>214576.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shp.xml</td>
+<td>planning_neighborhoods.shp.xml</td>
+<td>21958.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shx</td>
+<td>planning_neighborhoods.shx</td>
+<td>396.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="homework"><a class="header" href="#homework">Homework</a></h4>
+<p>First watch the more technical magellan presentation by Ram Sri Harsha (Hortonworks) in Spark Summit Europe 2015</p>
+<p><a href="http://img.youtube.com/vi/rP8H-xQTuM0/0.jpg">![Ram Sri Harsha's Magellan Spark Summit EU 2015 Talk]</a>](https://www.youtube.com/watch?v=rP8H-xQTuM0)</p>
+<p>Let's repeat Ram's original analysis from the following blog as done below.</p>
+<p><a href="http://hortonworks.com/blog/magellan-geospatial-analytics-in-spark/">Ram's blog in HortonWorks</a>.</p>
+</div>
+<div class="cell markdown">
+<p>This is just to get you started... You may need to moidfy this!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class UberRecord(tripId: String, timestamp: String, point: Point) // a case class for UberRecord 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class UberRecord
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val uber = sc.textFile(&quot;dbfs:/datasets/magellan/all.tsv&quot;)
+              .map { line =&gt;
+                      val parts = line.split(&quot;\t&quot; )
+                      val tripId = parts(0)
+                      val timestamp = parts(1)
+                      val point = Point(parts(3).toDouble, parts(2).toDouble)
+                      UberRecord(tripId, timestamp, point)
+                    }
+                     //.repartition(100) // using default repartition
+                     .toDF()
+                     .cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uber: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: string, timestamp: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val uberRecordCount = uber.count() // how many Uber records?
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uberRecordCount: Long = 1128663
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>So there are over a million <code>UberRecord</code>s.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sqlContext.read.format(&quot;magellan&quot;).load(&quot;dbfs:/datasets/magellan/SFNbhd/&quot;).printSchema()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- point: point (nullable = true)
+ |-- polyline: polyline (nullable = true)
+ |-- polygon: polygon (nullable = true)
+ |-- metadata: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
+ |-- valid: boolean (nullable = true)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val neighborhoods = sqlContext.read.format(&quot;magellan&quot;) 
+                                   .load(&quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+                                   .select($&quot;polygon&quot;, $&quot;metadata&quot;)
+                                   .cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>neighborhoods: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [polygon: polygon, metadata: map&lt;string,string&gt;]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">neighborhoods.count() // how many neighbourhoods in SF?
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res36: Long = 37
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">neighborhoods.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- polygon: polygon (nullable = true)
+ |-- metadata: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">neighborhoods.show(2,false) // see the first two neighbourhoods
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-------------------------+-----------------------------------------+
+|polygon                  |metadata                                 |
++-------------------------+-----------------------------------------+
+|magellan.Polygon@5e8b7382|[neighborho -&gt; Twin Peaks               ]|
+|magellan.Polygon@aefbe87e|[neighborho -&gt; Pacific Heights          ]|
++-------------------------+-----------------------------------------+
+only showing top 2 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>You Try:</strong></p>
+<p>Modify the next cell to see all 37 neighborhoods.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">neighborhoods.show(37,false) // modify this cell to see all 37 neighborhoods
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-------------------------+-----------------------------------------+
+|polygon                  |metadata                                 |
++-------------------------+-----------------------------------------+
+|magellan.Polygon@9a519148|[neighborho -&gt; Twin Peaks               ]|
+|magellan.Polygon@2d5e862b|[neighborho -&gt; Pacific Heights          ]|
+|magellan.Polygon@eafc4a01|[neighborho -&gt; Visitacion Valley        ]|
+|magellan.Polygon@b87b053f|[neighborho -&gt; Potrero Hill             ]|
+|magellan.Polygon@a90162d5|[neighborho -&gt; Crocker Amazon           ]|
+|magellan.Polygon@bb49ff9c|[neighborho -&gt; Outer Mission            ]|
+|magellan.Polygon@fb06b113|[neighborho -&gt; Bayview                  ]|
+|magellan.Polygon@bafd0911|[neighborho -&gt; Lakeshore                ]|
+|magellan.Polygon@ad89232d|[neighborho -&gt; Russian Hill             ]|
+|magellan.Polygon@b3c46f20|[neighborho -&gt; Golden Gate Park         ]|
+|magellan.Polygon@5ff06533|[neighborho -&gt; Outer Sunset             ]|
+|magellan.Polygon@fa2cc9b5|[neighborho -&gt; Inner Sunset             ]|
+|magellan.Polygon@6beaa40b|[neighborho -&gt; Excelsior                ]|
+|magellan.Polygon@2befcdb6|[neighborho -&gt; Outer Richmond           ]|
+|magellan.Polygon@7f2f3423|[neighborho -&gt; Parkside                 ]|
+|magellan.Polygon@16cde909|[neighborho -&gt; Bernal Heights           ]|
+|magellan.Polygon@dd6fd499|[neighborho -&gt; Noe Valley               ]|
+|magellan.Polygon@965ebd1c|[neighborho -&gt; Presidio                 ]|
+|magellan.Polygon@6e73c0c2|[neighborho -&gt; Nob Hill                 ]|
+|magellan.Polygon@686b88b |[neighborho -&gt; Financial District       ]|
+|magellan.Polygon@a0d10f1b|[neighborho -&gt; Glen Park                ]|
+|magellan.Polygon@335cadb5|[neighborho -&gt; Marina                   ]|
+|magellan.Polygon@4eac537f|[neighborho -&gt; Seacliff                 ]|
+|magellan.Polygon@5b75bfd9|[neighborho -&gt; Mission                  ]|
+|magellan.Polygon@5e99ea57|[neighborho -&gt; Downtown/Civic Center    ]|
+|magellan.Polygon@d22d0489|[neighborho -&gt; South of Market          ]|
+|magellan.Polygon@6aaf808d|[neighborho -&gt; Presidio Heights         ]|
+|magellan.Polygon@5f470ef3|[neighborho -&gt; Inner Richmond           ]|
+|magellan.Polygon@7dba9eb4|[neighborho -&gt; Castro/Upper Market      ]|
+|magellan.Polygon@b9501895|[neighborho -&gt; West of Twin Peaks       ]|
+|magellan.Polygon@b213687c|[neighborho -&gt; Ocean View               ]|
+|magellan.Polygon@766d6fd4|[neighborho -&gt; Treasure Island/YBI      ]|
+|magellan.Polygon@48c45968|[neighborho -&gt; Chinatown                ]|
+|magellan.Polygon@d2c56329|[neighborho -&gt; Western Addition         ]|
+|magellan.Polygon@c92a684c|[neighborho -&gt; North Beach              ]|
+|magellan.Polygon@ce8caa28|[neighborho -&gt; Diamond Heights          ]|
+|magellan.Polygon@aac6c49d|[neighborho -&gt; Haight Ashbury           ]|
++-------------------------+-----------------------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions._ // this is needed for sql functions like explode, etc.
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.functions._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">//names of all 37 neighborhoods of San Francisco
+neighborhoods.select(explode($&quot;metadata&quot;).as(Seq(&quot;k&quot;, &quot;v&quot;))).show(37,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+-------------------------+
+|k         |v                        |
++----------+-------------------------+
+|neighborho|Twin Peaks               |
+|neighborho|Pacific Heights          |
+|neighborho|Visitacion Valley        |
+|neighborho|Potrero Hill             |
+|neighborho|Crocker Amazon           |
+|neighborho|Outer Mission            |
+|neighborho|Bayview                  |
+|neighborho|Lakeshore                |
+|neighborho|Russian Hill             |
+|neighborho|Golden Gate Park         |
+|neighborho|Outer Sunset             |
+|neighborho|Inner Sunset             |
+|neighborho|Excelsior                |
+|neighborho|Outer Richmond           |
+|neighborho|Parkside                 |
+|neighborho|Bernal Heights           |
+|neighborho|Noe Valley               |
+|neighborho|Presidio                 |
+|neighborho|Nob Hill                 |
+|neighborho|Financial District       |
+|neighborho|Glen Park                |
+|neighborho|Marina                   |
+|neighborho|Seacliff                 |
+|neighborho|Mission                  |
+|neighborho|Downtown/Civic Center    |
+|neighborho|South of Market          |
+|neighborho|Presidio Heights         |
+|neighborho|Inner Richmond           |
+|neighborho|Castro/Upper Market      |
+|neighborho|West of Twin Peaks       |
+|neighborho|Ocean View               |
+|neighborho|Treasure Island/YBI      |
+|neighborho|Chinatown                |
+|neighborho|Western Addition         |
+|neighborho|North Beach              |
+|neighborho|Diamond Heights          |
+|neighborho|Haight Ashbury           |
++----------+-------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>This join below yields nothing.</p>
+<p>So what's going on?</p>
+<p>Watch Ram's 2015 Spark Summit talk for details on geospatial formats and transformations.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">neighborhoods
+  .join(uber)
+  .where($&quot;point&quot; within $&quot;polygon&quot;)
+  .select($&quot;tripId&quot;, $&quot;timestamp&quot;, explode($&quot;metadata&quot;).as(Seq(&quot;k&quot;, &quot;v&quot;)))
+  .withColumnRenamed(&quot;v&quot;, &quot;neighborhood&quot;)
+  .drop(&quot;k&quot;)
+  .show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+---------+------------+
+|tripId|timestamp|neighborhood|
++------+---------+------------+
++------+---------+------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Geographic_coordinate_system"
+ width="95%" height="400"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>Need the right <code>transformer</code> to transform the points into the right coordinate system of the shape files.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/North_American_Datum#North_American_Datum_of_1983&quot;,400))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/North_American_Datum#North_American_Datum_of_1983"
+ width="95%" height="400"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// This code was removed from magellan in this commit:
+// https://github.com/harsha2010/magellan/commit/8df0a62560116f8ed787fc7e86f190f8e2730826
+// We bring this back to show how to roll our own transformations.
+// EXERCISE: find existing transformers / methods in magellan or esri to go between coordinate systems 
+import magellan.Point
+
+class NAD83(params: Map[String, Any]) {
+  val RAD = 180d / Math.PI
+  val ER  = 6378137.toDouble  // semi-major axis for GRS-80
+  val RF  = 298.257222101  // reciprocal flattening for GRS-80
+  val F   = 1.toDouble / RF  // flattening for GRS-80
+  val ESQ = F + F - (F * F)
+  val E   = StrictMath.sqrt(ESQ)
+
+  private val ZONES =  Map(
+    401 -&gt; Array(122.toDouble, 2000000.0001016,
+      500000.0001016001, 40.0,
+      41.66666666666667, 39.33333333333333),
+    403 -&gt; Array(120.5, 2000000.0001016,
+      500000.0001016001, 37.06666666666667,
+      38.43333333333333, 36.5)
+  )
+
+  def from() = {
+    val zone = params(&quot;zone&quot;).asInstanceOf[Int]
+    ZONES.get(zone) match {
+      case Some(x) =&gt; if (x.length == 5) {
+        toTransverseMercator(x)
+      } else {
+        toLambertConic(x)
+      }
+      case None =&gt; ???
+    }
+  }
+
+  def to() = {
+    val zone = params(&quot;zone&quot;).asInstanceOf[Int]
+    ZONES.get(zone) match {
+      case Some(x) =&gt; if (x.length == 5) {
+        fromTransverseMercator(x)
+      } else {
+        fromLambertConic(x)
+      }
+      case None =&gt; ???
+    }
+  }
+
+  def qqq(e: Double, s: Double) = {
+    (StrictMath.log((1 + s) / (1 - s)) - e *
+      StrictMath.log((1 + e * s) / (1 - e * s))) / 2
+  }
+
+  def toLambertConic(params: Array[Double]) = {
+    val cm = params(0) / RAD  // CENTRAL MERIDIAN (CM)
+    val eo = params(1)  // FALSE EASTING VALUE AT THE CM (METERS)
+    val nb = params(2)  // FALSE NORTHING VALUE AT SOUTHERMOST PARALLEL (METERS), (USUALLY ZERO)
+    val fis = params(3) / RAD  // LATITUDE OF SO. STD. PARALLEL
+    val fin = params(4) / RAD  // LATITUDE OF NO. STD. PARALLEL
+    val fib = params(5) / RAD // LATITUDE OF SOUTHERNMOST PARALLEL
+    val sinfs = StrictMath.sin(fis)
+    val cosfs = StrictMath.cos(fis)
+    val sinfn = StrictMath.sin(fin)
+    val cosfn = StrictMath.cos(fin)
+    val sinfb = StrictMath.sin(fib)
+    val qs = qqq(E, sinfs)
+    val qn = qqq(E, sinfn)
+    val qb = qqq(E, sinfb)
+    val w1 = StrictMath.sqrt(1.toDouble - ESQ * sinfs * sinfs)
+    val w2 = StrictMath.sqrt(1.toDouble - ESQ * sinfn * sinfn)
+    val sinfo = StrictMath.log(w2 * cosfs / (w1 * cosfn)) / (qn - qs)
+    val k = ER * cosfs * StrictMath.exp(qs * sinfo) / (w1 * sinfo)
+    val rb = k / StrictMath.exp(qb * sinfo)
+
+    (point: Point) =&gt; {
+      val (long, lat) = (point.getX(), point.getY())
+      val l = - long / RAD
+      val f = lat / RAD
+      val q = qqq(E, StrictMath.sin(f))
+      val r = k / StrictMath.exp(q * sinfo)
+      val gam = (cm - l) * sinfo
+      val n = rb + nb - (r * StrictMath.cos(gam))
+      val e = eo + (r * StrictMath.sin(gam))
+      Point(e, n)
+    }
+  }
+
+  def toTransverseMercator(params: Array[Double]) = {
+    (point: Point) =&gt; {
+      point
+    }
+  }
+
+  def fromLambertConic(params: Array[Double]) = {
+    val cm = params(0) / RAD  // CENTRAL MERIDIAN (CM)
+    val eo = params(1)  // FALSE EASTING VALUE AT THE CM (METERS)
+    val nb = params(2)  // FALSE NORTHING VALUE AT SOUTHERMOST PARALLEL (METERS), (USUALLY ZERO)
+    val fis = params(3) / RAD  // LATITUDE OF SO. STD. PARALLEL
+    val fin = params(4) / RAD  // LATITUDE OF NO. STD. PARALLEL
+    val fib = params(5) / RAD // LATITUDE OF SOUTHERNMOST PARALLEL
+    val sinfs = StrictMath.sin(fis)
+    val cosfs = StrictMath.cos(fis)
+    val sinfn = StrictMath.sin(fin)
+    val cosfn = StrictMath.cos(fin)
+    val sinfb = StrictMath.sin(fib)
+
+    val qs = qqq(E, sinfs)
+    val qn = qqq(E, sinfn)
+    val qb = qqq(E, sinfb)
+    val w1 = StrictMath.sqrt(1.toDouble - ESQ * sinfs * sinfs)
+    val w2 = StrictMath.sqrt(1.toDouble - ESQ * sinfn * sinfn)
+    val sinfo = StrictMath.log(w2 * cosfs / (w1 * cosfn)) / (qn - qs)
+    val k = ER * cosfs * StrictMath.exp(qs * sinfo) / (w1 * sinfo)
+    val rb = k / StrictMath.exp(qb * sinfo)
+    (point: Point) =&gt; {
+      val easting = point.getX()
+      val northing = point.getY()
+      val npr = rb - northing + nb
+      val epr = easting - eo
+      val gam = StrictMath.atan(epr / npr)
+      val lon = cm - (gam / sinfo)
+      val rpt = StrictMath.sqrt(npr * npr + epr * epr)
+      val q = StrictMath.log(k / rpt) / sinfo
+      val temp = StrictMath.exp(q + q)
+      var sine = (temp - 1.toDouble) / (temp + 1.toDouble)
+      var f1, f2 = 0.0
+      for (i &lt;- 0 until 2) {
+        f1 = ((StrictMath.log((1.toDouble + sine) / (1.toDouble - sine)) - E *
+          StrictMath.log((1.toDouble + E * sine) / (1.toDouble - E * sine))) / 2.toDouble) - q
+        f2 = 1.toDouble / (1.toDouble - sine * sine) - ESQ / (1.toDouble - ESQ * sine * sine)
+        sine -= (f1/ f2)
+      }
+      Point(StrictMath.toDegrees(lon) * -1, StrictMath.toDegrees(StrictMath.asin(sine)))
+    }
+  }
+
+  def fromTransverseMercator(params: Array[Double]) = {
+    val cm = params(0)  // CENTRAL MERIDIAN (CM)
+    val fe = params(1)  // FALSE EASTING VALUE AT THE CM (METERS)
+    val or = params(2) / RAD  // origin latitude
+    val sf = 1.0 - (1.0 / params(3)) // scale factor
+    val fn = params(4)  // false northing
+    // translated from TCONPC subroutine
+    val eps = ESQ / (1.0 - ESQ)
+    val pr = (1.0 - F) * ER
+    val en = (ER - pr) / (ER + pr)
+    val en2 = en * en
+    val en3 = en * en * en
+    val en4 = en2 * en2
+
+    var c2 = -3.0 * en / 2.0 + 9.0 * en3 / 16.0
+    var c4 = 15.0d * en2 / 16.0d - 15.0d * en4 /32.0
+    var c6 = -35.0 * en3 / 48.0
+    var c8 = 315.0 * en4 / 512.0
+    val u0 = 2.0 * (c2 - 2.0 * c4 + 3.0 * c6 - 4.0 * c8)
+    val u2 = 8.0 * (c4 - 4.0 * c6 + 10.0 * c8)
+    val u4 = 32.0 * (c6 - 6.0 * c8)
+    val u6 = 129.0 * c8
+
+    c2 = 3.0 * en / 2.0 - 27.0 * en3 / 32.0
+    c4 = 21.0 * en2 / 16.0 - 55.0 * en4 / 32.0d
+    c6 = 151.0 * en3 / 96.0
+    c8 = 1097.0d * en4 / 512.0
+    val v0 = 2.0 * (c2 - 2.0 * c4 + 3.0 * c6 - 4.0 * c8)
+    val v2 = 8.0 * (c4 - 4.0 * c6 + 10.0 * c8)
+    val v4 = 32.0 * (c6 - 6.0 * c8)
+    val v6 = 128.0 * c8
+
+    val r = ER * (1.0 - en) * (1.0 - en * en) * (1.0 + 2.25 * en * en + (225.0 / 64.0) * en4)
+    val cosor = StrictMath.cos(or)
+    val omo = or + StrictMath.sin(or) * cosor *
+      (u0 + u2 * cosor * cosor + u4 * StrictMath.pow(cosor, 4) + u6 * StrictMath.pow(cosor, 6))
+    val so = sf * r * omo
+
+    (point: Point) =&gt; {
+      val easting = point.getX()
+      val northing = point.getY()
+      // translated from TMGEOD subroutine
+      val om = (northing - fn + so) / (r * sf)
+      val cosom = StrictMath.cos(om)
+      val foot = om + StrictMath.sin(om) * cosom *
+        (v0 + v2 * cosom * cosom + v4 * StrictMath.pow(cosom, 4) + v6 * StrictMath.pow(cosom, 6))
+      val sinf = StrictMath.sin(foot)
+      val cosf = StrictMath.cos(foot)
+      val tn = sinf / cosf
+      val ts = tn * tn
+      val ets = eps * cosf * cosf
+      val rn = ER * sf / StrictMath.sqrt(1.0 - ESQ * sinf * sinf)
+      val q = (easting - fe) / rn
+      val qs = q * q
+      val b2 = -tn * (1.0 + ets) / 2.0
+      val b4 = -(5.0 + 3.0 * ts + ets * (1.0 - 9.0 * ts) - 4.0 * ets * ets) / 12.0
+      val b6 = (61.0 + 45.0 * ts * (2.0 + ts) + ets * (46.0 - 252.0 * ts -60.0 * ts * ts)) / 360.0
+      val b1 = 1.0
+      val b3 = -(1.0 + ts + ts + ets) / 6.0
+      val b5 = (5.0 + ts * (28.0 + 24.0 * ts) + ets * (6.0 + 8.0 * ts)) / 120.0
+      val b7 = -(61.0 + 662.0 * ts + 1320.0 * ts * ts + 720.0 * StrictMath.pow(ts, 3)) / 5040.0
+      val lat = foot + b2 * qs * (1.0 + qs * (b4 + b6 * qs))
+      val l = b1 * q * (1.0 + qs * (b3 + qs * (b5 + b7 * qs)))
+      val lon = -l / cosf + cm
+      Point(StrictMath.toDegrees(lon) * -1, StrictMath.toDegrees(lat))
+    }
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import magellan.Point
+defined class NAD83
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val transformer: Point =&gt; Point = (point: Point) =&gt; {
+  val from = new NAD83(Map(&quot;zone&quot; -&gt; 403)).from()
+  val p = point.transform(from)
+  Point(3.28084 * p.getX, 3.28084 * p.getY)
+}
+
+// add a new column in nad83 coordinates
+val uberTransformed = uber
+                      .withColumn(&quot;nad83&quot;, $&quot;point&quot;.transform(transformer))
+                      .cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>transformer: magellan.Point =&gt; magellan.Point = &lt;function1&gt;
+uberTransformed: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: string, timestamp: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberTransformed.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res43: Long = 1128663
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberTransformed.show(5,false) // nad83 transformed points
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------------+-----------------------------+---------------------------------------------+
+|tripId|timestamp                |point                        |nad83                                        |
++------+-------------------------+-----------------------------+---------------------------------------------+
+|00001 |2007-01-07T10:54:50+00:00|Point(-122.445368, 37.782551)|Point(5999523.477715266, 2113253.7290443885) |
+|00001 |2007-01-07T10:54:54+00:00|Point(-122.444586, 37.782745)|Point(5999750.8888492435, 2113319.6570987953)|
+|00001 |2007-01-07T10:54:58+00:00|Point(-122.443688, 37.782842)|Point(6000011.08106823, 2113349.5785887106)  |
+|00001 |2007-01-07T10:55:02+00:00|Point(-122.442815, 37.782919)|Point(6000263.898268142, 2113372.3716762937) |
+|00001 |2007-01-07T10:55:06+00:00|Point(-122.442112, 37.782992)|Point(6000467.566895697, 2113394.7303657546) |
++------+-------------------------+-----------------------------+---------------------------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberTransformed.select(&quot;tripId&quot;).distinct().count() // number of unique tripIds
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res45: Long = 24999
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let' try the join again after appropriate transformation of coordinate system.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val joined = neighborhoods
+              .join(uberTransformed)
+              .where($&quot;nad83&quot; within $&quot;polygon&quot;)
+              .select($&quot;tripId&quot;, $&quot;timestamp&quot;, explode($&quot;metadata&quot;).as(Seq(&quot;k&quot;, &quot;v&quot;)))
+              .withColumnRenamed(&quot;v&quot;, &quot;neighborhood&quot;)
+              .drop(&quot;k&quot;)
+              .cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>joined: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: string, timestamp: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val UberRecordsInNbhdsCount = joined.count() // about 131 seconds for first action (doing broadcast hash join)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>UberRecordsInNbhdsCount: Long = 1085087
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">joined.explain
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>== Physical Plan ==
+InMemoryTableScan [tripId#469, timestamp#470, neighborhood#929]
+   +- InMemoryRelation [tripId#469, timestamp#470, neighborhood#929], StorageLevel(disk, memory, deserialized, 1 replicas)
+         +- *(1) Project [tripId#469, timestamp#470, v#924 AS neighborhood#929]
+            +- *(1) Generate explode(metadata#580), [tripId#469, timestamp#470], false, [k#923, v#924]
+               +- *(1) Project [metadata#580, tripId#469, timestamp#470]
+                  +- *(1) BroadcastNestedLoopJoin BuildLeft, Inner, Within(nad83#745, polygon#579)
+                     :- BroadcastExchange IdentityBroadcastMode, [id=#1719]
+                     :  +- InMemoryTableScan [polygon#579, metadata#580]
+                     :        +- InMemoryRelation [polygon#579, metadata#580], StorageLevel(disk, memory, deserialized, 1 replicas)
+                     :              +- *(1) Scan ShapeFileRelation(dbfs:/datasets/magellan/SFNbhd/,Map(path -&gt; dbfs:/datasets/magellan/SFNbhd/)) [polygon#579,metadata#580] PushedFilters: [], ReadSchema: struct&lt;polygon:struct&lt;type:int,xmin:double,ymin:double,xmax:double,ymax:double,indices:array&lt;int&gt;...
+                     +- InMemoryTableScan [tripId#469, timestamp#470, nad83#745]
+                           +- InMemoryRelation [tripId#469, timestamp#470, point#471, nad83#745], StorageLevel(disk, memory, deserialized, 1 replicas)
+                                 +- *(1) Project [tripId#469, timestamp#470, point#471, transformer(point#471, &lt;function1&gt;) AS nad83#745]
+                                    +- InMemoryTableScan [point#471, timestamp#470, tripId#469]
+                                          +- InMemoryRelation [tripId#469, timestamp#470, point#471], StorageLevel(disk, memory, deserialized, 1 replicas)
+                                                +- *(1) SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, line891d49738e2e4c728aab43b5afc9663a112.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$UberRecord, true]).tripId, true, false) AS tripId#469, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, line891d49738e2e4c728aab43b5afc9663a112.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$UberRecord, true]).timestamp, true, false) AS timestamp#470, newInstance(class org.apache.spark.sql.types.PointUDT).serialize AS point#471]
+                                                   +- Scan[obj#468]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">joined.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------------+-------------------------+
+|tripId|timestamp                |neighborhood             |
++------+-------------------------+-------------------------+
+|00001 |2007-01-07T10:54:50+00:00|Western Addition         |
+|00001 |2007-01-07T10:54:54+00:00|Western Addition         |
+|00001 |2007-01-07T10:54:58+00:00|Western Addition         |
+|00001 |2007-01-07T10:55:02+00:00|Western Addition         |
+|00001 |2007-01-07T10:55:06+00:00|Western Addition         |
++------+-------------------------+-------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberRecordCount - UberRecordsInNbhdsCount // records not in the neighbouthood shape files
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res49: Long = 43576
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">joined
+  .groupBy($&quot;neighborhood&quot;)
+  .agg(countDistinct(&quot;tripId&quot;)
+  .as(&quot;trips&quot;))
+  .orderBy(col(&quot;trips&quot;).desc)
+  .show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-------------------------+-----+
+|neighborhood             |trips|
++-------------------------+-----+
+|South of Market          |9891 |
+|Western Addition         |6794 |
+|Downtown/Civic Center    |6697 |
+|Financial District       |6038 |
+|Mission                  |5620 |
++-------------------------+-----+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="other-spatial-algorithms-in-spark-are-being-explored-for-generic-and-more-efficient-scalable-geospatial-analytic-tasks"><a class="header" href="#other-spatial-algorithms-in-spark-are-being-explored-for-generic-and-more-efficient-scalable-geospatial-analytic-tasks">Other spatial Algorithms in Spark are being explored for generic and more efficient scalable geospatial analytic tasks</a></h2>
+<p>Read for more spatial indexing structures.</p>
+<ul>
+<li><a href="http://spark-packages.org/package/syoummer/SpatialSpark">SpatialSpark</a> aims to provide efficient spatial operations using Apache Spark.
+<ul>
+<li>Spatial Partition
+<ul>
+<li>Generate a spatial partition from input dataset, currently Fixed-Grid Partition (FGP), Binary-Split Partition (BSP) and Sort-Tile Partition (STP) are supported.</li>
+</ul>
+</li>
+<li>Spatial Range Query
+<ul>
+<li>includes both indexed and non-indexed query (useful for neighbourhood searches)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://github.com/anantasty/SparkAlgorithms/tree/master/mllib/src/main/scala/org/sparkalgos/mllib/join">z-order Knn join</a>
+<ul>
+<li>A space-filling curve trick to index multi-dimensional metric data into 1 Dimension. See: <a href="http://ieeexplore.ieee.org.ezproxy.canterbury.ac.nz/stamp/stamp.jsp?tp=&amp;arnumber=5447837">ieee paper</a> and the <a href="http://www.slideshare.net/AshutoshTrivedi3/spark-algorithms">slides</a>.</li>
+</ul>
+</li>
+<li>AkNN = All K Nearest Neighbours - identify the k nearesy neighbours for all nodes <strong>simultaneously</strong> (cont AkNN is the streaming form of AkNN)
+<ul>
+<li>need to identify the right resources to do this scalably.</li>
+</ul>
+</li>
+<li>spark-knn-graphs: <a href="https://github.com/tdebatty/spark-knn-graphs">https://github.com/tdebatty/spark-knn-graphs</a> *** ***</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="step-0-downloading-datasets-and-load-into-dbfs"><a class="header" href="#step-0-downloading-datasets-and-load-into-dbfs">Step 0: Downloading datasets and load into dbfs</a></h1>
+<ul>
+<li>get the Uber data</li>
+<li>get the San Francisco neighborhood data</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="getting-uber-data"><a class="header" href="#getting-uber-data">getting uber data</a></h2>
+<h3 id="this-only-needs-to-be-done-once-per-shard"><a class="header" href="#this-only-needs-to-be-done-once-per-shard">(This only needs to be done once per shard!)</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">ls
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>conf
+derby.log
+eventlogs
+ganglia
+logs
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-sh">wget https://raw.githubusercontent.com/dima42/uber-gps-analysis/master/gpsdata/all.tsv
+#wget http://lamastex.org/datasets/public/geospatial/uber/all.tsv
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>--2022-02-01 14:21:17--  https://raw.githubusercontent.com/dima42/uber-gps-analysis/master/gpsdata/all.tsv
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 60947802 (58M) [text/plain]
+Saving to: ‘all.tsv’
+
+     0K .......... .......... .......... .......... ..........  0% 4.78M 12s
+    50K .......... .......... .......... .......... ..........  0% 4.04M 13s
+   100K .......... .......... .......... .......... ..........  0% 5.61M 12s
+   150K .......... .......... .......... .......... ..........  0% 19.6M 10s
+   200K .......... .......... .......... .......... ..........  0% 40.4M 8s
+   250K .......... .......... .......... .......... ..........  0% 7.67M 8s
+   300K .......... .......... .......... .......... ..........  0% 23.6M 7s
+   350K .......... .......... .......... .......... ..........  0% 72.8M 6s
+   400K .......... .......... .......... .......... ..........  0% 22.2M 6s
+   450K .......... .......... .......... .......... ..........  0%  115M 5s
+   500K .......... .......... .......... .......... ..........  0% 12.8M 5s
+   550K .......... .......... .......... .......... ..........  1% 41.7M 5s
+   600K .......... .......... .......... .......... ..........  1%  109M 5s
+   650K .......... .......... .......... .......... ..........  1% 72.6M 4s
+   700K .......... .......... .......... .......... ..........  1% 46.3M 4s
+   750K .......... .......... .......... .......... ..........  1% 90.8M 4s
+   800K .......... .......... .......... .......... ..........  1% 85.0M 4s
+   850K .......... .......... .......... .......... ..........  1% 98.7M 4s
+   900K .......... .......... .......... .......... ..........  1% 88.8M 3s
+   950K .......... .......... .......... .......... ..........  1% 12.3M 3s
+  1000K .......... .......... .......... .......... ..........  1% 66.6M 3s
+  1050K .......... .......... .......... .......... ..........  1%  127M 3s
+  1100K .......... .......... .......... .......... ..........  1% 53.0M 3s
+  1150K .......... .......... .......... .......... ..........  2% 85.6M 3s
+  1200K .......... .......... .......... .......... ..........  2% 81.8M 3s
+  1250K .......... .......... .......... .......... ..........  2% 91.5M 3s
+  1300K .......... .......... .......... .......... ..........  2% 85.0M 3s
+  1350K .......... .......... .......... .......... ..........  2% 78.6M 3s
+  1400K .......... .......... .......... .......... ..........  2% 74.0M 3s
+  1450K .......... .......... .......... .......... ..........  2% 81.5M 3s
+  1500K .......... .......... .......... .......... ..........  2% 82.1M 2s
+  1550K .......... .......... .......... .......... ..........  2% 82.2M 2s
+  1600K .......... .......... .......... .......... ..........  2%  103M 2s
+  1650K .......... .......... .......... .......... ..........  2%  103M 2s
+  1700K .......... .......... .......... .......... ..........  2% 91.0M 2s
+  1750K .......... .......... .......... .......... ..........  3% 82.6M 2s
+  1800K .......... .......... .......... .......... ..........  3% 86.4M 2s
+  1850K .......... .......... .......... .......... ..........  3% 90.7M 2s
+  1900K .......... .......... .......... .......... ..........  3% 79.5M 2s
+  1950K .......... .......... .......... .......... ..........  3% 70.8M 2s
+  2000K .......... .......... .......... .......... ..........  3% 91.1M 2s
+  2050K .......... .......... .......... .......... ..........  3% 75.5M 2s
+  2100K .......... .......... .......... .......... ..........  3% 87.2M 2s
+  2150K .......... .......... .......... .......... ..........  3% 64.9M 2s
+  2200K .......... .......... .......... .......... ..........  3% 74.8M 2s
+  2250K .......... .......... .......... .......... ..........  3% 71.8M 2s
+  2300K .......... .......... .......... .......... ..........  3% 77.2M 2s
+  2350K .......... .......... .......... .......... ..........  4% 59.8M 2s
+  2400K .......... .......... .......... .......... ..........  4% 86.2M 2s
+  2450K .......... .......... .......... .......... ..........  4% 92.3M 2s
+  2500K .......... .......... .......... .......... ..........  4% 75.4M 2s
+  2550K .......... .......... .......... .......... ..........  4% 87.0M 2s
+  2600K .......... .......... .......... .......... ..........  4% 89.6M 2s
+  2650K .......... .......... .......... .......... ..........  4%  126M 2s
+  2700K .......... .......... .......... .......... ..........  4%  107M 2s
+  2750K .......... .......... .......... .......... ..........  4%  108M 2s
+  2800K .......... .......... .......... .......... ..........  4%  150M 2s
+  2850K .......... .......... .......... .......... ..........  4% 6.79M 2s
+  2900K .......... .......... .......... .......... ..........  4% 88.7M 2s
+  2950K .......... .......... .......... .......... ..........  5% 62.4M 2s
+  3000K .......... .......... .......... .......... ..........  5% 82.6M 2s
+  3050K .......... .......... .......... .......... ..........  5% 70.7M 2s
+  3100K .......... .......... .......... .......... ..........  5% 76.5M 2s
+  3150K .......... .......... .......... .......... ..........  5% 64.7M 2s
+  3200K .......... .......... .......... .......... ..........  5% 75.1M 2s
+  3250K .......... .......... .......... .......... ..........  5% 85.2M 2s
+  3300K .......... .......... .......... .......... ..........  5% 67.2M 2s
+  3350K .......... .......... .......... .......... ..........  5% 57.0M 2s
+  3400K .......... .......... .......... .......... ..........  5% 77.5M 2s
+  3450K .......... .......... .......... .......... ..........  5% 72.9M 2s
+  3500K .......... .......... .......... .......... ..........  5% 72.1M 2s
+  3550K .......... .......... .......... .......... ..........  6% 65.7M 2s
+  3600K .......... .......... .......... .......... ..........  6% 67.8M 2s
+  3650K .......... .......... .......... .......... ..........  6% 77.6M 1s
+  3700K .......... .......... .......... .......... ..........  6% 71.1M 1s
+  3750K .......... .......... .......... .......... ..........  6% 57.3M 1s
+  3800K .......... .......... .......... .......... ..........  6% 69.2M 1s
+  3850K .......... .......... .......... .......... ..........  6% 74.5M 1s
+  3900K .......... .......... .......... .......... ..........  6% 79.1M 1s
+  3950K .......... .......... .......... .......... ..........  6% 73.3M 1s
+  4000K .......... .......... .......... .......... ..........  6% 64.1M 1s
+  4050K .......... .......... .......... .......... ..........  6% 85.2M 1s
+  4100K .......... .......... .......... .......... ..........  6% 68.1M 1s
+  4150K .......... .......... .......... .......... ..........  7% 63.9M 1s
+  4200K .......... .......... .......... .......... ..........  7% 82.1M 1s
+  4250K .......... .......... .......... .......... ..........  7% 57.8M 1s
+  4300K .......... .......... .......... .......... ..........  7% 81.6M 1s
+  4350K .......... .......... .......... .......... ..........  7% 4.48M 1s
+  4400K .......... .......... .......... .......... ..........  7% 95.6M 1s
+  4450K .......... .......... .......... .......... ..........  7% 77.9M 1s
+  4500K .......... .......... .......... .......... ..........  7% 88.5M 1s
+  4550K .......... .......... .......... .......... ..........  7% 73.6M 1s
+  4600K .......... .......... .......... .......... ..........  7% 23.0M 1s
+  4650K .......... .......... .......... .......... ..........  7%  126M 1s
+  4700K .......... .......... .......... .......... ..........  7%  145M 1s
+  4750K .......... .......... .......... .......... ..........  8% 64.5M 1s
+  4800K .......... .......... .......... .......... ..........  8% 32.3M 1s
+  4850K .......... .......... .......... .......... ..........  8% 11.0M 1s
+  4900K .......... .......... .......... .......... ..........  8%  122M 1s
+  4950K .......... .......... .......... .......... ..........  8% 9.11M 1s
+  5000K .......... .......... .......... .......... ..........  8% 94.6M 1s
+  5050K .......... .......... .......... .......... ..........  8%  100M 1s
+  5100K .......... .......... .......... .......... ..........  8%  114M 1s
+  5150K .......... .......... .......... .......... ..........  8%  102M 1s
+  5200K .......... .......... .......... .......... ..........  8% 94.7M 1s
+  5250K .......... .......... .......... .......... ..........  8%  107M 1s
+  5300K .......... .......... .......... .......... ..........  8% 67.8M 1s
+  5350K .......... .......... .......... .......... ..........  9%  121M 1s
+  5400K .......... .......... .......... .......... ..........  9% 92.2M 1s
+  5450K .......... .......... .......... .......... ..........  9%  134M 1s
+  5500K .......... .......... .......... .......... ..........  9%  140M 1s
+  5550K .......... .......... .......... .......... ..........  9% 93.9M 1s
+  5600K .......... .......... .......... .......... ..........  9%  125M 1s
+  5650K .......... .......... .......... .......... ..........  9%  118M 1s
+  5700K .......... .......... .......... .......... ..........  9% 99.6M 1s
+  5750K .......... .......... .......... .......... ..........  9%  121M 1s
+  5800K .......... .......... .......... .......... ..........  9%  107M 1s
+  5850K .......... .......... .......... .......... ..........  9%  142M 1s
+  5900K .......... .......... .......... .......... ..........  9%  156M 1s
+  5950K .......... .......... .......... .......... .......... 10%  104M 1s
+  6000K .......... .......... .......... .......... .......... 10%  145M 1s
+  6050K .......... .......... .......... .......... .......... 10%  153M 1s
+  6100K .......... .......... .......... .......... .......... 10%  104M 1s
+  6150K .......... .......... .......... .......... .......... 10% 94.7M 1s
+  6200K .......... .......... .......... .......... .......... 10% 71.3M 1s
+  6250K .......... .......... .......... .......... .......... 10%  104M 1s
+  6300K .......... .......... .......... .......... .......... 10% 82.2M 1s
+  6350K .......... .......... .......... .......... .......... 10% 86.7M 1s
+  6400K .......... .......... .......... .......... .......... 10%  105M 1s
+  6450K .......... .......... .......... .......... .......... 10%  100M 1s
+  6500K .......... .......... .......... .......... .......... 11%  112M 1s
+  6550K .......... .......... .......... .......... .......... 11% 66.9M 1s
+  6600K .......... .......... .......... .......... .......... 11%  137M 1s
+  6650K .......... .......... .......... .......... .......... 11%  102M 1s
+  6700K .......... .......... .......... .......... .......... 11%  116M 1s
+  6750K .......... .......... .......... .......... .......... 11%  115M 1s
+  6800K .......... .......... .......... .......... .......... 11%  108M 1s
+  6850K .......... .......... .......... .......... .......... 11%  143M 1s
+  6900K .......... .......... .......... .......... .......... 11% 94.0M 1s
+  6950K .......... .......... .......... .......... .......... 11%  100M 1s
+  7000K .......... .......... .......... .......... .......... 11%  153M 1s
+  7050K .......... .......... .......... .......... .......... 11% 77.2M 1s
+  7100K .......... .......... .......... .......... .......... 12%  110M 1s
+  7150K .......... .......... .......... .......... .......... 12% 63.3M 1s
+  7200K .......... .......... .......... .......... .......... 12% 86.5M 1s
+  7250K .......... .......... .......... .......... .......... 12% 88.8M 1s
+  7300K .......... .......... .......... .......... .......... 12%  109M 1s
+  7350K .......... .......... .......... .......... .......... 12% 85.1M 1s
+  7400K .......... .......... .......... .......... .......... 12%  127M 1s
+  7450K .......... .......... .......... .......... .......... 12%  128M 1s
+  7500K .......... .......... .......... .......... .......... 12%  129M 1s
+  7550K .......... .......... .......... .......... .......... 12%  141M 1s
+  7600K .......... .......... .......... .......... .......... 12%  115M 1s
+  7650K .......... .......... .......... .......... .......... 12%  122M 1s
+  7700K .......... .......... .......... .......... .......... 13%  151M 1s
+  7750K .......... .......... .......... .......... .......... 13% 34.2M 1s
+  7800K .......... .......... .......... .......... .......... 13% 28.5M 1s
+  7850K .......... .......... .......... .......... .......... 13% 30.1M 1s
+  7900K .......... .......... .......... .......... .......... 13% 31.6M 1s
+  7950K .......... .......... .......... .......... .......... 13% 26.2M 1s
+  8000K .......... .......... .......... .......... .......... 13% 29.8M 1s
+  8050K .......... .......... .......... .......... .......... 13% 31.2M 1s
+  8100K .......... .......... .......... .......... .......... 13% 30.2M 1s
+  8150K .......... .......... .......... .......... .......... 13% 24.6M 1s
+  8200K .......... .......... .......... .......... .......... 13% 30.7M 1s
+  8250K .......... .......... .......... .......... .......... 13% 33.0M 1s
+  8300K .......... .......... .......... .......... .......... 14% 40.0M 1s
+  8350K .......... .......... .......... .......... .......... 14% 33.0M 1s
+  8400K .......... .......... .......... .......... .......... 14% 31.6M 1s
+  8450K .......... .......... .......... .......... .......... 14% 35.9M 1s
+  8500K .......... .......... .......... .......... .......... 14% 37.3M 1s
+  8550K .......... .......... .......... .......... .......... 14% 25.2M 1s
+  8600K .......... .......... .......... .......... .......... 14% 31.4M 1s
+  8650K .......... .......... .......... .......... .......... 14% 34.6M 1s
+  8700K .......... .......... .......... .......... .......... 14% 35.7M 1s
+  8750K .......... .......... .......... .......... .......... 14% 25.8M 1s
+  8800K .......... .......... .......... .......... .......... 14% 28.4M 1s
+  8850K .......... .......... .......... .......... .......... 14% 29.3M 1s
+  8900K .......... .......... .......... .......... .......... 15% 28.5M 1s
+  8950K .......... .......... .......... .......... .......... 15% 30.5M 1s
+  9000K .......... .......... .......... .......... .......... 15% 26.6M 1s
+  9050K .......... .......... .......... .......... .......... 15% 28.8M 1s
+  9100K .......... .......... .......... .......... .......... 15% 28.9M 1s
+  9150K .......... .......... .......... .......... .......... 15% 27.5M 1s
+  9200K .......... .......... .......... .......... .......... 15% 29.0M 1s
+  9250K .......... .......... .......... .......... .......... 15% 30.5M 1s
+  9300K .......... .......... .......... .......... .......... 15% 29.2M 1s
+  9350K .......... .......... .......... .......... .......... 15% 25.7M 1s
+  9400K .......... .......... .......... .......... .......... 15% 25.8M 1s
+  9450K .......... .......... .......... .......... .......... 15% 29.3M 1s
+  9500K .......... .......... .......... .......... .......... 16% 3.77M 1s
+  9550K .......... .......... .......... .......... .......... 16% 19.9M 1s
+  9600K .......... .......... .......... .......... .......... 16% 22.7M 1s
+  9650K .......... .......... .......... .......... .......... 16% 31.6M 1s
+  9700K .......... .......... .......... .......... .......... 16% 26.2M 1s
+  9750K .......... .......... .......... .......... .......... 16% 21.1M 1s
+  9800K .......... .......... .......... .......... .......... 16% 18.2M 1s
+  9850K .......... .......... .......... .......... .......... 16% 26.4M 1s
+  9900K .......... .......... .......... .......... .......... 16% 38.4M 1s
+  9950K .......... .......... .......... .......... .......... 16% 29.7M 1s
+ 10000K .......... .......... .......... .......... .......... 16% 35.5M 1s
+ 10050K .......... .......... .......... .......... .......... 16% 32.0M 1s
+ 10100K .......... .......... .......... .......... .......... 17% 31.2M 1s
+ 10150K .......... .......... .......... .......... .......... 17% 29.4M 1s
+ 10200K .......... .......... .......... .......... .......... 17% 29.2M 1s
+ 10250K .......... .......... .......... .......... .......... 17% 33.4M 1s
+ 10300K .......... .......... .......... .......... .......... 17% 35.5M 1s
+ 10350K .......... .......... .......... .......... .......... 17% 25.0M 1s
+ 10400K .......... .......... .......... .......... .......... 17% 22.0M 1s
+ 10450K .......... .......... .......... .......... .......... 17% 29.7M 1s
+ 10500K .......... .......... .......... .......... .......... 17% 28.5M 1s
+ 10550K .......... .......... .......... .......... .......... 17% 30.8M 1s
+ 10600K .......... .......... .......... .......... .......... 17% 99.1M 1s
+ 10650K .......... .......... .......... .......... .......... 17%  114M 1s
+ 10700K .......... .......... .......... .......... .......... 18%  104M 1s
+ 10750K .......... .......... .......... .......... .......... 18% 90.1M 1s
+ 10800K .......... .......... .......... .......... .......... 18%  106M 1s
+ 10850K .......... .......... .......... .......... .......... 18%  108M 1s
+ 10900K .......... .......... .......... .......... .......... 18%  108M 1s
+ 10950K .......... .......... .......... .......... .......... 18% 98.7M 1s
+ 11000K .......... .......... .......... .......... .......... 18%  103M 1s
+ 11050K .......... .......... .......... .......... .......... 18% 97.0M 1s
+ 11100K .......... .......... .......... .......... .......... 18%  105M 1s
+ 11150K .......... .......... .......... .......... .......... 18%  101M 1s
+ 11200K .......... .......... .......... .......... .......... 18% 83.4M 1s
+ 11250K .......... .......... .......... .......... .......... 18%  106M 1s
+ 11300K .......... .......... .......... .......... .......... 19%  125M 1s
+ 11350K .......... .......... .......... .......... .......... 19%  107M 1s
+ 11400K .......... .......... .......... .......... .......... 19%  103M 1s
+ 11450K .......... .......... .......... .......... .......... 19% 98.8M 1s
+ 11500K .......... .......... .......... .......... .......... 19%  107M 1s
+ 11550K .......... .......... .......... .......... .......... 19%  117M 1s
+ 11600K .......... .......... .......... .......... .......... 19%  120M 1s
+ 11650K .......... .......... .......... .......... .......... 19%  125M 1s
+ 11700K .......... .......... .......... .......... .......... 19%  114M 1s
+ 11750K .......... .......... .......... .......... .......... 19%  104M 1s
+ 11800K .......... .......... .......... .......... .......... 19%  115M 1s
+ 11850K .......... .......... .......... .......... .......... 19%  120M 1s
+ 11900K .......... .......... .......... .......... .......... 20%  118M 1s
+ 11950K .......... .......... .......... .......... .......... 20%  113M 1s
+ 12000K .......... .......... .......... .......... .......... 20%  119M 1s
+ 12050K .......... .......... .......... .......... .......... 20%  115M 1s
+ 12100K .......... .......... .......... .......... .......... 20%  106M 1s
+ 12150K .......... .......... .......... .......... .......... 20%  105M 1s
+ 12200K .......... .......... .......... .......... .......... 20%  122M 1s
+ 12250K .......... .......... .......... .......... .......... 20%  124M 1s
+ 12300K .......... .......... .......... .......... .......... 20%  120M 1s
+ 12350K .......... .......... .......... .......... .......... 20%  116M 1s
+ 12400K .......... .......... .......... .......... .......... 20%  115M 1s
+ 12450K .......... .......... .......... .......... .......... 21%  107M 1s
+ 12500K .......... .......... .......... .......... .......... 21%  119M 1s
+ 12550K .......... .......... .......... .......... .......... 21% 79.7M 1s
+ 12600K .......... .......... .......... .......... .......... 21%  159M 1s
+ 12650K .......... .......... .......... .......... .......... 21%  142M 1s
+ 12700K .......... .......... .......... .......... .......... 21%  132M 1s
+ 12750K .......... .......... .......... .......... .......... 21% 80.5M 1s
+ 12800K .......... .......... .......... .......... .......... 21%  121M 1s
+ 12850K .......... .......... .......... .......... .......... 21%  112M 1s
+ 12900K .......... .......... .......... .......... .......... 21%  119M 1s
+ 12950K .......... .......... .......... .......... .......... 21% 92.5M 1s
+ 13000K .......... .......... .......... .......... .......... 21%  100M 1s
+ 13050K .......... .......... .......... .......... .......... 22%  110M 1s
+ 13100K .......... .......... .......... .......... .......... 22%  118M 1s
+ 13150K .......... .......... .......... .......... .......... 22%  112M 1s
+ 13200K .......... .......... .......... .......... .......... 22% 5.60M 1s
+ 13250K .......... .......... .......... .......... .......... 22%  114M 1s
+ 13300K .......... .......... .......... .......... .......... 22%  100M 1s
+ 13350K .......... .......... .......... .......... .......... 22%  102M 1s
+ 13400K .......... .......... .......... .......... .......... 22%  105M 1s
+ 13450K .......... .......... .......... .......... .......... 22%  127M 1s
+ 13500K .......... .......... .......... .......... .......... 22% 93.5M 1s
+ 13550K .......... .......... .......... .......... .......... 22% 88.1M 1s
+ 13600K .......... .......... .......... .......... .......... 22%  120M 1s
+ 13650K .......... .......... .......... .......... .......... 23%  128M 1s
+ 13700K .......... .......... .......... .......... .......... 23%  101M 1s
+ 13750K .......... .......... .......... .......... .......... 23%  109M 1s
+ 13800K .......... .......... .......... .......... .......... 23%  150M 1s
+ 13850K .......... .......... .......... .......... .......... 23% 98.1M 1s
+ 13900K .......... .......... .......... .......... .......... 23%  119M 1s
+ 13950K .......... .......... .......... .......... .......... 23% 90.2M 1s
+ 14000K .......... .......... .......... .......... .......... 23%  125M 1s
+ 14050K .......... .......... .......... .......... .......... 23%  119M 1s
+ 14100K .......... .......... .......... .......... .......... 23%  119M 1s
+ 14150K .......... .......... .......... .......... .......... 23%  104M 1s
+ 14200K .......... .......... .......... .......... .......... 23%  127M 1s
+ 14250K .......... .......... .......... .......... .......... 24%  117M 1s
+ 14300K .......... .......... .......... .......... .......... 24%  123M 1s
+ 14350K .......... .......... .......... .......... .......... 24% 89.7M 1s
+ 14400K .......... .......... .......... .......... .......... 24%  113M 1s
+ 14450K .......... .......... .......... .......... .......... 24%  107M 1s
+ 14500K .......... .......... .......... .......... .......... 24%  125M 1s
+ 14550K .......... .......... .......... .......... .......... 24% 97.4M 1s
+ 14600K .......... .......... .......... .......... .......... 24%  111M 1s
+ 14650K .......... .......... .......... .......... .......... 24%  123M 1s
+ 14700K .......... .......... .......... .......... .......... 24%  114M 1s
+ 14750K .......... .......... .......... .......... .......... 24%  104M 1s
+ 14800K .......... .......... .......... .......... .......... 24%  108M 1s
+ 14850K .......... .......... .......... .......... .......... 25%  114M 1s
+ 14900K .......... .......... .......... .......... .......... 25%  114M 1s
+ 14950K .......... .......... .......... .......... .......... 25%  101M 1s
+ 15000K .......... .......... .......... .......... .......... 25%  112M 1s
+ 15050K .......... .......... .......... .......... .......... 25%  111M 1s
+ 15100K .......... .......... .......... .......... .......... 25%  119M 1s
+ 15150K .......... .......... .......... .......... .......... 25%  105M 1s
+ 15200K .......... .......... .......... .......... .......... 25%  116M 1s
+ 15250K .......... .......... .......... .......... .......... 25%  114M 1s
+ 15300K .......... .......... .......... .......... .......... 25%  127M 1s
+ 15350K .......... .......... .......... .......... .......... 25%  104M 1s
+ 15400K .......... .......... .......... .......... .......... 25%  125M 1s
+ 15450K .......... .......... .......... .......... .......... 26%  124M 1s
+ 15500K .......... .......... .......... .......... .......... 26%  105M 1s
+ 15550K .......... .......... .......... .......... .......... 26%  104M 1s
+ 15600K .......... .......... .......... .......... .......... 26%  106M 1s
+ 15650K .......... .......... .......... .......... .......... 26%  120M 1s
+ 15700K .......... .......... .......... .......... .......... 26%  111M 1s
+ 15750K .......... .......... .......... .......... .......... 26% 95.2M 1s
+ 15800K .......... .......... .......... .......... .......... 26%  126M 1s
+ 15850K .......... .......... .......... .......... .......... 26%  108M 1s
+ 15900K .......... .......... .......... .......... .......... 26%  119M 1s
+ 15950K .......... .......... .......... .......... .......... 26% 89.3M 1s
+ 16000K .......... .......... .......... .......... .......... 26%  111M 1s
+ 16050K .......... .......... .......... .......... .......... 27%  122M 1s
+ 16100K .......... .......... .......... .......... .......... 27%  114M 1s
+ 16150K .......... .......... .......... .......... .......... 27% 93.8M 1s
+
+*** WARNING: skipped 41040 bytes of output ***
+
+ 43200K .......... .......... .......... .......... .......... 72%  124M 0s
+ 43250K .......... .......... .......... .......... .......... 72%  107M 0s
+ 43300K .......... .......... .......... .......... .......... 72% 11.8M 0s
+ 43350K .......... .......... .......... .......... .......... 72% 52.4M 0s
+ 43400K .......... .......... .......... .......... .......... 73% 66.4M 0s
+ 43450K .......... .......... .......... .......... .......... 73% 68.0M 0s
+ 43500K .......... .......... .......... .......... .......... 73%  115M 0s
+ 43550K .......... .......... .......... .......... .......... 73%  109M 0s
+ 43600K .......... .......... .......... .......... .......... 73%  111M 0s
+ 43650K .......... .......... .......... .......... .......... 73%  117M 0s
+ 43700K .......... .......... .......... .......... .......... 73% 55.8M 0s
+ 43750K .......... .......... .......... .......... .......... 73%  101M 0s
+ 43800K .......... .......... .......... .......... .......... 73%  113M 0s
+ 43850K .......... .......... .......... .......... .......... 73%  125M 0s
+ 43900K .......... .......... .......... .......... .......... 73%  118M 0s
+ 43950K .......... .......... .......... .......... .......... 73%  100M 0s
+ 44000K .......... .......... .......... .......... .......... 74%  129M 0s
+ 44050K .......... .......... .......... .......... .......... 74%  124M 0s
+ 44100K .......... .......... .......... .......... .......... 74% 50.6M 0s
+ 44150K .......... .......... .......... .......... .......... 74% 50.6M 0s
+ 44200K .......... .......... .......... .......... .......... 74% 66.3M 0s
+ 44250K .......... .......... .......... .......... .......... 74% 68.9M 0s
+ 44300K .......... .......... .......... .......... .......... 74% 66.5M 0s
+ 44350K .......... .......... .......... .......... .......... 74% 61.2M 0s
+ 44400K .......... .......... .......... .......... .......... 74%  125M 0s
+ 44450K .......... .......... .......... .......... .......... 74%  132M 0s
+ 44500K .......... .......... .......... .......... .......... 74%  108M 0s
+ 44550K .......... .......... .......... .......... .......... 74%  100M 0s
+ 44600K .......... .......... .......... .......... .......... 75%  118M 0s
+ 44650K .......... .......... .......... .......... .......... 75%  119M 0s
+ 44700K .......... .......... .......... .......... .......... 75% 96.6M 0s
+ 44750K .......... .......... .......... .......... .......... 75% 75.6M 0s
+ 44800K .......... .......... .......... .......... .......... 75% 84.7M 0s
+ 44850K .......... .......... .......... .......... .......... 75% 93.7M 0s
+ 44900K .......... .......... .......... .......... .......... 75% 26.2M 0s
+ 44950K .......... .......... .......... .......... .......... 75% 51.1M 0s
+ 45000K .......... .......... .......... .......... .......... 75% 57.5M 0s
+ 45050K .......... .......... .......... .......... .......... 75% 52.9M 0s
+ 45100K .......... .......... .......... .......... .......... 75% 54.3M 0s
+ 45150K .......... .......... .......... .......... .......... 75% 55.2M 0s
+ 45200K .......... .......... .......... .......... .......... 76% 66.7M 0s
+ 45250K .......... .......... .......... .......... .......... 76% 57.9M 0s
+ 45300K .......... .......... .......... .......... .......... 76% 63.0M 0s
+ 45350K .......... .......... .......... .......... .......... 76% 49.8M 0s
+ 45400K .......... .......... .......... .......... .......... 76% 64.7M 0s
+ 45450K .......... .......... .......... .......... .......... 76% 67.4M 0s
+ 45500K .......... .......... .......... .......... .......... 76% 66.6M 0s
+ 45550K .......... .......... .......... .......... .......... 76% 71.5M 0s
+ 45600K .......... .......... .......... .......... .......... 76%  127M 0s
+ 45650K .......... .......... .......... .......... .......... 76%  118M 0s
+ 45700K .......... .......... .......... .......... .......... 76%  119M 0s
+ 45750K .......... .......... .......... .......... .......... 76%  110M 0s
+ 45800K .......... .......... .......... .......... .......... 77% 56.2M 0s
+ 45850K .......... .......... .......... .......... .......... 77% 58.3M 0s
+ 45900K .......... .......... .......... .......... .......... 77% 62.2M 0s
+ 45950K .......... .......... .......... .......... .......... 77% 49.2M 0s
+ 46000K .......... .......... .......... .......... .......... 77% 44.7M 0s
+ 46050K .......... .......... .......... .......... .......... 77%  104M 0s
+ 46100K .......... .......... .......... .......... .......... 77%  123M 0s
+ 46150K .......... .......... .......... .......... .......... 77% 95.9M 0s
+ 46200K .......... .......... .......... .......... .......... 77% 94.1M 0s
+ 46250K .......... .......... .......... .......... .......... 77%  105M 0s
+ 46300K .......... .......... .......... .......... .......... 77%  114M 0s
+ 46350K .......... .......... .......... .......... .......... 77%  101M 0s
+ 46400K .......... .......... .......... .......... .......... 78%  115M 0s
+ 46450K .......... .......... .......... .......... .......... 78% 59.9M 0s
+ 46500K .......... .......... .......... .......... .......... 78% 66.9M 0s
+ 46550K .......... .......... .......... .......... .......... 78% 61.3M 0s
+ 46600K .......... .......... .......... .......... .......... 78%  119M 0s
+ 46650K .......... .......... .......... .......... .......... 78%  117M 0s
+ 46700K .......... .......... .......... .......... .......... 78%  118M 0s
+ 46750K .......... .......... .......... .......... .......... 78% 73.3M 0s
+ 46800K .......... .......... .......... .......... .......... 78% 43.7M 0s
+ 46850K .......... .......... .......... .......... .......... 78% 65.8M 0s
+ 46900K .......... .......... .......... .......... .......... 78% 69.9M 0s
+ 46950K .......... .......... .......... .......... .......... 78% 91.2M 0s
+ 47000K .......... .......... .......... .......... .......... 79%  115M 0s
+ 47050K .......... .......... .......... .......... .......... 79% 59.8M 0s
+ 47100K .......... .......... .......... .......... .......... 79% 67.6M 0s
+ 47150K .......... .......... .......... .......... .......... 79%  109M 0s
+ 47200K .......... .......... .......... .......... .......... 79%  123M 0s
+ 47250K .......... .......... .......... .......... .......... 79%  116M 0s
+ 47300K .......... .......... .......... .......... .......... 79% 90.3M 0s
+ 47350K .......... .......... .......... .......... .......... 79% 97.4M 0s
+ 47400K .......... .......... .......... .......... .......... 79% 84.2M 0s
+ 47450K .......... .......... .......... .......... .......... 79% 44.8M 0s
+ 47500K .......... .......... .......... .......... .......... 79% 63.1M 0s
+ 47550K .......... .......... .......... .......... .......... 79% 73.1M 0s
+ 47600K .......... .......... .......... .......... .......... 80%  114M 0s
+ 47650K .......... .......... .......... .......... .......... 80%  125M 0s
+ 47700K .......... .......... .......... .......... .......... 80% 98.4M 0s
+ 47750K .......... .......... .......... .......... .......... 80% 52.6M 0s
+ 47800K .......... .......... .......... .......... .......... 80%  108M 0s
+ 47850K .......... .......... .......... .......... .......... 80%  123M 0s
+ 47900K .......... .......... .......... .......... .......... 80%  120M 0s
+ 47950K .......... .......... .......... .......... .......... 80%  106M 0s
+ 48000K .......... .......... .......... .......... .......... 80%  119M 0s
+ 48050K .......... .......... .......... .......... .......... 80%  122M 0s
+ 48100K .......... .......... .......... .......... .......... 80% 56.2M 0s
+ 48150K .......... .......... .......... .......... .......... 80% 47.5M 0s
+ 48200K .......... .......... .......... .......... .......... 81% 55.7M 0s
+ 48250K .......... .......... .......... .......... .......... 81% 65.2M 0s
+ 48300K .......... .......... .......... .......... .......... 81% 84.8M 0s
+ 48350K .......... .......... .......... .......... .......... 81% 11.5M 0s
+ 48400K .......... .......... .......... .......... .......... 81% 17.6M 0s
+ 48450K .......... .......... .......... .......... .......... 81% 48.7M 0s
+ 48500K .......... .......... .......... .......... .......... 81% 77.4M 0s
+ 48550K .......... .......... .......... .......... .......... 81% 5.73M 0s
+ 48600K .......... .......... .......... .......... .......... 81% 19.9M 0s
+ 48650K .......... .......... .......... .......... .......... 81% 15.9M 0s
+ 48700K .......... .......... .......... .......... .......... 81% 22.3M 0s
+ 48750K .......... .......... .......... .......... .......... 81% 19.3M 0s
+ 48800K .......... .......... .......... .......... .......... 82% 21.3M 0s
+ 48850K .......... .......... .......... .......... .......... 82% 21.8M 0s
+ 48900K .......... .......... .......... .......... .......... 82% 19.3M 0s
+ 48950K .......... .......... .......... .......... .......... 82% 15.5M 0s
+ 49000K .......... .......... .......... .......... .......... 82% 12.9M 0s
+ 49050K .......... .......... .......... .......... .......... 82% 40.4M 0s
+ 49100K .......... .......... .......... .......... .......... 82% 41.2M 0s
+ 49150K .......... .......... .......... .......... .......... 82% 35.8M 0s
+ 49200K .......... .......... .......... .......... .......... 82% 40.8M 0s
+ 49250K .......... .......... .......... .......... .......... 82% 41.4M 0s
+ 49300K .......... .......... .......... .......... .......... 82% 41.4M 0s
+ 49350K .......... .......... .......... .......... .......... 82% 37.9M 0s
+ 49400K .......... .......... .......... .......... .......... 83% 33.0M 0s
+ 49450K .......... .......... .......... .......... .......... 83% 34.4M 0s
+ 49500K .......... .......... .......... .......... .......... 83% 43.2M 0s
+ 49550K .......... .......... .......... .......... .......... 83% 37.7M 0s
+ 49600K .......... .......... .......... .......... .......... 83% 42.6M 0s
+ 49650K .......... .......... .......... .......... .......... 83% 42.5M 0s
+ 49700K .......... .......... .......... .......... .......... 83% 42.5M 0s
+ 49750K .......... .......... .......... .......... .......... 83% 41.0M 0s
+ 49800K .......... .......... .......... .......... .......... 83%  110M 0s
+ 49850K .......... .......... .......... .......... .......... 83% 80.4M 0s
+ 49900K .......... .......... .......... .......... .......... 83% 80.0M 0s
+ 49950K .......... .......... .......... .......... .......... 84%  116M 0s
+ 50000K .......... .......... .......... .......... .......... 84% 86.4M 0s
+ 50050K .......... .......... .......... .......... .......... 84% 92.7M 0s
+ 50100K .......... .......... .......... .......... .......... 84% 91.8M 0s
+ 50150K .......... .......... .......... .......... .......... 84% 88.4M 0s
+ 50200K .......... .......... .......... .......... .......... 84% 90.7M 0s
+ 50250K .......... .......... .......... .......... .......... 84% 90.6M 0s
+ 50300K .......... .......... .......... .......... .......... 84%  101M 0s
+ 50350K .......... .......... .......... .......... .......... 84%  115M 0s
+ 50400K .......... .......... .......... .......... .......... 84%  215M 0s
+ 50450K .......... .......... .......... .......... .......... 84%  248M 0s
+ 50500K .......... .......... .......... .......... .......... 84%  248M 0s
+ 50550K .......... .......... .......... .......... .......... 85%  208M 0s
+ 50600K .......... .......... .......... .......... .......... 85%  245M 0s
+ 50650K .......... .......... .......... .......... .......... 85%  190M 0s
+ 50700K .......... .......... .......... .......... .......... 85%  246M 0s
+ 50750K .......... .......... .......... .......... .......... 85%  225M 0s
+ 50800K .......... .......... .......... .......... .......... 85%  249M 0s
+ 50850K .......... .......... .......... .......... .......... 85%  227M 0s
+ 50900K .......... .......... .......... .......... .......... 85% 74.6M 0s
+ 50950K .......... .......... .......... .......... .......... 85% 78.2M 0s
+ 51000K .......... .......... .......... .......... .......... 85%  127M 0s
+ 51050K .......... .......... .......... .......... .......... 85%  127M 0s
+ 51100K .......... .......... .......... .......... .......... 85%  132M 0s
+ 51150K .......... .......... .......... .......... .......... 86% 59.4M 0s
+ 51200K .......... .......... .......... .......... .......... 86% 79.7M 0s
+ 51250K .......... .......... .......... .......... .......... 86% 11.7M 0s
+ 51300K .......... .......... .......... .......... .......... 86% 92.7M 0s
+ 51350K .......... .......... .......... .......... .......... 86% 80.8M 0s
+ 51400K .......... .......... .......... .......... .......... 86% 93.1M 0s
+ 51450K .......... .......... .......... .......... .......... 86%  112M 0s
+ 51500K .......... .......... .......... .......... .......... 86% 68.9M 0s
+ 51550K .......... .......... .......... .......... .......... 86% 8.58M 0s
+ 51600K .......... .......... .......... .......... .......... 86% 40.9M 0s
+ 51650K .......... .......... .......... .......... .......... 86% 35.9M 0s
+ 51700K .......... .......... .......... .......... .......... 86% 26.9M 0s
+ 51750K .......... .......... .......... .......... .......... 87% 33.7M 0s
+ 51800K .......... .......... .......... .......... .......... 87% 46.3M 0s
+ 51850K .......... .......... .......... .......... .......... 87% 44.5M 0s
+ 51900K .......... .......... .......... .......... .......... 87% 29.9M 0s
+ 51950K .......... .......... .......... .......... .......... 87% 23.4M 0s
+ 52000K .......... .......... .......... .......... .......... 87% 20.6M 0s
+ 52050K .......... .......... .......... .......... .......... 87% 51.7M 0s
+ 52100K .......... .......... .......... .......... .......... 87% 43.6M 0s
+ 52150K .......... .......... .......... .......... .......... 87% 36.5M 0s
+ 52200K .......... .......... .......... .......... .......... 87% 43.9M 0s
+ 52250K .......... .......... .......... .......... .......... 87% 28.6M 0s
+ 52300K .......... .......... .......... .......... .......... 87% 38.1M 0s
+ 52350K .......... .......... .......... .......... .......... 88% 39.0M 0s
+ 52400K .......... .......... .......... .......... .......... 88% 40.8M 0s
+ 52450K .......... .......... .......... .......... .......... 88% 41.0M 0s
+ 52500K .......... .......... .......... .......... .......... 88% 44.6M 0s
+ 52550K .......... .......... .......... .......... .......... 88% 39.1M 0s
+ 52600K .......... .......... .......... .......... .......... 88% 44.9M 0s
+ 52650K .......... .......... .......... .......... .......... 88% 29.4M 0s
+ 52700K .......... .......... .......... .......... .......... 88% 35.3M 0s
+ 52750K .......... .......... .......... .......... .......... 88% 33.0M 0s
+ 52800K .......... .......... .......... .......... .......... 88% 45.3M 0s
+ 52850K .......... .......... .......... .......... .......... 88%  120M 0s
+ 52900K .......... .......... .......... .......... .......... 88%  120M 0s
+ 52950K .......... .......... .......... .......... .......... 89% 91.1M 0s
+ 53000K .......... .......... .......... .......... .......... 89% 74.8M 0s
+ 53050K .......... .......... .......... .......... .......... 89%  123M 0s
+ 53100K .......... .......... .......... .......... .......... 89%  100M 0s
+ 53150K .......... .......... .......... .......... .......... 89% 79.9M 0s
+ 53200K .......... .......... .......... .......... .......... 89%  150M 0s
+ 53250K .......... .......... .......... .......... .......... 89%  165M 0s
+ 53300K .......... .......... .......... .......... .......... 89%  159M 0s
+ 53350K .......... .......... .......... .......... .......... 89% 65.6M 0s
+ 53400K .......... .......... .......... .......... .......... 89%  127M 0s
+ 53450K .......... .......... .......... .......... .......... 89% 38.7M 0s
+ 53500K .......... .......... .......... .......... .......... 89% 35.9M 0s
+ 53550K .......... .......... .......... .......... .......... 90% 40.1M 0s
+ 53600K .......... .......... .......... .......... .......... 90% 41.4M 0s
+ 53650K .......... .......... .......... .......... .......... 90% 32.2M 0s
+ 53700K .......... .......... .......... .......... .......... 90% 32.0M 0s
+ 53750K .......... .......... .......... .......... .......... 90% 25.5M 0s
+ 53800K .......... .......... .......... .......... .......... 90% 27.6M 0s
+ 53850K .......... .......... .......... .......... .......... 90% 23.7M 0s
+ 53900K .......... .......... .......... .......... .......... 90%  114M 0s
+ 53950K .......... .......... .......... .......... .......... 90%  111M 0s
+ 54000K .......... .......... .......... .......... .......... 90%  124M 0s
+ 54050K .......... .......... .......... .......... .......... 90%  122M 0s
+ 54100K .......... .......... .......... .......... .......... 90%  113M 0s
+ 54150K .......... .......... .......... .......... .......... 91% 78.2M 0s
+ 54200K .......... .......... .......... .......... .......... 91% 91.3M 0s
+ 54250K .......... .......... .......... .......... .......... 91% 87.3M 0s
+ 54300K .......... .......... .......... .......... .......... 91% 90.7M 0s
+ 54350K .......... .......... .......... .......... .......... 91% 96.7M 0s
+ 54400K .......... .......... .......... .......... .......... 91%  147M 0s
+ 54450K .......... .......... .......... .......... .......... 91%  242M 0s
+ 54500K .......... .......... .......... .......... .......... 91%  205M 0s
+ 54550K .......... .......... .......... .......... .......... 91%  155M 0s
+ 54600K .......... .......... .......... .......... .......... 91% 83.4M 0s
+ 54650K .......... .......... .......... .......... .......... 91% 98.4M 0s
+ 54700K .......... .......... .......... .......... .......... 91%  122M 0s
+ 54750K .......... .......... .......... .......... .......... 92%  112M 0s
+ 54800K .......... .......... .......... .......... .......... 92%  154M 0s
+ 54850K .......... .......... .......... .......... .......... 92%  104M 0s
+ 54900K .......... .......... .......... .......... .......... 92%  127M 0s
+ 54950K .......... .......... .......... .......... .......... 92%  134M 0s
+ 55000K .......... .......... .......... .......... .......... 92%  152M 0s
+ 55050K .......... .......... .......... .......... .......... 92%  144M 0s
+ 55100K .......... .......... .......... .......... .......... 92%  148M 0s
+ 55150K .......... .......... .......... .......... .......... 92% 80.0M 0s
+ 55200K .......... .......... .......... .......... .......... 92%  117M 0s
+ 55250K .......... .......... .......... .......... .......... 92%  118M 0s
+ 55300K .......... .......... .......... .......... .......... 92% 95.4M 0s
+ 55350K .......... .......... .......... .......... .......... 93%  105M 0s
+ 55400K .......... .......... .......... .......... .......... 93%  168M 0s
+ 55450K .......... .......... .......... .......... .......... 93%  148M 0s
+ 55500K .......... .......... .......... .......... .......... 93%  183M 0s
+ 55550K .......... .......... .......... .......... .......... 93% 49.5M 0s
+ 55600K .......... .......... .......... .......... .......... 93% 76.8M 0s
+ 55650K .......... .......... .......... .......... .......... 93% 80.0M 0s
+ 55700K .......... .......... .......... .......... .......... 93% 80.6M 0s
+ 55750K .......... .......... .......... .......... .......... 93% 66.5M 0s
+ 55800K .......... .......... .......... .......... .......... 93% 82.5M 0s
+ 55850K .......... .......... .......... .......... .......... 93% 79.4M 0s
+ 55900K .......... .......... .......... .......... .......... 94% 81.0M 0s
+ 55950K .......... .......... .......... .......... .......... 94% 87.4M 0s
+ 56000K .......... .......... .......... .......... .......... 94%  123M 0s
+ 56050K .......... .......... .......... .......... .......... 94%  124M 0s
+ 56100K .......... .......... .......... .......... .......... 94%  235M 0s
+ 56150K .......... .......... .......... .......... .......... 94% 95.1M 0s
+ 56200K .......... .......... .......... .......... .......... 94%  127M 0s
+ 56250K .......... .......... .......... .......... .......... 94%  109M 0s
+ 56300K .......... .......... .......... .......... .......... 94% 83.7M 0s
+ 56350K .......... .......... .......... .......... .......... 94% 89.5M 0s
+ 56400K .......... .......... .......... .......... .......... 94% 92.3M 0s
+ 56450K .......... .......... .......... .......... .......... 94% 86.6M 0s
+ 56500K .......... .......... .......... .......... .......... 95% 90.9M 0s
+ 56550K .......... .......... .......... .......... .......... 95%  103M 0s
+ 56600K .......... .......... .......... .......... .......... 95%  148M 0s
+ 56650K .......... .......... .......... .......... .......... 95%  237M 0s
+ 56700K .......... .......... .......... .......... .......... 95%  107M 0s
+ 56750K .......... .......... .......... .......... .......... 95% 71.7M 0s
+ 56800K .......... .......... .......... .......... .......... 95% 96.6M 0s
+ 56850K .......... .......... .......... .......... .......... 95%  225M 0s
+ 56900K .......... .......... .......... .......... .......... 95%  130M 0s
+ 56950K .......... .......... .......... .......... .......... 95%  209M 0s
+ 57000K .......... .......... .......... .......... .......... 95%  133M 0s
+ 57050K .......... .......... .......... .......... .......... 95%  230M 0s
+ 57100K .......... .......... .......... .......... .......... 96%  130M 0s
+ 57150K .......... .......... .......... .......... .......... 96%  214M 0s
+ 57200K .......... .......... .......... .......... .......... 96%  142M 0s
+ 57250K .......... .......... .......... .......... .......... 96%  120M 0s
+ 57300K .......... .......... .......... .......... .......... 96%  100M 0s
+ 57350K .......... .......... .......... .......... .......... 96% 77.4M 0s
+ 57400K .......... .......... .......... .......... .......... 96%  125M 0s
+ 57450K .......... .......... .......... .......... .......... 96%  130M 0s
+ 57500K .......... .......... .......... .......... .......... 96% 83.9M 0s
+ 57550K .......... .......... .......... .......... .......... 96% 87.4M 0s
+ 57600K .......... .......... .......... .......... .......... 96% 83.9M 0s
+ 57650K .......... .......... .......... .......... .......... 96%  105M 0s
+ 57700K .......... .......... .......... .......... .......... 97% 82.0M 0s
+ 57750K .......... .......... .......... .......... .......... 97%  138M 0s
+ 57800K .......... .......... .......... .......... .......... 97%  123M 0s
+ 57850K .......... .......... .......... .......... .......... 97%  213M 0s
+ 57900K .......... .......... .......... .......... .......... 97%  202M 0s
+ 57950K .......... .......... .......... .......... .......... 97%  154M 0s
+ 58000K .......... .......... .......... .......... .......... 97%  125M 0s
+ 58050K .......... .......... .......... .......... .......... 97%  219M 0s
+ 58100K .......... .......... .......... .......... .......... 97%  246M 0s
+ 58150K .......... .......... .......... .......... .......... 97%  124M 0s
+ 58200K .......... .......... .......... .......... .......... 97%  133M 0s
+ 58250K .......... .......... .......... .......... .......... 97%  120M 0s
+ 58300K .......... .......... .......... .......... .......... 98%  121M 0s
+ 58350K .......... .......... .......... .......... .......... 98%  185M 0s
+ 58400K .......... .......... .......... .......... .......... 98%  172M 0s
+ 58450K .......... .......... .......... .......... .......... 98%  170M 0s
+ 58500K .......... .......... .......... .......... .......... 98%  251M 0s
+ 58550K .......... .......... .......... .......... .......... 98%  119M 0s
+ 58600K .......... .......... .......... .......... .......... 98% 20.1M 0s
+ 58650K .......... .......... .......... .......... .......... 98% 77.2M 0s
+ 58700K .......... .......... .......... .......... .......... 98% 83.0M 0s
+ 58750K .......... .......... .......... .......... .......... 98% 79.8M 0s
+ 58800K .......... .......... .......... .......... .......... 98% 97.9M 0s
+ 58850K .......... .......... .......... .......... .......... 98%  109M 0s
+ 58900K .......... .......... .......... .......... .......... 99% 89.6M 0s
+ 58950K .......... .......... .......... .......... .......... 99% 93.4M 0s
+ 59000K .......... .......... .......... .......... .......... 99% 83.1M 0s
+ 59050K .......... .......... .......... .......... .......... 99%  100M 0s
+ 59100K .......... .......... .......... .......... .......... 99%  104M 0s
+ 59150K .......... .......... .......... .......... .......... 99% 89.6M 0s
+ 59200K .......... .......... .......... .......... .......... 99%  106M 0s
+ 59250K .......... .......... .......... .......... .......... 99%  112M 0s
+ 59300K .......... .......... .......... .......... .......... 99%  101M 0s
+ 59350K .......... .......... .......... .......... .......... 99%  104M 0s
+ 59400K .......... .......... .......... .......... .......... 99% 24.2M 0s
+ 59450K .......... .......... .......... .......... .......... 99% 69.1M 0s
+ 59500K .......... .........                                  100%  162M=1.0s
+
+2022-02-01 14:21:20 (58.9 MB/s) - ‘all.tsv’ saved [60947802/60947802]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">pwd
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>/databricks/driver
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/datasets/magellan&quot;) //need not be done again!
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res55: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.cp(&quot;file:/databricks/driver/all.tsv&quot;, &quot;dbfs:/datasets/magellan/&quot;) // load into dbfs
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res56: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/magellan/&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/</td>
+<td>SFNbhd/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/all.tsv</td>
+<td>all.tsv</td>
+<td>6.0947802e7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="getting-sf-neighborhood-data"><a class="header" href="#getting-sf-neighborhood-data">Getting SF Neighborhood Data</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">wget http://www.lamastex.org/courses/ScalableDataScience/2016/datasets/magellan/UberSF/planning_neighborhoods.zip
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>--2022-02-01 14:21:24--  http://www.lamastex.org/courses/ScalableDataScience/2016/datasets/magellan/UberSF/planning_neighborhoods.zip
+Resolving www.lamastex.org (www.lamastex.org)... 166.62.28.100
+Connecting to www.lamastex.org (www.lamastex.org)|166.62.28.100|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 163771 (160K) [application/zip]
+Saving to: ‘planning_neighborhoods.zip’
+
+     0K .......... .......... .......... .......... .......... 31% 36.7M 0s
+    50K .......... .......... .......... .......... .......... 62%  294K 0s
+   100K .......... .......... .......... .......... .......... 93%  296K 0s
+   150K .........                                             100% 59.1K=0.5s
+
+2022-02-01 14:21:25 (315 KB/s) - ‘planning_neighborhoods.zip’ saved [163771/163771]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">unzip planning_neighborhoods.zip
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Archive:  planning_neighborhoods.zip
+  inflating: planning_neighborhoods.dbf  
+  inflating: planning_neighborhoods.shx  
+  inflating: planning_neighborhoods.shp.xml  
+  inflating: planning_neighborhoods.shp  
+  inflating: planning_neighborhoods.sbx  
+  inflating: planning_neighborhoods.sbn  
+  inflating: planning_neighborhoods.prj  
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">ls -al
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>total 59968
+drwxr-xr-x 1 root root     4096 Feb  1 14:21 .
+drwxr-xr-x 1 root root     4096 Feb  1 13:54 ..
+-rw-r--r-- 1 root root 60947802 Feb  1 14:21 all.tsv
+drwxr-xr-x 2 root root     4096 Jan  1  1970 conf
+-rw-r--r-- 1 root root      704 Feb  1 13:54 derby.log
+drwxr-xr-x 3 root root     4096 Feb  1 13:54 eventlogs
+drwxr-xr-x 2 root root     4096 Feb  1 14:15 ganglia
+drwxr-xr-x 2 root root     4096 Feb  1 14:00 logs
+-rw-r--r-- 1 root root     1028 Jan 20  2012 planning_neighborhoods.dbf
+-rw-r--r-- 1 root root      567 Jan 20  2012 planning_neighborhoods.prj
+-rw-r--r-- 1 root root      516 Jan 20  2012 planning_neighborhoods.sbn
+-rw-r--r-- 1 root root      164 Jan 20  2012 planning_neighborhoods.sbx
+-rw-r--r-- 1 root root   214576 Jan 20  2012 planning_neighborhoods.shp
+-rw-r--r-- 1 root root    21958 Jan 20  2012 planning_neighborhoods.shp.xml
+-rw-r--r-- 1 root root      396 Jan 20  2012 planning_neighborhoods.shx
+-rw-r--r-- 1 root root   163771 Nov  9  2015 planning_neighborhoods.zip
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">mv planning_neighborhoods.zip orig_planning_neighborhoods.zip
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="lets-prepare-the-files-in-a-local-directory-named-sfnbhd"><a class="header" href="#lets-prepare-the-files-in-a-local-directory-named-sfnbhd">Let's prepare the files in a local directory named <code>SFNbhd</code></a></h3>
+<ul>
+<li>make a directory called <code>SFNbhd</code> using the command <code>mkdir SFNbhd</code></li>
+<li>after making the directory specified by <code>&amp;&amp;</code> move the files starting with <code>planning_nei</code> in to the directory we made <code>SFNbhd</code> by:
+<ul>
+<li><code>mv planning_nei* SFNbhd</code></li>
+</ul>
+</li>
+<li>list the contents of the current directory using <code>ls</code></li>
+<li>finally list the contents of the directory <code>SFNbhd</code> inside current directory using <code>ls -al SFNbhd</code></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">mkdir SFNbhd &amp;&amp; mv planning_nei* SFNbhd &amp;&amp; ls 
+ls -al SFNbhd
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>SFNbhd
+all.tsv
+conf
+derby.log
+eventlogs
+ganglia
+logs
+orig_planning_neighborhoods.zip
+total 264
+drwxr-xr-x 2 root root   4096 Feb  1 14:21 .
+drwxr-xr-x 1 root root   4096 Feb  1 14:21 ..
+-rw-r--r-- 1 root root   1028 Jan 20  2012 planning_neighborhoods.dbf
+-rw-r--r-- 1 root root    567 Jan 20  2012 planning_neighborhoods.prj
+-rw-r--r-- 1 root root    516 Jan 20  2012 planning_neighborhoods.sbn
+-rw-r--r-- 1 root root    164 Jan 20  2012 planning_neighborhoods.sbx
+-rw-r--r-- 1 root root 214576 Jan 20  2012 planning_neighborhoods.shp
+-rw-r--r-- 1 root root  21958 Jan 20  2012 planning_neighborhoods.shp.xml
+-rw-r--r-- 1 root root    396 Jan 20  2012 planning_neighborhoods.shx
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/datasets/magellan/SFNbhd&quot;) //make the directory in dbfs - need not be done again!
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res58: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// just copy each file - done for pedantic reasons; we can do more sophisticated dbfs loads for large shape files
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.dbf&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.prj&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.sbn&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.sbx&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.shp&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.shp.xml&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+dbutils.fs.cp(&quot;file:/databricks/driver/SFNbhd/planning_neighborhoods.shx&quot;, &quot;dbfs:/datasets/magellan/SFNbhd/&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res59: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/datasets/magellan/SFNbhd/&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.dbf</td>
+<td>planning_neighborhoods.dbf</td>
+<td>1028.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.prj</td>
+<td>planning_neighborhoods.prj</td>
+<td>567.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.sbn</td>
+<td>planning_neighborhoods.sbn</td>
+<td>516.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.sbx</td>
+<td>planning_neighborhoods.sbx</td>
+<td>164.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shp</td>
+<td>planning_neighborhoods.shp</td>
+<td>214576.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shp.xml</td>
+<td>planning_neighborhoods.shp.xml</td>
+<td>21958.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/magellan/SFNbhd/planning_neighborhoods.shx</td>
+<td>planning_neighborhoods.shx</td>
+<td>396.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="end-of-step-0-downloading-and-putting-data-in-dbfs"><a class="header" href="#end-of-step-0-downloading-and-putting-data-in-dbfs">End of Step 0: downloading and putting data in dbfs</a></h3>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

@@ -145,7 +145,320 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="025_b_tttdffunctions"><a class="header" href="#025_b_tttdffunctions">025_b_TTTDFfunctions</a></h1>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="tweet-transmission-tree-function"><a class="header" href="#tweet-transmission-tree-function">Tweet Transmission Tree Function</a></h2>
+<p>This is part of <em>Project MEP: Meme Evolution Programme</em> and supported by databricks, AWS and a Swedish VR grant.</p>
+<p>Please see the following notebook to understand the rationale for the Tweet Transmission Tree Functions: * <a href="http://lamastex.org/lmse/mep/src/TweetAnatomyAndTransmissionTree.htmll">http://lamastex.org/lmse/mep/src/TweetAnatomyAndTransmissionTree.html</a></p>
+<pre><code>Copyright 2016-2020 Akinwande Atanda and Raazesh Sainudiin
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.types.{StructType, StructField, StringType};
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.ColumnName
+import org.apache.spark.sql.DataFrame
+
+spark.sql(&quot;set spark.sql.legacy.timeParserPolicy=LEGACY&quot;)
+
+def fromParquetFile2DF(InputDFAsParquetFilePatternString: String): DataFrame = {
+      sqlContext.
+        read.parquet(InputDFAsParquetFilePatternString)
+}
+
+def tweetsJsonStringDF2TweetsDF(tweetsAsJsonStringInputDF: DataFrame): DataFrame = {
+      sqlContext
+        .read
+        .json(tweetsAsJsonStringInputDF.map({case Row(val1: String) =&gt; val1}))
+      }
+
+def tweetsIDLong_JsonStringPairDF2TweetsDF(tweetsAsIDLong_JsonStringInputDF: DataFrame): DataFrame = {
+      sqlContext
+        .read
+        .json(tweetsAsIDLong_JsonStringInputDF.map({case Row(val0:Long, val1: String) =&gt; val1}))
+      }
+
+def tweetsDF2TTTDF(tweetsInputDF: DataFrame): DataFrame = {
+ tweetsInputDF.select(
+  unix_timestamp($&quot;createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CurrentTweetDate&quot;),
+  $&quot;id&quot;.as(&quot;CurrentTwID&quot;),
+  $&quot;lang&quot;.as(&quot;lang&quot;),
+  $&quot;geoLocation.latitude&quot;.as(&quot;lat&quot;),
+  $&quot;geoLocation.longitude&quot;.as(&quot;lon&quot;),
+  unix_timestamp($&quot;retweetedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInRT&quot;), 
+  $&quot;retweetedStatus.id&quot;.as(&quot;OriginalTwIDinRT&quot;),  
+  unix_timestamp($&quot;quotedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInQT&quot;), 
+  $&quot;quotedStatus.id&quot;.as(&quot;OriginalTwIDinQT&quot;), 
+  $&quot;inReplyToStatusId&quot;.as(&quot;OriginalTwIDinReply&quot;), 
+  $&quot;user.id&quot;.as(&quot;CPostUserId&quot;),
+  unix_timestamp($&quot;user.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;userCreatedAtDate&quot;),
+  $&quot;retweetedStatus.user.id&quot;.as(&quot;OPostUserIdinRT&quot;), 
+  $&quot;quotedStatus.user.id&quot;.as(&quot;OPostUserIdinQT&quot;),
+  $&quot;inReplyToUserId&quot;.as(&quot;OPostUserIdinReply&quot;),
+  $&quot;user.name&quot;.as(&quot;CPostUserName&quot;), 
+  $&quot;retweetedStatus.user.name&quot;.as(&quot;OPostUserNameinRT&quot;), 
+  $&quot;quotedStatus.user.name&quot;.as(&quot;OPostUserNameinQT&quot;), 
+  $&quot;user.screenName&quot;.as(&quot;CPostUserSN&quot;), 
+  $&quot;retweetedStatus.user.screenName&quot;.as(&quot;OPostUserSNinRT&quot;), 
+  $&quot;quotedStatus.user.screenName&quot;.as(&quot;OPostUserSNinQT&quot;),
+  $&quot;inReplyToScreenName&quot;.as(&quot;OPostUserSNinReply&quot;),
+  $&quot;user.favouritesCount&quot;,
+  $&quot;user.followersCount&quot;,
+  $&quot;user.friendsCount&quot;,
+  $&quot;user.isVerified&quot;,
+  $&quot;user.isGeoEnabled&quot;,
+  $&quot;text&quot;.as(&quot;CurrentTweet&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.id&quot;.as(&quot;UMentionRTiD&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionRTsN&quot;), 
+  $&quot;quotedStatus.userMentionEntities.id&quot;.as(&quot;UMentionQTiD&quot;), 
+  $&quot;quotedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionQTsN&quot;), 
+  $&quot;userMentionEntities.id&quot;.as(&quot;UMentionASiD&quot;), 
+  $&quot;userMentionEntities.screenName&quot;.as(&quot;UMentionASsN&quot;)
+ ).withColumn(&quot;TweetType&quot;,
+    when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Original Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp;$&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;ReTweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Retweet of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Quoted Rely Tweet&quot;)
+      .otherwise(&quot;Unclassified&quot;))
+.withColumn(&quot;MentionType&quot;, 
+    when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;RetweetAndQuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;RetweetMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;QuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;AuthoredMention&quot;)
+    .otherwise(&quot;NoMention&quot;))
+.withColumn(&quot;Weight&quot;, lit(1L))
+}
+
+def tweetsDF2TTTDFWithURLsAndHashtags(tweetsInputDF: DataFrame): DataFrame = {
+ tweetsInputDF.select(
+  unix_timestamp($&quot;createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CurrentTweetDate&quot;),
+  $&quot;id&quot;.as(&quot;CurrentTwID&quot;),
+  $&quot;lang&quot;.as(&quot;lang&quot;),
+  $&quot;geoLocation.latitude&quot;.as(&quot;lat&quot;),
+  $&quot;geoLocation.longitude&quot;.as(&quot;lon&quot;),
+  unix_timestamp($&quot;retweetedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInRT&quot;), 
+  $&quot;retweetedStatus.id&quot;.as(&quot;OriginalTwIDinRT&quot;),  
+  unix_timestamp($&quot;quotedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInQT&quot;), 
+  $&quot;quotedStatus.id&quot;.as(&quot;OriginalTwIDinQT&quot;), 
+  $&quot;inReplyToStatusId&quot;.as(&quot;OriginalTwIDinReply&quot;), 
+  $&quot;user.id&quot;.as(&quot;CPostUserId&quot;),
+  unix_timestamp($&quot;user.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;userCreatedAtDate&quot;),
+  $&quot;retweetedStatus.user.id&quot;.as(&quot;OPostUserIdinRT&quot;), 
+  $&quot;quotedStatus.user.id&quot;.as(&quot;OPostUserIdinQT&quot;),
+  $&quot;inReplyToUserId&quot;.as(&quot;OPostUserIdinReply&quot;),
+  $&quot;user.name&quot;.as(&quot;CPostUserName&quot;), 
+  $&quot;retweetedStatus.user.name&quot;.as(&quot;OPostUserNameinRT&quot;), 
+  $&quot;quotedStatus.user.name&quot;.as(&quot;OPostUserNameinQT&quot;), 
+  $&quot;user.screenName&quot;.as(&quot;CPostUserSN&quot;), 
+  $&quot;retweetedStatus.user.screenName&quot;.as(&quot;OPostUserSNinRT&quot;), 
+  $&quot;quotedStatus.user.screenName&quot;.as(&quot;OPostUserSNinQT&quot;),
+  $&quot;inReplyToScreenName&quot;.as(&quot;OPostUserSNinReply&quot;),
+  $&quot;user.favouritesCount&quot;,
+  $&quot;user.followersCount&quot;,
+  $&quot;user.friendsCount&quot;,
+  $&quot;user.isVerified&quot;,
+  $&quot;user.isGeoEnabled&quot;,
+  $&quot;text&quot;.as(&quot;CurrentTweet&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.id&quot;.as(&quot;UMentionRTiD&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionRTsN&quot;), 
+  $&quot;quotedStatus.userMentionEntities.id&quot;.as(&quot;UMentionQTiD&quot;), 
+  $&quot;quotedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionQTsN&quot;), 
+  $&quot;userMentionEntities.id&quot;.as(&quot;UMentionASiD&quot;), 
+  $&quot;userMentionEntities.screenName&quot;.as(&quot;UMentionASsN&quot;),
+  $&quot;urlEntities.expandedURL&quot;.as(&quot;URLs&quot;),
+  $&quot;hashtagEntities.text&quot;.as(&quot;hashTags&quot;)
+ ).withColumn(&quot;TweetType&quot;,
+    when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Original Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp;$&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;ReTweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Retweet of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Quoted Rely Tweet&quot;)
+      .otherwise(&quot;Unclassified&quot;))
+.withColumn(&quot;MentionType&quot;, 
+    when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;RetweetAndQuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;RetweetMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;QuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;AuthoredMention&quot;)
+    .otherwise(&quot;NoMention&quot;))
+.withColumn(&quot;Weight&quot;, lit(1L))
+}
+
+println(&quot;&quot;&quot;USAGE: val df = tweetsDF2TTTDF(tweetsJsonStringDF2TweetsDF(fromParquetFile2DF(&quot;parquetFileName&quot;)))
+                  val df = tweetsDF2TTTDF(tweetsIDLong_JsonStringPairDF2TweetsDF(fromParquetFile2DF(&quot;parquetFileName&quot;)))
+                  &quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// try to modify the function tweetsDF2TTTDF so some fields are not necessarily assumed to be available
+// there are better ways - https://stackoverflow.com/questions/35904136/how-do-i-detect-if-a-spark-dataframe-has-a-column
+
+def tweetsDF2TTTDFLightWeight(tweetsInputDF: DataFrame): DataFrame = {
+ tweetsInputDF.select(
+  unix_timestamp($&quot;createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CurrentTweetDate&quot;),
+  $&quot;id&quot;.as(&quot;CurrentTwID&quot;),
+  $&quot;lang&quot;.as(&quot;lang&quot;),
+  //$&quot;geoLocation.latitude&quot;.as(&quot;lat&quot;),
+  //$&quot;geoLocation.longitude&quot;.as(&quot;lon&quot;),
+  unix_timestamp($&quot;retweetedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInRT&quot;), 
+  $&quot;retweetedStatus.id&quot;.as(&quot;OriginalTwIDinRT&quot;),  
+  unix_timestamp($&quot;quotedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInQT&quot;), 
+  $&quot;quotedStatus.id&quot;.as(&quot;OriginalTwIDinQT&quot;), 
+  $&quot;inReplyToStatusId&quot;.as(&quot;OriginalTwIDinReply&quot;), 
+  $&quot;user.id&quot;.as(&quot;CPostUserId&quot;),
+  unix_timestamp($&quot;user.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;userCreatedAtDate&quot;),
+  $&quot;retweetedStatus.user.id&quot;.as(&quot;OPostUserIdinRT&quot;), 
+  $&quot;quotedStatus.user.id&quot;.as(&quot;OPostUserIdinQT&quot;),
+  $&quot;inReplyToUserId&quot;.as(&quot;OPostUserIdinReply&quot;),
+  $&quot;user.name&quot;.as(&quot;CPostUserName&quot;), 
+  $&quot;retweetedStatus.user.name&quot;.as(&quot;OPostUserNameinRT&quot;), 
+  $&quot;quotedStatus.user.name&quot;.as(&quot;OPostUserNameinQT&quot;), 
+  $&quot;user.screenName&quot;.as(&quot;CPostUserSN&quot;), 
+  $&quot;retweetedStatus.user.screenName&quot;.as(&quot;OPostUserSNinRT&quot;), 
+  $&quot;quotedStatus.user.screenName&quot;.as(&quot;OPostUserSNinQT&quot;),
+  $&quot;inReplyToScreenName&quot;.as(&quot;OPostUserSNinReply&quot;),
+  $&quot;user.favouritesCount&quot;,
+  $&quot;user.followersCount&quot;,
+  $&quot;user.friendsCount&quot;,
+  $&quot;user.isVerified&quot;,
+  $&quot;user.isGeoEnabled&quot;,
+  $&quot;text&quot;.as(&quot;CurrentTweet&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.id&quot;.as(&quot;UMentionRTiD&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionRTsN&quot;), 
+  $&quot;quotedStatus.userMentionEntities.id&quot;.as(&quot;UMentionQTiD&quot;), 
+  $&quot;quotedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionQTsN&quot;), 
+  $&quot;userMentionEntities.id&quot;.as(&quot;UMentionASiD&quot;), 
+  $&quot;userMentionEntities.screenName&quot;.as(&quot;UMentionASsN&quot;)
+ ).withColumn(&quot;TweetType&quot;,
+    when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Original Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp;$&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;ReTweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Retweet of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Quoted Rely Tweet&quot;)
+      .otherwise(&quot;Unclassified&quot;))
+.withColumn(&quot;MentionType&quot;, 
+    when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;RetweetAndQuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;RetweetMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;QuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;AuthoredMention&quot;)
+    .otherwise(&quot;NoMention&quot;))
+.withColumn(&quot;Weight&quot;, lit(1L))
+}
+
+def tweetsDF2TTTDFWithURLsAndHashtagsLightWeight(tweetsInputDF: DataFrame): DataFrame = {
+ tweetsInputDF.select(
+  unix_timestamp($&quot;createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CurrentTweetDate&quot;),
+  $&quot;id&quot;.as(&quot;CurrentTwID&quot;),
+  $&quot;lang&quot;.as(&quot;lang&quot;),
+  //$&quot;geoLocation.latitude&quot;.as(&quot;lat&quot;),
+  //$&quot;geoLocation.longitude&quot;.as(&quot;lon&quot;),
+  unix_timestamp($&quot;retweetedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInRT&quot;), 
+  $&quot;retweetedStatus.id&quot;.as(&quot;OriginalTwIDinRT&quot;),  
+  unix_timestamp($&quot;quotedStatus.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;CreationDateOfOrgTwInQT&quot;), 
+  $&quot;quotedStatus.id&quot;.as(&quot;OriginalTwIDinQT&quot;), 
+  $&quot;inReplyToStatusId&quot;.as(&quot;OriginalTwIDinReply&quot;), 
+  $&quot;user.id&quot;.as(&quot;CPostUserId&quot;),
+  unix_timestamp($&quot;user.createdAt&quot;, &quot;&quot;&quot;MMM dd, yyyy hh:mm:ss a&quot;&quot;&quot;).cast(TimestampType).as(&quot;userCreatedAtDate&quot;),
+  $&quot;retweetedStatus.user.id&quot;.as(&quot;OPostUserIdinRT&quot;), 
+  $&quot;quotedStatus.user.id&quot;.as(&quot;OPostUserIdinQT&quot;),
+  $&quot;inReplyToUserId&quot;.as(&quot;OPostUserIdinReply&quot;),
+  $&quot;user.name&quot;.as(&quot;CPostUserName&quot;), 
+  $&quot;retweetedStatus.user.name&quot;.as(&quot;OPostUserNameinRT&quot;), 
+  $&quot;quotedStatus.user.name&quot;.as(&quot;OPostUserNameinQT&quot;), 
+  $&quot;user.screenName&quot;.as(&quot;CPostUserSN&quot;), 
+  $&quot;retweetedStatus.user.screenName&quot;.as(&quot;OPostUserSNinRT&quot;), 
+  $&quot;quotedStatus.user.screenName&quot;.as(&quot;OPostUserSNinQT&quot;),
+  $&quot;inReplyToScreenName&quot;.as(&quot;OPostUserSNinReply&quot;),
+  $&quot;user.favouritesCount&quot;,
+  $&quot;user.followersCount&quot;,
+  $&quot;user.friendsCount&quot;,
+  $&quot;user.isVerified&quot;,
+  $&quot;user.isGeoEnabled&quot;,
+  $&quot;text&quot;.as(&quot;CurrentTweet&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.id&quot;.as(&quot;UMentionRTiD&quot;), 
+  $&quot;retweetedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionRTsN&quot;), 
+  $&quot;quotedStatus.userMentionEntities.id&quot;.as(&quot;UMentionQTiD&quot;), 
+  $&quot;quotedStatus.userMentionEntities.screenName&quot;.as(&quot;UMentionQTsN&quot;), 
+  $&quot;userMentionEntities.id&quot;.as(&quot;UMentionASiD&quot;), 
+  $&quot;userMentionEntities.screenName&quot;.as(&quot;UMentionASsN&quot;),
+  $&quot;urlEntities.expandedURL&quot;.as(&quot;URLs&quot;),
+  $&quot;hashtagEntities.text&quot;.as(&quot;hashTags&quot;)
+ ).withColumn(&quot;TweetType&quot;,
+    when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Original Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp;$&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;ReTweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; === -1,
+      &quot;Retweet of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Reply Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Reply of Quoted Tweet&quot;)
+    .when($&quot;OriginalTwIDinRT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinQT&quot;.isNotNull &amp;&amp; $&quot;OriginalTwIDinReply&quot; &gt; -1,
+      &quot;Retweet of Quoted Rely Tweet&quot;)
+      .otherwise(&quot;Unclassified&quot;))
+.withColumn(&quot;MentionType&quot;, 
+    when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;RetweetAndQuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNotNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;RetweetMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNotNull, &quot;QuotedMention&quot;)
+    .when($&quot;UMentionRTid&quot;.isNull &amp;&amp; $&quot;UMentionQTid&quot;.isNull, &quot;AuthoredMention&quot;)
+    .otherwise(&quot;NoMention&quot;))
+.withColumn(&quot;Weight&quot;, lit(1L))
+}
+</code></pre>
+</div>
 
                     </main>
 

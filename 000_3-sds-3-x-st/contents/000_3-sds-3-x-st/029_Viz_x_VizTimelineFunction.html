@@ -145,7 +145,748 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="029_viz_x_viztimelinefunction"><a class="header" href="#029_viz_x_viztimelinefunction">029_Viz_x_VizTimelineFunction</a></h1>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="function-for-visualizing-a-twitter-timeline"><a class="header" href="#function-for-visualizing-a-twitter-timeline">Function for visualizing a Twitter timeline</a></h1>
+<p>by Olof Björck, Joakim Johansson, Rania Sahioun, Raazesh Sainudiin and Ivan Sadikov</p>
+<p>This is part of <em>Project MEP: Meme Evolution Programme</em> and supported by databricks, AWS and a Swedish VR grant.</p>
+<pre><code>Copyright 2016-2020 Olof Björck, Joakim Johansson, Rania Sahioun, Ivan Sadikov and Raazesh Sainudiin
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.DataFrame
+
+/** Displays an interactive visualization of a Twitter timeline.
+ *
+ *  This function takes a DataFrame from TTTDFfunctions function tweetsDF2TTTDF()
+ *  and displays it in an interactive visualization. The DataFrame content should
+ *  be a Twitter user timeline.
+ *  
+ *  Visualization description:
+ *
+ *
+ *  This is a visualization of a Twitter user timeline.
+ *  Each circle represents a Tweet. The x-axis shows the time a Tweet was posted and 
+ *  the y-axis shows the Tweet type of the Tweet. The displayed time interval can be 
+ *  zoomed by scrolling. If you hover over a Tweet circle, the Tweet text content 
+ *  will appear in the upper left corner and the Tweet circle you're hovering will 
+ *  become enlarged. Above the Tweet text in the upper left corner, there's a search 
+ *  box that let's you search all Tweet text content. If the character sequence you're 
+ *  searching for appears in a Tweet text, Tweet circle where the character sequence 
+ *  appears is colored yellow.
+ *  
+ *  @param TTTDF A DataFrame from TTTDFfunctions function tweetsDF2TTTDF() containing
+ *               the data to be displayed.
+ *  @param width The display width in pixels.
+ *  @param height The display height in pixels.
+ */
+def visualizeTimeline(TTTDF: DataFrame, width: Int = 900, height: Int = 400): Unit = {
+  
+  // The CSS code
+  val visualizeTimelineCSS: String = 
+  s&quot;&quot;&quot;
+  /*
+  General styling
+  */
+
+  body {
+      font-family: Sans-Serif;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      margin-bottom: 100px;
+      background-color: #FFF;
+      overflow: scroll;
+  }
+
+  /*
+  Page content
+  */
+
+  div.start {
+      text-align: center;
+  }
+
+  ul.start {
+      margin-top: 0;
+      display: inline-block;
+      text-align: left;
+  }
+
+  div.text {
+      text-align: left;
+      margin-left: 19.1%;
+      margin-right: 19.1%;
+  }
+
+  /*
+  For visualizations
+  */
+
+  .visualization {
+      display: block;
+      position: relative;
+      align: center;
+  }
+
+  .hidden {
+      visibility: hidden;
+  }
+
+  .visible {
+      visibility: visible;
+  }
+
+  .zoom {
+      cursor: move;
+      fill: none;
+      pointer-events: fill;
+  }
+
+  .tweet {
+	fill: #1da1f2;
+	stroke: black;
+	opacity: 0.5;
+  }
+
+  circle.clicked {
+      stroke-width: 5;
+  }
+
+  .searchedTweet {
+      fill: yellow;
+      opacity: 0.9;
+  }
+
+  .infoDisplay {
+      margin: 1%;
+  }
+
+  #tweetTextDiv {
+      position: absolute;
+      font-family: Helvetica;
+      text-align: left;
+      width: 20%;
+  }
+
+  #searchDiv {
+      height: 20px;
+  }
+
+  .highlight {
+    background-color: yellow;
+  }
+
+  path, line {
+    fill: none;
+    stroke: black;
+  }
+
+  .axis {
+      position:relative;
+      z-index:1000000;
+  }
+
+  .axis text {
+      fill: black;
+      font-size: 1em;
+  }
+
+  #userTimelineVisualizationDiv {
+      width: auto;
+      height: auto;
+      position: relative;
+      align: center;
+  }
+
+  .title {
+      fill: black;
+      font-family: sans-serif;
+      text-anchor: middle;
+      text-align: center;
+      font-size: 1.5em;
+  }
+
+  .searchField {
+      font-family: sans-serif;
+  }
+
+  #tweet {
+      position: absolute;
+      left: 60%;
+      height: auto;
+  }
+  &quot;&quot;&quot;;
+  
+  // Convert the timeline TTT DataFrame to a JSON object
+  val data = TTTDF.toJSON.collect
+
+  // The JavaScript code
+  val visualizeTimelineJS: String = 
+  s&quot;&quot;&quot;
+  /*******************************************************************************
+
+  This user timeline visualisation let's you explore a Twitter timeline.
+
+  Contained in the visualisation is:
+
+   - All Tweets in the data
+   - A search function to search Tweets
+   - A click option to view the original Tweet on Twitter
+
+  *******************************************************************************/
+
+  // Specify display sizes.
+  var width = ${width}, 
+      height = ${height},
+      margin = {
+                top: 0.1 * height,
+                right: 0.05 * width, 
+                bottom: 0.2 * height,
+                left: 0.05 * width
+            };
+
+  // Get div.
+  var div = d3.select(&quot;#userTimelineVisualizationDiv&quot;);
+
+  // Create svg.
+  var svg = div.append('svg')
+      //.attr(&quot;class&quot;, &quot;visualization&quot;)
+      .style(&quot;z-index&quot;, &quot;-1&quot;)
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append(&quot;g&quot;)
+          .attr(&quot;transform&quot;,
+              &quot;translate(&quot; + margin.left + &quot;,&quot; + margin.top + &quot;)&quot;);
+
+  // Declare global searched string.
+  var searchedStr = &quot;&quot;;
+
+  // Create zoom object. Zooms x-axis.
+  var zoom = d3.zoom()
+      .on(&quot;zoom&quot;, zoomed);
+
+  // Create zoomable area. Basically just an overlaid rectangle.
+  var view = svg.append(&quot;rect&quot;)
+      .attr(&quot;class&quot;, &quot;zoom&quot;)
+      .attr(&quot;width&quot;, width)
+      .attr(&quot;height&quot;, height)
+      // Allow for zoom while hovering x-axis
+      .attr(&quot;transform&quot;,
+          &quot;translate(&quot; + 0 + &quot;,&quot; + margin.top + &quot;)&quot;)
+      // Remove currently displayed tweet on click
+      .on(&quot;click&quot;, function() { clickView(); })
+      // Link to zoom
+      .call(zoom);
+
+  // Set various tweet radius
+  var idleTweetRadius = 15;
+  var activeTweetRadius = idleTweetRadius * 1.618;
+  var highlightedActiveTweetRadius = activeTweetRadius * 1.618;
+
+  // Add title to the figure.
+  svg.append(&quot;text&quot;)
+      .attr(&quot;class&quot;, &quot;title&quot;) // style in css
+      .attr(&quot;x&quot;, width / 2)
+      .attr(&quot;y&quot;, margin.top)
+      .text(&quot;Twitter Timeline Visualization&quot;);
+
+  // Create x-scale and set x-range.
+  var xScale = d3.scaleTime()
+      .range([0, width]);
+
+  // Create xAxis.
+  var xAxis = d3.axisBottom(xScale)
+      .tickFormat(d3.timeFormat(&quot;%c&quot;)) // Set tick format date and time
+
+  // Create x-axis g.
+  var gXAxis = svg.append(&quot;g&quot;)
+      .attr(&quot;class&quot;, &quot;x axis&quot;)
+      .attr(&quot;transform&quot;, &quot;translate(&quot; + 0 + &quot;,&quot; + height + &quot;)&quot;)
+
+  // Create x-axis label.
+  svg.append(&quot;text&quot;)
+      .attr(&quot;class&quot;, &quot;x label&quot;)
+      .attr(&quot;text-anchor&quot;, &quot;end&quot;)
+      .attr(&quot;x&quot;, width)
+      .attr(&quot;y&quot;, height - 6)
+      .text(&quot;Time of Tweet&quot;);
+
+  // y-range. Sets data placement along y-axis.
+  // y-axis is divided in 6 lines, including top/bottom of chart,
+  // and data is placed in the middle, lines 2 to 5.
+  var yRange = [2, 3, 4, 5].map(function(x) { return x * height / 6; });
+
+  // y-domain. Specifies which data should be placed where along y-axis.
+  // Important: Matches with data from file.
+  var yDomain = [&quot;ReplyTweet&quot;,
+                  &quot;QuotedTweet&quot;,
+                  &quot;ReTweet&quot;,
+                  &quot;OriginalTweet&quot;];
+
+  // y-ticks to be displayed.
+  var yTickValues = [&quot;Reply&quot;,
+                      &quot;Quote&quot;,
+                      &quot;Retweet&quot;,
+                      &quot;Tweet&quot;];
+
+  // Create the y-scale and set y-range
+  var yScale = d3.scaleOrdinal()
+      .range(yRange)
+      .domain(yDomain);
+
+  // Create y-axis.
+  var yAxis = d3.axisLeft(yScale)
+      .tickValues(yTickValues); // Set y-axis tick values
+
+  // Display y-axis (and label) after circles are placed to put y-axis above the circles
+
+  // Read data. Note: file needs to be chronologically structured so that
+  // data[0] is newest and data[length - 1] is oldest
+  var data = ${data.mkString(&quot;[&quot;, &quot;,\n&quot;, &quot;]&quot;)};
+        
+  // Create and display the x-axis
+  createAndDisplayXAxis(data);
+
+  // Create circle for each tweet
+  svg.selectAll(&quot;g&quot;)
+      .data(data)
+      .enter().append(&quot;g&quot;).attr(&quot;id&quot;, function(d) {
+          return getGID(d.CurrentTwID);
+      })
+          .append(&quot;circle&quot;)
+          // Set class to tweet ID
+          .attr(&quot;id&quot;, function(d) {
+              return getTweetID(d.CurrentTwID);
+          })
+          // Set position
+          .attr(&quot;cy&quot;, function(d) {
+              return yScale(d.TweetType.replace(/\\s/g, ''));
+          })
+          .attr(&quot;cx&quot;, function(d) { // x-position by tweet date
+              return xScale(new Date(d.CurrentTweetDate));
+          })
+          // Set circle radius
+          .attr(&quot;r&quot;, idleTweetRadius)
+          // Set stroke
+          .attr(&quot;stroke&quot;, &quot;black&quot;)
+          .attr(&quot;stroke-width&quot;, &quot;0&quot;)
+          // Set color by tweet type
+          .attr(&quot;class&quot;, function(d) {
+              // remove whitespace and return TweetType
+              return &quot;tweet &quot; + d.TweetType.replace(/\\s/g, '');
+            })
+            // Add tooltip and enlarge tweet on mouse hover
+            .on(&quot;mouseover&quot;, mouseoverTweet)
+            // Restore tweet on mouseout
+            .on(&quot;mouseout&quot;, mouseoutTweet)
+            // Show actual tweet on click
+            .on(&quot;click&quot;, clickTweet);
+
+      // Display y-axis.
+      var gYAxis = svg.append(&quot;g&quot;)
+          .attr(&quot;class&quot;, &quot;y axis&quot;) // Set class to y and axis
+          .call(yAxis);
+
+      // Create y-axis label.
+      svg.append(&quot;text&quot;)
+          .attr(&quot;class&quot;, &quot;y label&quot;)
+          .attr(&quot;text-anchor&quot;, &quot;end&quot;)
+          .attr(&quot;x&quot;, - 2 * height / 6)
+          .attr(&quot;y&quot;, 6)
+          .attr(&quot;dy&quot;, &quot;.75em&quot;)
+          .attr(&quot;transform&quot;, &quot;rotate(-90)&quot;)
+          .text(&quot;Type of Tweet&quot;);
+          
+      // display x-axis
+      xAxis.ticks(5);
+      gXAxis.call(xAxis);
+
+      // Handle input search
+      d3.select(&quot;#searchInput&quot;).on(&quot;input&quot;,
+          function() {
+              searchedStr = this.value.toLowerCase();
+              searchTweets(data);
+          });
+
+  /**
+   * Searches all tweets for a specific string.
+   *
+   * @param {string} searchStr - The string to search for
+   */
+  function searchTweets(data) {
+
+      // Perform search if searched string is at least 3 chars long
+      if (searchedStr.length &gt; 2) {
+
+          // Loop through all rows
+          for (i = 0; i &lt; data.length; i++) {
+
+              // Get tweet text
+              var tweetText = data[i].CurrentTweet;
+              var tweet = d3.select(&quot;#&quot; + getTweetID(data[i].CurrentTwID));
+
+              // If tweet includes search string, display
+              if (tweetText.toLowerCase().includes(searchedStr)) {
+                  // Set class to searched tweet and enlarge
+                  tweet
+                      .classed(&quot;searchedTweet&quot;, true)
+                      .attr(&quot;r&quot;, activeTweetRadius)
+              // else, restore tweet to normal
+              } else {
+                  tweet
+                      .classed(&quot;searchedTweet&quot;, false)
+                      .attr(&quot;r&quot;, idleTweetRadius)
+              }
+          }
+
+          // Highlight the searched string
+          highlight();
+
+      // else, restore tweets and dehighlight
+      } else {
+          // Restore tweets
+          d3.selectAll(&quot;.tweet&quot;)
+              .classed(&quot;searchedTweet&quot;, false)
+              .attr(&quot;r&quot;, idleTweetRadius)
+
+          // Dehighlight the displayed tweet
+          dehighlight();
+      }
+  }
+
+  /**
+   * Create and display x-axis based on newest
+   * and oldest dates in the dataset. Also sets the x-scale domain.
+   *
+   * @param data - Twitter dataset
+   */
+  function createAndDisplayXAxis(data) {
+
+      // Get oldest date (that is, date of first tweet in the data)
+      var oldestDate = new Date(data[data.length - 1].CurrentTweetDate);
+      // Get newest date (that is, date of latest tweet in the data)
+      var newestDate = new Date(data[0].CurrentTweetDate);
+      // Add 2 weeks at beginning and end of axis for prettier display
+      oldestDate.setDate(oldestDate.getDate() - 14); // go back 14 days
+      newestDate.setDate(newestDate.getDate() + 14); // go forward 14 days
+
+      // Set x-scale domain from newest and oldest date
+      xScale.domain([oldestDate, newestDate]);
+  }
+
+  /**
+   * Handle mouseover for Tweet.
+   *
+   * @param {list} d - Row from Twitter dataset
+   */
+  function mouseoverTweet(d) {
+
+      // Get tweet
+      var tweet = d3.select(this)
+
+      // Get tweet text div
+      var tweetTextDiv = d3.select(&quot;#tweetTextDiv&quot;);
+
+      // Remove old tweet
+      tweetTextDiv.selectAll(&quot;span&quot;)
+          .remove();
+
+      // Display tweet text
+      tweetTextDiv.append(&quot;span&quot;)
+          .text(d.CurrentTweet);
+
+      // Enlarge tweet
+      tweet.attr(&quot;r&quot;, activeTweetRadius);
+
+      // If the tweet is searched, highlight and enlarge it
+      if (tweet.classed(&quot;searchedTweet&quot;)) {
+
+          // Enlarge the tweet to active and highlighted
+          tweet.attr(&quot;r&quot;, highlightedActiveTweetRadius);
+
+          // Highlight the tweet
+          highlight();
+
+      // else (that is, tweet is not searched), just enlarge the tweet
+      } else {
+
+          // Enlarge tweet to active
+          tweet.attr(&quot;r&quot;, activeTweetRadius);
+      }
+  }
+
+  /**
+   * Highlights the searched part of the tweet text.
+   */
+  function highlight() {
+
+      // Get tweet text div
+      var tweetTextDiv = d3.select(&quot;#tweetTextDiv&quot;);
+
+      // Get tweet text (works although text is inside a &lt;span&gt;)
+      var tweetText = tweetTextDiv.text();
+      // Get tweet text in lower case (used to highlight without case sensitivity)
+      var tweetTextLowerCase = tweetText.toLowerCase();
+
+      // Highlight if string to highlight is currently displayed
+      if (tweetTextLowerCase.includes(searchedStr)) {
+
+          // Get string before the string to highlight
+          var strBefore = tweetText.substr(0, (tweetTextLowerCase.indexOf(searchedStr)));
+          // Get string after the string to highlight
+          var strAfter = tweetText.substr((tweetTextLowerCase.indexOf(searchedStr) +
+                                      searchedStr.length),
+                                      (tweetText.length - 1));
+
+          // Remove non highlighted tweet text (the old tweet text with 1 &lt;span&gt;)
+          tweetTextDiv.selectAll(&quot;span&quot;).remove();
+
+          // Append string before highlight
+          tweetTextDiv.append(&quot;span&quot;)
+              .text(strBefore);
+          // Append highlighted string
+          tweetTextDiv.append(&quot;span&quot;)
+              .attr(&quot;class&quot;, &quot;highlight&quot;)
+              .text(searchedStr);
+          // Append string after highlight
+          tweetTextDiv.append(&quot;span&quot;)
+              .text(strAfter);
+      }
+  }
+
+  /**
+   * Dehighlights the tweet text.
+   */
+  function dehighlight() {
+
+      // Get tweet text div
+      var tweetTextDiv = d3.select(&quot;#tweetTextDiv&quot;);
+
+      // Get tweet text
+      var tweetText = tweetTextDiv.text();
+
+      // Remove highlighted text (the old tweet text with 3 &lt;span&gt;s)
+      tweetTextDiv.selectAll(&quot;span&quot;).remove();
+
+      // Add non highlighted text
+      tweetTextDiv.append(&quot;span&quot;).text(tweetText);
+
+      // Add actual tweet
+
+  }
+
+  /**
+   * Handle mouseout for Tweet.
+   * Removes the tooltip displaying the tweet.
+   *
+   * @param {list} d - Row from Twitter dataset
+   */
+  function mouseoutTweet(d) {
+
+      // Get tweet
+      var tweet = d3.select(this)
+
+      // Restore tweet to idle unless the tweet is searched
+      if (!tweet.classed(&quot;searchedTweet&quot;)) {
+
+          // Restore tweet
+          tweet.attr(&quot;r&quot;, idleTweetRadius);
+
+      // else (that is, tweet is searched), restore to active radius
+      } else {
+          // Restore tweet
+          tweet.attr(&quot;r&quot;, activeTweetRadius);
+      }
+  }
+
+  /**
+   * Removes tooltip by ID.
+   *
+   * @param {string} id - The tooltip ID.
+   */
+  function removeTooltip(id) {
+      d3.select(&quot;#&quot; + id).remove();
+  }
+
+  /**
+   * Creates a tooltip ID from a raw data tweet ID.
+   *
+   * @param {string} id - The tweet ID.
+   */
+  function getTooltipID(currentTwID) {
+      return &quot;tt&quot; + currentTwID;
+  }
+
+  /**
+   * Creates a tweet ID from a raw data tweet ID.
+   *
+   * @param {string} id - The tweet ID.
+   */
+  function getTweetID(currentTwID) {
+      return &quot;tw&quot; + currentTwID;
+  }
+
+  function getGID(currentTwID) {
+      return &quot;g&quot; + currentTwID;
+  }
+
+  /**
+   * Handle zoom: Zoom the x-axis.
+   */
+  function zoomed() {
+
+      // Create new x-scale based on zoom
+      var new_xScale = d3.event.transform.rescaleX(xScale);
+
+      // Display new x-scale. .ticks(3) to prettify
+      gXAxis.call(xAxis.ticks(5).scale(new_xScale));
+
+      // Reposition tweets based on zoom
+      var tweets = d3.selectAll(&quot;.tweet&quot;);
+      tweets.attr(&quot;cx&quot;, function(d) {
+          return new_xScale(new Date(d.CurrentTweetDate));
+      });
+  };
+
+  /**
+   * Handle click on zoomable area. That is, handle click outside a tweet which
+   * is considered a deselecting click. So, deselect previously clicked tweets
+   * and remove displayed tweets.
+   */
+  function clickView() {
+
+      // Get all clicked tweets
+      var clicked = d3.selectAll(&quot;.clicked&quot;);
+
+      // Remove clicked status on clicked tweets
+      clicked.attr(&quot;stroke-width&quot;, &quot;0&quot;);
+      clicked.classed(&quot;clicked&quot;, false);
+
+      // Remove tweet
+      document.getElementById(&quot;tweet&quot;).innerHTML = &quot;&quot;
+  }
+
+  /**
+   * Handle click on a tweet circle. Display the clicked tweet and let the tweet
+   * appear selected by adding a stroke to it.
+   */
+  function clickTweet(d) {
+
+      // Remove results from old click
+      clickView();
+
+      // Get tweet
+      var tweet = d3.select(this)
+
+      // Set tweet to clicked
+      tweet.classed(&quot;clicked&quot;, true);
+
+      // Get tweet div
+      // Cannot do d3.select because twttr doesn't handle D3 selections
+      var tweetDiv = document.getElementById(&quot;tweet&quot;);
+
+      // Display tweet
+      twttr.widgets.createTweet(d.CurrentTwID, tweetDiv)
+  }
+  &quot;&quot;&quot;
+  
+  // The HTML code
+  displayHTML(s&quot;&quot;&quot;
+  &lt;!DOCTYPE html&gt;
+  &lt;html lang=&quot;en&quot;&gt;
+
+      &lt;head&gt;
+
+          &lt;meta charset=&quot;utf-8&quot;&gt;
+          &lt;meta name=&quot;author&quot; content=&quot;Olof Björck&quot;&gt;
+          &lt;title&gt;User Timeline&lt;/title&gt;
+
+          &lt;style&gt;
+            ${visualizeTimelineCSS}
+          &lt;/style&gt;
+
+      &lt;/head&gt;
+
+      &lt;body&gt;
+
+          &lt;!-- The input where you can search the Tweets --&gt;
+          &lt;div id=&quot;searchDiv&quot; class=&quot;infoDisplay&quot;&gt;
+              Search: &lt;input name=&quot;searchStr&quot; type=&quot;text&quot; id=&quot;searchInput&quot; class=&quot;searchField&quot;&gt;
+          &lt;/div&gt;
+
+          &lt;!-- The place where Tweet texts are displayed --&gt;
+          &lt;div id=&quot;tweetTextDiv&quot; class=&quot;infoDisplay&quot;&gt;
+          &lt;/div&gt;
+
+          &lt;!-- The D3 visualization --&gt;
+          &lt;div id=&quot;userTimelineVisualizationDiv&quot; class=&quot;visualization&quot;&gt;
+              &lt;div id=&quot;tweet&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;script sync src=&quot;https://platform.twitter.com/widgets.js&quot;&gt;&lt;/script&gt;
+          &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+          &lt;script&gt;
+            ${visualizeTimelineJS}
+          &lt;/script&gt;
+
+      &lt;/body&gt;
+  &lt;/html&gt;
+
+  &quot;&quot;&quot;)
+}
+
+// Info
+println(&quot;&quot;&quot;
+*** WARNING: ***
+
+BUG: The first Tweet in the dataset doesn't display for some reason.
+
+THERE IS NO SIZE CHECKING! Driver might crash as DataFrame.collect is used.
+Also, the display can only handle so and so many items at once. Too large
+dataset and the visualization might be very laggy or crash.
+
+***  USAGE:  ***
+
+visualizeTimeline(TTTDF)
+ 
+****************
+&quot;&quot;&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>*** WARNING: ***
+
+THERE IS NO SIZE CHECKING! Driver might crash as DataFrame.collect is used.
+Also, the display can only handle so and so many items at once. Too large
+dataset and the visualization might be very laggy or crash.
+
+***  USAGE:  ***
+
+visualizeTimeline(TTTDF)
+ 
+****************
+
+import org.apache.spark.sql.DataFrame
+visualizeTimeline: (TTTDF: org.apache.spark.sql.DataFrame, width: Int, height: Int)Unit
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
 
                     </main>
 

@@ -1,0 +1,964 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>035_01_Arcgis_coordinates_transformation - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html" class="active">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="transformation-of-coordinates-using-arcgis-runtime-library"><a class="header" href="#transformation-of-coordinates-using-arcgis-runtime-library">Transformation of coordinates using Arcgis Runtime library</a></h2>
+<p>Virginia Jimenez Mohedano (<a href="https://www.linkedin.com/in/virginiajimenezmohedano/">LinkedIn</a>), Stavroula Rafailia Vlachou (<a href="https://www.linkedin.com/in/stavroula-rafailia-vlachou/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>).</p>
+<pre><code>This project was supported by UAB SENSMETRY through a Data Science Thesis Internship 
+between 2022-01-17 and 2022-06-05 to Stavroula R. Vlachou and Virginia J. Mohedano 
+and Databricks University Alliance with infrastructure credits from AWS to 
+Raazesh Sainudiin, Department of Mathematics, Uppsala University, Sweden.
+</code></pre>
+<p>2022, Uppsala, Sweden</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions.udf
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions._ 
+import org.apache.spark.sql._ 
+import scala.util.matching.Regex
+
+import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.functions.udf
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql._
+import scala.util.matching.Regex
+import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="run-the-next-cells-just-once-per-cluster-to-install-the-library"><a class="header" href="#run-the-next-cells-just-once-per-cluster-to-install-the-library">Run the next cells just once per cluster to install the library</a></h4>
+</div>
+<div class="cell markdown">
+<p>Arcgis runtime library allows for coordinates transformations.</p>
+</div>
+<div class="cell markdown">
+<ul>
+<li>
+<p>Download arcgis runtime from https://developers.arcgis.com/downloads/#java (.tgz)</p>
+</li>
+<li>
+<p>Install jar (from the &quot;libs&quot; folder) in the cluster.</p>
+</li>
+</ul>
+<p>The version downloaded was 100.4.0</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/arcGISRuntime/&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-sh">tar zxvf /dbfs/arcGISRuntime/arcgis_runtime_sdk_java_100_4_0.tgz -C /dbfs/arcGISRuntime
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>arcgis-runtime-sdk-java-100.4.0/
+arcgis-runtime-sdk-java-100.4.0/LICENSE.txt
+arcgis-runtime-sdk-java-100.4.0/README.txt
+arcgis-runtime-sdk-java-100.4.0/RELEASE-NOTES.txt
+arcgis-runtime-sdk-java-100.4.0/jniLibs/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/OSX64/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/OSX64/libruntimecore.dylib
+arcgis-runtime-sdk-java-100.4.0/jniLibs/OSX64/libruntimecore_java.dylib
+arcgis-runtime-sdk-java-100.4.0/jniLibs/LX64/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/LX64/libruntimecore_java.so
+arcgis-runtime-sdk-java-100.4.0/jniLibs/LX64/libruntimecore.so
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_rxf_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_ground_overlay_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/post_process_viewshed_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_outline_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_pick_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/magnifier_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_atmosphere_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_pick_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_pattern_line_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_r16u_test_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_atmosphere_modifiers_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_modifiers_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_atmosphere_phongshadow_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_world_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/atmosphere_textured_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/measure_line_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/text_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/point_billboard_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_background_pattern_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_draped_graphics_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_ground_overlay_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/point_billboard_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_world_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_halo_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_pattern_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/atmosphere_textured_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_area_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/screen_overlay_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_phongshadow_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_rxs_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_pick_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_rxu_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/magnifier_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_pattern_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phong_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_sdf_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_pattern_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_solid_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_marker_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/screen_image_renderer_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/simple_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_world_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_pick_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/screen_overlay_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/texture_draw_instanced_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_render_target_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_world_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/skybox_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/frustum_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_sdf_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_pattern_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_stencil_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_halo_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/frustum_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_marker_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_pick_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_halo_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_overlay_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_halo_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_marker_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/simple_grid_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_stencil_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_area_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_r16s_test_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/offscreen_buffer_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_background_solid_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_render_target_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polyline_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/point_billboard_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_r32f_test_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_solid_line_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phong_world_instance_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_halo_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_outline_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_area_pick_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_b8g8r8a8un_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/texture_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_pick_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_draped_graphics_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_line_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phongshadow_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_coor_to_tex_coor_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/simple_grid_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_overlay_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_world_instance_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_solid_line_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phong_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polyline_overlay_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_circle_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_atmosphere_phongshadow_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_world_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_pick_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/offscreen_buffer_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/atmosphere_accurate_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phong_world_instance_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_outline_instance_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/post_process_quad_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/simple_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phongshadow_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_phong_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_world_instance_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_marker_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_outline_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_point_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_solid_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_halo_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phong_world_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_outline_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polyline_world_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_outline_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/atmosphere_accurate_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/texture_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_world_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_tile_info_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_background_pattern_fill_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/skybox_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_pattern_line_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_area_pick_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phongshadow_world_instance_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_outline_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_sdf_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_halo_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/point_billboard_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/star_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/text_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_phongshadow_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_circle_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_outlined_area_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polyline_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_line_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_coor_to_tex_coor_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phongshadow_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_world_depth_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_b8g8r8a8un_custom_filter_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/image_renderer_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_pattern_line_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_line_pick_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_tile_info_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_pattern_line_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/seq_render_sdf_point_halo_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/star_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tex_quad_b8g8r8a8un_adv_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_background_solid_fill_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_outline_overlay_draw_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_outline_overlay_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/vector_tiles_dd_sdf_ps.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_color_phongshadow_world_instance_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/texture_draw_instanced_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/trianglemesh_texture_world_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_atmosphere_phong_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polygon_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/screen_image_renderer_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/measure_line_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/tile_phongshadow_world_draw_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/image_renderer_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/directx/polyline_world_depth_vs.cso
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/msvcp140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/runtimecore.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/concrt140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/runtimecore_java.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/vcruntime140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN64/vccorlib140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/msvcp140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/runtimecore.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/concrt140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/runtimecore_java.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/vcruntime140.dll
+arcgis-runtime-sdk-java-100.4.0/jniLibs/WIN32/vccorlib140.dll
+arcgis-runtime-sdk-java-100.4.0/legal/
+arcgis-runtime-sdk-java-100.4.0/legal/third-party-software-acknowledgements.pdf
+arcgis-runtime-sdk-java-100.4.0/legal/EULA.pdf
+arcgis-runtime-sdk-java-100.4.0/legal/Copyright_and_Trademarks.pdf
+arcgis-runtime-sdk-java-100.4.0/libs/
+arcgis-runtime-sdk-java-100.4.0/libs/arcgis-java-api-javadoc.jar
+arcgis-runtime-sdk-java-100.4.0/libs/commons-logging-1.2.jar
+arcgis-runtime-sdk-java-100.4.0/libs/commons-codec-1.11.jar
+arcgis-runtime-sdk-java-100.4.0/libs/arcgis-java-api.jar
+arcgis-runtime-sdk-java-100.4.0/libs/gson-2.8.5.jar
+arcgis-runtime-sdk-java-100.4.0/resources/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/alaska.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/icegrid2004.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/icegrid2004.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stlrnc.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stpaul.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stgeorge.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/prvi.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/ICEGRID93.LOS
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/prvi.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stgeorge.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/hawaii.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stpaul.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/ICEGRID93.LAS
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/conus.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/stlrnc.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/hawaii.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/conus.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/nadcon/alaska.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/hvtdefaults.json
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/vertical/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/vertical/egm/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/vertical/egm/egm96.grd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gtdefaults.json
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/newzealand/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/newzealand/nzgd2kgrid0005.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/brazil/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/brazil/SAD69_003.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/brazil/CA7072_003.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/brazil/SAD96_003.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/brazil/CA61_003.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/austria/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/austria/AT_GIS_GRID.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/japan/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/japan/tky2jgd.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/japan/touhokutaiheiyouoki2011.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/france/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/france/rgf93_ntf.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/france/RGNC1991_IGN72GrandeTerre.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/france/RGNC1991_NEA74Noumea.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/ireland/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/ireland/tm75_etrs89.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/uk/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/uk/osgb36_xrail84.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/uk/OSTN02_NTv2.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/uk/OSTN15_NTv2.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/netherlands/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/netherlands/rdtrans2008.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/portugal/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/portugal/D73_ETRS89_geo.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/portugal/DLX_ETRS89_geo.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/switzerland/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/switzerland/CHENYX06_etrs.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/switzerland/CHENYX06.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/australia/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/australia/National_84_02_07_01.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/australia/A66_National_13_09_01.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/spain/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/spain/100800401.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/spain/peninsula.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/spain/baleares.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/spain/SPED2ETV2.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/germany/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/germany/BETA2007.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/ntv2/germany/NTv2_SN.gsb
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/kshpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/flhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wmhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/c2hpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ohhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/uthpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/imhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mshpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cnhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/lahpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/arhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/iahpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/tnhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nvhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nchpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ethpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ethpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/c1hpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ndhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cshpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/alhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cnhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/njhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wvhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/pvhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wshpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wyhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ohdhihpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/pahpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wyhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mehpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/lahpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nchpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/alhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/azhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/hihpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nvhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wshpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cohpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wthpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ilhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/schpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/flhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/okhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mohpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/okhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wohpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nbhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/sdhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/azhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/inhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ndhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wohpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mnhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wmhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/eshpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mdhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/emhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/eshpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/iahpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wihpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mihpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nbhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/schpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/vahpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mshpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nmhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/imhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mnhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/guhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wvhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/vahpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/pahpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/pvhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nmhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wihpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nyhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nehpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mohpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cohpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/kshpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/kyhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nehpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/emhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ohhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/tnhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/cshpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/guhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/njhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/kyhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mihpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/uthpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/c1hpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/gahpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/nyhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ohdhihpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/wthpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/hihpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/arhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/sdhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/gahpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mdhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/ilhpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/inhpgn.los
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/c2hpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/harn/mehpgn.las
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/geoid/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/geoid/WGS84.img
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/inspire_cp_CadastralBoundary.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/esri_StatePlane_extra.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gt_ellips.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gt_datum.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/geoccs.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/vdv452.xsd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/compdcs.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/netcdf_config.xsd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57attributes.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gml_registry.xml
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57objectclasses_aml.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gdalvrt.xsd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/inspire_cp_CadastralParcel.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/nitf_spec.xsd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/esri_Wisconsin_extra.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ogrvrt.xsd
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57agencies.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/vdv452.xml
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57objectclasses_iw.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/seed_3d.dgn
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/GDALLogoBW.svg
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/prime_meridian.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57objectclasses.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/coordinate_axis.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/pci_datum.txt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ozi_datum.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/header.dxf
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/pcs.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/epsg.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gdal_datum.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/projop_wparm.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/pcs.override.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ecw_cs.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/inspire_cp_CadastralZoning.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gdalicon.png
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/GDALLogoColor.svg
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ruian_vf_ob_v1.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ruian_vf_st_v1.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/pci_ellips.txt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ruian_vf_st_uvoh_v1.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57expectedinput.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/stateplane.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gcs.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ruian_vf_v1.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/GDALLogoGS.svg
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ozi_ellips.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/osmconf.ini
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57attributes_aml.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/cubewerx_extra.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/trailer.dxf
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/esri_extra.wkt
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/ellipsoid.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/gcs.override.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/datum_shift.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/nitf_spec.xml
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/seed_2d.dgn
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/vertcs.override.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/s57attributes_iw.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/unit_of_measure.csv
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/inspire_cp_BasicPropertyUnit.gfs
+arcgis-runtime-sdk-java-100.4.0/resources/pedata/gdaldata/vertcs.csv
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/S-52x.stylx
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/S57DataDictionary.xml
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/news57.xml
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/asymrefpb.dic
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/asymrefsb.dic
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/psymrefs.dic
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/lsymref.dic
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/lookup/psymreft.dic
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_bright.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_blackback.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_whiteback.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/dusk.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_bright.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_blackback.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/night.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/dusk.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/night.col
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/s57lookupfiles/colcalib/day_whiteback.clr
+arcgis-runtime-sdk-java-100.4.0/resources/hydrography/ECDIS_settings.xml
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/app6b/
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/app6b/app6b.stylx
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/mil2525c_b2/
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/mil2525c_b2/mil2525c_b2.stylx
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/app6d/
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/app6d/app6d.stylx
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/mil2525d/
+arcgis-runtime-sdk-java-100.4.0/resources/symbols/mil2525d/mil2525d.stylx
+arcgis-runtime-sdk-java-100.4.0/samples/
+arcgis-runtime-sdk-java-100.4.0/samples/arcgis-java-samples-v100.4.0.zip
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/LICENSE.txt</td>
+<td>LICENSE.txt</td>
+<td>174.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/README.txt</td>
+<td>README.txt</td>
+<td>1980.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/RELEASE-NOTES.txt</td>
+<td>RELEASE-NOTES.txt</td>
+<td>5227.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/jniLibs/</td>
+<td>jniLibs/</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/legal/</td>
+<td>legal/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/libs/</td>
+<td>libs/</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/resources/</td>
+<td>resources/</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/samples/</td>
+<td>samples/</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="now-the-library-is-installed-the-transformation-can-be-performed"><a class="header" href="#now-the-library-is-installed-the-transformation-can-be-performed">Now the library is installed, the transformation can be performed</a></h4>
+</div>
+<div class="cell markdown">
+<p>The library needs to be initialized running the following cell</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Initializing...
+Java version : 1.8.0_282 (Azul Systems, Inc.) amd64
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Read the data that needs to be transformed: in this case, osm location data is transformed.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.conf.set(&quot;spark.sql.parquet.binaryAsString&quot;, true)
+
+val nodes_df = spark.read.parquet(&quot;dbfs:/datasets/osm/lithuania/lithuania.osm.pbf.node.parquet&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>nodes_df: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 7 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">nodes_df.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Long = 21212155
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">nodes_df.show(1,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------+-------+-------------+---------+---+--------+----------------------------+----------+------------------+
+|id      |version|timestamp    |changeset|uid|user_sid|tags                        |latitude  |longitude         |
++--------+-------+-------------+---------+---+--------+----------------------------+----------+------------------+
+|15389886|7      |1427965254000|0        |0  |        |[[highway, traffic_signals]]|54.7309125|25.239701200000003|
++--------+-------+-------------+---------+---+--------+----------------------------+----------+------------------+
+only showing top 1 row
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>In this case, the coordinates are expressed in the WGS84 system and they will be projected into meters to be used with GeoMatch. To do this, one just need to change the code for each of the reference systems in the next function.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def project_to_meters(lon: Double, lat: Double): String = { 
+    
+    if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+  
+    val initial_point = new Point(lon, lat, SpatialReference.create(4326))
+    val reprojection = GeometryEngine.project(initial_point, SpatialReference.create(3035))
+    reprojection.toString
+}
+spark.udf.register(&quot;project_to_meters&quot;, project_to_meters(_:Double, _:Double):String)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>project_to_meters: (lon: Double, lat: Double)String
+res2: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,StringType,Some(List(DoubleType, DoubleType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val nodes_converted = nodes_df.selectExpr(&quot;id&quot;,&quot;latitude&quot;, &quot;longitude&quot;, &quot;project_to_meters(longitude, latitude) as new_coord&quot;)
+nodes_converted.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------+------------------+------------------+---------------------------------------------------------------+
+|id      |latitude          |longitude         |new_coord                                                      |
++--------+------------------+------------------+---------------------------------------------------------------+
+|15389886|54.7309125        |25.239701200000003|Point: [5294624.872733, 3617234.130316, 0.000000, NaN] SR: 3035|
+|15389895|54.732171400000006|25.243689500000002|Point: [5294845.235219, 3617425.427234, 0.000000, NaN] SR: 3035|
+|15389899|54.7352788        |25.2467356        |Point: [5294962.370295, 3617805.661476, 0.000000, NaN] SR: 3035|
+|15389959|54.7355529        |25.2458712        |Point: [5294901.580186, 3617823.871710, 0.000000, NaN] SR: 3035|
+|15389961|54.735927100000005|25.245138800000003|Point: [5294846.689805, 3617854.789556, 0.000000, NaN] SR: 3035|
++--------+------------------+------------------+---------------------------------------------------------------+
+only showing top 5 rows
+
+nodes_converted: org.apache.spark.sql.DataFrame = [id: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Once the transformation is done, it is necessary to unpack the coordinates as follow</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def unpack_lat(str: String): String = {
+        val lat = str.replaceAll(&quot;,&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).split(&quot; &quot;)(2)
+        return lat
+}
+spark.udf.register(&quot;unpack_lat&quot;, unpack_lat(_:String): String)
+
+def unpack_lon(str: String): String = {
+        val lon = str.replaceAll(&quot;,&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).split(&quot; &quot;)(1)
+        return lon
+}
+spark.udf.register(&quot;unpack_lon&quot;, unpack_lon(_:String): String)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>unpack_lat: (str: String)String
+unpack_lon: (str: String)String
+res5: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val new_coordinates = nodes_converted.selectExpr(&quot;id as node_id&quot;, &quot;unpack_lat(new_coord) as reprojected_lat&quot;, &quot;unpack_lon(new_coord) as reprojected_lon&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>new_coordinates: org.apache.spark.sql.DataFrame = [node_id: bigint, reprojected_lat: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now, the new coordinates are expressed in meters.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">new_coordinates.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------+---------------+---------------+
+|node_id |reprojected_lat|reprojected_lon|
++--------+---------------+---------------+
+|15389886|3617234.130316 |5294624.872733 |
+|15389895|3617425.427234 |5294845.235219 |
+|15389899|3617805.661476 |5294962.370295 |
+|15389959|3617823.871710 |5294901.580186 |
+|15389961|3617854.789556 |5294846.689805 |
++--------+---------------+---------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val nodes_new_coordinates = nodes_df.join(new_croordinates, nodes_df.col(&quot;id&quot;) === new_coordinates.col(&quot;node_id&quot;)).selectExpr(&quot;id&quot;, &quot;version&quot;, &quot;timestamp&quot;, &quot;changeset&quot;, &quot;uid&quot;, &quot;user_sid&quot;, &quot;tags&quot;, &quot;reprojected_lat as latitude&quot;, &quot;reprojected_lon as longitude&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>nodes_new_coordinates: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 7 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">nodes_new_coordinates.write.parquet(&quot;dbfs:/datasets/osm/lithuania/lithuania_nodes_converted.parquet&quot;)
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

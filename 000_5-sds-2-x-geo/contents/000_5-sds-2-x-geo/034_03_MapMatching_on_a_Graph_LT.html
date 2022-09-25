@@ -1,0 +1,861 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>034_03_MapMatching_on_a_Graph_LT - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html" class="active">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h2 id="map-matching-events-on-a-state-space--road-graph-with-geomatch"><a class="header" href="#map-matching-events-on-a-state-space--road-graph-with-geomatch">Map-Matching Events on a State Space / Road Graph with GeoMatch</a></h2>
+<p>Stavroula Rafailia Vlachou (<a href="https://www.linkedin.com/in/stavroula-rafailia-vlachou/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>).</p>
+<pre><code>This project was supported by SENSMETRY through a Data Science Project Internship 
+between 2022-01-17 and 2022-06-05 to Stavroula R. Vlachou and
+Databricks University Alliance with infrastructure credits from AWS to 
+Raazesh Sainudiin, Department of Mathematics, Uppsala University, Sweden.
+</code></pre>
+<p>2022, Uppsala, Sweden</p>
+</div>
+<div class="cell markdown">
+<h2 id="map-matching-with-geomatch"><a class="header" href="#map-matching-with-geomatch">Map-Matching with GeoMatch</a></h2>
+<p><a href="https://ieeexplore.ieee.org/document/8622488">GeoMatch</a> is a novel, scalable, and efficient big-data pipeline for large-scale map-matching on Apache Spark. It improves existing spatial big data solutions by utilizing a novel spatial partitioning scheme inspired by Hilbert space-filling curves.</p>
+<p>The library can be found in the following git repository <a href="https://github.com/bdilab/GeoMatch">GeoMatch</a>.</p>
+<p>The necessary files to generate the jar for this work can be found in the following fork <a href="https://github.com/StavroulaVlachou/GeoMatch">https://github.com/StavroulaVlachou/GeoMatch</a>.</p>
+</div>
+<div class="cell markdown">
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
+<p><code>git clone git@github.com:StavroulaVlachou/GeoMatch.git</code></p>
+<p><code>cd Common</code></p>
+<p><code>mvn compile install</code></p>
+<p><code>cd ../GeoMatch</code></p>
+<p><code>mvn compile install</code></p>
+<p>The generated <code>jar</code> files can be found within the <code>target</code> directories. Then, 1. In Databricks choose Create -&gt; Library and upload the packaged jars. 2. Create a Spark 2.4.0 - Scala 2.11 cluster with the uploaded GeoMatch library installed or if you are alreadt running a cluster and installed the uploaded library to it you have to detach and re-attache any notebook currently using that cluster.</p>
+</div>
+<div class="cell markdown">
+<h2 id="map-matching"><a class="header" href="#map-matching">Map-Matching</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
+//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
+//Example usage:
+// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Map_matching&quot;,600))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Map_matching"
+ width="95%" height="600"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.graphx._
+import sqlContext.implicits._
+import org.apache.spark.sql.functions._
+import scala.collection.JavaConversions._
+import org.cusp.bdi.gm.GeoMatch
+import org.cusp.bdi.gm.geom.GMPoint
+import org.cusp.bdi.gm.geom.GMLineString
+import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.graphx._
+import sqlContext.implicits._
+import org.apache.spark.sql.functions._
+import scala.collection.JavaConversions._
+import org.cusp.bdi.gm.GeoMatch
+import org.cusp.bdi.gm.geom.GMPoint
+import org.cusp.bdi.gm.geom.GMLineString
+import com.esri.arcgisruntime.geometry.{Point, SpatialReference, GeometryEngine}
+import com.esri.arcgisruntime.geometry.GeometryEngine.project
+import com.esri.arcgisruntime._
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="state-space--road-graph"><a class="header" href="#state-space--road-graph">State Space / Road Graph</a></h2>
+<ul>
+<li>In this work, we wish to match points of interest - events - against states of a State Space. The State Space consists of elements of the Road Graph. Specifically, a state is either a vertex that corresponds to an intersection point or an edge which is essentially a road segment.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<ul>
+<li>First we obtain the nodes and ways of the underlying road network.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.conf.set(&quot;spark.sql.parquet.binaryAsString&quot;, true)
+val nodes_df = spark.read.parquet(&quot;dbfs:/datasets/osm/lithuania/lithuania.osm.pbf.node.parquet&quot;)
+val ways_df = spark.read.parquet(&quot;dbfs:/datasets/osm/lithuania/lithuania.osm.pbf.way.parquet&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>nodes_df: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 7 more fields]
+ways_df: org.apache.spark.sql.DataFrame = [id: bigint, version: int ... 6 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert the nodes to Dataset containing the fields of interest
+case class NodeEntry(nodeId: Long, latitude: Double, longitude: Double, tags: Seq[String])
+
+val nodeDS = nodes_df.map(node =&gt; 
+  NodeEntry(node.getAs[Long](&quot;id&quot;),
+       node.getAs[Double](&quot;latitude&quot;),
+       node.getAs[Double](&quot;longitude&quot;),
+       node.getAs[Seq[Row]](&quot;tags&quot;).map{case Row(key:String, value:String) =&gt; value}
+))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class NodeEntry
+nodeDS: org.apache.spark.sql.Dataset[NodeEntry] = [nodeId: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>The next step is to obtain the intersection points and associate them with their corresponding vertices on the graph.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h4 id="intersection-points"><a class="header" href="#intersection-points">Intersection points</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersections = spark.read.parquet(&quot;dbfs:/LT/intersections&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersections: org.apache.spark.sql.DataFrame = [intersectionNode: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersections.count //in this area there are 162325 intersection points 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: Long = 162325
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>GeoMatch deals with points whose coordinates are measured in meters. However, OSM data have their coordinates expressed in degrees (WGS84 - spatial reference index 4326). Thus, for each point that is to participate in the matching we identify it's OSM coordinates and reproject them onto the European Grid (spatial reference index 3035).</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersection_points = nodeDS.join(intersections, intersections(&quot;intersectionNode&quot;) === nodeDS(&quot;nodeId&quot;)).drop(&quot;tags&quot;, &quot;nodeId&quot;).select(&quot;intersectionNode&quot;, &quot;latitude&quot;, &quot;longitude&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersection_points: org.apache.spark.sql.DataFrame = [intersectionNode: bigint, latitude: double ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val concat_coordinates = intersection_points.select($&quot;intersectionNode&quot;,concat($&quot;latitude&quot;,lit(&quot; &quot;),$&quot;longitude&quot;).alias(&quot;coordinates&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>concat_coordinates: org.apache.spark.sql.DataFrame = [intersectionNode: bigint, coordinates: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val firstIntersectionStates = concat_coordinates.select(concat(lit(&quot;LineString:&quot;),$&quot;intersectionNode&quot;).alias(&quot;LineString&quot;),$&quot;coordinates&quot;)
+val firstIntersectionStates_rdd = firstIntersectionStates.rdd
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>firstIntersectionStates: org.apache.spark.sql.DataFrame = [LineString: string, coordinates: string]
+firstIntersectionStates_rdd: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[318] at rdd at command-3336180278405410:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def project_to_meters(lon: String, lat: String): String = { 
+    
+    if(!ArcGISRuntimeEnvironment.isInitialized())
+    {
+      ArcGISRuntimeEnvironment.setInstallDirectory(&quot;/dbfs/arcGISRuntime/arcgis-runtime-sdk-java-100.4.0/&quot;)
+      ArcGISRuntimeEnvironment.initialize() 
+    }
+  
+    val initial_point = new Point(lon.toDouble, lat.toDouble, SpatialReference.create(4326))
+    val reprojection = GeometryEngine.project(initial_point, SpatialReference.create(3035))
+    reprojection.toString
+}
+spark.udf.register(&quot;project_to_meters&quot;, project_to_meters(_:String, _:String):String)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>project_to_meters: (lon: String, lat: String)String
+res8: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,StringType,Some(List(StringType, StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersections_reprojected = firstIntersectionStates_rdd.map(line =&gt; line.toString.replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;))
+              .map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(&quot;,&quot;);
+                            val arrCoords = parts.slice(1,parts.length)
+              .map(xyStr =&gt; {val xy = xyStr.split(&quot; &quot;);
+                             val reprojection = project_to_meters(xy(1).toString, xy(0).toString);
+                             val coords = reprojection.replaceAll(&quot;,&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).split(&quot; &quot;).slice(1,reprojection.length);
+                             val xy_new = coords(0).toString +&quot; &quot;+ coords(1).toString;xy_new});
+                            (parts(0).toString, arrCoords)})
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersections_reprojected: org.apache.spark.rdd.RDD[(String, Array[String])] = MapPartitionsRDD[320] at map at command-3336180278405413:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersections_unpacked = intersections_reprojected.map(item =&gt; item._1.toString + &quot;,&quot; + item._2(0).toString)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersections_unpacked: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[321] at map at command-3336180278405414:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rdd_first_set_intersections = intersections_unpacked.mapPartitions(_.map(line =&gt;{val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(',');val arrCoords = parts.slice(1, parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');(xy(0).toDouble.toInt, xy(1).toDouble.toInt)});new GMPoint(parts(0), arrCoords(0))}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rdd_first_set_intersections: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMPoint] = MapPartitionsRDD[322] at mapPartitions at command-3336180278405415:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>The next step is to fetch the events that are to be map-matched and transform their coordinates as well. Note that for this work, the events of interest are accidents recorded within Lithuania's road network.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val events = spark.read.format(&quot;csv&quot;).load(&quot;/FileStore/tables/LTnodes.csv&quot;).rdd.map(line =&gt; line.toString)
+events.count() //there are 11989 events to be matched 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>events: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[336] at map at command-3336180278405417:1
+res9: Long = 11989
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val all_accidents = spark.read.format(&quot;csv&quot;).load(&quot;/FileStore/tables/LTnodes.csv&quot;).toDF(&quot;PointId&quot;, &quot;longitude&quot;, &quot;latitude&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>all_accidents: org.apache.spark.sql.DataFrame = [PointId: string, longitude: string ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddSecondSet = events.mapPartitions(_.map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;).split(',');new GMPoint(parts(0), (parts(1).toDouble.toInt, parts(2).toDouble.toInt))}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rddSecondSet: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMPoint] = MapPartitionsRDD[345] at mapPartitions at command-3336180278405419:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="1st-round-of-map-matching"><a class="header" href="#1st-round-of-map-matching">1st round of Map Matching</a></h3>
+<ul>
+<li>In this first round the focus is around the intersection points and the events occurring within a predefined distance from them. Here the distance tolerance is set to 20 meters and the number of neighbours to be found is 1.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val geoMatch = new GeoMatch(false, 256, 20, (-1, -1, -1, -1)) //dimension of the Hilber curve=256, default value,  should be a power of 2. 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>geoMatch: org.cusp.bdi.gm.GeoMatch = GeoMatch(false,256,20.0,(-1,-1,-1,-1))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val resultRDD = geoMatch.spatialJoinKNN(rdd_first_set_intersections, rddSecondSet, 1, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>resultRDD: org.apache.spark.rdd.RDD[(org.cusp.bdi.gm.geom.GMPoint, scala.collection.mutable.ListBuffer[org.cusp.bdi.gm.geom.GMPoint])] = MapPartitionsRDD[358] at mapPartitions at GeoMatch.scala:94
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>3743 events (out of 11989) are found to be within a 20 meter distance radius from intersection points.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">resultRDD.map(element =&gt; (element._1.payload, element._2.map(_.payload))).filter(element =&gt; !(element._2.isEmpty)).count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res11: Long = 3743
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val result_first_round = resultRDD.map(element =&gt; (element._1.payload, element._2.map(_.payload))).filter(element =&gt; !(element._2.isEmpty)).map(element =&gt; (element._1, element._2(0))).toDF(&quot;PointId&quot;, &quot;State&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>result_first_round: org.apache.spark.sql.DataFrame = [PointId: string, State: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersection_counts = result_first_round.groupBy(&quot;State&quot;).count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersection_counts: org.apache.spark.sql.DataFrame = [State: string, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>One of the advantages of GeoMatch is that it carried all of the data points that are to be matched throughout the pipeline, even in the case where no match is found. This is key in this case, since the points were not matched successfully during this first round are subject to a second iteration where they are to be matched against the remaining of the State Space.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val unmatched_events = resultRDD.filter(element =&gt; (element._2.isEmpty)).map(element =&gt; element._1.payload).toDF(&quot;id&quot;)
+val second_set_second_round = unmatched_events.join(all_accidents, unmatched_events(&quot;id&quot;) === all_accidents(&quot;PointId&quot;)).drop(&quot;id&quot;).rdd.map(line =&gt; line.toString)
+val rddSecondSetSecondRound = second_set_second_round
+.mapPartitions(_.map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;).split(',');
+                              new GMPoint(parts(0),(parts(1).toDouble.toInt, parts(2).toDouble.toInt))}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>unmatched_events: org.apache.spark.sql.DataFrame = [id: string]
+second_set_second_round: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[373] at map at command-3336180278405428:2
+rddSecondSetSecondRound: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMPoint] = MapPartitionsRDD[374] at mapPartitions at command-3336180278405428:4
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>The remaining of the State Space consists of the edges of the Road Graph. In the following cells, we fetch these edges and associate them with their OSM coordinates and their reporjection.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val edges = spark.read.parquet(&quot;dbfs:/_checkpoint/edges_LT_initial&quot;) //edges of G0
+val vertices = spark.read.parquet(&quot;dbfs:/_checkpoint/vertices_LT_initial&quot;).toDF(&quot;vertexId&quot;, &quot;latitude&quot;, &quot;longitude&quot;) //vertices of G0
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>edges: org.apache.spark.sql.DataFrame = [src: bigint, dst: bigint]
+vertices: org.apache.spark.sql.DataFrame = [vertexId: bigint, latitude: double ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val src_coordinates = edges.join(vertices,vertices(&quot;vertexId&quot;) === edges(&quot;src&quot;), &quot;left_outer&quot;).drop(&quot;vertexId&quot;).withColumnRenamed(&quot;latitude&quot;, &quot;src_latitude&quot;).withColumnRenamed(&quot;longitude&quot;,&quot;src_longitude&quot;)
+val edge_coordinates = src_coordinates.join(vertices,vertices(&quot;vertexId&quot;) === src_coordinates(&quot;dst&quot;)).drop(&quot;vertexId&quot;).withColumnRenamed(&quot;latitude&quot;, &quot;dst_latitude&quot;).withColumnRenamed(&quot;longitude&quot;, &quot;dst_longitude&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>src_coordinates: org.apache.spark.sql.DataFrame = [src: bigint, dst: bigint ... 2 more fields]
+edge_coordinates: org.apache.spark.sql.DataFrame = [src: bigint, dst: bigint ... 4 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val concat_coordinates = edge_coordinates.select($&quot;src&quot;,concat($&quot;src_latitude&quot;,lit(&quot; &quot;),$&quot;src_longitude&quot;).alias(&quot;src_coordinates&quot;), $&quot;dst&quot;,concat($&quot;dst_latitude&quot;,lit(&quot; &quot;),$&quot;dst_longitude&quot;).alias(&quot;dst_coordinates&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>concat_coordinates: org.apache.spark.sql.DataFrame = [src: bigint, src_coordinates: string ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val linestring_coordinates = concat_coordinates.select($&quot;src&quot;, $&quot;dst&quot;,concat($&quot;src_coordinates&quot;, lit(&quot;,&quot;), $&quot;dst_coordinates&quot;).alias(&quot;list_of_coordinates&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>linestring_coordinates: org.apache.spark.sql.DataFrame = [src: bigint, dst: bigint ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val first = linestring_coordinates.select(concat(lit(&quot;LineString:&quot;),$&quot;src&quot;,lit(&quot;+&quot;), $&quot;dst&quot;).alias(&quot;LineString&quot;),$&quot;list_of_coordinates&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>first: org.apache.spark.sql.DataFrame = [LineString: string, list_of_coordinates: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ways_reprojected = first.rdd.map(line =&gt; line.toString.replaceAll(&quot;\\[&quot;,&quot;&quot;).replaceAll(&quot;\\]&quot;,&quot;&quot;)).map(line =&gt; {val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(&quot;,&quot;);val arrCoords = parts.slice(1,parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');val reprojection = project_to_meters(xy(1).toString, xy(0).toString);val coords = reprojection.replaceAll(&quot;,&quot;,&quot;&quot;).replaceAll(&quot;\\[&quot;,&quot;&quot;).split(&quot; &quot;).slice(1,reprojection.length);val xy_new = coords(0).toString +&quot; &quot;+ coords(1).toString;xy_new});(parts(0).toString, arrCoords)})
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ways_reprojected: org.apache.spark.rdd.RDD[(String, Array[String])] = MapPartitionsRDD[389] at map at command-3336180278405435:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ways_unpacked = ways_reprojected.map(item =&gt; item._1.toString + &quot;,&quot; + item._2(0).toString + &quot;,&quot; + item._2(1).toString)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ways_unpacked: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[390] at map at command-3336180278405436:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rdd_first_set = ways_unpacked
+.mapPartitions(_.map(line =&gt;{val parts = line.replaceAll(&quot;\&quot;&quot;,&quot;&quot;).split(',');
+                             val arrCoords = parts.slice(1, parts.length).map(xyStr =&gt; {val xy = xyStr.split(' ');(xy(0).toDouble.toInt, xy(1).toDouble.toInt)});
+                             new GMLineString(parts(0), arrCoords)}))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rdd_first_set: org.apache.spark.rdd.RDD[org.cusp.bdi.gm.geom.GMLineString] = MapPartitionsRDD[391] at mapPartitions at command-3336180278405437:2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>In this second round of Map-Matching, the distance threshold is set to be 200 meters. The dimension of the Hilbert index curve is again set to each desault value (256) and the number of nearest neighnours to be found is 1.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val geoMatchSecond = new GeoMatch(false, 256, 200, (-1, -1, -1, -1)) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>geoMatchSecond: org.cusp.bdi.gm.GeoMatch = GeoMatch(false,256,200.0,(-1,-1,-1,-1))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val resultRDDsecond = geoMatchSecond.spatialJoinKNN(rdd_first_set, rddSecondSetSecondRound, 1, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>resultRDDsecond: org.apache.spark.rdd.RDD[(org.cusp.bdi.gm.geom.GMPoint, scala.collection.mutable.ListBuffer[org.cusp.bdi.gm.geom.GMLineString])] = MapPartitionsRDD[404] at mapPartitions at GeoMatch.scala:94
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>The number of events that do not lie within a 200 meter radius from road segments is 269.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">resultRDDsecond.map(element =&gt; (element._1.payload, element._2.map(_.payload))).filter(element =&gt; (element._2.isEmpty)).count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res20: Long = 269
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="how-many-events-have-occurred-in-each-state"><a class="header" href="#how-many-events-have-occurred-in-each-state">How many events have occurred in each state?</a></h3>
+</div>
+<div class="cell markdown">
+<ul>
+<li>We are interested in how many events are matched against each state.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val res = resultRDDsecond.map(element =&gt; (element._1.payload, element._2.map(_.payload))).filter(element =&gt; !(element._2.isEmpty))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res: org.apache.spark.rdd.RDD[(String, scala.collection.mutable.ListBuffer[String])] = MapPartitionsRDD[408] at filter at command-3336180278405445:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val result_second_round = res.map(element =&gt; (element._1, element._2(0))).toDF(&quot;PointId&quot;, &quot;State&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>result_second_round: org.apache.spark.sql.DataFrame = [PointId: string, State: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val edge_counts = result_second_round.groupBy(&quot;State&quot;).count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>edge_counts: org.apache.spark.sql.DataFrame = [State: string, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val state_counts = edge_counts.union(intersection_counts)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>state_counts: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [State: string, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val all_intersection_states = rdd_first_set_intersections.toDF(&quot;stateId&quot;, &quot;coords&quot;).drop(&quot;coords&quot;)
+val all_edge_states = rdd_first_set.toDF(&quot;stateId&quot;, &quot;coords&quot;).drop(&quot;coords&quot;)
+val all_states = all_intersection_states.union(all_edge_states)
+all_states.count //number of states 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>all_intersection_states: org.apache.spark.sql.DataFrame = [stateId: string]
+all_edge_states: org.apache.spark.sql.DataFrame = [stateId: string]
+all_states: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [stateId: string]
+res24: Long = 399394
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>Find the states with no event has been matched against, assign count value equal to 0 and union them with the rest of the states_counts. This way, each state in the State Space is assigned a numerical value representing the number of accidents that have occurred within that state.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val s1 = all_states.join(state_counts, all_states(&quot;stateId&quot;) === state_counts(&quot;State&quot;), &quot;left_outer&quot;).drop(&quot;State&quot;)
+val s_final = s1.na.fill(0)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>s1: org.apache.spark.sql.DataFrame = [stateId: string, count: bigint]
+s_final: org.apache.spark.sql.DataFrame = [stateId: string, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">s_final.distinct.agg(sum(&quot;count&quot;)).show()  //11720 events in total successfully matched 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+
+|sum(count)|
++----------+
+|     11720|
++----------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def trim_id(stateId: String): String = {
+  val res = stateId.split(&quot;:&quot;)(1)
+  return res
+}
+
+def trim_point(pointId: String): String = {
+  val res = pointId.split(&quot; &quot;)(1)
+  return res
+}
+spark.udf.register(&quot;trim_point&quot;, trim_point(_:String): String)
+spark.udf.register(&quot;trim_id&quot;, trim_id(_:String): String)
+
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>trim_id: (stateId: String)String
+trim_point: (pointId: String)String
+res28: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val total_result = result_first_round.union(result_second_round)
+val trimed_total_result = total_result.selectExpr(&quot;trim_point(PointId) as point&quot;, &quot;trim_id(State) as state&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>total_result: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [PointId: string, State: string]
+trimed_total_result: org.apache.spark.sql.DataFrame = [point: string, state: string]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>Return here after notebook <code>034_06SimulatingArrivalTimesNHPP_Inversion</code></li>
+</ul>
+</div>
+<div class="cell markdown">
+<ul>
+<li>We want to map the simulated graph elements into an exact location</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df = spark.read.parquet(&quot;dbfs:/roadSafety/simulation_location&quot;).toDF(&quot;simulated_location&quot;, &quot;arrival_time&quot;)
+val location_id = df.select(&quot;simulated_location&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>df: org.apache.spark.sql.DataFrame = [simulated_location: string, arrival_time: double]
+location_id: org.apache.spark.sql.DataFrame = [simulated_location: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions._
+val intersection_samples = location_id.join(nodes_df, col(&quot;simulated_location&quot;) === col(&quot;id&quot;)).select(&quot;simulated_location&quot;, &quot;latitude&quot;, &quot;longitude&quot;)
+intersection_samples.count
+val edge_ids = edge_coordinates.withColumn(&quot;edge_id&quot;, concat(col(&quot;src&quot;), lit(&quot;+&quot;), col(&quot;dst&quot;)))
+val edge_samples = location_id.join(edge_ids, col(&quot;simulated_location&quot;) === col(&quot;edge_id&quot;)).drop(&quot;src&quot;, &quot;dst&quot;, &quot;edge_id&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.functions._
+intersection_samples: org.apache.spark.sql.DataFrame = [simulated_location: string, latitude: double ... 1 more field]
+edge_ids: org.apache.spark.sql.DataFrame = [src: bigint, dst: bigint ... 5 more fields]
+edge_samples: org.apache.spark.sql.DataFrame = [simulated_location: string, src_latitude: double ... 3 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.random.RandomRDDs
+val random_edge_coordinates = edge_samples.withColumn(&quot;random_sample&quot;, rand())
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.mllib.random.RandomRDDs
+random_edge_coordinates: org.apache.spark.sql.DataFrame = [simulated_location: string, src_latitude: double ... 4 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>For each simulated edge, generate a two dimensional uniform sample and scale it according to the coordinates of the edge's source and destination</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def random_lat(src_lat: Double, dst_lat: Double, sample: Double): Double = {
+  val lat_min = src_lat.min(dst_lat)
+  val lat_max = src_lat.max(dst_lat)
+  val lat = sample * (lat_max - lat_min) + lat_min
+  return lat
+}
+def random_lon(src_lon: Double, dst_lon: Double, sample: Double): Double = {
+  val lon_min = src_lon.min(dst_lon)
+  val lon_max = src_lon.max(dst_lon)
+  val lon = sample * (lon_max - lon_min) + lon_min
+  return lon
+}
+
+spark.udf.register(&quot;random_lat&quot;, random_lat(_: Double, _: Double, _: Double): Double)
+spark.udf.register(&quot;random_lon&quot;, random_lon(_: Double, _: Double, _: Double): Double)
+
+
+val random_coordinates = random_edge_coordinates.selectExpr(&quot;random_lat(src_latitude, dst_latitude, random_sample) as latitude&quot;, &quot;random_lon(src_longitude, dst_longitude, random_sample) as longitude&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>random_lat: (src_lat: Double, dst_lat: Double, sample: Double)Double
+random_lon: (src_lon: Double, dst_lon: Double, sample: Double)Double
+random_coordinates: org.apache.spark.sql.DataFrame = [latitude: double, longitude: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df_final = random_coordinates.union(intersection_samples.select(&quot;latitude&quot;, &quot;longitude&quot;))
+df_final.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>df_final: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [latitude: double, longitude: double]
+res36: Long = 12089
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<pre><code>df_final.show()
+</code></pre>
+<p>Output:</p>
+<pre><code>+------------------+------------------+
+|          latitude|         longitude|
++------------------+------------------+
+|54.66xxx          |25.29yyy          |
++------------------+------------------+
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

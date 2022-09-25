@@ -1,0 +1,960 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>001_CrashCourseGIS - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html" class="active">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="sds-22-360-in-525-03-geospatial-analytics-and-big-data"><a class="header" href="#sds-22-360-in-525-03-geospatial-analytics-and-big-data"><a href="https://lamastex.github.io/scalable-data-science/360-in-525/2018/03/">SDS-2.2-360-in-525-03: Geospatial Analytics and Big Data</a></a></h1>
+</div>
+<div class="cell markdown">
+<h1 id="intro-to-gis"><a class="header" href="#intro-to-gis">Intro to GIS</a></h1>
+<p>Raazesh Sainudiin, Marina Toger</p>
+<ul>
+<li>To illustrate the specifics of geospatial information, here we use <strong><a href="https://qgis.org/en/site/">QGIS</a></strong> software locally on your laptops.</li>
+<li>Later Raaz will show scalable geospatial analysis using <strong><a href="https://github.com/harsha2010/magellan">Magellan</a></strong>.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="a-bit-about-gis"><a class="header" href="#a-bit-about-gis">A bit about GIS</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Geographic_information_system"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="birth-of-gis-1854-cholera-outbreak-in-london"><a class="header" href="#birth-of-gis-1854-cholera-outbreak-in-london">Birth of GIS: 1854 Cholera outbreak in London</a></h2>
+<p><strong><a href="https://en.wikipedia.org/wiki/John_Snow">Dr. John Snow</a></strong> father of modern epidemiology, GIS and spatial analysis, hypothesised that cholera was transmitted through the drinking of polluted water, rather than through the air, as was commonly believed, by <a href="https://ds8.gitbooks.io/textbook/content/chapters/02/1/observation-and-visualization-john-snow-and-the-broad-street-pump.html">mapping</a> the cases.</p>
+<p><img src="https://www.wired.com/images_blogs/thisdayintech/2009/09/cholera.jpg" width=440> <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/John_Snow_memorial_and_pub.jpg" width=200></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://ds8.gitbooks.io/textbook/content/chapters/02/1/observation-and-visualization-john-snow-and-the-broad-street-pump.html&quot;,555))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://ds8.gitbooks.io/textbook/content/chapters/02/1/observation-and-visualization-john-snow-and-the-broad-street-pump.html"
+ width="95%" height="555"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="gis-components"><a class="header" href="#gis-components">GIS components</a></h4>
+<img src="http://u18439936.onlinehome-server.com/judd.curran/geography/images/GIScomponents.jpg" width=333>
+<p>From: Longley, P. A., Goodchild, M. F., Maguire, D. J., &amp; Rhind, D. W. (2005). <em>Geographical information systems and science.</em></p>
+<h4 id="applications-of-gis"><a class="header" href="#applications-of-gis">Applications of GIS</a></h4>
+<img src="https://www.grantspassoregon.gov/ImageRepository/Document?documentID=4740" width=666>
+<h4 id="gis-software"><a class="header" href="#gis-software">GIS software</a></h4>
+<img src="https://www.researchgate.net/profile/Kauri_Kiiman/publication/236330326/figure/fig1/AS:299369539620866@1448386668633/Different-types-of-GIS-software.png" width=700>
+<p>Source: <a href="https://www.researchgate.net/profile/Kauri_Kiiman/publication/236330326_INTRODUCTION_OF_OPEN_SOURCE_SOFTWARE_FOR_GIS_EDUCATION_Course_project_of_A_Nordnatur_Intensive_Course_OpenSource_GIS_GPS_and_Crowd_Sourcing_in_University_of_Copenhagen_Skovskolen/links/00b49517a3bb7a24a1000000/INTRODUCTION-OF-OPEN-SOURCE-SOFTWARE-FOR-GIS-EDUCATION-Course-project-of-A-Nordnatur-Intensive-Course-OpenSource-GIS-GPS-and-Crowd-Sourcing-in-University-of-Copenhagen-Skovskolen.pdf">Kauri_Kiiman,2013</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/List_of_geographic_information_systems_software&quot;,555))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/List_of_geographic_information_systems_software"
+ width="95%" height="555"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>The majority of governmental agencies and information providers, are still on proprietary mostly desktop GIS using legacy data formats like shapefiles. Researchers in various fields, e.g. ecology, geography, regional science, often use Python, R and PostGIS SQL, combined with desktop GIS software for visualisation.</p>
+<p>Some of the biggest players: * proprietary Desktop ArcGIS of <a href="https://www.esri.com/en-us/home">ESRI</a> (Windows OS) * free and open-source <a href="https://qgis.org/en/site/">QGIS</a> (large community of developers, cross-platform) * free <a href="https://www.r-project.org/">R</a> - a software environment for statistical computing and graphics, some people using R as a GIS</p>
+<p>These are just a few out of many software pachages, platforms and tools.</p>
+<p>Why <a href="https://magellan.ghost.io/welcome-to-ghost/">Magellan</a>? - scalable.</p>
+<img src="https://image.slidesharecdn.com/magellan-foss4gtalk-170817212639/95/magellan-foss4g-talk-boston-2017-12-638.jpg?cb=1503005917" width=555>
+<p>From <a href="https://www.slideshare.net/halfabrane/magellan-foss4g-talk-boston-2017">Ram's slide 12 of Magellan FOSS4G Talk, Boston 2017 at slideshare</a></p>
+<p>In the future we might add <a href="http://www.geomesa.org/">GeoMesa</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="do-we-need-one-more-geospatial-analytics-library"><a class="header" href="#do-we-need-one-more-geospatial-analytics-library">Do we need one more geospatial analytics library?</a></h2>
+<p>From <a href="http://www.slideshare.net/SparkSummit/magellanspark-as-a-geospatial-analytics-engine-by-ram-sriharsha">Ram's slide 4 of this Spark Summit East 2016 talk at slideshare</a>:</p>
+<ul>
+<li>Spatial Analytics at scale is challenging
+<ul>
+<li>Simplicity + Scalability = Hard</li>
+</ul>
+</li>
+<li>Ancient Data Formats
+<ul>
+<li>metadata, indexing not handled well, inefficient storage</li>
+</ul>
+</li>
+<li>Geospatial Analytics is not simply Business Intelligence anymore
+<ul>
+<li>Statistical + Machine Learning being leveraged in geospatial</li>
+</ul>
+</li>
+<li>Now is the time to do it!
+<ul>
+<li>Explosion of mobile data</li>
+<li>Finer granularity of data collection for geometries</li>
+<li>Analytics stretching the limits of traditional approaches</li>
+<li>Spark SQL + Catalyst + Tungsten makes extensible SQL engines easier than ever before!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="crash-course-in-gis-using-qgis-software-locally-on-your-laptops"><a class="header" href="#crash-course-in-gis-using-qgis-software-locally-on-your-laptops">Crash course in GIS using <a href="https://qgis.org/en/site/">QGIS</a> software locally on your laptops.</a></h1>
+<p>I learned from <a href="http://www.spatialthoughts.com/qgis/">Ujaval Gandhi</a>'s excellent albeit outdated QGIS tutorials as well as a lot of playing around. Here I use some of his materials but if you are really interested in geospatial data, I suggest you follow his original <a href="http://www.qgistutorials.com/en/">QGIS tutorials</a> for a fast dive into the GIS world. You can also learn using <a href="https://docs.qgis.org/2.18/en/docs/gentle_gis_introduction/index.html">A Gentle Introduction to GIS</a> and the <a href="https://docs.qgis.org/2.18/en/docs/training_manual/index.html">Training Materials</a> from the QGIS docs and <a href="https://github.com/mltConsEcol/QGIS-Tutorial">more</a>.</p>
+<h3 id="about"><a class="header" href="#about">About</a></h3>
+<p><strong>From <a href="https://qgis.org/en/site/about/index.html">qgis.org</a></strong>: <strong>QGIS</strong> is a user friendly Open Source Geographic Information System (GIS) licensed under the <strong>GNU Public License (GPL)</strong> Version 2 or above. QGIS is an official project of the Open Source Geospatial Foundation (OSGeo). It runs on Linux, Unix, Mac OSX, Windows and Android and supports numerous vector, raster, and database formats and functionalities.</p>
+<p>Here we shall use the <strong>QGIS 3.0.2-Girona</strong> , fresh out of the oven current version (to date 2018-04-29) released 2018-04-20 based on Python 3.6.</p>
+</div>
+<div class="cell markdown">
+<h3 id="1-setting-up"><a class="header" href="#1-setting-up">1. Setting up</a></h3>
+<h4 id="installation-pains"><a class="header" href="#installation-pains">Installation pains</a></h4>
+<p>Basically go to <a href="https://qgis.org/en/site/forusers/download.html">QGIS download page</a>, and follow instruction for your OS. We add here <strong>step-by-step tutorials</strong> for OS versions that we tried which are correct for today as we tried them. QGIS has a vibrant community of contributors so this will get outdated fast.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://qgis.org/en/site/forusers/download.html&quot;, 444))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://qgis.org/en/site/forusers/download.html"
+ width="95%" height="444"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>MAC</strong></p>
+<p>The following worked for me on OSX Yosemite 10.10.5 on a MBP from early 2011, using QGIS macOS Installer Version 3.0</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/MACInstallQGIS_01.png" width=555>
+<p>0.Check if you have Python 3.6 + and install if not (this isn't in the bundle, only <a href="https://www.python.org/">python.org</a> Python 3 is supported)</p>
+<p>I already had it:</p>
+<pre><code>$ python3
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; 
+</code></pre>
+<p>If this step fails for some reason you can install QGIS 2.18 LTR which is based on Python 2.7 for today.</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/MACInstallQGIS_02.png" width=555>
+<p>1.Install GDAL</p>
+<p>2.Install QGIS</p>
+</div>
+<div class="cell markdown">
+<p><strong>Windows</strong></p>
+<p>The following worked for me on Windows 10 Enterprise v.1709, using <strong>OSGeo4W Network Installer</strong> .</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/WinInstallQGIS_01.png" width=555>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/WinInstallQGIS_02.png" width=999>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/WinInstallQGIS_03.png" width=999>
+</div>
+<div class="cell markdown">
+<h2 id="lets-get-our-hands-dirty"><a class="header" href="#lets-get-our-hands-dirty">Let's get our hands dirty</a></h2>
+<h3 id="hello-world-in-qgis"><a class="header" href="#hello-world-in-qgis">Hello world in QGIS</a></h3>
+<p>Copy the following to your favourite text editor and save as a csv file:</p>
+<pre><code>id, lat, long, name
+1, 59.839264, 17.647075, point1
+</code></pre>
+<p>Open QGIS3 and start a new project</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_001.png" width=777>
+<p>Open the Open Data manager (click on <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_002.png" width=111> or <code>⌘L</code>)</p>
+<p>Select Delimited Text &gt; CSV, X and Y field, CRS &gt; Add&gt; Close</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_003.png" width=666>
+<p>You have created a temporary layer containing a point.</p>
+<p>GIS Data are stored in <em>Vector</em> or <em>Raster</em> Layers</p>
+<img src="https://prd-wret.s3-us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/atom_page_medium/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=r9eQnFOg" width=370>
+<p>You have created a temporary layer containing a point. To save it, right-click the layer &gt; SaveAs</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_004.png" width=333>
+<p>Let's have a look at the options we have:</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_005.png" width=555>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_006.png" width=555>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_007.png" width=555>
+<p>Now you store the point in shapefile format as a file.</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_008.png" width=222>
+</div>
+<div class="cell markdown">
+<h3 id="most-common-basic-vector-data-structures---esri-shapefiles"><a class="header" href="#most-common-basic-vector-data-structures---esri-shapefiles">Most common basic vector data structures - ESRI Shapefiles</a></h3>
+<ul>
+<li>Points</li>
+<li>Polygons</li>
+<li>Polylines</li>
+</ul>
+<p>Spatial data (invisible to the user in shapefile format) + attribute tables</p>
+<img src="http://neondataskills.org/images/dc-spatial-vector/Attribute_Table.png" width=555>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Shapefile&quot;, 444))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Shapefile"
+ width="95%" height="444"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>ls the folder containing the shapefile you just saved. There are 6 files created with the same name:</p>
+<pre><code>$ ls -S -lh | awk '{print $5, $9}'
+ 
+257B point4326.qpj
+147B point4326.dbf
+143B point4326.prj
+128B point4326.shp
+108B point4326.shx
+5B point4326.cpg
+</code></pre>
+<p>The original csv was <code>24B Point1.csv</code></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Shapefile">shape files</a> developed by Environmental Systems Research Institute <a href="https://en.wikipedia.org/wiki/Esri">(ESRI)</a>. See ESRI's <a href="https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf">what is a geospatial shape file?</a></li>
+<li>QGIS and Magellan build on <a href="http://esri.github.io/">http://esri.github.io/</a> a leading opensource geospatial library</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="to-prep-you-for-working-with-magellan-we-explore-the-basic-geometries-and-predicates-in-qgis"><a class="header" href="#to-prep-you-for-working-with-magellan-we-explore-the-basic-geometries-and-predicates-in-qgis">to prep you for working with Magellan, we explore the basic <em>Geometries</em> and <em>Predicates</em> in QGIS</a></h3>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <style type="text/css">
+        body {font-family: Helvetica;
+              font-size: 21px; color: #333333;}
+        svg .pumpkin {fill: white;stroke: #870613; stroke-width: 3; opacity: 0.6;}
+        </style>
+</head>
+<body>
+  <p><strong>Geometries</strong>:</p>
+  <ul>
+    <li>Point</li>
+    <li>LineString</li>
+    <li>Polygon</li>
+    <li>MultiPoint</li>
+    <li>MultiPolygon <i>(treated as a collection of Polygons and read in as a row per polygon by the GeoJSON reader)</i></li>
+  </ul>
+  <p><strong>Predicates</strong>:</p>
+  <ul>
+    <li>Intersects</li>
+    <li>Contains</li>
+    <li>Within</li>
+  </ul>
+  </body>
+</html>
+<p>For more info look at the magellan README in github: <a href="https://github.com/harsha2010/magellan">https://github.com/harsha2010/magellan</a></p>
+</div>
+<div class="cell markdown">
+<h4 id="lets-look-at-magellan-supported-formats-for-geometry"><a class="header" href="#lets-look-at-magellan-supported-formats-for-geometry">Let's look at Magellan supported formats for geometry</a></h4>
+<p>The library currently supports reading the following formats:</p>
+<ul>
+<li><a href="https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf" rel="nofollow">ESRI</a></li>
+<li><a href="http://geojson.org" rel="nofollow">GeoJSON</a></li>
+<li><a href="http://wiki.openstreetmap.org/wiki/OSM_XML" rel="nofollow">OSM-XML</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Well-known_text" rel="nofollow">WKT</a>.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h4 id="esri-shapefiles---788-bytes"><a class="header" href="#esri-shapefiles---788-bytes">ESRI Shapefiles - 788 bytes</a></h4>
+<p>Open source ancient format, but widely used, most data sources are in shapefiles</p>
+<p>Our point information is contained in <strong>6 files (!)</strong>, not all are required (created by default using QGIS)</p>
+<p><strong><code>.prj</code></strong> is the projection file. Open it with a text editor and have a look:</p>
+<pre><code>GEOGCS[&quot;GCS_WGS_1984&quot;,DATUM[&quot;D_WGS_1984&quot;,SPHEROID[&quot;WGS_1984&quot;,6378137,298.257223563]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.017453292519943295]]
+</code></pre>
+<p>Our default projection is WGS_1984. More on this later...</p>
+<p>let's save our point in other formats</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_004.png" width=222>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_009.png" width=555>
+<h4 id="wkt-of-our-point---76-bytes"><a class="header" href="#wkt-of-our-point---76-bytes">WKT of our point - 76 bytes</a></h4>
+<pre><code>WKT;y;x
+&quot;POINT (17.647075 59.839264)&quot;;59.839264000000000;17.647075000000001
+</code></pre>
+<h4 id="geojson-of-our-point---305-bytes"><a class="header" href="#geojson-of-our-point---305-bytes">GeoJSON of our point - 305 bytes</a></h4>
+<pre><code>{
+&quot;type&quot;: &quot;FeatureCollection&quot;,
+&quot;name&quot;: &quot;GJSpoint4326&quot;,
+&quot;crs&quot;: { &quot;type&quot;: &quot;name&quot;, &quot;properties&quot;: { &quot;name&quot;: &quot;urn:ogc:def:crs:OGC:1.3:CRS84&quot; } },
+&quot;features&quot;: [
+{ &quot;type&quot;: &quot;Feature&quot;, &quot;properties&quot;: { &quot;y&quot;: 59.839264, &quot;x&quot;: 17.647075 }, &quot;geometry&quot;: { &quot;type&quot;: &quot;Point&quot;, &quot;coordinates&quot;: [ 17.647075, 59.839264 ] } }
+]
+}
+</code></pre>
+<p>The numbers are coordinates: <code>long</code> , <code>lat</code> (Easting, Northing) in decimal degrees, like in Google Maps.</p>
+</div>
+<div class="cell markdown">
+<h2 id="datum-reference-surface-and-projection"><a class="header" href="#datum-reference-surface-and-projection">Datum, reference surface and projection</a></h2>
+<p>The objective is to project earth surface to Cartesian coordinates</p>
+<img src="https://kartoweb.itc.nl/geometrics/Bitmaps/Intro%201.8b.gif" width=333>
+<img src="https://www.e-education.psu.edu/maps/sites/www.e-education.psu.edu.maps/files/Images/L1_Figure6.png" width=555>
+<p>Source: Nathan P. Belz 2012</p>
+<p><img src="https://www.e-education.psu.edu/geog486/sites/www.e-education.psu.edu.geog486/files/image/L04_cg_fig03.gif" width=300> <img src="https://kartoweb.itc.nl/geometrics/Bitmaps/refsurface%203.12f.gif" width=666></p>
+<p>Bottom line, whatever projection is selected, there is always a <a href="https://map-projections.net/compare.php?p1=albers-equal-area-conic&amp;p2=lambert-conformal-conic">distortion</a>.</p>
+<p><strong>HOMEWORK</strong> and recommended reading on projections: * https://kartoweb.itc.nl/geometrics/Introduction/introduction.html * https://kartoweb.itc.nl/geometrics/Reference%20surfaces/body.htm * See <a href="https://www.e-education.psu.edu/geog486/node/1883">here</a> for more on projections.</p>
+<h3 id="geographic-vs-projected-coordinate-systems"><a class="header" href="#geographic-vs-projected-coordinate-systems">Geographic vs Projected Coordinate Systems</a></h3>
+<img src="http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters_files/image001.gif" width=400>
+<p>Image source: <a href="http://www.geography.hunter.cuny.edu/%7Ejochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm">Jochen Albrecht</a></p>
+<p>Geographic Coordinate Systems (GCS) - Location measured from curved surface of the earth - Measurement units latitude and longitude - Degrees-minutes-seconds (DMS) - Decimal degrees (DD) or radians (rad)</p>
+<p>Projected Coordinate Systems (PCS) - Flat surface - Units can be in meters, feet, inches - Distortions will occur, except for very fine scale maps</p>
+<p>Read more <a href="http://slideplayer.com/slide/10623028/">here</a> and <a href="https://communityhub.esriuk.com/geoxchange/2012/3/26/coordinate-systems-and-projections-for-beginners.html">here</a></p>
+<h3 id="spatial-reference-system-identifier-srid"><a class="header" href="#spatial-reference-system-identifier-srid">Spatial Reference System Identifier (SRID)</a></h3>
+<p>SRID are numeric codes for the <a href="https://en.wikipedia.org/wiki/Spatial_reference_system">spatial reference systems</a></p>
+<p>List of SRID with their attributes: https://spatialreference.org/ref/epsg/3006/</p>
+<h3 id="coordinate-transformations"><a class="header" href="#coordinate-transformations">Coordinate transformations</a></h3>
+<img src="https://static1.squarespace.com/static/55bb8935e4b046642e9d3fa7/55bb8e8ee4b03fcc125a74c0/55bb8e91e4b03fcc125a7a67/1331725592717/1000w/coordsys_diagram.png" width=666>
+<p>Source: <a href="https://communityhub.esriuk.com/geoxchange/2012/3/26/coordinate-systems-and-projections-for-beginners.html">geoXchange</a></p>
+</div>
+<div class="cell markdown">
+<p>Back to our point, let's compare WKT in two different CRS: * WGS84 (4326)</p>
+<p>and * SWEREF99 (3006)</p>
+<p>to do that, save the point in each of the formats we looked at (shapefile, csv-wkt, and geojson), but this time with a different CRS</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_010.png" width=555>
+<p>note that the transformed point shapefiles are larger than the originals</p>
+<pre><code>$ pwd
+.../3006
+
+$ ls -S -lh | awk '{print $5, $9}'
+ 
+570B point3006.qpj
+379B point3006.prj
+100B point3006.shp
+100B point3006.shx
+98B point3006.dbf
+5B point3006.cpg
+
+$ pwd
+.../4326
+
+$ ls -S -lh | awk '{print $5, $9}'
+ 
+257B point4326.qpj
+147B point4326.dbf
+143B point4326.prj
+128B point4326.shp
+108B point4326.shx
+5B point4326.cpg
+</code></pre>
+</div>
+<div class="cell markdown">
+<table border = 0  cellpadding = "10" cellspacing="2" >
+    <tr bgcolor = "#b1dbd6">
+        <td>Name</td>
+        <td>WGS84</td>
+        <td>SWEREF99</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>EPSG</td>
+        <td>4326</td>
+        <td>3006</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>Units</td>
+        <td>Degrees</td>
+        <td>Metres</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>WKT</td>
+        <td>POINT (17.647075 59.839264) </td>
+        <td>POINT (648337.212857818 6636474.10921653)</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>WKT file size</td>
+        <td>76 bytes</td>
+        <td>128 bytes</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>geojson file size</td>
+        <td>305 bytes</td>
+        <td>353 bytes</td>
+    </tr>
+    <tr bgcolor = "#b1dbd6">
+        <td>shapefiles (together)</td>
+        <td>788 bytes</td>
+        <td>1,252 bytes</td>
+    </tr>
+  </table>
+</div>
+<div class="cell markdown">
+<p>Compare .prj files for</p>
+<ul>
+<li>
+<p>WGS84 <code>GEOGCS[&quot;GCS_WGS_1984&quot;,DATUM[&quot;D_WGS_1984&quot;,SPHEROID[&quot;WGS_1984&quot;,6378137,298.257223563]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.017453292519943295]]</code></p>
+</li>
+<li>
+<p>SWEREF99 <code>PROJCS[&quot;SWEREF99_TM&quot;,GEOGCS[&quot;GCS_SWEREF99&quot;,DATUM[&quot;D_SWEREF99&quot;,SPHEROID[&quot;GRS_1980&quot;,6378137,298.257222101]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.017453292519943295]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,15],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;Meter&quot;,1]]</code></p>
+</li>
+</ul>
+<p>Look up the CRS you want, e.g. <a href="http://spatialreference.org/ref/epsg/sweref99-tm/">SWEREF99</a></p>
+<p><strong>Datum</strong> - reference points and the reference surface used to relate the coordinate system to the Earth, e.g. North American Data 1983 (NAD), or World Geodetic System 1984 (WGS84)</p>
+<p>Data stored in GIS are always <em>distorted</em>, contain errors, and are only a represntation of the world in estimated postional realm (see <a href="https://youtu.be/bLnJpkqjlwo">Jere Folgert</a>'s video for more)</p>
+<p><strong>False northing</strong> is a linear value applied to the origin of the y coordinates. False easting and northing values are usually applied to ensure that all x and y values are positive. You can also use the false easting and northing parameters to reduce the range of the x or y coordinate values (more <a href="https://en.wikipedia.org/wiki/Easting_and_northing">here</a> and <a href="http://help.arcgis.com/en/geodatabase/10.0/sdk/arcsde/concepts/geometry/coordref/coordsys/projected/mapprojections.htm">here</a>).</p>
+</div>
+<div class="cell markdown">
+<p>Adding multiple points, create .csv :</p>
+<pre><code>long,lat
+17.6480052,59.8393701
+17.6480341,59.8392894
+17.6481147,59.8392956
+17.6481432,59.8392159
+17.6472424,59.8391136
+17.6472631,59.8390557
+17.6473433,59.8390544
+17.6473458,59.8390704
+17.6475238,59.8390772
+17.647536,59.8389047
+17.6474709,59.8389008
+17.6474767,59.8388648
+17.6473751,59.8388618
+17.6473811,59.8387833
+17.6484274,59.8388934
+17.6484565,59.8388052
+17.648535,59.8388155
+17.6485727,59.838736
+17.647413,59.8386109
+17.6474341,59.8385565
+17.6475478,59.8385595
+17.6475474,59.8385703
+17.6478522,59.8385804
+17.6478664,59.8383792
+17.6475097,59.8383669
+17.6475481,59.8382687
+17.6486244,59.8383864
+17.6486543,59.8383085
+17.6487378,59.8383203
+17.6487746,59.8382488
+17.6476091,59.8381245
+17.6476395,59.8380363
+17.6480262,59.8380806
+17.6481183,59.8378764
+17.647737,59.8378336
+17.6477676,59.8377667
+17.6486223,59.837865
+17.6486551,59.8377838
+17.6487355,59.8377901
+17.6487695,59.8377133
+17.6478238,59.8376243
+17.6478937,59.83747
+17.6479301,59.8374764
+17.6479606,59.83739
+17.6477726,59.8373749
+17.6477583,59.8374074
+17.6476953,59.8374007
+17.6476289,59.8375505
+17.647422,59.8380329
+17.6473997,59.8380848
+17.6473907,59.8381057
+17.6462149,59.8379803
+17.6461825,59.8380509
+17.6462697,59.8380615
+17.6462406,59.8381342
+17.6473376,59.8382476
+17.6471772,59.838613
+17.6466979,59.8385603
+17.6467378,59.838468
+17.6465739,59.8383313
+17.6461422,59.8382847
+17.6460358,59.8385507
+17.6461231,59.8385563
+17.6460883,59.8386495
+17.6471381,59.838757
+17.6471013,59.8388454
+17.6460051,59.838735
+17.6459241,59.83898
+17.6458227,59.8389721
+17.645788,59.8390506
+17.6458626,59.8390585
+17.6458292,59.8391408
+17.6460294,59.8391601
+17.6468978,59.8392528
+17.6469334,59.8392565
+17.6473675,59.8393028
+17.6479529,59.839365
+17.6480052,59.8393701
+</code></pre>
+<p>Open the csv (lat is y, long is x). Save as a shapefile in 3006.</p>
+<p>You can create additional columns. We shall do this using GUI, but if you set up Postgres, you can use SQL queries.</p>
+<p><img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_011.png" width=333> <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_012.png" width=555></p>
+<p>Right-click the layer &gt; attribute table &gt; open field calculator &gt; create fields for x and y</p>
+<p>This is how the WKT looks:</p>
+<pre><code>WKT,long,lat,x,y
+&quot;POINT (648388.848931084 6636488.00213679)&quot;,17.648005200000000,59.839370099999996,648389,6636488
+&quot;POINT (648390.827050854 6636479.0844731)&quot;,17.648034100000000,59.839289399999998,648391,6636479
+&quot;POINT (648395.314532686 6636479.95512511)&quot;,17.648114700000001,59.839295600000000,648395,6636480
+&quot;POINT (648397.265812052 6636471.14787468)&quot;,17.648143200000000,59.839215899999999,648397,6636471
+&quot;POINT (648347.259564427 6636457.74363919)&quot;,17.647242400000000,59.839113599999997,648347,6636458
+&quot;POINT (648348.67678627 6636451.34537085)&quot;,17.647263100000000,59.839055700000003,648349,6636451
+</code></pre>
+<p>The x, y coordinates are in meters.</p>
+</div>
+<div class="cell markdown">
+<h4 id="polygons"><a class="header" href="#polygons">Polygons</a></h4>
+<p>let's create a polygon in QGIS, make myPolygon.csv:</p>
+<pre><code>WKT,gid
+&quot;MULTIPOLYGON (((17.6453 59.8395,17.649 59.8395,17.649 59.8373,17.6453 59.8373,17.6453 59.8395)))&quot;,111
+</code></pre>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_014.png" width=555>
+<p>This is geojson of the same polygon:</p>
+<pre><code>{
+&quot;type&quot;: &quot;FeatureCollection&quot;,
+&quot;name&quot;: &quot;myPolygon3006&quot;,
+&quot;crs&quot;: { &quot;type&quot;: &quot;name&quot;, &quot;properties&quot;: { &quot;name&quot;: &quot;urn:ogc:def:crs:EPSG::3006&quot; } },
+&quot;features&quot;: [
+{ &quot;type&quot;: &quot;Feature&quot;, &quot;properties&quot;: { &quot;gid&quot;: 111 }, &quot;geometry&quot;: { &quot;type&quot;: &quot;MultiPolygon&quot;, &quot;coordinates&quot;: [ [ [ [ 648236.730797635158524, 6636496.404087456874549 ], [ 648443.997444280423224, 6636504.689628538675606 ], [ 648453.793062769225799, 6636259.816340153105557 ], [ 648246.51272902963683, 6636251.530436812900007 ], [ 648236.730797635158524, 6636496.404087456874549 ] ] ] ] } }
+]
+}
+</code></pre>
+<p>Note how the first and last point coordinates are the same.</p>
+</div>
+<div class="cell markdown">
+<p>Polygons in Magellan</p>
+<p><img src="https://image.slidesharecdn.com/4gbramsriharsha-160224014538/95/magellanspark-as-a-geospatial-analytics-engine-by-ram-sriharsha-5-638.jpg?cb=1456278374" width=555> <img src="https://image.slidesharecdn.com/4gbramsriharsha-160224014538/95/magellanspark-as-a-geospatial-analytics-engine-by-ram-sriharsha-6-638.jpg?cb=1456278374" width=555></p>
+<p>source: Ram's <a href="https://www.slideshare.net/SparkSummit/magellen-geospatial-analytics-on-spark-by-ram-sriharsha">presentation</a></p>
+</div>
+<div class="cell markdown">
+<p>To add a <strong>Polyline</strong> create myPolyline.csv:</p>
+<pre><code>WKT,full_id
+&quot;MULTILINESTRING ((17.6453 59.8395,17.649 59.8395,17.649 59.8373,17.6453 59.8373))&quot;,6
+</code></pre>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_015.png" width=444>
+<p>Geojson of the polyline reprojected to SWEREF99:</p>
+<pre><code>{
+&quot;type&quot;: &quot;FeatureCollection&quot;,
+&quot;name&quot;: &quot;theLine6662_3006&quot;,
+&quot;crs&quot;: { &quot;type&quot;: &quot;name&quot;, &quot;properties&quot;: { &quot;name&quot;: &quot;urn:ogc:def:crs:EPSG::3006&quot; } },
+&quot;features&quot;: [
+{ &quot;type&quot;: &quot;Feature&quot;, &quot;properties&quot;: { &quot;full_id&quot;: 6 }, &quot;geometry&quot;: { &quot;type&quot;: &quot;MultiLineString&quot;, &quot;coordinates&quot;: [ [ [ 648236.730797635158524, 6636496.404087456874549 ], [ 648443.997444280423224, 6636504.689628538675606 ], [ 648453.793062769225799, 6636259.816340153105557 ], [ 648246.51272902963683, 6636251.530436812900007 ] ] ] } }
+]
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="creating-geometry"><a class="header" href="#creating-geometry">Creating geometry</a></h4>
+<h5 id="drawing-geometry"><a class="header" href="#drawing-geometry">Drawing geometry</a></h5>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_016.png" width=444>
+<p>The order: * add new layer (polygon, 3006) * turn on editing for the new layer * add new polygon * click to draw * right-click to finalise and fill in the attributes</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_017.png" width=444>
+<h5 id="buffer"><a class="header" href="#buffer">Buffer</a></h5>
+<p>Create new geometry offset by distance of 13 m</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_018.png" width=444>
+<h5 id="bounding-box"><a class="header" href="#bounding-box">Bounding Box</a></h5>
+<p>Create new geometry from BB of the buffer layer</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_019.png" width=444>
+<p>For points geometry this is done using &quot;minimum bounding geometry&quot;.</p>
+<p>There are plenty of such functions, here mentioned are commonly used for spatial analysis. Another useful one:</p>
+<h5 id="voronoi-polygons"><a class="header" href="#voronoi-polygons">Voronoi polygons</a></h5>
+<p>To try yourself: create a shapefile in 3006 of Voronoi polygons (select some buffer distance) and add columns with <code>area</code>, <code>perimeter</code>, and autoincremented <code>gid</code></p>
+<p><img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_020.png" width=444> <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_021.png" width=444></p>
+<p>Check out basic statistics and histogram for <code>area</code> field</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_022.png" width=444>
+</div>
+<div class="cell markdown">
+<h2 id="simple-queries"><a class="header" href="#simple-queries">Simple queries</a></h2>
+<h3 id="select-by-attribute"><a class="header" href="#select-by-attribute">Select by attribute</a></h3>
+<p>The Mean value of the <code>area</code> was ≈ 749.8. Select only the polygons with area larger than the mean:</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_023.png" width=444>
+<p>Save as a separate shapefile (same as usual but check &quot;selected only&quot;)</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_024.png" width=444>
+</div>
+<div class="cell markdown">
+<h2 id="predicates"><a class="header" href="#predicates">Predicates</a></h2>
+<h3 id="understanding-spatial-joins"><a class="header" href="#understanding-spatial-joins">Understanding spatial joins</a></h3>
+<p>From Boundlessgeo put very nicely: <a href="%22http://workshops.boundlessgeo.com/postgis-intro/spatial_relationships.html%22">11. Spatial Relationships</a></p>
+<p>From ESRI: <a href="%22http://resources.esri.com/help/9.3/arcgisengine/arcobjects/esriGeometry/IRelationalOperator.htm%22">IRelationalOperator Interface</a> where logic is based on the geom elements:</p>
+<img src="http://resources.esri.com/help/9.3/arcgisengine/arcobjects/esriGeometry/bitmaps/GeomRelOps.gif" width=333>
+<h4 id="in-magellan"><a class="header" href="#in-magellan">In Magellan</a></h4>
+<p><strong>Intersects</strong></p>
+<p>Intersects returns t (TRUE) if the intersection does not result in an empty set. Intersects returns the exact opposite result of disjoint.</p>
+<p><strong>Within</strong></p>
+<p>Within returns t (TRUE) if the first geometry is completely within the second geometry. Within tests for the exact opposite result of contains.</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref06.gif" width=333>
+<p><strong>Contains</strong></p>
+<p>Contains returns t (TRUE) if the second geometry is completely contained by the first geometry. The contains predicate returns the exact opposite result of the within predicate.</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref07.gif" width=333>
+<h4 id="not-in-magellan-from-esri"><a class="header" href="#not-in-magellan-from-esri">Not in Magellan, from ESRI</a></h4>
+<p>Equal</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref01.gif" width=333>
+<p>Disjoint</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref02.gif" width=333>
+<p>Touch</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref03.gif" width=333>
+<p>Overlap</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref04.gif" width=333>
+<p>Cross</p>
+<img src="http://edndoc.esri.com/arcsde/9.0/general_topics/graphics/sptlref05.gif" width=333>
+<p>Source: ESRI <a href="%22http://edndoc.esri.com/arcsde/9.0/general_topics/understand_spatial_relations.htm%22">Understanding spatial relations</a></p>
+</div>
+<div class="cell markdown">
+<h4 id="within"><a class="header" href="#within">Within</a></h4>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_025.png" width=666>
+<p>Equivalent PostgreSQL query:</p>
+<pre><code>SELECT * 
+FROM points3006try AS a 
+  INNER JOIN myPolygon2 AS b
+    ON st_within(a.geom, b.geom)
+</code></pre>
+<h4 id="contains"><a class="header" href="#contains">Contains</a></h4>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_026.png" width=666>
+<p>Equivalent PostgreSQL query:</p>
+<pre><code>SELECT * 
+FROM largerVoronoi AS a 
+  INNER JOIN extractedRedPoints AS b
+    ON st_contains(b.geom, a.geom)
+</code></pre>
+<h4 id="intersects"><a class="header" href="#intersects">Intersects</a></h4>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_027.png" width=666>
+<p>Equivalent PostgreSQL query:</p>
+<pre><code>SELECT * 
+FROM largerVoronoi AS a 
+  INNER JOIN myPolygon2 AS b
+    ON st_intersects(a.geom, b.geom)
+</code></pre>
+<p>Even though this says <code>INNER JOIN</code> basically a Cartesian join is performed first and then the undesired results are filtered out.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://magellan.ghost.io/how-does-magellan-scale-geospatial-queries&quot;, 550))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://magellan.ghost.io/how-does-magellan-scale-geospatial-queries"
+ width="95%" height="550"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="besides-the-predicates"><a class="header" href="#besides-the-predicates">Besides the predicates</a></h2>
+<p>GIS traditionally include two types of spatial joins, e.g.: * <code>IRelationalOperator Interface</code>: where the result is boolean (e.g. yes intersects, or doesn't) and thus joined data (e.g. attributes of the polygon within which the points are) * <code>ITopologicalOperator Interface</code>: where the result is geometry (e.g. the intersection)</p>
+<p>Joins of the second type include intersection, difference, union, etc. geometry ( more <a href="%22http://resources.esri.com/help/9.3/arcgisengine/arcobjects/esriGeometry/ITopologicalOperator.htm%22">here</a> ).</p>
+</div>
+<div class="cell markdown">
+<h3 id="overlay-operations"><a class="header" href="#overlay-operations">Overlay operations</a></h3>
+<p>Intersect</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_028.png" width=666>
+<p>Clip</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_029.png" width=666>
+<p>I'll show you some more live</p>
+</div>
+<div class="cell markdown">
+<h1 id="ingesting-data"><a class="header" href="#ingesting-data">Ingesting data</a></h1>
+</div>
+<div class="cell markdown">
+<h3 id="open-streets-maps-osm"><a class="header" href="#open-streets-maps-osm">Open Streets Maps (OSM)</a></h3>
+<p><strong>For now we download as a shapefile and play with it in QGIS</strong></p>
+<p>Go to http://extract.bbbike.org/ zoom and select the desired area and extract</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_032.png" width=666>
+<p>You should get an email from bbbike with the data:</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/Got_Data_BBBike.png" width=666>
+<p>Download and unzip in your local folder</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://wiki.openstreetmap.org/wiki/Map_Features&quot;, 550))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://wiki.openstreetmap.org/wiki/Map_Features"
+ width="95%" height="550"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<p>Open the building layer in QGIS</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_033.png" width=666>
+<p>Change the projection to 3006. Let us explore the OSM data</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_034.png" width=333>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_035.png" width=666>
+<p>OSM contains more data than what we got from bbbike. We can display OSM raster tiles (if the connection works, you should be able to do this locally)</p>
+<p><img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_036.png" width=666> <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_037.png" width=666></p>
+<p>To work with OSM properly in QGIS you need plugins. I can try to show you pending success in installing plugins. Try on your own:</p>
+<p><img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_038.png" width=222> <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_039.png" width=666></p>
+</div>
+<div class="cell markdown">
+<p>Some advanced operations: distance matrix, nearest neighbour, points-in-polygon, mean coordinates, ...</p>
+<p>Count points in polygon <img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_040.png" width=666></p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_041.png" width=666>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_042.png" width=666>
+</div>
+<div class="cell markdown">
+<h3 id="appendix"><a class="header" href="#appendix">Appendix</a></h3>
+</div>
+<div class="cell markdown">
+<p><strong>To download .osm format in Magellan do this later</strong></p>
+<p>1.We define an area of interest and find coordinates of its boundary, AKA &quot;bounding box&quot;. To do this go to https://www.openstreetmap.org and zoom roughly into the desired area.</p>
+<p>2.To ingest data from OSM we use <code>wget</code>, in the following format:</p>
+<p><code>wget -O MyFileName.osm &quot;https://api.openstreetmap.org/api/0.6/map?bbox=l,b,r,t&quot;</code></p>
+<ul>
+<li>
+<p><code>MyFileName.osm</code> - give some informative file name</p>
+</li>
+<li>
+<p>l = longitude of the LEFT boundary of the bounding box</p>
+</li>
+<li>
+<p>b = lattitude of the BOTTOM boundary of the bounding box</p>
+</li>
+<li>
+<p>r = longitude of the RIGHT boundary of the bounding box</p>
+</li>
+<li>
+<p>t = lattitude of the TOP boundary of the bounding box</p>
+</li>
+</ul>
+<p>For instance if you know the bounding box, do:</p>
+<ul>
+<li>
+<p><code>TinyUppsalaCentrumWgot.osm</code> - Tiny area in Uppsala Centrum</p>
+</li>
+<li>
+<p>l = <code>17.63514</code></p>
+</li>
+<li>
+<p>b = <code>59.85739</code></p>
+</li>
+<li>
+<p>r = <code>17.64154</code></p>
+</li>
+<li>
+<p>t = <code>59.86011</code></p>
+</li>
+</ul>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_030.png" width=666>
+<pre><code>wget -O TinyUppsalaCentrumWgot.osm &quot;https://api.openstreetmap.org/api/0.6/map?bbox=17.63514,59.85739,17.64154,59.86011&quot;
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="check-out-the-nyc-taxi-dataset-in-magellan"><a class="header" href="#check-out-the-nyc-taxi-dataset-in-magellan">Check out the NYC Taxi Dataset in Magellan</a></h4>
+<ul>
+<li><a href="https://magellan.ghost.io/magellan-geospatial-processing-made-easy/">https://magellan.ghost.io/magellan-geospatial-processing-made-easy/</a></li>
+</ul>
+<p>This is a much larger dataset and we may need access to a larger cluster - unless we just analyse a smaller subset of the data (perhaps just a month of Taxi rides in NYC). We can understand the same concepts using a much smaller dataset of Uber rides in San Francisco. We will analyse this next.</p>
+<p>The taxi data can be downloaded from <a href="http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml">here</a></p>
+<p>Let's have a look at NY neigbourhoods dataset (right-click save or wget/curl): https://github.com/harsha2010/magellan/raw/master/examples/datasets/NYC-NEIGHBORHOODS/neighborhoods.geojson</p>
+<p>Open it in QGIS and open attribute table</p>
+<img src="https://github.com/lizardie/scalable-data-science/raw/master/db/360-in-525/03/QGIS_tut_031.png" width=666>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

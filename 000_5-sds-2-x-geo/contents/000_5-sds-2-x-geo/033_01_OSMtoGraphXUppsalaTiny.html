@@ -1,0 +1,1888 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>033_01_OSMtoGraphXUppsalaTiny - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html" class="active">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="creating-a-road-graph-from-openstreetmap-osm-data-with-graphx"><a class="header" href="#creating-a-road-graph-from-openstreetmap-osm-data-with-graphx">Creating a road graph from OpenStreetMap (OSM) data with GraphX</a></h2>
+<p>Stavroula Rafailia Vlachou (<a href="https://www.linkedin.com/in/stavroula-rafailia-vlachou/">LinkedIn</a>), Virginia Jimenez Mohedano (<a href="https://www.linkedin.com/in/virginiajimenezmohedano/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>).</p>
+<pre><code>This project was supported by SENSMETRY through a Data Science Project Internship 
+between 2022-01-17 and 2022-06-05 to Stavroula R. Vlachou and Virginia J. Mohedano 
+and Databricks University Alliance with infrastructure credits from AWS to 
+Raazesh Sainudiin, Department of Mathematics, Uppsala University, Sweden.
+</code></pre>
+<p>2022, Uppsala, Sweden</p>
+<p>This project builds on top of the work of Dillon George (2016-2018).</p>
+<pre><code>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">ls /datasets/osm/uppsala
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.node.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.node.parquet.crc</td>
+<td>172.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.relation.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.relation.parquet.crc</td>
+<td>84.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/.uppsalaTinyR.pbf.way.parquet.crc</td>
+<td>.uppsalaTinyR.pbf.way.parquet.crc</td>
+<td>84.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf</td>
+<td>uppsalaTinyR.pbf</td>
+<td>17867.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.node.parquet</td>
+<td>uppsalaTinyR.pbf.node.parquet</td>
+<td>20829.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.relation.parquet</td>
+<td>uppsalaTinyR.pbf.relation.parquet</td>
+<td>9394.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf.way.parquet</td>
+<td>uppsalaTinyR.pbf.way.parquet</td>
+<td>9542.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/osm/uppsala/uppsalaTinyV.osm.pbf</td>
+<td>uppsalaTinyV.osm.pbf</td>
+<td>30606.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import crosby.binary.osmosis.OsmosisReader
+
+import org.apache.hadoop.mapreduce.{TaskAttemptContext, JobContext}
+import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.Path
+
+import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer
+import org.openstreetmap.osmosis.core.domain.v0_6._
+import org.openstreetmap.osmosis.core.task.v0_6.Sink
+
+import sqlContext.implicits._
+
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Map
+import scala.collection.JavaConversions._
+import org.apache.spark.graphx._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import crosby.binary.osmosis.OsmosisReader
+import org.apache.hadoop.mapreduce.{TaskAttemptContext, JobContext}
+import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.Path
+import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer
+import org.openstreetmap.osmosis.core.domain.v0_6._
+import org.openstreetmap.osmosis.core.task.v0_6.Sink
+import sqlContext.implicits._
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Map
+import scala.collection.JavaConversions._
+import org.apache.spark.graphx._
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val allowableWays = Set(
+  &quot;motorway&quot;,
+  &quot;motorway_link&quot;,
+  &quot;trunk&quot;,
+  &quot;trunk_link&quot;,
+  &quot;primary&quot;,
+  &quot;primary_link&quot;,
+  &quot;secondary&quot;,
+  &quot;secondary_link&quot;,
+  &quot;tertiary&quot;,
+  &quot;tertiary_link&quot;,
+  &quot;living_street&quot;,
+  &quot;residential&quot;,
+  &quot;road&quot;,
+  &quot;construction&quot;,
+  &quot;motorway_junction&quot;
+)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>allowableWays: scala.collection.immutable.Set[String] = Set(construction, primary_link, secondary_link, secondary, residential, trunk_link, tertiary_link, motorway_link, motorway, tertiary, road, trunk, living_street, primary, motorway_junction)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val fs = FileSystem.get(new Configuration())
+val path = new Path(&quot;dbfs:/datasets/osm/uppsala/uppsalaTinyR.pbf&quot;)
+val file = fs.open(path)
+
+var nodes: ArrayBuffer[Node] = ArrayBuffer()
+var ways: ArrayBuffer[Way] = ArrayBuffer()
+var relations: ArrayBuffer[Relation] = ArrayBuffer()
+
+val osmosisReader = new OsmosisReader(file)
+  osmosisReader.setSink(new Sink {
+    override def process(entityContainer: EntityContainer): Unit = {
+      
+      if (entityContainer.getEntity.getType != EntityType.Bound) {
+        val entity = entityContainer.getEntity
+        entity match {
+          case node: Node =&gt; nodes += node
+          case way: Way =&gt; {
+            val tagSet = way.getTags.map(_.getValue).toSet
+            if ( !(tagSet &amp; allowableWays).isEmpty ) {
+              // way has at least one tag of interest
+              ways += way
+            }
+          }
+          case relation: Relation =&gt; relations += relation
+        }
+      }
+    }
+
+    override def initialize(map: java.util.Map[String, AnyRef]): Unit = {
+      nodes = ArrayBuffer()
+      ways = ArrayBuffer()
+      relations = ArrayBuffer()
+    }
+
+    override def complete(): Unit = {}
+
+    override def release(): Unit = {} // this is 4.6 method
+    
+    def close(): Unit = {}
+  })
+
+osmosisReader.run() 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class WayEntry(wayId: Long, tags: Array[String], nodes: Array[Long])
+case class NodeEntry(nodeId: Long, latitude: Double, longitude: Double, tags: Array[String])
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class WayEntry
+defined class NodeEntry
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert the nodes array to Dataset
+val nodeDS = nodes.map{node =&gt; 
+  NodeEntry(node.getId, 
+       node.getLatitude, 
+       node.getLongitude, 
+       node.getTags.map(_.getValue).toArray
+)}.toDS
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>nodeDS: org.apache.spark.sql.Dataset[NodeEntry] = [nodeId: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">nodeDS.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Long = 627
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">nodeDS.show(5, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------+------------------+------------------+----+
+|nodeId  |latitude          |longitude         |tags|
++--------+------------------+------------------+----+
+|312339  |59.856328500000004|17.6430124        |[]  |
+|312352  |59.85636590000001 |17.6478229        |[]  |
+|312353  |59.857437700000006|17.645897700000003|[]  |
+|312363  |59.857601900000006|17.6432529        |[]  |
+|25724030|59.857001200000006|17.6418004        |[]  |
++--------+------------------+------------------+----+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert the ways array to Dataset
+val wayDS = ways.map(way =&gt; 
+  WayEntry(way.getId,
+      way.getTags.map(_.getValue).toArray,
+      way.getWayNodes.map(_.getNodeId).toArray)
+).toDS.cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wayDS: org.apache.spark.sql.Dataset[WayEntry] = [wayId: bigint, tags: array&lt;string&gt; ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayDS.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res5: Long = 9
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayDS.show(9, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+--------------------------------------------------------------------------+----------------------------------------------+
+|wayId    |tags                                                                      |nodes                                         |
++---------+--------------------------------------------------------------------------+----------------------------------------------+
+|4281074  |[living_street, Bredgränd, paving_stones]                                 |[25812013]                                    |
+|73834008 |[4, secondary, 4, 40, Kungsgatan, asphalt]                                |[25734373, 312352, 3431600977]                |
+|263934971|[living_street, 7, Dragarbrunnsgatan, paving_stones, sv:Dragarbrunnsgatan]|[3067700668, 312363]                          |
+|263934973|[living_street, 7, Dragarbrunnsgatan, paving_stones, sv:Dragarbrunnsgatan]|[312363, 3067700665, 25735257, 3067700641]    |
+|299906437|[4, secondary, 3, 2, 1, 40, Kungsgatan, asphalt]                          |[312353, 801437007, 2187779764, 25734373]     |
+|302521477|[residential, Dragarbrunnsgatan, asphalt, sv:Dragarbrunnsgatan]           |[3067700641, 2206536285, 25734470, 2206536278]|
+|302521479|[4, secondary, 3, 2, 1, 40, Kungsgatan, asphalt]                          |[455006648]                                   |
+|393182257|[living_street, yes, Vretgränd, no, asphalt]                              |[3963994985, 25735257]                        |
+|733389337|[4, secondary, 3, 2, 1, 40, Kungsgatan, asphalt]                          |[455006648, 1523899738, 312353]               |
++---------+--------------------------------------------------------------------------+----------------------------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions.explode
+
+val nodeCounts = wayDS
+                    .select(explode('nodes).as(&quot;node&quot;))
+                    .groupBy('node).count
+
+nodeCounts.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+-----+
+|      node|count|
++----------+-----+
+|    312363|    2|
+| 455006648|    2|
+|  25812013|    1|
+|3067700668|    1|
+|  25735257|    2|
++----------+-----+
+only showing top 5 rows
+
+import org.apache.spark.sql.functions.explode
+nodeCounts: org.apache.spark.sql.DataFrame = [node: bigint, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersectionNodes = nodeCounts.filter('count &gt;= 2).select('node.alias(&quot;intersectionNode&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersectionNodes: org.apache.spark.sql.DataFrame = [intersectionNode: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersectionNodes.count() //there are 6 intersections in this area 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res10: Long = 6
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val true_intersections = intersectionNodes
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>true_intersections: org.apache.spark.sql.DataFrame = [intersectionNode: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">true_intersections.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res12: Long = 6
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersectionNodes.show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------------+
+|intersectionNode|
++----------------+
+|          312363|
+|       455006648|
+|        25735257|
+|        25734373|
+|          312353|
+|      3067700641|
++----------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val distinctNodesWays = wayDS.flatMap(_.nodes).distinct //the distinct nodes within the ways 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>distinctNodesWays: org.apache.spark.sql.Dataset[Long] = [value: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">distinctNodesWays.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- value: long (nullable = false)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">distinctNodesWays.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res16: Long = 18
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">distinctNodesWays.show(5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+
+|     value|
++----------+
+|    312363|
+| 455006648|
+|  25812013|
+|3067700668|
+|  25735257|
++----------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wayNodes = nodeDS.as(&quot;nodes&quot;) //nodes that are in a way + nodes info from nodeDS
+  .joinWith(distinctNodesWays.as(&quot;ways&quot;), $&quot;ways.value&quot; === $&quot;nodes.nodeId&quot;)
+  .map(_._1).cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wayNodes: org.apache.spark.sql.Dataset[NodeEntry] = [nodeId: bigint, latitude: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayNodes.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- nodeId: long (nullable = false)
+ |-- latitude: double (nullable = false)
+ |-- longitude: double (nullable = false)
+ |-- tags: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayNodes.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res20: Long = 18
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayNodes.show(5, false) //the nodes and their coordinates that participate in the ways 25734373, 312352
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------+------------------+------------------+----+
+|nodeId  |latitude          |longitude         |tags|
++--------+------------------+------------------+----+
+|312352  |59.85636590000001 |17.6478229        |[]  |
+|312353  |59.857437700000006|17.645897700000003|[]  |
+|312363  |59.857601900000006|17.6432529        |[]  |
+|25734373|59.8567674        |17.6471041        |[]  |
+|25734470|59.8562881        |17.6456634        |[]  |
++--------+------------------+------------------+----+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wayDS.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- wayId: long (nullable = false)
+ |-- tags: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- nodes: array (nullable = true)
+ |    |-- element: long (containsNull = false)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val intersectionSetVal = intersectionNodes.as[Long].collect.toSet; //turn intersectionNodes to Set 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersectionSetVal: scala.collection.immutable.Set[Long] = Set(3067700641, 312363, 455006648, 312353, 25735257, 25734373)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//new 
+import org.apache.spark.sql.functions.{collect_list, map, udf}
+import org.apache.spark.sql.functions._
+
+// You could try using `getItem` methods
+// I assume that each &quot;nodes&quot; sequence contains at least one node
+// We do not really need first and last elements from the sequence and when combining with original nodes, just we assign them &quot;true&quot;
+
+val remove_first_and_last = udf((x: Seq[Long]) =&gt; x.drop(1).dropRight(1))
+
+val nodes = wayDS.
+  select($&quot;wayId&quot;, $&quot;nodes&quot;).
+  withColumn(&quot;node&quot;, explode($&quot;nodes&quot;)).
+  drop(&quot;nodes&quot;)
+
+val get_first_and_last = udf((x: Seq[Long]) =&gt; {val first = x(0); val last = x.reverse(0); Array(first, last)})
+
+val first_and_last_nodes = wayDS.
+  select($&quot;wayId&quot;, get_first_and_last($&quot;nodes&quot;).as(&quot;nodes&quot;)).
+  withColumn(&quot;node&quot;, explode($&quot;nodes&quot;)).
+  drop(&quot;nodes&quot;)
+
+val fake_intersections = first_and_last_nodes.select($&quot;node&quot;).distinct().withColumnRenamed(&quot;node&quot;, &quot;value&quot;)
+
+// // Turn intersection set into a dataset to join (all values must be unique)
+// //val intersections = intersectionSetVal.toSeq.toDF(&quot;value&quot;)
+val intersections = intersectionNodes.union(fake_intersections).distinct      //virginia
+ 
+val wayNodesLocated = nodes.join(wayNodes, wayNodes.col(&quot;nodeId&quot;) === nodes.col(&quot;node&quot;)).select($&quot;wayId&quot;, $&quot;node&quot;, $&quot;latitude&quot;, $&quot;longitude&quot;)
+
+
+// case class MappedWay(wayId: Long, labels: Seq[Map[Long, Boolean]])
+case class MappedWay(wayId: Long, labels_located: Seq[Map[Long, (Boolean, Double, Double)]])
+
+
+val maps = wayNodesLocated.join(intersections, 'node === 'intersectionNode, &quot;left_outer&quot;).
+  //left outer joins returns all rows from the left DataFrame/Dataset regardless of match found on the right dataset
+    select($&quot;wayId&quot;, $&quot;node&quot;, $&quot;intersectionNode&quot;.isNotNull.as(&quot;contains&quot;), $&quot;latitude&quot;, $&quot;longitude&quot;).
+   groupBy(&quot;wayId&quot;).agg(collect_list(map($&quot;node&quot;, struct($&quot;contains&quot;.as(&quot;_1&quot;), $&quot;latitude&quot;.as(&quot;_2&quot;), $&quot;longitude&quot;.as(&quot;_3&quot;)))).as(&quot;labels_located&quot;)).as[MappedWay] 
+ 
+
+val combine = udf((nodes: Seq[Long], labels_located: Seq[scala.collection.immutable.Map[Long, (Boolean, Double, Double)]]) =&gt; {
+  // If labels does not have &quot;node&quot;, then it is either start/end - we assign label = true, latitude = 0, longitude = 0 for it, TO DO: revise it later, not sure
+  val m = labels_located.map(_.toSeq).flatten.toMap
+
+  nodes.map { node =&gt; (node, m.getOrElse(node, (true, 0D, 0D))) } //add structure
+
+})
+
+
+val strSchema = &quot;array&lt;struct&lt;nodeId:long, nodeInfo:struct&lt;label:boolean, latitude:double, longitude: double&gt;&gt;&gt;&quot;
+val labeledWays = wayDS.join(maps, &quot;wayId&quot;)
+                     .select($&quot;wayId&quot;, $&quot;tags&quot;, combine($&quot;nodes&quot;, $&quot;labels_located&quot;).as(&quot;labeledNodes&quot;).cast(strSchema))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.functions.{collect_list, map, udf}
+import org.apache.spark.sql.functions._
+remove_first_and_last: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,ArrayType(LongType,false),Some(List(ArrayType(LongType,false))))
+nodes: org.apache.spark.sql.DataFrame = [wayId: bigint, node: bigint]
+get_first_and_last: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function1&gt;,ArrayType(LongType,false),Some(List(ArrayType(LongType,false))))
+first_and_last_nodes: org.apache.spark.sql.DataFrame = [wayId: bigint, node: bigint]
+fake_intersections: org.apache.spark.sql.DataFrame = [value: bigint]
+intersections: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [intersectionNode: bigint]
+wayNodesLocated: org.apache.spark.sql.DataFrame = [wayId: bigint, node: bigint ... 2 more fields]
+defined class MappedWay
+maps: org.apache.spark.sql.Dataset[MappedWay] = [wayId: bigint, labels_located: array&lt;map&lt;bigint,struct&lt;_1:boolean,_2:double,_3:double&gt;&gt;&gt;]
+combine: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(&lt;function2&gt;,ArrayType(StructType(StructField(_1,LongType,false), StructField(_2,StructType(StructField(_1,BooleanType,false), StructField(_2,DoubleType,false), StructField(_3,DoubleType,false)),true)),true),Some(List(ArrayType(LongType,false), ArrayType(MapType(LongType,StructType(StructField(_1,BooleanType,false), StructField(_2,DoubleType,false), StructField(_3,DoubleType,false)),true),true))))
+strSchema: String = array&lt;struct&lt;nodeId:long, nodeInfo:struct&lt;label:boolean, latitude:double, longitude: double&gt;&gt;&gt;
+labeledWays: org.apache.spark.sql.DataFrame = [wayId: bigint, tags: array&lt;string&gt; ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">labeledWays.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- wayId: long (nullable = false)
+ |-- tags: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- labeledNodes: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- nodeId: long (nullable = true)
+ |    |    |-- nodeInfo: struct (nullable = true)
+ |    |    |    |-- label: boolean (nullable = true)
+ |    |    |    |-- latitude: double (nullable = true)
+ |    |    |    |-- longitude: double (nullable = true)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">labeledWays.select(&quot;wayId&quot;, &quot;labeledNodes&quot;).show(9, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|wayId    |labeledNodes                                                                                                                                                                                                   |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|393182257|[[3963994985, [true, 59.857381800000006, 17.645299100000003]], [25735257, [true, 59.8569759, 17.644382]]]                                                                                                      |
+|733389337|[[455006648, [true, 59.857930700000004, 17.6450031]], [1523899738, [false, 59.8575528, 17.645685500000003]], [312353, [true, 59.857437700000006, 17.645897700000003]]]                                         |
+|299906437|[[312353, [true, 59.857437700000006, 17.645897700000003]], [801437007, [false, 59.8571596, 17.6463952]], [2187779764, [false, 59.856883200000006, 17.6468947]], [25734373, [true, 59.8567674, 17.6471041]]]    |
+|263934973|[[312363, [true, 59.857601900000006, 17.6432529]], [3067700665, [false, 59.8575443, 17.6433633]], [25735257, [true, 59.8569759, 17.644382]], [3067700641, [true, 59.856720800000005, 17.6448606]]]             |
+|73834008 |[[25734373, [true, 59.8567674, 17.6471041]], [312352, [false, 59.85636590000001, 17.6478229]], [3431600977, [true, 59.85631480000001, 17.6479153]]]                                                            |
+|302521479|[[455006648, [true, 59.857930700000004, 17.6450031]]]                                                                                                                                                          |
+|302521477|[[3067700641, [true, 59.856720800000005, 17.6448606]], [2206536285, [false, 59.8563708, 17.645517400000003]], [25734470, [false, 59.8562881, 17.6456634]], [2206536278, [true, 59.85618040000001, 17.6458707]]]|
+|263934971|[[3067700668, [true, 59.857640200000006, 17.6431843]], [312363, [true, 59.857601900000006, 17.6432529]]]                                                                                                       |
+|4281074  |[[25812013, [true, 59.8578769, 17.641676]]]                                                                                                                                                                    |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class Intersection(OSMId: Long , latitude: Double, longitude: Double, inBuf: ArrayBuffer[(Long, Double, Double)], outBuf: ArrayBuffer[(Long, Double, Double)])
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class Intersection
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val segmentedWays = labeledWays.map(way =&gt; {
+  
+  val labeledNodes = way.getAs[Seq[Row]](&quot;labeledNodes&quot;).map{case Row(k: Long, Row(v: Boolean, w:Double, x:Double)) =&gt; (k, v,w,x)}.toSeq //labeledNodes: (nodeid, label, lat, long)
+  val wayId = way.getAs[Long](&quot;wayId&quot;)
+  
+  val indexedNodes: Seq[((Long, Boolean, Double, Double), Int)] = labeledNodes.zipWithIndex //appends an integer as an index to every labeledNodes in a way
+  
+  val intersections = ArrayBuffer[Intersection]()  
+  
+  val currentBuffer = ArrayBuffer[(Long, Double, Double)]()
+  
+  val way_length = labeledNodes.length //number of nodes in a way
+  
+  if (way_length == 1) {
+
+    val intersect = new Intersection(labeledNodes(0)._1, labeledNodes(0)._3, labeledNodes(0)._4, ArrayBuffer((-1L, 0D, 0D)), ArrayBuffer((-1L, 0D, 0D))) //include lat and long info
+
+    var result = Array((intersect.OSMId, intersect.latitude, intersect.longitude, intersect.inBuf.toArray, intersect.outBuf.toArray))
+    (wayId, result) //return
+  }
+  else {
+    indexedNodes.foreach{ case ((id, isIntersection, latitude, longitude), i) =&gt; // id is nodeId and isIntersection is the node label
+      if (isIntersection) {
+        val newEntry = new Intersection(id, latitude, longitude, currentBuffer.clone, ArrayBuffer[(Long, Double, Double)]())
+        intersections += newEntry
+        currentBuffer.clear
+      }
+      else {
+        currentBuffer ++= Array((id, latitude, longitude))  //if the node is not an intersection append the nodeId to the current buffer 
+      }
+      
+      // Reaches the end of the way while the outBuffer is not empty
+      // Append the currentBuffer to the last intersection
+      if (i == way_length - 1 &amp;&amp; !currentBuffer.isEmpty) {  
+        if (intersections.isEmpty){
+        //intersections += new Intersection(-1L, 0D, 0D, ArrayBuffer[(Long, Double, Double)](), currentBuffer) //not sure about this but I'll keep it by now
+        intersections += new Intersection(-1, 0D, 0D, currentBuffer, ArrayBuffer[(Long, Double, Double)]()) 
+        }
+        else {
+          intersections.last.outBuf ++= currentBuffer
+        }
+        currentBuffer.clear
+      }
+    }
+    var result = intersections.map(i =&gt; (i.OSMId, i.latitude, i.longitude, i.inBuf.toArray, i.outBuf.toArray)).toArray  
+    (wayId, result) 
+  }
+})
+
+//segmentedWays contains two columns:
+  //_1: wayId
+  //_2: Array[(nodeId, latitude, longitude, inBuff, outBuff)] for each intersection node in the way
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>segmentedWays: org.apache.spark.sql.Dataset[(Long, Array[(Long, Double, Double, Array[(Long, Double, Double)], Array[(Long, Double, Double)])])] = [_1: bigint, _2: array&lt;struct&lt;_1:bigint,_2:double,_3:double,_4:array&lt;struct&lt;_1:bigint,_2:double,_3:double&gt;&gt;,_5:array&lt;struct&lt;_1:bigint,_2:double,_3:double&gt;&gt;&gt;&gt;]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val schema = &quot;array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double,inBuff:array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double&gt;&gt;,outBuff:array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double&gt;&gt;&gt;&gt;&quot;
+segmentedWays.select($&quot;_1&quot;.alias(&quot;wayId&quot;), $&quot;_2&quot;.cast(schema).alias(&quot;nodeInfo&quot;)).printSchema()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- wayId: long (nullable = false)
+ |-- nodeInfo: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- nodeId: long (nullable = true)
+ |    |    |-- latitude: double (nullable = true)
+ |    |    |-- longitude: double (nullable = true)
+ |    |    |-- inBuff: array (nullable = true)
+ |    |    |    |-- element: struct (containsNull = true)
+ |    |    |    |    |-- nodeId: long (nullable = true)
+ |    |    |    |    |-- latitude: double (nullable = true)
+ |    |    |    |    |-- longitude: double (nullable = true)
+ |    |    |-- outBuff: array (nullable = true)
+ |    |    |    |-- element: struct (containsNull = true)
+ |    |    |    |    |-- nodeId: long (nullable = true)
+ |    |    |    |    |-- latitude: double (nullable = true)
+ |    |    |    |    |-- longitude: double (nullable = true)
+
+schema: String = array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double,inBuff:array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double&gt;&gt;,outBuff:array&lt;struct&lt;nodeId:bigint,latitude:double,longitude:double&gt;&gt;&gt;&gt;
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">segmentedWays.show(2, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+|_1       |_2                                                                                                                                                         |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+|393182257|[[3963994985, 59.857381800000006, 17.645299100000003, [], []], [25735257, 59.8569759, 17.644382, [], []]]                                                  |
+|733389337|[[455006648, 59.857930700000004, 17.6450031, [], []], [312353, 59.857437700000006, 17.645897700000003, [[1523899738, 59.8575528, 17.645685500000003]], []]]|
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+only showing top 2 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//The nested structure of the segmentedWays is unwrapped
+val waySegmentDS = segmentedWays
+.flatMap(way =&gt; way._2.map(node =&gt; (way._1, node))) 
+// for each (wayId, Array(IntersectionNode) =&gt; (wayId, IntersectionNode)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>waySegmentDS: org.apache.spark.sql.Dataset[(Long, (Long, Double, Double, Array[(Long, Double, Double)], Array[(Long, Double, Double)]))] = [_1: bigint, _2: struct&lt;_1: bigint, _2: double ... 3 more fields&gt;]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">waySegmentDS.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- _1: long (nullable = false)
+ |-- _2: struct (nullable = true)
+ |    |-- _1: long (nullable = false)
+ |    |-- _2: double (nullable = false)
+ |    |-- _3: double (nullable = false)
+ |    |-- _4: array (nullable = true)
+ |    |    |-- element: struct (containsNull = true)
+ |    |    |    |-- _1: long (nullable = false)
+ |    |    |    |-- _2: double (nullable = false)
+ |    |    |    |-- _3: double (nullable = false)
+ |    |-- _5: array (nullable = true)
+ |    |    |-- element: struct (containsNull = true)
+ |    |    |    |-- _1: long (nullable = false)
+ |    |    |    |-- _2: double (nullable = false)
+ |    |    |    |-- _3: double (nullable = false)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">waySegmentDS.show(5, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+----------------------------------------------------------------------------------------------------+
+|_1       |_2                                                                                                  |
++---------+----------------------------------------------------------------------------------------------------+
+|393182257|[3963994985, 59.857381800000006, 17.645299100000003, [], []]                                        |
+|393182257|[25735257, 59.8569759, 17.644382, [], []]                                                           |
+|733389337|[455006648, 59.857930700000004, 17.6450031, [], []]                                                 |
+|733389337|[312353, 59.857437700000006, 17.645897700000003, [[1523899738, 59.8575528, 17.645685500000003]], []]|
+|299906437|[312353, 59.857437700000006, 17.645897700000003, [], []]                                            |
++---------+----------------------------------------------------------------------------------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.collection.immutable.Map
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import scala.collection.immutable.Map
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//returns the intersection nodes with the ways where they appear mapped with the nodes in those ways (inBuff, outBuff) 
+val intersectionVertices = waySegmentDS
+  .map(way =&gt; 
+   //nodeId     latitude   longitude      wayId      inBuff      outBuff
+   (way._2._1, (way._2._2, way._2._3, Map(way._1 -&gt; (way._2._4, way._2._5))))) 
+  .rdd
+  //                     latitude, long, Map(wayId, inBuff, outBuff)
+  .reduceByKey((a,b) =&gt; (a._1,     a._2, a._3 ++ b._3)) 
+
+//intersectionVertices =  RDD[(nodeId, (latitude, longitude, wayMap(wayId -&gt; inBuff, outBuff)))]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>intersectionVertices: org.apache.spark.rdd.RDD[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = ShuffledRDD[259] at reduceByKey at command-588572986432353:8
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersectionVertices.map(vertex =&gt; (vertex._1, vertex._2._1, vertex._2._2)).toDF(&quot;vertexId&quot;, &quot;latitude&quot;, &quot;longitude&quot;).write.mode(&quot;overwrite&quot;).parquet(&quot;dbfs:/graphs/uppsala/vertices&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersectionVertices.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res32: Long = 11
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">intersectionVertices.take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res33: Array[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = Array((25812013,(59.8578769,17.641676,Map(4281074 -&gt; (Array((-1,0.0,0.0)),Array((-1,0.0,0.0)))))), (455006648,(59.857930700000004,17.6450031,Map(733389337 -&gt; (Array(),Array()), 302521479 -&gt; (Array((-1,0.0,0.0)),Array((-1,0.0,0.0)))))), (25735257,(59.8569759,17.644382,Map(393182257 -&gt; (Array(),Array()), 263934973 -&gt; (Array((3067700665,59.8575443,17.6433633)),Array())))), (3431600977,(59.85631480000001,17.6479153,Map(73834008 -&gt; (Array((312352,59.85636590000001,17.6478229)),Array())))), (3963994985,(59.857381800000006,17.645299100000003,Map(393182257 -&gt; (Array(),Array())))), (3067700641,(59.856720800000005,17.6448606,Map(263934973 -&gt; (Array(),Array()), 302521477 -&gt; (Array(),Array())))), (312353,(59.857437700000006,17.645897700000003,Map(733389337 -&gt; (Array((1523899738,59.8575528,17.645685500000003)),Array()), 299906437 -&gt; (Array(),Array())))), (312363,(59.857601900000006,17.6432529,Map(263934973 -&gt; (Array(),Array()), 263934971 -&gt; (Array(),Array())))), (3067700668,(59.857640200000006,17.6431843,Map(263934971 -&gt; (Array(),Array())))), (25734373,(59.8567674,17.6471041,Map(299906437 -&gt; (Array((801437007,59.8571596,17.6463952), (2187779764,59.856883200000006,17.6468947)),Array()), 73834008 -&gt; (Array(),Array())))))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val edges = segmentedWays
+  .filter(way =&gt; way._2.length &gt; 1) //ways with more than one intersections
+  .flatMap{ case (wayId, nodes_info) =&gt; {  
+             nodes_info.sliding(2) // For each way it takes nodes in pairs
+               .flatMap(segment =&gt; //segment is the pair of two nodes
+                   List(Edge(segment(0)._1, segment(1)._1, wayId))
+               )
+   }}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>edges: org.apache.spark.sql.Dataset[org.apache.spark.graphx.Edge[Long]] = [srcId: bigint, dstId: bigint ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">edges.map(edge =&gt; (edge.srcId, edge.dstId)).toDF(&quot;src&quot;,&quot;dst&quot;).write.mode(&quot;overwrite&quot;).parquet(&quot;dbfs:/graphs/uppsala/edges&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">edges.printSchema
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>root
+ |-- srcId: long (nullable = false)
+ |-- dstId: long (nullable = false)
+ |-- attr: long (nullable = false)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">edges.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res35: Long = 8
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val roadGraph = Graph(intersectionVertices, edges.rdd).cache
+
+//intersectionVertices =  RDD[(nodeId, (latitude, longitude, wayMap(wayId -&gt; inBuff, outBuff)))]
+//edges = srcId, dstId, attribute (attribute is the wayId)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>roadGraph: org.apache.spark.graphx.Graph[(Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]),Long] = org.apache.spark.graphx.impl.GraphImpl@4114626
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">roadGraph.edges.take(10).foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Edge(3963994985,25735257,393182257)
+Edge(455006648,312353,733389337)
+Edge(312353,25734373,299906437)
+Edge(312363,25735257,263934973)
+Edge(25735257,3067700641,263934973)
+Edge(25734373,3431600977,73834008)
+Edge(3067700641,2206536278,302521477)
+Edge(3067700668,312363,263934971)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">package d3
+// We use a package object so that we can define top level classes like Edge that need to be used in other cells
+// This was modified by Ivan Sadikov to make sure it is compatible the latest databricks notebook
+
+import org.apache.spark.sql._
+import com.databricks.backend.daemon.driver.EnhancedRDDFunctions.displayHTML
+
+case class Edge(src: String, dest: String, count: Long)
+
+case class Node(name: String)
+case class Link(source: Int, target: Int, value: Long)
+case class Graph(nodes: Seq[Node], links: Seq[Link])
+
+object graphs {
+// val sqlContext = SQLContext.getOrCreate(org.apache.spark.SparkContext.getOrCreate())  /// fix
+val sqlContext = SparkSession.builder().getOrCreate().sqlContext
+import sqlContext.implicits._
+  
+def force(clicks: Dataset[Edge], height: Int = 100, width: Int = 960): Unit = {
+  val data = clicks.collect()
+  val nodes = (data.map(_.src) ++ data.map(_.dest)).map(_.replaceAll(&quot;_&quot;, &quot; &quot;)).toSet.toSeq.map(Node)
+  val links = data.map { t =&gt;
+    Link(nodes.indexWhere(_.name == t.src.replaceAll(&quot;_&quot;, &quot; &quot;)), nodes.indexWhere(_.name == t.dest.replaceAll(&quot;_&quot;, &quot; &quot;)), t.count / 20 + 1)
+  }
+  showGraph(height, width, Seq(Graph(nodes, links)).toDF().toJSON.first())
+}
+
+/**
+ * Displays a force directed graph using d3
+ * input: {&quot;nodes&quot;: [{&quot;name&quot;: &quot;...&quot;}], &quot;links&quot;: [{&quot;source&quot;: 1, &quot;target&quot;: 2, &quot;value&quot;: 0}]}
+ */
+def showGraph(height: Int, width: Int, graph: String): Unit = {
+
+displayHTML(s&quot;&quot;&quot;
+&lt;style&gt;
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: &quot;Helvetica Neue&quot;,&quot;Helvetica&quot;,&quot;Arial&quot;,sans-serif;
+  font-size: 17px;
+  font-weight: 200;
+}
+
+&lt;/style&gt;
+
+&lt;div id=&quot;clicks-graph&quot;&gt;
+&lt;script src=&quot;//d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var graph = $graph;
+
+var width = $width,
+    height = $height;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-700)
+    .linkDistance(180)
+    .size([width, height]);
+
+var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+    
+force
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+var link = svg.selectAll(&quot;.link&quot;)
+    .data(graph.links)
+    .enter().append(&quot;line&quot;)
+    .attr(&quot;class&quot;, &quot;link&quot;)
+    .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value); });
+
+var node = svg.selectAll(&quot;.node&quot;)
+    .data(graph.nodes)
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .call(force.drag);
+
+node.append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, 10)
+    .style(&quot;fill&quot;, function (d) {
+    if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})
+
+node.append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, 10)
+      .attr(&quot;dy&quot;, &quot;.35em&quot;)
+      .text(function(d) { return d.name });
+      
+//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+    link.attr(&quot;x1&quot;, function (d) {
+        return d.source.x;
+    })
+        .attr(&quot;y1&quot;, function (d) {
+        return d.source.y;
+    })
+        .attr(&quot;x2&quot;, function (d) {
+        return d.target.x;
+    })
+        .attr(&quot;y2&quot;, function (d) {
+        return d.target.y;
+    });
+    d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;cy&quot;, function (d) {
+        return d.y;
+    });
+    d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;y&quot;, function (d) {
+        return d.y;
+    });
+});
+&lt;/script&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;)
+}
+  
+  def help() = {
+displayHTML(&quot;&quot;&quot;
+&lt;p&gt;
+Produces a force-directed graph given a collection of edges of the following form:&lt;/br&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;case class&lt;/font&gt; &lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;(&lt;font color=&quot;#ed6a43&quot;&gt;src&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;dest&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;String&lt;/font&gt;, &lt;font color=&quot;#ed6a43&quot;&gt;count&lt;/font&gt;: &lt;font color=&quot;#a71d5d&quot;&gt;Long&lt;/font&gt;)&lt;/tt&gt;
+&lt;/p&gt;
+&lt;p&gt;Usage:&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#a71d5d&quot;&gt;import&lt;/font&gt; &lt;font color=&quot;#ed6a43&quot;&gt;d3._&lt;/font&gt;&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;&lt;font color=&quot;#795da3&quot;&gt;graphs.force&lt;/font&gt;(&lt;/br&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;height&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;width&lt;/font&gt; = &lt;font color=&quot;#795da3&quot;&gt;500&lt;/font&gt;,&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#ed6a43&quot;&gt;clicks&lt;/font&gt;: &lt;font color=&quot;#795da3&quot;&gt;Dataset&lt;/font&gt;[&lt;font color=&quot;#795da3&quot;&gt;Edge&lt;/font&gt;])&lt;/tt&gt;
+&lt;/p&gt;&quot;&quot;&quot;)
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Warning: classes defined within packages cannot be redefined without a cluster restart.
+Compilation successful.
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">import d3._
+import org.apache.spark.sql.functions.lit
+val G0 = roadGraph.edges.toDF().select($&quot;srcId&quot;.as(&quot;src&quot;), $&quot;dstId&quot;.as(&quot;dest&quot;),  lit(1L).as(&quot;count&quot;))
+
+d3.graphs.force(
+  height = 800,
+  width = 800,
+  clicks = G0.as[d3.Edge])
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<style>
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-size: 17px;
+  font-weight: 200;
+}
+
+</style>
+<div id="clicks-graph">
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+<p>var graph = {&quot;nodes&quot;:[{&quot;name&quot;:&quot;3431600977&quot;},{&quot;name&quot;:&quot;3067700668&quot;},{&quot;name&quot;:&quot;25735257&quot;},{&quot;name&quot;:&quot;3963994985&quot;},{&quot;name&quot;:&quot;25734373&quot;},{&quot;name&quot;:&quot;2206536278&quot;},{&quot;name&quot;:&quot;312353&quot;},{&quot;name&quot;:&quot;455006648&quot;},{&quot;name&quot;:&quot;3067700641&quot;},{&quot;name&quot;:&quot;312363&quot;}],&quot;links&quot;:[{&quot;source&quot;:3,&quot;target&quot;:2,&quot;value&quot;:1},{&quot;source&quot;:7,&quot;target&quot;:6,&quot;value&quot;:1},{&quot;source&quot;:6,&quot;target&quot;:4,&quot;value&quot;:1},{&quot;source&quot;:9,&quot;target&quot;:2,&quot;value&quot;:1},{&quot;source&quot;:2,&quot;target&quot;:8,&quot;value&quot;:1},{&quot;source&quot;:4,&quot;target&quot;:0,&quot;value&quot;:1},{&quot;source&quot;:8,&quot;target&quot;:5,&quot;value&quot;:1},{&quot;source&quot;:1,&quot;target&quot;:9,&quot;value&quot;:1}]};</p>
+<p>var width = 800,
+height = 800;</p>
+<p>var color = d3.scale.category20();</p>
+<p>var force = d3.layout.force()
+.charge(-700)
+.linkDistance(180)
+.size([width, height]);</p>
+<p>var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+.attr(&quot;width&quot;, width)
+.attr(&quot;height&quot;, height);</p>
+<p>force
+.nodes(graph.nodes)
+.links(graph.links)
+.start();</p>
+<p>var link = svg.selectAll(&quot;.link&quot;)
+.data(graph.links)
+.enter().append(&quot;line&quot;)
+.attr(&quot;class&quot;, &quot;link&quot;)
+.style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value); });</p>
+<p>var node = svg.selectAll(&quot;.node&quot;)
+.data(graph.nodes)
+.enter().append(&quot;g&quot;)
+.attr(&quot;class&quot;, &quot;node&quot;)
+.call(force.drag);</p>
+<p>node.append(&quot;circle&quot;)
+.attr(&quot;r&quot;, 10)
+.style(&quot;fill&quot;, function (d) {
+if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})</p>
+<p>node.append(&quot;text&quot;)
+.attr(&quot;dx&quot;, 10)
+.attr(&quot;dy&quot;, &quot;.35em&quot;)
+.text(function(d) { return d.name });</p>
+<p>//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+link.attr(&quot;x1&quot;, function (d) {
+return d.source.x;
+})
+.attr(&quot;y1&quot;, function (d) {
+return d.source.y;
+})
+.attr(&quot;x2&quot;, function (d) {
+return d.target.x;
+})
+.attr(&quot;y2&quot;, function (d) {
+return d.target.y;
+});
+d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+return d.x;
+})
+.attr(&quot;cy&quot;, function (d) {
+return d.y;
+});
+d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+return d.x;
+})
+.attr(&quot;y&quot;, function (d) {
+return d.y;
+});
+});
+</script></p>
+</div>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import com.esri.core.geometry.GeometryEngine.geodesicDistanceOnWGS84
+import com.esri.core.geometry.Point
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import com.esri.core.geometry.GeometryEngine.geodesicDistanceOnWGS84
+import com.esri.core.geometry.Point
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val weightedRoadGraph = roadGraph.mapTriplets{triplet =&gt; //mapTriplets gives EdgeTriplet https://spark.apache.org/docs/2.3.1/api/java/org/apache/spark/graphx/EdgeTriplet.html
+  def dist(lat1: Double, long1: Double, lat2: Double, long2: Double): Double = {
+    val p1 = new Point(long1, lat1)
+    val p2 = new Point(long2, lat2)
+    geodesicDistanceOnWGS84(p1, p2)
+  }
+  
+  //A triplet represents an edge along with the vertex attributes of its neighboring vertices (srcAttr, dstAttr)
+  //triplet.attr is the same as edge.attr
+  val wayNodesInBuff = triplet.dstAttr._3(triplet.attr)._1 //dstAttr is the vertex attribute (latitude, longitude, wayMap(wayId -&gt; inBuff, outBuff))
+  // inBuff -&gt; array(nodeId, lat, long)
+  
+  if (wayNodesInBuff.isEmpty) {
+      (triplet.attr, dist(triplet.srcAttr._1, triplet.srcAttr._2, triplet.dstAttr._1, triplet.dstAttr._2))
+  
+  } else {
+      var distance: Double = 0.0
+
+      //adds the distance between the src node and the first node in the InBuff
+      distance += dist(triplet.srcAttr._1, triplet.srcAttr._2, wayNodesInBuff(0)._2, wayNodesInBuff(0)._3 )
+    
+     //more than one node in the inBuffer
+      if (wayNodesInBuff.length &gt; 1) {
+        //adds the distance between every pair of nodes inside the inBuffer 
+        distance += wayNodesInBuff.sliding(2).map{
+        buff =&gt; dist(buff(0)._2, buff(0)._3, buff(1)._2, buff(1)._3)}
+        .reduce(_ + _)
+     }
+    
+      //adds the distance between the dst node and the last node in the InBuff
+      distance += dist(wayNodesInBuff.last._2, wayNodesInBuff.last._3, triplet.dstAttr._1, triplet.dstAttr._2)
+
+      (triplet.attr, distance)
+    }
+  
+}.cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>weightedRoadGraph: org.apache.spark.graphx.Graph[(Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]),(Long, Double)] = org.apache.spark.graphx.impl.GraphImpl@9eb578f
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">weightedRoadGraph.edges.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res36: Long = 8
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">weightedRoadGraph.edges.take(8).foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Edge(3963994985,25735257,(393182257,68.4570414333903))
+Edge(455006648,312353,(733389337,74.36517408391025))
+Edge(312353,25734373,(299906437,100.7353398484194))
+Edge(312363,25735257,(263934973,94.17321564547117))
+Edge(25735257,3067700641,(263934973,39.0782384063323))
+Edge(25734373,3431600977,(73834008,67.891710670905))
+Edge(3067700641,2206536278,(302521477,82.6456450149808))
+Edge(3067700668,312363,(263934971,5.743347106374985))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">weightedRoadGraph.vertices.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res38: Long = 11
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">weightedRoadGraph.vertices.map(node =&gt; node._1).take(11)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res39: Array[org.apache.spark.graphx.VertexId] = Array(25812013, 455006648, 25735257, 3431600977, 3963994985, 3067700641, 312353, 312363, 3067700668, 25734373, 2206536278)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">weightedRoadGraph.vertices.take(11)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res40: Array[(org.apache.spark.graphx.VertexId, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = Array((25812013,(59.8578769,17.641676,Map(4281074 -&gt; (Array((-1,0.0,0.0)),Array((-1,0.0,0.0)))))), (455006648,(59.857930700000004,17.6450031,Map(733389337 -&gt; (Array(),Array()), 302521479 -&gt; (Array((-1,0.0,0.0)),Array((-1,0.0,0.0)))))), (25735257,(59.8569759,17.644382,Map(393182257 -&gt; (Array(),Array()), 263934973 -&gt; (Array((3067700665,59.8575443,17.6433633)),Array())))), (3431600977,(59.85631480000001,17.6479153,Map(73834008 -&gt; (Array((312352,59.85636590000001,17.6478229)),Array())))), (3963994985,(59.857381800000006,17.645299100000003,Map(393182257 -&gt; (Array(),Array())))), (3067700641,(59.856720800000005,17.6448606,Map(263934973 -&gt; (Array(),Array()), 302521477 -&gt; (Array(),Array())))), (312353,(59.857437700000006,17.645897700000003,Map(733389337 -&gt; (Array((1523899738,59.8575528,17.645685500000003)),Array()), 299906437 -&gt; (Array(),Array())))), (312363,(59.857601900000006,17.6432529,Map(263934973 -&gt; (Array(),Array()), 263934971 -&gt; (Array(),Array())))), (3067700668,(59.857640200000006,17.6431843,Map(263934971 -&gt; (Array(),Array())))), (25734373,(59.8567674,17.6471041,Map(299906437 -&gt; (Array((801437007,59.8571596,17.6463952), (2187779764,59.856883200000006,17.6468947)),Array()), 73834008 -&gt; (Array(),Array())))), (2206536278,(59.85618040000001,17.6458707,Map(302521477 -&gt; (Array((2206536285,59.8563708,17.645517400000003), (25734470,59.8562881,17.6456634)),Array())))))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.graphx.{Edge =&gt; Edges}
+val splittedEdges = weightedRoadGraph.triplets.flatMap{triplet =&gt; {
+  def dist(lat1: Double, long1: Double, lat2: Double, long2: Double): Double = {
+    val p1 = new Point(long1, lat1)
+    val p2 = new Point(long2, lat2)
+    geodesicDistanceOnWGS84(p1, p2)
+  }
+  val maxDist = 200
+  var finalResult = Array[(Edges[(Long,  Double)], (Long, (Double, Double, Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])])), (Long, (Double, Double, Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])])))]()
+  
+  if(triplet.attr._2 &gt; maxDist){                            
+    val wayId = triplet.attr._1
+    var wayNodesBuff = triplet.dstAttr._3(wayId)._1 
+    var wayNodesBuffSize = wayNodesBuff.length
+    
+    if(wayNodesBuffSize &gt; 0){
+      var previousSrc = triplet.srcId
+
+      var distance: Double = 0.0
+      var currentBuff = Array[(Long, Double, Double)]()
+      
+      distance += dist(triplet.srcAttr._1, triplet.srcAttr._2, wayNodesBuff(0)._2, wayNodesBuff(0)._3) 
+      
+      var newVertex = (triplet.srcId, triplet.srcAttr)
+      var previousVertex = newVertex
+      
+      if (distance &gt; maxDist){
+        newVertex = (wayNodesBuff(0)._1, (wayNodesBuff(0)._2, wayNodesBuff(0)._3, Map(wayId -&gt; (Array[(Long, Double, Double)](), Array[(Long, Double, Double)]()))))
+            
+        finalResult +:= (Edges(previousSrc, wayNodesBuff(0)._1, (wayId, distance)), previousVertex, newVertex) 
+        
+        previousVertex = newVertex
+        
+        distance = 0
+        previousSrc = wayNodesBuff(0)._1
+      }
+      else 
+      {
+        currentBuff +:= wayNodesBuff(0)
+      }
+         
+      //loop through pairs of nodes in the way (in the buffer)
+      if (wayNodesBuff.length &gt; 1){
+      wayNodesBuff.sliding(2).foreach{segment =&gt; {
+        
+        val tmp_dst = distance
+        distance += dist(segment(0)._2, segment(0)._3, segment(1)._2, segment(1)._3)
+        
+        if (distance &gt; maxDist)
+        {
+          if(segment(0)._1 != previousSrc){
+              //      Vertex(nodeId,      (lat,                long,     Map(wayId-&gt;inBuff, outBuff)))
+            newVertex = (segment(0)._1, (segment(0)._2, segment(0)._3, Map(wayId -&gt; (currentBuff, Array[(Long, Double, Double)]()))) )
+
+            //adds the edge to the array
+            finalResult +:= (Edges(previousSrc, segment(0)._1, (wayId, tmp_dst)), previousVertex, newVertex)
+
+            previousVertex = newVertex
+            distance -= tmp_dst
+            previousSrc = segment(0)._1
+            currentBuff = Array[(Long, Double, Double)]()
+          }    
+        }
+        else 
+        {
+          currentBuff +:= segment(0)
+        }
+      }}}
+      
+      
+      //from last node in the inBuff to the dst
+      val tmp_dist = distance
+      distance += dist(wayNodesBuff.last._2, wayNodesBuff.last._3, triplet.dstAttr._1, triplet.dstAttr._2)
+      if (distance &gt; maxDist){
+        if (wayNodesBuff.last._1 != previousSrc){
+            newVertex = (wayNodesBuff.last._1, (wayNodesBuff.last._2, wayNodesBuff.last._3, Map(wayId -&gt; (currentBuff, Array[(Long, Double, Double)]()))))
+            finalResult +:= (Edges(previousSrc, wayNodesBuff.last._1, (wayId, tmp_dist)), previousVertex, newVertex) 
+            previousVertex = newVertex
+            distance -= tmp_dist
+            previousSrc = wayNodesBuff.last._1 
+            currentBuff = Array[(Long, Double, Double)]()
+            newVertex = (triplet.dstId, (triplet.dstAttr._1, triplet.dstAttr._2, Map(wayId -&gt; (currentBuff, triplet.dstAttr._3(wayId)._2))) )
+        }
+      }
+      finalResult +:= (Edges(previousSrc, triplet.dstId, (wayId, distance)), previousVertex, newVertex)
+      
+    }
+    // Distance &gt; threshold but no nodes in the way (buffer)
+    else
+    {
+      finalResult +:= (Edges(triplet.srcId, triplet.dstId, triplet.attr), (triplet.srcId, triplet.srcAttr), (triplet.dstId, triplet.dstAttr))
+    }
+  }
+  // Distance &lt; threshold
+  else
+  {
+    finalResult +:= (Edges(triplet.srcId, triplet.dstId, triplet.attr), (triplet.srcId, triplet.srcAttr), (triplet.dstId, triplet.dstAttr))
+  }
+  
+  // return
+  finalResult
+}}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.graphx.{Edge=&gt;Edges}
+splittedEdges: org.apache.spark.rdd.RDD[(org.apache.spark.graphx.Edge[(Long, Double)], (Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])])), (Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])])))] = MapPartitionsRDD[776] at flatMap at command-588572986432369:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Taking each edge and its reverse
+val segmentedEdges = splittedEdges.flatMap{case(edge, srcVertex, dstVertex) =&gt; Array(edge) ++ Array(Edges(edge.dstId, edge.srcId, edge.attr))}
+segmentedEdges.count() 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>segmentedEdges: org.apache.spark.rdd.RDD[org.apache.spark.graphx.Edge[(Long, Double)]] = MapPartitionsRDD[777] at flatMap at command-588572986432370:2
+res70: Long = 16
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">segmentedEdges.take(36).foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Edge(3963994985,25735257,(393182257,68.4570414333903))
+Edge(25735257,3963994985,(393182257,68.4570414333903))
+Edge(455006648,312353,(733389337,74.36517408391025))
+Edge(312353,455006648,(733389337,74.36517408391025))
+Edge(2187779764,25734373,(299906437,17.439956081003103))
+Edge(25734373,2187779764,(299906437,17.439956081003103))
+Edge(312353,2187779764,(299906437,83.2953837674163))
+Edge(2187779764,312353,(299906437,83.2953837674163))
+Edge(312363,25735257,(263934973,94.17321564547117))
+Edge(25735257,312363,(263934973,94.17321564547117))
+Edge(25735257,3067700641,(263934973,39.0782384063323))
+Edge(3067700641,25735257,(263934973,39.0782384063323))
+Edge(25734373,3431600977,(73834008,67.891710670905))
+Edge(3431600977,25734373,(73834008,67.891710670905))
+Edge(3067700641,2206536278,(302521477,82.6456450149808))
+Edge(2206536278,3067700641,(302521477,82.6456450149808))
+Edge(3067700668,312363,(263934971,5.743347106374985))
+Edge(312363,3067700668,(263934971,5.743347106374985))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Taking the individual vertices
+val segmentedVertices = splittedEdges.flatMap{case(edge, srcVertex, dstVertex) =&gt; Array(srcVertex) ++ Array(dstVertex)}
+
+segmentedVertices.map(node =&gt; node._1).distinct().take(16)
+//25812013, 455006648, 25735257, 3431600977, 3963994985, 3067700641, 312353, 312363, 3067700668, 25734373, 2206536278) initial nodes 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>segmentedVertices: org.apache.spark.rdd.RDD[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = MapPartitionsRDD[778] at flatMap at command-588572986432372:2
+res71: Array[Long] = Array(455006648, 25735257, 3431600977, 3963994985, 3067700641, 312353, 312363, 3067700668, 25734373, 2206536278)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">// Converting the vertices to a df
+val verticesDF = segmentedVertices.toDF(&quot;nodeId&quot;,&quot;attr&quot;).select($&quot;nodeId&quot;,$&quot;attr._1&quot;.as(&quot;lat&quot;),$&quot;attr._2&quot;.as(&quot;long&quot;),explode($&quot;attr._3&quot;))
+    .withColumnRenamed(&quot;key&quot;,&quot;wayId&quot;).withColumnRenamed(&quot;value&quot;,&quot;buffers&quot;)
+    .select($&quot;nodeId&quot;,$&quot;lat&quot;,$&quot;long&quot;,$&quot;wayId&quot;,$&quot;buffers._1&quot;.as(&quot;inBuff&quot;),$&quot;buffers._2&quot;.as(&quot;outBuff&quot;))
+  
+verticesDF.show(24,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+------------------+------------------+---------+-----------------------------------------------------------------------------------+----------------+
+|nodeId    |lat               |long              |wayId    |inBuff                                                                             |outBuff         |
++----------+------------------+------------------+---------+-----------------------------------------------------------------------------------+----------------+
+|3963994985|59.857381800000006|17.645299100000003|393182257|[]                                                                                 |[]              |
+|25735257  |59.8569759        |17.644382         |393182257|[]                                                                                 |[]              |
+|25735257  |59.8569759        |17.644382         |263934973|[[3067700665, 59.8575443, 17.6433633]]                                             |[]              |
+|455006648 |59.857930700000004|17.6450031        |733389337|[]                                                                                 |[]              |
+|455006648 |59.857930700000004|17.6450031        |302521479|[[-1, 0.0, 0.0]]                                                                   |[[-1, 0.0, 0.0]]|
+|312353    |59.857437700000006|17.645897700000003|733389337|[[1523899738, 59.8575528, 17.645685500000003]]                                     |[]              |
+|312353    |59.857437700000006|17.645897700000003|299906437|[]                                                                                 |[]              |
+|312353    |59.857437700000006|17.645897700000003|733389337|[[1523899738, 59.8575528, 17.645685500000003]]                                     |[]              |
+|312353    |59.857437700000006|17.645897700000003|299906437|[]                                                                                 |[]              |
+|25734373  |59.8567674        |17.6471041        |299906437|[[801437007, 59.8571596, 17.6463952], [2187779764, 59.856883200000006, 17.6468947]]|[]              |
+|25734373  |59.8567674        |17.6471041        |73834008 |[]                                                                                 |[]              |
+|312363    |59.857601900000006|17.6432529        |263934973|[]                                                                                 |[]              |
+|312363    |59.857601900000006|17.6432529        |263934971|[]                                                                                 |[]              |
+|25735257  |59.8569759        |17.644382         |393182257|[]                                                                                 |[]              |
+|25735257  |59.8569759        |17.644382         |263934973|[[3067700665, 59.8575443, 17.6433633]]                                             |[]              |
+|25735257  |59.8569759        |17.644382         |393182257|[]                                                                                 |[]              |
+|25735257  |59.8569759        |17.644382         |263934973|[[3067700665, 59.8575443, 17.6433633]]                                             |[]              |
+|3067700641|59.856720800000005|17.6448606        |263934973|[]                                                                                 |[]              |
+|3067700641|59.856720800000005|17.6448606        |302521477|[]                                                                                 |[]              |
+|25734373  |59.8567674        |17.6471041        |299906437|[[801437007, 59.8571596, 17.6463952], [2187779764, 59.856883200000006, 17.6468947]]|[]              |
+|25734373  |59.8567674        |17.6471041        |73834008 |[]                                                                                 |[]              |
+|3431600977|59.85631480000001 |17.6479153        |73834008 |[[312352, 59.85636590000001, 17.6478229]]                                          |[]              |
+|3067700641|59.856720800000005|17.6448606        |263934973|[]                                                                                 |[]              |
+|3067700641|59.856720800000005|17.6448606        |302521477|[]                                                                                 |[]              |
++----------+------------------+------------------+---------+-----------------------------------------------------------------------------------+----------------+
+only showing top 24 rows
+
+verticesDF: org.apache.spark.sql.DataFrame = [nodeId: bigint, lat: double ... 4 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//unique wayIds of the edges
+val nodesWayId = splittedEdges.map{case(edge, srcVertex, dstVertex) =&gt; edge.attr._1}.toDF(&quot;nodesWayId&quot;).dropDuplicates() 
+nodesWayId.show(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+
+|nodesWayId|
++----------+
+| 393182257|
+| 733389337|
+| 299906437|
+| 263934973|
+|  73834008|
+| 302521477|
+| 263934971|
++----------+
+
+nodesWayId: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [nodesWayId: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Only vertices which have a wayId in their Map that is not included in any edge
+// Dead end means there are no other intersection vertex in the way
+val verticesWithDeadEndWays = verticesDF.join(nodesWayId, $&quot;nodesWayId&quot; === $&quot;wayId&quot;, &quot;leftanti&quot;) //leftanti is a special join which returns the rows that don't match
+verticesWithDeadEndWays.show(20,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+---------+------------------+----------+---------+----------------+----------------+
+|nodeId   |lat               |long      |wayId    |inBuff          |outBuff         |
++---------+------------------+----------+---------+----------------+----------------+
+|455006648|59.857930700000004|17.6450031|302521479|[[-1, 0.0, 0.0]]|[[-1, 0.0, 0.0]]|
++---------+------------------+----------+---------+----------------+----------------+
+
+verticesWithDeadEndWays: org.apache.spark.sql.DataFrame = [nodeId: bigint, lat: double ... 4 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//convert df to rdd to be joined later with the rest of the vertices
+import scala.collection.mutable.WrappedArray
+val verticesWithDeadEndWaysRDD = verticesWithDeadEndWays.rdd.map(row =&gt; (row.getLong(0),(row.getDouble(1),row.getDouble(2),Map(row.getLong(3)-&gt; (row.getAs[WrappedArray[(Long, Double, Double)]](4).array,row.getAs[WrappedArray[(Long, Double, Double)]](5).array)))))
+
+verticesWithDeadEndWaysRDD.take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import scala.collection.mutable.WrappedArray
+verticesWithDeadEndWaysRDD: org.apache.spark.rdd.RDD[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = MapPartitionsRDD[820] at map at command-588572986432376:3
+res80: Array[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = Array((455006648,(59.857930700000004,17.6450031,Map(302521479 -&gt; (Array([-1,0.0,0.0]),Array([-1,0.0,0.0]))))))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// for a node appearing in different ways, returns one vertex for each way
+val verticesWithSharedWays = splittedEdges.flatMap{case(edge, srcVertex, dstVertex) =&gt; 
+  {
+    val srcVertex1 = (srcVertex._1,(srcVertex._2._1,srcVertex._2._2,Map(edge.attr._1 -&gt; srcVertex._2._3(edge.attr._1))))
+    val dstVertex1 = (dstVertex._1,(dstVertex._2._1,dstVertex._2._2,Map(edge.attr._1 -&gt; dstVertex._2._3(edge.attr._1))))
+
+    Array(srcVertex1) ++ Array(dstVertex1)
+  }}.distinct()
+
+
+verticesWithSharedWays.take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>verticesWithSharedWays: org.apache.spark.rdd.RDD[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = MapPartitionsRDD[824] at distinct at command-588572986432377:8
+res81: Array[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = Array((25735257,(59.8569759,17.644382,Map(393182257 -&gt; (Array(),Array())))), (312363,(59.857601900000006,17.6432529,Map(263934971 -&gt; (Array(),Array())))), (312353,(59.857437700000006,17.645897700000003,Map(299906437 -&gt; (Array(),Array())))), (3963994985,(59.857381800000006,17.645299100000003,Map(393182257 -&gt; (Array(),Array())))), (25735257,(59.8569759,17.644382,Map(263934973 -&gt; (Array((3067700665,59.8575443,17.6433633)),Array())))), (3431600977,(59.85631480000001,17.6479153,Map(73834008 -&gt; (Array((312352,59.85636590000001,17.6478229)),Array())))), (3067700641,(59.856720800000005,17.6448606,Map(302521477 -&gt; (Array(),Array())))), (25734373,(59.8567674,17.6471041,Map(73834008 -&gt; (Array(),Array())))), (2206536278,(59.85618040000001,17.6458707,Map(302521477 -&gt; (Array((2206536285,59.8563708,17.645517400000003), (25734470,59.8562881,17.6456634)),Array())))), (3067700668,(59.857640200000006,17.6431843,Map(263934971 -&gt; (Array(),Array())))))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//union of verticesWithDeadEndWaysRDD and verticesWithSharedWays and reduced adding the maps 
+val allVertices = verticesWithSharedWays.union(verticesWithDeadEndWaysRDD).reduceByKey((a,b) =&gt; (a._1, a._2, a._3 ++ b._3)) 
+allVertices.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>allVertices: org.apache.spark.rdd.RDD[(Long, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = ShuffledRDD[826] at reduceByKey at command-588572986432378:2
+res82: Long = 10
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.graphx.Graph
+val segmentedGraph = Graph(allVertices, segmentedEdges).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.graphx.Graph
+segmentedGraph: org.apache.spark.graphx.Graph[(Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]),(Long, Double)] = org.apache.spark.graphx.impl.GraphImpl@2cb44552
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//allVertices.map(vertex =&gt; (vertex._1,(vertex._2._1, vertex._2._2))).toDF(&quot;id&quot;,&quot;coordinates&quot;).write.mode(&quot;overwrite&quot;).parquet(&quot;dbfs:/graphs/uppsala/vertices&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// spark.read.parquet(&quot;dbfs:/graphs/uppsala/edges&quot;).rdd.take(1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res88: Array[org.apache.spark.sql.Row] = Array([2187779764,25734373,[299906437,17.439956081003103]])
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">segmentedGraph.vertices.take(11) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res33: Array[(org.apache.spark.graphx.VertexId, (Double, Double, scala.collection.immutable.Map[Long,(Array[(Long, Double, Double)], Array[(Long, Double, Double)])]))] = Array((25735257,(59.8569759,17.644382,Map(263934973 -&gt; (Array((3067700665,59.8575443,17.6433633)),Array()), 393182257 -&gt; (Array(),Array())))), (2187779764,(59.856883200000006,17.6468947,Map(299906437 -&gt; (Array((801437007,59.8571596,17.6463952), (801437007,59.8571596,17.6463952)),Array())))), (3431600977,(59.85631480000001,17.6479153,Map(73834008 -&gt; (Array((312352,59.85636590000001,17.6478229)),Array())))), (3963994985,(59.857381800000006,17.645299100000003,Map(393182257 -&gt; (Array(),Array())))), (3067700641,(59.856720800000005,17.6448606,Map(263934973 -&gt; (Array(),Array()), 302521477 -&gt; (Array(),Array())))), (3067700668,(59.857640200000006,17.6431843,Map(263934971 -&gt; (Array(),Array())))), (2206536278,(59.85618040000001,17.6458707,Map(302521477 -&gt; (Array((2206536285,59.8563708,17.645517400000003), (25734470,59.8562881,17.6456634)),Array())))), (455006648,(59.857930700000004,17.6450031,Map(733389337 -&gt; (Array(),Array()), 302521479 -&gt; (Array([-1,0.0,0.0]),Array([-1,0.0,0.0]))))), (312353,(59.857437700000006,17.645897700000003,Map(733389337 -&gt; (Array((1523899738,59.8575528,17.645685500000003)),Array()), 299906437 -&gt; (Array(),Array())))), (312363,(59.857601900000006,17.6432529,Map(263934973 -&gt; (Array(),Array()), 263934971 -&gt; (Array(),Array())))), (25734373,(59.8567674,17.6471041,Map(73834008 -&gt; (Array(),Array()), 299906437 -&gt; (Array(),Array())))))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">segmentedGraph.edges.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res34: Long = 18
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">segmentedGraph.edges.take(18).foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Edge(25735257,3963994985,(393182257,68.4570414333903))
+Edge(3963994985,25735257,(393182257,68.4570414333903))
+Edge(312353,455006648,(733389337,74.36517408391025))
+Edge(455006648,312353,(733389337,74.36517408391025))
+Edge(312353,2187779764,(299906437,83.2953837674163))
+Edge(25734373,2187779764,(299906437,17.439956081003103))
+Edge(2187779764,312353,(299906437,83.2953837674163))
+Edge(2187779764,25734373,(299906437,17.439956081003103))
+Edge(312363,25735257,(263934973,94.17321564547117))
+Edge(25735257,312363,(263934973,94.17321564547117))
+Edge(25735257,3067700641,(263934973,39.0782384063323))
+Edge(3067700641,25735257,(263934973,39.0782384063323))
+Edge(25734373,3431600977,(73834008,67.891710670905))
+Edge(3431600977,25734373,(73834008,67.891710670905))
+Edge(2206536278,3067700641,(302521477,82.6456450149808))
+Edge(3067700641,2206536278,(302521477,82.6456450149808))
+Edge(312363,3067700668,(263934971,5.743347106374985))
+Edge(3067700668,312363,(263934971,5.743347106374985))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">val G1 = segmentedGraph.edges.toDF().select($&quot;srcId&quot;.as(&quot;src&quot;), $&quot;dstId&quot;.as(&quot;dest&quot;), lit(1L).as(&quot;count&quot;))
+
+d3.graphs.force(
+  height = 1000,
+  width = 1000,
+  clicks = G1.as[d3.Edge])
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<style>
+
+.node_circle {
+  stroke: #777;
+  stroke-width: 1.3px;
+}
+
+.node_label {
+  pointer-events: none;
+}
+
+.link {
+  stroke: #777;
+  stroke-opacity: .2;
+}
+
+.node_count {
+  stroke: #777;
+  stroke-width: 1.0px;
+  fill: #999;
+}
+
+text.legend {
+  font-family: Verdana;
+  font-size: 13px;
+  fill: #000;
+}
+
+.node text {
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-size: 17px;
+  font-weight: 200;
+}
+
+</style>
+<div id="clicks-graph">
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+<p>var graph = {&quot;nodes&quot;:[{&quot;name&quot;:&quot;3431600977&quot;},{&quot;name&quot;:&quot;2187779764&quot;},{&quot;name&quot;:&quot;3067700668&quot;},{&quot;name&quot;:&quot;25735257&quot;},{&quot;name&quot;:&quot;3963994985&quot;},{&quot;name&quot;:&quot;25734373&quot;},{&quot;name&quot;:&quot;2206536278&quot;},{&quot;name&quot;:&quot;312353&quot;},{&quot;name&quot;:&quot;455006648&quot;},{&quot;name&quot;:&quot;3067700641&quot;},{&quot;name&quot;:&quot;312363&quot;}],&quot;links&quot;:[{&quot;source&quot;:3,&quot;target&quot;:4,&quot;value&quot;:1},{&quot;source&quot;:4,&quot;target&quot;:3,&quot;value&quot;:1},{&quot;source&quot;:7,&quot;target&quot;:8,&quot;value&quot;:1},{&quot;source&quot;:8,&quot;target&quot;:7,&quot;value&quot;:1},{&quot;source&quot;:7,&quot;target&quot;:1,&quot;value&quot;:1},{&quot;source&quot;:5,&quot;target&quot;:1,&quot;value&quot;:1},{&quot;source&quot;:1,&quot;target&quot;:7,&quot;value&quot;:1},{&quot;source&quot;:1,&quot;target&quot;:5,&quot;value&quot;:1},{&quot;source&quot;:10,&quot;target&quot;:3,&quot;value&quot;:1},{&quot;source&quot;:3,&quot;target&quot;:10,&quot;value&quot;:1},{&quot;source&quot;:3,&quot;target&quot;:9,&quot;value&quot;:1},{&quot;source&quot;:9,&quot;target&quot;:3,&quot;value&quot;:1},{&quot;source&quot;:5,&quot;target&quot;:0,&quot;value&quot;:1},{&quot;source&quot;:0,&quot;target&quot;:5,&quot;value&quot;:1},{&quot;source&quot;:6,&quot;target&quot;:9,&quot;value&quot;:1},{&quot;source&quot;:9,&quot;target&quot;:6,&quot;value&quot;:1},{&quot;source&quot;:10,&quot;target&quot;:2,&quot;value&quot;:1},{&quot;source&quot;:2,&quot;target&quot;:10,&quot;value&quot;:1}]};</p>
+<p>var width = 1000,
+height = 1000;</p>
+<p>var color = d3.scale.category20();</p>
+<p>var force = d3.layout.force()
+.charge(-700)
+.linkDistance(180)
+.size([width, height]);</p>
+<p>var svg = d3.select(&quot;#clicks-graph&quot;).append(&quot;svg&quot;)
+.attr(&quot;width&quot;, width)
+.attr(&quot;height&quot;, height);</p>
+<p>force
+.nodes(graph.nodes)
+.links(graph.links)
+.start();</p>
+<p>var link = svg.selectAll(&quot;.link&quot;)
+.data(graph.links)
+.enter().append(&quot;line&quot;)
+.attr(&quot;class&quot;, &quot;link&quot;)
+.style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value); });</p>
+<p>var node = svg.selectAll(&quot;.node&quot;)
+.data(graph.nodes)
+.enter().append(&quot;g&quot;)
+.attr(&quot;class&quot;, &quot;node&quot;)
+.call(force.drag);</p>
+<p>node.append(&quot;circle&quot;)
+.attr(&quot;r&quot;, 10)
+.style(&quot;fill&quot;, function (d) {
+if (d.name.startsWith(&quot;other&quot;)) { return color(1); } else { return color(2); };
+})</p>
+<p>node.append(&quot;text&quot;)
+.attr(&quot;dx&quot;, 10)
+.attr(&quot;dy&quot;, &quot;.35em&quot;)
+.text(function(d) { return d.name });</p>
+<p>//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on(&quot;tick&quot;, function () {
+link.attr(&quot;x1&quot;, function (d) {
+return d.source.x;
+})
+.attr(&quot;y1&quot;, function (d) {
+return d.source.y;
+})
+.attr(&quot;x2&quot;, function (d) {
+return d.target.x;
+})
+.attr(&quot;y2&quot;, function (d) {
+return d.target.y;
+});
+d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+return d.x;
+})
+.attr(&quot;cy&quot;, function (d) {
+return d.y;
+});
+d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+return d.x;
+})
+.attr(&quot;y&quot;, function (d) {
+return d.y;
+});
+});
+</script></p>
+</div>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

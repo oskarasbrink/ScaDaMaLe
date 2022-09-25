@@ -1,0 +1,1416 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>032b_UberMapMatchingAndVisualization - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html" class="active">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<p>This is part of <a href="http://lamastex.org/lmse/mep"><em>Project MEP: Meme Evolution Programme</em></a> and supported by databricks academic partners program.</p>
+<h1 id="map-matching-noisy-spatial-trajectories-of-vehicles-to-roadways-in-open-street-map"><a class="header" href="#map-matching-noisy-spatial-trajectories-of-vehicles-to-roadways-in-open-street-map">Map-matching Noisy Spatial Trajectories of Vehicles to Roadways in Open Street Map</a></h1>
+<h2 id="dillon-george-dan-lilja-and-raazesh-sainudiin"><a class="header" href="#dillon-george-dan-lilja-and-raazesh-sainudiin">Dillon George, Dan Lilja and Raazesh Sainudiin</a></h2>
+<pre><code>Copyright 2016-2019 Dillon George, Dan Lilja and Raazesh Sainudiin
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>This is the precursor 2016 presentation by Dillon George as part of <em>Scalable Data Science from Middle Earth</em> student project.</p>
+<p><a href="https://www.youtube.com/watch?v=0wKxVfeBQBc?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=5931&amp;end=8274"><img src="http://img.youtube.com/vi/0wKxVfeBQBc/0.jpg" alt="sds/uji/studentProjects/01DillonGeorge/038UberMapMatchingAndVisualization" /></a></p>
+<p>Here we are updating it to more recent versions of the needed libraries.</p>
+</div>
+<div class="cell markdown">
+<h2 id="what-is-map-matching"><a class="header" href="#what-is-map-matching">What is map-matching?</a></h2>
+<p>Map matching is the problem of how to match recorded geographic coordinates to a logical model of the real world, typically using some form of Geographic Information System. See <a href="https://en.wikipedia.org/wiki/Map_matching">https://en.wikipedia.org/wiki/Map_matching</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
+//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
+//Example usage:
+// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Map_matching&quot;,600))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/Map_matching"
+ width="95%" height="600"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="why-are-we-interested-in-map-matching"><a class="header" href="#why-are-we-interested-in-map-matching">Why are we interested in map-matching?</a></h2>
+<p>Mainly because we can naturally deal with noise in raw GPS trajectories of entities moving along <em>mapped ways</em>, such as, vehicles, pedestrians or cyclists.</p>
+<ul>
+<li>Trajectories from sources like Uber are typically noisy and we will map-match such trajectories in this worksheet.</li>
+<li>Often, such trajectories lead to significant <em>graph-dimensionality</em> reduction as you will see below.</li>
+<li>More importantly, map-matching is a natural first step towards learning distributions over historical trajectories of an entity.</li>
+<li>Moreover, a set of map-matched trajectories (with additional work using kNN operations) can be turned into a graphX graph that can be vertex-programmed and joined with other graphX representations of the map itself.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="how-are-we-map-matching"><a class="header" href="#how-are-we-map-matching">How are we map-matching?</a></h2>
+<p>We are using <code>graphHopper</code> for this for now. See <a href="https://en.wikipedia.org/wiki/GraphHopper">https://en.wikipedia.org/wiki/GraphHopper</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://en.wikipedia.org/wiki/GraphHopper"
+ width="95%" height="600"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="the-following-alternatives-need-exploration"><a class="header" href="#the-following-alternatives-need-exploration">The following alternatives need exploration:</a></h3>
+<ul>
+<li>BMW's barefoot on OSM (with Spark integration)
+<ul>
+<li><a href="https://github.com/bmwcarit/barefoot">https://github.com/bmwcarit/barefoot</a></li>
+<li><a href="http://www.bmw-carit.com/blog/barefoot-release-an-open-source-java-library-for-map-matching-with-openstreetmap/">http://www.bmw-carit.com/blog/barefoot-release-an-open-source-java-library-for-map-matching-with-openstreetmap/</a> which seems to use a Hidden Markov Model from Microsoft Research.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="steps-in-this-worksheet"><a class="header" href="#steps-in-this-worksheet">Steps in this worksheet</a></h1>
+</div>
+<div class="cell markdown">
+<h3 id="the-basic-steps-are-the-following"><a class="header" href="#the-basic-steps-are-the-following">The basic steps are the following:</a></h3>
+<ol>
+<li>Preliminaries: 0. Attach needed libraries, load osm data and initialize graphhopper</li>
+</ol>
+<ul>
+<li>the two steps 0.1 and 0.2 need to be done only once per cluster</li>
+</ul>
+<ol>
+<li>Setting up leaflet for visualisation</li>
+<li>Load table of Uber Data from earlier analysis. Then convert to an RDD for mapmatching</li>
+<li>Start Map Matching</li>
+<li>Display Results of a map-matched trajectory</li>
+</ol>
+</div>
+<div class="cell markdown">
+<ol>
+<li>Preliminaries</li>
+</ol>
+<hr />
+</div>
+<div class="cell markdown">
+<h3 id="loading-required-libraries"><a class="header" href="#loading-required-libraries">Loading required libraries</a></h3>
+<ol>
+<li>Launch a cluster using spark 2.4.3 (this is for compatibility with magellan built from the forked repos; see first notebook in this folder!).</li>
+<li>Attach following libraries if you have not already done so:</li>
+</ol>
+<ul>
+<li>map_matching - <code>com.graphhopper:map-matching:0.6.0</code> (more recent libraries may work but are note tested yet!)</li>
+<li>magellan - import custom-built jar by downloading locally from <code>https://github.com/lamastex/scalable-data-science/blob/master/custom-builds/jars/magellan/forks/</code> and then uploading to databricks</li>
+<li>If needed only (this is already in databricks): spray-json <code>io.spray:spray-json_2.11:1.3.4</code></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import com.graphhopper.matching._
+import com.graphhopper._
+import com.graphhopper.routing.util.{EncodingManager, CarFlagEncoder}
+import com.graphhopper.storage.index.LocationIndexTree
+import com.graphhopper.util.GPXEntry
+
+import magellan.Point
+
+import scala.collection.JavaConverters._
+import spray.json._
+import DefaultJsonProtocol._
+
+import scala.util.{Try, Success, Failure}
+
+import org.apache.spark.sql.functions._
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import com.graphhopper.matching._
+import com.graphhopper._
+import com.graphhopper.routing.util.{EncodingManager, CarFlagEncoder}
+import com.graphhopper.storage.index.LocationIndexTree
+import com.graphhopper.util.GPXEntry
+import magellan.Point
+import scala.collection.JavaConverters._
+import spray.json._
+import DefaultJsonProtocol._
+import scala.util.{Try, Success, Failure}
+import org.apache.spark.sql.functions._
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="do-step-0-at-the-bottom-of-the-notebook"><a class="header" href="#do-step-0-at-the-bottom-of-the-notebook">Do Step 0 at the bottom of the notebook</a></h3>
+<h4 id="only-once-in-shard-per-osm-file-ignore-this-step-the-second-time"><a class="header" href="#only-once-in-shard-per-osm-file-ignore-this-step-the-second-time">Only once in shard per OSM file (ignore this step the second time!):</a></h4>
+<ul>
+<li>follow section below on **Step 0.1: Loading our OSM Data **</li>
+<li>follow section below on <strong>Step 0.2: Initialising GraphHopper</strong></li>
+</ul>
+</div>
+<div class="cell markdown">
+<p><strong>NOTE</strong></p>
+<p>If you loaded a smaller map so as to be able to analyze in the community edition, then you need the bounding box of this map to filter those trajectories that fall within this smaller map.</p>
+<p>For example <code>SanfranciscoSmall</code> OSM map has the following bounding box:</p>
+<ul>
+<li><code>-122.449,37.747</code> and <code>-122.397,37.772</code></li>
+</ul>
+<p>Let's put them in Scala <code>val</code>s as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val minLatInOSMMap = -122.449
+val minLonInOSMMap = 37.747 
+val maxLatInOSMMap = -122.397 
+val maxLonInOSMMap = 37.772
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>minLatInOSMMap: Double = -122.449
+minLonInOSMMap: Double = 37.747
+maxLatInOSMMap: Double = -122.397
+maxLonInOSMMap: Double = 37.772
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ol start="2">
+<li>Setting up leaflet and visualisation</li>
+</ol>
+<hr />
+<h2 id="21-setting-up-leaflet"><a class="header" href="#21-setting-up-leaflet">2.1 Setting up leaflet</a></h2>
+<p>You need to go to the following URL and set-up access-token in map-box to use leaflet independently:</p>
+<ul>
+<li>https://leafletjs.com/examples/quick-start/</li>
+<li>Request access-token:
+<ul>
+<li>https://account.mapbox.com/auth/signin/?route-to=%22/access-tokens/%22</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="22-visualising-with-leaflet"><a class="header" href="#22-visualising-with-leaflet">2.2 Visualising with leaflet</a></h2>
+<p>Take an array of Strings in 'GeoJson' format, then insert this into a prebuild html string that contains all the code neccesary to display these features using Leaflet. The resulting html can be displayed in databricks using the <code>displayHTML</code> function.</p>
+<p>See http://leafletjs.com/examples/geojson.html for a detailed example of using GeoJson with Leaflet.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def genLeafletHTML(features: Array[String]): String = {
+
+  val featureArray = features.reduce(_ + &quot;,&quot; +  _)
+  // get your own access-token from https://leafletjs.com/examples/quick-start/
+  // see request-access token link above at: https://account.mapbox.com/auth/signin/?route-to=%22/access-tokens/%22
+  val accessToken = &quot;pk.eyJ1Ijoic3RhdnJvdWxhdmxhY2hvdSIsImEiOiJjbDEzY3EwNDcycjBzM2JrYnBuemx4bmZkIn0.2DhL_f07vB0i7psep_QR8Q&quot;
+
+  val generatedHTML = f&quot;&quot;&quot;&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt;Maps&lt;/title&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css&quot;&gt;
+  &lt;style&gt;
+  #map {width: 600px; height:400px;}
+  &lt;/style&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;div id=&quot;map&quot; style=&quot;width: 1000px; height: 600px&quot;&gt;&lt;/div&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+  var map = L.map('map').setView([37.77471008393265, -122.40422604391485], 14);
+
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=$accessToken', {
+  maxZoom: 18,
+  attribution: 'Map data &amp;copy; &lt;a href=&quot;http://openstreetmap.org&quot;&gt;OpenStreetMap&lt;/a&gt; contributors, ' +
+  '&lt;a href=&quot;http://creativecommons.org/licenses/by-sa/2.0/&quot;&gt;CC-BY-SA&lt;/a&gt;, ' +
+  'Imagery © &lt;a href=&quot;http://mapbox.com&quot;&gt;Mapbox&lt;/a&gt;',
+  id: 'mapbox.streets'
+  }).addTo(map);
+
+  var features = [$featureArray];
+
+ colors = features.map(function (_) {return rainbow(100, Math.floor(Math.random() * 100)); });
+
+  for (var i = 0; i &lt; features.length; i++) {
+      console.log(i);
+      L.geoJson(features[i], {
+          pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, {
+                  radius: 4,
+                  fillColor: colors[i],
+                  color: colors[i],
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8
+              });
+          }
+      }).addTo(map);
+  }
+
+
+  function rainbow(numOfSteps, step) {
+  // This function generates vibrant, &quot;evenly spaced&quot; colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
+  // Adam Cole, 2011-Sept-14
+  // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+  var r, g, b;
+  var h = step / numOfSteps;
+  var i = ~~(h * 6);
+  var f = h * 6 - i;
+  var q = 1 - f;
+  switch(i %% 6){
+  case 0: r = 1; g = f; b = 0; break;
+  case 1: r = q; g = 1; b = 0; break;
+  case 2: r = 0; g = 1; b = f; break;
+  case 3: r = 0; g = q; b = 1; break;
+  case 4: r = f; g = 0; b = 1; break;
+  case 5: r = 1; g = 0; b = q; break;
+  }
+  var c = &quot;#&quot; + (&quot;00&quot; + (~ ~(r * 255)).toString(16)).slice(-2) + (&quot;00&quot; + (~ ~(g * 255)).toString(16)).slice(-2) + (&quot;00&quot; + (~ ~(b * 255)).toString(16)).slice(-2);
+  return (c);
+  }
+  &lt;/script&gt;
+
+
+  &lt;/body&gt;
+  &quot;&quot;&quot;
+  generatedHTML
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>genLeafletHTML: (features: Array[String])String
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ol start="3">
+<li>Load Uber Data as in earlier analysis.</li>
+</ol>
+<hr />
+<p>Then convert to an RDD for mapmatching</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class UberRecord(tripId: Int, time: String, latlon: Array[Double])
+
+val uberData = sc.textFile(&quot;dbfs:/datasets/magellan/all.tsv&quot;).map { line =&gt;
+  val parts = line.split(&quot;\t&quot; )
+  val tripId = parts(0).toInt
+  val time  = parts(1)
+  val latlon = Array(parts(3).toDouble, parts(2).toDouble)
+  UberRecord(tripId, time, latlon)
+}.
+repartition(100).
+toDF().
+select($&quot;tripId&quot;, to_utc_timestamp($&quot;time&quot;, &quot;yyyy-MM-dd'T'HH:mm:ss&quot;).as(&quot;timeStamp&quot;), $&quot;latlon&quot;).
+cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class UberRecord
+uberData: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: int, timeStamp: timestamp ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberData.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Long = 1128663
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberData.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------------------------+
+|tripId|timeStamp          |latlon                  |
++------+-------------------+------------------------+
+|2     |2007-01-06 06:23:27|[-122.436298, 37.800702]|
+|6     |2007-01-04 01:04:58|[-122.429251, 37.79932] |
+|8     |2007-01-03 00:59:01|[-122.444698, 37.759913]|
+|11    |2007-01-06 09:08:04|[-122.422785, 37.801069]|
+|14    |2007-01-02 05:18:37|[-122.422255, 37.764986]|
++------+-------------------+------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val uberOSMMapBoundingBoxFiltered = uberData
+                                      .filter($&quot;latlon&quot;(0) &gt;= minLatInOSMMap &amp;&amp;
+                                              $&quot;latlon&quot;(0) &lt;= maxLatInOSMMap &amp;&amp;
+                                              $&quot;latlon&quot;(1) &gt;= minLonInOSMMap &amp;&amp;
+                                              $&quot;latlon&quot;(1) &lt;= maxLonInOSMMap)
+                                      .cache()
+uberOSMMapBoundingBoxFiltered.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uberOSMMapBoundingBoxFiltered: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: int, timeStamp: timestamp ... 1 more field]
+res1: Long = 253696
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberOSMMapBoundingBoxFiltered.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------------------------+
+|tripId|timeStamp          |latlon                  |
++------+-------------------+------------------------+
+|8     |2007-01-03 00:59:01|[-122.444698, 37.759913]|
+|14    |2007-01-02 05:18:37|[-122.422255, 37.764986]|
+|26    |2007-01-07 07:17:52|[-122.434058, 37.763653]|
+|38    |2007-01-07 16:05:22|[-122.433124, 37.763497]|
+|87    |2007-01-06 00:40:58|[-122.408277, 37.769129]|
++------+-------------------+------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The number of trajectory points that are not within our bounding box of the OSM is:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberData.count() - uberOSMMapBoundingBoxFiltered.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res6: Long = 874967
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We will consider a trip to be invalid when it contains less that two data points, as this is required by Graph Hopper. First identify the all trips that are valid.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val uberCountsFiltered = uberOSMMapBoundingBoxFiltered
+                          .groupBy($&quot;tripId&quot;.alias(&quot;validTripId&quot;))
+                          .count.filter($&quot;count&quot; &gt; 1)
+                          .drop(&quot;count&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uberCountsFiltered: org.apache.spark.sql.DataFrame = [validTripId: int]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberCountsFiltered.show(5, false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-----------+
+|validTripId|
++-----------+
+|833        |
+|1829       |
+|3175       |
+|5300       |
+|5518       |
++-----------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Next is to join this list of valid Ids with the original data set, only the entries for those trips contained in <code>uberCountsFiltered</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val uberValidData = uberOSMMapBoundingBoxFiltered
+  .join(uberCountsFiltered, uberOSMMapBoundingBoxFiltered(&quot;tripId&quot;) === uberCountsFiltered(&quot;validTripId&quot;)) // Only want trips with more than 2 data points
+  .drop(&quot;validTripId&quot;).cache 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>uberValidData: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [tripId: int, timeStamp: timestamp ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now seeing how many data points were dropped:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberOSMMapBoundingBoxFiltered.count - uberValidData.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res10: Long = 221
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">uberValidData.show(5,false)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+------+-------------------+------------------------+
+|tripId|timeStamp          |latlon                  |
++------+-------------------+------------------------+
+|8     |2007-01-03 00:59:01|[-122.444698, 37.759913]|
+|14    |2007-01-02 05:18:37|[-122.422255, 37.764986]|
+|26    |2007-01-07 07:17:52|[-122.434058, 37.763653]|
+|38    |2007-01-07 16:05:22|[-122.433124, 37.763497]|
+|87    |2007-01-06 00:40:58|[-122.408277, 37.769129]|
++------+-------------------+------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Graphopper considers a trip to be a sequence of (latitude, longitude, time) tuples. First the relevant columns are selected from the DataFrame, and then the rows are mapped to key-value pairs with the tripId as the key. After this is done the <code>reduceByKey</code> step merges all the (lat, lon, time) arrays for each key (trip Id) so that there is one entry for each trip id containing all the relevant data points.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// To use sql api instead of rdd api
+// val ubers = uberValidData.
+//   select($&quot;tripId&quot;, struct($&quot;latlon&quot;(0), $&quot;latLon&quot;(1), $&quot;timeStamp&quot;).as(&quot;coord&quot;))
+//   .groupBy($&quot;tripId&quot;)
+//   .agg(collect_set(&quot;coord&quot;).as(&quot;coords&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ubers = uberValidData.select($&quot;tripId&quot;, $&quot;latlon&quot;, $&quot;timeStamp&quot;)
+  .map( row =&gt; {
+        val id = row.get(0).asInstanceOf[Integer]
+        val time = row.get(2).asInstanceOf[java.sql.Timestamp].getTime
+        // Array(lat, lon)
+        val latlon = row.get(1).asInstanceOf[scala.collection.mutable.WrappedArray[Double]] 
+        val entry = Array((latlon(0), latlon(1), time))
+        (id, entry)
+        }
+      )
+.rdd.reduceByKey( (e1, e2) =&gt; e1 ++ e2) // Sequence of timespace tuples
+.cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ubers: org.apache.spark.rdd.RDD[(Integer, Array[(Double, Double, Long)])] = ShuffledRDD[1195] at reduceByKey at command-2971213210274838:11
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">ubers.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res12: Long = 8321
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">ubers.take(1) // first of 8,321 trip ids prepped and ready for map-matching
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res13: Array[(Integer, Array[(Double, Double, Long)])] = Array((2100,Array((-122.430268,37.766517,1168142813000), (-122.430456,37.766368,1168142819000), (-122.430588,37.766267,1168142825000), (-122.430874,37.766065,1168142873000), (-122.431452,37.765596,1168142879000), (-122.43189,37.76524,1168142885000), (-122.432244,37.764965,1168142891000), (-122.432537,37.764759,1168142897000), (-122.432833,37.764534,1168142903000), (-122.433421,37.764042,1168142909000), (-122.434094,37.763526,1168142915000), (-122.406513,37.771497,1168142387000), (-122.40595,37.770276,1168142393000), (-122.406148,37.769156,1168142399000), (-122.407442,37.768924,1168142405000), (-122.409003,37.76907,1168142411000), (-122.410424,37.76931,1168142417000), (-122.412292,37.769523,1168142423000), (-122.414228,37.769585,1168142429000), (-122.416105,37.769652,1168142435000), (-122.4181,37.76988,1168142441000), (-122.419548,37.770068,1168142447000), (-122.420887,37.770144,1168142453000), (-122.422174,37.770579,1168142459000), (-122.422506,37.770788,1168142465000), (-122.422915,37.771149,1168142471000), (-122.422932,37.771242,1168142477000), (-122.423008,37.771513,1168142483000), (-122.423167,37.771772,1168142489000), (-122.423186,37.771882,1168142507000), (-122.423467,37.771914,1168142639000), (-122.42389,37.771557,1168142645000), (-122.424358,37.771214,1168142651000), (-122.42451,37.771112,1168142657000), (-122.424577,37.77107,1168142699000), (-122.424858,37.770832,1168142705000), (-122.425321,37.770462,1168142711000), (-122.425981,37.769912,1168142717000), (-122.426489,37.769485,1168142723000), (-122.42671,37.769349,1168142729000), (-122.426785,37.769304,1168142735000), (-122.427076,37.769072,1168142741000), (-122.427508,37.768713,1168142747000), (-122.42785,37.768438,1168142753000), (-122.427882,37.768396,1168142759000), (-122.427958,37.768333,1168142765000), (-122.428191,37.76816,1168142783000), (-122.428687,37.767765,1168142789000), (-122.429273,37.767284,1168142795000), (-122.429752,37.766923,1168142801000), (-122.430132,37.766626,1168142807000))))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ol start="4">
+<li>Start Map Matching</li>
+</ol>
+<hr />
+</div>
+<div class="cell markdown">
+<p>Now stepping into GraphHopper land we first define some utility functions for interfacing with the GraphHopper map matching library. Attaching the following artefact: - <code>com.graphhopper:map-matching:0.6.0</code></p>
+</div>
+<div class="cell markdown">
+<p>This function takes a <code>MatchResult</code> from graphhopper and converts it into an Array of <code>LON,LAT</code> points.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def extractLatLong(mr: MatchResult): Array[(Double, Double)] = {
+  val pointsList = mr.getEdgeMatches.asScala.zipWithIndex
+                    .map{ case  (e, i) =&gt;
+                              if (i == 0) e.getEdgeState.fetchWayGeometry(3) // FetchWayGeometry returns vertices on graph if 2,
+                              else e.getEdgeState.fetchWayGeometry(2) }      // and edges if 3 
+                    .map{case pointList =&gt; pointList.asScala.toArray}
+                    .flatMap{ case e =&gt; e}
+  val latLongs = pointsList.map(point =&gt; (point.lon, point.lat)).toArray
+
+  latLongs   
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>extractLatLong: (mr: com.graphhopper.matching.MatchResult)Array[(Double, Double)]
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The following returns a new GraphHopper object and encoder. It reads the pre-generated graphhopper 'database' from the dbfs, this way multiple graphHopper objects can be created on the workers all reading from the same shared database.</p>
+<p>Currently the documentation is scattered all over the place if it exists at all. The method to create the Graph as specified in the map-matching repository differs from the main GraphHopper repository. The API should hopefully converge as GraphHopper matures</p>
+<p>See the main graphHopper documentation <a href="https://github.com/graphhopper/graphhopper/blob/0.5/docs/core/low-level-api.md">here</a>, and the map-matching documentation <a href="https://github.com/graphhopper/map-matching#java-usage">here.</a></p>
+</div>
+<div class="cell markdown">
+<p>Read <a href="https://github.com/graphhopper/graphhopper/blob/0.6/docs/core/technical.md">https://github.com/graphhopper/graphhopper/blob/0.6/docs/core/technical.md</a>.</p>
+</div>
+<div class="cell markdown">
+<p>This function returns a new GrapHopper object, with all settings defined and reading the graph from the location in dbfs. <strong>Note</strong>: <code>setAllowWrites(false)</code> ensures that multiple GraphHopper objects can read from the same files simultaneously.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def getHopper = {
+    val enc = new CarFlagEncoder() // Vehicle type
+    val hopp = new GraphHopper()
+    .setStoreOnFlush(true)
+    .setCHWeightings(&quot;shortest&quot;)    // Contraction Hierarchy settings
+    .setAllowWrites(false)         // Avoids issues when reading graph object fom HDFS
+    .setGraphHopperLocation(&quot;/dbfs/files/graphhopper/graphHopperData&quot;)
+    .setEncodingManager(new EncodingManager(enc))
+  hopp.importOrLoad()
+  
+  (hopp, enc)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>getHopper: (com.graphhopper.GraphHopper, com.graphhopper.routing.util.CarFlagEncoder)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The next step does the actual map matching. It begins by creating a new GraphHopper object for each partition, this is done as the GraphHopper objects themselves are not Serializable and so must be created on the partitions themselves to avoid this serialization step.</p>
+<p>Then once all the GraphHopper and MapMatching objects are created and initialised map matching runs for each trajectory on that partition. The actual map matching is done in the <code>mm.doWork()</code> call, this returns a MatchResult object (it is wrapped in a Try statment as an exception is raised when no match is found). With this MatchResult, Failed matches are filtered out being replaced by dummy data, when successful the coordinates of the matched points are extracted into an array of (latitude, longitude)</p>
+<p>The last (optional) step estimates the time taken to get from one matched point to another as currently there is no time information retained after the data has been map matched. This is a rather crude way of doing this and more sophisticated methods would be preferable.</p>
+</div>
+<div class="cell markdown">
+<p>Let's recall this most useful transformation first!</p>
+<h2 id="mappartitions"><a class="header" href="#mappartitions">mapPartitions</a></h2>
+<p>Return a new RDD by applying a function to each partition of the RDD.</p>
+<p><img src="https://raw.githubusercontent.com/raazesh-sainudiin/scalable-data-science/master/db/visualapi/med/visualapi-47.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// let's look at a simple exmaple of mapPartitions in action
+val x = sc.parallelize(Array(1,2,3), 2) // RDD with 2 partitions
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[96] at parallelize at command-2971213210274852:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// our baby function we will call
+def f(i:Iterator[Int])={ (i.sum, 42).productIterator }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>f: (i: Iterator[Int])Iterator[Any]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val y = x.mapPartitions(f)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: org.apache.spark.rdd.RDD[Any] = MapPartitionsRDD[97] at mapPartitions at command-2971213210274854:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// glom() flattens elements on the same partition
+val xOut = x.glom().collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>xOut: Array[Array[Int]] = Array(Array(1), Array(2, 3))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val yOut = y.glom().collect() // we can see the mapPartitions with f applied to each partition
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>yOut: Array[Array[Any]] = Array(Array(1, 42), Array(5, 42))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Having understood the basic power of <code>mapPartitions</code> transformation, let's get back to map-matching problem at hand.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val matchTrips = ubers
+  .mapPartitions(partition =&gt; {
+    // Create the map matching object only once for each partition
+    val (hopp, enc) = getHopper
+
+    val tripGraph = hopp.getGraphHopperStorage()
+    val locationIndex = new LocationIndexMatch(tripGraph,
+                                               hopp.getLocationIndex().asInstanceOf[LocationIndexTree])
+
+    val mm = new MapMatching(tripGraph, locationIndex, enc)
+    
+    def extractLatLong(mr: MatchResult): Array[(Double, Double)] = {
+      val pointsList = mr.getEdgeMatches.asScala.zipWithIndex
+                    .map{ case  (e, i) =&gt;
+                              if (i == 0) e.getEdgeState.fetchWayGeometry(3) // FetchWayGeometry returns vertices on graph if 2,
+                              else e.getEdgeState.fetchWayGeometry(2) }      // and edges if 3 
+                    .map{case pointList =&gt; pointList.asScala.toArray}
+                    .flatMap{ case e =&gt; e}
+      val latLongs = pointsList.map(point =&gt; (point.lon, point.lat)).toArray
+
+      latLongs   
+    }
+
+    // Map matching parameters
+    // Have not found any documention on what these do, other that comments in source code
+    //   mm.setMaxSearchMultiplier(2000)
+    mm.setSeparatedSearchDistance(600)
+    mm.setForceRepair(true)
+
+    // Do the map matching for each trajectory
+    val matchedPartition = partition.map{case (key, dataPoints) =&gt; {
+
+      val sortedPoints = dataPoints.sortWith( (a, b) =&gt; a._3 &lt; b._3) // Sort by time
+      val gpxEntries = sortedPoints.map{ case (lat, lon, time) =&gt; new GPXEntry(lon, lat, time)}.toList.asJava
+
+      val mr = Try(mm.doWork(gpxEntries)) // mapMatch the trajectory, Try() wraps the exception when no match can be found
+      val points = mr match {
+        case Success(result) =&gt; {
+          val pointsList = result.getEdgeMatches.asScala.zipWithIndex // (edge, index tuple)
+                      .map{ case  (e, i) =&gt;
+                                if (i == 0) e.getEdgeState.fetchWayGeometry(3) // FetchWayGeometry returns verts on graph if 2,
+                                else e.getEdgeState.fetchWayGeometry(2)        // and edges if 3 (I'm pretty sure that's the case)
+                      }      
+                      .map{case pointList =&gt; pointList.asScala.toArray}
+                      .flatMap{ case e =&gt; e}
+          val latLongs = pointsList.map(point =&gt; (point.lon, point.lat)).toArray
+
+          latLongs
+        }
+        case Failure(_) =&gt; Array[(Double, Double)]() // When no match can be made
+      }
+
+      // Use GraphHopper routing to get time estimates of the new matched trajcetory
+      /// NOTE: Currently only calculates time offsets from 0
+      val times = points.iterator.sliding(2).map{ pair =&gt;
+        val (lonFrom, latFrom) = pair(0)
+        val (lonTo, latTo) = pair(1)
+
+        val req = new GHRequest(latFrom, lonFrom, latTo, lonTo)
+            .setWeighting(&quot;shortest&quot;)
+            .setVehicle(&quot;car&quot;)
+            .setLocale(&quot;US&quot;)
+
+//         val time = hopp.route(req).getTime -- using new method
+        val time = hopp.route(req).getBest.getTime
+        time
+      }
+    
+    val timeOffsets = times.scanLeft(0.toLong){ (a: Long, b: Long) =&gt; a + b }.toList
+    
+    (key, points.zip(timeOffsets)) // Return a tuple of (key, Array((lat, lon), timeOffSetFromStart))
+  }}
+  
+  matchedPartition
+}).cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>matchTrips: org.apache.spark.rdd.RDD[(Integer, Array[((Double, Double), Long)])] = MapPartitionsRDD[1196] at mapPartitions at command-2971213210274858:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(matchTrips.toDF.limit(2))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Define the schema of the points in a map matched trip
+case class UberMatched(id: Int, lat: Double, lon: Double, time: Long) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class UberMatched
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Here we convert the map matched points into a dataframe and explore certain things about the matched points</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create a dataframe to better explore the matched trajectories, make sure it is sensible
+val matchTripsDF = matchTrips.map{case (id, points) =&gt; 
+  points.map(point =&gt; UberMatched(id, point._1._1, point._1._2, point._2 ))
+}
+.flatMap(uberMatched =&gt; uberMatched)
+.toDF.cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>matchTripsDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [id: int, lat: double ... 2 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">matchTripsDF.groupBy($&quot;id&quot;).count.orderBy(-$&quot;count&quot;).show(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-----+-----+
+|   id|count|
++-----+-----+
+|11721|  418|
+|23602|  264|
+| 3586|  250|
+| 3719|  247|
+| 5783|  225|
+|10858|  217|
+| 7092|  212|
+|10842|  212|
+|12734|  212|
+| 1333|  208|
++-----+-----+
+only showing top 10 rows
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Finally it is helpful to be able to visualise the results of the map matching.</p>
+<p>These next few steps take the map matched trips and convert them into json using the Spray-Json library. See <a href="https://github.com/spray/spray-json">here</a> for documentation on the library.</p>
+</div>
+<div class="cell markdown">
+<p>To make the visualisation less clutterd only two trips will be selected. Though little would have to be done to extend this to multiple/all of the trajectories.</p>
+<p>Here we select only those points that belong to the trip with id <code>11721</code> and id <code>10858</code>, it is selected only because it contains the most points after map matching.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val filterTrips = matchTrips.filter{case (id, values) =&gt; id == 11721 || id == 10858 }.cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>filterTrips: org.apache.spark.rdd.RDD[(Integer, Array[((Double, Double), Long)])] = MapPartitionsRDD[115] at filter at command-2971213210274866:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Next a schema for the json representation of a trajectory. Then the filtered trips are collected to the master and converted to strings of Json</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Convert our Uber data points into GeoJson Geometries
+// Is not fully compliant with the spec but in a format that Leaflet understands
+case class UberData(`type`: String = &quot;MultiPoint&quot;,
+                    coordinates: Array[(Double, Double)])
+
+object UberJsonProtocol extends DefaultJsonProtocol {
+  implicit val uberDataFormat = jsonFormat2(UberData)
+}
+
+import UberJsonProtocol._
+
+val mapMatchedTrajectories = filterTrips.collect.map{case (key, matchedPoints) =&gt; { // change filterTrips to matchTrip to get all matched trajectories as json
+  val jsonString = UberData(coordinates = matchedPoints.map{case ((lat, lon), time) =&gt; (lat, lon)}).toJson.prettyPrint
+  jsonString
+}}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class UberData
+defined object UberJsonProtocol
+import UberJsonProtocol._
+mapMatchedTrajectories: Array[String] =
+Array({
+  &quot;type&quot;: &quot;MultiPoint&quot;,
+  &quot;coordinates&quot;: [[-122.42245184084292, 37.77072625839843], [-122.42243656715236, 37.77058581495104], [-122.42240359833248, 37.77025929324908], [-122.4224008043647, 37.77022911839699], [-122.4223676492803, 37.76987353943006], [-122.42172391910233, 37.76991358630166], [-122.42160135704879, 37.76992345832117], [-122.4214882944857, 37.76993705563107], [-122.42136852639992, 37.76995251558615], [-122.42125322866261, 37.769969651921905], [-122.42113383310587, 37.76998883716737], [-122.42100940840713, 37.76997337721229], [-122.42095278399331, 37.769978406354305], [-122.42077732281635, 37.76999368004487], [-122.42028837845373, 37.77000932626447], [-122.42018705055536, 37.7700085812064], [-122.42019748136842, 37.7699178703856], [-122.4201181326833, 37.769236142245745], [-122.42008423254082, 37.76918175300617], [-122.4200527538371, 37.76923651477478], [-122.4200313334174, 37.76943265131338], [-122.42002574548182, 37.76953025392138], [-122.42001345202357, 37.769660266555704], [-122.41998607113926, 37.7699178703856], [-122.41996651336476, 37.770005973503125], [-122.41984357878216, 37.77000057183207], [-122.41926019830838, 37.769963877721814], [-122.41909088386053, 37.76994469247635], [-122.41891113859961, 37.7699178703856], [-122.41878541004922, 37.76989794008206], [-122.41829665195115, 37.76981821886789], [-122.41782111863392, 37.769741664150544], [-122.41772891769698, 37.76972694925354], [-122.41753948668106, 37.76969547054981], [-122.4173642117686, 37.76966864845906], [-122.41688439436743, 37.76960867128392], [-122.41674693115235, 37.76959824047085], [-122.41665435768637, 37.7695909761546], [-122.41619428432422, 37.769570859586544], [-122.41606762445124, 37.76956285021222], [-122.4155909735469, 37.76953304788917], [-122.41450244369736, 37.76950417688871], [-122.41378495276983, 37.76948741308199], [-122.41340273797667, 37.769474560830176], [-122.41220785108673, 37.76943842551347], [-122.41199159798008, 37.76943209251982], [-122.41131154622089, 37.76938534012553], [-122.41121822769682, 37.769376399428616], [-122.41115731919909, 37.769370625228525], [-122.41101464057746, 37.769354420215365], [-122.4109047445112, 37.76943488648761], [-122.41077063405746, 37.76954627267002], [-122.4104606898977, 37.76979866109338], [-122.41031279586954, 37.76991340003714], [-122.41022636913269, 37.76998045526401], [-122.40974413029278, 37.77035447441834], [-122.40962901881998, 37.770334357850274], [-122.40929392895015, 37.770282017520415], [-122.40906240215293, 37.77022297166786], [-122.40884540398818, 37.77013673119553], [-122.40854067523496, 37.76996927939287], [-122.40832609850897, 37.7698349826746], [-122.40775855051932, 37.769472139391425], [-122.40708874330868, 37.769007595680826], [-122.40683840379502, 37.768820027310106], [-122.4063531847228, 37.76846202690442], [-122.4059715287232, 37.76817015040301], [-122.40576030475856, 37.76796693581269], [-122.40560086233022, 37.767732987576714], [-122.40553455216143, 37.76757298635482], [-122.40549711299309, 37.767405162023124], [-122.405491338793, 37.76732115672502], [-122.40548221183155, 37.767276453240434], [-122.40541385275306, 37.76674075648354], [-122.40533245515822, 37.76631756349618], [-122.40525645923442, 37.76605064644033], [-122.40513762247124, 37.76481217365292], [-122.40511340808376, 37.764428096214566], [-122.40511191796762, 37.764387118020366], [-122.40511229049666, 37.764303298986775], [-122.40512979936145, 37.76398329654299], [-122.40516705226527, 37.76372625150665], [-122.40522740196946, 37.76346250094762], [-122.40535387557792, 37.763090530703], [-122.40559397054301, 37.76260307645656], [-122.4061734394619, 37.76165648017056], [-122.40629581525093, 37.76140763077306], [-122.40639081015566, 37.76115263464643], [-122.40645637526639, 37.76089186431971], [-122.40648915782174, 37.76062345714771], [-122.40649027540886, 37.760358775266084], [-122.4064604730858, 37.76009297579735], [-122.40635430230992, 37.759696232371695], [-122.40624906285665, 37.75945166705813], [-122.40603057457575, 37.75908621607169], [-122.40585082931483, 37.758859904680996], [-122.40563178224039, 37.758637691109726], [-122.405418136837, 37.75845440682294], [-122.4044393167892, 37.75773505325023], [-122.40410292306773, 37.757449137213435], [-122.40381235041795, 37.75713416391166], [-122.40364862390567, 37.75690058820472], [-122.40351767994875, 37.75665658168472], [-122.40338207937886, 37.75629262081443], [-122.40328447677086, 37.75577648183204], [-122.40304456807027, 37.753280164747245], [-122.40301904983116, 37.75275210483563], [-122.40302016741828, 37.75262414111102], [-122.40311255461974, 37.75222106469172], [-122.40330012299046, 37.75159651975922], [-122.40334724791379, 37.75146576206682], [-122.40350594528405, 37.75110049734489], [-122.40397365549148, 37.74993131495859], [-122.40405896464122, 37.749760324130065], [-122.40410981485493, 37.749678367741666], [-122.40420015314669, 37.74960479325663], [-122.40431377450334, 37.749536434178125], [-122.40456467281054, 37.749446282150885], [-122.40481277714996, 37.74940493142765], [-122.40491466384191, 37.7494112644213], [-122.40501748185643, 37.749430263402246], [-122.40516649347171, 37.7494883779322], [-122.40536486518454, 37.7495772261078], [-122.40538982463009, 37.74960702843086], [-122.40553064060653, 37.74984898604115], [-122.40555466872948, 37.74989443458381], [-122.4057696179845, 37.750304030261276], [-122.40605516149228, 37.75084438363115], [-122.40610843314472, 37.751026177801776], [-122.40614456846143, 37.75138157050419], [-122.4061715768167, 37.75163172375333], [-122.40617921366199, 37.751738453322766], [-122.406184242804, 37.75181538056915], [-122.40625129803087, 37.75252877367725], [-122.4062878058766, 37.752933153948184], [-122.4062905998444, 37.75300225808476], [-122.40641278936891, 37.752984004161895], [-122.40651244088663, 37.75296928926489], [-122.4072226674979, 37.75292011543185], [-122.40732176022206, 37.75291359617368], [-122.40740557925565, 37.752908380767146], [-122.40813294220268, 37.75286479486968], [-122.40821378100397, 37.75285976572766], [-122.40829014945679, 37.75285548164373], [-122.40903148224275, 37.752812454539814], [-122.40914864262525, 37.75280556275261], [-122.40927343985304, 37.75279829843637], [-122.41001421384546, 37.7527547125389], [-122.41008909218212, 37.752750242190444], [-122.41016657822206, 37.752745585577465], [-122.41090493077573, 37.7527010683574], [-122.41098223055114, 37.75269622547991], [-122.41105971659108, 37.75269138260241], [-122.41179974552541, 37.7526483554985], [-122.41189567175275, 37.75264202250485], [-122.41203499761302, 37.752632895543414], [-122.41225963262303, 37.75261780811737], [-122.41248482642662, 37.752603093220365], [-122.41289721607187, 37.752578133774804], [-122.41293372391762, 37.7525760848651], [-122.41301288633822, 37.752571241987596], [-122.41308403938451, 37.75256677163914], [-122.41311160653333, 37.75256528152299], [-122.4135172906559, 37.75254088087099], [-122.41380134404751, 37.75252374453523], [-122.41398928494728, 37.752512382399566], [-122.41410234751037, 37.75250567687688], [-122.41423422278987, 37.752498598825156], [-122.41510854844246, 37.75244514090818], [-122.41518864218567, 37.752440298030685], [-122.41528102938715, 37.75243452383059], [-122.41615107095579, 37.752382556029765], [-122.41628164238367, 37.752374546655446], [-122.41641891933423, 37.75236709607468], [-122.41644611395402, 37.752364674635935], [-122.41684248485065, 37.75234083277749], [-122.41700099595639, 37.75233133328702], [-122.41727815756079, 37.7523145694803], [-122.41737389752359, 37.75230898154472], [-122.41747615674457, 37.75230264855108], [-122.41789525191251, 37.75227768910552], [-122.4180444497923, 37.75226856214408], [-122.4181517381553, 37.75226204288592], [-122.41833707135179, 37.75225049448573], [-122.41846335869573, 37.752243416434005], [-122.41859653782687, 37.75223577958872], [-122.41864999574386, 37.75223279935642], [-122.41899514389772, 37.752213427846435], [-122.41903332812413, 37.752211192672206], [-122.41945596231794, 37.75218586069761], [-122.41956958367459, 37.75217971396848], [-122.41967482312786, 37.75217393976839], [-122.42008460506986, 37.752145813826004], [-122.42021722540746, 37.75213799071621], [-122.42044968352727, 37.75212383461275], [-122.4206655641049, 37.75211098236094], [-122.42096768515485, 37.752092728438065], [-122.42114370512539, 37.752082297624995], [-122.42159576911321, 37.75205491674069], [-122.42274613878308, 37.75198581260411], [-122.42283442816513, 37.75198059719757], [-122.4229268153666, 37.75197482299748], [-122.42305887691063, 37.7519671861522], [-122.42399448359001, 37.75191167932552], [-122.4245283177017, 37.75187908303467], [-122.42509512063329, 37.75184443783412], [-122.42524282839692, 37.75183568340173], [-122.42542350498043, 37.7518246937951], [-122.4255550077309, 37.751816870685296], [-122.42580981759302, 37.75180159699473], [-122.4263317307755, 37.751770118291006], [-122.42730943323619, 37.7517114449675], [-122.4274325540833, 37.75170418065125], [-122.42744857283193, 37.751703249328656], [-122.4274705520452, 37.75170194547702], [-122.42845365617693, 37.751642527095434], [-122.42854771975907, 37.75163693915986], [-122.42866134111571, 37.75163004737266], [-122.42952374583908, 37.75157826583635], [-122.42965878761542, 37.75157007019751], [-122.42982530809549, 37.751560011913476], [-122.43069106558019, 37.751508044112654], [-122.43085479209248, 37.75149817209314], [-122.43102913568234, 37.75148774128007], [-122.43173936229361, 37.7514450867052], [-122.43187682550871, 37.75143670480184], [-122.4320485613953, 37.751426087724255], [-122.43314174785782, 37.75135884623287], [-122.43372531459612, 37.75132289718068], [-122.43381379024268, 37.75131730924511], [-122.4341086469764, 37.75129924158676], [-122.43445211874959, 37.75127875248966], [-122.4358818851981, 37.751193443339915], [-122.43617022267364, 37.75117630700416], [-122.43630042157248, 37.75116848389436], [-122.43645744256207, 37.75115898440389], [-122.4383871429798, 37.75104089269878], [-122.43849163737502, 37.75103455970513], [-122.43850057807194, 37.751126574377565], [-122.43856800582785, 37.751832516904905], [-122.43864437428067, 37.75263028784015], [-122.4387216740561, 37.753435881885196], [-122.43873191860465, 37.75354372904175], [-122.43879766997988, 37.7542293687365], [-122.43890384075576, 37.75533708383151], [-122.43888428298125, 37.75541363854886], [-122.43902025608018, 37.75539706100666], [-122.4396468499224, 37.75531994749576], [-122.43996908754042, 37.755253451062444], [-122.44005495548372, 37.75522681523621], [-122.44018049776957, 37.75523631472669], [-122.44025556237077, 37.75527729292089], [-122.44029169768747, 37.755338946476705], [-122.44012536347192, 37.75564386149445], [-122.44010282546512, 37.75574537565735], [-122.4400860616584, 37.75581652870364], [-122.44008382648417, 37.75598342171274], [-122.44015367567883, 37.75641872189385], [-122.44026208162893, 37.75640996746145], [-122.44090711565853, 37.75625946573003], [-122.44103526564766, 37.756229477142455], [-122.44106059762225, 37.75627492568511], [-122.44112187864904, 37.75635855845418], [-122.44121538343762, 37.756444240132964], [-122.44141412767948, 37.756549852115285], [-122.4415674233787, 37.756590830309484], [-122.44202265386335, 37.756654346510494], [-122.44210684542597, 37.75667818836894], [-122.44217688088514, 37.756704451666124], [-122.44224374984749, 37.75673611663437], [-122.4423139715712, 37.756780075060874], [-122.44248309975453, 37.75692554765028], [-122.44293516374235, 37.75754711235047], [-122.44309535122876, 37.757728533992065], [-122.44316426910082, 37.75779689307057], [-122.4432460392247, 37.75787363405243], [-122.44332892693569, 37.75794571842132], [-122.44340939320794, 37.75801053847396], [-122.44347458578962, 37.75805915351344], [-122.44363905735997, 37.75816737319903], [-122.44366681077332, 37.75818618591546], [-122.44371896483867, 37.75821431185784], [-122.44376702108458, 37.75823852624532], [-122.44390988597073, 37.758302787504405], [-122.44451822589006, 37.75858255681207], [-122.44463631759515, 37.75867103245864], [-122.44473671417094, 37.75878297743461], [-122.44477601598447, 37.75884183702264], [-122.44480879853984, 37.758906657075286], [-122.44486784439239, 37.75916761366653], [-122.4448445613275, 37.75937958268925], [-122.44482053320453, 37.7594542747614], [-122.44479408364283, 37.75950903653001], [-122.44468958924762, 37.7596699690745], [-122.44464693467275, 37.75971746652687], [-122.44469797115097, 37.75970126151371], [-122.44479464243638, 37.759634392551355], [-122.44495222221953, 37.75936002491474], [-122.44499599438151, 37.759316997810835], [-122.44500102352353, 37.75924044309349], [-122.44499841582027, 37.759163515847106], [-122.44498891632979, 37.75908938256851], [-122.44497196625855, 37.75901599434799], [-122.44487902026353, 37.758804956647865], [-122.44477582971996, 37.75868388471046], [-122.44463929782746, 37.75857193973449], [-122.44448469827663, 37.75848383661696], [-122.44389088698978, 37.75821021403842], [-122.44382643946618, 37.75816979463778], [-122.44374783583912, 37.75811615045628], [-122.44356213011359, 37.75798408891225], [-122.44349786885451, 37.75793603266633], [-122.44342261798879, 37.75787586922666], [-122.44334289677462, 37.75780657882556], [-122.44326038159267, 37.75773207301793], [-122.44312887884219, 37.7576069032611], [-122.44297241664616, 37.75744373554238], [-122.44256282096869, 37.75688196175282], [-122.44244510179263, 37.75677020304136], [-122.44230652099043, 37.75667911969153], [-122.44223164265375, 37.756641121729636], [-122.4421433532717, 37.7566085254388], [-122.44196379427531, 37.75656382195422], [-122.44160039219857, 37.756517814618], [-122.44146106633829, 37.756474973778616], [-122.44134465101386, 37.75641015372597], [-122.44121985378608, 37.756303424156535], [-122.44115093591401, 37.75620265505171], [-122.44111182036501, 37.75607413253354], [-122.44111535939086, 37.755970941989965], [-122.44114665183008, 37.75585154643323], [-122.44120681526974, 37.75573867013466], [-122.44167303536102, 37.7551027630665], [-122.44191704188101, 37.754524970528294], [-122.44245217984435, 37.75379239217473], [-122.44253003841334, 37.753632204688316], [-122.44257902598186, 37.75346847817604], [-122.44267327582851, 37.75309091999585], [-122.44279043621101, 37.75262209220131], [-122.44285097217971, 37.752379575797455], [-122.44288189208989, 37.75225645495034], [-122.4430519515958, 37.751575099339526], [-122.4430664802283, 37.75151754360313], [-122.44338983543344, 37.7502222601374], [-122.44341144211765, 37.75013564713603], [-122.44343230374379, 37.750052386895995], [-122.44350159414489, 37.74977522529159], [-122.4435749823654, 37.74950029886142], [-122.4436636442765, 37.749304348587344], [-122.44415277490361, 37.74863696281545], [-122.44424609342768, 37.74845721755454], [-122.44427161166679, 37.748329998888], [-122.44427012155063, 37.74820035878272], [-122.4441691661813, 37.74768254341966], [-122.44418928274935, 37.74752719881074], [-122.44425745556335, 37.747374834434126], [-122.44429396340908, 37.74732715071724], [-122.44433289269357, 37.74728486867141], [-122.44444018105656, 37.74719136388283], [-122.44456050793589, 37.74711704433971], [-122.44468809913147, 37.74706898809379], [-122.44479911278485, 37.74704551876438], [-122.44487902026353, 37.747034156628715], [-122.44489075492824, 37.747117789397784], [-122.44492279242552, 37.7473433557304], [-122.4450084741043, 37.747946293978686], [-122.44501257192371, 37.74798112544375], [-122.44501517962698, 37.748013721734594], [-122.44501946371092, 37.74809158030357], [-122.44503306102081, 37.74830839220379], [-122.44503995280802, 37.74837339852095], [-122.4450563440857, 37.748503224890754], [-122.44507087271819, 37.74861815009903], [-122.44505131494368, 37.74878560190169], [-122.44488144170228, 37.74909815376471], [-122.4448533157599, 37.7492112163278], [-122.44484679650174, 37.74925498848978], [-122.44483059148857, 37.749368423581906], [-122.44492614518686, 37.74959305859193], [-122.44498053442643, 37.749668495722155], [-122.44528135162476, 37.74993429519089], [-122.44562314701729, 37.750238278886044], [-122.44574682665795, 37.75043348410205], [-122.44575558109035, 37.7505033332967], [-122.44575166953545, 37.750522704806684], [-122.44574515027729, 37.75054095872956], [-122.44544843089838, 37.75082389453405], [-122.4453169281479, 37.75089355746419], [-122.44528936099908, 37.75090119430947], [-122.44528805714745, 37.75093751589069], [-122.44510607671229, 37.75134431760038], [-122.44509694975086, 37.75137747268477], [-122.44508670520231, 37.75141751955638], [-122.44506584357617, 37.75165947716667], [-122.44510309648, 37.75186101537632], [-122.4451695929133, 37.752015428662645], [-122.44545010727904, 37.75251424504476], [-122.44547413540201, 37.752598250342864], [-122.44545588147915, 37.752727145390075], [-122.44527408730852, 37.753161700513104], [-122.44525415700497, 37.753356719464584], [-122.44525061797911, 37.75338354155534], [-122.44524633389517, 37.75340552076859], [-122.44513979059025, 37.75363816515293], [-122.44493564467733, 37.75390079812484], [-122.44490062694774, 37.75394196258355], [-122.44486858945046, 37.75398405836487], [-122.44471957783519, 37.75424352483996], [-122.4446718941183, 37.75438974248744], [-122.44464805225986, 37.75454378324473], [-122.44466183583428, 37.75478704470665], [-122.4447605560294, 37.75506811786595], [-122.44474695871949, 37.75521061022305], [-122.44468083481522, 37.75530877162461], [-122.44456628213598, 37.75540674676165], [-122.44441969195947, 37.7554950361437], [-122.44432525584828, 37.75551329006657], [-122.44423622140816, 37.75551235874397]]
+}, {
+  &quot;type&quot;: &quot;MultiPoint&quot;,
+  &quot;coordinates&quot;: [[-122.41189697560438, 37.772072950871426], [-122.4115702676379, 37.77181236680923], [-122.41128695930436, 37.7715866142121], [-122.4109047445112, 37.771281140400795], [-122.41059219264818, 37.77103489870656], [-122.41056462549935, 37.77101273322879], [-122.41011107139538, 37.77064635091975], [-122.40974413029278, 37.77035447441834], [-122.40962901881998, 37.770334357850274], [-122.40929392895015, 37.770282017520415], [-122.40906240215293, 37.77022297166786], [-122.40884540398818, 37.77013673119553], [-122.40854067523496, 37.76996927939287], [-122.40832609850897, 37.7698349826746], [-122.40775855051932, 37.769472139391425], [-122.40708874330868, 37.769007595680826], [-122.40683840379502, 37.768820027310106], [-122.4063531847228, 37.76846202690442], [-122.4059715287232, 37.76817015040301], [-122.40576030475856, 37.76796693581269], [-122.40560086233022, 37.767732987576714], [-122.40553455216143, 37.76757298635482], [-122.40549711299309, 37.767405162023124], [-122.405491338793, 37.76732115672502], [-122.40548221183155, 37.767276453240434], [-122.40541385275306, 37.76674075648354], [-122.40533245515822, 37.76631756349618], [-122.40525645923442, 37.76605064644033], [-122.40513762247124, 37.76481217365292], [-122.40511340808376, 37.764428096214566], [-122.40511191796762, 37.764387118020366], [-122.40511229049666, 37.764303298986775], [-122.40512979936145, 37.76398329654299], [-122.40516705226527, 37.76372625150665], [-122.40522740196946, 37.76346250094762], [-122.40535387557792, 37.763090530703], [-122.40559397054301, 37.76260307645656], [-122.4061734394619, 37.76165648017056], [-122.40629581525093, 37.76140763077306], [-122.40639081015566, 37.76115263464643], [-122.40645637526639, 37.76089186431971], [-122.40648915782174, 37.76062345714771], [-122.40649027540886, 37.760358775266084], [-122.4064604730858, 37.76009297579735], [-122.40635430230992, 37.759696232371695], [-122.40624906285665, 37.75945166705813], [-122.40603057457575, 37.75908621607169], [-122.40585082931483, 37.758859904680996], [-122.40563178224039, 37.758637691109726], [-122.405418136837, 37.75845440682294], [-122.4044393167892, 37.75773505325023], [-122.40410292306773, 37.757449137213435], [-122.40381235041795, 37.75713416391166], [-122.40364862390567, 37.75690058820472], [-122.40351767994875, 37.75665658168472], [-122.40338207937886, 37.75629262081443], [-122.40328447677086, 37.75577648183204], [-122.40304456807027, 37.753280164747245], [-122.40301904983116, 37.75275210483563], [-122.40302016741828, 37.75262414111102], [-122.40311255461974, 37.75222106469172], [-122.40330012299046, 37.75159651975922], [-122.40334724791379, 37.75146576206682], [-122.40347316272869, 37.751091370383456], [-122.40387642541252, 37.749896297229], [-122.40389225789664, 37.74986388720268], [-122.4039377064393, 37.74981415457608], [-122.40402860352461, 37.74973908997489], [-122.40416439035903, 37.749664397902734], [-122.40463563959231, 37.749497691158155], [-122.40476937751701, 37.749389285208046], [-122.40483326624707, 37.74926839953516], [-122.40483922671167, 37.74913950448795], [-122.40478558253018, 37.74901731496343], [-122.40468276451564, 37.74891375189082], [-122.4044149161372, 37.74871090982953], [-122.40412471601645, 37.74848776493567], [-122.4040509552669, 37.74841344539255], [-122.40398799785945, 37.74834452752049], [-122.40392485418748, 37.74825120899643], [-122.4038879738127, 37.74815118494968], [-122.40387288638665, 37.74812250021374], [-122.40381253668247, 37.74796361657896], [-122.40379316517249, 37.74780044886024], [-122.40382296749554, 37.74764249654805], [-122.40391088434855, 37.747388059214984], [-122.40431284318073, 37.746326537720705], [-122.40433333227783, 37.746106559323664], [-122.40432364652284, 37.74600411383817], [-122.40428974638037, 37.745946185572734], [-122.40423945496022, 37.74590185461719], [-122.40413365671337, 37.74586124895203], [-122.40404741624104, 37.74586571930049], [-122.40396136203321, 37.74589906064941], [-122.4038605929284, 37.74601007430278], [-122.40383228072149, 37.746066326187545], [-122.4036722794996, 37.74691699624621], [-122.40364229091202, 37.74708984971992], [-122.40366985806085, 37.74729269178121], [-122.40359535225322, 37.747486779410096], [-122.40360392042109, 37.74773451122048], [-122.40361826278907, 37.74788389536479], [-122.40362031169877, 37.74791481527496], [-122.40367246576412, 37.747960636346654], [-122.40376876452048, 37.7482245731702], [-122.40384587803139, 37.74835011545606], [-122.4040069968404, 37.74854867343341], [-122.40419028112717, 37.74872767363625], [-122.40459410260455, 37.74900744294392], [-122.40468965630285, 37.749071704203004], [-122.40472877185185, 37.74909796750019], [-122.40478297482692, 37.749135220404014], [-122.40497072946215, 37.749265046773814], [-122.40505249958602, 37.74932129865858], [-122.40513762247124, 37.74937978571757], [-122.40533990573898, 37.7495498452235], [-122.40536486518454, 37.7495772261078], [-122.40538982463009, 37.74960702843086], [-122.40553064060653, 37.74984898604115], [-122.40555466872948, 37.74989443458381], [-122.4057696179845, 37.750304030261276], [-122.40605516149228, 37.75084438363115], [-122.40610843314472, 37.751026177801776], [-122.40614456846143, 37.75138157050419], [-122.4061715768167, 37.75163172375333], [-122.40617921366199, 37.751738453322766], [-122.406184242804, 37.75181538056915], [-122.40625129803087, 37.75252877367725], [-122.4062878058766, 37.752933153948184], [-122.4062905998444, 37.75300225808476], [-122.40629525645737, 37.753083841944125], [-122.40632133349004, 37.75332524076086], [-122.40634275390974, 37.75356067911299], [-122.40640701516882, 37.75421390878142], [-122.4064146520141, 37.754292698673], [-122.4064418466339, 37.754581036148544], [-122.4064487384211, 37.754652189194836], [-122.40658862307494, 37.75610896399861], [-122.40659495606859, 37.75617564669644], [-122.4066009165332, 37.75624679974273], [-122.40664506122421, 37.75677113436396], [-122.40665139421786, 37.75684582643611], [-122.40666014865026, 37.75691567563077], [-122.40669702902504, 37.75721500271294], [-122.40670969501234, 37.75739307159319], [-122.40672552749646, 37.75756834650565], [-122.40673819348376, 37.75770785863045], [-122.40674471274193, 37.75778012926385], [-122.40675123200009, 37.75784550811005], [-122.40676855460038, 37.758021714345105], [-122.40687267646653, 37.759083794632936], [-122.40689204797653, 37.759306566997765], [-122.40689893976374, 37.75937604366338], [-122.40690434143478, 37.75945632367111], [-122.40699635610721, 37.76036808849204], [-122.40701814905594, 37.7605999878183], [-122.40702392325603, 37.7606692782194], [-122.40703193263036, 37.76074397029156], [-122.407047951379, 37.760907696803834], [-122.40708557681185, 37.76129475447449], [-122.40712096707048, 37.76165256861566], [-122.40714238749018, 37.76187478218693], [-122.40714797542574, 37.761942582471875], [-122.40715598480007, 37.762023980066715], [-122.40723514722069, 37.76293220586178], [-122.40725526378874, 37.76314249850383], [-122.40727817432459, 37.763173418414], [-122.40732250528013, 37.76321663178243], [-122.40734634713857, 37.7634701377929], [-122.407350444958, 37.76351465501296], [-122.4074109809267, 37.76414422908748], [-122.40741563753967, 37.76419284412696], [-122.40744394974658, 37.764486769538074], [-122.40746835039857, 37.76474102060663], [-122.40747058557281, 37.76476486246507], [-122.40747375206963, 37.76479727249139], [-122.40748399661818, 37.76490381579631], [-122.40749256478605, 37.76499229144288], [-122.40753056274795, 37.765388476074975], [-122.40754453258688, 37.76553432119342], [-122.407560365071, 37.76569935155733], [-122.40756781565177, 37.76578074915217], [-122.40757899152291, 37.76589288039266], [-122.40760078447165, 37.76611844672527], [-122.40766597705333, 37.766797380897344], [-122.40768460350523, 37.76701251641689], [-122.40769056396985, 37.76708162055347], [-122.40769857334416, 37.7671648807935], [-122.40771813111867, 37.767367722854786], [-122.40772204267357, 37.76740832851995], [-122.40778406875843, 37.768054480136655], [-122.40779133307467, 37.76812954473785], [-122.40781368481696, 37.76836181659315], [-122.40782504695262, 37.76849741716305], [-122.4078315662108, 37.76857434440943], [-122.40779561715861, 37.76870025922433], [-122.40780511664909, 37.76883567352971], [-122.40781834142994, 37.76896382351884], [-122.40782541948167, 37.769033486448976], [-122.40782933103657, 37.76907018055924], [-122.40783715414636, 37.76914561768947], [-122.40790141540545, 37.769241171387755], [-122.40777456926796, 37.76938627144813], [-122.4077466295901, 37.76941644630022], [-122.40768516229879, 37.76948294273353], [-122.40764213519489, 37.769530440185896], [-122.40708632186993, 37.76999554269006], [-122.40699765995885, 37.77006986223317], [-122.40690806672517, 37.77014213286658], [-122.40686299071155, 37.7701784544478], [-122.40630158945102, 37.77063107722918], [-122.40554386538737, 37.77122619236766], [-122.40544589025033, 37.77130330587856], [-122.40536691409424, 37.77136458690534], [-122.40535909098445, 37.77137091989899], [-122.40448457906733, 37.77205842223894], [-122.40401854524058, 37.77242480454798]]
+})
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now the same is done except using the original trajectory rather than the map matched one.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val originalTraj = uberData.filter($&quot;tripId&quot; === 11721 || $&quot;tripId&quot; == 10858)
+    .select($&quot;latlon&quot;).cache
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>originalTraj: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [latlon: array&lt;double&gt;]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Convert our Uber data points into GeoJson Geometries 
+case class UberData(`type`: String = &quot;MultiPoint&quot;,
+                    coordinates: Array[(Double, Double)])
+
+object UberJsonProtocol extends DefaultJsonProtocol {
+  implicit val uberDataFormat = jsonFormat2(UberData)
+}
+
+import UberJsonProtocol._
+
+val originalLatLon = originalTraj
+  .map(r =&gt; r.getAs[scala.collection.mutable.WrappedArray[Double]](&quot;latlon&quot;))
+  .map(point =&gt; (point(0), point(1))).collect
+
+val originalJson = UberData(coordinates = originalLatLon).toJson.prettyPrint  // Original Unmatched trajectories
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class UberData
+defined object UberJsonProtocol
+import UberJsonProtocol._
+originalLatLon: Array[(Double, Double)] = Array((-122.418327,37.769662), (-122.420465,37.752152), (-122.440099,37.755275), (-122.418033,37.769377), (-122.420542,37.752137), (-122.44031,37.75535), (-122.41801,37.769061), (-122.420881,37.7521), (-122.440255,37.755554), (-122.418315,37.76886), (-122.421396,37.75206), (-122.440142,37.755828), (-122.418724,37.768883), (-122.421987,37.75203), (-122.440138,37.756193), (-122.419014,37.769147), (-122.422569,37.752005), (-122.440149,37.756371), (-122.418971,37.769483), (-122.422693,37.752004), (-122.440359,37.756411), (-122.418511,37.769687), (-122.422818,37.752014), (-122.44069,37.756341), (-122.417832,37.769659), (-122.423185,37.751983), (-122.44086,37.756313), (-122.41706,37.769579), (-122.423685,37.751946), (-122.441048,37.756333), (-122.416215,37.769531), (-122.424169,37.751918), (-122.441334,37.756555), (-122.415324,37.769522), (-122.424708,37.751885), (-122.441897,37.756684), (-122.414432,37.76951), (-122.424958,37.751875), (-122.442435,37.756889), (-122.413484,37.769487), (-122.424984,37.751852), (-122.442802,37.757329), (-122.412444,37.769453), (-122.425247,37.751841), (-122.443158,37.757806), (-122.411387,37.769401), (-122.425729,37.751814), (-122.443619,37.758213), (-122.410386,37.769268), (-122.426196,37.751781), (-122.444145,37.758475), (-122.409464,37.769109), (-122.426694,37.751751), (-122.444577,37.758679), (-122.408661,37.768924), (-122.427177,37.751718), (-122.444832,37.759028), (-122.407822,37.76878), (-122.427336,37.751713), (-122.444837,37.759426), (-122.406908,37.768626), (-122.427581,37.7517), (-122.444577,37.759657), (-122.406076,37.768222), (-122.428053,37.75167), (-122.444514,37.759751), (-122.405508,37.767584), (-122.428398,37.751655), (-122.444658,37.75975), (-122.405369,37.76681), (-122.428542,37.751655), (-122.444871,37.759528), (-122.405278,37.765996), (-122.428965,37.751632), (-122.444939,37.759096), (-122.405222,37.765188), (-122.429399,37.751602), (-122.444754,37.758632), (-122.405166,37.764413), (-122.429542,37.751587), (-122.444395,37.758382), (-122.405225,37.763661), (-122.429883,37.751555), (-122.444256,37.758327), (-122.405476,37.762902), (-122.430437,37.751511), (-122.444097,37.758272), (-122.405923,37.762129), (-122.431027,37.751473), (-122.443826,37.758148), (-122.406369,37.761326), (-122.431551,37.751459), (-122.443456,37.757896), (-122.40657,37.760493), (-122.43174,37.751459), (-122.443045,37.757527), (-122.406438,37.759641), (-122.432052,37.751442), (-122.442714,37.757076), (-122.405972,37.758826), (-122.432547,37.751401), (-122.442393,37.756685), (-122.405289,37.758195), (-122.433013,37.751368), (-122.441899,37.756513), (-122.404561,37.757664), (-122.433527,37.75134), (-122.441371,37.756363), (-122.403931,37.757064), (-122.434029,37.751315), (-122.441165,37.755966), (-122.403497,37.756271), (-122.434547,37.751281), (-122.441389,37.75552), (-122.403226,37.754705), (-122.435054,37.751253), (-122.441737,37.755033), (-122.403133,37.753789), (-122.435511,37.751228), (-122.442034,37.754477), (-122.403107,37.753565), (-122.435945,37.751211), (-122.44236,37.754006), (-122.403045,37.752721), (-122.436152,37.7512), (-122.442662,37.753557), (-122.403134,37.751899), (-122.436356,37.751184), (-122.442805,37.753054), (-122.403397,37.751196), (-122.436847,37.751152), (-122.442904,37.752566), (-122.40367,37.750529), (-122.437464,37.751113), (-122.443011,37.752035), (-122.403916,37.74996), (-122.438115,37.751083), (-122.443169,37.751483), (-122.404188,37.749513), (-122.438337,37.75107), (-122.44333,37.750914), (-122.40475,37.749263), (-122.4385,37.751162), (-122.443481,37.750366), (-122.405186,37.749328), (-122.438535,37.75151), (-122.443608,37.74989), (-122.405446,37.749605), (-122.438569,37.751751), (-122.443739,37.749409), (-122.405722,37.750095), (-122.438591,37.751967), (-122.443995,37.749005), (-122.405981,37.750691), (-122.438646,37.752356), (-122.444297,37.748614), (-122.406143,37.751261), (-122.438655,37.752555), (-122.444418,37.748159), (-122.406192,37.751811), (-122.438666,37.752747), (-122.444341,37.747639), (-122.406246,37.752386), (-122.438701,37.753118), (-122.444515,37.747228), (-122.406331,37.752796), (-122.438718,37.75333), (-122.444731,37.747076), (-122.406367,37.752952), (-122.438702,37.753511), (-122.444758,37.747066), (-122.406436,37.752996), (-122.438716,37.753871), (-122.444928,37.747193), (-122.406774,37.753001), (-122.438745,37.75411), (-122.444944,37.747476), (-122.407123,37.752941), (-122.438767,37.75422), (-122.444931,37.747834), (-122.407234,37.752931), (-122.43883,37.754559), (-122.444924,37.748234), (-122.407593,37.752915), (-122.438898,37.755016), (-122.444938,37.748669), (-122.407987,37.752886), (-122.438914,37.755296), (-122.444866,37.749047), (-122.408148,37.752862), (-122.438889,37.755366), (-122.444752,37.749373), (-122.408531,37.752836), (-122.438864,37.755555), (-122.444881,37.749725), (-122.408922,37.752817), (-122.438884,37.755852), (-122.445259,37.750076), (-122.408958,37.752814), (-122.438931,37.756233), (-122.445615,37.750375), (-122.409201,37.752817), (-122.438969,37.756521), (-122.445711,37.750517), (-122.409683,37.752807), (-122.43901,37.756796), (-122.445731,37.75057), (-122.409911,37.752785), (-122.439033,37.757037), (-122.445745,37.750608), (-122.410194,37.752723), (-122.439219,37.757126), (-122.445524,37.750736), (-122.410691,37.752689), (-122.439402,37.757132), (-122.445241,37.751019), (-122.410904,37.752679), (-122.439496,37.75712), (-122.445072,37.751368), (-122.411205,37.752666), (-122.439774,37.757185), (-122.445045,37.751731), (-122.411634,37.752642), (-122.440133,37.757251), (-122.445205,37.752141), (-122.411762,37.752633), (-122.440426,37.757365), (-122.445419,37.752573), (-122.422617,37.770549), (-122.411999,37.752599), (-122.440673,37.757582), (-122.445379,37.752959), (-122.422602,37.770505), (-122.412454,37.752544), (-122.440823,37.757866), (-122.445243,37.753398), (-122.42258,37.770472), (-122.412856,37.752522), (-122.440919,37.758086), (-122.445065,37.753805), (-122.422556,37.770377), (-122.412994,37.752521), (-122.440957,37.758141), (-122.444786,37.754166), (-122.4225,37.770249), (-122.413365,37.752504), (-122.440916,37.758093), (-122.44464,37.754517), (-122.422447,37.770132), (-122.413775,37.752444), (-122.440873,37.758018), (-122.444673,37.754914), (-122.422431,37.770048), (-122.413914,37.752431), (-122.440795,37.757945), (-122.444669,37.755273), (-122.422408,37.770006), (-122.414045,37.752478), (-122.44073,37.757726), (-122.444413,37.755485), (-122.422391,37.76999), (-122.414408,37.752469), (-122.440588,37.757431), (-122.444293,37.755533), (-122.422259,37.769866), (-122.41493,37.752428), (-122.440358,37.757253), (-122.42187,37.769849), (-122.415443,37.752393), (-122.439989,37.757148), (-122.4214,37.769876), (-122.415963,37.752366), (-122.439585,37.757045), (-122.421024,37.769912), (-122.416165,37.75235), (-122.439192,37.757043), (-122.420889,37.76993), (-122.416402,37.752351), (-122.439015,37.756936), (-122.420832,37.769942), (-122.41688,37.75233), (-122.438978,37.756708), (-122.420759,37.769902), (-122.417439,37.752294), (-122.438946,37.756414), (-122.420504,37.769874), (-122.417951,37.752258), (-122.438909,37.756055), (-122.420153,37.769848), (-122.418225,37.752245), (-122.438872,37.755653), (-122.419805,37.769819), (-122.41827,37.752243), (-122.438862,37.755536), (-122.419466,37.769781), (-122.418785,37.752229), (-122.438864,37.755472), (-122.418976,37.769726), (-122.419291,37.752216), (-122.438915,37.755413), (-122.418672,37.769685), (-122.419473,37.752208), (-122.43896,37.755403), (-122.418487,37.769666), (-122.419781,37.752187), (-122.439242,37.755366), (-122.418453,37.769667), (-122.420279,37.752162), (-122.439668,37.755331))
+originalJson: String =
+{
+  &quot;type&quot;: &quot;MultiPoint&quot;,
+  &quot;coordinates&quot;: [[-122.418327, 37.769662], [-122.420465, 37.752152], [-122.440099, 37.755275], [-122.418033, 37.769377], [-122.420542, 37.752137], [-122.44031, 37.75535], [-122.41801, 37.769061], [-122.420881, 37.7521], [-122.440255, 37.755554], [-122.418315, 37.76886], [-122.421396, 37.75206], [-122.440142, 37.755828], [-122.418724, 37.768883], [-122.421987, 37.75203], [-122.440138, 37.756193], [-122.419014, 37.769147], [-122.422569, 37.752005], [-122.440149, 37.756371], [-122.418971, 37.769483], [-122.422693, 37.752004], [-122.440359, 37.756411], [-122.418511, 37.769687], [-122.422818, 37.752014], [-122.44069, 37.756341], [-122.417832, 37.769659], [-122.423185, 37.751983], [-122.44086, 37.756313], [-122.41706, 37.769579], [-122.423685, 37.751946], [-122.441048, 37.756333], [-122.416215, 37.769531], [-122.424169, 37.751918], [-122.441334, 37.756555], [-122.415324, 37.769522], [-122.424708, 37.751885], [-122.441897, 37.756684], [-122.414432, 37.76951], [-122.424958, 37.751875], [-122.442435, 37.756889], [-122.413484, 37.769487], [-122.424984, 37.751852], [-122.442802, 37.757329], [-122.412444, 37.769453], [-122.425247, 37.751841], [-122.443158, 37.757806], [-122.411387, 37.769401], [-122.425729, 37.751814], [-122.443619, 37.758213], [-122.410386, 37.769268], [-122.426196, 37.751781], [-122.444145, 37.758475], [-122.409464, 37.769109], [-122.426694, 37.751751], [-122.444577, 37.758679], [-122.408661, 37.768924], [-122.427177, 37.751718], [-122.444832, 37.759028], [-122.407822, 37.76878], [-122.427336, 37.751713], [-122.444837, 37.759426], [-122.406908, 37.768626], [-122.427581, 37.7517], [-122.444577, 37.759657], [-122.406076, 37.768222], [-122.428053, 37.75167], [-122.444514, 37.759751], [-122.405508, 37.767584], [-122.428398, 37.751655], [-122.444658, 37.75975], [-122.405369, 37.76681], [-122.428542, 37.751655], [-122.444871, 37.759528], [-122.405278, 37.765996], [-122.428965, 37.751632], [-122.444939, 37.759096], [-122.405222, 37.765188], [-122.429399, 37.751602], [-122.444754, 37.758632], [-122.405166, 37.764413], [-122.429542, 37.751587], [-122.444395, 37.758382], [-122.405225, 37.763661], [-122.429883, 37.751555], [-122.444256, 37.758327], [-122.405476, 37.762902], [-122.430437, 37.751511], [-122.444097, 37.758272], [-122.405923, 37.762129], [-122.431027, 37.751473], [-122.443826, 37.758148], [-122.406369, 37.761326], [-122.431551, 37.751459], [-122.443456, 37.757896], [-122.40657, 37.760493], [-122.43174, 37.751459], [-122.443045, 37.757527], [-122.406438, 37.759641], [-122.432052, 37.751442], [-122.442714, 37.757076], [-122.405972, 37.758826], [-122.432547, 37.751401], [-122.442393, 37.756685], [-122.405289, 37.758195], [-122.433013, 37.751368], [-122.441899, 37.756513], [-122.404561, 37.757664], [-122.433527, 37.75134], [-122.441371, 37.756363], [-122.403931, 37.757064], [-122.434029, 37.751315], [-122.441165, 37.755966], [-122.403497, 37.756271], [-122.434547, 37.751281], [-122.441389, 37.75552], [-122.403226, 37.754705], [-122.435054, 37.751253], [-122.441737, 37.755033], [-122.403133, 37.753789], [-122.435511, 37.751228], [-122.442034, 37.754477], [-122.403107, 37.753565], [-122.435945, 37.751211], [-122.44236, 37.754006], [-122.403045, 37.752721], [-122.436152, 37.7512], [-122.442662, 37.753557], [-122.403134, 37.751899], [-122.436356, 37.751184], [-122.442805, 37.753054], [-122.403397, 37.751196], [-122.436847, 37.751152], [-122.442904, 37.752566], [-122.40367, 37.750529], [-122.437464, 37.751113], [-122.443011, 37.752035], [-122.403916, 37.74996], [-122.438115, 37.751083], [-122.443169, 37.751483], [-122.404188, 37.749513], [-122.438337, 37.75107], [-122.44333, 37.750914], [-122.40475, 37.749263], [-122.4385, 37.751162], [-122.443481, 37.750366], [-122.405186, 37.749328], [-122.438535, 37.75151], [-122.443608, 37.74989], [-122.405446, 37.749605], [-122.438569, 37.751751], [-122.443739, 37.749409], [-122.405722, 37.750095], [-122.438591, 37.751967], [-122.443995, 37.749005], [-122.405981, 37.750691], [-122.438646, 37.752356], [-122.444297, 37.748614], [-122.406143, 37.751261], [-122.438655, 37.752555], [-122.444418, 37.748159], [-122.406192, 37.751811], [-122.438666, 37.752747], [-122.444341, 37.747639], [-122.406246, 37.752386], [-122.438701, 37.753118], [-122.444515, 37.747228], [-122.406331, 37.752796], [-122.438718, 37.75333], [-122.444731, 37.747076], [-122.406367, 37.752952], [-122.438702, 37.753511], [-122.444758, 37.747066], [-122.406436, 37.752996], [-122.438716, 37.753871], [-122.444928, 37.747193], [-122.406774, 37.753001], [-122.438745, 37.75411], [-122.444944, 37.747476], [-122.407123, 37.752941], [-122.438767, 37.75422], [-122.444931, 37.747834], [-122.407234, 37.752931], [-122.43883, 37.754559], [-122.444924, 37.748234], [-122.407593, 37.752915], [-122.438898, 37.755016], [-122.444938, 37.748669], [-122.407987, 37.752886], [-122.438914, 37.755296], [-122.444866, 37.749047], [-122.408148, 37.752862], [-122.438889, 37.755366], [-122.444752, 37.749373], [-122.408531, 37.752836], [-122.438864, 37.755555], [-122.444881, 37.749725], [-122.408922, 37.752817], [-122.438884, 37.755852], [-122.445259, 37.750076], [-122.408958, 37.752814], [-122.438931, 37.756233], [-122.445615, 37.750375], [-122.409201, 37.752817], [-122.438969, 37.756521], [-122.445711, 37.750517], [-122.409683, 37.752807], [-122.43901, 37.756796], [-122.445731, 37.75057], [-122.409911, 37.752785], [-122.439033, 37.757037], [-122.445745, 37.750608], [-122.410194, 37.752723], [-122.439219, 37.757126], [-122.445524, 37.750736], [-122.410691, 37.752689], [-122.439402, 37.757132], [-122.445241, 37.751019], [-122.410904, 37.752679], [-122.439496, 37.75712], [-122.445072, 37.751368], [-122.411205, 37.752666], [-122.439774, 37.757185], [-122.445045, 37.751731], [-122.411634, 37.752642], [-122.440133, 37.757251], [-122.445205, 37.752141], [-122.411762, 37.752633], [-122.440426, 37.757365], [-122.445419, 37.752573], [-122.422617, 37.770549], [-122.411999, 37.752599], [-122.440673, 37.757582], [-122.445379, 37.752959], [-122.422602, 37.770505], [-122.412454, 37.752544], [-122.440823, 37.757866], [-122.445243, 37.753398], [-122.42258, 37.770472], [-122.412856, 37.752522], [-122.440919, 37.758086], [-122.445065, 37.753805], [-122.422556, 37.770377], [-122.412994, 37.752521], [-122.440957, 37.758141], [-122.444786, 37.754166], [-122.4225, 37.770249], [-122.413365, 37.752504], [-122.440916, 37.758093], [-122.44464, 37.754517], [-122.422447, 37.770132], [-122.413775, 37.752444], [-122.440873, 37.758018], [-122.444673, 37.754914], [-122.422431, 37.770048], [-122.413914, 37.752431], [-122.440795, 37.757945], [-122.444669, 37.755273], [-122.422408, 37.770006], [-122.414045, 37.752478], [-122.44073, 37.757726], [-122.444413, 37.755485], [-122.422391, 37.76999], [-122.414408, 37.752469], [-122.440588, 37.757431], [-122.444293, 37.755533], [-122.422259, 37.769866], [-122.41493, 37.752428], [-122.440358, 37.757253], [-122.42187, 37.769849], [-122.415443, 37.752393], [-122.439989, 37.757148], [-122.4214, 37.769876], [-122.415963, 37.752366], [-122.439585, 37.757045], [-122.421024, 37.769912], [-122.416165, 37.75235], [-122.439192, 37.757043], [-122.420889, 37.76993], [-122.416402, 37.752351], [-122.439015, 37.756936], [-122.420832, 37.769942], [-122.41688, 37.75233], [-122.438978, 37.756708], [-122.420759, 37.769902], [-122.417439, 37.752294], [-122.438946, 37.756414], [-122.420504, 37.769874], [-122.417951, 37.752258], [-122.438909, 37.756055], [-122.420153, 37.769848], [-122.418225, 37.752245], [-122.438872, 37.755653], [-122.419805, 37.769819], [-122.41827, 37.752243], [-122.438862, 37.755536], [-122.419466, 37.769781], [-122.418785, 37.752229], [-122.438864, 37.755472], [-122.418976, 37.769726], [-122.419291, 37.752216], [-122.438915, 37.755413], [-122.418672, 37.769685], [-122.419473, 37.752208], [-122.43896, 37.755403], [-122.418487, 37.769666], [-122.419781, 37.752187], [-122.439242, 37.755366], [-122.418453, 37.769667], [-122.420279, 37.752162], [-122.439668, 37.755331]]
+}
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ol start="5">
+<li>Display result of a map-matched trajectory</li>
+</ol>
+<hr />
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">val trajHTML = genLeafletHTML(mapMatchedTrajectories ++ Array(originalJson))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(trajHTML) // zoom and play - orange dots are raw and azure dots are map-matched
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Maps</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+  <style>
+  #map {width: 600px; height:400px;}
+  </style>
+</head>
+  <body>
+  <div id="map" style="width: 1000px; height: 600px"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+  <script type="text/javascript">
+  var map = L.map('map').setView([37.77471008393265, -122.40422604391485], 14);
+<p>L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHRnIiwiYSI6ImNpaWF6MGdiNDAwanNtemx6MmIyNXoyOWIifQ.ndbNtExCMXZHKyfNtEN0Vg', {
+maxZoom: 18,
+attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(map);</p>
+<p>var features = [{
+&quot;type&quot;: &quot;MultiPoint&quot;,
+&quot;coordinates&quot;: [[-122.42245184084292, 37.77072625839843], [-122.42243656715236, 37.77058581495104], [-122.42240359833248, 37.77025929324908], [-122.4224008043647, 37.77022911839699], [-122.4223676492803, 37.76987353943006], [-122.42172391910233, 37.76991358630166], [-122.42160135704879, 37.76992345832117], [-122.4214882944857, 37.76993705563107], [-122.42136852639992, 37.76995251558615], [-122.42125322866261, 37.769969651921905], [-122.42113383310587, 37.76998883716737], [-122.42100940840713, 37.76997337721229], [-122.42095278399331, 37.769978406354305], [-122.42077732281635, 37.76999368004487], [-122.42028837845373, 37.77000932626447], [-122.42018705055536, 37.7700085812064], [-122.42019748136842, 37.7699178703856], [-122.4201181326833, 37.769236142245745], [-122.42008423254082, 37.76918175300617], [-122.4200527538371, 37.76923651477478], [-122.4200313334174, 37.76943265131338], [-122.42002574548182, 37.76953025392138], [-122.42001345202357, 37.769660266555704], [-122.41998607113926, 37.7699178703856], [-122.41996651336476, 37.770005973503125], [-122.41984357878216, 37.77000057183207], [-122.41926019830838, 37.769963877721814], [-122.41909088386053, 37.76994469247635], [-122.41891113859961, 37.7699178703856], [-122.41878541004922, 37.76989794008206], [-122.41829665195115, 37.76981821886789], [-122.41782111863392, 37.769741664150544], [-122.41772891769698, 37.76972694925354], [-122.41753948668106, 37.76969547054981], [-122.4173642117686, 37.76966864845906], [-122.41688439436743, 37.76960867128392], [-122.41674693115235, 37.76959824047085], [-122.41665435768637, 37.7695909761546], [-122.41619428432422, 37.769570859586544], [-122.41606762445124, 37.76956285021222], [-122.4155909735469, 37.76953304788917], [-122.41450244369736, 37.76950417688871], [-122.41378495276983, 37.76948741308199], [-122.41340273797667, 37.769474560830176], [-122.41220785108673, 37.76943842551347], [-122.41199159798008, 37.76943209251982], [-122.41131154622089, 37.76938534012553], [-122.41121822769682, 37.769376399428616], [-122.41115731919909, 37.769370625228525], [-122.41101464057746, 37.769354420215365], [-122.4109047445112, 37.76943488648761], [-122.41077063405746, 37.76954627267002], [-122.4104606898977, 37.76979866109338], [-122.41031279586954, 37.76991340003714], [-122.41022636913269, 37.76998045526401], [-122.40974413029278, 37.77035447441834], [-122.40962901881998, 37.770334357850274], [-122.40929392895015, 37.770282017520415], [-122.40906240215293, 37.77022297166786], [-122.40884540398818, 37.77013673119553], [-122.40854067523496, 37.76996927939287], [-122.40832609850897, 37.7698349826746], [-122.40775855051932, 37.769472139391425], [-122.40708874330868, 37.769007595680826], [-122.40683840379502, 37.768820027310106], [-122.4063531847228, 37.76846202690442], [-122.4059715287232, 37.76817015040301], [-122.40576030475856, 37.76796693581269], [-122.40560086233022, 37.767732987576714], [-122.40553455216143, 37.76757298635482], [-122.40549711299309, 37.767405162023124], [-122.405491338793, 37.76732115672502], [-122.40548221183155, 37.767276453240434], [-122.40541385275306, 37.76674075648354], [-122.40533245515822, 37.76631756349618], [-122.40525645923442, 37.76605064644033], [-122.40513762247124, 37.76481217365292], [-122.40511340808376, 37.764428096214566], [-122.40511191796762, 37.764387118020366], [-122.40511229049666, 37.764303298986775], [-122.40512979936145, 37.76398329654299], [-122.40516705226527, 37.76372625150665], [-122.40522740196946, 37.76346250094762], [-122.40535387557792, 37.763090530703], [-122.40559397054301, 37.76260307645656], [-122.4061734394619, 37.76165648017056], [-122.40629581525093, 37.76140763077306], [-122.40639081015566, 37.76115263464643], [-122.40645637526639, 37.76089186431971], [-122.40648915782174, 37.76062345714771], [-122.40649027540886, 37.760358775266084], [-122.4064604730858, 37.76009297579735], [-122.40635430230992, 37.759696232371695], [-122.40624906285665, 37.75945166705813], [-122.40603057457575, 37.75908621607169], [-122.40585082931483, 37.758859904680996], [-122.40563178224039, 37.758637691109726], [-122.405418136837, 37.75845440682294], [-122.4044393167892, 37.75773505325023], [-122.40410292306773, 37.757449137213435], [-122.40381235041795, 37.75713416391166], [-122.40364862390567, 37.75690058820472], [-122.40351767994875, 37.75665658168472], [-122.40338207937886, 37.75629262081443], [-122.40328447677086, 37.75577648183204], [-122.40304456807027, 37.753280164747245], [-122.40301904983116, 37.75275210483563], [-122.40302016741828, 37.75262414111102], [-122.40311255461974, 37.75222106469172], [-122.40330012299046, 37.75159651975922], [-122.40334724791379, 37.75146576206682], [-122.40350594528405, 37.75110049734489], [-122.40397365549148, 37.74993131495859], [-122.40405896464122, 37.749760324130065], [-122.40410981485493, 37.749678367741666], [-122.40420015314669, 37.74960479325663], [-122.40431377450334, 37.749536434178125], [-122.40456467281054, 37.749446282150885], [-122.40481277714996, 37.74940493142765], [-122.40491466384191, 37.7494112644213], [-122.40501748185643, 37.749430263402246], [-122.40516649347171, 37.7494883779322], [-122.40536486518454, 37.7495772261078], [-122.40538982463009, 37.74960702843086], [-122.40553064060653, 37.74984898604115], [-122.40555466872948, 37.74989443458381], [-122.4057696179845, 37.750304030261276], [-122.40605516149228, 37.75084438363115], [-122.40610843314472, 37.751026177801776], [-122.40614456846143, 37.75138157050419], [-122.4061715768167, 37.75163172375333], [-122.40617921366199, 37.751738453322766], [-122.406184242804, 37.75181538056915], [-122.40625129803087, 37.75252877367725], [-122.4062878058766, 37.752933153948184], [-122.4062905998444, 37.75300225808476], [-122.40641278936891, 37.752984004161895], [-122.40651244088663, 37.75296928926489], [-122.4072226674979, 37.75292011543185], [-122.40732176022206, 37.75291359617368], [-122.40740557925565, 37.752908380767146], [-122.40813294220268, 37.75286479486968], [-122.40821378100397, 37.75285976572766], [-122.40829014945679, 37.75285548164373], [-122.40903148224275, 37.752812454539814], [-122.40914864262525, 37.75280556275261], [-122.40927343985304, 37.75279829843637], [-122.41001421384546, 37.7527547125389], [-122.41008909218212, 37.752750242190444], [-122.41016657822206, 37.752745585577465], [-122.41090493077573, 37.7527010683574], [-122.41098223055114, 37.75269622547991], [-122.41105971659108, 37.75269138260241], [-122.41179974552541, 37.7526483554985], [-122.41189567175275, 37.75264202250485], [-122.41203499761302, 37.752632895543414], [-122.41225963262303, 37.75261780811737], [-122.41248482642662, 37.752603093220365], [-122.41289721607187, 37.752578133774804], [-122.41293372391762, 37.7525760848651], [-122.41301288633822, 37.752571241987596], [-122.41308403938451, 37.75256677163914], [-122.41311160653333, 37.75256528152299], [-122.4135172906559, 37.75254088087099], [-122.41380134404751, 37.75252374453523], [-122.41398928494728, 37.752512382399566], [-122.41410234751037, 37.75250567687688], [-122.41423422278987, 37.752498598825156], [-122.41510854844246, 37.75244514090818], [-122.41518864218567, 37.752440298030685], [-122.41528102938715, 37.75243452383059], [-122.41615107095579, 37.752382556029765], [-122.41628164238367, 37.752374546655446], [-122.41641891933423, 37.75236709607468], [-122.41644611395402, 37.752364674635935], [-122.41684248485065, 37.75234083277749], [-122.41700099595639, 37.75233133328702], [-122.41727815756079, 37.7523145694803], [-122.41737389752359, 37.75230898154472], [-122.41747615674457, 37.75230264855108], [-122.41789525191251, 37.75227768910552], [-122.4180444497923, 37.75226856214408], [-122.4181517381553, 37.75226204288592], [-122.41833707135179, 37.75225049448573], [-122.41846335869573, 37.752243416434005], [-122.41859653782687, 37.75223577958872], [-122.41864999574386, 37.75223279935642], [-122.41899514389772, 37.752213427846435], [-122.41903332812413, 37.752211192672206], [-122.41945596231794, 37.75218586069761], [-122.41956958367459, 37.75217971396848], [-122.41967482312786, 37.75217393976839], [-122.42008460506986, 37.752145813826004], [-122.42021722540746, 37.75213799071621], [-122.42044968352727, 37.75212383461275], [-122.4206655641049, 37.75211098236094], [-122.42096768515485, 37.752092728438065], [-122.42114370512539, 37.752082297624995], [-122.42159576911321, 37.75205491674069], [-122.42274613878308, 37.75198581260411], [-122.42283442816513, 37.75198059719757], [-122.4229268153666, 37.75197482299748], [-122.42305887691063, 37.7519671861522], [-122.42399448359001, 37.75191167932552], [-122.4245283177017, 37.75187908303467], [-122.42509512063329, 37.75184443783412], [-122.42524282839692, 37.75183568340173], [-122.42542350498043, 37.7518246937951], [-122.4255550077309, 37.751816870685296], [-122.42580981759302, 37.75180159699473], [-122.4263317307755, 37.751770118291006], [-122.42730943323619, 37.7517114449675], [-122.4274325540833, 37.75170418065125], [-122.42744857283193, 37.751703249328656], [-122.4274705520452, 37.75170194547702], [-122.42845365617693, 37.751642527095434], [-122.42854771975907, 37.75163693915986], [-122.42866134111571, 37.75163004737266], [-122.42952374583908, 37.75157826583635], [-122.42965878761542, 37.75157007019751], [-122.42982530809549, 37.751560011913476], [-122.43069106558019, 37.751508044112654], [-122.43085479209248, 37.75149817209314], [-122.43102913568234, 37.75148774128007], [-122.43173936229361, 37.7514450867052], [-122.43187682550871, 37.75143670480184], [-122.4320485613953, 37.751426087724255], [-122.43314174785782, 37.75135884623287], [-122.43372531459612, 37.75132289718068], [-122.43381379024268, 37.75131730924511], [-122.4341086469764, 37.75129924158676], [-122.43445211874959, 37.75127875248966], [-122.4358818851981, 37.751193443339915], [-122.43617022267364, 37.75117630700416], [-122.43630042157248, 37.75116848389436], [-122.43645744256207, 37.75115898440389], [-122.4383871429798, 37.75104089269878], [-122.43849163737502, 37.75103455970513], [-122.43850057807194, 37.751126574377565], [-122.43856800582785, 37.751832516904905], [-122.43864437428067, 37.75263028784015], [-122.4387216740561, 37.753435881885196], [-122.43873191860465, 37.75354372904175], [-122.43879766997988, 37.7542293687365], [-122.43890384075576, 37.75533708383151], [-122.43888428298125, 37.75541363854886], [-122.43902025608018, 37.75539706100666], [-122.4396468499224, 37.75531994749576], [-122.43996908754042, 37.755253451062444], [-122.44005495548372, 37.75522681523621], [-122.44018049776957, 37.75523631472669], [-122.44025556237077, 37.75527729292089], [-122.44029169768747, 37.755338946476705], [-122.44012536347192, 37.75564386149445], [-122.44010282546512, 37.75574537565735], [-122.4400860616584, 37.75581652870364], [-122.44008382648417, 37.75598342171274], [-122.44015367567883, 37.75641872189385], [-122.44026208162893, 37.75640996746145], [-122.44090711565853, 37.75625946573003], [-122.44103526564766, 37.756229477142455], [-122.44106059762225, 37.75627492568511], [-122.44112187864904, 37.75635855845418], [-122.44121538343762, 37.756444240132964], [-122.44141412767948, 37.756549852115285], [-122.4415674233787, 37.756590830309484], [-122.44202265386335, 37.756654346510494], [-122.44210684542597, 37.75667818836894], [-122.44217688088514, 37.756704451666124], [-122.44224374984749, 37.75673611663437], [-122.4423139715712, 37.756780075060874], [-122.44248309975453, 37.75692554765028], [-122.44293516374235, 37.75754711235047], [-122.44309535122876, 37.757728533992065], [-122.44316426910082, 37.75779689307057], [-122.4432460392247, 37.75787363405243], [-122.44332892693569, 37.75794571842132], [-122.44340939320794, 37.75801053847396], [-122.44347458578962, 37.75805915351344], [-122.44363905735997, 37.75816737319903], [-122.44366681077332, 37.75818618591546], [-122.44371896483867, 37.75821431185784], [-122.44376702108458, 37.75823852624532], [-122.44390988597073, 37.758302787504405], [-122.44451822589006, 37.75858255681207], [-122.44463631759515, 37.75867103245864], [-122.44473671417094, 37.75878297743461], [-122.44477601598447, 37.75884183702264], [-122.44480879853984, 37.758906657075286], [-122.44486784439239, 37.75916761366653], [-122.4448445613275, 37.75937958268925], [-122.44482053320453, 37.7594542747614], [-122.44479408364283, 37.75950903653001], [-122.44468958924762, 37.7596699690745], [-122.44464693467275, 37.75971746652687], [-122.44469797115097, 37.75970126151371], [-122.44479464243638, 37.759634392551355], [-122.44495222221953, 37.75936002491474], [-122.44499599438151, 37.759316997810835], [-122.44500102352353, 37.75924044309349], [-122.44499841582027, 37.759163515847106], [-122.44498891632979, 37.75908938256851], [-122.44497196625855, 37.75901599434799], [-122.44487902026353, 37.758804956647865], [-122.44477582971996, 37.75868388471046], [-122.44463929782746, 37.75857193973449], [-122.44448469827663, 37.75848383661696], [-122.44389088698978, 37.75821021403842], [-122.44382643946618, 37.75816979463778], [-122.44374783583912, 37.75811615045628], [-122.44356213011359, 37.75798408891225], [-122.44349786885451, 37.75793603266633], [-122.44342261798879, 37.75787586922666], [-122.44334289677462, 37.75780657882556], [-122.44326038159267, 37.75773207301793], [-122.44312887884219, 37.7576069032611], [-122.44297241664616, 37.75744373554238], [-122.44256282096869, 37.75688196175282], [-122.44244510179263, 37.75677020304136], [-122.44230652099043, 37.75667911969153], [-122.44223164265375, 37.756641121729636], [-122.4421433532717, 37.7566085254388], [-122.44196379427531, 37.75656382195422], [-122.44160039219857, 37.756517814618], [-122.44146106633829, 37.756474973778616], [-122.44134465101386, 37.75641015372597], [-122.44121985378608, 37.756303424156535], [-122.44115093591401, 37.75620265505171], [-122.44111182036501, 37.75607413253354], [-122.44111535939086, 37.755970941989965], [-122.44114665183008, 37.75585154643323], [-122.44120681526974, 37.75573867013466], [-122.44167303536102, 37.7551027630665], [-122.44191704188101, 37.754524970528294], [-122.44245217984435, 37.75379239217473], [-122.44253003841334, 37.753632204688316], [-122.44257902598186, 37.75346847817604], [-122.44267327582851, 37.75309091999585], [-122.44279043621101, 37.75262209220131], [-122.44285097217971, 37.752379575797455], [-122.44288189208989, 37.75225645495034], [-122.4430519515958, 37.751575099339526], [-122.4430664802283, 37.75151754360313], [-122.44338983543344, 37.7502222601374], [-122.44341144211765, 37.75013564713603], [-122.44343230374379, 37.750052386895995], [-122.44350159414489, 37.74977522529159], [-122.4435749823654, 37.74950029886142], [-122.4436636442765, 37.749304348587344], [-122.44415277490361, 37.74863696281545], [-122.44424609342768, 37.74845721755454], [-122.44427161166679, 37.748329998888], [-122.44427012155063, 37.74820035878272], [-122.4441691661813, 37.74768254341966], [-122.44418928274935, 37.74752719881074], [-122.44425745556335, 37.747374834434126], [-122.44429396340908, 37.74732715071724], [-122.44433289269357, 37.74728486867141], [-122.44444018105656, 37.74719136388283], [-122.44456050793589, 37.74711704433971], [-122.44468809913147, 37.74706898809379], [-122.44479911278485, 37.74704551876438], [-122.44487902026353, 37.747034156628715], [-122.44489075492824, 37.747117789397784], [-122.44492279242552, 37.7473433557304], [-122.4450084741043, 37.747946293978686], [-122.44501257192371, 37.74798112544375], [-122.44501517962698, 37.748013721734594], [-122.44501946371092, 37.74809158030357], [-122.44503306102081, 37.74830839220379], [-122.44503995280802, 37.74837339852095], [-122.4450563440857, 37.748503224890754], [-122.44507087271819, 37.74861815009903], [-122.44505131494368, 37.74878560190169], [-122.44488144170228, 37.74909815376471], [-122.4448533157599, 37.7492112163278], [-122.44484679650174, 37.74925498848978], [-122.44483059148857, 37.749368423581906], [-122.44492614518686, 37.74959305859193], [-122.44498053442643, 37.749668495722155], [-122.44528135162476, 37.74993429519089], [-122.44562314701729, 37.750238278886044], [-122.44574682665795, 37.75043348410205], [-122.44575558109035, 37.7505033332967], [-122.44575166953545, 37.750522704806684], [-122.44574515027729, 37.75054095872956], [-122.44544843089838, 37.75082389453405], [-122.4453169281479, 37.75089355746419], [-122.44528936099908, 37.75090119430947], [-122.44528805714745, 37.75093751589069], [-122.44510607671229, 37.75134431760038], [-122.44509694975086, 37.75137747268477], [-122.44508670520231, 37.75141751955638], [-122.44506584357617, 37.75165947716667], [-122.44510309648, 37.75186101537632], [-122.4451695929133, 37.752015428662645], [-122.44545010727904, 37.75251424504476], [-122.44547413540201, 37.752598250342864], [-122.44545588147915, 37.752727145390075], [-122.44527408730852, 37.753161700513104], [-122.44525415700497, 37.753356719464584], [-122.44525061797911, 37.75338354155534], [-122.44524633389517, 37.75340552076859], [-122.44513979059025, 37.75363816515293], [-122.44493564467733, 37.75390079812484], [-122.44490062694774, 37.75394196258355], [-122.44486858945046, 37.75398405836487], [-122.44471957783519, 37.75424352483996], [-122.4446718941183, 37.75438974248744], [-122.44464805225986, 37.75454378324473], [-122.44466183583428, 37.75478704470665], [-122.4447605560294, 37.75506811786595], [-122.44474695871949, 37.75521061022305], [-122.44468083481522, 37.75530877162461], [-122.44456628213598, 37.75540674676165], [-122.44441969195947, 37.7554950361437], [-122.44432525584828, 37.75551329006657], [-122.44423622140816, 37.75551235874397]]
+},{
+&quot;type&quot;: &quot;MultiPoint&quot;,
+&quot;coordinates&quot;: [[-122.41189697560438, 37.772072950871426], [-122.4115702676379, 37.77181236680923], [-122.41128695930436, 37.7715866142121], [-122.4109047445112, 37.771281140400795], [-122.41059219264818, 37.77103489870656], [-122.41056462549935, 37.77101273322879], [-122.41011107139538, 37.77064635091975], [-122.40974413029278, 37.77035447441834], [-122.40962901881998, 37.770334357850274], [-122.40929392895015, 37.770282017520415], [-122.40906240215293, 37.77022297166786], [-122.40884540398818, 37.77013673119553], [-122.40854067523496, 37.76996927939287], [-122.40832609850897, 37.7698349826746], [-122.40775855051932, 37.769472139391425], [-122.40708874330868, 37.769007595680826], [-122.40683840379502, 37.768820027310106], [-122.4063531847228, 37.76846202690442], [-122.4059715287232, 37.76817015040301], [-122.40576030475856, 37.76796693581269], [-122.40560086233022, 37.767732987576714], [-122.40553455216143, 37.76757298635482], [-122.40549711299309, 37.767405162023124], [-122.405491338793, 37.76732115672502], [-122.40548221183155, 37.767276453240434], [-122.40541385275306, 37.76674075648354], [-122.40533245515822, 37.76631756349618], [-122.40525645923442, 37.76605064644033], [-122.40513762247124, 37.76481217365292], [-122.40511340808376, 37.764428096214566], [-122.40511191796762, 37.764387118020366], [-122.40511229049666, 37.764303298986775], [-122.40512979936145, 37.76398329654299], [-122.40516705226527, 37.76372625150665], [-122.40522740196946, 37.76346250094762], [-122.40535387557792, 37.763090530703], [-122.40559397054301, 37.76260307645656], [-122.4061734394619, 37.76165648017056], [-122.40629581525093, 37.76140763077306], [-122.40639081015566, 37.76115263464643], [-122.40645637526639, 37.76089186431971], [-122.40648915782174, 37.76062345714771], [-122.40649027540886, 37.760358775266084], [-122.4064604730858, 37.76009297579735], [-122.40635430230992, 37.759696232371695], [-122.40624906285665, 37.75945166705813], [-122.40603057457575, 37.75908621607169], [-122.40585082931483, 37.758859904680996], [-122.40563178224039, 37.758637691109726], [-122.405418136837, 37.75845440682294], [-122.4044393167892, 37.75773505325023], [-122.40410292306773, 37.757449137213435], [-122.40381235041795, 37.75713416391166], [-122.40364862390567, 37.75690058820472], [-122.40351767994875, 37.75665658168472], [-122.40338207937886, 37.75629262081443], [-122.40328447677086, 37.75577648183204], [-122.40304456807027, 37.753280164747245], [-122.40301904983116, 37.75275210483563], [-122.40302016741828, 37.75262414111102], [-122.40311255461974, 37.75222106469172], [-122.40330012299046, 37.75159651975922], [-122.40334724791379, 37.75146576206682], [-122.40347316272869, 37.751091370383456], [-122.40387642541252, 37.749896297229], [-122.40389225789664, 37.74986388720268], [-122.4039377064393, 37.74981415457608], [-122.40402860352461, 37.74973908997489], [-122.40416439035903, 37.749664397902734], [-122.40463563959231, 37.749497691158155], [-122.40476937751701, 37.749389285208046], [-122.40483326624707, 37.74926839953516], [-122.40483922671167, 37.74913950448795], [-122.40478558253018, 37.74901731496343], [-122.40468276451564, 37.74891375189082], [-122.4044149161372, 37.74871090982953], [-122.40412471601645, 37.74848776493567], [-122.4040509552669, 37.74841344539255], [-122.40398799785945, 37.74834452752049], [-122.40392485418748, 37.74825120899643], [-122.4038879738127, 37.74815118494968], [-122.40387288638665, 37.74812250021374], [-122.40381253668247, 37.74796361657896], [-122.40379316517249, 37.74780044886024], [-122.40382296749554, 37.74764249654805], [-122.40391088434855, 37.747388059214984], [-122.40431284318073, 37.746326537720705], [-122.40433333227783, 37.746106559323664], [-122.40432364652284, 37.74600411383817], [-122.40428974638037, 37.745946185572734], [-122.40423945496022, 37.74590185461719], [-122.40413365671337, 37.74586124895203], [-122.40404741624104, 37.74586571930049], [-122.40396136203321, 37.74589906064941], [-122.4038605929284, 37.74601007430278], [-122.40383228072149, 37.746066326187545], [-122.4036722794996, 37.74691699624621], [-122.40364229091202, 37.74708984971992], [-122.40366985806085, 37.74729269178121], [-122.40359535225322, 37.747486779410096], [-122.40360392042109, 37.74773451122048], [-122.40361826278907, 37.74788389536479], [-122.40362031169877, 37.74791481527496], [-122.40367246576412, 37.747960636346654], [-122.40376876452048, 37.7482245731702], [-122.40384587803139, 37.74835011545606], [-122.4040069968404, 37.74854867343341], [-122.40419028112717, 37.74872767363625], [-122.40459410260455, 37.74900744294392], [-122.40468965630285, 37.749071704203004], [-122.40472877185185, 37.74909796750019], [-122.40478297482692, 37.749135220404014], [-122.40497072946215, 37.749265046773814], [-122.40505249958602, 37.74932129865858], [-122.40513762247124, 37.74937978571757], [-122.40533990573898, 37.7495498452235], [-122.40536486518454, 37.7495772261078], [-122.40538982463009, 37.74960702843086], [-122.40553064060653, 37.74984898604115], [-122.40555466872948, 37.74989443458381], [-122.4057696179845, 37.750304030261276], [-122.40605516149228, 37.75084438363115], [-122.40610843314472, 37.751026177801776], [-122.40614456846143, 37.75138157050419], [-122.4061715768167, 37.75163172375333], [-122.40617921366199, 37.751738453322766], [-122.406184242804, 37.75181538056915], [-122.40625129803087, 37.75252877367725], [-122.4062878058766, 37.752933153948184], [-122.4062905998444, 37.75300225808476], [-122.40629525645737, 37.753083841944125], [-122.40632133349004, 37.75332524076086], [-122.40634275390974, 37.75356067911299], [-122.40640701516882, 37.75421390878142], [-122.4064146520141, 37.754292698673], [-122.4064418466339, 37.754581036148544], [-122.4064487384211, 37.754652189194836], [-122.40658862307494, 37.75610896399861], [-122.40659495606859, 37.75617564669644], [-122.4066009165332, 37.75624679974273], [-122.40664506122421, 37.75677113436396], [-122.40665139421786, 37.75684582643611], [-122.40666014865026, 37.75691567563077], [-122.40669702902504, 37.75721500271294], [-122.40670969501234, 37.75739307159319], [-122.40672552749646, 37.75756834650565], [-122.40673819348376, 37.75770785863045], [-122.40674471274193, 37.75778012926385], [-122.40675123200009, 37.75784550811005], [-122.40676855460038, 37.758021714345105], [-122.40687267646653, 37.759083794632936], [-122.40689204797653, 37.759306566997765], [-122.40689893976374, 37.75937604366338], [-122.40690434143478, 37.75945632367111], [-122.40699635610721, 37.76036808849204], [-122.40701814905594, 37.7605999878183], [-122.40702392325603, 37.7606692782194], [-122.40703193263036, 37.76074397029156], [-122.407047951379, 37.760907696803834], [-122.40708557681185, 37.76129475447449], [-122.40712096707048, 37.76165256861566], [-122.40714238749018, 37.76187478218693], [-122.40714797542574, 37.761942582471875], [-122.40715598480007, 37.762023980066715], [-122.40723514722069, 37.76293220586178], [-122.40725526378874, 37.76314249850383], [-122.40727817432459, 37.763173418414], [-122.40732250528013, 37.76321663178243], [-122.40734634713857, 37.7634701377929], [-122.407350444958, 37.76351465501296], [-122.4074109809267, 37.76414422908748], [-122.40741563753967, 37.76419284412696], [-122.40744394974658, 37.764486769538074], [-122.40746835039857, 37.76474102060663], [-122.40747058557281, 37.76476486246507], [-122.40747375206963, 37.76479727249139], [-122.40748399661818, 37.76490381579631], [-122.40749256478605, 37.76499229144288], [-122.40753056274795, 37.765388476074975], [-122.40754453258688, 37.76553432119342], [-122.407560365071, 37.76569935155733], [-122.40756781565177, 37.76578074915217], [-122.40757899152291, 37.76589288039266], [-122.40760078447165, 37.76611844672527], [-122.40766597705333, 37.766797380897344], [-122.40768460350523, 37.76701251641689], [-122.40769056396985, 37.76708162055347], [-122.40769857334416, 37.7671648807935], [-122.40771813111867, 37.767367722854786], [-122.40772204267357, 37.76740832851995], [-122.40778406875843, 37.768054480136655], [-122.40779133307467, 37.76812954473785], [-122.40781368481696, 37.76836181659315], [-122.40782504695262, 37.76849741716305], [-122.4078315662108, 37.76857434440943], [-122.40779561715861, 37.76870025922433], [-122.40780511664909, 37.76883567352971], [-122.40781834142994, 37.76896382351884], [-122.40782541948167, 37.769033486448976], [-122.40782933103657, 37.76907018055924], [-122.40783715414636, 37.76914561768947], [-122.40790141540545, 37.769241171387755], [-122.40777456926796, 37.76938627144813], [-122.4077466295901, 37.76941644630022], [-122.40768516229879, 37.76948294273353], [-122.40764213519489, 37.769530440185896], [-122.40708632186993, 37.76999554269006], [-122.40699765995885, 37.77006986223317], [-122.40690806672517, 37.77014213286658], [-122.40686299071155, 37.7701784544478], [-122.40630158945102, 37.77063107722918], [-122.40554386538737, 37.77122619236766], [-122.40544589025033, 37.77130330587856], [-122.40536691409424, 37.77136458690534], [-122.40535909098445, 37.77137091989899], [-122.40448457906733, 37.77205842223894], [-122.40401854524058, 37.77242480454798]]
+},{
+&quot;type&quot;: &quot;MultiPoint&quot;,
+&quot;coordinates&quot;: [[-122.418327, 37.769662], [-122.420465, 37.752152], [-122.440099, 37.755275], [-122.418033, 37.769377], [-122.420542, 37.752137], [-122.44031, 37.75535], [-122.41801, 37.769061], [-122.420881, 37.7521], [-122.440255, 37.755554], [-122.418315, 37.76886], [-122.421396, 37.75206], [-122.440142, 37.755828], [-122.418724, 37.768883], [-122.421987, 37.75203], [-122.440138, 37.756193], [-122.419014, 37.769147], [-122.422569, 37.752005], [-122.440149, 37.756371], [-122.418971, 37.769483], [-122.422693, 37.752004], [-122.440359, 37.756411], [-122.418511, 37.769687], [-122.422818, 37.752014], [-122.44069, 37.756341], [-122.417832, 37.769659], [-122.423185, 37.751983], [-122.44086, 37.756313], [-122.41706, 37.769579], [-122.423685, 37.751946], [-122.441048, 37.756333], [-122.416215, 37.769531], [-122.424169, 37.751918], [-122.441334, 37.756555], [-122.415324, 37.769522], [-122.424708, 37.751885], [-122.441897, 37.756684], [-122.414432, 37.76951], [-122.424958, 37.751875], [-122.442435, 37.756889], [-122.413484, 37.769487], [-122.424984, 37.751852], [-122.442802, 37.757329], [-122.412444, 37.769453], [-122.425247, 37.751841], [-122.443158, 37.757806], [-122.411387, 37.769401], [-122.425729, 37.751814], [-122.443619, 37.758213], [-122.410386, 37.769268], [-122.426196, 37.751781], [-122.444145, 37.758475], [-122.409464, 37.769109], [-122.426694, 37.751751], [-122.444577, 37.758679], [-122.408661, 37.768924], [-122.427177, 37.751718], [-122.444832, 37.759028], [-122.407822, 37.76878], [-122.427336, 37.751713], [-122.444837, 37.759426], [-122.406908, 37.768626], [-122.427581, 37.7517], [-122.444577, 37.759657], [-122.406076, 37.768222], [-122.428053, 37.75167], [-122.444514, 37.759751], [-122.405508, 37.767584], [-122.428398, 37.751655], [-122.444658, 37.75975], [-122.405369, 37.76681], [-122.428542, 37.751655], [-122.444871, 37.759528], [-122.405278, 37.765996], [-122.428965, 37.751632], [-122.444939, 37.759096], [-122.405222, 37.765188], [-122.429399, 37.751602], [-122.444754, 37.758632], [-122.405166, 37.764413], [-122.429542, 37.751587], [-122.444395, 37.758382], [-122.405225, 37.763661], [-122.429883, 37.751555], [-122.444256, 37.758327], [-122.405476, 37.762902], [-122.430437, 37.751511], [-122.444097, 37.758272], [-122.405923, 37.762129], [-122.431027, 37.751473], [-122.443826, 37.758148], [-122.406369, 37.761326], [-122.431551, 37.751459], [-122.443456, 37.757896], [-122.40657, 37.760493], [-122.43174, 37.751459], [-122.443045, 37.757527], [-122.406438, 37.759641], [-122.432052, 37.751442], [-122.442714, 37.757076], [-122.405972, 37.758826], [-122.432547, 37.751401], [-122.442393, 37.756685], [-122.405289, 37.758195], [-122.433013, 37.751368], [-122.441899, 37.756513], [-122.404561, 37.757664], [-122.433527, 37.75134], [-122.441371, 37.756363], [-122.403931, 37.757064], [-122.434029, 37.751315], [-122.441165, 37.755966], [-122.403497, 37.756271], [-122.434547, 37.751281], [-122.441389, 37.75552], [-122.403226, 37.754705], [-122.435054, 37.751253], [-122.441737, 37.755033], [-122.403133, 37.753789], [-122.435511, 37.751228], [-122.442034, 37.754477], [-122.403107, 37.753565], [-122.435945, 37.751211], [-122.44236, 37.754006], [-122.403045, 37.752721], [-122.436152, 37.7512], [-122.442662, 37.753557], [-122.403134, 37.751899], [-122.436356, 37.751184], [-122.442805, 37.753054], [-122.403397, 37.751196], [-122.436847, 37.751152], [-122.442904, 37.752566], [-122.40367, 37.750529], [-122.437464, 37.751113], [-122.443011, 37.752035], [-122.403916, 37.74996], [-122.438115, 37.751083], [-122.443169, 37.751483], [-122.404188, 37.749513], [-122.438337, 37.75107], [-122.44333, 37.750914], [-122.40475, 37.749263], [-122.4385, 37.751162], [-122.443481, 37.750366], [-122.405186, 37.749328], [-122.438535, 37.75151], [-122.443608, 37.74989], [-122.405446, 37.749605], [-122.438569, 37.751751], [-122.443739, 37.749409], [-122.405722, 37.750095], [-122.438591, 37.751967], [-122.443995, 37.749005], [-122.405981, 37.750691], [-122.438646, 37.752356], [-122.444297, 37.748614], [-122.406143, 37.751261], [-122.438655, 37.752555], [-122.444418, 37.748159], [-122.406192, 37.751811], [-122.438666, 37.752747], [-122.444341, 37.747639], [-122.406246, 37.752386], [-122.438701, 37.753118], [-122.444515, 37.747228], [-122.406331, 37.752796], [-122.438718, 37.75333], [-122.444731, 37.747076], [-122.406367, 37.752952], [-122.438702, 37.753511], [-122.444758, 37.747066], [-122.406436, 37.752996], [-122.438716, 37.753871], [-122.444928, 37.747193], [-122.406774, 37.753001], [-122.438745, 37.75411], [-122.444944, 37.747476], [-122.407123, 37.752941], [-122.438767, 37.75422], [-122.444931, 37.747834], [-122.407234, 37.752931], [-122.43883, 37.754559], [-122.444924, 37.748234], [-122.407593, 37.752915], [-122.438898, 37.755016], [-122.444938, 37.748669], [-122.407987, 37.752886], [-122.438914, 37.755296], [-122.444866, 37.749047], [-122.408148, 37.752862], [-122.438889, 37.755366], [-122.444752, 37.749373], [-122.408531, 37.752836], [-122.438864, 37.755555], [-122.444881, 37.749725], [-122.408922, 37.752817], [-122.438884, 37.755852], [-122.445259, 37.750076], [-122.408958, 37.752814], [-122.438931, 37.756233], [-122.445615, 37.750375], [-122.409201, 37.752817], [-122.438969, 37.756521], [-122.445711, 37.750517], [-122.409683, 37.752807], [-122.43901, 37.756796], [-122.445731, 37.75057], [-122.409911, 37.752785], [-122.439033, 37.757037], [-122.445745, 37.750608], [-122.410194, 37.752723], [-122.439219, 37.757126], [-122.445524, 37.750736], [-122.410691, 37.752689], [-122.439402, 37.757132], [-122.445241, 37.751019], [-122.410904, 37.752679], [-122.439496, 37.75712], [-122.445072, 37.751368], [-122.411205, 37.752666], [-122.439774, 37.757185], [-122.445045, 37.751731], [-122.411634, 37.752642], [-122.440133, 37.757251], [-122.445205, 37.752141], [-122.411762, 37.752633], [-122.440426, 37.757365], [-122.445419, 37.752573], [-122.422617, 37.770549], [-122.411999, 37.752599], [-122.440673, 37.757582], [-122.445379, 37.752959], [-122.422602, 37.770505], [-122.412454, 37.752544], [-122.440823, 37.757866], [-122.445243, 37.753398], [-122.42258, 37.770472], [-122.412856, 37.752522], [-122.440919, 37.758086], [-122.445065, 37.753805], [-122.422556, 37.770377], [-122.412994, 37.752521], [-122.440957, 37.758141], [-122.444786, 37.754166], [-122.4225, 37.770249], [-122.413365, 37.752504], [-122.440916, 37.758093], [-122.44464, 37.754517], [-122.422447, 37.770132], [-122.413775, 37.752444], [-122.440873, 37.758018], [-122.444673, 37.754914], [-122.422431, 37.770048], [-122.413914, 37.752431], [-122.440795, 37.757945], [-122.444669, 37.755273], [-122.422408, 37.770006], [-122.414045, 37.752478], [-122.44073, 37.757726], [-122.444413, 37.755485], [-122.422391, 37.76999], [-122.414408, 37.752469], [-122.440588, 37.757431], [-122.444293, 37.755533], [-122.422259, 37.769866], [-122.41493, 37.752428], [-122.440358, 37.757253], [-122.42187, 37.769849], [-122.415443, 37.752393], [-122.439989, 37.757148], [-122.4214, 37.769876], [-122.415963, 37.752366], [-122.439585, 37.757045], [-122.421024, 37.769912], [-122.416165, 37.75235], [-122.439192, 37.757043], [-122.420889, 37.76993], [-122.416402, 37.752351], [-122.439015, 37.756936], [-122.420832, 37.769942], [-122.41688, 37.75233], [-122.438978, 37.756708], [-122.420759, 37.769902], [-122.417439, 37.752294], [-122.438946, 37.756414], [-122.420504, 37.769874], [-122.417951, 37.752258], [-122.438909, 37.756055], [-122.420153, 37.769848], [-122.418225, 37.752245], [-122.438872, 37.755653], [-122.419805, 37.769819], [-122.41827, 37.752243], [-122.438862, 37.755536], [-122.419466, 37.769781], [-122.418785, 37.752229], [-122.438864, 37.755472], [-122.418976, 37.769726], [-122.419291, 37.752216], [-122.438915, 37.755413], [-122.418672, 37.769685], [-122.419473, 37.752208], [-122.43896, 37.755403], [-122.418487, 37.769666], [-122.419781, 37.752187], [-122.439242, 37.755366], [-122.418453, 37.769667], [-122.420279, 37.752162], [-122.439668, 37.755331]]
+}];</p>
+<p>colors = features.map(function (_) {return rainbow(100, Math.floor(Math.random() * 100)); });</p>
+<p>for (var i = 0; i &lt; features.length; i++) {
+console.log(i);
+L.geoJson(features[i], {
+pointToLayer: function (feature, latlng) {
+return L.circleMarker(latlng, {
+radius: 4,
+fillColor: colors[i],
+color: colors[i],
+weight: 1,
+opacity: 1,
+fillOpacity: 0.8
+});
+}
+}).addTo(map);
+}</p>
+<p>function rainbow(numOfSteps, step) {
+// This function generates vibrant, &quot;evenly spaced&quot; colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
+// Adam Cole, 2011-Sept-14
+// HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+var r, g, b;
+var h = step / numOfSteps;
+var i = ~~(h * 6);
+var f = h * 6 - i;
+var q = 1 - f;
+switch(i % 6){
+case 0: r = 1; g = f; b = 0; break;
+case 1: r = q; g = 1; b = 0; break;
+case 2: r = 0; g = 1; b = f; break;
+case 3: r = 0; g = q; b = 1; break;
+case 4: r = f; g = 0; b = 1; break;
+case 5: r = 1; g = 0; b = q; break;
+}
+var c = &quot;#&quot; + (&quot;00&quot; + (~ ~(r * 255)).toString(16)).slice(-2) + (&quot;00&quot; + (~ ~(g * 255)).toString(16)).slice(-2) + (&quot;00&quot; + (~ ~(b * 255)).toString(16)).slice(-2);
+return (c);
+}
+</script></p>
+</body>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="visualization--mapmatching-further-things-one-could-do"><a class="header" href="#visualization--mapmatching-further-things-one-could-do">Visualization &amp; MapMatching (Further things one could do).</a></h3>
+<ul>
+<li>
+<p>Show Direction of Travel</p>
+</li>
+<li>
+<p>Get timestamp for points, currently Graphhopper map matching does no preserve this information.</p>
+</li>
+<li>
+<p>Map the matched coordinates to OSM Way Ids. See <a href="https://discuss.graphhopper.com/t/how-to-get-the-osm-resource-reference-for-a-node-edge-in-the-match-result/200">here</a> to extract OSM ids from the graphhopper graph edges with GraphHopper, does however require 0.6 SNAPSHOT for it to work.</p>
+<p>Another potential way to do this is just to reverse geocode with something such as http://nominatim.openstreetmap.org/</p>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="step-0"><a class="header" href="#step-0">Step 0.</a></h1>
+<h2 id="do-steps-01-and-02-once-in-a-given-shard-per-osm-map"><a class="header" href="#do-steps-01-and-02-once-in-a-given-shard-per-osm-map">Do steps 0.1 and 0.2 once in a given shard per OSM Map</a></h2>
+</div>
+<div class="cell markdown">
+<h2 id="step-01-loading-our-osm-data"><a class="header" href="#step-01-loading-our-osm-data">Step 0.1: Loading our OSM Data</a></h2>
+<h3 id="only-needs-to-be-done-once-per-osm-map"><a class="header" href="#only-needs-to-be-done-once-per-osm-map">(<em>Only needs to be done once per OSM Map</em>)</a></h3>
+<p>See <a href="https://download.bbbike.org/osm/bbbike/SanFrancisco/">https://download.bbbike.org/osm/bbbike/SanFrancisco/</a> to download the <code>pbf</code> format of the OSM.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">#curl -O https://download.bbbike.org/osm/bbbike/SanFrancisco/SanFrancisco.osm.pbf
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>The below osm.pbf file was downloaded deom the above link as Marina pointed out yesterday and received via email:</p>
+<pre><code>your requested OpenStreetMap area 'San Francisco' was extracted from planet.osm
+To download the file, please click on the following link:
+
+  https://download.bbbike.org/osm/extract/planet_-122.529,37.724_-122.352,37.811.osm.pbf
+
+The file will be available for the next 48 hours. Please download the
+file as soon as possible.
+
+ Name: San Francisco
+ Coordinates: -122.529,37.724 x -122.352,37.811
+ Script URL: https://extract.bbbike.org/?sw_lng=-122.529&amp;sw_lat=37.724&amp;ne_lng=-122.352&amp;ne_lat=37.811&amp;format=osm.pbf&amp;city=San%20Francisco
+ Square kilometre: 150
+ Granularity: 100 (1.1 cm)
+ Format: osm.pbf
+ File size: 8.5 MB
+ SHA256 checksum: 8fe277a3b23ebd5a612d21cc50a5287bae3a169867c631353e9a1da3963cd617
+ MD5 checksum: 9d2c5650547623bbca1656db84efeb7d
+ Last planet.osm database update: Thu May  3 05:46:46 2018 UTC
+ License: OpenStreetMap License
+
+Please read the extract online help for more informations:
+https://extract.bbbike.org/extract.html
+</code></pre>
+<p>and the much smaller map has these details:</p>
+<pre><code>your requested OpenStreetMap area 'San Francisco' was extracted from planet.osm
+To download the file, please click on the following link:
+
+  https://download.bbbike.org/osm/extract/planet_-122.449,37.747_-122.397,37.772.osm.pbf
+
+The file will be available for the next 48 hours. Please download the
+file as soon as possible.
+
+ Name: San Francisco
+ Coordinates: -122.449,37.747 x -122.397,37.772
+ Script URL: https://extract.bbbike.org/?sw_lng=-122.449&amp;sw_lat=37.747&amp;ne_lng=-122.397&amp;ne_lat=37.772&amp;format=osm.pbf&amp;city=San%20Francisco
+ Square kilometre: 12
+ Granularity: 100 (1.1 cm)
+ Format: osm.pbf
+ File size: 1.3 MB
+ SHA256 checksum: 4fa2c4137e9eabdacc840ebcd9f741470c617c43d4d852d528e1baa44d2fb190
+ MD5 checksum: 38f2954459efa8d95f65a16f844adebf
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh"># smaller SF osm.pbf file as the driver crashes with the above larger map
+ curl -O https://download.bbbike.org/osm/bbbike/SanFrancisco/SanFrancisco.osm.pbf # nearly 17MB and too big for community edition...
+#curl -O https://download.bbbike.org/osm/extract/planet_-122.529,37.724_-122.352,37.811.osm.pbf
+#curl -O https://download.bbbike.org/osm/extract/planet_-122.449,37.747_-122.397,37.772.osm.gz # much smaller map of SF
+# backups in progress here... http://lamastex.org/.../SanFrancisco_-122.529_37.724__-122.352_37.811.osm.pbf
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 20.0M  100 20.0M    0     0  22.8M      0 --:--:-- --:--:-- --:--:-- 22.7M
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">ls
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>SanFrancisco.osm.pbf
+conf
+derby.log
+eventlogs
+logs
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/files/graphhopper/osm/&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.rm(&quot;dbfs:/datasets/graphhopper/osm/SanFrancisco.osm.pbf&quot;,recurse=true) // to remove any pre-existing file with same name in dbfs
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Boolean = false
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mv(&quot;file:/databricks/driver/SanFrancisco.osm.pbf&quot;, &quot;dbfs:/files/graphhopper/osm/SanFrancisco.osm.pbf&quot;) // too big for driver memory
+//dbutils.fs.mv(&quot;file:/databricks/driver/planet_-122.529,37.724_-122.352,37.811.osm.pbf&quot;, &quot;dbfs:/datasets/graphhopper/osm/SanFrancisco.osm.pbf&quot;)
+//dbutils.fs.mv(&quot;file:/databricks/driver/planet_-122.449,37.747_-122.397,37.772.osm.gz&quot;, &quot;dbfs:/files/graphhopper/osm/SanFranciscoSmall.osm.gz&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/files/graphhopper/osm&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/files/graphhopper/osm/SanFrancisco.osm.pbf</td>
+<td>SanFrancisco.osm.pbf</td>
+<td>2.1059693e7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mkdirs(&quot;dbfs:/files/graphhopper/graphHopperData&quot;) // Where graphhopper will store its data
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res5: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="step-02-initialising-graphhopper"><a class="header" href="#step-02-initialising-graphhopper">Step 0.2: Initialising GraphHopper</a></h2>
+<h3 id="only-needs-to-be-done-once-per-shard-for-each-osm-file"><a class="header" href="#only-needs-to-be-done-once-per-shard-for-each-osm-file">(<em>Only needs to be done once per shard for each OSM file</em>)</a></h3>
+</div>
+<div class="cell markdown">
+<p>Process an OSM file, creating from it a GraphHopper Graph. The contents of this graph are then stored in the distributed filesystem to be accessed for later use. This ensures that the processing step only takes place once, and subsequent GraphHopper objects can simply read these files to start map matching.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val osmPath = &quot;/dbfs/files/graphhopper/osm/SanFrancisco.osm.pbf&quot;
+val graphHopperPath = &quot;/dbfs/files/graphhopper/graphHopperData&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>osmPath: String = /dbfs/files/graphhopper/osm/SanFrancisco.osm.pbf
+graphHopperPath: String = /dbfs/files/graphhopper/graphHopperData
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val encoder = new CarFlagEncoder()
+ 
+val hopper = new GraphHopper()
+      .setStoreOnFlush(true)
+      .setEncodingManager(new EncodingManager(encoder))
+      .setOSMFile(osmPath)
+      .setCHWeightings(&quot;shortest&quot;)
+      .setGraphHopperLocation(&quot;graphhopper/&quot;)
+
+hopper.importOrLoad()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>encoder: com.graphhopper.routing.util.CarFlagEncoder = car
+hopper: com.graphhopper.GraphHopper = com.graphhopper.GraphHopper@5d5ac119
+res6: com.graphhopper.GraphHopper = com.graphhopper.GraphHopper@5d5ac119
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Move the GraphHopper object to dbfs:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.mv(&quot;file:/databricks/driver/graphhopper&quot;, &quot;dbfs:/files/graphhopper/graphHopperData&quot;, recurse=true)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res7: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">display(dbutils.fs.ls(&quot;dbfs:/files/graphhopper/graphHopperData&quot;))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/files/graphhopper/graphHopperData/edges</td>
+<td>edges</td>
+<td>3145828.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/files/graphhopper/graphHopperData/geometry</td>
+<td>geometry</td>
+<td>1048676.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/files/graphhopper/graphHopperData/location_index</td>
+<td>location_index</td>
+<td>1048676.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/files/graphhopper/graphHopperData/names</td>
+<td>names</td>
+<td>1048676.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/files/graphhopper/graphHopperData/nodes</td>
+<td>nodes</td>
+<td>1048676.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/files/graphhopper/graphHopperData/nodes_ch_shortest_car</td>
+<td>nodes_ch_shortest_car</td>
+<td>1048676.0</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/files/graphhopper/graphHopperData/properties</td>
+<td>properties</td>
+<td>32868.0</td>
+</tr>
+<tr class="even">
+<td>dbfs:/files/graphhopper/graphHopperData/shortcuts_shortest_car</td>
+<td>shortcuts_shortest_car</td>
+<td>3145828.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

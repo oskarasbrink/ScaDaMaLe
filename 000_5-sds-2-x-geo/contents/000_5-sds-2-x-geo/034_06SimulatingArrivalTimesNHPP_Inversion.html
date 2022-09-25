@@ -1,0 +1,1785 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>034_06SimulatingArrivalTimesNHPP_Inversion - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/000_5-sds-2-x-geo-changes.html">000_5-sds-2-x-geo-changes</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/001_CrashCourseGIS.html">001_CrashCourseGIS</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031_GeospatialAnalyticsInMagellan.html">031_GeospatialAnalyticsInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/031a_MagellanOSMIngestion.html">031a_MagellanOSMIngestion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032_NYtaxisInMagellan.html">032_NYtaxisInMagellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032a_MSR_BeijingTaxiTrajectories_MagellanQueries.html">032a_MSR_BeijingTaxiTrajectories_MagellanQueries</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032b_UberMapMatchingAndVisualization.html">032b_UberMapMatchingAndVisualization</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032d_MobileSampleSQL.html">032d_MobileSampleSQL</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032e_CallDetailRecords.html">032e_CallDetailRecords</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/032x_ComingAttractions.html">032x_ComingAttractions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_00_Intro2PointsOnGraphs.html">033_00_Intro2PointsOnGraphs</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_01_OSMtoGraphXUppsalaTiny.html">033_01_OSMtoGraphXUppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_02_OSMtoGraphX_LT.html">033_02_OSMtoGraphX_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/033_03_LT_PageRank.html">033_03_LT_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_01_MapMatching_with_GeoMatch_UppsalaTiny.html">034_01_MapMatching_with_GeoMatch_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_02_MapMatching_on_a_Graph_UppsalaTiny.html">034_02_MapMatching_on_a_Graph_UppsalaTiny</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_03_MapMatching_on_a_Graph_LT.html">034_03_MapMatching_on_a_Graph_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_04_MapMatching_on_a_G1_LT.html">034_04_MapMatching_on_a_G1_LT</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html">034_05DistributionOfStates</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/034_06SimulatingArrivalTimesNHPP_Inversion.html" class="active">034_06SimulatingArrivalTimesNHPP_Inversion</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html">035_01_Arcgis_coordinates_transformation</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_02_Segmentation_municipalities_Magellan.html">035_02_Segmentation_municipalities_Magellan</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_03_Visualization_municipalities.html">035_03_Visualization_municipalities</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_04_MapMatching_intersections.html">035_04_MapMatching_intersections</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_05_UndirectedG0.html">035_05_UndirectedG0</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_06_ConnectedComponent_PageRank.html">035_06_ConnectedComponent_PageRank</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_5-sds-2-x-geo/035_07_PoissonRegression.html">035_07_PoissonRegression</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h2 id="simulating-the-arrival-times-of-a-nhpp-by-inversion"><a class="header" href="#simulating-the-arrival-times-of-a-nhpp-by-inversion">Simulating the Arrival Times of a NHPP by Inversion</a></h2>
+<p>Stavroula Rafailia Vlachou (<a href="https://www.linkedin.com/in/stavroula-rafailia-vlachou/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>).</p>
+<pre><code>This project was supported by SENSMETRY through a Data Science Project Internship 
+between 2022-01-17 and 2022-06-05 to Stavroula R. Vlachou and 
+Databricks University Alliance with infrastructure credits from AWS to 
+Raazesh Sainudiin, Department of Mathematics, Uppsala University, Sweden.
+</code></pre>
+<p>2022, Uppsala, Sweden</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.random._
+import math.{log, floor, ceil}
+import org.apache.spark.sql.functions._
+import scala.util.{Try,Success,Failure}
+import scala.util.control.Exception
+import org.apache.spark.mllib.random.RandomRDDs._
+import scala.collection.mutable.ArrayBuffer
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.mllib.random._
+import math.{log, floor, ceil}
+import org.apache.spark.sql.functions._
+import scala.util.{Try, Success, Failure}
+import scala.util.control.Exception
+import org.apache.spark.mllib.random.RandomRDDs._
+import scala.collection.mutable.ArrayBuffer
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>Load the arrival times of the events from 1 realization of the process</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val df = spark.read.parquet(&quot;FileStore/tables/LT_time_intervals&quot;).select(&quot;prev_date&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>df: org.apache.spark.sql.DataFrame = [prev_date: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val ordered_T = df.collect().toArray :+ 1461
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val generator = new UniformGenerator()
+generator.setSeed(1234L) //set the seed for reproducability of results 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>generator: org.apache.spark.mllib.random.UniformGenerator = org.apache.spark.mllib.random.UniformGenerator@2c211685
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//initialization 
+var i = 1
+var u = generator.nextValue
+var E = -math.log(1-u)
+var T = 0.0
+var m = 0.0
+var width = 0.0
+var samples = Array[Double]()
+val n = 11720 //number of total observations 
+val k = 1  //number of realisations
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>i: Int = 1
+u: Double = 0.9499610869333489
+E: Double = 2.9949543149092834
+T: Double = 0.0
+m: Double = 0.0
+width: Double = 0.0
+samples: Array[Double] = Array()
+n: Int = 11720
+k: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">while (E &lt; n/k){
+    m = math.floor(((n+1)*k/n)*E)
+    width = ordered_T(m.toInt+1).toString.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;\\]&quot;, &quot;&quot;).toDouble - ordered_T(m.toInt).toString.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;\\]&quot;, &quot;&quot;).toDouble
+    T = ordered_T(m.toInt).toString.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;\\]&quot;, &quot;&quot;).toDouble + width * (((n+1)*k/n)*E - m).toDouble
+    samples = samples :+ T
+    i += 1 
+    u = generator.nextValue
+    E -= math.log(1-u)
+}
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val arrival_samples = sc.parallelize(samples)
+val rounded_arrivals = arrival_samples.map(item =&gt; math.ceil(item))
+val sample_df = rounded_arrivals.toDF(&quot;day&quot;).groupBy(&quot;day&quot;).count.orderBy($&quot;day&quot;.asc)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>arrival_samples: org.apache.spark.rdd.RDD[Double] = ParallelCollectionRDD[14874] at parallelize at command-1211269020742804:1
+rounded_arrivals: org.apache.spark.rdd.RDD[Double] = MapPartitionsRDD[14875] at map at command-1211269020742804:2
+sample_df: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [day: double, count: bigint]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sample_df.count() //number of simulated days 
+sample_df.select(sum(&quot;count&quot;)).show() //number of simulated events
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+----------+
+|sum(count)|
++----------+
+|     11755|
++----------+
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val times = sample_df 
+val initialisation = sc.parallelize(Seq((&quot; &quot;, 0.0))).toDF(&quot;initial_state&quot;, &quot;time_unit&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>times: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [day: double, count: bigint]
+initialisation: org.apache.spark.sql.DataFrame = [initial_state: string, time_unit: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">val time_day_map = spark.sql(&quot;SELECT sequence(to_date('2017-01-01'), to_date('2020-12-31'), interval 1 day) as dates&quot;).select(explode($&quot;dates&quot;).alias(&quot;day_of_year&quot;), (monotonically_increasing_id + 1).alias(&quot;time_unit&quot;))
+val initial = ArrayBuffer[(String, Double)]()
+val times_list = times.collect()
+for (time &lt;-  times_list){
+    val day = time_day_map.filter(col(&quot;time_unit&quot;) === time(0)).select(&quot;day_of_year&quot;).collect()(0)(0).toString
+    val count = time(1).asInstanceOf[Long]
+    try {val conditional_distribution = spark.read.parquet(&quot;dbfs:/roadSafety_&quot; + day + &quot;_CD&quot;).select($&quot;initial_state&quot;, $&quot;prob_interval._1&quot;.alias(&quot;start&quot;), $&quot;prob_interval._2&quot;.alias(&quot;end&quot;))
+         val uniform_samples = uniformRDD(sc,count).toDF()
+         val cross_samples_intervals = uniform_samples.crossJoin(conditional_distribution)
+         val samples = cross_samples_intervals.filter(&quot;start &lt; value&quot;).filter(&quot;end &gt;= value&quot;).select(&quot;initial_state&quot;).cache()
+         val location_time = samples.rdd.map(item =&gt; (item(0).toString, time(0).asInstanceOf[Double])).collect()
+         initial ++= location_time
+         samples.unpersist
+         println(time(0).toString)
+        }
+    catch {
+      case u: org.apache.spark.sql.AnalysisException =&gt; {
+        println(&quot;Path does not exist &quot; + day + &quot;. Sampling independent of time&quot;)
+        val conditional_distribution = spark.read.parquet(&quot;dbfs:/roadSafety_no_date_CD&quot;).select($&quot;initial_state&quot;, $&quot;prob_interval.prob_interval&quot;.alias(&quot;start&quot;), $&quot;prob_interval.cumulative_Sum&quot;.alias(&quot;end&quot;))
+        val uniform_samples = uniformRDD(sc,count).toDF()
+        val cross_samples_intervals = uniform_samples.crossJoin(conditional_distribution)
+        val samples = cross_samples_intervals.filter(&quot;start &lt; value&quot;).filter(&quot;end &gt;= value&quot;).select(&quot;initial_state&quot;).cache()
+        val location_time = samples.rdd.map(item =&gt; (item(0).toString, time(0).asInstanceOf[Double])).collect()
+        initial ++= location_time
+        samples.unpersist
+        println(time(0).toString)
+        
+      }
+    }  
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1.0
+2.0
+3.0
+4.0
+5.0
+6.0
+7.0
+8.0
+9.0
+10.0
+11.0
+12.0
+13.0
+14.0
+15.0
+16.0
+17.0
+18.0
+19.0
+20.0
+21.0
+22.0
+23.0
+24.0
+25.0
+26.0
+27.0
+28.0
+29.0
+30.0
+31.0
+32.0
+33.0
+34.0
+35.0
+36.0
+37.0
+38.0
+39.0
+Path does not exist 2017-02-09. Sampling independent of time
+40.0
+41.0
+42.0
+43.0
+44.0
+45.0
+46.0
+47.0
+48.0
+49.0
+50.0
+51.0
+52.0
+53.0
+54.0
+55.0
+56.0
+57.0
+58.0
+59.0
+60.0
+61.0
+62.0
+63.0
+64.0
+65.0
+66.0
+67.0
+68.0
+69.0
+70.0
+71.0
+72.0
+73.0
+74.0
+75.0
+76.0
+77.0
+78.0
+79.0
+80.0
+81.0
+82.0
+83.0
+84.0
+85.0
+86.0
+87.0
+88.0
+89.0
+90.0
+91.0
+92.0
+93.0
+94.0
+95.0
+96.0
+97.0
+98.0
+99.0
+100.0
+101.0
+102.0
+103.0
+104.0
+105.0
+106.0
+107.0
+108.0
+109.0
+110.0
+112.0
+113.0
+114.0
+115.0
+116.0
+117.0
+119.0
+120.0
+121.0
+122.0
+123.0
+124.0
+125.0
+126.0
+127.0
+128.0
+129.0
+130.0
+131.0
+132.0
+133.0
+134.0
+135.0
+136.0
+137.0
+138.0
+139.0
+140.0
+141.0
+142.0
+143.0
+144.0
+145.0
+146.0
+147.0
+148.0
+149.0
+150.0
+151.0
+152.0
+153.0
+154.0
+155.0
+156.0
+157.0
+158.0
+159.0
+160.0
+161.0
+162.0
+163.0
+164.0
+165.0
+166.0
+167.0
+168.0
+169.0
+170.0
+171.0
+172.0
+173.0
+174.0
+175.0
+176.0
+177.0
+178.0
+179.0
+180.0
+181.0
+182.0
+183.0
+184.0
+185.0
+186.0
+187.0
+188.0
+189.0
+190.0
+191.0
+192.0
+193.0
+194.0
+195.0
+196.0
+197.0
+198.0
+199.0
+200.0
+201.0
+202.0
+203.0
+204.0
+205.0
+206.0
+207.0
+208.0
+209.0
+210.0
+211.0
+212.0
+213.0
+214.0
+215.0
+216.0
+217.0
+218.0
+219.0
+220.0
+221.0
+222.0
+223.0
+224.0
+225.0
+226.0
+227.0
+228.0
+229.0
+230.0
+231.0
+232.0
+233.0
+234.0
+235.0
+236.0
+237.0
+238.0
+239.0
+240.0
+241.0
+242.0
+243.0
+244.0
+245.0
+246.0
+247.0
+248.0
+249.0
+250.0
+251.0
+252.0
+253.0
+254.0
+255.0
+256.0
+257.0
+258.0
+259.0
+260.0
+261.0
+262.0
+263.0
+264.0
+265.0
+266.0
+267.0
+268.0
+269.0
+270.0
+271.0
+272.0
+273.0
+274.0
+275.0
+276.0
+277.0
+278.0
+279.0
+280.0
+281.0
+282.0
+283.0
+284.0
+285.0
+286.0
+287.0
+288.0
+289.0
+290.0
+291.0
+292.0
+293.0
+294.0
+295.0
+296.0
+297.0
+298.0
+299.0
+300.0
+301.0
+302.0
+303.0
+304.0
+305.0
+306.0
+307.0
+308.0
+309.0
+310.0
+311.0
+313.0
+314.0
+315.0
+316.0
+317.0
+318.0
+319.0
+320.0
+321.0
+322.0
+323.0
+324.0
+325.0
+326.0
+327.0
+328.0
+329.0
+330.0
+331.0
+332.0
+333.0
+334.0
+335.0
+336.0
+337.0
+338.0
+339.0
+340.0
+341.0
+342.0
+343.0
+344.0
+345.0
+346.0
+347.0
+348.0
+349.0
+350.0
+351.0
+352.0
+353.0
+354.0
+355.0
+356.0
+357.0
+358.0
+359.0
+360.0
+361.0
+362.0
+363.0
+364.0
+365.0
+366.0
+367.0
+368.0
+369.0
+370.0
+371.0
+372.0
+373.0
+374.0
+375.0
+376.0
+377.0
+378.0
+379.0
+380.0
+381.0
+382.0
+383.0
+384.0
+385.0
+386.0
+387.0
+388.0
+389.0
+390.0
+391.0
+392.0
+393.0
+394.0
+395.0
+396.0
+397.0
+398.0
+399.0
+400.0
+401.0
+402.0
+403.0
+404.0
+405.0
+406.0
+407.0
+408.0
+409.0
+410.0
+411.0
+413.0
+414.0
+415.0
+417.0
+418.0
+419.0
+420.0
+421.0
+422.0
+423.0
+424.0
+425.0
+426.0
+427.0
+428.0
+429.0
+430.0
+431.0
+432.0
+433.0
+434.0
+435.0
+436.0
+437.0
+438.0
+439.0
+440.0
+441.0
+442.0
+443.0
+444.0
+445.0
+446.0
+447.0
+448.0
+449.0
+450.0
+451.0
+452.0
+453.0
+454.0
+455.0
+456.0
+458.0
+459.0
+460.0
+461.0
+462.0
+463.0
+464.0
+465.0
+466.0
+467.0
+468.0
+469.0
+470.0
+471.0
+472.0
+473.0
+474.0
+475.0
+476.0
+477.0
+478.0
+479.0
+480.0
+481.0
+482.0
+483.0
+484.0
+485.0
+486.0
+487.0
+488.0
+489.0
+490.0
+491.0
+492.0
+493.0
+494.0
+495.0
+496.0
+497.0
+498.0
+499.0
+500.0
+501.0
+502.0
+503.0
+504.0
+505.0
+506.0
+507.0
+508.0
+509.0
+510.0
+511.0
+512.0
+513.0
+514.0
+515.0
+516.0
+517.0
+518.0
+519.0
+520.0
+521.0
+522.0
+523.0
+524.0
+525.0
+526.0
+527.0
+528.0
+529.0
+530.0
+531.0
+532.0
+533.0
+534.0
+535.0
+536.0
+537.0
+538.0
+539.0
+540.0
+541.0
+542.0
+543.0
+544.0
+545.0
+546.0
+547.0
+548.0
+549.0
+550.0
+551.0
+552.0
+553.0
+554.0
+555.0
+556.0
+557.0
+558.0
+559.0
+560.0
+561.0
+562.0
+563.0
+564.0
+565.0
+566.0
+567.0
+568.0
+569.0
+570.0
+571.0
+572.0
+573.0
+574.0
+575.0
+576.0
+577.0
+578.0
+579.0
+580.0
+581.0
+582.0
+583.0
+584.0
+585.0
+586.0
+587.0
+588.0
+589.0
+590.0
+591.0
+592.0
+593.0
+594.0
+595.0
+596.0
+597.0
+598.0
+599.0
+600.0
+601.0
+602.0
+603.0
+604.0
+605.0
+606.0
+607.0
+608.0
+609.0
+610.0
+611.0
+612.0
+613.0
+614.0
+615.0
+616.0
+617.0
+618.0
+619.0
+620.0
+621.0
+622.0
+623.0
+624.0
+625.0
+626.0
+627.0
+628.0
+629.0
+630.0
+631.0
+632.0
+633.0
+634.0
+635.0
+636.0
+637.0
+638.0
+639.0
+640.0
+641.0
+642.0
+643.0
+644.0
+645.0
+646.0
+647.0
+648.0
+649.0
+650.0
+651.0
+652.0
+653.0
+654.0
+655.0
+656.0
+657.0
+658.0
+659.0
+660.0
+661.0
+662.0
+663.0
+664.0
+665.0
+666.0
+667.0
+668.0
+669.0
+670.0
+671.0
+672.0
+673.0
+674.0
+675.0
+676.0
+677.0
+678.0
+679.0
+680.0
+681.0
+682.0
+683.0
+684.0
+685.0
+686.0
+687.0
+688.0
+689.0
+690.0
+691.0
+692.0
+693.0
+694.0
+695.0
+696.0
+697.0
+698.0
+699.0
+700.0
+701.0
+702.0
+703.0
+704.0
+705.0
+706.0
+707.0
+708.0
+709.0
+710.0
+711.0
+712.0
+713.0
+714.0
+715.0
+716.0
+717.0
+718.0
+719.0
+720.0
+721.0
+722.0
+723.0
+724.0
+725.0
+726.0
+727.0
+728.0
+729.0
+730.0
+731.0
+732.0
+733.0
+734.0
+735.0
+737.0
+738.0
+739.0
+740.0
+741.0
+742.0
+743.0
+744.0
+745.0
+746.0
+747.0
+748.0
+749.0
+750.0
+751.0
+752.0
+753.0
+754.0
+755.0
+756.0
+757.0
+758.0
+759.0
+760.0
+761.0
+762.0
+763.0
+765.0
+766.0
+767.0
+768.0
+769.0
+770.0
+772.0
+773.0
+774.0
+775.0
+776.0
+777.0
+778.0
+779.0
+780.0
+781.0
+782.0
+783.0
+784.0
+785.0
+786.0
+787.0
+788.0
+789.0
+790.0
+791.0
+792.0
+793.0
+794.0
+795.0
+796.0
+797.0
+798.0
+799.0
+801.0
+802.0
+803.0
+804.0
+806.0
+807.0
+808.0
+809.0
+810.0
+811.0
+812.0
+813.0
+814.0
+815.0
+816.0
+817.0
+818.0
+819.0
+820.0
+821.0
+822.0
+823.0
+824.0
+825.0
+826.0
+827.0
+828.0
+829.0
+830.0
+831.0
+832.0
+833.0
+834.0
+835.0
+836.0
+837.0
+838.0
+839.0
+840.0
+841.0
+842.0
+843.0
+844.0
+845.0
+846.0
+847.0
+848.0
+849.0
+850.0
+851.0
+852.0
+853.0
+854.0
+855.0
+856.0
+857.0
+858.0
+859.0
+860.0
+861.0
+862.0
+863.0
+864.0
+865.0
+866.0
+867.0
+868.0
+869.0
+870.0
+871.0
+872.0
+873.0
+874.0
+875.0
+876.0
+877.0
+878.0
+879.0
+880.0
+881.0
+882.0
+883.0
+884.0
+885.0
+886.0
+887.0
+888.0
+889.0
+890.0
+891.0
+892.0
+893.0
+894.0
+895.0
+896.0
+897.0
+898.0
+899.0
+900.0
+901.0
+902.0
+903.0
+904.0
+905.0
+906.0
+907.0
+908.0
+909.0
+910.0
+911.0
+912.0
+913.0
+914.0
+915.0
+916.0
+917.0
+918.0
+919.0
+920.0
+921.0
+922.0
+923.0
+924.0
+925.0
+926.0
+927.0
+928.0
+929.0
+930.0
+931.0
+932.0
+933.0
+934.0
+935.0
+936.0
+937.0
+938.0
+939.0
+940.0
+941.0
+942.0
+943.0
+944.0
+945.0
+946.0
+947.0
+948.0
+949.0
+950.0
+951.0
+952.0
+953.0
+954.0
+955.0
+956.0
+957.0
+958.0
+959.0
+960.0
+961.0
+962.0
+963.0
+964.0
+965.0
+966.0
+967.0
+968.0
+969.0
+970.0
+971.0
+972.0
+973.0
+974.0
+975.0
+976.0
+977.0
+978.0
+979.0
+980.0
+981.0
+982.0
+983.0
+984.0
+985.0
+986.0
+987.0
+988.0
+989.0
+990.0
+991.0
+992.0
+993.0
+994.0
+995.0
+996.0
+997.0
+998.0
+999.0
+1000.0
+1001.0
+1002.0
+1003.0
+1004.0
+1005.0
+1006.0
+1007.0
+1008.0
+1009.0
+1010.0
+1011.0
+1012.0
+1013.0
+1014.0
+1015.0
+1016.0
+1017.0
+1018.0
+1019.0
+1020.0
+1021.0
+1022.0
+1023.0
+1024.0
+1025.0
+1026.0
+1027.0
+1028.0
+1029.0
+1030.0
+1031.0
+1032.0
+1033.0
+1034.0
+1035.0
+1036.0
+1037.0
+1038.0
+1039.0
+1040.0
+1041.0
+1042.0
+1043.0
+1044.0
+1045.0
+1046.0
+1047.0
+1048.0
+1049.0
+1050.0
+1051.0
+1052.0
+1053.0
+1054.0
+1055.0
+1056.0
+1057.0
+1058.0
+1059.0
+1060.0
+1061.0
+1062.0
+1063.0
+1064.0
+1065.0
+1066.0
+1067.0
+1068.0
+1069.0
+1070.0
+1071.0
+1072.0
+1073.0
+1074.0
+1075.0
+1076.0
+1077.0
+1078.0
+1079.0
+1080.0
+1081.0
+1082.0
+1083.0
+1084.0
+1085.0
+1086.0
+1087.0
+1088.0
+1089.0
+1090.0
+1091.0
+1093.0
+1094.0
+1095.0
+1096.0
+1097.0
+1098.0
+1099.0
+1100.0
+1101.0
+1102.0
+1103.0
+1104.0
+1105.0
+1106.0
+1107.0
+1108.0
+1109.0
+1110.0
+1111.0
+1112.0
+1113.0
+1114.0
+1115.0
+1116.0
+1117.0
+1118.0
+1119.0
+1120.0
+1121.0
+1122.0
+1123.0
+1124.0
+1125.0
+1126.0
+1127.0
+1128.0
+1129.0
+1130.0
+1131.0
+1132.0
+1133.0
+1134.0
+1135.0
+1136.0
+1137.0
+1138.0
+1139.0
+1140.0
+1141.0
+1142.0
+1143.0
+1144.0
+1145.0
+1146.0
+1147.0
+1148.0
+1149.0
+1150.0
+1151.0
+1152.0
+1153.0
+1154.0
+1155.0
+1156.0
+1157.0
+1158.0
+1159.0
+1160.0
+1161.0
+1162.0
+1163.0
+1164.0
+1165.0
+1166.0
+1167.0
+1168.0
+1169.0
+1170.0
+1171.0
+1172.0
+1173.0
+1174.0
+1175.0
+1176.0
+1177.0
+1178.0
+1179.0
+1180.0
+1181.0
+1183.0
+1184.0
+1185.0
+1186.0
+1187.0
+1188.0
+1189.0
+1190.0
+1191.0
+1192.0
+1194.0
+1195.0
+1196.0
+1197.0
+1198.0
+1199.0
+1200.0
+1201.0
+1202.0
+1203.0
+1204.0
+1205.0
+1206.0
+1208.0
+1209.0
+1210.0
+1211.0
+1212.0
+1213.0
+1214.0
+1215.0
+1216.0
+1217.0
+1218.0
+1219.0
+1220.0
+1221.0
+1223.0
+1224.0
+1225.0
+1226.0
+1227.0
+1228.0
+1229.0
+1230.0
+1231.0
+1232.0
+1233.0
+1234.0
+1235.0
+1236.0
+1237.0
+1238.0
+1239.0
+1241.0
+1242.0
+1243.0
+1244.0
+1245.0
+1246.0
+1247.0
+1248.0
+1249.0
+1250.0
+1251.0
+1252.0
+1253.0
+1254.0
+1255.0
+1256.0
+1257.0
+1258.0
+1259.0
+1260.0
+1261.0
+1262.0
+1263.0
+1264.0
+1265.0
+1266.0
+1267.0
+1268.0
+1269.0
+1270.0
+1271.0
+1272.0
+1273.0
+1274.0
+1275.0
+1276.0
+1277.0
+1278.0
+1279.0
+1280.0
+1281.0
+1282.0
+1283.0
+1284.0
+1285.0
+1286.0
+1287.0
+1288.0
+1289.0
+1290.0
+1291.0
+1292.0
+1293.0
+1294.0
+1295.0
+1296.0
+1297.0
+1298.0
+1299.0
+1300.0
+1301.0
+1302.0
+1303.0
+1304.0
+1305.0
+1306.0
+1307.0
+1308.0
+1309.0
+1310.0
+1311.0
+1312.0
+1313.0
+1314.0
+1315.0
+1316.0
+1317.0
+1318.0
+1319.0
+1320.0
+1321.0
+1322.0
+1323.0
+1324.0
+1325.0
+1326.0
+1327.0
+1328.0
+1329.0
+1330.0
+1331.0
+1332.0
+1333.0
+1334.0
+1335.0
+1336.0
+1337.0
+1338.0
+1339.0
+1340.0
+1341.0
+1342.0
+1343.0
+1344.0
+1345.0
+1346.0
+1347.0
+1348.0
+1349.0
+1350.0
+1351.0
+1352.0
+1353.0
+1354.0
+1355.0
+1356.0
+1357.0
+1358.0
+1359.0
+1360.0
+1361.0
+1362.0
+1363.0
+1364.0
+1365.0
+1366.0
+1367.0
+1368.0
+1369.0
+1370.0
+1371.0
+1372.0
+1373.0
+1374.0
+1375.0
+1376.0
+1377.0
+1378.0
+1379.0
+1380.0
+1381.0
+1382.0
+1383.0
+1384.0
+1385.0
+1387.0
+1388.0
+1389.0
+1390.0
+1391.0
+1392.0
+1393.0
+1394.0
+1395.0
+1396.0
+1397.0
+1398.0
+1399.0
+1400.0
+1401.0
+1402.0
+1403.0
+1404.0
+1405.0
+1406.0
+1407.0
+1408.0
+1409.0
+1410.0
+1411.0
+1412.0
+time_day_map: org.apache.spark.sql.DataFrame = [day_of_year: date, time_unit: bigint]
+initial: scala.collection.mutable.ArrayBuffer[(String, Double)] = ArrayBuffer((4368444509,1.0), (2424668863+4975677371,1.0), (1625682383,2.0), (2370300562+2370300566,2.0), (3205833256,2.0), (3205833256,2.0), (7731932519+33700189,2.0), (33140425+2320320623,2.0), (7731932519+33700189,2.0), (3205833256,2.0), (822048855,2.0), (33140425+2320320623,2.0), (6717810040+1092044002,3.0), (8850792014,3.0), (5387293279,3.0), (59600242+721036420,3.0), (2587005829,3.0), (291194903,4.0), (1584051936+429511771,4.0), (1584051936+429511771,4.0), (8242746297+2588236883,4.0), (730037987,4.0), (2762296139,4.0), (291194903,4.0), (730037987,4.0), (8242746297+2588236883,4.0), (2762296139,4.0), (798797373+2465504066,5.0), (798797373+2465504066,5.0), (1600441347,5.0), (3868060765+3868060765,5.0), (1600441347,5.0), (7879758835+7879758835,6.0), (470874618+1795329374,6.0), (1222823443,6.0), (470874618+1795329374,6.0), (3762326457,7.0), (1930969711,7.0), (2471815931,8.0), (2471815931,8.0), (319250909,8.0), (1163019324,9.0), (462706139+6900302992,9.0), (1119743298,9.0), (3051839354+6073948246,9.0), (1295828592,10.0), (1584065362,10.0), (1747606475,10.0), (8647346250+5230985201,10.0), (959451147,10.0), (2336797434+2336797436,10.0), (727331982,10.0), (3841856354,10.0), (1747606475,10.0), (727331982,10.0), (32871408+1699178230,10.0), (388222759+2619379829,10.0), (425442963,10.0), (2669381052,11.0), (7554572709,11.0), (1406196913+1507667881,11.0), (903290706+981434283,11.0), (7554572709,11.0), (1908755771+1908755753,11.0), (1165609337+420749684,12.0), (2680169742+8418869072,12.0), (1165869863+1662728370,12.0), (2680169742+8418869072,12.0), (1649361502,12.0), (1917119589+2557260234,12.0), (1165609337+420749684,12.0), (8315333427+983995722,12.0), (1183150115,12.0), (59613397,12.0), (2680169742+8418869072,12.0), (59613397,12.0), (7694675604+7694675604,13.0), (415545990,13.0), (1649797526+388227874,13.0), (253277187,13.0), (2588236884+8242746296,13.0), (305467163,13.0), (2203515240+168854751,13.0), (2588236884+8242746296,13.0), (3504903953+984408228,13.0), (1236407339,13.0), (3208381288,14.0), (894241356+7667433908,14.0), (792695963,14.0), (33735303,14.0), (2667703355+1386152713,14.0), (3208381288,14.0), (792695963,14.0), (894241356+7667433908,14.0), (279058228+73365133,15.0), (279058228+73365133,15.0), (279058228+73365133,15.0), (363672709,16.0), (363672709,16.0), (5798210145,16.0), (371713055,16.0), (32600448,16.0), (32083743,16.0), (32083743,16.0), (319247356,16.0), (967110682,16.0), (32325841,16.0), (3583899803,16.0), (60347482,17.0), (79672822+303583628,17.0), (32324664+4533351034,17.0), (427527701,17.0), (9363277628+9363277628,17.0), (1815575570,17.0), (4634922480,17.0), (5975667825+5975667825,17.0), (2677669585,17.0), (1020331765,18.0), (2320097163,18.0), (419237353,18.0), (419237353,18.0), (6905476274,18.0), (4450697716+4450697716,18.0), (5633388659,18.0), (1020331765,18.0), (2320097163,18.0), (8622036237+1580774004,18.0), (1192596587,19.0), (409755460,19.0), (363563559,19.0), (1022296148+410874210,19.0), (2264484031+1014608971,19.0), (363563559,19.0), (32845143,19.0), (2379377598,19.0), (32845143,19.0), (409755460,19.0), (2827597845,19.0), (409755460,19.0), (32845143,19.0), (32845143,19.0), (2574590933+38454926,19.0), (2505129295+2483169589,20.0), (364152927,20.0), (364152927,20.0), (7345759454,20.0), (837556761,20.0), (2044841002,20.0), (364152927,20.0), (364152927,20.0), (837556761,20.0), (4988458872,20.0), (461087005,21.0), (1639502771+1639502893,21.0), (739986370+410889520,21.0), (377656562+32598459,21.0), (847313826,21.0), (461087005,21.0), (1796292269+686546553,22.0), (1362685260+1362685270,22.0), (1944439773+1944439370,23.0), (8882257323+8882257323,23.0), (249070390,23.0), (8479396589,24.0), (6735091203,24.0), (2827586261,24.0), (8479396589,24.0), (538957975,24.0), (410606100+2434603229,25.0), (2252732116,25.0), (2204305386,26.0), (3114251682,26.0), (1329638683+419151551,26.0), (32324664,26.0), (32324664,26.0), (1299645458,26.0), (32845016,26.0), (7276369590+7276369590,26.0), (6042420027,26.0), (1820923762+1820923764,26.0), (36141432,26.0), (6042420027,26.0), (3114251682,26.0), (6042420027,26.0), (6042420027,26.0), (1329638683+419151551,26.0), (60734542,27.0), (1622367325,27.0), (264463729,27.0), (264463729,27.0), (264463729,27.0), (264463729,27.0), (32320314+31440369,27.0), (264463729,27.0), (31294780,27.0), (60734542,27.0), (32320314+31440369,27.0), (732200650,27.0), (2914930062,27.0), (2914930062,27.0), (504652363,27.0), (32320314+31440369,27.0), (1855893783+903265851,28.0), (32600451,28.0), (32600451,28.0), (99159029+3438113759,29.0), (4255116003+1314187228,29.0), (2866951734,30.0), (32603235,30.0), (32603235,30.0), (2378120812,30.0), (32600419,30.0), (2320320799+1001229890,31.0), (257179521+280830499,32.0), (364864586,32.0), (2033030280+2704534655,32.0), (364864586,32.0), (3841769599+3841709818,33.0), (707406699+419261237,34.0), (2619379831+2619379829,34.0), (3179603721,34.0), (3756289535+4460747443,34.0), (257178390,34.0), (5239539831+1124773938,34.0), (5239539831+1124773938,34.0), (365221734,34.0), (2265713612+2214926252,34.0), (3179603721,34.0), (181324716+430270954,34.0), (4267144632+1860705058,35.0), (919098478+504651594,35.0), (2119185927+9275274666,35.0), (4267144632+1860705058,35.0), (4267144632+1860705058,35.0), (2396386210,35.0), (667305142,35.0), (1740329002+8307613765,35.0), (1740329002+8307613765,35.0), (267528863+267528909,36.0), (6281971598,36.0), (4273563149,36.0), (1669465612+1669465948,37.0), (3270112620,38.0), (3709684883+3568781836,38.0), (5134670286+2938466972,38.0), (3270112620,38.0), (2211152928+2211152924,38.0), (2752159044,39.0), (2808766795,39.0), (2752159044,39.0), (5200261128,40.0), (1116078427+1124976131,41.0), (181324580,41.0), (2769155072,41.0), (5437941245,41.0), (5244364267,41.0), (1116078427+1124976131,41.0), (1116078427+1124976131,41.0), (698987043,41.0), (695491357,42.0), (8591908000+8591908000,42.0), (2845965238+6454345013,43.0), (2845965238+6454345013,43.0), (2845965238+6454345013,43.0), (1189263478,43.0), (2225754900,43.0), (33733769,44.0), (393806398,44.0), (33733769,44.0), (1134386488,44.0), (3791804903+1285072225,44.0), (33733769,44.0), (5929248812+5929248812,44.0), (442828950,45.0), (61103392,45.0), (60734594,46.0), (31436065,46.0), (8316810005,46.0), (8316810005,46.0), (181324716,46.0), (5037480027,46.0), (60734594,46.0), (60734594,46.0), (673605204,46.0), (449061049+2244985716,46.0), (2214843642+984408176,46.0), (60734594,46.0), (181324716,46.0), (2415765398,46.0), (2415765398,46.0), (1765993885,47.0), (6800010191+3451134345,47.0), (307434796+3777092701,47.0), (5605047102,48.0), (837556757,48.0), (316413715,48.0), (1800855075+3495077800,48.0), (32871384+32070360,48.0), (32083873,48.0), (837556757,48.0), (1837718516,49.0), (901004064,49.0), (1837718516,49.0), (8012758414+8012758414,49.0), (367664567+367665337,49.0), (901004064,49.0), (1837718516,49.0), (983988024+983995593,50.0), (3546166405+3546166405,50.0), (1791724822+510069981,50.0), (365354022,50.0), (365354022,50.0), (5582510225+1165869020,50.0), (363382358+5581876714,51.0), (738822019+738821988,51.0), (363382358+5581876714,51.0), (735564684,51.0), (738822019+738821988,51.0), (363382358+5581876714,51.0), (31451266,51.0), (291537629+6080716335,51.0), (7129328348+363422218,52.0), (8325783100,52.0), (2687132352,52.0), (2479010123+2479010123,52.0), (2687132352,52.0), (7129328348+363422218,52.0), (8325783100,52.0), (41640317,53.0), (41640317,53.0), (983977283,53.0), (969236862,53.0), (41640317,53.0), (7366187586,53.0), (983977283,53.0), (421555281,53.0), (468185991+1972218284,53.0), (421555281,53.0), (421555281,53.0), (2559562351+2473750225,53.0), (468185991+1972218284,53.0), (1362397315+2565174886,54.0), (2190745603+1534489849,55.0), (707948589+730037913,55.0), (3197923028,55.0), (2346338702,55.0), (4703986855,55.0), (1812189130,55.0), (477196849+1396536694,55.0), (2346338702,55.0), (2899475498+863177358,55.0), (2899475498+863177358,55.0), (3241251443,55.0), (750600011+504652363,56.0), (2379129581+2379129537,56.0), (452649792,56.0), (1408174637,56.0), (4047563197+4047563197,56.0), (1832790970,57.0), (621880643+1045983864,57.0), (2110411666+448680811,57.0), (33733769,57.0), (621880643+1045983864,57.0), (621880643+1045983864,57.0), (32603144,58.0), (1667994930,58.0), (32603144,58.0), (1667994930,58.0), (1667994930,58.0), (2687389613,58.0), (1667994930,58.0), (2209738067,59.0), (2095623986,59.0), (425438825,59.0), (2607606613,59.0), (1272406897+1272405098,59.0), (2095623986,59.0), (2209738067,59.0), (107845176,59.0), (276256802+32441462,59.0), (277163792+2511304183,59.0), (272241691+1356215270,59.0), (805115715,59.0), (2209738067,59.0), (107845176,59.0), (1834041179+1213838159,59.0), (3589633444+1973901879,59.0), (425438825,59.0), (3828294610+3828294610,60.0), (4982837044+8398875924,60.0), (33140649,60.0), (1041189696,60.0), (3828294610+3828294610,60.0), (2727216343,61.0), (372329733,61.0), (908644094+805802505,61.0), (905253285+905194309,61.0), (3115364670+3115364670,61.0), (372329733,61.0), (9457779045+9457779044,61.0), (2727216343,61.0), (908644094+805802505,61.0), (908644094+805802505,61.0), (905253285+905194309,61.0), (2121192109,61.0), (369440763,62.0), (7617598784,62.0), (761890856+1920545801,62.0), (32846319,62.0), (369440763,62.0), (761890856+1920545801,62.0), (6185695200+1254080956,63.0), (8558531217+419251719,63.0), (1582702256,63.0), (1582702256,63.0), (8558531217+419251719,63.0), (1043675144,63.0), (1043675144,63.0), (1632015035+1633097390,64.0), (430270932,64.0), (1367982085,64.0), (2522888081,64.0), (1367982085,64.0), (57174067,65.0), (1342605898+3316552071,65.0), (708727962,65.0), (1754989264,65.0), (708727962,65.0), (1022667594,65.0), (2392092692,65.0), (1754989264,65.0), (1342605898+3316552071,65.0), (32083738,65.0), (708727962,65.0), (272228692,65.0), (1754989264,65.0), (1342605898+3316552071,65.0), (6080716335+291537606,66.0), (998752776,66.0), (5781413491,66.0), (1283445497+5475700247,66.0), (6080716335+291537606,66.0), (5781413491,66.0), (6080716335+291537606,66.0), (2498101067,66.0), (9364003884+9364003880,66.0), (798796935+844163601,67.0), (3828041185,67.0), (6720021623,67.0), (452652743+1044734663,67.0), (430258456+430249899,68.0), (3543875617+452652743,68.0), (249508859+249070050,68.0), (249508859+249070050,68.0), (4020240830+774073633,68.0), (249508859+249070050,68.0), (58320579+410412998,69.0), (2869142866,69.0), (2869142866,69.0), (830394646,69.0), (257079497+2091836308,69.0), (8939171941,69.0), (2869142866,69.0), (32337907,69.0), (32337907,69.0), (58320579+410412998,69.0), (32337907,69.0), (476289852+332015274,69.0), (32337907,69.0), (32144610,70.0), (32592937+2896686179,70.0), (1678145942+1678145911,70.0), (32326858,71.0), (2430043373,71.0), (3780995164+3780995164,71.0), (2430043373,71.0), (1812425941+2188931612,71.0), (5693629241+2260725019,72.0), (1068390022,72.0), (1068390022,72.0), (1068390022,72.0), (500879800,72.0), (4187377477+1583369903,73.0), (3569307993+1916333696,73.0), (130181345+1567689612,73.0), (4187377477+1583369903,73.0), (1112055347,73.0), (2914930062,73.0), (3569307993+1916333696,73.0), (7194916352,73.0), (31440283,73.0), (1112055347,73.0), (1112055347,73.0), (2925616721+2925616755,73.0), (1371986386+1371986386,73.0), (1371986386+1371986386,73.0), (1371986386+1371986386,73.0), (3569307993+1916333696,73.0), (1812811235+1157299848,74.0), (790410920+2061146211,74.0), (33735983,74.0), (3823984678,75.0), (264255099,75.0), (995068123+1910308046,75.0), (870496846,75.0), (6193410234+4076638889,75.0), (316987996+316988454,75.0), (8464905466+4169756813,75.0), (2035645711,76.0), (2253085562,76.0), (364768683,76.0), (79672819,76.0), (1508768578,76.0), (2035645711,76.0), (2035645711,76.0), (2035645711,76.0), (364768683,76.0), (822774232,77.0), (822774232,77.0), (4695077711+36165476,77.0), (983988302+983983054,77.0), (8345609714+1451270220,77.0), (8850792014,78.0), (8850792014,78.0), (73365133,78.0), (1240365147,78.0), (48802835+33732285,78.0), (33140426,78.0), (1240365147,78.0), (7669605770+7669605770,78.0), (137659102+387188989,78.0), (7837166170+8261687225,78.0), (34826082+454487103,79.0), (31440402,79.0), (1935576369+1935576369,79.0), (1344671612,80.0), (1344671612,80.0), (1344671612,80.0), (268069623+32124581,81.0), (292201998,81.0), (60347306,81.0), (1011699241+1011699252,81.0), (1011699241+1011699252,81.0), (3208381292,81.0), (6003310256,81.0), (132213264,81.0), (268069623+32124581,81.0), (60347306,81.0), (1454083019+364842217,81.0), (1454083019+364842217,81.0), (2753247211+2753247199,82.0), (2753247211+2753247199,82.0), (3467475443,82.0), (2753247211+2753247199,82.0), (1333297073,82.0), (672383719+672383713,82.0), (247561146,82.0), (8150983190,82.0), (2215914977,83.0), (428001750+2580428654,83.0), (829195466+8274083855,83.0), (2215914977,83.0), (2215914977,83.0), (2215914977,83.0), (32603219,83.0), (1150522044,83.0), (1258016356+31294789,83.0), (719213330+419261248,84.0), (1886842224,84.0), (445000434,84.0), (2419955225+1780507291,85.0), (32137408,85.0), (7201404920+7201404949,85.0), (2419955225+1780507291,85.0), (3818529745+2319216250,86.0), (2794309227+4770052846,86.0), (4687602661,87.0), (4687602661,87.0), (1663156593,87.0), (677323819,88.0), (1343651192+7201404748,88.0), (32600388,88.0), (1343651192+7201404748,88.0), (7491706202+2610624579,88.0), (268076378+36431893,88.0), (53407297,89.0), (32320162,89.0), (2580428589,89.0), (437273409,89.0), (1343651192+7201404748,89.0), (710972236,89.0), (2273366398,90.0), (983983239,90.0), (983983239,90.0), (734222888+2448153895,90.0), (2273366398,90.0), (3220104621,91.0), (3220104621,91.0), (429634387,91.0), (2168559068,91.0), (393348631+393377026,92.0), (1316592312,92.0), (321615547,92.0), (1316592312,92.0), (332367071,92.0), (4426807408+32324670,92.0), (367664567+367665337,92.0), (8223018014,92.0), (393348631+393377026,92.0), (1846894455+1846894465,92.0), (332367071,92.0), (1316592312,92.0), (367664567+367665337,92.0), (393348631+393377026,92.0), (4426807408+32324670,92.0), (367664567+367665337,92.0), (393348631+393377026,92.0), (31440395,93.0), (5027680424+4397288350,93.0), (1219517801,93.0), (60459851,94.0), (1634421617+3124723371,94.0), (1652188887+1652188550,94.0), (60459851,94.0), (1634421617+3124723371,94.0), (60459851,94.0), (503888809+2194878863,94.0), (1029665281+798855663,94.0), (732084863,94.0), (3205837007,95.0), (1376843583+3777296495,95.0), (2221466124+56012660,95.0), (2221466124+56012660,95.0), (1029665177,96.0), (8622060711,96.0), (441289926,96.0), (821374299+2431196674,96.0), (821374299+2431196674,96.0), (2044963802,96.0), (8622060711,96.0), (1029665177,96.0), (1445306347+938392573,96.0), (1445306347+938392573,96.0), (1388570341,97.0), (32337915+4732541408,97.0), (32337915+4732541408,97.0), (1625538797+1622318296,97.0), (1422975465+5733349675,97.0), (428894865,97.0), (44584759,97.0), (3018600248,97.0), (1388570341,97.0), (1794957826,98.0), (1794957826,98.0), (419587810,98.0), (1794957826,98.0), (419587810,98.0), (1794957826,98.0), (130129965+1250621845,99.0), (2347394398,99.0), (410184858,100.0), (410184858,100.0), (473116304,100.0), (822051441,100.0), (727235504,100.0), (32144610,100.0), (2618230543+2618230543,100.0), (1054345176,100.0), (3691584014+2426837105,100.0), (6466793418+276853372,100.0), (1631514774+1633155543,101.0), (8325783100,101.0), (8010164409+1183150421,101.0), (4723634309+7201404784,102.0), (1212530639,102.0), (388221823,102.0), (4359032233,102.0), (4169756816,102.0), (5908445071+5908445071,102.0), (3730732737+8306548565,102.0), (3730732737+8306548565,102.0), (9241442144,102.0), (4359032233,102.0), (298331548+2707116048,103.0), (32083794,103.0), (340813015,103.0), (1015065017+285957360,103.0), (2376777237,103.0), (819584374,103.0), (32083794,103.0), (340813015,103.0), (2376777237,103.0), (2055871041,103.0), (2055871041,103.0), (4851260583+1769178439,103.0), (298331548+2707116048,103.0), (32083794,103.0), (819584374,103.0), (53829919,103.0), (4014341532+4014341532,104.0), (315548178,104.0), (32329191,104.0), (928079737+928080182,104.0), (429634387,104.0), (315548178,104.0), (315548178,104.0), (428001748,104.0), (258334235,105.0), (816440536+33184937,106.0), (1481655829,106.0), (2411610303+1991224693,106.0), (1481655829,106.0), (3796306736+3796306731,106.0), (499334549,107.0), (6152986966,107.0), (4297075907,108.0), (3390170283,108.0), (337174516,108.0), (337174516,108.0), (698986986+728464190,108.0), (337174516,108.0), (4416859006+4416859006,108.0), (502981961,108.0), (1669388836+2454216733,109.0), (728972240,109.0), (666943301,109.0), (538957968,109.0), (8708590595,109.0), (1525335651,109.0), (32603144,109.0), (1530707872+305220293,110.0), (5291441321+4248151334,110.0), (984408218,110.0), (2060253704,112.0), (510070404,112.0), (2060253704,112.0), (5041997631,112.0), (3954617988+3954617988,112.0), (430784582,112.0), (2338538872,112.0), (430784582,112.0), (2060253704,112.0), (430784582,112.0), (31294796,112.0), (510070404,112.0), (364842112+364842217,112.0), (40563567+40563576,112.0), (841522850,113.0), (1422198764,113.0), (880857400,113.0), (2322675730+2323171669,113.0), (1869130003+6328411651,114.0), (5231165084+32083794,114.0), (1869130003+6328411651,114.0), (34825447,114.0), (5329978798+4119457188,114.0), (7076643916+2088206020,115.0), (32336967+662024171,116.0), (824900014+290372103,116.0), (3755666372,117.0), (279058700+2885304357,117.0), (454487103+454487105,117.0), (4332324526,117.0), (7201262716,117.0), (279058700+2885304357,117.0), (7201262716,117.0), (4314404998+995040223,117.0), (4314404998+995040223,117.0), (8778774527,119.0), (31440405,119.0), (293601806,120.0), (427122850,120.0), (293601806,120.0), (8242746297,120.0), (8242746297,120.0), (4695046213+4695046213,120.0), (4695046213+4695046213,120.0), (2234858278+2234619485,120.0), (4695046213+4695046213,120.0), (2234858278+2234619485,120.0), (775866761,120.0), (1057743807+3319735019,121.0), (79672822,121.0), (671452932,121.0), (2249967174,121.0), (671452932,121.0), (5163798580+5163798581,122.0), (32337924+763634384,122.0), (421368977+1684694008,122.0), (1145771998+822048855,122.0), (924615848+303583180,122.0), (850776167,123.0), (761890866,123.0), (741684488+741684516,124.0), (1530349807,124.0), (1530349807,124.0), (2379979513+2364390338,124.0), (664158323,124.0), (1530349807,124.0), (33143924+8647346243,124.0), (2208884052,124.0), (664158323,124.0), (2914930062,124.0), (664158323,124.0), (1576250536,124.0), (2313116061,124.0), (3905293672+3905293672,124.0), (99171112+468098177,124.0), (2914930062,124.0), (2208884052,124.0), (2379979513+2364390338,124.0), (2914930062,124.0), (1747606452+371714002,124.0), (2033208931,124.0), (1530349807,124.0), (1892263414,124.0), (5834149249,124.0), (4021523900+4021523900,124.0), (32449296+32449294,125.0), (1508768578,125.0), (3817042384+3817042384,125.0), (1508768578,125.0), (638949148+867132773,125.0), (3817042384+3817042384,125.0), (1508768578,125.0), (32449296+32449294,125.0), (2637895619+2043449691,125.0), (2522426546+1833291602,125.0), (1001268109,125.0), (32449296+32449294,125.0), (1885204134+3025020911,125.0), (1001268109,125.0), (282776849+31447762,126.0), (1532706305,126.0), (59971295,126.0), (32324664,126.0), (2699991905+3946708557,126.0), (32324664,126.0), (32324664,126.0), (838630723,126.0), (421369053+1500341905,126.0), (1136532100+3603289690,126.0), (1857324410,126.0), (421369053+1500341905,126.0), (1857324410,126.0), (2417963673,126.0), (2417963673,126.0), (838630723,126.0), (59971295,126.0), (371712696+371712930,126.0), (428001748+837556746,127.0), (8990895368,127.0), (875843369+99159011,127.0), (8296159895,127.0), (8917108974,127.0), (428001748+837556746,127.0), (428001748+837556746,127.0), (673605204,128.0), (1612176500+2544330449,128.0), (1612176500+2544330449,128.0), (2071749918,128.0), (2071749918,128.0), (1612176500+2544330449,128.0), (411397954,128.0), (673605204,128.0), (1612176500+2544330449,128.0), (861783706+861782814,128.0), (673605204,128.0), (2071749918,128.0), (3617407575+32341473,129.0), (3617407575+32341473,129.0), (560477778+560477826,129.0), (1534411751+1534411469,129.0), (3617407575+32341473,129.0), (1534411751+1534411469,129.0), (1306730546,129.0), (4559143062,129.0), (3617407575+32341473,129.0), (1513211288+1513211288,130.0), (1144004920+1144004896,130.0), (2588955866,130.0), (36806444,130.0), (977638371+3592236210,130.0), (977638371+3592236210,130.0), (977638371+3592236210,130.0), (8299422859+5745389608,131.0), (33140425+2320320623,131.0), (2049428806,131.0), (997670026,131.0), (1201326476,131.0), (33140425+2320320623,131.0), (4319726742+4319726758,131.0), (9076976196+9076976196,131.0), (8299422859+5745389608,131.0), (9076976196+9076976196,131.0), (1597662295,131.0), (9076976196+9076976196,131.0), (997670026,131.0), (701189135,131.0), (2049428806,131.0), (41850576+78151900,131.0), (41850576+78151900,131.0), (33140425+2320320623,131.0), (2130812867,131.0), (2049428806,131.0), (41850576+78151900,131.0), (1201326476,131.0), (454487103+454487105,132.0), (7829481088,132.0), (162360518+250998985,132.0), (2868207489,132.0), (343467289+722953613,132.0), (343467289+722953613,132.0), (343467289+722953613,132.0), (2868207489,132.0), (32843212,132.0), (796013109,133.0), (2265022473+332270108,133.0), (5041997631,133.0), (560477894,133.0), (459884206,133.0), (560477894,133.0), (3728924143+864598775,133.0), (9276069144+3404472948,133.0), (509915318,133.0), (796013109,133.0), (509915318,133.0), (509915318,133.0), (5041997631,133.0), (459884206,133.0), (1017873799+1017873843,133.0), (459884206,133.0), (459884206,133.0), (9276069144+3404472948,133.0), (2098014328,134.0), (1479204328+1479204409,134.0), (2441490656+117053372,134.0), (461668700,134.0), (699790533+699790564,134.0), (1399469404,135.0), (1399469404,135.0), (1928971453,136.0), (1092778941+9626313335,136.0), (1928971453,136.0), (4487066323+1937844649,136.0), (364152927,136.0), (430771927,136.0), (769311044+1598659408,136.0), (1091364909+8245890249,136.0), (769311044+1598659408,136.0), (1092778941+9626313335,136.0), (2534694080+9227149677,136.0), (769311044+1598659408,136.0), (919597247+417492988,136.0), (821373861+2119428072,136.0), (420760611,136.0), (769311044+1598659408,136.0), (5698711201,136.0), (2520255231+2034323927,136.0), (181324580,136.0), (2520255231+2034323927,136.0), (7294603948+7294603949,136.0), (430771927,136.0), (79668785,137.0), (73419186,137.0), (31448343,137.0), (519329104,137.0), (504642878,137.0), (2351498507+2351498445,137.0), (2351498507+2351498445,137.0), (73419186,137.0), (2211708906,137.0), (372329733,137.0), (31448343,137.0), (31448343,137.0), (504642878,137.0), (818675978+560064854,138.0), (58304256+60002230,138.0), (722953640,138.0), (73419192,138.0), (73419192,138.0), (33732301,138.0), (722953640,138.0), (33732301,138.0), (1104466256+474708878,138.0), (1152426544,138.0), (73419192,138.0), (58304256+60002230,138.0), (1152426544,138.0), (33732301,138.0), (2378979201+1744549002,139.0), (2034521571+2034521558,139.0), (2378979201+1744549002,139.0), (2608166052,139.0), (8322485005+4406661355,139.0), (2608166052,139.0), (8246161251,140.0), (3524132662+3524132656,140.0), (8246161251,140.0), (287914012,140.0))
+times_list: Array[org.apache.spark.sql.Row] = Array([1.0,2], [2.0,10], [3.0,5], [4.0,10], [5.0,5], [6.0,4], [7.0,2], [8.0,3], [9.0,4], [10.0,13], [11.0,6], [12.0,12], [13.0,10], [14.0,8], [15.0,3], [16.0,11], [17.0,9], [18.0,10], [19.0,15], [20.0,10], [21.0,6], [22.0,2], [23.0,3], [24.0,5], [25.0,2], [26.0,16], [27.0,16], [28.0,3], [29.0,2], [30.0,5], [31.0,1], [32.0,4], [33.0,1], [34.0,11], [35.0,9], [36.0,3], [37.0,1], [38.0,5], [39.0,3], [40.0,1], [41.0,8], [42.0,2], [43.0,5], [44.0,7], [45.0,2], [46.0,15], [47.0,3], [48.0,7], [49.0,7], [50.0,6], [51.0,8], [52.0,7], [53.0,13], [54.0,1], [55.0,11], [56.0,5], [57.0,6], [58.0,7], [59.0,17], [60.0,5], [61.0,12], [62.0,6], [63.0,7], [64.0,5], [65.0,14], [66.0,9], [67.0,4], [68.0,6], [69.0,13], [70.0,3], [71.0,5], [72.0,5], [73.0,16], [74.0,3], [75.0,7], [76.0,9], [77.0,5], [78.0,10], [79.0,3], [80.0,3], [81.0,12], [82.0,8], [83.0,9], [84.0,3], [85.0,4], [86.0,2], [87.0,3], [88.0,6], [89.0,6], [90.0,5], [91.0,4], [92.0,17], [93.0,3], [94.0,9], [95.0,4], [96.0,10], [97.0,9], [98.0,6], [99.0,2], [100.0,10], [101.0,3], [102.0,10], [103.0,16], [104.0,8], [105.0,1], [106.0,5], [107.0,2], [108.0,8], [109.0,7], [110.0,3], [112.0,14], [113.0,4], [114.0,5], [115.0,1], [116.0,2], [117.0,9], [119.0,2], [120.0,11], [121.0,5], [122.0,5], [123.0,2], [124.0,25], [125.0,14], [126.0,18], [127.0,7], [128.0,12], [129.0,9], [130.0,7], [131.0,22], [132.0,9], [133.0,18], [134.0,5], [135.0,2], [136.0,22], [137.0,13], [138.0,14], [139.0,6], [140.0,16], [141.0,5], [142.0,11], [143.0,20], [144.0,11], [145.0,22], [146.0,5], [147.0,28], [148.0,8], [149.0,8], [150.0,10], [151.0,11], [152.0,14], [153.0,10], [154.0,9], [155.0,4], [156.0,10], [157.0,7], [158.0,8], [159.0,7], [160.0,14], [161.0,11], [162.0,9], [163.0,8], [164.0,14], [165.0,7], [166.0,19], [167.0,5], [168.0,12], [169.0,12], [170.0,10], [171.0,4], [172.0,11], [173.0,4], [174.0,16], [175.0,4], [176.0,5], [177.0,12], [178.0,8], [179.0,1], [180.0,5], [181.0,7], [182.0,6], [183.0,8], [184.0,8], [185.0,13], [186.0,8], [187.0,8], [188.0,10], [189.0,5], [190.0,7], [191.0,7], [192.0,7], [193.0,2], [194.0,14], [195.0,14], [196.0,5], [197.0,17], [198.0,13], [199.0,8], [200.0,4], [201.0,10], [202.0,9], [203.0,6], [204.0,6], [205.0,9], [206.0,18], [207.0,11], [208.0,6], [209.0,5], [210.0,13], [211.0,5], [212.0,6], [213.0,10], [214.0,8], [215.0,14], [216.0,7], [217.0,13], [218.0,10], [219.0,10], [220.0,15], [221.0,7], [222.0,14], [223.0,7], [224.0,16], [225.0,6], [226.0,18], [227.0,5], [228.0,13], [229.0,15], [230.0,14], [231.0,13], [232.0,5], [233.0,7], [234.0,3], [235.0,5], [236.0,3], [237.0,8], [238.0,5], [239.0,17], [240.0,16], [241.0,8], [242.0,11], [243.0,13], [244.0,10], [245.0,5], [246.0,5], [247.0,11], [248.0,8], [249.0,9], [250.0,9], [251.0,13], [252.0,18], [253.0,5], [254.0,13], [255.0,19], [256.0,10], [257.0,4], [258.0,9], [259.0,5], [260.0,3], [261.0,9], [262.0,9], [263.0,15], [264.0,15], [265.0,13], [266.0,5], [267.0,18], [268.0,13], [269.0,8], [270.0,20], [271.0,11], [272.0,7], [273.0,6], [274.0,2], [275.0,10], [276.0,6], [277.0,9], [278.0,9], [279.0,14], [280.0,5], [281.0,6], [282.0,5], [283.0,18], [284.0,11], [285.0,6], [286.0,14], [287.0,5], [288.0,7], [289.0,6], [290.0,8], [291.0,6], [292.0,9], [293.0,3], [294.0,21], [295.0,6], [296.0,13], [297.0,5], [298.0,17], [299.0,13], [300.0,8], [301.0,3], [302.0,14], [303.0,7], [304.0,13], [305.0,7], [306.0,8], [307.0,4], [308.0,1], [309.0,4], [310.0,10], [311.0,4], [313.0,3], [314.0,19], [315.0,9], [316.0,10], [317.0,6], [318.0,9], [319.0,12], [320.0,17], [321.0,4], [322.0,7], [323.0,1], [324.0,9], [325.0,6], [326.0,11], [327.0,4], [328.0,12], [329.0,7], [330.0,5], [331.0,4], [332.0,4], [333.0,15], [334.0,9], [335.0,7], [336.0,9], [337.0,4], [338.0,10], [339.0,17], [340.0,8], [341.0,16], [342.0,10], [343.0,5], [344.0,1], [345.0,8], [346.0,4], [347.0,15], [348.0,12], [349.0,7], [350.0,3], [351.0,3], [352.0,6], [353.0,15], [354.0,12], [355.0,20], [356.0,21], [357.0,10], [358.0,11], [359.0,11], [360.0,8], [361.0,13], [362.0,1], [363.0,17], [364.0,6], [365.0,1], [366.0,10], [367.0,6], [368.0,6], [369.0,9], [370.0,17], [371.0,2], [372.0,4], [373.0,11], [374.0,7], [375.0,6], [376.0,5], [377.0,8], [378.0,1], [379.0,5], [380.0,8], [381.0,5], [382.0,13], [383.0,10], [384.0,9], [385.0,6], [386.0,1], [387.0,4], [388.0,6], [389.0,5], [390.0,2], [391.0,9], [392.0,10], [393.0,3], [394.0,23], [395.0,8], [396.0,3], [397.0,12], [398.0,6], [399.0,1], [400.0,1], [401.0,11], [402.0,6], [403.0,7], [404.0,3], [405.0,6], [406.0,3], [407.0,10], [408.0,7], [409.0,9], [410.0,2], [411.0,4], [413.0,9], [414.0,2], [415.0,4], [417.0,8], [418.0,3], [419.0,6], [420.0,3], [421.0,2], [422.0,6], [423.0,6], [424.0,2], [425.0,6], [426.0,3], [427.0,9], [428.0,4], [429.0,4], [430.0,8], [431.0,7], [432.0,16], [433.0,5], [434.0,6], [435.0,3], [436.0,8], [437.0,10], [438.0,4], [439.0,6], [440.0,4], [441.0,6], [442.0,2], [443.0,6], [444.0,6], [445.0,3], [446.0,10], [447.0,6], [448.0,3], [449.0,1], [450.0,2], [451.0,7], [452.0,12], [453.0,3], [454.0,3], [455.0,4], [456.0,3], [458.0,9], [459.0,4], [460.0,7], [461.0,9], [462.0,7], [463.0,8], [464.0,14], [465.0,10], [466.0,9], [467.0,10], [468.0,8], [469.0,7], [470.0,1], [471.0,3], [472.0,7], [473.0,2], [474.0,8], [475.0,7], [476.0,8], [477.0,8], [478.0,15], [479.0,4], [480.0,7], [481.0,5], [482.0,8], [483.0,4], [484.0,3], [485.0,8], [486.0,4], [487.0,10], [488.0,7], [489.0,6], [490.0,18], [491.0,12], [492.0,10], [493.0,21], [494.0,14], [495.0,7], [496.0,23], [497.0,8], [498.0,8], [499.0,6], [500.0,12], [501.0,6], [502.0,2], [503.0,8], [504.0,16], [505.0,4], [506.0,20], [507.0,7], [508.0,12], [509.0,18], [510.0,18], [511.0,9], [512.0,7], [513.0,8], [514.0,13], [515.0,17], [516.0,15], [517.0,10], [518.0,9], [519.0,6], [520.0,6], [521.0,11], [522.0,3], [523.0,8], [524.0,19], [525.0,20], [526.0,12], [527.0,5], [528.0,3], [529.0,10], [530.0,11], [531.0,15], [532.0,16], [533.0,11], [534.0,11], [535.0,5], [536.0,7], [537.0,6], [538.0,6], [539.0,12], [540.0,6], [541.0,4], [542.0,9], [543.0,6], [544.0,6], [545.0,8], [546.0,1], [547.0,3], [548.0,11], [549.0,7], [550.0,6], [551.0,8], [552.0,4], [553.0,11], [554.0,6], [555.0,12], [556.0,5], [557.0,6], [558.0,3], [559.0,4], [560.0,13], [561.0,5], [562.0,16], [563.0,8], [564.0,9], [565.0,10], [566.0,12], [567.0,8], [568.0,4], [569.0,7], [570.0,21], [571.0,7], [572.0,16], [573.0,14], [574.0,10], [575.0,5], [576.0,2], [577.0,5], [578.0,8], [579.0,8], [580.0,22], [581.0,9], [582.0,12], [583.0,9], [584.0,7], [585.0,9], [586.0,12], [587.0,12], [588.0,9], [589.0,9], [590.0,9], [591.0,10], [592.0,4], [593.0,8], [594.0,10], [595.0,14], [596.0,5], [597.0,11], [598.0,6], [599.0,9], [600.0,9], [601.0,17], [602.0,5], [603.0,14], [604.0,6], [605.0,6], [606.0,8], [607.0,12], [608.0,13], [609.0,7], [610.0,10], [611.0,11], [612.0,6], [613.0,18], [614.0,10], [615.0,11], [616.0,8], [617.0,2], [618.0,7], [619.0,11], [620.0,12], [621.0,7], [622.0,15], [623.0,1], [624.0,7], [625.0,5], [626.0,18], [627.0,16], [628.0,17], [629.0,13], [630.0,5], [631.0,5], [632.0,8], [633.0,3], [634.0,9], [635.0,14], [636.0,11], [637.0,8], [638.0,2], [639.0,4], [640.0,8], [641.0,14], [642.0,5], [643.0,8], [644.0,8], [645.0,6], [646.0,9], [647.0,12], [648.0,7], [649.0,6], [650.0,10], [651.0,9], [652.0,7], [653.0,8], [654.0,8], [655.0,10], [656.0,2], [657.0,10], [658.0,7], [659.0,2], [660.0,12], [661.0,8], [662.0,20], [663.0,11], [664.0,7], [665.0,7], [666.0,3], [667.0,6], [668.0,5], [669.0,13], [670.0,6], [671.0,9], [672.0,4], [673.0,5], [674.0,5], [675.0,1], [676.0,2], [677.0,2], [678.0,10], [679.0,11], [680.0,5], [681.0,10], [682.0,13], [683.0,9], [684.0,13], [685.0,5], [686.0,3], [687.0,3], [688.0,6], [689.0,13], [690.0,8], [691.0,7], [692.0,6], [693.0,11], [694.0,2], [695.0,11], [696.0,10], [697.0,8], [698.0,12], [699.0,7], [700.0,17], [701.0,4], [702.0,18], [703.0,16], [704.0,9], [705.0,14], [706.0,11], [707.0,10], [708.0,3], [709.0,12], [710.0,4], [711.0,8], [712.0,13], [713.0,9], [714.0,4], [715.0,14], [716.0,11], [717.0,10], [718.0,2], [719.0,4], [720.0,15], [721.0,8], [722.0,8], [723.0,7], [724.0,3], [725.0,9], [726.0,4], [727.0,5], [728.0,2], [729.0,2], [730.0,2], [731.0,8], [732.0,6], [733.0,7], [734.0,7], [735.0,7], [737.0,6], [738.0,6], [739.0,6], [740.0,6], [741.0,14], [742.0,8], [743.0,2], [744.0,23], [745.0,6], [746.0,4], [747.0,8], [748.0,11], [749.0,2], [750.0,8], [751.0,5], [752.0,4], [753.0,5], [754.0,11], [755.0,9], [756.0,6], [757.0,9], [758.0,16], [759.0,1], [760.0,5], [761.0,5], [762.0,16], [763.0,7], [765.0,8], [766.0,3], [767.0,8], [768.0,10], [769.0,7], [770.0,4], [772.0,7], [773.0,8], [774.0,9], [775.0,2], [776.0,7], [777.0,11], [778.0,7], [779.0,7], [780.0,11], [781.0,4], [782.0,3], [783.0,10], [784.0,5], [785.0,2], [786.0,7], [787.0,6], [788.0,4], [789.0,7], [790.0,5], [791.0,6], [792.0,4], [793.0,7], [794.0,1], [795.0,7], [796.0,6], [797.0,8], [798.0,6], [799.0,5], [801.0,11], [802.0,5], [803.0,5], [804.0,4], [806.0,7], [807.0,5], [808.0,10], [809.0,5], [810.0,4], [811.0,8], [812.0,9], [813.0,4], [814.0,10], [815.0,9], [816.0,6], [817.0,4], [818.0,7], [819.0,8], [820.0,4], [821.0,5], [822.0,11], [823.0,14], [824.0,11], [825.0,10], [826.0,6], [827.0,8], [828.0,6], [829.0,7], [830.0,2], [831.0,4], [832.0,11], [833.0,9], [834.0,6], [835.0,26], [836.0,5], [837.0,7], [838.0,14], [839.0,19], [840.0,6], [841.0,7], [842.0,11], [843.0,5], [844.0,11], [845.0,4], [846.0,18], [847.0,6], [848.0,6], [849.0,2], [850.0,14], [851.0,19], [852.0,6], [853.0,10], [854.0,5], [855.0,3], [856.0,14], [857.0,5], [858.0,8], [859.0,6], [860.0,2], [861.0,14], [862.0,7], [863.0,8], [864.0,10], [865.0,9], [866.0,3], [867.0,3], [868.0,4], [869.0,9], [870.0,9], [871.0,12], [872.0,16], [873.0,19], [874.0,7], [875.0,8], [876.0,5], [877.0,4], [878.0,7], [879.0,9], [880.0,18], [881.0,10], [882.0,12], [883.0,5], [884.0,11], [885.0,11], [886.0,8], [887.0,10], [888.0,10], [889.0,9], [890.0,10], [891.0,17], [892.0,14], [893.0,6], [894.0,13], [895.0,13], [896.0,14], [897.0,5], [898.0,9], [899.0,9], [900.0,12], [901.0,10], [902.0,8], [903.0,17], [904.0,13], [905.0,10], [906.0,9], [907.0,8], [908.0,14], [909.0,8], [910.0,16], [911.0,12], [912.0,14], [913.0,17], [914.0,4], [915.0,4], [916.0,12], [917.0,7], [918.0,8], [919.0,4], [920.0,8], [921.0,11], [922.0,10], [923.0,12], [924.0,7], [925.0,14], [926.0,16], [927.0,11], [928.0,8], [929.0,6], [930.0,5], [931.0,9], [932.0,6], [933.0,12], [934.0,16], [935.0,12], [936.0,11], [937.0,11], [938.0,20], [939.0,12], [940.0,12], [941.0,8], [942.0,6], [943.0,8], [944.0,3], [945.0,21], [946.0,10], [947.0,11], [948.0,12], [949.0,14], [950.0,4], [951.0,7], [952.0,4], [953.0,7], [954.0,6], [955.0,10], [956.0,8], [957.0,4], [958.0,8], [959.0,13], [960.0,12], [961.0,13], [962.0,8], [963.0,5], [964.0,18], [965.0,22], [966.0,15], [967.0,5], [968.0,10], [969.0,13], [970.0,12], [971.0,8], [972.0,6], [973.0,5], [974.0,16], [975.0,1], [976.0,17], [977.0,13], [978.0,10], [979.0,9], [980.0,15], [981.0,11], [982.0,10], [983.0,13], [984.0,15], [985.0,13], [986.0,15], [987.0,18], [988.0,5], [989.0,10], [990.0,7], [991.0,8], [992.0,9], [993.0,12], [994.0,7], [995.0,9], [996.0,10], [997.0,4], [998.0,2], [999.0,6], [1000.0,14], [1001.0,4], [1002.0,2], [1003.0,7], [1004.0,7], [1005.0,8], [1006.0,10], [1007.0,18], [1008.0,13], [1009.0,8], [1010.0,7], [1011.0,10])
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val location_simulation = initial.toDF(&quot;simulated_location&quot;, &quot;arrival_time&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>location_simulation: org.apache.spark.sql.DataFrame = [simulated_location: string, arrival_time: double]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">location_simulation.show(3)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+--------------------+------------+
+|  simulated_location|arrival_time|
++--------------------+------------+
+|          4368444509|         1.0|
+|2424668863+497567...|         1.0|
+|          1625682383|         2.0|
++--------------------+------------+
+only showing top 3 rows
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_5-sds-2-x-geo/034_05DistributionOfStates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_5-sds-2-x-geo/035_01_Arcgis_coordinates_transformation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

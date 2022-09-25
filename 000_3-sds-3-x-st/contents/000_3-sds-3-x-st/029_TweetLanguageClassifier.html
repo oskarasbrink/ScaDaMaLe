@@ -145,7 +145,1804 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="029_tweetlanguageclassifier"><a class="header" href="#029_tweetlanguageclassifier">029_TweetLanguageClassifier</a></h1>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="twitter-streaming-language-classifier"><a class="header" href="#twitter-streaming-language-classifier">Twitter Streaming Language Classifier</a></h1>
+<p>This is a databricksification of <a href="https://databricks.gitbooks.io/databricks-spark-reference-applications/content/twitter_classifier/index.html">https://databricks.gitbooks.io/databricks-spark-reference-applications/content/twitter_classifier/index.html</a> by Amendra Shreshta.</p>
+<p>Note that you need to change the fields in background notebook <code>025_a_extendedTwitterUtils2run</code> so more fields for <code>lang</code> in Tweets are exposed. This is a good example of how one has to go deeper into the java code of <code>twitter4j</code> as new needs arise.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./025_c_extendedTwitterUtils2runWithLangs&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import twitter4j._
+import twitter4j.auth.Authorization
+import twitter4j.conf.ConfigurationBuilder
+import twitter4j.auth.OAuthAuthorization
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.dstream._
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.receiver.Receiver
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class ExtendedTwitterReceiver
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+
+import scala.math.Ordering
+
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark._
+import org.apache.spark.storage._
+import org.apache.spark.streaming._
+import scala.math.Ordering
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class ExtendedTwitterInputDStream
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<p><strong>Enter your Twitter API Credentials.</strong> * Go to https://apps.twitter.com and look up your Twitter API Credentials, or create an app to create them. * Run the code in a cell to Enter your own credentials.</p>
+<pre><code class="language-%scala">// put your own twitter developer credentials below instead of xxx
+// instead of the '%run &quot;.../secrets/026_secret_MyTwitterOAuthCredentials&quot;' below
+// you need to copy-paste the following code-block with your own Twitter credentials replacing XXXX
+
+
+// put your own twitter developer credentials below 
+
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+
+
+// These have been regenerated!!! - need to chane them
+
+def myAPIKey       = &quot;XXXX&quot; // APIKey 
+def myAPISecret    = &quot;XXXX&quot; // APISecretKey
+def myAccessToken          = &quot;XXXX&quot; // AccessToken
+def myAccessTokenSecret    = &quot;XXXX&quot; // AccessTokenSecret
+
+
+System.setProperty(&quot;twitter4j.oauth.consumerKey&quot;, myAPIKey)
+System.setProperty(&quot;twitter4j.oauth.consumerSecret&quot;, myAPISecret)
+System.setProperty(&quot;twitter4j.oauth.accessToken&quot;, myAccessToken)
+System.setProperty(&quot;twitter4j.oauth.accessTokenSecret&quot;, myAccessTokenSecret)
+
+println(&quot;twitter OAuth Credentials loaded&quot;)
+</code></pre>
+<p>The cell-below will not expose my Twitter API Credentials: <code>myAPIKey</code>, <code>myAPISecret</code>, <code>myAccessToken</code> and <code>myAccessTokenSecret</code>. Use the code above to enter your own credentials in a scala cell.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import twitter4j.Status
+import twitter4j.auth.Authorization
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.StreamingContext
+import org.apache.spark.streaming.dstream.{ReceiverInputDStream, DStream}
+defined object ExtendedTwitterUtils
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>done running the extendedTwitterUtils2run notebook - ready to stream from twitter by filtering on strings, users and language
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;Users/raazesh.sainudiin@math.uu.se/scalable-data-science/secrets/026_secret_MyTwitterOAuthCredentials&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>twitter OAuth Credentials loaded
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+import twitter4j.auth.OAuthAuthorization
+import twitter4j.conf.ConfigurationBuilder
+myAPIKey: String
+myAPISecret: String
+myAccessToken: String
+myAccessTokenSecret: String
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="step-1-collect-data"><a class="header" href="#step-1-collect-data">Step 1. Collect Data</a></h2>
+<p>Start downloading tweets in order to start building a simple model for language classification.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// ## Let's create a directory in dbfs for storing tweets in the cluster's distributed file system.
+val outputDirectoryRoot = &quot;/datasets/tweetsStreamTmp&quot; // output directory
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>outputDirectoryRoot: String = /datasets/tweetsStreamTmp
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// to remove a pre-existing directory and start from scratch uncomment next line and evaluate this cell
+dbutils.fs.rm(outputDirectoryRoot, true) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// ## Capture tweets in every sliding window of slideInterval many milliseconds.
+val slideInterval = new Duration(1 * 1000) // 1 * 1000 = 1000 milli-seconds = 1 sec
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>slideInterval: org.apache.spark.streaming.Duration = 1000 ms
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Our goal is to take each RDD in the twitter DStream and write it as a json file in our dbfs.
+// Create a Spark Streaming Context.
+val ssc = new StreamingContext(sc, slideInterval)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>ssc: org.apache.spark.streaming.StreamingContext = org.apache.spark.streaming.StreamingContext@466128fb
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Create a Twitter Stream for the input source. 
+val auth = Some(new OAuthAuthorization(new ConfigurationBuilder().build()))
+val twitterStream = ExtendedTwitterUtils.createStream(ssc, auth)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>auth: Some[twitter4j.auth.OAuthAuthorization] = Some(OAuthAuthorization{consumerKey='8uN0N9RTLT1viaR811yyG7xwk', consumerSecret='******************************************', oauthToken=AccessToken{screenName='null', userId=4173723312}})
+twitterStream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] = ExtendedTwitterInputDStream@206a254d
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Let's import google's json library next.
+import com.google.gson.Gson 
+//Let's map the tweets into json formatted string (one tweet per line).
+val twitterStreamJson = twitterStream.map(
+                                            x =&gt; { val gson = new Gson();
+                                                 val xJson = gson.toJson(x)
+                                                 xJson
+                                                 }
+                                          ) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import com.google.gson.Gson
+twitterStreamJson: org.apache.spark.streaming.dstream.DStream[String] = org.apache.spark.streaming.dstream.MappedDStream@20405bce
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val partitionsEachInterval = 1 
+
+val batchInterval = 1 // in minutes
+val timeoutJobLength =  batchInterval * 5
+
+var newContextCreated = false
+var numTweetsCollected = 0L // track number of tweets collected
+
+twitterStreamJson.foreachRDD((rdd, time) =&gt; { // for each filtered RDD in the DStream
+      val count = rdd.count()
+      if (count &gt; 0) {
+        val outputRDD = rdd.repartition(partitionsEachInterval) // repartition as desired
+        // to write to parquet directly in append mode in one directory per 'time'------------       
+        val outputDF = outputRDD.toDF(&quot;tweetAsJsonString&quot;)
+        // get some time fields from current `.Date()`
+        val year = (new java.text.SimpleDateFormat(&quot;yyyy&quot;)).format(new java.util.Date())
+        val month = (new java.text.SimpleDateFormat(&quot;MM&quot;)).format(new java.util.Date())
+        val day = (new java.text.SimpleDateFormat(&quot;dd&quot;)).format(new java.util.Date())
+        val hour = (new java.text.SimpleDateFormat(&quot;HH&quot;)).format(new java.util.Date())
+        // write to a file with a clear time-based hierarchical directory structure for example
+        outputDF.write.mode(SaveMode.Append)
+                .parquet(outputDirectoryRoot+ &quot;/&quot;+ year + &quot;/&quot; + month + &quot;/&quot; + day + &quot;/&quot; + hour + &quot;/&quot; + time.milliseconds) 
+        // end of writing as parquet file-------------------------------------
+        numTweetsCollected += count // update with the latest count
+      }
+  })
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>partitionsEachInterval: Int = 1
+batchInterval: Int = 1
+timeoutJobLength: Int = 5
+newContextCreated: Boolean = false
+numTweetsCollected: Long = 0
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// ## Let's start the spark streaming context we have created next.
+ssc.start()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// total tweets downloaded
+numTweetsCollected
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res14: Long = 6936
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// ## Go to SparkUI and see if a streaming job is already running. If so you need to terminate it before starting a new streaming job. Only one streaming job can be run on the DB CE.
+// #  let's stop the streaming job next.
+ssc.stop(stopSparkContext = false) 
+StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) } 
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-2-explore-data"><a class="header" href="#step-2-explore-data">Step 2: Explore Data</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-run">&quot;./025_b_TTTDFfunctions&quot;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// #Let's examine what was saved in dbfs
+display(dbutils.fs.ls(outputDirectoryRoot))
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/tweetsStreamTmp/2020/</td>
+<td>2020/</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Replace the date with current date
+val date = &quot;/2020/11/*&quot;
+val rawDF = fromParquetFile2DF(outputDirectoryRoot + date +&quot;/*/*&quot;) //.cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>date: String = /2020/11/*
+rawDF: org.apache.spark.sql.DataFrame = [tweetAsJsonString: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val TTTsDF = tweetsDF2TTTDF(tweetsJsonStringDF2TweetsDF(rawDF)).cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>TTTsDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [CurrentTweetDate: timestamp, CurrentTwID: bigint ... 35 more fields]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Creating SQL table 
+TTTsDF.createOrReplaceTempView(&quot;tbl_tweet&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="step-3-build-model"><a class="header" href="#step-3-build-model">Step 3. Build Model</a></h2>
+<p>Let us use the structured data in <code>tbl_tweet</code> to build a simple classifier of the language using K-means.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sqlContext.sql(&quot;SELECT lang, CPostUserName, CurrentTweet FROM tbl_tweet LIMIT 10&quot;).collect.foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>[ja,古泉幕僚総長,#hour_14#あ、あの…ここで…は、ちょっと…んっ…！]
+[ja,もしよき,それをよしとする空間もわりぃよ結局。だから声が大きいやつがのさばるんだよ]
+[ja,雨山,あさひちゃん表情かわいすぎぃ]
+[en,HourGMT5,It's November 20, 2020 at 06:01AM!]
+[fr,𝘈 ₇,Meghan kali et bts ont drop leurs albums 😳😳]
+[en,Mika,Another hour! It's November 20, 2020 at 08:01PM]
+[ja,ベリー,RT @Sdan_sanrio: ずっと楽しくサンリオ男子していきたいです！！みんなも一緒にサンリオ活しましょう～！康太　#サンリオ男子5周年 https://t.co/Wnel4BWKAR]
+[pt,TRIGGERED LOLI,@ItachinMr Opa como tá]
+[th,ING. ไม่มูฟออนจากคาโอชิน,แล้วด้อมดันกันนี่ คนชิปฆาตกรกับเหยื่อเยอะมากนะ อ้ย ทุกคน😭😭😭😭]
+[tr,𝐛𝐞 𝐭𝐡𝐚𝐧𝐤𝐟𝐮𝐥,@soudadesky hadi gelin]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">// Checking the language of tweets
+sqlContext.sql(
+    &quot;SELECT lang, COUNT(*) as cnt FROM tbl_tweet &quot; +
+    &quot;GROUP BY lang ORDER BY cnt DESC limit 1000&quot;)
+    .collect.foreach(println)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>[ja,1985]
+[en,1868]
+[und,532]
+[th,467]
+[ko,338]
+[in,325]
+[es,281]
+[pt,280]
+[ar,279]
+[tr,200]
+[fr,160]
+[tl,109]
+[ru,57]
+[pl,45]
+[de,42]
+[hi,41]
+[fa,31]
+[it,31]
+[nl,23]
+[ur,22]
+[et,20]
+[zh,18]
+[ht,11]
+[el,9]
+[ta,9]
+[iw,8]
+[ro,6]
+[cs,6]
+[eu,5]
+[lt,5]
+[ca,5]
+[da,4]
+[sr,4]
+[gu,4]
+[no,4]
+[is,3]
+[uk,3]
+[vi,3]
+[sl,3]
+[fi,3]
+[te,2]
+[sv,2]
+[cy,2]
+[bg,2]
+[mr,1]
+[or,1]
+[sd,1]
+[kn,1]
+[km,1]
+[bn,1]
+[ne,1]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// extracting just tweets from the table and converting it to String
+val texts = sqlContext
+      .sql(&quot;SELECT CurrentTweet from tbl_tweet&quot;)
+      .map(_.toString)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>texts: org.apache.spark.sql.Dataset[String] = [value: string]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.clustering.KMeans
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.mllib.clustering.KMeans
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Featurize as bigrams</strong></p>
+<p>Create feature vectors by turning each tweet into bigrams of characters (an n-gram model) and then hashing those to a length-1000 feature vector that we can pass to MLlib.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def featurize(s: String): Vector = {
+  val n = 1000
+  val result = new Array[Double](n)
+  val bigrams = s.sliding(2).toArray
+  for (h &lt;- bigrams.map(_.hashCode % n)) {
+    result(h) += 1.0 / bigrams.length
+  }
+  Vectors.sparse(n, result.zipWithIndex.filter(_._1 != 0).map(_.swap))
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>featurize: (s: String)org.apache.spark.mllib.linalg.Vector
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Cache the vectors RDD since it will be used for all the KMeans iterations.
+val vectors = texts.rdd
+      .map(featurize)
+      .cache()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>vectors: org.apache.spark.rdd.RDD[org.apache.spark.mllib.linalg.Vector] = MapPartitionsRDD[3608] at map at command-2972105651607107:3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// cache is lazy so count will force the data to store in memory
+vectors.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res22: Long = 7264
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vectors.first()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res23: org.apache.spark.mllib.linalg.Vector = (1000,[189,227,263,313,335,344,351,358,372,382,389,411,439,500,501,529,558,565,568,571,629,647,658,741,804,856,872,892,994],[0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.03333333333333333,0.06666666666666667,0.03333333333333333,0.03333333333333333])
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>K-Means model</strong> trained with 10 clusters and 10 iterations.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Training model with 10 cluster and 10 iteration
+val model = KMeans.train(vectors, k=10, maxIterations = 10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>model: org.apache.spark.mllib.clustering.KMeansModel = org.apache.spark.mllib.clustering.KMeansModel@61f49262
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">// Sample 100 of the original set
+val some_tweets = texts.take(100)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>some_tweets: Array[String] =
+Array([#hour_14#あ、あの…ここで…は、ちょっと…んっ…！], [それをよしとする空間もわりぃよ結局。だから声が大きいやつがのさばるんだよ], [あさひちゃん表情かわいすぎぃ], [It's November 20, 2020 at 06:01AM!], [Meghan kali et bts ont drop leurs albums 😳😳], [Another hour! It's November 20, 2020 at 08:01PM], [RT @Sdan_sanrio: ずっと楽しくサンリオ男子していきたいです！！みんなも一緒にサンリオ活しましょう～！康太　#サンリオ男子5周年 https://t.co/Wnel4BWKAR], [@ItachinMr Opa como tá], [แล้วด้อมดันกันนี่ คนชิปฆาตกรกับเหยื่อเยอะมากนะ อ้ย ทุกคน😭😭😭😭], [@soudadesky hadi gelin], [RT @p8h33: 5000 آلاف ريال 💸💸💸💸💸
+1000 💸
+1000 💸
+1000 💸
+1000 💸
+1000 💸
+السحب غدا ان شاء الله من الرتويت موثق], [RT @doktongchangyed: นับถือไอดอลหญิงมากอะ ถ้าปวดท้องเมนส์ก็ยังต้องยิ้มแย้ม แอคทีฟงานปกติ เพื่อนกุปวดท้องเมนส์คือโทรมาร้องไห้ โทรมาบ่นกับกู…], [RT @selahattingrkn: Hoş geldik evet çünkü hoş’a geldik.
+
+Biz hizmet üretmeye, gönüllere dokunmaya geldik.
+
+Biz bu şehrin her karış toprağın…], [@OmarNassar01 💙💙❤💙], [1週間がんばり女だったのにテストで休み2日潰されるのキレそうだし殺す  しね…………………………], [RT @ministop_fan: ＼フォロー＆RTで当たる／
+
+本日から新発売★
+その名も「世界のライスぼうや」
+世界の食べ物をちまきでアレンジしたミミ！
+ちょこっとお腹がすいた時にもおすすめだＹＯ
+
+フォロー&amp;RTしてくれた方の中から抽選で
+1,000名さまに鶏五目ちまき無…], [@Kero_kero_pad ただいまー！(≧∇≦)], [@pradverse Mera no. ni aane wala ab😂😭], [voltar a assistir spn só pra saber o final], [RT @aztvresmi: Azərbaycan Ordusunun bölmələri Ağdam rayonuna daxil olub ✊🇦🇿
+
+Müdafiə Nazirliyi https://t.co/OGXPqdoalB], [｢コロナラン｣｢ノンコロン｣くらいまでなら薬事法OKかな。 #小林製薬 #もしも小林製薬がコロナワクチンを作ったら], [RT @_G3WP3R: เคี้ยวงั้ม ๆ แต่มันร้อน หนูก็สู้เคี้ยวไม่หยุด เอ็นดูววว https://t.co/ibjFPqHBCM], [RT @mkodchannel: 相方の誕生日にヒカキンさん
+@hikakin プレゼントしてみた🎁🎉
+https://t.co/47YXJxeaNp https://t.co/fjsNWCCUI9], [RT @istopeverything: ทุกคนรู้มั้ยคะว่าตอนนี้มีผู้ป่วยด้วยโรคไตเรื้อรังระยะสุดท้ายรักษาไม่หายจำนวนเท่าไหร่ แล้วที่มีการโปรโมทข้าวกล่องแช่แข็…], [RT @TheDeverakonda: I told you it comes with full approval ❤️
+
+Good opportunity to do something together with your entire family - get tog…], [RT @merlinx26: ก็ดีใจด้วยที่เธอมูฟออนได้ แต่เรายังว่ะ], [@Sarashina_BB277 なんてえちえちな尻なんだ], [@steph_sunandar HAHAHA gue ud ep 7 tp gue tim han ji pyeong bgt sun], [RT @anuxaaaaa: oi mudei o cabelo 💋 https://t.co/u3KKQ8rhAS], [RT @OficialSala12: Flamengo precisando de gol:
+
+Michael: https://t.co/FdEyuUbqzZ], [RT @c_emre11: https://t.co/JijOPNwfJH], [RT @bts_bighit: [#오늘의방탄] 어느 날 세상이 멈췄어..
+방탄을 본 그 순간부터..💜
+아미와 함께해서 즐거웠던 Live Goes On!
+아미들에게도 즐거운 시간이었길🥰
+
+#인터내셔널팝케이센세이션썬샤인레인보우트레디셔널트랜스퍼USB허브쉬림…], [It’s possible you'll fall head over heels for a new lover or f... More for Cancer https://t.co/y5ZArDaO0u], [@uwith_b อาจจะไปร้านนั้นแทน อย่า จวพ เลย รำคาญแอดมิน 55555555555555555555], [RT @telugufilmnagar: All Smiles ❤️❤️
+@urstrulymahesh shares a lovely picture wishing #ShilpaShirodkar on her birthday!
+
+#MaheshBabu #Namrat…], [RT @parkxminxmin: 아 긋냥 해요 ~ &gt;▽&lt;
+https://t.co/9NjzwRziRP
+
+#BTS #JIMIN #지민 @BTS_twt https://t.co/TYBgv3lmAP], [RT @tarouame96: 次男がプラレールに餌をやっていた。 https://t.co/gSmqJRrd7i], [Украина испугалась подрыва мифа об ОУН-УПА и дивизии СС «Галичина».  https://t.co/8VHbtT8edk], [RT @Anime_ABEMA: 🏫 #よつば音楽学院
+第2回の配信が決定!👏
+
+📣 11月27日(金) よる10時30分〜
+
+今回はゲスト講師👨‍🏫として
+「 #KENTHE390 」 (@KENTHE390 )
+を迎えヒップホップ講義‼️
+
+音楽をテーマにしたABEMA…], [@jam_cauilan Opo ate], [free hunter icons
+https://t.co/tAZ5loOKbZ], [@omanai_on اجلس في بيتك وما رايح تسمع شيء، أما مازلت تبحث عن الأخبار ستسمع ما يسرك وما يزعجك وعليك أن تتحمل], [RT @pineapplebreads: Here, I summarized the #Supernatural finale so you don't have to watch it https://t.co/LJ9jDHFbSm], [RT @WinterBbang: No one:
+Literally no one:
+Bit and Hangyul: (ability of thhe other members that you wanna have)
+DOHYON'S HEIGHT https://t.…], [RT @WaseemPatriot: #SaveChildrenOfIIOJK
+During this phase of the armed conflict, the scale of the violence made documentation difficult. A…], [RT @Olanmoveforward: #EndSARS
+#EndNorthBanditry
+#EndSarsNow
+#EndBadGovernmentinNIGERIA
+#LekkiMassacre
+#LekkiTollGateShooting
+#EndPoliceB…], [@thatginamiller https://t.co/uQTIWSzELG], [RT @deryloops: his reaction 😭😭 https://t.co/aDAGeYOuOf], [RT @Promise_Royalz: @AlbumTalksHQ @yemialadee https://t.co/e8mwpyQmK2], [RT @bleksip: 2020 masih takut mencari pertolongan untuk masalah kesehatan mentalmu?
+
+Emang ngapain sih kalau ke psikiater?
+Apa akan disetru…], [RT @JorgeMoruno: Al margen de que su abuelo era un nazi, el mengele español, me ha recordado a esto. Cuando los millonarios empiezan de cer…], [Aku giniin sendiri kok s*nge yaa, apakah ada yg salah (?) wkwk], [RT @SNOOPYZ3US: jungwoo preview for vogue
+
+a thread: https://t.co/v7xiKXvsTG], [Vraiment 🤣🤣🤣🤣 même mon entourage ne va pas me croire 🤣🤣], [RT @aespasmiling: music bank interview!
+#aespa #에스파 https://t.co/TSmezo1OX3], [Nigerian politicians], [mass indoctrination day24
+#PureDoctrineOfChrist], [RT @Primacaque: เราก็ไม่เคยคิดจะทำแท้ง แต่ก็สนับสนุนทำแท้งเสรีค่า
+
+เหล้าก็ไม่ชอบกิน มันไม่อร่อย แต่ก็ไม่สนับสนุนการผูกขาดของนายทุน
+
+เป็นเซ็…], [Coronavirus vaccine: Moderna completes phase 3 of vaccine study https://t.co/YAylsaf8uq via @YouTube], [미프프리스톤의 과격한 낙태약반대론자들의 각종 위협에 시달렸던 임신여성들은 보다 은밀하게 낙태문제를 해결할 수 있게 됐다. https://t.co/fcG9s71RR3 미페프리스톤은 수정란이 자궁에 접착할 수 없도록 방해하는약품으로 자궁수축 미프진인 미소프로스톨과 함께 사용], [Was it not a few weeks ago that the TL was up in arms and ready to protect young girlhood after that awful video surfaced?
+
+Why am I now seeing justifications for a grown men sleeping with teenagers?], [consegui dormir e acordar cedo pela primeira vez em meses e tô exatamente assim agora https://t.co/ATcfUH8CK9], [サンプル画像👉https://t.co/HyTgIpFsF0 https://t.co/gjCnoludHB], [ᏴᎬ : 𝐋𝐢𝐟𝐞 𝐠𝐨𝐞𝐬 𝐨𝐧, 𝐋𝐞𝐭’𝐬 𝐥𝐢𝐯𝐞 𝐨𝐧.
+X 𝐔𝐍 𝐆𝐞𝐧𝐞𝐫𝐚𝐥 𝐀𝐬𝐬𝐞𝐦𝐛𝐥𝐲
+
+선입금 특전안내
+
+[ 𝐔𝐍 연설 스티커]
+기존 3종에서 디자인 변경 후 8종 제공
+
+✔️ 8종류 각 1장씩, 총 8장
+✔️ 1인 1세트 (1개당 1세트 X)
+
+🔗 추가 및 구매 링크
+https://t.co/NUpv3GZqpc https://t.co/7WW7kNKjFQ], [Soluciones prueba 8: JK 🐰 https://t.co/jXVheWj8YO], [@Pkhetarpal1 @junkie_for_news @ANI Madar chod], [Weitere angekündigte Features für #Twitter um die Plattform konkurrenzfähig zu halten:
+
+-In Zukunft nur noch quadratische Fotos
+-Tweets verschwinden nach einmaligem Ansehen
+-Verifikationshaken wechselt Farbe je nach Followerzahl
+-Videotweets (max 12s) ab 2021 standard], [日刊ポケモンソードシールド　5日目-1
+エンジンシティ到着からジムチャレンジ申込まで
+
+今作のライバルとなるアノ人が登場
+ジムチャレンジ開会式はこの街のスタジアムで行われるけれど、バトルに挑戦できるのは2つのバッジを手に入れたあと
+いわゆるミアレシティポジションの街ですね
+#ポケモン剣盾 https://t.co/x8nT9lG88V], [“In the light of the appalling abuse of human rights perpetrated on the people of Hong Kong, surely Essex should consider closing down all relationship with China?&quot;
+
+https://t.co/8SRDUUvDPn], [·
+     🐸かえるモチーフの女の子🐸
+· https://t.co/ZV0gosDPji], [うつくし… https://t.co/OxqUo4l98T], [⚽️ #PORRALEGA | Acierta resultado y goleadores pepineros del #MálagaLeganés y entra en el sorteo de una mascarilla oficial 😷. ¡Suerte a todos! https://t.co/qrEHXyjs4w], [Woman miraculously survives being shoved onto train tracks by crazed NYC subway rider https://t.co/xt80mV7VQr], [Sevimli miniklerle eğlence devam ediyor!
+
+#ÇocuktanAlHaberi yeni bölümüyle yarın 17.00'de Show TV'de! @cocuktnalshowtv https://t.co/jdZZ6f8gix], [❤🥺], [＼📢セミナー告知／
+10月にもご登壇いただいた橋元恵一氏（@atjam_hashimoto）がカムバック！
+
+社会人の方だけでなく、
+エンタメ業界を志望している学生さん必見！
+是非奮ってご参加ください！
+
+詳細/お申込みはコチラ↓
+ https://t.co/BXnn2YScdF
+#エンターズ #エンタメ #就活  #就活支援 #22卒 #21卒 https://t.co/lnJvxwExzA], [135日目①　　画像提供：むくろさん( @2m5k2 )
+侑ちゃん
+#ラブライブ #lovelive #虹ヶ咲 #ニジガクアニメ #ラブライブ壁紙遊戯 #高咲侑 https://t.co/CqkUUaZB1Q], [＜朝活どうでしょう～解答編～＞
+I_1側の抵抗の値が分からないので、まずはI_2を計算します
+次にI_2とR_2から電圧V_2を求めます
+
+電験三種の直流回路では、このように数回の計算を経て解にたどり着ける問題が多いです。詰将棋を解くように先を見据えて計算ができる力をつけていきましょう！
+
+#電験朝活 https://t.co/RFYRwrxjUS], [=TEAM 51% VOTING=
+
+ONCEs! Here's the mass voting schedule. We are in need of more voters. Encourage more ONCEs in different SNS and close the gap!
+
+Please follow your regional fanbase and @billboard_twice for more information.
+
+@JYPETWICE #TWICE #MAMAVOTE #51_Percent https://t.co/ZklwziCFXo], [How does Coronavirus compare to Ebola  SARS  etc  https://t.co/AT484Gd9kc https://t.co/klm1KUQQC7], [Arhiepiscopia Târgoviștei anunță acțiuni caritabile de 1 milion de lei în preajma Crăciunului.
+
+https://t.co/o9QwTPhoua https://t.co/lIJS9iHk4W], [Это комплимент, тк я мало кому доверяю], [#どうぶつ　#ねこ
+
+なになに♪なになに♪
+
+(´･ω･`)っ💕 https://t.co/yVSos0wW8d], [On 21 November 1920, Michael Feery and Jerome O'Leary attended a football match in Croke Park. They never came home. Michael and Jerome were two of 14 people who were killed on Bloody Sunday.
+
+#B100dySunday - the GAA remembers.
+
+Learn more at https://t.co/0YyrIyygwQ https://t.co/ufmb7aZk9B], [信頼している人に言われたことを、愚直に、ただ素直にやり続ける。
+簡単なことのようで、難しいものです。
+
+「勝利を引き寄せる実践的成功法」とは。
+https://t.co/i9pTilGJxk
+#YouTube #実践 #成功 #動画編集 #動画制作 #動画 https://t.co/wQYljzmi3E], [En sus últimos lanzamientos le podíamos ver de la mano de @omarmontesSr o @lolaindigomusic, pero ahora @Rvfvrxiz reclama protagonismo en solitario con nuevo material bajo el brazo.
+
+Descúbrelo en https://t.co/4qpCcEh0rw https://t.co/SW6eylT1mR], [@Nefie26 中腰めちゃ可愛い(*´艸`*)], [Register https://t.co/EhcY9eoAUb https://t.co/AbgyyqMErV], [Playing chess… and a few other things ✌️ https://t.co/iEOqPaysO1], [@miinyan_hanabi おつかれ！], [TIC y educación en Tweeted Times @lmggr https://t.co/4u0k8Q7DKG], [@dc_maru_ 何枚買うか悩み中でごわす], [RT @narendramodi: Neutralising of 4 terrorists belonging to Pakistan-based terrorist organisation Jaish-e-Mohammed and the presence of larg…], [no #Gears5], [@NestT4ku あんがと！寝る😴], [Allahım sen utandırma🤲 gönlümden geçeni hakkımda hayırlı eyle bu son olsun en güzeli olsun🌸], [RT @ATEEZofficial: [#윤호] 자연과 함께💐
+#ATEEZ #에이티즈 https://t.co/EivLdPVLit], [@_itsbunnie @GivingAnimeboo doneee], [RT @IHK_FFM_INT: Die AHK #Peru 🇵🇪 lädt Sie zu den 3. Deutsch-Peruanischen Wirtschaftstagen unter dem Motto &quot;Gemeinsame Ziele vereinen&quot; ein.…], [RT @LeireOlmeda: C's dice que la M-50 la pague Rivas, por rojos o algo así. Y el PP que palmaditas en la espalda las que hagan falta, pero…])
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">// iterate through the 100 samples and show which cluster they are in
+for (i &lt;- 0 until 10) {
+  println(s&quot;\nCLUSTER $i:&quot;)
+  some_tweets.foreach { t =&gt;
+    if (model.predict(featurize(t)) == i) {
+      println(t)
+    }
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>CLUSTER 0:
+[RT @mkodchannel: 相方の誕生日にヒカキンさん
+@hikakin プレゼントしてみた🎁🎉
+https://t.co/47YXJxeaNp https://t.co/fjsNWCCUI9]
+[RT @anuxaaaaa: oi mudei o cabelo 💋 https://t.co/u3KKQ8rhAS]
+[RT @c_emre11: https://t.co/JijOPNwfJH]
+[RT @parkxminxmin: 아 긋냥 해요 ~ &gt;▽&lt;
+https://t.co/9NjzwRziRP
+
+#BTS #JIMIN #지민 @BTS_twt https://t.co/TYBgv3lmAP]
+[RT @tarouame96: 次男がプラレールに餌をやっていた。 https://t.co/gSmqJRrd7i]
+[free hunter icons
+https://t.co/tAZ5loOKbZ]
+[@thatginamiller https://t.co/uQTIWSzELG]
+[RT @deryloops: his reaction 😭😭 https://t.co/aDAGeYOuOf]
+[RT @Promise_Royalz: @AlbumTalksHQ @yemialadee https://t.co/e8mwpyQmK2]
+[サンプル画像👉https://t.co/HyTgIpFsF0 https://t.co/gjCnoludHB]
+[Soluciones prueba 8: JK 🐰 https://t.co/jXVheWj8YO]
+[·
+     🐸かえるモチーフの女の子🐸
+· https://t.co/ZV0gosDPji]
+[うつくし… https://t.co/OxqUo4l98T]
+[How does Coronavirus compare to Ebola  SARS  etc  https://t.co/AT484Gd9kc https://t.co/klm1KUQQC7]
+[#どうぶつ　#ねこ
+
+なになに♪なになに♪
+
+(´･ω･`)っ💕 https://t.co/yVSos0wW8d]
+[信頼している人に言われたことを、愚直に、ただ素直にやり続ける。
+簡単なことのようで、難しいものです。
+
+「勝利を引き寄せる実践的成功法」とは。
+https://t.co/i9pTilGJxk
+#YouTube #実践 #成功 #動画編集 #動画制作 #動画 https://t.co/wQYljzmi3E]
+[Register https://t.co/EhcY9eoAUb https://t.co/AbgyyqMErV]
+[RT @ATEEZofficial: [#윤호] 자연과 함께💐
+#ATEEZ #에이티즈 https://t.co/EivLdPVLit]
+
+CLUSTER 1:
+[It's November 20, 2020 at 06:01AM!]
+[Meghan kali et bts ont drop leurs albums 😳😳]
+[Another hour! It's November 20, 2020 at 08:01PM]
+[RT @TheDeverakonda: I told you it comes with full approval ❤️ 
+
+Good opportunity to do something together with your entire family - get tog…]
+[@steph_sunandar HAHAHA gue ud ep 7 tp gue tim han ji pyeong bgt sun]
+[RT @telugufilmnagar: All Smiles ❤️❤️
+@urstrulymahesh shares a lovely picture wishing #ShilpaShirodkar on her birthday!
+
+#MaheshBabu #Namrat…]
+[RT @WinterBbang: No one:
+Literally no one:
+Bit and Hangyul: (ability of thhe other members that you wanna have) 
+DOHYON'S HEIGHT https://t.…]
+[RT @WaseemPatriot: #SaveChildrenOfIIOJK 
+During this phase of the armed conflict, the scale of the violence made documentation difficult. A…]
+[mass indoctrination day24
+#PureDoctrineOfChrist]
+[Was it not a few weeks ago that the TL was up in arms and ready to protect young girlhood after that awful video surfaced?
+
+Why am I now seeing justifications for a grown men sleeping with teenagers?]
+[Weitere angekündigte Features für #Twitter um die Plattform konkurrenzfähig zu halten: 
+
+-In Zukunft nur noch quadratische Fotos
+-Tweets verschwinden nach einmaligem Ansehen
+-Verifikationshaken wechselt Farbe je nach Followerzahl
+-Videotweets (max 12s) ab 2021 standard]
+[“In the light of the appalling abuse of human rights perpetrated on the people of Hong Kong, surely Essex should consider closing down all relationship with China?&quot;
+
+https://t.co/8SRDUUvDPn]
+[=TEAM 51% VOTING=
+
+ONCEs! Here's the mass voting schedule. We are in need of more voters. Encourage more ONCEs in different SNS and close the gap! 
+
+Please follow your regional fanbase and @billboard_twice for more information.
+
+@JYPETWICE #TWICE #MAMAVOTE #51_Percent https://t.co/ZklwziCFXo]
+[RT @narendramodi: Neutralising of 4 terrorists belonging to Pakistan-based terrorist organisation Jaish-e-Mohammed and the presence of larg…]
+[RT @IHK_FFM_INT: Die AHK #Peru 🇵🇪 lädt Sie zu den 3. Deutsch-Peruanischen Wirtschaftstagen unter dem Motto &quot;Gemeinsame Ziele vereinen&quot; ein.…]
+
+CLUSTER 2:
+[#hour_14#あ、あの…ここで…は、ちょっと…んっ…！]
+[それをよしとする空間もわりぃよ結局。だから声が大きいやつがのさばるんだよ]
+[あさひちゃん表情かわいすぎぃ]
+[RT @Sdan_sanrio: ずっと楽しくサンリオ男子していきたいです！！みんなも一緒にサンリオ活しましょう～！康太　#サンリオ男子5周年 https://t.co/Wnel4BWKAR]
+[แล้วด้อมดันกันนี่ คนชิปฆาตกรกับเหยื่อเยอะมากนะ อ้ย ทุกคน😭😭😭😭]
+[RT @p8h33: 5000 آلاف ريال 💸💸💸💸💸
+1000 💸
+1000 💸
+1000 💸
+1000 💸
+1000 💸
+السحب غدا ان شاء الله من الرتويت موثق]
+[RT @doktongchangyed: นับถือไอดอลหญิงมากอะ ถ้าปวดท้องเมนส์ก็ยังต้องยิ้มแย้ม แอคทีฟงานปกติ เพื่อนกุปวดท้องเมนส์คือโทรมาร้องไห้ โทรมาบ่นกับกู…]
+[1週間がんばり女だったのにテストで休み2日潰されるのキレそうだし殺す  しね…………………………]
+[RT @ministop_fan: ＼フォロー＆RTで当たる／
+
+本日から新発売★
+その名も「世界のライスぼうや」
+世界の食べ物をちまきでアレンジしたミミ！
+ちょこっとお腹がすいた時にもおすすめだＹＯ
+
+フォロー&amp;RTしてくれた方の中から抽選で
+1,000名さまに鶏五目ちまき無…]
+[｢コロナラン｣｢ノンコロン｣くらいまでなら薬事法OKかな。 #小林製薬 #もしも小林製薬がコロナワクチンを作ったら]
+[RT @_G3WP3R: เคี้ยวงั้ม ๆ แต่มันร้อน หนูก็สู้เคี้ยวไม่หยุด เอ็นดูววว https://t.co/ibjFPqHBCM]
+[RT @istopeverything: ทุกคนรู้มั้ยคะว่าตอนนี้มีผู้ป่วยด้วยโรคไตเรื้อรังระยะสุดท้ายรักษาไม่หายจำนวนเท่าไหร่ แล้วที่มีการโปรโมทข้าวกล่องแช่แข็…]
+[RT @merlinx26: ก็ดีใจด้วยที่เธอมูฟออนได้ แต่เรายังว่ะ]
+[RT @bts_bighit: [#오늘의방탄] 어느 날 세상이 멈췄어..
+방탄을 본 그 순간부터..💜
+아미와 함께해서 즐거웠던 Live Goes On!
+아미들에게도 즐거운 시간이었길🥰
+
+#인터내셔널팝케이센세이션썬샤인레인보우트레디셔널트랜스퍼USB허브쉬림…]
+[Украина испугалась подрыва мифа об ОУН-УПА и дивизии СС «Галичина».  https://t.co/8VHbtT8edk]
+[RT @Anime_ABEMA: 🏫 #よつば音楽学院 
+第2回の配信が決定!👏
+
+📣 11月27日(金) よる10時30分〜
+
+今回はゲスト講師👨‍🏫として
+「 #KENTHE390 」 (@KENTHE390 ) 
+を迎えヒップホップ講義‼️
+
+音楽をテーマにしたABEMA…]
+[@omanai_on اجلس في بيتك وما رايح تسمع شيء، أما مازلت تبحث عن الأخبار ستسمع ما يسرك وما يزعجك وعليك أن تتحمل]
+[RT @Olanmoveforward: #EndSARS 
+#EndNorthBanditry 
+#EndSarsNow 
+#EndBadGovernmentinNIGERIA
+#LekkiMassacre
+#LekkiTollGateShooting
+#EndPoliceB…]
+[RT @Primacaque: เราก็ไม่เคยคิดจะทำแท้ง แต่ก็สนับสนุนทำแท้งเสรีค่า
+
+เหล้าก็ไม่ชอบกิน มันไม่อร่อย แต่ก็ไม่สนับสนุนการผูกขาดของนายทุน
+
+เป็นเซ็…]
+[미프프리스톤의 과격한 낙태약반대론자들의 각종 위협에 시달렸던 임신여성들은 보다 은밀하게 낙태문제를 해결할 수 있게 됐다. https://t.co/fcG9s71RR3 미페프리스톤은 수정란이 자궁에 접착할 수 없도록 방해하는약품으로 자궁수축 미프진인 미소프로스톨과 함께 사용]
+[ᏴᎬ : 𝐋𝐢𝐟𝐞 𝐠𝐨𝐞𝐬 𝐨𝐧, 𝐋𝐞𝐭’𝐬 𝐥𝐢𝐯𝐞 𝐨𝐧. 
+X 𝐔𝐍 𝐆𝐞𝐧𝐞𝐫𝐚𝐥 𝐀𝐬𝐬𝐞𝐦𝐛𝐥𝐲 
+
+선입금 특전안내
+
+[ 𝐔𝐍 연설 스티커]
+기존 3종에서 디자인 변경 후 8종 제공 
+
+✔️ 8종류 각 1장씩, 총 8장 
+✔️ 1인 1세트 (1개당 1세트 X) 
+
+🔗 추가 및 구매 링크
+https://t.co/NUpv3GZqpc https://t.co/7WW7kNKjFQ]
+[日刊ポケモンソードシールド　5日目-1
+エンジンシティ到着からジムチャレンジ申込まで
+
+今作のライバルとなるアノ人が登場
+ジムチャレンジ開会式はこの街のスタジアムで行われるけれど、バトルに挑戦できるのは2つのバッジを手に入れたあと
+いわゆるミアレシティポジションの街ですね
+#ポケモン剣盾 https://t.co/x8nT9lG88V]
+[❤🥺]
+[＼📢セミナー告知／
+10月にもご登壇いただいた橋元恵一氏（@atjam_hashimoto）がカムバック！
+
+社会人の方だけでなく、
+エンタメ業界を志望している学生さん必見！
+是非奮ってご参加ください！
+
+詳細/お申込みはコチラ↓
+ https://t.co/BXnn2YScdF
+#エンターズ #エンタメ #就活  #就活支援 #22卒 #21卒 https://t.co/lnJvxwExzA]
+[135日目①　　画像提供：むくろさん( @2m5k2 )
+侑ちゃん
+#ラブライブ #lovelive #虹ヶ咲 #ニジガクアニメ #ラブライブ壁紙遊戯 #高咲侑 https://t.co/CqkUUaZB1Q]
+[＜朝活どうでしょう～解答編～＞
+I_1側の抵抗の値が分からないので、まずはI_2を計算します
+次にI_2とR_2から電圧V_2を求めます
+
+電験三種の直流回路では、このように数回の計算を経て解にたどり着ける問題が多いです。詰将棋を解くように先を見据えて計算ができる力をつけていきましょう！
+
+#電験朝活 https://t.co/RFYRwrxjUS]
+[Это комплимент, тк я мало кому доверяю]
+
+CLUSTER 3:
+[@soudadesky hadi gelin]
+[RT @selahattingrkn: Hoş geldik evet çünkü hoş’a geldik.
+
+Biz hizmet üretmeye, gönüllere dokunmaya geldik.
+
+Biz bu şehrin her karış toprağın…]
+[@OmarNassar01 💙💙❤💙]
+[@Kero_kero_pad ただいまー！(≧∇≦)]
+[@Sarashina_BB277 なんてえちえちな尻なんだ]
+[@jam_cauilan Opo ate]
+[Nigerian politicians]
+[@Pkhetarpal1 @junkie_for_news @ANI Madar chod]
+[@Nefie26 中腰めちゃ可愛い(*´艸`*)]
+[@miinyan_hanabi おつかれ！]
+[@dc_maru_ 何枚買うか悩み中でごわす]
+[@NestT4ku あんがと！寝る😴]
+[@_itsbunnie @GivingAnimeboo doneee]
+
+CLUSTER 4:
+[@ItachinMr Opa como tá]
+[@pradverse Mera no. ni aane wala ab😂😭]
+[voltar a assistir spn só pra saber o final]
+[RT @bleksip: 2020 masih takut mencari pertolongan untuk masalah kesehatan mentalmu?
+
+Emang ngapain sih kalau ke psikiater?
+Apa akan disetru…]
+[RT @JorgeMoruno: Al margen de que su abuelo era un nazi, el mengele español, me ha recordado a esto. Cuando los millonarios empiezan de cer…]
+[Aku giniin sendiri kok s*nge yaa, apakah ada yg salah (?) wkwk]
+[Vraiment 🤣🤣🤣🤣 même mon entourage ne va pas me croire 🤣🤣]
+[consegui dormir e acordar cedo pela primeira vez em meses e tô exatamente assim agora https://t.co/ATcfUH8CK9]
+[⚽️ #PORRALEGA | Acierta resultado y goleadores pepineros del #MálagaLeganés y entra en el sorteo de una mascarilla oficial 😷. ¡Suerte a todos! https://t.co/qrEHXyjs4w]
+[En sus últimos lanzamientos le podíamos ver de la mano de @omarmontesSr o @lolaindigomusic, pero ahora @Rvfvrxiz reclama protagonismo en solitario con nuevo material bajo el brazo.
+
+Descúbrelo en https://t.co/4qpCcEh0rw https://t.co/SW6eylT1mR]
+[no #Gears5]
+[Allahım sen utandırma🤲 gönlümden geçeni hakkımda hayırlı eyle bu son olsun en güzeli olsun🌸]
+[RT @LeireOlmeda: C's dice que la M-50 la pague Rivas, por rojos o algo así. Y el PP que palmaditas en la espalda las que hagan falta, pero…]
+
+CLUSTER 5:
+[@uwith_b อาจจะไปร้านนั้นแทน อย่า จวพ เลย รำคาญแอดมิน 55555555555555555555]
+
+CLUSTER 6:
+[RT @aztvresmi: Azərbaycan Ordusunun bölmələri Ağdam rayonuna daxil olub ✊🇦🇿
+
+Müdafiə Nazirliyi https://t.co/OGXPqdoalB]
+[RT @OficialSala12: Flamengo precisando de gol:
+
+Michael: https://t.co/FdEyuUbqzZ]
+[It’s possible you'll fall head over heels for a new lover or f... More for Cancer https://t.co/y5ZArDaO0u]
+[RT @pineapplebreads: Here, I summarized the #Supernatural finale so you don't have to watch it https://t.co/LJ9jDHFbSm]
+[RT @SNOOPYZ3US: jungwoo preview for vogue
+
+a thread: https://t.co/v7xiKXvsTG]
+[RT @aespasmiling: music bank interview! 
+#aespa #에스파 https://t.co/TSmezo1OX3]
+[Coronavirus vaccine: Moderna completes phase 3 of vaccine study https://t.co/YAylsaf8uq via @YouTube]
+[Woman miraculously survives being shoved onto train tracks by crazed NYC subway rider https://t.co/xt80mV7VQr]
+[Sevimli miniklerle eğlence devam ediyor!
+
+#ÇocuktanAlHaberi yeni bölümüyle yarın 17.00'de Show TV'de! @cocuktnalshowtv https://t.co/jdZZ6f8gix]
+[Arhiepiscopia Târgoviștei anunță acțiuni caritabile de 1 milion de lei în preajma Crăciunului.
+
+https://t.co/o9QwTPhoua https://t.co/lIJS9iHk4W]
+[On 21 November 1920, Michael Feery and Jerome O'Leary attended a football match in Croke Park. They never came home. Michael and Jerome were two of 14 people who were killed on Bloody Sunday.
+
+#B100dySunday - the GAA remembers.
+
+Learn more at https://t.co/0YyrIyygwQ https://t.co/ufmb7aZk9B]
+[Playing chess… and a few other things ✌️ https://t.co/iEOqPaysO1]
+[TIC y educación en Tweeted Times @lmggr https://t.co/4u0k8Q7DKG]
+
+CLUSTER 7:
+
+CLUSTER 8:
+
+CLUSTER 9:
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">dbutils.fs.ls(&quot;/datasets/model/&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res25: Seq[com.databricks.backend.daemon.dbutils.FileInfo] = WrappedArray(FileInfo(dbfs:/datasets/model/_SUCCESS, _SUCCESS, 0), FileInfo(dbfs:/datasets/model/part-00000, part-00000, 8266), FileInfo(dbfs:/datasets/model/part-00001, part-00001, 8266), FileInfo(dbfs:/datasets/model/part-00002, part-00002, 8266), FileInfo(dbfs:/datasets/model/part-00003, part-00003, 16282), FileInfo(dbfs:/datasets/model/part-00004, part-00004, 8266), FileInfo(dbfs:/datasets/model/part-00005, part-00005, 8266), FileInfo(dbfs:/datasets/model/part-00006, part-00006, 8266), FileInfo(dbfs:/datasets/model/part-00007, part-00007, 16282))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// to remove a pre-existing model and start from scratch
+dbutils.fs.rm(&quot;/datasets/model&quot;, true) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res26: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// save the model
+sc.makeRDD(model.clusterCenters).saveAsObjectFile(&quot;/datasets/model&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.clustering.KMeans
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.clustering.KMeansModel
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.mllib.clustering.KMeans
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.clustering.KMeansModel
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>USAGE: val df = tweetsDF2TTTDF(tweetsJsonStringDF2TweetsDF(fromParquetFile2DF(&quot;parquetFileName&quot;)))
+                  val df = tweetsDF2TTTDF(tweetsIDLong_JsonStringPairDF2TweetsDF(fromParquetFile2DF(&quot;parquetFileName&quot;)))
+                  
+import org.apache.spark.sql.types.{StructType, StructField, StringType}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.ColumnName
+import org.apache.spark.sql.DataFrame
+fromParquetFile2DF: (InputDFAsParquetFilePatternString: String)org.apache.spark.sql.DataFrame
+tweetsJsonStringDF2TweetsDF: (tweetsAsJsonStringInputDF: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame
+tweetsIDLong_JsonStringPairDF2TweetsDF: (tweetsAsIDLong_JsonStringInputDF: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame
+tweetsDF2TTTDF: (tweetsInputDF: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame
+tweetsDF2TTTDFWithURLsAndHashtags: (tweetsInputDF: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Checking if the model works
+val clusterNumber = 5
+
+val modelFile = &quot;/datasets/model&quot;
+
+val model: KMeansModel = new KMeansModel(sc.objectFile[Vector](modelFile).collect)
+model.predict(featurize(&quot;واحد صاحبى لو حد يعرف اكونت وزير التعليم &quot;)) == clusterNumber
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>clusterNumber: Int = 5
+modelFile: String = /datasets/model
+model: org.apache.spark.mllib.clustering.KMeansModel = org.apache.spark.mllib.clustering.KMeansModel@45bb929a
+res28: Boolean = false
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>tweetsDF2TTTDFLightWeight: (tweetsInputDF: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">model.predict(featurize(&quot;ご参加ありがとうございます❣&quot;)) == 2
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res29: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">model.predict(featurize(&quot;واحد صاحبى لو حد يعرف اكونت وزير التعليم &quot;)) == 2
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res30: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Loading model and printing tweets that matched the desired cluster.</strong></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="true">
+<pre><code class="language-scala">var newContextCreated = false
+var num = 0
+
+// Create a Spark Streaming Context.
+@transient val ssc = new StreamingContext(sc, slideInterval)
+// Create a Twitter Stream for the input source. 
+@transient val auth = Some(new OAuthAuthorization(new ConfigurationBuilder().build()))
+@transient val twitterStream = ExtendedTwitterUtils.createStream(ssc, auth)
+
+//Replace the cluster number as you desire between 0 to 9
+val clusterNumber = 2
+
+//model location
+val modelFile = &quot;/datasets/model&quot;
+
+// Get tweets from twitter
+val Tweet = twitterStream.map(_.getText)
+//Tweet.print()
+
+println(&quot;Initalizaing the the KMeans model...&quot;)
+val model: KMeansModel = new KMeansModel(sc.objectFile[Vector](modelFile).collect)
+
+//printing tweets that match our choosen cluster
+Tweet.foreachRDD(rdd =&gt; {  
+rdd.collect().foreach(i =&gt;
+    {
+       val record = i
+       if (model.predict(featurize(record)) == clusterNumber) {
+       println(record)
+    }
+    })
+})
+
+// Start the streaming computation
+println(&quot;Initialization complete.&quot;)
+ssc.start()
+ssc.awaitTermination()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Initalizaing the the KMeans model...
+Initialization complete.
+せえな氏…
+RT @chieri_kakyoin: ((( _(　_'ω')_ ((( _(　_'ω')_　ｺｿｺｿ
+ああドレワン早く見たい～～～～～～～～
+美味しい焼肉が食べたい(´･∀･｀)！
+RT @1_yanny: Feliz Viernes🍀🌻
+Activos👇
+#InnovaciónYSoberaníaTecnológica
+@ElizTorrres @kerny70
+@Puerto462 @BaenaDegas @luiscarrillo66 @jdmend…
+يارب تخليلي ♥️♥️.
+RT @crn_ru: Вкалывают роботы? Каковы перспективы рынка цифровых аватаров в России https://t.co/1AXuN336dY Цифровые аватары успешно «перерос…
+RT @FilipeRet: B O M   D I A   !
+#نحن_نلهم_العالم برؤيتنا الطموحة، وقيادتنا الحكيمة، وهمة أبناء وبنات الوطن. #مجموعة_العشرين #G20
+コロナの１日あたりの感染者、仮に１日二億人だったとしても、医療機関がそれを捌き切る事が出来るなら問題ないし、仮に１日に1人だったとしても、医療機関が捌き切れないなら、それは医療崩壊なわけで、人数だけドーーーーン発表するのは話題作りというか、それは「報道」と違うぞ、という感じ。
+RT @mechocola: ทีม Gen.Gเค้าโควทตอบน้องแบคน่ารักจัง ไม่รู้ถูกไหมนะ กดแปลภาษาอะ
+
+สั่นเพราะเกม ... หรือสั่นเพราะการสนับสนุนที่อบอุ่นของแบคฮยอ…
+@yuu294 美人さんだからなってます
+していいのか？
+@FzWWCPMYu1k0EKr 今、まさに
+同じ格好でいますー🤭
+RT @gsushma55: फिर हुआ उनका ज़िक्र .. 
+फिर हुआ मन उदास .. 
+
+फिर याद आया वो बातों का सिलसिला ..
+फिर हुई आँखें नम .. !! 
+
+#Sush!
+@BTS_History613 @BTS_twt YES
+@euyuule 公式がこの解釈なので安心して不埒な妄想しよう（？）
+RT @Rmlove09127: &quot;7시3분기준 22,117,000회 13분기준 22,753,094회 10분동안 조회수 636,094회 늘었고 뮤비 나온지는 5시간15분이 되었습니다&quot;
+23시간내로 1억뷰는 이 추이대로라면 조금 힘들지만 내일은 주말이고…
+RT @meniichigo: 残り2分‼️
+
+参加してない人急いで参加💨
+RT @ArmyYourselfBR: 📰| Todas as músicas do álbum ‘BE’ estão no Top 30 do iTunes Brasil. 
+
+#1 - #LifeGoesOn  
+#5 - Blue &amp; Grey
+#6 - Fly to M…
+RT @BFidr: トランプ大統領は70％以上の得票率で大勝し、400人以上の選挙人票を勝ち取っていたと確信している——リン・ウッド弁護士がラジオ番組で語る
+
+https://t.co/8ChsUGqX4M
+RT @Hyuga_aipara: 瑠唯さん、ハッピーバースデー！！
+
+#八潮瑠唯生誕祭2020 
+#八潮瑠唯誕生祭2020 
+#バンドリーマーさんと繋がりたい https://t.co/biygw0ExzT
+みんなからの匿名質問を募集中！
+
+こんな質問に答えてるよ
+● 一目惚れってしたことある？…
+● 彼氏いがいの男性と二人きりでド…
+● 皆さんはどこからが浮気と感じま…
+● 彼氏と大体いつも3ヶ月で別れる…
+#質問箱 #匿名質問募集中
+
+https://t.co/dssTEuSiGL
+RT @DONNYSQUADPH: Trust in You...                   amidst the   
+                                            darkness.
+
+#WalkWithYouMV htt…
+@shashikant88857 हरे रंग को खुश करने में तुमने #भगवा को नीलाम किया..... 🙄🙄
+ अरे #सियासी_कलमुहो ये बहुत घिनोना काम किया..!!!
+
+ खत्म करनी तुम्हारी नौटंकी है  😡😡😡
+#भगवा मेरी जान है !!!!
+
+#भारत_माँगे_हिन्दू_राष्ट्र
+
+#भारत_माँगे_हिन्दू_राष्ट्र 
+
+#जय_जय_श्री__राम 
+🚩🚩🚩🚩🚩
+RT @monsterzmate: 【新作動画投稿】
+
+📺ドキッ！男だらけの体力測定 ポロリもあるかも！アレ？あったっけ...？あれ？僕は誰？...君の名は？ 後編📺
+
+🔻🔻フルはこちら🔻🔻
+https://t.co/Hl3N5ByO4Y
+
+舞元さん( @maimoto_k )…
+RT @KharkhariAmit: अनिल जी बेशर्मी @RahulGandhi से सीखी है क्या? हजारों हिन्दू पूजा स्थलों को नष्ठ करने वाला,हजारों हिंदुओ का जबरदस्ती धर्म…
+RT @bluesherbet_: เราเคยเขียนเธรดยาวๆ เกี่ยวกับวิกฤตIMF ที่เกาหลีต้องผลักดัน KPOP เป็นสินค้าออกทั้งที่ไม่พร้อม (อ่านได้ที่นี่)
+https://t.co…
+薔薇 ケンジントンガーデン
+
+咲くにつれ花の形を変えていく
+スクエアから丸くへ
+
+既視感はイソギンチャク
+ワイルドな感じもして
+
+友達から｢あいつはやめておけ｣
+って言われたことあるよね？
+あるでしょ？
+忠告は間違っていない…
+
+あいつは、私だったこともある
+人も丸くなるのかな https://t.co/ypNVkpElUv
+誰か遊ぼ♪巨乳体型の甘えん坊です(〃▽〃)お洒落できれいなお姉さんタイプですょ♪今日確実に会える人限定で連絡ちょーだい♪DM来るかな。。。
+らぶりつしてくれると嬉しい
+盾子もってるから罪木一緒に遊んで
+DMしたいなぁ♪Ｍの方限定です！今からホテルで乳○責め･目隠し･言葉責め･ｱ○ﾙ責め･前○腺責めで虐○ちゃいます♪我こそは！！！って人いたらいいなぁ♪DM来るのたのしみぃ～♪ 
+あっ、らぶりつもよろしくね
+基樹さんと左遷さんがやってたのは覚えてる！もちろん守護星も(記憶にございます)
+@BTS_LS0618 당근
+@ippy1pandshot73 おつありです！
+RT @m0momochan: 7話のラストで示されたようにあの姉妹はこれからもやっぱり私が…というようなことを繰り返して、その度お互いがお互いを大好きということを確認し、二人で支え合っていくんだよな…
+@lfsswt @0llyfyb Yes.
+@pc3589_ え？簡単だよ
+明日の飲酒が無しになったので今日🍷のもう
+@Poketoru0820 そーいや今更だけど誕おめ
+ハヤテ、オレはな、
+お前が次期族長の有力候補だったことをこの前初めて知ったんだ。   
+
+そうか……、ハヤテもヤンチャしてたんだなあ。驚いたぜ、マジで。
+でも交通規則は守れよな、一歩間違えたら大事故だぞ。
+
+え？そっちの族長じゃない？
+RT @furukawa_staff: 第二部～Special Live～は完全無観客生配信で実施！
+古川のオリジナル楽曲はもちろん、今年、残念ながら舞台上では披露できなかったあのミュージカル曲まで…！
+画面越しに熱いステージをお届けします！
+
+内容の異なる2ステージをお見逃し…
+RT @wdmnss: คือแบบมันต้องตัวติดกันขนาดไหนอ่ะถึงมีรูปคู่กันปล่อยออกมา ทั้งๆที่ในหนังสือก็ไม่ได้ถ่ายคู่กัน😳
+#ปัญเจนนิษฐ์ #เฌอสิค https://t.co…
+RT @fernhaeforY: ทุกอย่างมาจากภาษีประชาชน เราต้องนั่งรถเมล์อายุเกือบ 100 ปี แต่รถตำรวจเป็น BMW ว้าววววว
+すやなまは
+【ク】クロスワードが得意で
+【リ】理解力があって
+【ス】好き嫌いがなく
+【マ】枚挙に暇がないほど魅力がある
+【ス】素晴らしい人です。
+#shindanmaker
+https://t.co/ZhVMhNijiW
+正反対なんですけど...
+通話したい気分…
+まずは友達！DMから！
+だれやねん！とおもったらわこ？！みこ？？みこ！！！
+RT @ayln69: İnfazdaAyrım ÖlümeTerketmek
+👆🏼🕊
+長くお世話になってる医院で予防注射行ったら診察室の方から全集中！ってきこえたんだけど、先生が子供に打つときにやってるみたいでなんだかほっこりしたな
+何の話で、オートレーサーって、中居さんが言ったのか🤭
+#金スマ
+RT @usagi_kitty_: GoTo批判うっとおしい💢！！！！！
+
+人が動くことで経済も動くんだよ？
+全ては繋がっているの！
+批判するならせめてまともな代案を出したらどうなんだ？？
+こっちはもうボロボロで自殺寸前だ！！！！
+
+どうせまた雰囲気だけで東京除外とか札幌自粛と…
+@KARMARALONSO Muchas gracias!!!🙏🙋⚘⚘⚘😘
+@smile_slow_life 早く素がみたい😂😂😂
+@Q97455 حلو كلهم نفس الاستايل
+@LoveOrPoor 酒は？
+@yellowkitten_ 키튼깅 다치게한 새* 다 패줌
+@n_aygod 調べてみてください！、
+応援してます…！
+@O9XnISYteURdtUX 言論で勝った…
+口だけは良いって事ね😓
+@FonproyA LISA LALISA MANOBAN
+블랙핑크 리사
+I vote for #LISA from @BLACKPINK for #BousnidStars2020 #Bousnid #4thBousnidStars2020
+観ま〜す😊💕
+@shionsiphon0530 おっぱいのすげぇ！！
+@ferruh270370 - Hele hele   DIŞ KÜRESEL GÜÇLERE SATILMIŞ  DARBECİLERE ARKA DURANLARLA HİÇ İŞİM OLMAZ. BÖYLE BİR GÖRÜNTÜNÜN YANINDA OLMAM..PARTİLERLE MENFAAT İLİŞKİSİ HİÇ  YAŞAMADIM..!
+RT @LLinWood: TRUTH.
+僕はブロックされてませんでした😃
+@sumokyokai 東ではなく西の15枚目、超ギリギリ
+若隆景のように東の16枚目で七戦全勝優勝で幕下筆頭止まりだった力士もいますし
+RT @AsreVishwakarma: सभी देशवासियों को धनतेरस व दीपावली पर्व की हार्दिक हार्दिक बधाई एवं शुभकामनाएं। @yadavakhilesh @mulayamyadav @proframg…
+生首ドラマすき　#虹ヶ咲
+画竜点睛〜
+프레임 언제 정리하구 트친소 열어!
+ジャージできたんですかぁ？って言っちゃうとこすごい好きよwww
+@Devendara_ පොලිසියකට ගියත් හරි විදියට ප්‍රතිකාර වලට යොමු කරන්නෙ නෑ මම දන්න විදියට.ඒකයි ලොකුම ප්‍රශ්නෙ
+RT @eh12__: - وفي يوم الجُمعة ؛ &quot;اللهُم بدل اقدارنا الى الأجمل&quot;❤️
+@chukwudigamer Cry
+베댓 고지전하다가 탈모올듯;
+@moemii えっ！行く
+RT @ffluffyb: อันนี้เล่นตามรีล่า คนอื่นชอบmvไหนที่สุดของน้องเค้กกันบ้างคะ 🥺 https://t.co/UQ5PvuNqA9
+フォロー&amp;いいね&amp;RTありがとうございます！
+こちらのアカウントは大量にRTいたしますので、気になる方は『RTミュート』をお願いいたします！
+@KanittaK5 เอารูปมาจากไหนคะเตง
+RT @OfficialMonstaX: 📸
+#몬스타엑스 #셔누
+#뷰티쁠 BEAUTY+ 
+12월호에서 곧 만나요!
+
+@beautyplmania
+#MONSTAX #MONSTA_X
+#SHOWNU #beautyplmagazine https://t.co/R87…
+@richan__xx 大丈夫です👍
+@x9r1WdRq4O9malO 素敵な時間が、伝わって来ます。
+　　　幸せは笑顔と感謝の多さ^ - ^
+RT @NOS_PROJECT: 【新色】「ジゼル・スカート」
+品格、華やか、女性らしい美しさ、3つのエレメントを持ったドレッシーなスカート。
+タック分量を最大限までたっぷりといれることで、他にはないフレアシルエットに。　
+クラシカルなボルドースカートでレディライクなコーデをお…
+@luvxiaos ITS CURSED GN
+RT @Fushigur0Megumi: &quot;ยังกล้าไปสอนคนอื่นอีกหรอครับ..&quot;
+
+เห็นเคยบอกว่าคุณไม่เลี้ยงลูกตัวเองนี่ น่าสงสารลูกเขาจริงๆเลย.. https://t.co/evkvTJAt…
+RT @Nassr_Almai: @coach__nawaf 👌👌👌👀
+طبيعي لان الطرفين مصريين !!!!!؟
+官僚とは名ばかりなの？
+それでよし、とされる何か力があったの？
+フェイスシールドに意味があるなんて思えないんですけど。
+100歩譲ってマスク併用必須。
+でも必要なのは医療職とか店員さんとかだよ…
+
+それにしても街中で急にフェイスシールドオンリーで歩いている人見ると、ドッキリかと思う…
+ADOROO ADOORO ADOROOO LA NUEVA CANCION DE MILEY CYRUS Y DUA LIPAA QUE REINASSSS 🤩🤩🤩😍😍 #PRISONER #DuaLipa #MileyDuaPrisioner #MileyCyrus https://t.co/jWwtyfGcfb
+RT @DELTAGG058: ㊗️㊗️\\1万人感謝祭//㊗️㊗️
+
+フォロワー1万人を記念してプレゼント企画開催します❗️❗️
+
+第一弾は Apexpro TKL🎮
+
+※応募条件
+@DELTAGG058  をフォロー
+このツイートをRT
+
+是非みんな参加してね❗️
+あと拡散…
+けんmちのkざき呼びで天に召した
+ペーパー頑張る気力ガガガ
+素組みでもわかる素性の良さ。いいプロポ。（積んでるけど
+@Avokado62228 ну-ну
+RT @yupe_1123: @choco6rabi たこさんウィンナーぺろぺろ🐙( '-' 🐙 )ﾀｺｻﾝ
+青オーラ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ外れたよ
+RT @kanintr_: ทำไมเอ้ดเอมมันขายเด็กไม่ตรงปกเลยอะ เปิดมาลุคเฟียสๆแบบจงอิน แทยง คาริน่า ของจริงคือ แห่ะๆหวัดดีกั๊บกันทุกคนเลยอะ 5555555555555…
+@haluokun この漫画がすごい！の一位になったやつですよ！
+@soda_rafinsky そうね〜時間が経つと色々と変わっていくもんなあ… ゲームしてた方が楽しいのもわかるわ〜
+RT @7AHaWClulx8cjzM: الله خلقنا ناس ما نقبل الهون هذا بلانا يا مدور بلانا 
+ما نلتفت للي ورانا يهدون ميزه من الله ما ناظر ورانا
+#عوده_الرويع…
+RT @heicat_movie_jp: 劇場版『羅小黒戦記』（ロシャオヘイセンキ）制作スタジオのスタッフ陣が歌う「羅小黒大電影之歌」をご紹介します。監督のMTJJを始めた主力アニメーターたちの歌声と、ムゲン師匠のキレキレダンスをご堪能できますよ🥰
+https://t.co/s…
+RT @amocafe_ikeb01: 【超勇者展×AMOCAFE池袋店】勇者シリーズ30周年を
+記念したコラボカフェ開催が決定！かっこいいデフォルメ
+勇者ロボとかわいい主人公ミニキャラのイラストが登場✨
+グッズやメニューは来週発表🚅展示会連動企画も！予約開始致します☆ご予約は…
+RT @boonlert1512: &quot;ชุดไม่แดงไม่มีแรงเดิน&quot;❤คิดถึงนะครับคุณคณาวุฒิ🌻☺😌💕
+#GulfKanawut 🌻☀
+#คิดถึงคุณคนสวยคะน้าน้อย https://t.co/XvCPioPNyE
+RT @neuron1204: 坂道研修生東名阪Zeppツアーお疲れ様でした。ありがとう坂道研修生、ありがとう黒見明香さん。
+@saaalsheikh 😭😭😭😭😭😭😭😭😭
+@iili4p @Mllk_11 حطيت كل الاجابات ههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه
+ハヤシさんまじ最高
+RT @coscos_makeup: コス用、普段用どっちにも使える
+【パーフェクトHDファンデーション N03】
+肌なじみする”ナチュラルオークルカラー”✨
+
+高カバー＆ひと塗りでツルンと陶器肌に💛
+
+【@coscos_makeup をフォロー＆RT】で抽選で30名の方にプレ…
+RT @megido72: 皆さま！アートチームから素敵なイラストが届いたので公開します🎨子犬も思わず振り返る、キリっとした表情のウァプラさんとガミジンさん…いったいどちらへ向かうのでしょうか✨
+
+#メギド #メギド72 https://t.co/JS4LJmPRwm
+RT @ma1ahot: 롱패딩 이제 유행 지났다고 하는 거 정말 이해할 수 없어... 롱패딩의 시작은 유행이 아니라 발명이었으며 롱패딩은 이제 생존의 문제라니까... 너는 유행 챙기면서 맨날 숏패딩 입고 당기다가 궁디 얼어붙으세요 저는 유행 지난 롱…
+①デュエルランカー毎週15名前後
+②終末戦争はボーナスエリアを選択し順位は3-5位
+③アウライベントは前回2位
+④ファクションチャット活発に利用中
+⑤メンバー全員がTwitterグループに参加しており情報共有もスムーズ
+その他ご不明点やご質問等はご遠慮なくDM下さいませ♡
+次のリプに続きます
+인별 파바박 게시물에 댓글 보니까 피티 받는거 같더니 그 결과물이 이것인가•• 𝙒𝙝𝙮𝙧𝙖𝙣𝙤.. 𝙒𝙝𝙮𝙧𝙖𝙣𝙤..
+بِسْم الله وش هذا
+آج پھر درد و غم کے دھاگے میں 
+ہم پرو کر ترے خیال کے پھول 
+ترک الفت کے دشت سے چن کر 
+آشنائی کے ماہ و سال کے پھول 
+تیری دہلیز پر سجا آئے 
+پھر تری یاد پر چڑھا آئے 
+باندھ کر آرزو کے پلے میں 
+ہجر کی راکھ اور وصال کے پھول 
+
+#فیض_احمد_فیض
+زاد جوعك وتبغى تطبيق سريع يجيب لك الأكل اللي في خاطرك ؟😋👀
+
+-حمّل تطبيق شقردي 📲
+-اكتب طلبك ✅
+-الشقردي عند بابك 🚙
+-شفت كيف شقردي يضّبطك 😉
+
+-وكمان اكواد خصم ⬅️ wow
+Em11 
+للتحميل 👇
+💛https://t.co/gfAGQfd8pL
+-الشقردي يوصل في جميع أنحاء المملكة 
+جده مرسول هنقرستيشن ماك بارك https://t.co/MxCyFmaRVV
+タコのおふんふん………
+学生の時から付き合って結婚するって
+
+すごい憧れだよね。
+RT @bint_alshmrii: اللهم في يوم الجمعة إرحم من توسدت أجسادهم الأكفان و اختلطت عظامهم بالتراب ، اللهم إجعل قبورهم خير مسكن تغفو به أعينهم.
+RT @DUCKYWORLD_KR: 🎉단독 출시 기념 RT 이벤트🎉
+🎁산리오 포토카드 홀더 10개 증정🎁
+-
+✔️기간
+11월 20일~11월 26일까지
+✔️참여방법
+더키월드 이벤트 게시물 리트윗
+✔️당첨인원 : 10명
+✔️당첨발표 : 11월 26일
+-…
+RT @aitcsudip: আবার বাড়লো পেট্রোল-ডিজেলের দাম!ভারতবর্ষে শুধু মানুষের দাম কমছে, নিত্য প্রয়োজনীয় জিনিসের দাম বাড়ছে দিন দিন। দেশ জুড়ে @BJ…
+RT @ssarawatlismm: @Tine__chicchic ไหนๆเล่ยให้ฟังหน่อย
+RT @hypnosismic_RA: BDDVD発売記念トークイベント第2弾発表🎉
+
+🟡3巻
+2021/6/13開催
+【出演】白井悠介、斉藤壮馬、野津山幸宏
+
+⚪️4巻
+2021/7/3開催
+【出演】速水 奨、木島隆一、伊東健人
+
+100名限定無料招待✨
+イベント当日はBDD…
+@atiab_alia1 بالضبط..
+نفس سناب وستوري الأنستغرام
+@Feel_free_ 아미친 ㅠ 아몬드의 와랄라 
+ㅜ
+ㅠ
+ㅠ
+괜찮은거같아요 투명....쿠키 커스텀은 이케하셧구나 아하 파일은 편한대루 써주새요! 냐냐묘~~~
+RT @SerieTV46: #BTS &quot;BE&quot; songs on MelOn hits at 20:00 KST:
+
+#1 Dynamite (=)
+#15 Life Goes On (+6)
+#44 Fly To My Room (+10)
+#50 Blue &amp; Grey…
+#விடியலைநோக்கி_ஸ்டாலினின்குரல்
+かわいい　成仏する
+にょんさんの歌は安定に天才なのですが、絵も天才なのでぜひ…😿
+🔥 #まんが王国お得爆発DAY 🔥 #全マンガ最大80パーセント還元 11/22まで実施中🎉「📘お得に一気読みしたいマンガをココに入力📘」読みたい😆💕 https://t.co/6HvM0OfZbn @manga_okokuより
+RT @vminggukx: SPRING DAY                  LIFE GOES ON
+
+#LifeGoesOnWithBTS #BETODAY https://t.co/zSBS0uCQnA
+RT @queblick: 11/7に出演したHUL OVERが
+4th Single『SAIEN』feat.田中聖/JUU (UZMK)
+
+のMVを公開したそうです🎊
+
+🔽要チェック❗️
+Tomorrowbytogether은 망신살이 몇명이나 잇는거지
+アバッキオ「ブチャラティは今朝から腰が痛いって言うから今日は休ませたぜ。…何だよその目は。」
+@AhmedEl93905010 فالح 🙃😂
+Yieee
+بقى كيكه وادخل 400 🤭؟
+RT @Kehlani: im so icéeeeee
+RT @dj_kiko28: うんこが漏れそうな時に流れる曲ランキング
+1位 Shiny Kung-fu Revival
+2位 FIRE FIRE
+3位 snow storm
+장소있는분?
+
+#일산 #파주 #게이 #오프 #번개
+وباعد ياالله بيننا وبين القاسية قلوبهم وقرب الينا من يحفظ الود...
+RT @ancle7chill: ถ้าGoing crazy คือเพลงชาติ 
+Orange ก็คือเพลงสรรเสริญพระบารมี
+@Kalaage_27 焦げ感、チーズの色、レタスの大きさ…美味しいでしょう!!🤤
+RT @GoncharenkoUa: Якщо Зеленський у Феофанії, то чому ніщо не вказує на його присутність в лікарні? На території тиша, спокій, і ні одного…
+RT @Moonlover_Miyu: ยัยน้องสึกกี้ก็คือตัวสูง 190 กว่าแต่กลัวความสูงนะ ดูทำหน้าเข้าสิ กำมือแน่นอีก น้องก็ตัวเท่านิ้วก้อยเนี่ย😭💘💖 https://t.c…
+@TOGth_Dowon ม่ายช่าย ให้โอกาสอีกรอบเพราะเราลำเอียง คิกคิก
+RT @zlem88369215: @Zeynepe37572607 @AYMBASKANLIGI @NumanKurtulmus İnfazdaAyrım ÖlümeTerketmek
+RT @ministop_fan: ＼フォロー＆RTで当たる／
+
+本日から新発売★
+その名も「世界のライスぼうや」
+世界の食べ物をちまきでアレンジしたミミ！
+ちょこっとお腹がすいた時にもおすすめだＹＯ
+
+フォロー&amp;RTしてくれた方の中から抽選で
+1,000名さまに鶏五目ちまき無…
+@ucpzwDpHuIwso9d ステラの時も、表紙を内側に丸めて、必要ないパンだのお菓子だのを大量買いしてカモフラージュさせてようやく買えたのに…_(:3」∠)_💕💕💕
+@tausy72 栃木-東北新幹線→盛岡-秋田新幹線→秋田-五能線→五所川原-五能線・奥羽本線→新青森-北海道新幹線→新函館北斗-函館本線→札幌
+RT @bts_bighit: [#오늘의방탄] 어느 날 세상이 멈췄어..
+방탄을 본 그 순간부터..💜
+아미와 함께해서 즐거웠던 Live Goes On!
+아미들에게도 즐거운 시간이었길🥰
+
+#인터내셔널팝케이센세이션썬샤인레인보우트레디셔널트랜스퍼USB허브쉬림…
+@BKF94 お疲れさまです〜＼(^o^)／
+ありがとうございます！オヤスンさんも早く帰れると良いですね🤗(無理か)
+RT @BLINKVotingPage: DAILY REMINDER for Social50:
+
+@BLACKPINK #BLACKPINK #블랙핑크 #JISOO #지수 #JENNIE #제니 #ROSÉ #로제 #LISA #리사
+@magda9666 يسعده احلا من الف منسف
+感染に一番よくないのはさ、カリカリして冷静さを欠いて不潔な行動をしても気をつけなくなること。ガタガタ騒がないで各自やれることをやれって話。誰がハンドリングしたって同じよ、ここまで感染が世界規模で広がったらさ。唯一言えるのは冷静な人が多い国が優勝、ってことじゃない？
+@DPY332820 Nice
+RT @mthai: ผลการวิเคราะห์น้ำที่เก็บได้จากแนวปะทะที่เกียกกาย  โดยอ.อ๊อด พบว่า
+
+*** WARNING: skipped 561051281 bytes of output ***
+
+ดีงามมากเพลงโคตรดีอ่าาาา
+@nctyarchive 90's Love MV
+
+#RESONANCE_PT2
+#NCT_RESONANCE
+#90sLove @NCTsmtown
+♥️♥️♥️♥️♥️
+𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅 𐌅  https://t.co/TISDfkDBIh
+【エグプリ結成のキッカケの場所】さようなら！！たまご街道！！ https://t.co/8SNHgEd9FR @YouTubeより
+
+この養鶏場が…
+なかったら→今のエグプリはなかったかもしれない重要な動画です❣️
+
+エグプリ結成して…
+初の撮影です❣️
+
+初々しいエグプリちゃん達→見てね❣️ https://t.co/36M6iGI7Sb
+温度差で風邪引くわ
+#アイマス三昧
+RT @UncleCafe: ความระยำของการปราบคนเสื้อแดง คือมันไม่ใช่การปราบ มันเป็นการล่า ยิงให้บาดเจ็บ เพื่อให้คนมาช่วย และยิงคนช่วยอีก วนๆ ซ้ำๆ ไปอย่…
+RT @GZB7IVtxmjcW26b: أصبحنا و أصبح الملك لله
+
+أللهم بك أصبحنا و بك أمسينا و بك نحيا و بك نموت و إليك النشور
+
+صباح السعادة و السرور
+RT @jxmoods: แพ้คนใจเย็น พูดอะไรก็ใช้เหตุผลอยู่เสมอ
+@qnnP1PaLYz35uEo よろ
+RT @BaisleyKendra: 念願の裏アカ女子でびゅーっ🤗
+田舎で募集しても誰もいないからね、この度田舎から出てきて、念願を叶える事がようやく出来ました！
+
+性欲強くて困っちゃうんですけど
+何人かセフレ欲しいです！
+
+生とかも未経験だから興味あったり…💕
+
+RT後にDM…
+友から｢知らないですまされるほど甘くないぞ｣とおすすめ()された呪術廻戦を一気見しました。五条先生すごいな。
+RT @lololo46925975: คนที่น่าสงสารที่สุดคือนางเอก ดีใจสุดได้เป็นทีมชนะวางแผนพร้อมท่องโลก พอถึงเวลาถูกปลด ตั้งสติได้ปรึกษาพระรองไม่ใช่เพื่อตั…
+@halup_o 제발,,,,제발 몸 챙겨주세요.,,!!! 간곡히 부탁드립니다 ㅠㅠㅠㅠ!!!!
+RT @_satoreika: 展示される絵に関してですが、どちらも自信作ですので、是非、展示を見に行って頂けると嬉しいです。番組で見て頂いた方は分かるかもしれませんが、色使いにもこだわっています🙂！！
+#計算中
+RT @norystch: นอกเหนือจากนั้นคือMV ดีนะคะ ดูมีความลงทุน มีการไปถ่ายข้างนอกที่ไม่ใช่สตูอีกต่อไปแล้ว และพร้อบเยอะมาก เป็นอะไรที่ไม่ได้เห็นมาน…
+@sunagimotter いや、人だったんだなって…
+RT @FIFAQ8_: سحب سريع على ستور 50$والشروط :
+تابع @huda_fut وسو رتويت
+* بالكثير 5 ساعات واسحب https://t.co/8C3FgGipI5
+【予約状況について】
+11/24(火)は、12時～閉店まで予約に空きがございます🤗来店予約をして頂くと優先的にご案内出来ますので、お気軽にお問い合わせください☺️👍
+また、#ドコモのロング学割 もスタートしましたのでぜひご相談にいらしてください🎉
+☎️0120-022-767(10:00～19:00/第三火曜日以外)
+@0pUhczppMfMPsuI 😂
+RT @NCTsmtown: #2020ENQUETE20📝
+
+#WINWIN #JUNGWOO #LUCAS #NCT_MARK
+#NCT #RESONANCE
+#RESONANCE_Pt2
+#NCT_RESONANCE https://t.co/fGq0tXQ4AQ
+محاضرات الظهر محد يسمع لها الا الدكتور نفسه
+RT @reiou0106: ！音量注意！
+夜の人が大声で囁いてるよ
+気をつけてね皆んな
+@BobaKaTea_ Doneeepo
+いいショットです👌
+やっぱりエイトはこれが無いと🐝
+撮可あってのチーム📷
+RT @shima_s2: さかたさ～～～N！
+@mood_sakura จริงพี่ชอบๆๆ
+RT @bIazedmark: mark lee being                  but also
+cute as hell                  what the hell https://t.co/Zb6sSqVokI
+白ロンTとか
+頭ぐしゃぐしゃって
+タオルで拭いちゃうとことか
+…萌えポイントすぎて死ぬ😍😇
+
+続き見なくちゃ👀
+これはもう悔しさを積みゲーにぶつけるしかない
+RT @bellechans: เอสเอ็มมึงทำงานชุ่ยอีกละอีเหี้ย ทำไมมันมีปัญหาทุกการคัมแบคเลย กุพูดทุกครั้งว่ากุรักที่ตัวศิลปินแต่ชังอีค่าย ผิดหวังซ้ำแล้ว…
+RT @CaramelCorn1971: ／
+今日は、勤労感謝の日！
+みんないつもお仕事お疲れ様！！
+＼
+今は在宅勤務の人も増えているみたいだけれど、お仕事のときにはスーツもいいよね✨
+ボクもビシッと青いスーツできめてみたよ🎶似合ってるかな！？ https://t.co/5WA…
+書き込みボード返信できずごめんなさい😭もうしばらくおまちくださいいいいい
+@Sakura_050218 じゃあLINE交換するかぁ
+@t_o_e_m_u わー❗生クリーム絶対美味しい😋⭐️
+体重減らなくなったら生クリームも摂取しよっと🤤
+
+1ヶ月の辛抱です☺️
+その後は自分なりに調整しながら行きますよ❗
+RT @ern_konpeito: 朝からふざけたことばっかしてないで
+こっちにも真面目に載せときます🥴🤍
+似てないとかのクレームは受け付けてません🥺🤍笑
+スマホリメイクにどうぞ🤍🤍ˎˊ˗ https://t.co/lADfcMmaTd
+RT @AlMosahf: وَوَهَبْنَا لَهُ إِسْحَاقَ وَيَعْقُوبَ نَافِلَةً ۖ وَكُلًّا جَعَلْنَا صَالِحِينَ
+RT @topazine: ที่ไม่ด่าก้อยแบบ slut-shaming, body-shaming เพราะจะได้ไม่ต้องมาตอบคำถามตัวเองว่าทำไมคนนี้ด่าได้ ทีกลับคนอื่นทำเป็นรณรงค์ไม่ใ…
+@sari_111 @Hamedallah_9 الله يجعل النصر حليفكم🌹
+@1009_1126 👍👍👍
+感染判明の市長、都内で国交省幹部との懇親会に参加 https://t.co/rgltA1e6VF #スマートニュース
+これ宮城の行政の長の資質が問われる…村井県知事云々関係なく！
+@JINF4IRY 😭😭😭😭 ALE TO JA NIE WYSLALAM ZALOSNE
+RT @25hmm__: 일을 이딴식으로 하면서 뭘 또 전세계로 확장시키겟다고...
+RT @rysyrys: 谷地中という最も悪質なレイシストが、今回暴力事件を引き起したことは、極めて危険な兆候。
+次の流血事の前兆です。
+もし「被害者が日本人だから」という理由からレイシズムとして無視・軽視するならば、私たち全員が手痛いしっぺ返しを食うことになる。
+これを反レイ…
+✨23時半スク✨
+
+交換枠ご所望です🎩✨
+主催される方は是非行ってらっしゃいです(つ✧ω✧)つ
+
+#23日 #23時半 #スク 
+#スクワッド #賞金ルーム
+RT @wanghabits: @gyeommine BREATH OUT NOW
+#GOT7_BreathRelease
+#믿듣아르스_Breath_6시선공개 #GOT7_Breath @GOT7official
+@jjaejaepeach 90's Love MV
+
+#RESONANCE_PT2
+#NCT_RESONANCE
+#90sLove @NCTsmtown
+RT @dztp: 女性の胸の画像にED治療の広告を載っけたビルボードが撤去されて、ED治療の広告がプリントされたTシャツのみの画像に差し替えられたのを見て、「こんな世の中で満足ですか」みたいなことを言ってる人がいるんですけど、いや普通に満足でしょ。
+RT @thelittle_CB: 🍪เธอชื่อ : ว่าน
+🍯ดูฮอตกี่% :50%
+🎂มีแฟนยัง : ยังแน่เลย
+💗คิดว่าเธอสูงเท่าไหร่ : 168
+🍧ตรงสเป็คกี่% : 40%
+🐻emojiสำหรับเธอ : 🍪
+@Kristin99350413 👏 #JusticeForJohnnyDepp #ThankYouDior
+sis same #GOT7_BreathRelease
+#GOT7_Breath  #GOT7  #갓세븐 @GOT7Official
+本当に坂田さんのおかげで人生が楽しくなりました✨今の私があるのはお世辞抜きに坂田さんのおかげで感謝してもしてもしきれないです。今までもこれからもずっと応援しています✨大好きです！！❤️ https://t.co/cYkgXPpbVM
+あってるwwwwwwww
+できればノンストップで繋げてほしかったけどなかなか難しいかな #アイマス三昧
+RT @imyounumber1fan: เอนซีทีเดี๋ยวนี้มาไกลเว่อ เดี๋ยวนี้ปล่อยเพลงได้ขึ้นกราฟเมล่อนตลอด
+水族館いきてえ
+RT @0949_LQS: ˗ˏˋ 連戦 デュオゲリラ ˎˊ˗
+
+⏰｜11月23日 18:30 18時30分
+
+🗝｜ ジャスト @0949_LQS 
+
+👤｜デュオ
+
+💸｜1500×2 ( a ) 1週間後
+ 
+▫️参加条件 ( 全員 )
+Follow @0949_LQS RT…
+RT @topazine: ที่ไม่ด่าก้อยแบบ slut-shaming, body-shaming เพราะจะได้ไม่ต้องมาตอบคำถามตัวเองว่าทำไมคนนี้ด่าได้ ทีกลับคนอื่นทำเป็นรณรงค์ไม่ใ…
+RT @beingarun28: आज मैं नेटफ्लिक्स को बैन करवाने के लिए आवाज उठा रहा हूँ 
+
+क्या आप सभी भगवाधारी  साथ हो.. ❓
+
+#BanNetflix
+私は、11月24日（火）発売のお得な #丸亀ランチセット 3種類のうち #神コスパ500円かけうどんセット が食べたい！ #丸亀製麺
+RT @yamanow: 22日朝食　殆どパンを食べる事は無いが、卵消費の為にサンドを作ってみた。卵サンド、フリッジ、イチゴジャム（冷凍イチゴ、砂糖、レモン）、初めての、家で土鍋石焼き芋（石をネットで、522円購入）　#石焼き芋　#サンドイッチ　#土鍋 https://t.co…
+RT @mankai_company: ★HAPPY BIRTHDAY★
+今日は秋組・古市左京さんの誕生日です！
+本日の主役から一言：左京「やけにでかくて軽い箱を貰ったが、中身は駄菓子の詰め合わせだった。この年になっても駄菓子を送られるとはな…まあ、あいつらなりに考えて用意して…
+@xponochka и «она лезби потому что у неё короткая стрижка»
+@t_Ace_ZERO つぅたぁあああん！
+RT @Casiosusu: 只系告「行為失當」。
+@Nozu_Rato ほ、本人アイコンとか知らんし~(口笛)
+@S_standflower りっかはグクミンシパですか？
+#원영메일 
+원영이 손이 많이 시렵구낭 ㅠㅠ 그렇지만 톡톡 타자 치고있구낭 ㅎㅎ 지금 아아 시킨거 후회하고 있구낭 따뜻한거 마셔야되는뎅 ㅠㅠ 난 라떼 추천이면 무조건 초코라떼징 ㅎㅎ 난 초코라떼가 좋앙 ㅎㅎ 그랭 원영아 오늘 같이 화이팅하장 ㅎㅎ 원영이 너무 이쁘당💕💕 좋은 하루 보냉💕💕
+RT @heymooooooom: แกกกกกกกก มันเกินไปไหมมมมม ปล่อยเพลงมาซับต้องเยอะขนาดนี้ไหม//รับความแมสไม่ไหว #GOT7_Breath https://t.co/zCLNc5kHgc
+Вообще, прогресс в моей гигиене сна очевиден, хотя пока мигрени все равно меня мучают почти каждый день, так как это состояние, когда меняешь режим, похоже на jet lag.
+Надеюсь, что в общей сложности за месяц организм привыкнет 🙏🏻
+@AJELNEWS24 حتى يطمئن قلبك  
+
+وينجلي همك 
+
+وينشرح صدرك 
+
+ويتسع رزقك
+
+أكثر من 
+
+أَسْتَغْفِرُ الله الْعَظِيمَ
+
+ الَّذي لَا إلَهَ إلاَّ هُوَ الْحَيُّ الْقَيُّوم
+
+ وَأَتُوبُ إلَيْهِ  
+
+❤️❤️
+RT @seoulcuteclub: ที่ Watsons ตอนนี้มีโปรลดราคากันแดด Bioreอยู่น้า รุ่น Aqua rich กลิ่น Blooming Blossom🌷เหลือ 347 บาท ตัวนี้หอมแนวๆดอกไม้…
+RT @Littleminn: SM แจ้งว่าอัลบั้ม Departure ver. มีปัญหาเหี่ยวกับการพิมพ์ทำให้ต้องเลื่อนการวางขายอัลบั้มออกไปแบบหลีกเลี่ยงไม่ได้ แต่จะพยายา…
+الاستاذة تنادي وحدة اسمها جواهر مو موجودة عندنا وتقول مين جواهر هذي اللي دخلت علينا😭😭😭😭😭قرت اسمها تحسب طالبه دخلت ااااه دايخة من الضحك https://t.co/dZPKo0k3aH
+RLP वालो हनुमान जी बेनीवाल  से पुछो क्या राजस्थान में Rlp की सरकार आई तो ये RTO परेशान करना छोड़ देगा क्या भ्रस्टाचार खत्म करेगे हनुमान जी बेनिवाल तो मे भी rlp का समर्थन शुरु करु फिर ।बाड़मेर जिला संपर्क प्रमुख नानकाराम कड़वासरा @hanumanbeniwal  @UmmedaRamBaytu  @NarayanBeniwal7 https://t.co/KvmZauT4fw
+A BEYBLADE FUCKS UP A DISH AND KAI TRYIN TO ACT LIKE THAT DONT SCARE HIM LIKE BOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII https://t.co/y5R7mk3cr9
+こ、ここで！
+иногда меня пугает то как много у меня мью которых я знаю ирл но с другой стороны это круто
+---
+ちょーちょーほんときも！
+ほんとキモ！
+にしか聞こえない
+ #アイマス三昧
+こんにちは！YDAイラスト部っ！です。YDAイラスト部っ！公式サイトは、イラスト部の活動情報や部員イラスト等を発信しています！是非みてください！ YDAイラスト部っ！公式サイト→[ https://t.co/OR1S0iiVse]
+RT @yukiyuki0_0r6s: 🎁総額100万円企画🎁
+
+第2弾　🧸Switch liteを1名様🧸
+
+　ギフカ・PayPay・現金対応
+
+〜応募方法〜
+
+🔸ゆきまると@LemoGoBo1118 
+　　　　　　　@ore_1919 
+🔸3人のフォローRT
+
+締め切り　3…
+スマホケースが待てど暮らせど届かないから繋ぎ用に100均でケース買ったら思った以上に良くて草
+@chry142w 먼데
+夏の化身ビーチブレイバー
+MY EVERYTHING IS SO AAAAAAAAAAA IM GONNA CRY RIGHT NOW
+RT @star_isshhh: ภาพบรรยากาศ ' ออฟ จุมพล - กัน อรรถพันธ์ ' ในงานคอนเสิร์ต ไทยประกันชีวิต Presents &quot; FANTOPIA &quot; ที่ Impact Arena &amp; Challenge…
+｢なんで俺のプリン食うの？｣｢どこにもしょウたくんのなんて書いてなかったもん｣｢いや普通わかんだろ｣｢わかんないでしょ！それに同じの2個あったし！｣｢俺が2個食べる予定だったんだよ！｣｢そしたら名前書いといてよ！｣｢書いたし！｣｢書いてあったら私食べないから！｣
+RT @Ammume02: ทุกคัมเลยค้างช่วงสี่แสนวิวตลอด ปั่นวนไปค้าบบบ
+#GOT7_Breath https://t.co/zxi5Li9kzJ
+RT @JOOXTH: #GOT7_BreathRelease 
+เพลงปล่อยแล้วน้าาา 💚
+
+ฟัง 'Breath' พรีรีลิสซิงเกิลจากอัลบั้มใหม่ Breath of Love : Last Piece ได้แล้วที่ #J…
+RT @alwaysmendex: GO WATCH THE DOCUMENTARY #InWonderWatchParty
+@TuTi8HiThuZi WAO…SOULEATER…
+RT @BTS_twt: 💜💜💜💜💜💜💜💜💜
+ワタシジュンちゃんオシナノカモシレナイ
+激しく感情を揺さぶるんじゃないよ
+RT最高、こうであって…泣
+RT @sfkkfs_: ต่อให้ปากบอกว่าไม่คาดหวัง แม่งก็คาดหวังอยู่ดีอะ
+RT @taeyongelvisx: สงสารคนที่โดนทักเรื่องการแต่งตัวละเสียความมั่นใจ จนไม่กล้าแต่งตัวในแบบที่ชอบไปเลยอะ มันแย่นะ แค่เพราะการพูดไม่คิดของคนอะ…
+@haruhidemasaki えっ…！？
+(´×ω×`)(´×ω×`)(´×ω×`)
+バイオ(実写じゃない方)の映画が全部入ったとのことなので、ヴェンデッタまず吹き替えで見る。その後字幕見るーん。
+@shoki_jazz_tp まあそうね
+@re_1230_ 入れた入れた💜
+@FragileHeart96 سلام آدم عاشق همیشه عاشق تا وقتی به بیپولی بخوره اون وقت یادش میره
+RT @Mohamed34461331: مصنع لمسه للاثاث الحديث 
+تفصيل على حسب الطلب صناعه وطنى خامات تايلاندى  ضمان ١٠ سنوات ضد عيوب الصناعه 
+خشب تايلاندى وا…
+RT @na2key_: 左目はもう君を映さなくなって
+左手はもう君を満足に触れなくなって
+今度は君の料理も受け付けなくなってしまった
+
+それでも“私“として君を見守り続けよう https://t.co/6PrKC0pO8a
+@smtakemymoney 지금 저도 듣는 중인데 사기입니다 .. 🥺
+@143Viceyy HAHAHHAHA KYOT!!! NAKAUWI KA NA?? INGAT KA HAA?? WUV U
+RT @LOH_information: ■ 오벨리스크 구성 변경
+
+“ 신비한 고대의 건축물은 주기적으로 그 구조가 변경됩니다.
+
+▶ 모든 층의 주인과 클리어 조건이 변경됩니다.
+
+※ 변경된 구성은 12월 1일(화) 00:00 (로컬 시간)부터 적용 h…
+@kaede7728 ありがとうございますwwwww
+RT @sourcemusicFS: #여자친구스탭
+
+🎉 #여자친구 #GFRIEND ONLINE CONCERT
+[ GFRIEND C:ON ] 이벤트 (2)  당첨자 안내
+
+📍 &lt;G C:ON 보고 왔지&gt; 당첨자 발표
+📍 당첨자 명단을 확인해주세요
+
+자세한…
+น้องซองชานเยี่ยวมากกกกก
+RT @monamourjd: @BUNNYMYE0N @weareoneEXO omg😭
+
+WE ARE ONE
+
+#AMAs   #AMAsTNT EXO #EXOL 
+@weareoneEXO
+Diego Alves, Rafinha, Rodrigo Caio, Pablo Mari, Filipe Luis, Willian Arão, Gerson, Everton Ribeiro, Arrascaeta, Bruno Henrique, Gabriel Barbosa.
+Jorge Jesus. 
+
+NINGUÉM ME CONTOU, EU VI.
+
+#1AnoDaGloriaEterna
+可愛い相方ちゃんです(๑•̀ㅂ•́)و✧いつも暇してるので構ってあげて♡
+RT @immalilbbb: rt; #รีลั่น clip-0:34sec: ลองเอาด้ามแปรงสีฟันแหย่🐚#imgforลั่น #ลั่น #imgforเงี่ยน #หมีฟ้าน่ะนะ #ลั่นเจ้าหมีฟ้า
+//ว่างเดี๋ยว…
+瓜江：俺と六月と米林との３人でご飯食べに行ったんだが、 いろいろ話してて、俺と米林が楽しげに話すたびに六月が机の下で足をこつこつ蹴ってきたときは萌えた
+┏┛墓┗┓三
+だから！！！！
+振れ幅が　　すごい！！！！！
+#アイマス三昧
+今更ながらこの回の現場猫安達が好き過ぎる…&gt;RT
+単行本の方ではもう少し可愛く書き直されたよね😂
+どっちも好きだー
+@icxrea 저기요, 제 팔자•ㅔ 유투브는 업문대요
+RT @I3amBam1A: ถูกจริตอินเตอร์ที่แท้ทรู!! #GOT7_BreathRelease #GOT7_Breath  #GOT7  #갓세븐 @GOT7Official
+RT @8AIcTgxKbubUGD2: おはようございます
+テレビつけたら　コロナ祭りやまた。それしかないのか！
+@j_myHOPE218 岸くんの力では禊に太刀打ちできんかったか…
+
+自力で頑張るw
+まぁ周りにコロナ脳的な人が誰もいないだけ幸せか
+RT @NCTsmtown: ‘NCT – The 2nd Album RESONANCE Pt.2’ 피지컬 앨범 발매 연기 관련 안내 말씀 드립니다.  
+
+https://t.co/xwRFkCCxbA
+RT @nn_ss99a: 500人突破〜
+みんなありがとう！
+
+リプしてくれた人に手書きメッセージ書く！！
+※字は汚いです
+
+顔は載せらんないからDMくれた人(知ってる人)にだけ見せるかも！かも https://t.co/VbYjvIXvBB
+@M98cocco 希望出すの忘れちゃったどん🥺w
+@mae_saeng2 엽떡 착한맛 먹는 맵찔이는 찍먹으로 갑니다..⭐️
+@Ging10622755 @LukasZackeff 아.니. 아니. 깅님.봐봐. 루카스님이 먼저 자기 작업물 기대하지말랬다니까?
+RT @retokani: 動画投稿！
+ついに完全初見部分！イケメン少年がその後どうなったのかのIFストーリーです！！次回はBLOODモード！
+
+追加されたIFストーリー 少年はその後どうなった？『マッドファーザー 完全リメイク版 』 https://t.co/ztJg0hGI…
+RT @AA55388: *يُنبت آلله من قآع آلحزن*
+*فرحًا نسعد به ولو بعد حين .&quot;*
+
+فقط كن مع الله 😊 https://t.co/0MubGIxAUA
+あーだめ……集めな……　RT
+BRAZIL LOVES YOU
+RT @yeonsek498: https://t.co/SAWnTQNtSo
+
+링크 접속 후 로그인, 회의 시작하기 &gt; 지금 참여하기로 들어가실 수 있고, 마찬가지로 초대 링크 배부 가능합니다. 화면 공유 기능은 우측 하단에 '발표시작'을 눌러서 전체 화…
+RT @Shin_Kurose: デモすらできないのが本物の独裁国家であり、「アベは独裁だー！」とどんちゃん騒ぎしてるサヨクは本当に矛盾してますよね。
+
+しかし日本も中国に飲み込まれそうなのに、呑気に政府の揚げ足取りばかりしてる連中は本当に抜けている。 https://t.co…
+RT @AAairty: ใครเอาจีซองไปหมุนกาอน โคตรน่ารัก555555
+@lirx111 م اتحممملل😭😭😭😭
+@DCulee هههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه هههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه
+หนูก็ไมรู้ออมม่า หนูเช็คไม่เป็น🤣🤣🤣
+
+I vote for #Taehyung #BTSV from #BTS @BTS_twt for #BousnidStars2020 #Bousnid #4thBousnidStars2020
+เอากูไปเผาเลยจ่ะ ไม่ต้องทอดไม่ต้องเวฟ ไม่ต้องต้มยำทำแกงไรทั้งนั้น เผาไปเลย เผาเท่านั้น เผาชุ้นไปเลย !!!!!! #GOT7 #갓세븐 @GOT7Official #IGOT7 #아가새 #GOT7_BreathofLove_LastPiece #GOT7_Breath #GOT7_LastPiece
+#JacksongWang https://t.co/z3mJAqb3fq
+JOIN NOW DELAY IS DANGEROUS
+CONTINUE DOUBTING WE CONTINUE WINNING
+😍😍😍😍😍😍😍😍😍 https://t.co/ATfhHSLWnC
+感情の落差！！ちょっと！！
+#アイマス三昧
+تظن أنك مُت ، ولكن تعيش .
+RT @mymtuan__: ทีมสองได้เงินเดือนวันนี้เหรอ เอ็มวีปล่อยปุ้ป ทำงานหนักเลยนะ ทวิตทุกนาที ทรศสั่นเป็นเจ้าเข้าแล้วแม่
+RT @Riaqx_: #りあからのお年玉
+プレゼント企画🎁します！！
+内容は好きなプリペ3000円分×2名様です‼️
+条件
+リプにコメントとRT
+こちらの人を全員フォロー😎😎
+@Riaqx_  @order_a_ll  @RuruaZeros  @meruxg 
+引用RTと…
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// ## Go to SparkUI and see if a streaming job is already running. If so you need to terminate it before starting a new streaming job. Only one streaming job can be run on the DB CE.
+// #  let's stop the streaming job next.
+ssc.stop(stopSparkContext = false) 
+StreamingContext.getActive.foreach { _.stop(stopSparkContext = false) } 
+</code></pre>
+</div>
 
                     </main>
 
