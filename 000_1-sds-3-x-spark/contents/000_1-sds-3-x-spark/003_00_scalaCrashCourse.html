@@ -1,0 +1,1096 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>003_00_scalaCrashCourse - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html" class="active">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="scala-crash-course"><a class="header" href="#scala-crash-course">Scala Crash Course</a></h1>
+<p>Here we take a minimalist approach to learning just enough Scala, the language that Apache Spark is written in, to be able to use Spark effectively.</p>
+<p>In the sequel we can learn more Scala concepts as they arise. This learning can be done by chasing the pointers in this crash course for a detailed deeper dive on your own time.</p>
+<p>There are two basic ways in which we can learn Scala:</p>
+<p><strong>1. Learn Scala in a notebook environment</strong></p>
+<p>For convenience we use databricks Scala notebooks like this one here.</p>
+<p>You can learn Scala locally on your own computer using Scala REPL (and Spark using Spark-Shell).</p>
+<p><strong>2. Learn Scala in your own computer</strong></p>
+<p>The most easy way to get Scala locally is through sbt, the Scala Build Tool. You can also use an IDE that integrates sbt.</p>
+<p>See: <a href="https://docs.scala-lang.org/getting-started/index.html">https://docs.scala-lang.org/getting-started/index.html</a> to set up Scala in your own computer.</p>
+<p><strong>Software Engineering NOTE:</strong> You can use <code>docker pull lamastex/dockerdev:spark3x</code> and use the docker container for local development based on minimal pointers here: <a href="https://github.com/lamastex/dockerDev">https://github.com/lamastex/dockerDev</a>. Being able to modularise and reuse codes modularly requires the building of libraries which inturn requires building them locally with tools such as <code>sbt</code> or <code>mvn</code> for instance. You can also set-up modern IDEs like <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a> or <a href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a>, etc. for this.</p>
+<h2 id="scala-resources"><a class="header" href="#scala-resources">Scala Resources</a></h2>
+<p>You will not be learning scala systematically and thoroughly in this course. You will learn <em>to use</em> Scala by doing various Spark jobs.</p>
+<p>If you are interested in learning scala properly, then there are various resources, including:</p>
+<ul>
+<li><a href="http://www.scala-lang.org/">scala-lang.org</a> is the <strong>core Scala resource</strong>. Bookmark the following three links:
+<ul>
+<li><a href="https://docs.scala-lang.org/tour/tour-of-scala.html">tour-of-scala</a> - Bite-sized introductions to core language features.
+<ul>
+<li>we will go through the tour in a hurry now as some Scala familiarity is needed immediately.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/overviews/scala-book/introduction.html">scala-book</a> - An online book introducing the main language features
+<ul>
+<li>you are expected to use this resource to figure out Scala as needed.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/cheatsheets/index.html">scala-cheatsheet</a> - A handy cheatsheet covering the basics of Scala syntax.</li>
+<li><a href="https://superruzafa.github.io/visual-scala-reference/">visual-scala-reference</a> - This guide collects some of the most common functions of the Scala Programming Language and explain them conceptual and graphically in a simple way.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/learn.html">Online Resources</a>, including:
+<ul>
+<li><a href="https://www.coursera.org/course/progfun">courseera: Functional Programming Principles in Scala</a></li>
+</ul>
+</li>
+<li><a href="http://www.scala-lang.org/documentation/books.html">Books</a>
+<ul>
+<li><a href="http://www.artima.com/pins1ed/">Programming in Scala, 1st Edition, Free Online Reading</a></li>
+</ul>
+</li>
+</ul>
+<p>The main sources for the following content are (you are encouraged to read them for more background):</p>
+<ul>
+<li><a href="https://www.scala-lang.org/old/sites/default/files/linuxsoft_archives/docu/files/ScalaByExample.pdf">Martin Oderski's Scala by example</a></li>
+<li><a href="http://lintool.github.io/SparkTutorial/slides/day1_Scala_crash_course.pdf">Scala crash course by Holden Karau</a></li>
+<li><a href="https://darrenjw.wordpress.com/2013/12/30/brief-introduction-to-scala-and-breeze-for-statistical-computing/">Darren's brief introduction to scala and breeze for statistical computing</a></li>
+</ul>
+<h2 id="what-is-scala"><a class="header" href="#what-is-scala">What is Scala?</a></h2>
+<p>&quot;Scala smoothly integrates object-oriented and functional programming. It is designed to express common programming patterns in a concise, elegant, and type-safe way.&quot; by Matrin Odersky.</p>
+<ul>
+<li>High-level language for the Java Virtual Machine (JVM)</li>
+<li>Object oriented + functional programming</li>
+<li>Statically typed</li>
+<li>Comparable in speed to Java</li>
+<li>Type inference saves us from having to write explicit types most of the time Interoperates with Java</li>
+<li>Can use any Java class (inherit from, etc.)</li>
+<li>Can be called from Java code</li>
+</ul>
+<p>See a quick tour here:</p>
+<ul>
+<li><a href="https://docs.scala-lang.org/tour/tour-of-scala.html">https://docs.scala-lang.org/tour/tour-of-scala.html</a></li>
+</ul>
+<h2 id="why-scala"><a class="header" href="#why-scala">Why Scala?</a></h2>
+<ul>
+<li>Spark was originally written in Scala, which allows concise function syntax and interactive use</li>
+<li>Spark APIs for other languages include:
+<ul>
+<li>Java API for standalone use</li>
+<li>Python API added to reach a wider user community of programmes</li>
+<li>R API added more recently to reach a wider community of data analyststs</li>
+<li>Unfortunately, Python and R APIs are generally behind Spark's native Scala (for eg. GraphX is only available in Scala currently and datasets are only available in Scala as of 20200918).</li>
+</ul>
+</li>
+<li>See Darren Wilkinson's 11 reasons for <a href="https://darrenjw.wordpress.com/2013/12/23/scala-as-a-platform-for-statistical-computing-and-data-science/">scala as a platform for statistical computing and data science</a>. It is embedded in-place below for your convenience.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="scala-versus-python-for-apache-spark"><a class="header" href="#scala-versus-python-for-apache-spark">Scala Versus Python for Apache Spark</a></h2>
+<p>Read: <a href="https://www.projectpro.io/article/scala-vs-python-for-apache-spark/213">https://www.projectpro.io/article/scala-vs-python-for-apache-spark/213</a> for an interesting overview.</p>
+</div>
+<div class="cell markdown">
+<h2 id="learn-scala-in-notebook-environment"><a class="header" href="#learn-scala-in-notebook-environment">Learn Scala in Notebook Environment</a></h2>
+<hr />
+<h3 id="run-a-scala-cell"><a class="header" href="#run-a-scala-cell">Run a <strong>Scala Cell</strong></a></h3>
+<ul>
+<li>Run the following scala cell.</li>
+<li>Note: There is no need for any special indicator (such as <code>%md</code>) necessary to create a Scala cell in a Scala notebook.</li>
+<li>You know it is a scala notebook because of the <code>(Scala)</code> appended to the name of this notebook.</li>
+<li>Make sure the cell contents updates before moving on.</li>
+<li>Press <strong>Shift+Enter</strong> when in the cell to run it and proceed to the next cell.
+<ul>
+<li>The cells contents should update.</li>
+<li>Alternately, press <strong>Ctrl+Enter</strong> when in a cell to <strong>run</strong> it, but not proceed to the next cell.</li>
+</ul>
+</li>
+<li>characters following <code>//</code> are comments in scala. ***</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">1+1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res0: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(System.currentTimeMillis) // press Ctrl+Enter to evaluate println that prints its argument as a line
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1664271977227
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>See <a href="https://darrenjw.wordpress.com/2013/12/23/scala-as-a-platform-for-statistical-computing-and-data-science/">Scala as a platform for statistical computing and data science</a>.</p>
+</div>
+<div class="cell markdown">
+<h2 id="lets-get-our-hands-dirty-in-scala"><a class="header" href="#lets-get-our-hands-dirty-in-scala">Let's get our hands dirty in Scala</a></h2>
+<p>We will go through the <strong>following</strong> programming concepts and tasks by building on <a href="https://docs.scala-lang.org/tour/basics.html">https://docs.scala-lang.org/tour/basics.html</a>.</p>
+<ul>
+<li><strong>Scala Types</strong></li>
+<li><strong>Expressions and Printing</strong></li>
+<li><strong>Naming and Assignments</strong></li>
+<li><strong>Functions and Methods in Scala</strong></li>
+<li><strong>Classes and Case Classes</strong></li>
+<li><strong>Methods and Tab-completion</strong></li>
+<li><strong>Objects and Traits</strong></li>
+<li>Collections in Scala and Type Hierarchy</li>
+<li>Functional Programming and MapReduce</li>
+<li>Lazy Evaluations and Recursions</li>
+</ul>
+<p><strong>Remark</strong>: You need to take a computer science course (from CourseEra, for example) to properly learn Scala. Here, we will learn to use Scala by example to accomplish our data science tasks at hand. You can learn more Scala as needed from various sources pointed out above in <strong>Scala Resources</strong>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="scala-types"><a class="header" href="#scala-types">Scala Types</a></h3>
+<p>In Scala, all values have a type, including numerical values and functions. The diagram below illustrates a subset of the type hierarchy.</p>
+<p><img src="https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg" alt="" /></p>
+<p>For now, notice some common types we will be usinf including <code>Int</code>, <code>String</code>, <code>Double</code>, <code>Unit</code>, <code>Boolean</code>, <code>List</code>, etc. For more details see <a href="https://docs.scala-lang.org/tour/unified-types.html">https://docs.scala-lang.org/tour/unified-types.html</a>. We will return to this at the end of the notebook after seeing a brief tour of Scala now.</p>
+</div>
+<div class="cell markdown">
+<h3 id="expressions"><a class="header" href="#expressions">Expressions</a></h3>
+<p>Expressions are computable statements such as the <code>1+1</code> we have seen before.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">1+1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can print the output of a computed or evaluated expressions as a line using <code>println</code>:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(1+1) // printing 2
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(&quot;hej hej!&quot;) // printing a string
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>hej hej!
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="naming-and-assignments"><a class="header" href="#naming-and-assignments">Naming and Assignments</a></h3>
+<p><strong>value and variable as <code>val</code> and <code>var</code></strong></p>
+<p>You can name the results of expressions using keywords <code>val</code> and <code>var</code>.</p>
+<p>Let us assign the integer value <code>5</code> to <code>x</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x : Int = 5 // &lt;Ctrl+Enter&gt; to declare a value x to be integer 5. 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Int = 5
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><code>x</code> is a named result and it is a value since we used the keyword <code>val</code> when naming it.</p>
+</div>
+<div class="cell markdown">
+<p>Scala is statically typed, but it uses built-in type inference machinery to automatically figure out that <code>x</code> is an integer or <code>Int</code> type as follows. Let's declare a value <code>x</code> to be <code>Int</code> 5 next without explictly using <code>Int</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = 5    // &lt;Ctrl+Enter&gt; to declare a value x as Int 5 (type automatically inferred)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Int = 5
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's declare <code>x</code> as a <code>Double</code> or double-precision floating-point type using decimal such as <code>5.0</code> (a digit has to follow the decimal point!)</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = 5.0   // &lt;Ctrl+Enter&gt; to declare a value x as Double 5
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Double = 5.0
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Alternatively, we can assign <code>x</code> as a <code>Double</code> explicitly. Note that the decimal point is not needed in this case due to explicit typing as <code>Double</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x :  Double = 5    // &lt;Ctrl+Enter&gt; to declare a value x as Double 5 (type automatically inferred)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Double = 5.0
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Next note that labels need to be declared on first use. We have declared <code>x</code> to be a <code>val</code> which is short for <em>value</em>. This makes <code>x</code> immutable (cannot be changed).</p>
+<p>Thus, <code>x</code> cannot be just re-assigned, as the following code illustrates in the resulting error: <code>... error: reassignment to val</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//x = 10    //  uncomment and &lt;Ctrl+Enter&gt; to try to reassign val x to 10
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Scala allows declaration of mutable variables as well using <code>var</code>, as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">var y = 2    // &lt;Shift+Enter&gt; to declare a variable y to be integer 2 and go to next cell
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">y = 3    // &lt;Shift+Enter&gt; to change the value of y to 3
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: Int = 3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">y = y+1 // adds 1 to y
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: Int = 4
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">y += 2 // adds 2 to y
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(y) // the var y is 6 now
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>6
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="blocks"><a class="header" href="#blocks">Blocks</a></h3>
+<p>Just combine expressions by surrounding them with <code>{</code> and <code>}</code> called a block.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println({
+  val x = 1+1
+  x+2 // expression in last line is returned for the block
+})// prints 4
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>4
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println({ val x=22; x+2})
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>24
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="functions"><a class="header" href="#functions">Functions</a></h3>
+<p>Functions are expressions that have parameters. A function takes arguments as input and returns expressions as output.</p>
+<p>A function can be nameless or <em>anonymous</em> and simply return an output from a given input. For example, the following annymous function returns the square of the input integer.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">(x: Int) =&gt; x*x
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res10: Int =&gt; Int = $Lambda$5453/989605864@15857286
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>On the left of <code>=&gt;</code> is a list of parameters with name and type. On the right is an expression involving the parameters.</p>
+</div>
+<div class="cell markdown">
+<p>You can also name functions:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val multiplyByItself = (x: Int) =&gt; x*x
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>multiplyByItself: Int =&gt; Int = $Lambda$5454/1749476144@41de911a
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(multiplyByItself(10))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>100
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>A function can have no parameters:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val howManyAmI = () =&gt; 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>howManyAmI: () =&gt; Int = $Lambda$5457/1325610144@72b8fd99
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(howManyAmI()) // 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>A function can have more than one parameter:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val multiplyTheseTwoIntegers = (a: Int, b: Int) =&gt; a*b
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>multiplyTheseTwoIntegers: (Int, Int) =&gt; Int = $Lambda$5458/1327542156@7adcf443
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(multiplyTheseTwoIntegers(2,4)) // 8
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>8
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
+<p>Methods are very similar to functions, but a few key differences exist.</p>
+<p>Methods use the <code>def</code> keyword followed by a name, parameter list(s), a return type, and a body.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def square(x: Int): Int = x*x    // &lt;Shitf+Enter&gt; to define a function named square
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>square: (x: Int)Int
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Note that the return type <code>Int</code> is specified after the parameter list and a <code>:</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">square(5)    // &lt;Shitf+Enter&gt; to call this function on argument 5
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res14: Int = 25
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val y = 3    // &lt;Shitf+Enter&gt; make val y as Int 3
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: Int = 3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">square(y) // &lt;Shitf+Enter&gt; to call the function on val y of the right argument type Int
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res15: Int = 9
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = 5.0     // let x be Double 5.0
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Double = 5.0
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//square(x) // &lt;Shift+Enter&gt; to call the function on val x of type Double will give type mismatch error
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def square(x: Int): Int = { // &lt;Shitf+Enter&gt; to declare function in a block
+  val answer = x*x
+  answer // the last line of the function block is returned
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>square: (x: Int)Int
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">square(5000)    // &lt;Shift+Enter&gt; to call the function
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res17: Int = 25000000
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; to define function with input and output type as String
+def announceAndEmit(text: String): String = 
+{
+  println(text)
+  text // the last line of the function block is returned
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>announceAndEmit: (text: String)String
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Scala has a <code>return</code> keyword but it is rarely used as the expression in the last line of the multi-line block is the method's return value.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Ctrl+Enter&gt; to call function which prints as line and returns as String
+announceAndEmit(&quot;roger  roger&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>roger  roger
+res18: String = roger  roger
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>A method can have output expressions involving multiple parameter lists:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def multiplyAndTranslate(x: Int, y: Int)(translateBy: Int): Int = (x * y) + translateBy
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>multiplyAndTranslate: (x: Int, y: Int)(translateBy: Int)Int
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(multiplyAndTranslate(2, 3)(4))  // (2*3)+4 = 10
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>10
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>A method can have no parameter lists at all:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def time: Long = System.currentTimeMillis
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>time: Long
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(&quot;Current time in milliseconds is &quot; + time)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Current time in milliseconds is 1664271993372
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(&quot;Current time in milliseconds is &quot; + time)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Current time in milliseconds is 1664271993681
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="classes"><a class="header" href="#classes">Classes</a></h3>
+<p>The <code>class</code> keyword followed by the name and constructor parameters is used to define a class.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">class Box(h: Int, w: Int, d: Int) {
+  def printVolume(): Unit = println(h*w*d)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class Box
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<ul>
+<li>The return type of the method <code>printVolume</code> is <code>Unit</code>.</li>
+<li>When the return type is <code>Unit</code> it indicates that there is nothing meaningful to return, similar to <code>void</code> in Java and C, but with a difference.</li>
+<li>Because every Scala expression must have some value, there is actually a singleton value of type <code>Unit</code>, written <code>()</code> and carrying no information.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>We can make an instance of the class with the <code>new</code> keyword.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val my1Cube = new Box(1,1,1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>my1Cube: Box = Box@2f0a334c
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>And call the method on the instance.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">my1Cube.printVolume() // 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Our named instance <code>my1Cube</code> of the <code>Box</code> class is immutable due to <code>val</code>.</p>
+<p>You can have mutable instances of the class using <code>var</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">var myVaryingCuboid = new Box(1,3,2)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myVaryingCuboid: Box = Box@41dfc388
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myVaryingCuboid.printVolume()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>6
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myVaryingCuboid = new Box(1,1,1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myVaryingCuboid: Box = Box@3b1898db
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myVaryingCuboid.printVolume()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>See <a href="https://docs.scala-lang.org/tour/classes.html">https://docs.scala-lang.org/tour/classes.html</a> for more details as needed.</p>
+</div>
+<div class="cell markdown">
+<h3 id="case-classes"><a class="header" href="#case-classes">Case Classes</a></h3>
+<p>Scala has a special type of class called a <em>case class</em> that can be defined with the <code>case class</code> keyword.</p>
+<p>Unlike classes, whose instances are compared by reference, instances of case classes are immutable by default and compared by value. This makes them useful for defining rows of typed values in Spark.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">case class Point(x: Int, y: Int, z: Int)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class Point
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Case classes can be instantiated without the <code>new</code> keyword.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val point = Point(1, 2, 3)
+val anotherPoint = Point(1, 2, 3)
+val yetAnotherPoint = Point(2, 2, 2)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>point: Point = Point(1,2,3)
+anotherPoint: Point = Point(1,2,3)
+yetAnotherPoint: Point = Point(2,2,2)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Instances of case classes are compared by value and not by reference.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">if (point == anotherPoint) {
+  println(point + &quot; and &quot; + anotherPoint + &quot; are the same.&quot;)
+} else {
+  println(point + &quot; and &quot; + anotherPoint + &quot; are different.&quot;)
+} // Point(1,2,3) and Point(1,2,3) are the same.
+
+if (point == yetAnotherPoint) {
+  println(point + &quot; and &quot; + yetAnotherPoint + &quot; are the same.&quot;)
+} else {
+  println(point + &quot; and &quot; + yetAnotherPoint + &quot; are different.&quot;)
+} // Point(1,2,3) and Point(2,2,2) are different.
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Point(1,2,3) and Point(1,2,3) are the same.
+Point(1,2,3) and Point(2,2,2) are different.
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>By contrast, instances of classes are compared by reference.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myVaryingCuboid.printVolume() // should be 1 x 1 x 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">my1Cube.printVolume()  // should be 1 x 1 x 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">if (myVaryingCuboid == my1Cube) {
+  println(&quot;myVaryingCuboid and my1Cube are the same.&quot;)
+} else {
+  println(&quot;myVaryingCuboid and my1Cube are different.&quot;)
+} // they are compared by reference and are not the same.
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myVaryingCuboid and my1Cube are different.
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>More about case classes here: <a href="https://docs.scala-lang.org/tour/case-classes.html">https://docs.scala-lang.org/tour/case-classes.html</a>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="methods-and-tab-completion"><a class="header" href="#methods-and-tab-completion">Methods and Tab-completion</a></h3>
+<p>Many methods of a class can be accessed by <code>.</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val s  = &quot;hi&quot;    // &lt;Ctrl+Enter&gt; to declare val s to String &quot;hi&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>s: String = hi
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>You can place the cursor after <code>.</code> following a declared object and find out the methods available for it as shown in the image below.</p>
+<p><img src="https://github.com/raazesh-sainudiin/scalable-data-science/raw/master/images/week1/tabCompletionAfterSDot.png" alt="tabCompletionAfterSDot PNG image" /></p>
+<p><strong>You Try</strong> doing this next.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//s.  // place cursor after the '.' and press Tab to see all available methods for s 
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>For example,</p>
+<ul>
+<li>scroll down to <code>contains</code> and double-click on it.</li>
+<li>This should lead to <code>s.contains</code> in your cell.</li>
+<li>Now add an argument String to see if <code>s</code> contains the argument, for example, try:
+<ul>
+<li><code>s.contains(&quot;f&quot;)</code></li>
+<li><code>s.contains(&quot;&quot;)</code> and</li>
+<li><code>s.contains(&quot;i&quot;)</code></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//s    // &lt;Shift-Enter&gt; recall the value of String s
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">s.contains(&quot;f&quot;)     // &lt;Shift-Enter&gt; returns Boolean false since s does not contain the string &quot;f&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res31: Boolean = false
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">s.contains(&quot;&quot;)    // &lt;Shift-Enter&gt; returns Boolean true since s contains the empty string &quot;&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res32: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">s.contains(&quot;i&quot;)    // &lt;Ctrl+Enter&gt; returns Boolean true since s contains the string &quot;i&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res33: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
+<p>Objects are single instances of their own definitions using the <code>object</code> keyword. You can think of them as singletons of their own classes.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">object IdGenerator {
+  private var currentId = 0
+  def make(): Int = {
+    currentId += 1
+    currentId
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object IdGenerator
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>You can access an object through its name:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val newId: Int = IdGenerator.make()
+val newerId: Int = IdGenerator.make()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>newId: Int = 1
+newerId: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(newId) // 1
+println(newerId) // 2
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1
+2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>For details see <a href="https://docs.scala-lang.org/tour/singleton-objects.html">https://docs.scala-lang.org/tour/singleton-objects.html</a></p>
+</div>
+<div class="cell markdown">
+<h3 id="traits"><a class="header" href="#traits">Traits</a></h3>
+<p>Traits are abstract data types containing certain fields and methods. They can be defined using the <code>trait</code> keyword.</p>
+<p>In Scala inheritance, a class can only extend one other class, but it can extend multiple traits.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">trait Greeter {
+  def greet(name: String): Unit
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined trait Greeter
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Traits can have default implementations also.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">trait Greeter {
+  def greet(name: String): Unit =
+    println(&quot;Hello, &quot; + name + &quot;!&quot;)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined trait Greeter
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>You can extend traits with the <code>extends</code> keyword and override an implementation with the <code>override</code> keyword:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">class DefaultGreeter extends Greeter
+
+class SwedishGreeter extends Greeter {
+  override def greet(name: String): Unit = {
+    println(&quot;Hej hej, &quot; + name + &quot;!&quot;)
+  }
+}
+
+class CustomizableGreeter(prefix: String, postfix: String) extends Greeter {
+  override def greet(name: String): Unit = {
+    println(prefix + name + postfix)
+  }
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined class DefaultGreeter
+defined class SwedishGreeter
+defined class CustomizableGreeter
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Instantiate the classes.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val greeter = new DefaultGreeter()
+val swedishGreeter = new SwedishGreeter()
+val customGreeter = new CustomizableGreeter(&quot;How are you, &quot;, &quot;?&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>greeter: DefaultGreeter = DefaultGreeter@737bf119
+swedishGreeter: SwedishGreeter = SwedishGreeter@6bdaad03
+customGreeter: CustomizableGreeter = CustomizableGreeter@4564c74a
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Call the <code>greet</code> method in each case.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">greeter.greet(&quot;Scala developer&quot;) // Hello, Scala developer!
+swedishGreeter.greet(&quot;Scala developer&quot;) // Hej hej, Scala developer!
+customGreeter.greet(&quot;Scala developer&quot;) // How are you, Scala developer?
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Hello, Scala developer!
+Hej hej, Scala developer!
+How are you, Scala developer?
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>A class can also be made to extend multiple traits.</p>
+<p>For more details see: <a href="https://docs.scala-lang.org/tour/traits.html">https://docs.scala-lang.org/tour/traits.html</a>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="main-method"><a class="header" href="#main-method">Main Method</a></h3>
+<p>The main method is the entry point of a Scala program.</p>
+<p>The Java Virtual Machine requires a main method, named <code>main</code>, that takes an array of strings as its only argument.</p>
+<p>Using an object, you can define the main method as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">object Main {
+  def main(args: Array[String]): Unit =
+    println(&quot;Hello, Scala developer!&quot;)
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>defined object Main
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>What I try not do while learning a new language?</strong></p>
+<ol>
+<li>I don't immediately try to ask questions like: <em>how can I do this particular variation of some small thing I just learned so I can use patterns I am used to from another language I am hooked-on right now?</em></li>
+<li>first go through the detailed Scala Tour on your own and then through the 50 odd lessons in the Scala Book</li>
+<li>then return to 1. and ask detailed cross-language comparison questions by diving deep as needed with the source and scala docs as needed (google or duck-duck-go search!).</li>
+</ol>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

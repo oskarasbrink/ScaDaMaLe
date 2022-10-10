@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>006a_PipedRDD - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html" class="active">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="piped-rdds-and-more"><a class="header" href="#piped-rdds-and-more">Piped RDDs and More</a></h1>
+<p>This is a very useful but <em>Advanced Topic</em>.</p>
+<p>This notebooks, demonstrates how you can go through Chapters of the recommended book <em>Spark: The Definitive Guide</em> and get your hands dirty with the codes in it to learn by coding, in addition to reading.</p>
+</div>
+<div class="cell markdown">
+<p>Here we will first take excerpts with minor modifications from the end of <strong>Chapter 12. Resilient Distributed Datasets (RDDs)</strong> of <em>Spark: The Definitive Guide</em>:</p>
+<ul>
+<li>https://learning.oreilly.com/library/view/spark-the-definitive/9781491912201/ch12.html</li>
+</ul>
+<p>Next, we will do Bayesian AB Testing using PipedRDDs.</p>
+</div>
+<div class="cell markdown">
+<p>First, we create the toy RDDs as in <em>The Definitive Guide</em>:</p>
+<blockquote>
+<p><strong>From a Local Collection</strong></p>
+</blockquote>
+<blockquote>
+<p>To create an RDD from a collection, you will need to use the parallelize method on a SparkContext (within a SparkSession). This turns a single node collection into a parallel collection. When creating this parallel collection, you can also explicitly state the number of partitions into which you would like to distribute this array. In this case, we are creating two partitions:</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val myCollection = &quot;Spark The Definitive Guide : Big Data Processing Made Simple&quot;  .split(&quot; &quot;)
+val words = spark.sparkContext.parallelize(myCollection, 2)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myCollection: Array[String] = Array(Spark, The, Definitive, Guide, :, Big, Data, Processing, Made, Simple)
+words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[0] at parallelize at command-4088905069025460:2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p><strong>glom</strong> from <em>The Definitive Guide</em></p>
+</blockquote>
+<blockquote>
+<p><code>glom</code> is an interesting function that takes every partition in your dataset and converts them to arrays. This can be useful if you’re going to collect the data to the driver and want to have an array for each partition. However, this can cause serious stability issues because if you have large partitions or a large number of partitions, it’s simple to crash the driver.</p>
+</blockquote>
+</div>
+<div class="cell markdown">
+<p>Let's use <code>glom</code> to see how our <code>words</code> are distributed among the two partitions we used explicitly.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">words.glom.collect 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Array[Array[String]] = Array(Array(Spark, The, Definitive, Guide, :), Array(Big, Data, Processing, Made, Simple))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p><strong>Checkpointing</strong> from <em>The Definitive Guide</em></p>
+</blockquote>
+<blockquote>
+<p>One feature not available in the DataFrame API is the concept of checkpointing. Checkpointing is the act of saving an RDD to disk so that future references to this RDD point to those intermediate partitions on disk rather than recomputing the RDD from its original source. This is similar to caching except that it’s not stored in memory, only disk. This can be helpful when performing iterative computation, similar to the use cases for caching:</p>
+</blockquote>
+<p>Let's create a directory for checkpointing of RDDs in the sequel.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">mkdirs /datasets/sds/ScaDaMaLe/checkpointing/
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Boolean = true
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.sparkContext.setCheckpointDir(&quot;/datasets/sds/ScaDaMaLe/checkpointing&quot;)
+words.checkpoint()
+</code></pre>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>Now, when we reference this RDD, it will derive from the checkpoint instead of the source data. This can be a helpful optimization.</p>
+</blockquote>
+</div>
+<div class="cell markdown">
+<h2 id="youtry"><a class="header" href="#youtry">YouTry</a></h2>
+<p>Just some more words in <code>haha_words</code> with <code>\n</code>, the End-Of-Line (EOL) characters, in-place.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val haha_words = sc.parallelize(Seq(&quot;ha\nha&quot;, &quot;he\nhe\nhe&quot;, &quot;ho\nho\nho\nho&quot;),3)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[2] at parallelize at command-4088905069025471:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's use <code>glom</code> to see how our <code>haha_words</code> are distributed among the partitions</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">haha_words.glom.collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res4: Array[Array[String]] =
+Array(Array(ha
+ha), Array(he
+he
+he), Array(ho
+ho
+ho
+ho))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<h1 id="pipe-rdds-to-system-commands"><a class="header" href="#pipe-rdds-to-system-commands">Pipe RDDs to System Commands</a></h1>
+</blockquote>
+<blockquote>
+<p>The pipe method is probably one of Spark’s more interesting methods. With pipe, you can return an RDD created by piping elements to a forked external process. The resulting RDD is computed by executing the given process once per partition. All elements of each input partition are written to a process’s stdin as lines of input separated by a newline. The resulting partition consists of the process’s stdout output, with each line of stdout resulting in one element of the output partition. A process is invoked even for empty partitions.</p>
+</blockquote>
+<blockquote>
+<p>The print behavior can be customized by providing two functions.</p>
+</blockquote>
+<p>We can use a simple example and pipe each partition to the command wc. Each row will be passed in as a new line, so if we perform a line count, we will get the number of lines, one per partition:</p>
+</div>
+<div class="cell markdown">
+<p>The following produces a <code>PipedRDD</code>:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wc_l_PipedRDD = words.pipe(&quot;wc -l&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wc_l_PipedRDD: org.apache.spark.rdd.RDD[String] = PipedRDD[4] at pipe at command-4088905069025476:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now, we take an action via <code>collect</code> to bring the results to the Driver.</p>
+<p>NOTE: Be careful what you collect! You can always write the output to parquet of binary files in <code>dbfs:///</code> if the returned output is large.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wc_l_PipedRDD.collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res5: Array[String] = Array(5, 5)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>In this case, we got the number of lines returned by <code>wc -l</code> per partition.</p>
+</div>
+<div class="cell markdown">
+<h2 id="youtry-1"><a class="header" href="#youtry-1">YouTry</a></h2>
+<p>Try to make sense of the next few cells where we do NOT specifiy the number of partitions explicitly and let Spark decide on the number of partitions automatically.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val haha_words = sc.parallelize(Seq(&quot;ha\nha&quot;, &quot;he\nhe\nhe&quot;, &quot;ho\nho\nho\nho&quot;),3)
+haha_words.glom.collect
+val wc_l_PipedRDD_haha_words = haha_words.pipe(&quot;wc -l&quot;)
+wc_l_PipedRDD_haha_words.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>haha_words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[5] at parallelize at command-4088905069025483:1
+wc_l_PipedRDD_haha_words: org.apache.spark.rdd.RDD[String] = PipedRDD[7] at pipe at command-4088905069025483:3
+res6: Array[String] = Array(2, 3, 4)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Do you understand why the above <code>collect</code> statement returns what it does?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val haha_words_again = sc.parallelize(Seq(&quot;ha\nha&quot;, &quot;he\nhe\nhe&quot;, &quot;ho\nho\nho\nho&quot;))
+haha_words_again.glom.collect
+val wc_l_PipedRDD_haha_words_again = haha_words_again.pipe(&quot;wc -l&quot;)
+wc_l_PipedRDD_haha_words_again.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>haha_words_again: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[8] at parallelize at command-4088905069025485:1
+wc_l_PipedRDD_haha_words_again: org.apache.spark.rdd.RDD[String] = PipedRDD[10] at pipe at command-4088905069025485:3
+res7: Array[String] = Array(2, 7)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Did you understand why some of the results are <code>0</code> in the last <code>collect</code> statement?</p>
+</div>
+<div class="cell markdown">
+<blockquote>
+<h1 id="mappartitions"><a class="header" href="#mappartitions">mapPartitions</a></h1>
+</blockquote>
+<blockquote>
+<p>The previous command revealed that Spark operates on a per-partition basis when it comes to actually executing code. You also might have noticed earlier that the return signature of a map function on an RDD is actually <code>MapPartitionsRDD</code>.</p>
+</blockquote>
+<p>Or <code>ParallelCollectionRDD</code> in our case.</p>
+<blockquote>
+<p>This is because map is just a row-wise alias for <code>mapPartitions</code>, which makes it possible for you to map an individual partition (represented as an iterator). That’s because physically on the cluster we operate on each partition individually (and not a specific row). A simple example creates the value “1” for every partition in our data, and the sum of the following expression will count the number of partitions we have:</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">words.mapPartitions(part =&gt; Iterator[Int](1)).sum() // 2.0
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: Double = 2.0
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>Naturally, this means that we operate on a per-partition basis and therefore it allows us to perform an operation on that <em>entire</em> partition. This is valuable for performing something on an entire subdataset of your RDD. You can gather all values of a partition class or group into one partition and then operate on that entire group using arbitrary functions and controls. An example use case of this would be that you could pipe this through some custom machine learning algorithm and train an individual model for that company’s portion of the dataset. A Facebook engineer has an interesting demonstration of their particular implementation of the pipe operator with a similar use case demonstrated at <a href="https://spark-summit.org/east-2017/events/experiences-with-sparks-rdd-apis-for-complex-custom-applications/">Spark Summit East 2017</a>.</p>
+</blockquote>
+<blockquote>
+<p>Other functions similar to <code>mapPartitions</code> include <code>mapPartitionsWithIndex</code>. With this you specify a function that accepts an index (within the partition) and an iterator that goes through all items within the partition. The partition index is the partition number in your RDD, which identifies where each record in our dataset sits (and potentially allows you to debug). You might use this to test whether your map functions are behaving correctly:</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def indexedFunc(partitionIndex:Int, withinPartIterator: Iterator[String]) = {  withinPartIterator.toList.map(    
+  value =&gt; s&quot;Partition: $partitionIndex =&gt; $value&quot;).iterator
+                                                                            }
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>indexedFunc: (partitionIndex: Int, withinPartIterator: Iterator[String])Iterator[String]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">words.mapPartitionsWithIndex(indexedFunc).collect() // let's call our indexed function
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res9: Array[String] = Array(Partition: 0 =&gt; Spark, Partition: 0 =&gt; The, Partition: 0 =&gt; Definitive, Partition: 0 =&gt; Guide, Partition: 0 =&gt; :, Partition: 1 =&gt; Big, Partition: 1 =&gt; Data, Partition: 1 =&gt; Processing, Partition: 1 =&gt; Made, Partition: 1 =&gt; Simple)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<h1 id="foreachpartition"><a class="header" href="#foreachpartition">foreachPartition</a></h1>
+</blockquote>
+<blockquote>
+<p>Although <code>mapPartitions</code> needs a return value to work properly, this next function does not. <code>foreachPartition</code> simply iterates over all the partitions of the data. The difference is that the function has no return value. This makes it great for doing something with each partition like writing it out to a database. In fact, this is how many data source connectors are written. You can create</p>
+</blockquote>
+<p>your</p>
+<blockquote>
+<p>own text file source if you want by specifying outputs to the temp directory with a random ID:</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">words.foreachPartition { iter =&gt;  
+  import java.io._  
+  import scala.util.Random  
+  val randomFileName = new Random().nextInt()  
+  val pw = new PrintWriter(new File(s&quot;/tmp/random-file-${randomFileName}.txt&quot;))  
+  while (iter.hasNext) {
+    pw.write(iter.next())  
+  }  
+  pw.close()
+}
+</code></pre>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>You’ll find these two files if you scan your /tmp directory.</p>
+</blockquote>
+<p>You need to scan for the file across all the nodes. As the file may not be in the Driver node's <code>/tmp/</code> directory but in those of the executors that hosted the partition.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sh">pwd
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/006_WordCount.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../editors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/006_WordCount.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../editors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

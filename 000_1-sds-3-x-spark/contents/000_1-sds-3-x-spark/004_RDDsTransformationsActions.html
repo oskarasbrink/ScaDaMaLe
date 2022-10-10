@@ -1,0 +1,1176 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>004_RDDsTransformationsActions - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html" class="active">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="introduction-to-spark"><a class="header" href="#introduction-to-spark">Introduction to Spark</a></h1>
+<h2 id="spark-essentials-rdds-transformations-and-actions"><a class="header" href="#spark-essentials-rdds-transformations-and-actions">Spark Essentials: RDDs, Transformations and Actions</a></h2>
+<ul>
+<li>This introductory notebook describes how to get started running Spark (Scala) code in Notebooks.</li>
+<li>Working with Spark's Resilient Distributed Datasets (RDDs)
+<ul>
+<li>creating RDDs</li>
+<li>performing basic transformations on RDDs</li>
+<li>performing basic actions on RDDs</li>
+</ul>
+</li>
+</ul>
+<p><strong>RECOLLECT</strong> from <code>001_WhySpark</code> notebook that <em>Spark does fault-tolerant, distributed, in-memory computing</em></p>
+<p><strong>THEORY CAVEAT</strong> This module is focused on getting you to quickly write Spark programs with a high-level appreciation of the underlying concepts.</p>
+<p>In the last module, we will spend more time on analyzing the core algorithms in parallel and distributed setting of a typical Spark cluster today -- where several multi-core parallel computers (Spark workers) are networked together to provide a fault-tolerant distributed computing platform.</p>
+</div>
+<div class="cell markdown">
+<h2 id="spark-cluster-overview"><a class="header" href="#spark-cluster-overview">Spark Cluster Overview:</a></h2>
+<p><strong>Driver Program, Cluster Manager and Worker Nodes</strong></p>
+<p>The <em>driver</em> does the following:</p>
+<ol>
+<li>connects to a <em>cluster manager</em> to allocate resources across applications</li>
+</ol>
+<ul>
+<li>acquire <em>executors</em> on cluster nodes
+<ul>
+<li>executor processs run compute tasks and cache data in memory or disk on a <em>worker node</em></li>
+</ul>
+</li>
+<li>sends <em>application</em> (user program built on Spark) to the executors</li>
+<li>sends <em>tasks</em> for the executors to run
+<ul>
+<li>task is a unit of work that will be sent to one executor</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://spark.apache.org/docs/latest/img/cluster-overview.png" alt="" /></p>
+<p>See <a href="http://spark.apache.org/docs/latest/cluster-overview.html">http://spark.apache.org/docs/latest/cluster-overview.html</a> for an overview of the spark cluster.</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-abstraction-of-resilient-distributed-dataset-rdd"><a class="header" href="#the-abstraction-of-resilient-distributed-dataset-rdd">The Abstraction of Resilient Distributed Dataset (RDD)</a></h2>
+<p><strong>RDD is a fault-tolerant collection of elements that can be operated on in parallel.</strong></p>
+<h3 id="key-points-to-note"><a class="header" href="#key-points-to-note">Key Points to Note</a></h3>
+<ul>
+<li>Resilient distributed datasets (RDDs) are the primary abstraction in Spark.</li>
+<li>RDDs are immutable once created:
+<ul>
+<li>can transform it.</li>
+<li>can perform actions on it.</li>
+<li>but cannot change an RDD once you construct it.</li>
+</ul>
+</li>
+<li>Spark tracks each RDD's lineage information or recipe to enable its efficient recomputation if a machine fails.</li>
+<li>RDDs enable operations on collections of elements in parallel.</li>
+<li>We can construct RDDs by:
+<ul>
+<li>parallelizing Scala collections such as lists or arrays</li>
+<li>by transforming an existing RDD,</li>
+<li>from files in distributed file systems such as (HDFS, S3, etc.).</li>
+</ul>
+</li>
+<li>We can specify the number of partitions for an RDD</li>
+<li>The more partitions in an RDD, the more opportunities for parallelism</li>
+<li>There are <strong>two types of operations</strong> you can perform on an RDD:
+<ul>
+<li><strong>transformations</strong> (are lazily evaluated)
+<ul>
+<li>map</li>
+<li>flatMap</li>
+<li>filter</li>
+<li>distinct</li>
+<li>...</li>
+</ul>
+</li>
+<li><strong>actions</strong> (actual evaluation happens)
+<ul>
+<li>count</li>
+<li>reduce</li>
+<li>take</li>
+<li>collect</li>
+<li>takeOrdered</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Spark transformations enable us to create new RDDs from an existing RDD.</li>
+<li>RDD transformations are lazy evaluations (results are not computed right away)</li>
+<li>Spark remembers the set of transformations that are applied to a base data set (this is the lineage graph of RDD)</li>
+<li>The allows Spark to automatically recover RDDs from failures and slow workers.</li>
+<li>The lineage graph is a recipe for creating a result and it can be optimized before execution.</li>
+<li>A transformed RDD is executed only when an action runs on it.</li>
+<li>You can also persist, or cache, RDDs in memory or on disk (this speeds up iterative ML algorithms that transforms the initial RDD iteratively).</li>
+<li>Here is a great reference URL for programming guides for Spark that one should try to cover first
+<ul>
+<li><a href="http://spark.apache.org/docs/latest/programming-guide.html">http://spark.apache.org/docs/latest/programming-guide.html</a>.</li>
+<li>and specifically for RDDs: <a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html">https://spark.apache.org/docs/latest/rdd-programming-guide.html</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://spark.apache.org/docs/latest/rdd-programming-guide.html"
+ width="95%" height="700"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="lets-get-our-hands-dirty-in-spark"><a class="header" href="#lets-get-our-hands-dirty-in-spark">Let's get our hands dirty in Spark!</a></h2>
+<p><strong>DO NOW!</strong></p>
+<p>There is a peer-reviewed Assignment where you will dig deeper into Spark transformations and actions.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Let us look at the legend and overview of the visual RDD Api by doing the following first:</strong></p>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-1.png" alt="" /></p>
+</div>
+<div class="cell markdown">
+<h3 id="running-spark"><a class="header" href="#running-spark">Running <strong>Spark</strong></a></h3>
+<p>The variable <strong>sc</strong> allows you to access a Spark Context to run your Spark programs. Recall <code>SparkContext</code> is in the Driver Program.</p>
+<p><img src="http://spark.apache.org/docs/latest/img/cluster-overview.png" alt="" /></p>
+<p>**NOTE: Do not create the <em>sc</em> variable - it is already initialized for you in spark-shell REPL, that includes notebook environments like databricks, Jupyter, zeppelin, etc. **</p>
+</div>
+<div class="cell markdown">
+<h3 id="we-will-do-the-following-next"><a class="header" href="#we-will-do-the-following-next">We will do the following next:</a></h3>
+<ol>
+<li>Create an RDD using <code>sc.parallelize</code></li>
+</ol>
+<ul>
+<li>Perform the <code>collect</code> action on the RDD and find the number of partitions it is made of using <code>getNumPartitions</code> action</li>
+<li>Perform the <code>take</code> action on the RDD</li>
+<li>Transform the RDD by <code>map</code> to make another RDD</li>
+<li>Transform the RDD by <code>filter</code> to make another RDD</li>
+<li>Perform the <code>reduce</code> action on the RDD</li>
+<li>Transform the RDD by <code>flatMap</code> to make another RDD</li>
+<li>Create a Pair RDD</li>
+<li>Perform some transformations on a Pair RDD</li>
+<li>Where in the cluster is your computation running?</li>
+<li>Shipping Closures, Broadcast Variables and Accumulator Variables</li>
+<li>Spark Essentials: Summary</li>
+<li>HOMEWORK</li>
+<li>Importing Standard Scala and Java libraries</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h4 id="entry-point"><a class="header" href="#entry-point">Entry Point</a></h4>
+<p>Now we are ready to start programming in Spark!</p>
+<p>Our entry point for Spark applications is the class <code>SparkSession</code>. An instance of this object is already instantiated for us which can be easily demonstrated by running the next cell</p>
+<p>We will need these docs!</p>
+<ul>
+<li><a href="https://spark.apache.org/docs/3.0.1/api/scala/org/apache/spark/rdd/RDD.html">RDD Scala Docs</a></li>
+<li><a href="https://spark.apache.org/docs/3.0.1/api/scala/org/apache/spark/sql/Dataset.html">Dataset Scala Docs</a></li>
+<li><a href="https://spark.apache.org/docs/3.0.1/api/scala/index.html">https://spark.apache.org/docs/3.0.1/api/scala/index.html</a> you can simply search for other Spark classes, methods, etc here</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(spark) // spark is already created for us in databricks or in spark-shell
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>org.apache.spark.sql.SparkSession@1b6fb477
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>NOTE that since Spark 2.0 <code>SparkSession</code> is a replacement for the other entry points: * <code>SparkContext</code>, available in our notebook as <strong>sc</strong>. * <code>SQLContext</code>, or more specifically its subclass <code>HiveContext</code>, available in our notebook as <strong>sqlContext</strong>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(sc)
+println(sqlContext)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>org.apache.spark.SparkContext@61cc1a6b
+org.apache.spark.sql.hive.HiveContext@1da4f2b4
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We will be using the pre-made SparkContext <code>sc</code> when learning about RDDs.</p>
+</div>
+<div class="cell markdown">
+<h4 id="1-create-an-rdd-using-scparallelize"><a class="header" href="#1-create-an-rdd-using-scparallelize">1. Create an RDD using <code>sc.parallelize</code></a></h4>
+<p>First, let us create an RDD of three elements (of integer type <code>Int</code>) from a Scala <code>Seq</code> (or <code>List</code> or <code>Array</code>) with two partitions by using the <code>parallelize</code> method of the available Spark Context <code>sc</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = sc.parallelize(Array(1, 2, 3), 2)    // &lt;Ctrl+Enter&gt; to evaluate this cell (using 2 partitions)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at command-4088905069026221:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//x.  // place the cursor after 'x.' and hit Tab to see the methods available for the RDD x we created
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="2-perform-the-collect-action-on-the-rdd-and-find-the-number-of-partitions-in-it-using-getnumpartitions-action"><a class="header" href="#2-perform-the-collect-action-on-the-rdd-and-find-the-number-of-partitions-in-it-using-getnumpartitions-action">2. Perform the <code>collect</code> action on the RDD and find the number of partitions in it using <code>getNumPartitions</code> action</a></h4>
+<p>No action has been taken by <code>sc.parallelize</code> above. To see what is &quot;cooked&quot; by the recipe for RDD <code>x</code> we need to take an action.</p>
+<p>The simplest is the <code>collect</code> action which returns all of the elements of the RDD as an <code>Array</code> to the driver program and displays it.</p>
+<p><em>So you have to make sure that all of that data will fit in the driver program if you call <code>collect</code> action!</em></p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-collect-action-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-collect-action-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/actions/collect">collect action in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-90.png" alt="" /></p>
+</div>
+<div class="cell markdown">
+<p>Let us perform a <code>collect</code> action on RDD <code>x</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x.collect()    // &lt;Ctrl+Enter&gt; to collect (action) elements of rdd; should be (1, 2, 3)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res4: Array[Int] = Array(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><em>CAUTION:</em> <code>collect</code> can crash the driver when called upon an RDD with massively many elements.
+So, it is better to use other diplaying actions like <code>take</code> or <code>takeOrdered</code> as follows:</p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-getnumpartitions-action-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-getnumpartitions-action-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/actions/getNumPartitions">getNumPartitions action in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-88.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Ctrl+Enter&gt; to evaluate this cell and find the number of partitions in RDD x
+x.getNumPartitions 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res5: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>We can see which elements of the RDD are in which parition by calling <code>glom()</code> before <code>collect()</code>.</p>
+<p><code>glom()</code> flattens elements of the same partition into an <code>Array</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x.glom().collect() // glom() flattens elements on the same partition
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res6: Array[Array[Int]] = Array(Array(1), Array(2, 3))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val a = x.glom().collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>a: Array[Array[Int]] = Array(Array(1), Array(2, 3))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Thus from the output above, <code>Array[Array[Int]] = Array(Array(1), Array(2, 3))</code>, we know that <code>1</code> is in one partition while <code>2</code> and <code>3</code> are in another partition.</p>
+</div>
+<div class="cell markdown">
+<h5 id="you-try"><a class="header" href="#you-try">You Try!</a></h5>
+<p>Crate an RDD <code>x</code> with three elements, 1,2,3, and this time do not specifiy the number of partitions. Then the default number of partitions will be used. Find out what this is for the cluster you are attached to.</p>
+<p>The default number of partitions for an RDD depends on the cluster this notebook is attached to among others - see <a href="http://spark.apache.org/docs/latest/programming-guide.html">programming-guide</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = sc.parallelize(Seq(1, 2, 3))    // &lt;Shift+Enter&gt; to evaluate this cell (using default number of partitions)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[3] at parallelize at command-4088905069026235:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x.getNumPartitions // &lt;Shift+Enter&gt; to evaluate this cell
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res7: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x.glom().collect() // &lt;Ctrl+Enter&gt; to evaluate this cell
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: Array[Array[Int]] = Array(Array(1), Array(2, 3))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="3-perform-the-take-action-on-the-rdd"><a class="header" href="#3-perform-the-take-action-on-the-rdd">3. Perform the <code>take</code> action on the RDD</a></h4>
+<p>The <code>.take(n)</code> action returns an array with the first <code>n</code> elements of the RDD.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x.take(2) // Ctrl+Enter to take two elements from the RDD x
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res9: Array[Int] = Array(1, 2)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="you-try-1"><a class="header" href="#you-try-1">You Try!</a></h5>
+<p>Fill in the parenthes <code>( )</code> below in order to <code>take</code> just one element from RDD <code>x</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//x.take(1) // uncomment by removing '//' before x in the cell and fill in the parenthesis to take just one element from RDD x and Cntrl+Enter
+</code></pre>
+</div>
+<div class="cell markdown">
+<hr />
+<h4 id="4-transform-the-rdd-by-map-to-make-another-rdd"><a class="header" href="#4-transform-the-rdd-by-map-to-make-another-rdd">4. Transform the RDD by <code>map</code> to make another RDD</a></h4>
+<p>The <code>map</code> transformation returns a new RDD that's formed by passing each element of the source RDD through a function (closure). The closure is automatically passed on to the workers for evaluation (when an action is called later).</p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-map-transformation-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-map-transformation-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/transformations/map">map transformation in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-18.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Shift+Enter to make RDD x and RDD y that is mapped from x
+val x = sc.parallelize(Array(&quot;b&quot;, &quot;a&quot;, &quot;c&quot;)) // make RDD x: [b, a, c]
+val y = x.map(z =&gt; (z,1))                    // map x into RDD y: [(b, 1), (a, 1), (c, 1)]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[5] at parallelize at command-4088905069026244:2
+y: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[6] at map at command-4088905069026244:3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Cntrl+Enter to collect and print the two RDDs
+println(x.collect().mkString(&quot;, &quot;))
+println(y.collect().mkString(&quot;, &quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>b, a, c
+(b,1), (a,1), (c,1)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<hr />
+<h4 id="5-transform-the-rdd-by-filter-to-make-another-rdd"><a class="header" href="#5-transform-the-rdd-by-filter-to-make-another-rdd">5. Transform the RDD by <code>filter</code> to make another RDD</a></h4>
+<p>The <code>filter</code> transformation returns a new RDD that's formed by selecting those elements of the source RDD on which the function returns <code>true</code>.</p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-filter-transformation-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-filter-transformation-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/transformations/filter">filter transformation in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-24.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Shift+Enter to make RDD x and filter it by (n =&gt; n%2 == 1) to make RDD y
+val x = sc.parallelize(Array(1,2,3))
+// the closure (n =&gt; n%2 == 1) in the filter will 
+// return True if element n in RDD x has remainder 1 when divided by 2 (i.e., if n is odd)
+val y = x.filter(n =&gt; n%2 == 1) 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[7] at parallelize at command-4088905069026248:2
+y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[8] at filter at command-4088905069026248:5
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Cntrl+Enter to collect and print the two RDDs
+println(x.collect().mkString(&quot;, &quot;))
+println(y.collect().mkString(&quot;, &quot;))
+//y.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1, 2, 3
+1, 3
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<hr />
+<h4 id="6-perform-the-reduce-action-on-the-rdd"><a class="header" href="#6-perform-the-reduce-action-on-the-rdd">6. Perform the <code>reduce</code> action on the RDD</a></h4>
+<p>Reduce aggregates a data set element using a function (closure). This function takes two arguments and returns one and can often be seen as a binary operator. This operator has to be commutative and associative so that it can be computed correctly in parallel (where we have little control over the order of the operations!).</p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-reduce-action-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-reduce-action-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/actions/reduce">reduce action in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-94.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Shift+Enter to make RDD x of inteegrs 1,2,3,4 and reduce it to sum
+val x = sc.parallelize(Array(1,2,3,4))
+val y = x.reduce((a,b) =&gt; a+b)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[9] at parallelize at command-4088905069026252:2
+y: Int = 10
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Cntrl+Enter to collect and print RDD x and the Int y, sum of x
+println(x.collect.mkString(&quot;, &quot;))
+println(y)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1, 2, 3, 4
+10
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="7-transform-an-rdd-by-flatmap-to-make-another-rdd"><a class="header" href="#7-transform-an-rdd-by-flatmap-to-make-another-rdd">7. Transform an RDD by <code>flatMap</code> to make another RDD</a></h4>
+<p><code>flatMap</code> is similar to <code>map</code> but each element from input RDD can be mapped to zero or more output elements. Therefore your function should return a sequential collection such as an <code>Array</code> rather than a single element as shown below.</p>
+</div>
+<div class="cell markdown">
+<h5 id="let-us-look-at-the-flatmap-transformation-in-detail-and-return-here-to-try-out-the-example-codes"><a class="header" href="#let-us-look-at-the-flatmap-transformation-in-detail-and-return-here-to-try-out-the-example-codes">Let us look at the <a href="/#workspace/scalable-data-science/xtraResources/visualRDDApi/recall/transformations/flatMap">flatMap transformation in detail</a> and return here to try out the example codes.</a></h5>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-31.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Shift+Enter to make RDD x and flatMap it into RDD by closure (n =&gt; Array(n, n*100, 42))
+val x = sc.parallelize(Array(1,2,3))
+val y = x.flatMap(n =&gt; Array(n, n*100, 42))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[10] at parallelize at command-4088905069026256:2
+y: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[11] at flatMap at command-4088905069026256:3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Cntrl+Enter to collect and print RDDs x and y
+println(x.collect().mkString(&quot;, &quot;))
+println(y.collect().mkString(&quot;, &quot;))
+sc.parallelize(Array(1,2,3)).map(n =&gt; Array(n,n*100,42)).collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>1, 2, 3
+1, 100, 42, 2, 200, 42, 3, 300, 42
+res14: Array[Array[Int]] = Array(Array(1, 100, 42), Array(2, 200, 42), Array(3, 300, 42))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="8-create-a-pair-rdd"><a class="header" href="#8-create-a-pair-rdd">8. Create a Pair RDD</a></h4>
+<p>Let's next work with RDD of <code>(key,value)</code> pairs called a <em>Pair RDD</em> or <em>Key-Value RDD</em>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Cntrl+Enter to make RDD words and display it by collect
+val words = sc.parallelize(Array(&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;))
+words.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[14] at parallelize at command-4088905069026259:2
+res15: Array[String] = Array(a, b, a, a, b, b, a, a, a, b, b)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's make a Pair RDD called <code>wordCountPairRDD</code> that is made of (key,value) pairs with key=word and value=1 in order to encode each occurrence of each word in the RDD <code>words</code>, as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Cntrl+Enter to make and collect Pair RDD wordCountPairRDD
+val wordCountPairRDD = words.map(s =&gt; (s, 1))
+wordCountPairRDD.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wordCountPairRDD: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[15] at map at command-4088905069026261:2
+res16: Array[(String, Int)] = Array((a,1), (b,1), (a,1), (a,1), (b,1), (b,1), (a,1), (a,1), (a,1), (b,1), (b,1))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="wide-transformations-and-shuffles"><a class="header" href="#wide-transformations-and-shuffles">Wide Transformations and Shuffles</a></h4>
+<p>So far we have seen transformations that are <strong>narrow</strong> -- with no data transfer between partitions. Think of <code>map</code>.</p>
+<p><code>ReduceByKey</code> and <code>GroupByKey</code> are <strong>wide</strong> transformations as data has to be shuffled across the partitions in different executors -- this is generally very expensive operation.</p>
+</div>
+<div class="cell markdown">
+<p><img src="https://raw.githubusercontent.com/raazesh-sainudiin/scalable-data-science/master/db/visualapi/med/visualapi-40.png" alt="" /></p>
+</div>
+<div class="cell markdown">
+<p>READ the <strong>Background</strong> about Shuffles in the programming guide below.</p>
+<blockquote>
+<p>In Spark, data is generally not distributed across partitions to be in the necessary place for a specific operation. During computations, a single task will operate on a single partition - thus, to organize all the data for a single reduceByKey reduce task to execute, Spark needs to perform an all-to-all operation. It must read from all partitions to find all the values for all keys, and then bring together values across partitions to compute the final result for each key - this is called the shuffle</p>
+</blockquote>
+<p>READ the <strong>Performance Impact</strong> about Shuffles in the programming guide below.</p>
+<blockquote>
+<p>The Shuffle is an expensive operation since it involves disk I/O, data serialization, and network I/O. To organize data for the shuffle, Spark generates sets of tasks - map tasks to organize the data, and a set of reduce tasks to aggregate it. This nomenclature comes from MapReduce and does not directly relate to Spark’s map and reduce operations.</p>
+</blockquote>
+<blockquote>
+<p>Internally, results from individual map tasks are kept in memory until they can’t fit. Then, these are sorted based on the target partition and written to a single file. On the reduce side, tasks read the relevant sorted blocks.</p>
+</blockquote>
+<p><a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html#shuffle-operations">https://spark.apache.org/docs/latest/rdd-programming-guide.html#shuffle-operations</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#shuffle-operations&quot;,500))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://spark.apache.org/docs/latest/rdd-programming-guide.html#shuffle-operations"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="9-perform-some-transformations-on-a-pair-rdd"><a class="header" href="#9-perform-some-transformations-on-a-pair-rdd">9. Perform some transformations on a Pair RDD</a></h4>
+<p>Let's next work with RDD of <code>(key,value)</code> pairs called a <em>Pair RDD</em> or <em>Key-Value RDD</em>.</p>
+<p>Now some of the Key-Value transformations that we could perform include the following.</p>
+<ul>
+<li><strong><code>reduceByKey</code> transformation</strong>
+<ul>
+<li>which takes an RDD and returns a new RDD of key-value pairs, such that:
+<ul>
+<li>the values for each key are aggregated using the given reduced function</li>
+<li>and the reduce function has to be of the type that takes two values and returns one value.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>sortByKey</code> transformation</strong>
+<ul>
+<li>this returns a new RDD of key-value pairs that's sorted by keys in ascending order</li>
+</ul>
+</li>
+<li><strong><code>groupByKey</code> transformation</strong>
+<ul>
+<li>this returns a new RDD consisting of key and iterable-valued pairs.</li>
+</ul>
+</li>
+</ul>
+<p>Let's see some concrete examples next.</p>
+</div>
+<div class="cell markdown">
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-44.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Cntrl+Enter to reduceByKey and collect wordcounts RDD
+//val wordcounts = wordCountPairRDD.reduceByKey( _ + _ )
+val wordcounts = wordCountPairRDD.reduceByKey( (value1, value2) =&gt; value1 + value2 )
+wordcounts.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wordcounts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[16] at reduceByKey at command-4088905069026268:3
+res18: Array[(String, Int)] = Array((b,5), (a,6))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now, let us do just the crucial steps and avoid collecting intermediate RDDs (something we should avoid for large datasets anyways, as they may not fit in the driver program).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//Cntrl+Enter to make words RDD and do the word count in two lines
+val words = sc.parallelize(Array(&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;))
+val wordcounts = words
+                    .map(s =&gt; (s, 1))
+                    .reduceByKey(_ + _)
+                    .collect() 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[17] at parallelize at command-4088905069026270:2
+wordcounts: Array[(String, Int)] = Array((b,5), (a,6))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="you-try-2"><a class="header" href="#you-try-2">You Try!</a></h5>
+<p>You try evaluating <code>sortByKey()</code> which will make a new RDD that consists of the elements of the original pair RDD that are sorted by Keys.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Shift+Enter and comprehend code
+val words = sc.parallelize(Array(&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;))
+val wordCountPairRDD = words.map(s =&gt; (s, 1))
+val wordCountPairRDDSortedByKey = wordCountPairRDD.sortByKey()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>words: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[20] at parallelize at command-4088905069026272:2
+wordCountPairRDD: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[21] at map at command-4088905069026272:3
+wordCountPairRDDSortedByKey: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[24] at sortByKey at command-4088905069026272:4
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wordCountPairRDD.collect() // Shift+Enter and comprehend code
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res19: Array[(String, Int)] = Array((a,1), (b,1), (a,1), (a,1), (b,1), (b,1), (a,1), (a,1), (a,1), (b,1), (b,1))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wordCountPairRDDSortedByKey.collect() // Cntrl+Enter and comprehend code
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res20: Array[(String, Int)] = Array((a,1), (a,1), (a,1), (a,1), (a,1), (a,1), (b,1), (b,1), (b,1), (b,1), (b,1))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>The next key value transformation we will see is <code>groupByKey</code></p>
+<p>When we apply the <code>groupByKey</code> transformation to <code>wordCountPairRDD</code> we end up with a new RDD that contains two elements. The first element is the tuple <code>b</code> and an iterable <code>CompactBuffer(1,1,1,1,1)</code> obtained by grouping the value <code>1</code> for each of the five key value pairs <code>(b,1)</code>. Similarly the second element is the key <code>a</code> and an iterable <code>CompactBuffer(1,1,1,1,1,1)</code> obtained by grouping the value <code>1</code> for each of the six key value pairs <code>(a,1)</code>.</p>
+<p><em>CAUTION</em>: <code>groupByKey</code> can cause a large amount of data movement across the network. It also can create very large iterables at a worker. Imagine you have an RDD where you have 1 billion pairs that have the key <code>a</code>. All of the values will have to fit in a single worker if you use group by key. So instead of a group by key, consider using reduced by key.</p>
+</div>
+<div class="cell markdown">
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/db/visualapi/med/visualapi-45.png" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wordCountPairRDDGroupByKey = wordCountPairRDD.groupByKey() // &lt;Shift+Enter&gt; CAUTION: this transformation can be very wide!
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wordCountPairRDDGroupByKey: org.apache.spark.rdd.RDD[(String, Iterable[Int])] = ShuffledRDD[25] at groupByKey at command-4088905069026277:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wordCountPairRDDGroupByKey.collect()  // Cntrl+Enter
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res21: Array[(String, Iterable[Int])] = Array((b,CompactBuffer(1, 1, 1, 1, 1)), (a,CompactBuffer(1, 1, 1, 1, 1, 1)))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="10-understanding-closures---where-in-the-cluster-is-your-computation-running"><a class="header" href="#10-understanding-closures---where-in-the-cluster-is-your-computation-running">10. Understanding Closures - Where in the cluster is your computation running?</a></h4>
+<blockquote>
+<p>One of the harder things about Spark is understanding the scope and life cycle of variables and methods when executing code across a cluster. RDD operations that modify variables outside of their scope can be a frequent source of confusion. In the example below we’ll look at code that uses <code>foreach()</code> to increment a counter, but similar issues can occur for other operations as well.</p>
+</blockquote>
+<p><a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html#understanding-closures-">https://spark.apache.org/docs/latest/rdd-programming-guide.html#understanding-closures-</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#understanding-closures-&quot;,500))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://spark.apache.org/docs/latest/rdd-programming-guide.html#understanding-closures-"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val data = Array(1, 2, 3, 4, 5)
+var counter = 0
+var rdd = sc.parallelize(data)
+
+// Wrong: Don't do this!!
+rdd.foreach(x =&gt; counter += x)
+
+println(&quot;Counter value: &quot; + counter)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Counter value: 0
+data: Array[Int] = Array(1, 2, 3, 4, 5)
+counter: Int = 0
+rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[26] at parallelize at command-4088905069026281:3
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>From RDD programming guide:</p>
+<blockquote>
+<p>The behavior of the above code is undefined, and may not work as intended. To execute jobs, Spark breaks up the processing of RDD operations into tasks, each of which is executed by an executor. Prior to execution, Spark computes the task’s closure. The closure is those variables and methods which must be visible for the executor to perform its computations on the RDD (in this case foreach()). This closure is serialized and sent to each executor.</p>
+</blockquote>
+<blockquote>
+<p>The variables within the closure sent to each executor are now copies and thus, when counter is referenced within the foreach function, it’s no longer the counter on the driver node. There is still a counter in the memory of the driver node but this is no longer visible to the executors! The executors only see the copy from the serialized closure. Thus, the final value of counter will still be zero since all operations on counter were referencing the value within the serialized closure.</p>
+</blockquote>
+</div>
+<div class="cell markdown">
+<h4 id="11-shipping-closures-broadcast-variables-and-accumulator-variables"><a class="header" href="#11-shipping-closures-broadcast-variables-and-accumulator-variables">11. Shipping Closures, Broadcast Variables and Accumulator Variables</a></h4>
+<h5 id="closures-broadcast-and-accumulator-variables"><a class="header" href="#closures-broadcast-and-accumulator-variables">Closures, Broadcast and Accumulator Variables</a></h5>
+<p>Spark automatically creates closures</p>
+<ul>
+<li>for functions that run on RDDs at workers,</li>
+<li>and for any global variables that are used by those workers</li>
+<li>one closure per worker is sent with every task</li>
+<li>and there's no communication between workers</li>
+<li>closures are one way from the driver to the worker</li>
+<li>any changes that you make to the global variables at the workers
+<ul>
+<li>are not sent to the driver or</li>
+<li>are not sent to other workers.</li>
+</ul>
+</li>
+</ul>
+<p>The problem we have is that these closures</p>
+<ul>
+<li>are automatically created are sent or re-sent with every job</li>
+<li>with a large global variable it gets inefficient to send/resend lots of data to each worker</li>
+<li>we cannot communicate that back to the driver</li>
+</ul>
+<p>To do this, Spark provides shared variables in two different types.</p>
+<ul>
+<li><strong>broadcast variables</strong>
+<ul>
+<li>lets us to efficiently send large read-only values to all of the workers</li>
+<li>these are saved at the workers for use in one or more Spark operations.</li>
+</ul>
+</li>
+<li><strong>accumulator variables</strong>
+<ul>
+<li>These allow us to aggregate values from workers back to the driver.</li>
+<li>only the driver can access the value of the accumulator</li>
+<li>for the tasks, the accumulators are basically write-only</li>
+</ul>
+</li>
+</ul>
+<hr />
+</div>
+<div class="cell markdown">
+<h5 id="accumulators"><a class="header" href="#accumulators">Accumulators</a></h5>
+<blockquote>
+<p>Accumulators are variables that are only “added” to through an associative and commutative operation and can therefore be efficiently supported in parallel. They can be used to implement counters (as in MapReduce) or sums. Spark natively supports accumulators of numeric types, and programmers can add support for new types.</p>
+</blockquote>
+<p>Read: <a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html#accumulators">https://spark.apache.org/docs/latest/rdd-programming-guide.html#accumulators</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#accumulators&quot;,500))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://spark.apache.org/docs/latest/rdd-programming-guide.html#accumulators"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>A numeric accumulator can be created by calling SparkContext.longAccumulator() or SparkContext.doubleAccumulator() to accumulate values of type Long or Double, respectively. Tasks running on a cluster can then add to it using the add method. However, they cannot read its value. Only the driver program can read the accumulator’s value, using its value method.</p>
+</blockquote>
+<blockquote>
+<p>The code below shows an accumulator being used to add up the elements of an array:</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val accum = sc.longAccumulator(&quot;My Accumulator&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>accum: org.apache.spark.util.LongAccumulator = LongAccumulator(id: 1236, name: Some(My Accumulator), value: 0)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sc.parallelize(Array(1, 2, 3, 4)).foreach(x =&gt; accum.add(x))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">accum.value
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res26: Long = 10
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.range(1, 100000).foreach(x =&gt; accum.add(x)) // bigger example
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">accum.value
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res28: Long = 4999950010
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="broadcast-variables"><a class="header" href="#broadcast-variables">Broadcast Variables</a></h5>
+<p>From <a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables">https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables</a>:</p>
+<blockquote>
+<p>Broadcast variables allow the programmer to keep a read-only variable cached on each machine rather than shipping a copy of it with tasks. They can be used, for example, to give every node a copy of a large input dataset in an efficient manner. Spark also attempts to distribute broadcast variables using efficient broadcast algorithms to reduce communication cost.</p>
+</blockquote>
+<blockquote>
+<p>Spark actions are executed through a set of stages, separated by distributed “shuffle” operations. Spark automatically broadcasts the common data needed by tasks within each stage. The data broadcasted this way is cached in serialized form and deserialized before running each task. This means that explicitly creating broadcast variables is only useful when tasks across multiple stages need the same data or when caching the data in deserialized form is important.</p>
+</blockquote>
+<blockquote>
+<p>Broadcast variables are created from a variable v by calling SparkContext.broadcast(v). The broadcast variable is a wrapper around v, and its value can be accessed by calling the value method. The code below shows this in action.</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables&quot;,500))
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://spark.apache.org/docs/latest/rdd-programming-guide.html#broadcast-variables"
+ width="95%" height="500"
+ sandbox>
+  <p>
+    <a href="http://spark.apache.org/docs/latest/index.html">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val broadcastVar = sc.broadcast(Array(1, 2, 3))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>broadcastVar: org.apache.spark.broadcast.Broadcast[Array[Int]] = Broadcast(30)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">broadcastVar.value
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res30: Array[Int] = Array(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">broadcastVar.value(0)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res31: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rdd = sc.parallelize(1 to 10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[34] at parallelize at command-4088905069026297:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rdd.collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res32: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rdd.map(x =&gt; x%3).collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res33: Array[Int] = Array(1, 2, 0, 1, 2, 0, 1, 2, 0, 1)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rdd.map(x =&gt; x+broadcastVar.value(x%3)).collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res34: Array[Int] = Array(3, 5, 4, 6, 8, 7, 9, 11, 10, 12)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>After the broadcast variable is created, it should be used instead of the value v in any functions run on the cluster so that v is not shipped to the nodes more than once. In addition, the object v should not be modified after it is broadcast in order to ensure that all nodes get the same value of the broadcast variable (e.g. if the variable is shipped to a new node later).</p>
+</blockquote>
+<blockquote>
+<p>To release the resources that the broadcast variable copied onto executors, call .unpersist(). If the broadcast is used again afterwards, it will be re-broadcast. To permanently release all resources used by the broadcast variable, call .destroy(). The broadcast variable can’t be used after that. Note that these methods do not block by default. To block until resources are freed, specify blocking=true when calling them.</p>
+</blockquote>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">broadcastVar.unpersist()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h5 id="a-more-interesting-example-of-broadcast-variable"><a class="header" href="#a-more-interesting-example-of-broadcast-variable">A more interesting example of broadcast variable</a></h5>
+<p>Let us broadcast maps and use them to lookup the values at each executor. This example is taken from: - <a href="https://sparkbyexamples.com/spark/spark-broadcast-variables/">https://sparkbyexamples.com/spark/spark-broadcast-variables/</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val states = Map((&quot;NY&quot;,&quot;New York&quot;),(&quot;CA&quot;,&quot;California&quot;),(&quot;FL&quot;,&quot;Florida&quot;))
+val countries = Map((&quot;USA&quot;,&quot;United States of America&quot;),(&quot;IN&quot;,&quot;India&quot;))
+
+val broadcastStates = spark.sparkContext.broadcast(states) // same as sc.broadcast
+val broadcastCountries = spark.sparkContext.broadcast(countries)
+
+val data = Seq((&quot;James&quot;,&quot;Smith&quot;,&quot;USA&quot;,&quot;CA&quot;),
+    (&quot;Michael&quot;,&quot;Rose&quot;,&quot;USA&quot;,&quot;NY&quot;),
+    (&quot;Robert&quot;,&quot;Williams&quot;,&quot;USA&quot;,&quot;CA&quot;),
+    (&quot;Maria&quot;,&quot;Jones&quot;,&quot;USA&quot;,&quot;FL&quot;))
+
+val rdd = spark.sparkContext.parallelize(data) // spark.sparkContext is the same as sc.parallelize in spark-shell/notebook
+
+  val rdd2 = rdd.map(f =&gt; {
+    val country = f._3
+    val state = f._4
+    val fullCountry = broadcastCountries.value.get(country).get
+    val fullState = broadcastStates.value.get(state).get
+    (f._1,f._2,fullCountry,fullState)
+  })
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>states: scala.collection.immutable.Map[String,String] = Map(NY -&gt; New York, CA -&gt; California, FL -&gt; Florida)
+countries: scala.collection.immutable.Map[String,String] = Map(USA -&gt; United States of America, IN -&gt; India)
+broadcastStates: org.apache.spark.broadcast.Broadcast[scala.collection.immutable.Map[String,String]] = Broadcast(34)
+broadcastCountries: org.apache.spark.broadcast.Broadcast[scala.collection.immutable.Map[String,String]] = Broadcast(35)
+data: Seq[(String, String, String, String)] = List((James,Smith,USA,CA), (Michael,Rose,USA,NY), (Robert,Williams,USA,CA), (Maria,Jones,USA,FL))
+rdd: org.apache.spark.rdd.RDD[(String, String, String, String)] = ParallelCollectionRDD[37] at parallelize at command-4088905069026304:12
+rdd2: org.apache.spark.rdd.RDD[(String, String, String, String)] = MapPartitionsRDD[38] at map at command-4088905069026304:14
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(rdd2.collect().mkString(&quot;\n&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>(James,Smith,United States of America,California)
+(Michael,Rose,United States of America,New York)
+(Robert,Williams,United States of America,California)
+(Maria,Jones,United States of America,Florida)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="13-homework"><a class="header" href="#13-homework">13. HOMEWORK</a></h4>
+<p>See the notebook in this folder named <code>005_RDDsTransformationsActionsHOMEWORK</code>. This notebook will give you more examples of the operations above as well as others we will be using later, including:</p>
+<ul>
+<li>Perform the <code>takeOrdered</code> action on the RDD</li>
+<li>Transform the RDD by <code>distinct</code> to make another RDD and</li>
+<li>Doing a bunch of transformations to our RDD and performing an action in a single cell.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<hr />
+<hr />
+<h4 id="14-importing-standard-scala-and-java-libraries"><a class="header" href="#14-importing-standard-scala-and-java-libraries">14. Importing Standard Scala and Java libraries</a></h4>
+<ul>
+<li>For other libraries that are not available by default, you can upload other libraries to the Workspace.</li>
+<li>Refer to the <strong><a href="https://docs.databricks.com/user-guide/libraries.html">Libraries</a></strong> guide for more details.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import scala.math._
+val x = min(1, 10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import scala.math._
+x: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import java.util.HashMap
+val map = new HashMap[String, Int]()
+map.put(&quot;a&quot;, 1)
+map.put(&quot;b&quot;, 2)
+map.put(&quot;c&quot;, 3)
+map.put(&quot;d&quot;, 4)
+map.put(&quot;e&quot;, 5)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import java.util.HashMap
+map: java.util.HashMap[String,Int] = {a=1, b=2, c=3, d=4, e=5}
+res37: Int = 0
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>To read at ease more methodically go through <strong>Chapter 12. Resilient Distributed Datasets (RDDs)</strong> of <em>Spark: The Definitive Guide</em>:</p>
+<ul>
+<li>https://learning.oreilly.com/library/view/spark-the-definitive/9781491912201/ch12.html</li>
+</ul>
+<p>Note, you may need access via your library.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

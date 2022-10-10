@@ -1,0 +1,868 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>006_WordCount - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html" class="active">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="word-count-on-us-state-of-the-union-sou-addresses"><a class="header" href="#word-count-on-us-state-of-the-union-sou-addresses">Word Count on US State of the Union (SoU) Addresses</a></h1>
+<ul>
+<li>Word Count in big data is the equivalent of <code>Hello World</code> in programming</li>
+<li>We count the number of occurences of each word in the first and last (2016) SoU addresses.</li>
+</ul>
+<p>You should have loaded data by now, i.e., run all cells in the Notebook <code>002_02_dbcCEdataLoader</code>.</p>
+</div>
+<div class="cell markdown">
+<p>An interesting analysis of the textual content of the <em>State of the Union (SoU)</em> addresses by all US presidents was done in:</p>
+<ul>
+<li><a href="http://www.pnas.org/content/112/35/10837.full">Alix Rule, Jean-Philippe Cointet, and Peter S. Bearman, Lexical shifts, substantive changes, and continuity in State of the Union discourse, 1790–2014, PNAS 2015 112 (35) 10837-10844; doi:10.1073/pnas.1512221112</a>.</li>
+</ul>
+<p><img src="https://www.pnas.org/cms/10.1073/pnas.1512221112/asset/52ec0970-5ebe-4119-a1d1-f6b4e83be604/assets/graphic/pnas.1512221112fig05.jpeg" alt="" /></p>
+<p><a href="http://www.pnas.org/content/112/35/10837.full">Fig. 5</a>. A river network captures the flow across history of US political discourse, as perceived by contemporaries. Time moves along the x axis. Clusters on semantic networks of 300 most frequent terms for each of 10 historical periods are displayed as vertical bars. Relations between clusters of adjacent periods are indexed by gray flows, whose density reflects their degree of connection. Streams that connect at any point in history may be considered to be part of the same system, indicated with a single color.</p>
+<h2 id="let-us-investigate-this-dataset-ourselves"><a class="header" href="#let-us-investigate-this-dataset-ourselves">Let us investigate this dataset ourselves!</a></h2>
+<ol>
+<li>We first get the source text data by scraping and parsing from <a href="http://stateoftheunion.onetwothree.net/texts/index.html">http://stateoftheunion.onetwothree.net/texts/index.html</a> as explained in <a href="/#workspace/scalable-data-science/xtraResources/sdsDatasets/scraperUSStateofUnionAddresses">scraping and parsing SoU addresses</a>.</li>
+</ol>
+<ul>
+<li>All of the SOU addresses from the founding of the United States until 2017 has been scraped into a single file.</li>
+<li>This data is already made available in our distributed file system.</li>
+<li>We only do the simplest word count with this data in this notebook and will do more sophisticated analyses in the sequel (including topic modeling, etc).</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="key-data-management-concepts"><a class="header" href="#key-data-management-concepts">Key Data Management Concepts</a></h2>
+<h3 id="the-structure-spectrum"><a class="header" href="#the-structure-spectrum">The Structure Spectrum</a></h3>
+<p>Let's peruse through the following blog from IBM to get an idea of structured, unstructured and semi-structured data:</p>
+<ul>
+<li><a href="https://www.ibm.com/cloud/blog/structured-vs-unstructured-data">https://www.ibm.com/cloud/blog/structured-vs-unstructured-data</a></li>
+</ul>
+<p>In this notebook we will be working with <strong>unstructured</strong> or <strong>schema-never</strong> data (plain text files).</p>
+<p>Later on we will be working with structured or tabular data as well as semi-structured data.</p>
+<hr />
+</div>
+<div class="cell markdown">
+<h3 id="dbfs-and-dbutils---where-is-this-dataset-in-our-distributed-file-system-inside-databricks"><a class="header" href="#dbfs-and-dbutils---where-is-this-dataset-in-our-distributed-file-system-inside-databricks">DBFS and dbutils - where is this dataset in our distributed file system inside databricks?</a></h3>
+<ul>
+<li>Since we are on the databricks cloud, it has a file system called DBFS</li>
+<li>DBFS is similar to HDFS, the Hadoop distributed file system</li>
+<li>dbutils allows us to interact with dbfs.</li>
+<li>The 'display' command displays the list of files in a given directory in the file system.</li>
+</ul>
+<p><strong>Note:</strong> If you are on zeppelin or a non-databricks environment then use hdfs or drop into shell via <code>%sh</code> to <code>ls</code> the files in the local file system.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">ls /datasets/sds
+</code></pre>
+<div class="output execute_result tabular_result" execution_count="1">
+<table>
+<thead>
+<tr class="header">
+<th>path</th>
+<th>name</th>
+<th>size</th>
+<th>modificationTime</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dbfs:/datasets/sds/Rdatasets/</td>
+<td>Rdatasets/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/cs100/</td>
+<td>cs100/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/flights/</td>
+<td>flights/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/mnist-digits/</td>
+<td>mnist-digits/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/people/</td>
+<td>people/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/people.json/</td>
+<td>people.json/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/power-plant/</td>
+<td>power-plant/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/social_media_usage.csv/</td>
+<td>social_media_usage.csv/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/songs/</td>
+<td>songs/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/souall.txt.gz</td>
+<td>souall.txt.gz</td>
+<td>3576868.0</td>
+<td>1.664296002e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/spark-examples/</td>
+<td>spark-examples/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="even">
+<td>dbfs:/datasets/sds/weather/</td>
+<td>weather/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+<tr class="odd">
+<td>dbfs:/datasets/sds/wikipedia-datasets/</td>
+<td>wikipedia-datasets/</td>
+<td>0.0</td>
+<td>1.66429635041e12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="read-the-file-into-spark-context-as-an-rdd-of-strings"><a class="header" href="#read-the-file-into-spark-context-as-an-rdd-of-strings">Read the file into Spark Context as an RDD of Strings</a></h3>
+<ul>
+<li>The <code>textFile</code> method on the available <code>SparkContext</code> <code>sc</code> can read the gnu-zip compressed text file <code>/datasets/sds/souall.txt.gz</code> into Spark and create an RDD of Strings
+<ul>
+<li>but this is done lazily until an action is taken on the RDD <code>sou</code>!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val sou = sc.textFile(&quot;/datasets/sds/souall.txt.gz&quot;) // Cntrl+Enter to read the gzipped textfile as RDD[String]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>sou: org.apache.spark.rdd.RDD[String] = /datasets/sds/souall.txt.gz MapPartitionsRDD[3] at textFile at command-2942007275186754:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.take(5) // Cntrl+Enter to read the first 5 lines of the gzipped textfile as RDD[String]
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Array[String] = Array(&quot;George Washington &quot;, &quot;&quot;, &quot;January 8, 1790 &quot;, &quot;Fellow-Citizens of the Senate and House of Representatives: &quot;, &quot;I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. &quot;)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="perform-some-actions-on-the-rdd"><a class="header" href="#perform-some-actions-on-the-rdd">Perform some actions on the RDD</a></h3>
+<ul>
+<li>Each String in the RDD <code>sou</code> represents one line of data from the file and can be made to perform one of the following actions:
+<ul>
+<li>count the number of elements in the RDD <code>sou</code> (i.e., the number of lines in the text file <code>/datasets/sds/souall.txt.gz</code>) using <code>sou.count</code></li>
+<li>display the contents of the RDD using <code>take</code></li>
+<li>do not use <code>collect</code> as it will bring all the lines to the Driver, which could crash the Driver if the RDD is very large.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.count // &lt;Shift+Enter&gt; to get the number of elements or number of lines ending in line breaks '\n' in sou
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.take(30) // &lt;Shift+Enter&gt; to display the first 30 elements of RDD, including the beginning of the second SOU by George Washington
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res4: Array[String] = Array(&quot;George Washington &quot;, &quot;&quot;, &quot;January 8, 1790 &quot;, &quot;Fellow-Citizens of the Senate and House of Representatives: &quot;, &quot;I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. &quot;, &quot;In resuming your consultations for the general good you can not but derive encouragement from the reflection that the measures of the last session have been as satisfactory to your constituents as the novelty and difficulty of the work allowed you to hope. Still further to realize their expectations and to secure the blessings which a gracious Providence has placed within our reach will in the course of the present important session call for the cool and deliberate exertion of your patriotism, firmness, and wisdom. &quot;, &quot;Among the many interesting objects which will engage your attention that of providing for the common defense will merit particular regard. To be prepared for war is one of the most effectual means of preserving peace. &quot;, &quot;A free people ought not only to be armed, but disciplined; to which end a uniform and well-digested plan is requisite; and their safety and interest require that they should promote such manufactories as tend to render them independent of others for essential, particularly military, supplies. &quot;, &quot;The proper establishment of the troops which may be deemed indispensable will be entitled to mature consideration. In the arrangements which may be made respecting it it will be of importance to conciliate the comfortable support of the officers and soldiers with a due regard to economy. &quot;, &quot;There was reason to hope that the pacific measures adopted with regard to certain hostile tribes of Indians would have relieved the inhabitants of our southern and western frontiers from their depredations, but you will perceive from the information contained in the papers which I shall direct to be laid before you (comprehending a communication from the Commonwealth of Virginia) that we ought to be prepared to afford protection to those parts of the Union, and, if necessary, to punish aggressors. &quot;, &quot;The interests of the United States require that our intercourse with other nations should be facilitated by such provisions as will enable me to fulfill my duty in that respect in the manner which circumstances may render most conducive to the public good, and to this end that the compensation to be made to the persons who may be employed should, according to the nature of their appointments, be defined by law, and a competent fund designated for defraying the expenses incident to the conduct of foreign affairs. &quot;, &quot;Various considerations also render it expedient that the terms on which foreigners may be admitted to the rights of citizens should be speedily ascertained by a uniform rule of naturalization. &quot;, &quot;Uniformity in the currency, weights, and measures of the United States is an object of great importance, and will, I am persuaded, be duly attended to. &quot;, &quot;The advancement of agriculture, commerce, and manufactures by all proper means will not, I trust, need recommendation; but I can not forbear intimating to you the expediency of giving effectual encouragement as well to the introduction of new and useful inventions from abroad as to the exertions of skill and genius in producing them at home, and of facilitating the intercourse between the distant parts of our country by a due attention to the post-office and post-roads. &quot;, &quot;Nor am I less persuaded that you will agree with me in opinion that there is nothing which can better deserve your patronage than the promotion of science and literature. Knowledge is in every country the surest basis of public happiness. In one in which the measures of government receive their impressions so immediately from the sense of the community as in ours it is proportionably essential. &quot;, &quot;To the security of a free constitution it contributes in various ways--by convincing those who are intrusted with the public administration that every valuable end of government is best answered by the enlightened confidence of the people, and by teaching the people themselves to know and to value their own rights; to discern and provide against invasions of them; to distinguish between oppression and the necessary exercise of lawful authority; between burthens proceeding from a disregard to their convenience and those resulting from the inevitable exigencies of society; to discriminate the spirit of liberty from that of licentiousness-- cherishing the first, avoiding the last--and uniting a speedy but temperate vigilance against encroachments, with an inviolable respect to the laws. &quot;, &quot;Whether this desirable object will be best promoted by affording aids to seminaries of learning already established, by the institution of a national university, or by any other expedients will be well worthy of a place in the deliberations of the legislature. &quot;, &quot;Gentlemen of the House of Representatives: &quot;, &quot;I saw with peculiar pleasure at the close of the last session the resolution entered into by you expressive of your opinion that an adequate provision for the support of the public credit is a matter of high importance to the national honor and prosperity. In this sentiment I entirely concur; and to a perfect confidence in your best endeavors to devise such a provision as will be truly with the end I add an equal reliance on the cheerful cooperation of the other branch of the legislature. &quot;, &quot;It would be superfluous to specify inducements to a measure in which the character and interests of the United States are so obviously so deeply concerned, and which has received so explicit a sanction from your declaration. &quot;, &quot;Gentlemen of the Senate and House of Representatives: &quot;, &quot;I have directed the proper officers to lay before you, respectively, such papers and estimates as regard the affairs particularly recommended to your consideration, and necessary to convey to you that information of the state of the Union which it is my duty to afford. &quot;, The welfare of our country is the great object to which our cares and efforts ought to be directed, and I shall derive great satisfaction from a cooperation with you in the pleasing though arduous task of insuring to our fellow citizens the blessings which they have a right to expect from a free, efficient, and equal government., &quot;&quot;, &quot;George Washington &quot;, &quot;&quot;, &quot;December 8, 1790 &quot;, &quot;Fellow-Citizens of the Senate and House of Representatives: &quot;, &quot;In meeting you again I feel much satisfaction in being able to repeat my congratulations on the favorable prospects which continue to distinguish our public affairs. The abundant fruits of another year have blessed our country with plenty and with the means of a flourishing commerce. &quot;, &quot;The progress of public credit is witnessed by a considerable rise of American stock abroad as well as at home, and the revenues allotted for this and other national purposes have been productive beyond the calculations by which they were regulated. This latter circumstance is the more pleasing, as it is not only a proof of the fertility of our resources, but as it assures us of a further increase of the national respectability and credit, and, let me add, as it bears an honorable testimony to the patriotism and integrity of the mercantile and marine part of our citizens. The punctuality of the former in discharging their engagements has been exemplary. &quot;)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.take(5).foreach(println) // &lt;Shift+Enter&gt; to display the first 5 elements of RDD line by line
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>George Washington 
+
+January 8, 1790 
+Fellow-Citizens of the Senate and House of Representatives: 
+I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. 
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.zipWithIndex.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res6: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>SInce we have several SOU addresses we can use <code>zipWithIndex</code> and filter to extract the specific lines in a range of interest.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val souWithIndices = sou.zipWithIndex()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>souWithIndices: org.apache.spark.rdd.RDD[(String, Long)] = ZippedWithIndexRDD[5] at zipWithIndex at command-69839727109967:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.take(5) // &lt;Cntrl+Enter&gt; to display all the elements of RDD zipped with index starting from 0
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res7: Array[(String, Long)] = Array((&quot;George Washington &quot;,0), (&quot;&quot;,1), (&quot;January 8, 1790 &quot;,2), (&quot;Fellow-Citizens of the Senate and House of Representatives: &quot;,3), (&quot;I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. &quot;,4))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.map(lineWithIndex =&gt; lineWithIndex._1).take(5) // the first element via ._1 as String of each tuple... taking first 5
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: Array[String] = Array(&quot;George Washington &quot;, &quot;&quot;, &quot;January 8, 1790 &quot;, &quot;Fellow-Citizens of the Senate and House of Representatives: &quot;, &quot;I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. &quot;)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.map(lineWithIndex =&gt; lineWithIndex._2).take(5) // the second element via ._2 as Long of each tuple... taking first 5
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res9: Array[Long] = Array(0, 1, 2, 3, 4)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.filter(lineWithIndex =&gt; 1 &lt;= lineWithIndex._2 &amp;&amp; lineWithIndex._2 &lt;= 3).collect // collecting lines 1-3
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res10: Array[(String, Long)] = Array((&quot;&quot;,1), (&quot;January 8, 1790 &quot;,2), (&quot;Fellow-Citizens of the Senate and House of Representatives: &quot;,3))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// the last 148 lines are from the 2017 SOU by Donald J. Trump
+souWithIndices.filter(lineWithIndex =&gt; 22258-148 &lt; lineWithIndex._2 &amp;&amp; lineWithIndex._2 &lt;= 22258).collect
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res11: Array[(String, Long)] = Array((&quot;Donald J. Trump &quot;,22111), (&quot;&quot;,22112), (&quot;February 28, 2017 &quot;,22113), (&quot;Thank you very much. Mr. Speaker, Mr. Vice President, members of Congress, the first lady of the United States ... &quot;,22114), (&quot;... and citizens of America, tonight, as we mark the conclusion of our celebration of Black History Month, we are reminded of our nation's path toward civil rights and the work that still remains to be done. &quot;,22115), (&quot;Recent threats ... &quot;,22116), (&quot;Recent threats targeting Jewish community centers and vandalism of Jewish cemeteries, as well as last week's shooting in Kansas City, remind us that while we may be a nation divided on policies, we are a country that stands united in condemning hate and evil in all of its very ugly forms. &quot;,22117), (&quot;Each American generation passes the torch of truth, liberty and justice, in an unbroken chain all the way down to the present. That torch is now in our hands. And we will use it to light up the world. &quot;,22118), (&quot;I am here tonight to deliver a message of unity and strength, and it is a message deeply delivered from my heart. A new chapter ... &quot;,22119), (&quot;... of American greatness is now beginning. A new national pride is sweeping across our nation. And a new surge of optimism is placing impossible dreams firmly within our grasp. What we are witnessing today is the renewal of the American spirit. Our allies will find that America is once again ready to lead. &quot;,22120), (&quot;All the nations of the world friend or foe will find that America is strong, America is proud, and America is free. In nine years, the United States will celebrate the 250th anniversary of our founding, 250 years since the day we declared our independence. It will be one of the great milestones in the history of the world. &quot;,22121), (&quot;But what will America look like as we reach our 250th year? What kind of country will we leave for our children? I will not allow the mistakes of recent decades past to define the course of our future. &quot;,22122), (&quot;For too long, we've watched our middle class shrink as we've exported our jobs and wealth to foreign countries. We've financed and built one global project after another, but ignored the fates of our children in the inner cities of Chicago, Baltimore, Detroit and so many other places throughout our land. &quot;,22123), (&quot;We've defended the borders of other nations while leaving our own borders wide open for anyone to cross, and for drugs to pour in at a now unprecedented rate. And we've spent trillions and trillions of dollars overseas, while our infrastructure at home has so badly crumbled. &quot;,22124), (&quot;Then, in 2016, the earth shifted beneath our feet. The rebellion started as a quiet protest, spoken by families of all colors and creeds, families who just wanted a fair shot for their children, and a fair hearing for their concerns. &quot;,22125), (&quot;But then the quiet voices became a loud chorus, as thousands of citizens now spoke out together, from cities small and large, all across our country. &quot;,22126), (&quot;Finally, the chorus became an earthquake, and the people turned out by the tens of millions, and they were all united by one very simple, but crucial demand, that America must put its own citizens first, because only then can we truly make America great again. &quot;,22127), (&quot;Dying industries will come roaring back to life. Heroic veterans will get the care they so desperately need. Our military will be given the resources its brave warriors so richly deserve. &quot;,22128), (&quot;Crumbling infrastructure will be replaced with new roads, bridges, tunnels, airports and railways, gleaming across our very, very beautiful land. Our terrible drug epidemic will slow down and ultimately stop. And our neglected inner cities will see a rebirth of hope, safety and opportunity. &quot;,22129), (&quot;Above all else, we will keep our promises to the American people. &quot;,22130), (&quot;Thank you. It's been a little over a month since my inauguration, and I want to take this moment to update the nation on the progress I've made in keeping those promises. Since my election, Ford, Fiat-Chrysler, General Motors, Sprint, Softbank, Lockheed, Intel, Walmart and many others have announced that they will invest billions and billions of dollars in the United States and will create tens of thousands of new American jobs. &quot;,22131), (&quot;The stock market has gained almost $3 trillion in value since the election on Nov. 8, a record. We've saved taxpayers hundreds of millions of dollars by bringing down the price of fantastic and it is a fantastic new F-35 jet fighter, and we'll be saving billions more on contracts all across our government. &quot;,22132), (&quot;We have placed a hiring freeze on nonmilitary and nonessential federal workers. &quot;,22133), (&quot;We have begun to drain the swamp of government corruption by imposing a five-year ban on lobbying by executive branch officials and a lifetime ban ... &quot;,22134), (&quot;Thank you. Thank you. And a lifetime ban on becoming lobbyists for a foreign government. We have undertaken a historic effort to massively reduce job-crushing regulations, creating a deregulation task force inside of every government agency ... &quot;,22135), (&quot;... and we're imposing a new rule which mandates that for every one new regulation, two old regulations must be eliminated. &quot;,22136), (&quot;We're going to stop the regulations that threaten the future and livelihood of our great coal miners. &quot;,22137), (&quot;We have cleared the way for the construction of the Keystone and Dakota Access Pipelines ... &quot;,22138), (&quot;... thereby creating tens of thousands of jobs. And I've issued a new directive that new American pipelines be made with American steel. &quot;,22139), (&quot;We have withdrawn the United States from the job-killing Trans-Pacific Partnership. &quot;,22140), (&quot;And with the help of Prime Minister Justin Trudeau, we have formed a council with our neighbors in Canada to help ensure that women entrepreneurs have access to the networks, markets and capital they need to start a business and live out their financial dreams. &quot;,22141), (&quot;To protect our citizens, I have directed the Department of Justice to form a task force on reducing violent crime. I have further ordered the Departments of Homeland Security and Justice, along with the Department of State and the director of national intelligence, to coordinate an aggressive strategy to dismantle the criminal cartels that have spread all across our nation. &quot;,22142), (&quot;We will stop the drugs from pouring into our country and poisoning our youth, and we will expand treatment for those who have become so badly addicted. &quot;,22143), (&quot;At the same time, my administration has answered the pleas of the American people for immigration enforcement and border security. &quot;,22144), (&quot;By finally enforcing our immigration laws, we will raise wages, help the unemployed, save billions and billions of dollars, and make our communities safer for everyone. &quot;,22145), (&quot;We want all Americans to succeed, but that can't happen in an environment of lawless chaos. &quot;,22146), (&quot;We must restore integrity and the rule of law at our borders. &quot;,22147), (&quot;For that reason, we will soon begin the construction of a great, great wall along our southern border. &quot;,22148), (&quot;As we speak tonight, we are removing gang members, drug dealers and criminals that threaten our communities and prey on our very innocent citizens. Bad ones are going out as I speak, and as I promised throughout the campaign. To any in Congress who do not believe we should enforce our laws, I would ask you this one question: What would you say to the American family that loses their jobs, their income or their loved one because America refused to uphold its laws and defend its borders? &quot;,22149), (&quot;Our obligation is to serve, protect and defend the citizens of the United States. We are also taking strong measures to protect our nation from radical Islamic terrorism. &quot;,22150), (&quot;According to data provided by the Department of Justice, the vast majority of individuals convicted of terrorism and terrorism-related offenses since 9/11 came here from outside of our country. We have seen the attacks at home, from Boston to San Bernardino to the Pentagon and, yes, even the World Trade Center. We have seen the attacks in France, in Belgium, in Germany and all over the world. &quot;,22151), (&quot;It is not compassionate, but reckless to allow uncontrolled entry from places where proper vetting cannot occur. &quot;,22152), (&quot;Those given the high honor of admission to the United States should support this country and love its people and its values. We cannot allow a beachhead of terrorism to form inside America, and we cannot allow our nation to become a sanctuary for extremists. &quot;,22153), (&quot;That is why my administration has been working on improved vetting procedures, and we will shortly take new steps to keep our nation safe, and to keep those out who will do us harm. &quot;,22154), (&quot;As promised, I directed the Department of Defense to develop a plan to demolish and destroy ISIS, a network of lawless savages that have slaughtered Muslims and Christians, and men, women and children of all faiths and all beliefs. We will work with our allies, including our friends and allies in the Muslim world, to extinguish this vile enemy from our planet. &quot;,22155), (&quot;I have also imposed new sanctions on entities and individuals who support Iran's ballistic missile program, and reaffirmed our unbreakable alliance with the state of Israel. &quot;,22156), (&quot;Finally, I have kept my promise to appoint a justice to the United States Supreme Court, from my list of 20 judges, who will defend our Constitution. &quot;,22157), (&quot;I am greatly honored to have Maureen Scalia with us in the gallery tonight. &quot;,22158), (&quot;Thank you, Maureen. Her late, great husband, Antonin Scalia, will forever be a symbol of American justice. &quot;,22159), (&quot;To fill his seat, we have chosen Judge Neil Gorsuch, a man of incredible skill and deep devotion to the law. He was confirmed unanimously by the Court of Appeals, and I am asking the Senate to swiftly approve his nomination. &quot;,22160), (&quot;Tonight, as I outline the next steps we must take as a country, we must honestly acknowledge the circumstances we inherited. Ninety-four million Americans are out of the labor force. Over 43 million people are now living in poverty. And over 43 million Americans are on food stamps. &quot;,22161), (&quot;More than one in five people in their prime working years are not working. We have the worst financial recovery in 65 years. In the last eight years, the past administration has put on more new debt than nearly all of the other presidents combined. &quot;,22162), (&quot;We've lost more than one-fourth of our manufacturing jobs since Nafta was approved, and we've lost 60,000 factories since China joined the World Trade Organization in 2001. Our trade deficit in goods with the world last year was nearly $800 billion. And overseas, we have inherited a series of tragic foreign policy disasters. &quot;,22163), (&quot;Solving these and so many other pressing problems will require us to work past the differences of party. It will require us to tap into the American spirit that has overcome every challenge throughout our long and storied history. But to accomplish our goals at home and abroad, we must restart the engine of the American economy, making it easier for companies to do business in the United States and much, much harder for companies to leave our country. &quot;,22164), (&quot;Right now, American companies are taxed at one of the highest rates anywhere in the world. My economic team is developing historic tax reform that will reduce the tax rate on our companies so they can compete and thrive anywhere and with anyone. &quot;,22165), (&quot;It will be a big, big cut. &quot;,22166), (&quot;At the same time, we will provide massive tax relief for the middle class. We must create a level playing field for American companies and our workers have to do it. &quot;,22167), (&quot;Currently, when we ship products out of America, many other countries make us pay very high tariffs and taxes, but when foreign companies ship their products into America, we charge them nothing or almost nothing. &quot;,22168), (&quot;I just met with officials and workers from a great American company, Harley-Davidson. In fact, they proudly displayed five of their magnificent motorcycles, made in the U.S.A., on the front lawn of the White House. &quot;,22169), (&quot;And they wanted me to ride one, and I said, &quot;No, thank you.&quot; &quot;,22170), (&quot;At our meeting, I asked them, &quot;How are you doing? How is business?&quot; They said that it's good. I asked them further, &quot;How are you doing with other countries, mainly international sales?&quot; &quot;,22171), (&quot;They told me without even complaining, because they have been so mistreated for so long that they've become used to it that it's very hard to do business with other countries, because they tax our goods at such a high rate. They said that in the case of another country, they taxed their motorcycles at 100 percent. &quot;,22172), (&quot;They weren't even asking for a change. But I am. I believe ... &quot;,22173), (&quot;I believe strongly in free trade, but it also has to be fair trade. It's been a long time since we had fair trade. &quot;,22174), (&quot;The first Republican president, Abraham Lincoln, warned that &quot;the abandonment of the protective policy by the American government will produce want and ruin among our people.&quot; &quot;,22175), (&quot;Lincoln was right, and it's time we heeded his advice and his words. &quot;,22176), (&quot;I am not going to let America and its great companies and workers be taken advantage of us any longer. They have taken advantage of our country no longer. &quot;,22177), (&quot;I am going to bring back millions of jobs. Protecting our workers also means reforming our system of legal immigration. &quot;,22178), (&quot;The current, outdated system depresses wages for our poorest workers and puts great pressure on taxpayers. Nations around the world, like Canada, Australia and many others, have a merit-based immigration system. &quot;,22179), (&quot;It's a basic principle that those seeking to enter a country ought to be able to support themselves financially. Yet in America we do not enforce this rule, straining the very public resources that our poorest citizens rely upon. &quot;,22180), (&quot;According to the National Academy of Sciences, our current immigration system costs American taxpayers many billions of dollars a year. Switching away from this current system of lower-skilled immigration, and instead adopting a merit-based system, we will have so many more benefits. It will save countless dollars, raise workers' wages and help struggling families, including immigrant families, enter the middle class. And they will do it quickly, and they will be very, very happy, indeed. &quot;,22181), (&quot;I believe that real and positive immigration reform is possible, as long as we focus on the following goals: to improve jobs and wages for Americans, to strengthen our nation's security and to restore respect for our laws. &quot;,22182), (&quot;If we are guided by the well-being of American citizens, then I believe Republicans and Democrats can work together to achieve an outcome that has eluded our country for decades. &quot;,22183), (&quot;Another Republican president, Dwight D. Eisenhower, initiated the last truly great national infrastructure program: the building of the interstate highway system. The time has come for a new program of national rebuilding. &quot;,22184), (&quot;America has spent approximately $6 trillion in the Middle East, all the while our infrastructure at home is crumbling. &quot;,22185), (&quot;With the $6 trillion, we could have rebuilt our country twice, and maybe even three times, if we had people who had the ability to negotiate. &quot;,22186), (&quot;To launch our national rebuilding, I will be asking Congress to approve legislation that produces a $1 trillion investment in infrastructure of the United States, financed through both public and private capital, creating millions of new jobs. &quot;,22187), (&quot;This effort will be guided by two core principles: Buy American and hire American. &quot;,22188), (&quot;Tonight, I am also calling on this Congress to repeal and replace Obamacare ... &quot;,22189), (&quot;... with reforms that expand choice, increase access, lower costs and at the same time provide better health care. &quot;,22190), (&quot;Mandating every American to buy government-approved health insurance was never the right solution for our country. &quot;,22191), (&quot;The way to make health insurance available to everyone is to lower the cost of health insurance, and that is what we are going to do. &quot;,22192), (&quot;Obamacare premiums nationwide have increased by double and triple digits. As an example, Arizona went up 116 percent last year alone. Gov. Matt Bevin of Kentucky just said Obamacare is failing in his state, the state of Kentucky, and it's unsustainable and collapsing. &quot;,22193), (&quot;One third of the counties have only one insurer, and they're losing them fast, they are losing them so fast. They're leaving. And many Americans have no choice at all. There's no choice left. &quot;,22194), (&quot;Remember when you were told that you could keep your doctor and keep your plan? We now know that all of those promises have been totally broken. Obamacare is collapsing, and we must act decisively to protect all Americans. &quot;,22195), (&quot;Action is not a choice; it is a necessity. So I am calling on all Democrats and Republicans in Congress to work with us to save Americans from this imploding Obamacare disaster. &quot;,22196), (&quot;Here are the principles that should guide Congress as we move to create a better health care system for all Americans. &quot;,22197), (&quot;First, we should ensure that Americans with pre-existing conditions have access to coverage and that we have a stable transition for Americans currently enrolled in the health care exchanges. &quot;,22198), (&quot;Secondly, we should help Americans purchase their own coverage, through the use of tax credits and expanded health savings accounts, but it must be the plan they want, not the plan forced on them by our government. &quot;,22199), (&quot;Thirdly, we should give our state governors the resources and flexibility they need with Medicaid to make sure no one is left out. &quot;,22200), (&quot;Fourth, we should implement legal reforms that protect patients and doctors from unnecessary costs that drive up the price of insurance and work to bring down the artificially high price of drugs and bring them down immediately. &quot;,22201), (&quot;And finally, the time has come to give Americans the freedom to purchase health insurance across state lines ... &quot;,22202), (&quot;... which will create a truly competitive national marketplace that will bring costs way down and provide far better care. So important. &quot;,22203), (&quot;Everything that is broken in our country can be fixed. Every problem can be solved. And every hurting family can find healing and hope. Our citizens deserve this, and so much more, so why not join forces and finally get the job done and get it done right? &quot;,22204), (&quot;On this and so many other things, Democrats and Republicans should get together and unite for the good of our country and for the good of the American people. &quot;,22205), (&quot;My administration wants to work with members of both parties to make child care accessible and affordable, to help ensure new parents that they have paid family leave ... &quot;,22206), (&quot;... to invest in women's health, and to promote clean air and clean water, and to rebuild our military and our infrastructure. &quot;,22207), (&quot;True love for our people requires us to find common ground, to advance the common good, and to cooperate on behalf of every American child who deserves a much brighter future. &quot;,22208), (&quot;An incredible young woman is with us this evening who should serve as an inspiration to us all. Today is Rare Disease Day, and joining us in the gallery is a rare disease survivor, Megan Crowley. Megan ... &quot;,22209), (&quot;Megan was diagnosed with Pompe disease, a rare and serious illness, when she was 15 months old. She was not expected to live past 5. On receiving this news, Megan's dad, John, fought with everything he had to save the life of his precious child. He founded a company to look for a cure and helped develop the drug that saved Megan's life. Today she is 20 years old and a sophomore at Notre Dame. &quot;,22210), (&quot;Megan's story is about the unbounded power of a father's love for a daughter. But our slow and burdensome approval process at the Food and Drug Administration keeps too many advances, like the one that saved Megan's life, from reaching those in need. &quot;,22211), (&quot;If we slash the restraints, not just at the F.D.A. but across our government, then we will be blessed with far more miracles just like Megan. &quot;,22212), (&quot;In fact, our children will grow up in a nation of miracles. But to achieve this future, we must enrich the mind and the souls of every American child. Education is the civil rights issue of our time. &quot;,22213), (&quot;I am calling upon members of both parties to pass an education bill that funds school choice for disadvantaged youth, including millions of African-American and Latino children. &quot;,22214), (&quot;These families should be free to choose the public, private, charter, magnet, religious or home school that is right for them. &quot;,22215), (&quot;Joining us tonight in the gallery is a remarkable woman, Denisha Merriweather. As a young girl, Denisha struggled in school and failed third grade twice. But then she was able to enroll in a private center for learning great learning center with the help of a tax credit and a scholarship program. Today, she is the first in her family to graduate, not just from high school, but from college. Later this year, she will get her master's degree in social work. We want all children to be able to break the cycle of poverty just like Denisha. &quot;,22216), (&quot;But to break the cycle of poverty, we must also break the cycle of violence. The murder rate in 2015 experienced its largest single-year increase in nearly half a century. In Chicago, more than 4,000 people were shot last year alone, and the murder rate so far this year has been even higher. This is not acceptable in our society. &quot;,22217), (&quot;Every American child should be able to grow up in a safe community, to attend a great school and to have access to a high-paying job. &quot;,22218), (&quot;But to create this future, we must work with not against not against the men and women of law enforcement. &quot;,22219), (&quot;We must build bridges of cooperation and trust, not drive the wedge of disunity and it's really, it's what it is, division. It's pure, unadulterated division. We have to unify. Police and sheriffs are members of our community. They're friends and neighbors, they're mothers and fathers, sons and daughters, and they leave behind loved ones every day who worry about whether or not they'll come home safe and sound. We must support the incredible men and women of law enforcement. &quot;,22220), (&quot;And we must support the victims of crime. I have ordered the Department of Homeland Security to create an office to serve American victims. The office is called Voice, Victims of Immigration Crime Engagement. &quot;,22221), (&quot;We are providing a voice to those who have been ignored by our media and silenced by special interests. Joining us ... &quot;,22222), (&quot;Joining us in the audience tonight are four very brave Americans whose government failed them. Their names are Jamiel Shaw, Susan Oliver, Jenna Oliver and Jessica Davis. Jamiel's 17-year-old son was viciously murdered by an illegal immigrant gang member who had just been released from prison. Jamiel Shaw Jr. was an incredible young man with unlimited potential who was getting ready to go to college, where he would have excelled as a great college quarterback. &quot;,22223), (&quot;But he never got the chance. His father, who is in the audience tonight, has become a very good friend of mine. Jamiel, thank you. Thank you. &quot;,22224), (&quot;Also with us are Susan Oliver and Jessica Davis. Their husbands Deputy Sheriff Danny Oliver and Detective Michael Davis were slain in the line of duty in California. They were pillars of their community. These brave men were viciously gunned down by an illegal immigrant with a criminal record and two prior deportations. Should have never been in our country. &quot;,22225), (&quot;Sitting with Susan is her daughter, Jenna. Jenna, I want you to know that your father was a hero and that tonight you have the love of an entire country supporting you and praying for you. &quot;,22226), (&quot;To Jamiel, Jenna, Susan and Jessica, I want you to know that we will never stop fighting for justice. Your loved ones will never, ever be forgotten. We will always honor their memory. &quot;,22227), (&quot;Finally, to keep America safe, we must provide the men and women of the United States military with the tools they need to prevent war if they must they have to fight and they only have to win. &quot;,22228), (&quot;I am sending Congress a budget that rebuilds the military, eliminates the defense sequester... &quot;,22229), (&quot;... and calls for one of the largest increases in national defense spending in American history. &quot;,22230), (&quot;My budget will also increase funding for our veterans. Our veterans have delivered for this nation, and now we must deliver for them. &quot;,22231), (&quot;The challenges we face as a nation are great. But our people are even greater. And none are greater or braver than those who fight for America in uniform. &quot;,22232), (&quot;We are blessed to be joined tonight by Carryn Owens, the widow of U.S. Navy special operator, Senior Chief William &quot;Ryan&quot; Owens. Ryan died as he lived, a warrior and a hero, battling against terrorism and securing our nation. &quot;,22233), (&quot;I just spoke to our great General [Jim] Mattis just now who reconfirmed that, and I quote, &quot;Ryan was a part of a highly successful raid that generated large amounts of vital intelligence that will lead to many more victories in the future against our enemy.&quot; &quot;,22234), (&quot;Ryan's legacy is etched into eternity. Thank you. &quot;,22235), (&quot;And Ryan is looking down right now. You know that. And he's very happy, because I think he just broke a record. &quot;,22236), (&quot;For as the Bible teaches us, there is no greater act of love than to lay down one's life for one's friends. Ryan laid down his life for his friends, for his country and for our freedom. And we will never forget Ryan. &quot;,22237), (&quot;To those allies who wonder what kind of a friend America will be, look no further than the heroes who wear our uniform. Our foreign policy calls for a direct, robust and meaningful engagement with the world. It is American leadership based on vital security interests that we share with our allies all across the globe. &quot;,22238), (&quot;We strongly support NATO, an alliance forged through the bonds of two world wars, that dethroned fascism ... &quot;,22239), (&quot;... and a Cold War and defeated communism. &quot;,22240), (&quot;But our partners must meet their financial obligations. And now, based on our very strong and frank discussions, they are beginning to do just that. In fact, I can tell you the money is pouring in. Very nice. &quot;,22241), (&quot;We expect our partners, whether in NATO, in the Middle East or in the Pacific, to take a direct and meaningful role in both strategic and military operations, and pay their fair share of the cost have to do that. &quot;,22242), (&quot;We will respect historic institutions, but we will respect the foreign rights of all nations. And they have to respect our rights as a nation, also. &quot;,22243), (&quot;Free nations are the best vehicle for expressing the will of the people, and America respects the right of all nations to chart their own path. My job is not to represent the world. My job is to represent the United States of America. &quot;,22244), (&quot;But we know that America is better off when there is less conflict, not more. We must learn from the mistakes of the past. We have seen the war and the destruction that have ravaged and raged throughout the world. All across the world. &quot;,22245), (&quot;The only long-term solution for these humanitarian disasters, in many cases, is to create the conditions where displaced persons can safely return home and begin the long, long process of rebuilding. &quot;,22246), (&quot;America is willing to find new friends, and to forge new partnerships, where shared interests align. We want harmony and stability, not war and conflict. We want peace, wherever peace can be found. America is friends today with former enemies. Some of our closest allies, decades ago, fought on the opposite side of these terrible, terrible wars. This history should give us all faith in the possibilities for a better world. &quot;,22247), (&quot;Hopefully, the 250th year for America will see a world that is more peaceful, more just, and more free. &quot;,22248), (&quot;On our 100th anniversary in 1876, citizens from across our nation came to Philadelphia to celebrate America's centennial. At that celebration, the country's builders and artists and inventors showed off their wonderful creations. Alexander Graham Bell displayed his telephone for the first time. Remington unveiled the first typewriter. An early attempt was made at electric light. Thomas Edison showed an automatic telegraph and an electric pen. Imagine the wonders our country could know in America's 250th year. &quot;,22249), (&quot;Think of the marvels we could achieve if we simply set free the dreams of our people. Cures to the illnesses that have always plagued us are not too much to hope. American footprints on distant worlds are not too big a dream. Millions lifted from welfare to work is not too much to expect. And streets where mothers are safe from fear schools where children learn in peace, and jobs where Americans prosper and grow are not too much to ask. &quot;,22250), (&quot;When we have all of this, we will have made America greater than ever before, for all Americans. This is our vision. This is our mission. But we can only get there together. We are one people, with one destiny. &quot;,22251), (&quot;We all bleed the same blood. We all salute the same great American flag. And we are all made by the same God. &quot;,22252), (&quot;When we fulfill this vision, when we celebrate our 250 years of glorious freedom, we will look back on tonight as when this new chapter of American greatness began. The time for small thinking is over. The time for trivial fights is behind us. We just need the courage to share the dreams that fill our hearts, the bravery to express the hopes that stir our souls, and the confidence to turn those hopes and those dreams into action. &quot;,22253), (&quot;From now on, America will be empowered by our aspirations, not burdened by our fears, inspired by the future, not bound by failures of the past, and guided by a vision, not blinded by our doubts. &quot;,22254), (&quot;I am asking all citizens to embrace this renewal of the American spirit. I am asking all members of Congress to join me in dreaming big and bold and daring things for our country. I am asking everyone watching tonight to seize this moment. Believe in yourselves. Believe in your future. And believe, once more, in America. &quot;,22255), (Thank you, God bless you, and God bless the United States.,22256), (&quot;&quot;,22257))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="cache-the-rdd-in-distributed-memory-to-avoid-recreating-it-for-each-action"><a class="header" href="#cache-the-rdd-in-distributed-memory-to-avoid-recreating-it-for-each-action">Cache the RDD in (distributed) memory to avoid recreating it for each action</a></h3>
+<ul>
+<li>Above, every time we took an action on the same RDD, the RDD was reconstructed from the textfile.
+<ul>
+<li>Spark's advantage compared to Hadoop MapReduce is the ability to cache or store the RDD in distributed memory across the nodes.</li>
+</ul>
+</li>
+<li>Let's use <code>.cache()</code> after creating an RDD so that it is in memory after the first action (and thus avoid reconstruction for subsequent actions).
+<ul>
+<li>count the number of elements in the RDD <code>sou</code> (i.e., the number of lines in the text file <code>/datasets/sds/souall.txt.gz</code>) using <code>sou.count()</code></li>
+<li>display the contents of the RDD using <code>take</code> or <code>collect</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// Shift+Enter to read in the textfile as RDD[String] and cache it in distributed memory
+val sou = sc.textFile(&quot;/datasets/sds/souall.txt.gz&quot;) // Cntrl+Enter to read the gzipped textfile as RDD[String]
+sou.cache() // cache the RDD in memory
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>sou: org.apache.spark.rdd.RDD[String] = /datasets/sds/souall.txt.gz MapPartitionsRDD[11] at textFile at command-4088905069026019:2
+res12: sou.type = /datasets/sds/souall.txt.gz MapPartitionsRDD[11] at textFile at command-4088905069026019:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.count() // Shift+Enter during this count action the RDD is constructed from texfile and cached
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res13: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.count() // Shift+Enter during this count action the cached RDD is used (notice less time taken by the same command)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res14: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now, let's go to SparkUI and verify that this RDD is actually cached. The details would look something akin to the following.</p>
+<table><thead><tr><th>ID | RD</th><th>RDD Name</th><th>Storage Level</th><th>Cached Partitions | Fract</th><th>Fraction Cached | Si</th><th>Size in Memory</th><th>Size on Disk |</th></tr></thead><tbody>
+<tr><td>xxx |/d</td><td>/datasets/sds/souall.txt.gz</td><td>Memory Deserialized 1x Replicated |</td><td>1| 10</td><td>100% | 20.</td><td>20.1 MiB |</td><td>0.0 B |</td></tr>
+</tbody></table>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.take(5) // &lt;Cntrl+Enter&gt; to display the first 5 elements of the cached RDD
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res15: Array[String] = Array(&quot;George Washington &quot;, &quot;&quot;, &quot;January 8, 1790 &quot;, &quot;Fellow-Citizens of the Senate and House of Representatives: &quot;, &quot;I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union, and the concord, peace, and plenty with which we are blessed are circumstances auspicious in an eminent degree to our national prosperity. &quot;)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou.getStorageLevel
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res16: org.apache.spark.storage.StorageLevel = StorageLevel(memory, deserialized, 1 replicas)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p><strong>Question</strong></p>
+<ul>
+<li>what happens when we call the following now?</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val souWithIndices = sou.zipWithIndex()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>souWithIndices: org.apache.spark.rdd.RDD[(String, Long)] = ZippedWithIndexRDD[12] at zipWithIndex at command-69839727109975:1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's quickly go back to SparkUI's Storage and see what is cached now.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.getStorageLevel
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res17: org.apache.spark.storage.StorageLevel = StorageLevel(1 replicas)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.count // let's call an action and look at the DAG Visualization of this job
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res18: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>What if we tried to cache <code>souWithIndices</code>?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.cache() // check SparkUI -&gt; Storage
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res19: souWithIndices.type = ZippedWithIndexRDD[12] at zipWithIndex at command-69839727109975:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices.count() // need to act once to actually cache it; check SparkUI -&gt; Storage again
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res20: Long = 22258
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Now, you will notice that both RDDs are cached in memory now.</p>
+<p>This is merely illustrative and makes little difference in this example. However, if you do a whole lot of transformations to an RDD and plan to use it in the immediate future then it may be worthwhile caching the intermediate RDD to save time. This is often done in iterative ML algorithms.</p>
+</div>
+<div class="cell markdown">
+<h4 id="lifecycle-of-a-spark-program---summary"><a class="header" href="#lifecycle-of-a-spark-program---summary">Lifecycle of a Spark Program - Summary</a></h4>
+<ul>
+<li>create RDDs from:
+<ul>
+<li>some external data source (such as a distributed file system)</li>
+<li>parallelized collection in your driver program</li>
+</ul>
+</li>
+<li>lazily transform these RDDs into new RDDs</li>
+<li>cache some of those RDDs for future reuse</li>
+<li>you perform actions to execute parallel computation to produce results</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="transform-lines-to-words"><a class="header" href="#transform-lines-to-words">Transform lines to words</a></h3>
+<ul>
+<li>We need to loop through each line and split the line into words</li>
+<li>For now, let us split using whitespace</li>
+<li>More sophisticated regular expressions can be used to split the line (as we will see soon)</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou
+.flatMap(line =&gt; line.split(&quot; &quot;))
+.take(100)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res21: Array[String] = Array(George, Washington, &quot;&quot;, January, 8,, 1790, Fellow-Citizens, of, the, Senate, and, House, of, Representatives:, I, embrace, with, great, satisfaction, the, opportunity, which, now, presents, itself, of, congratulating, you, on, the, present, favorable, prospects, of, our, public, affairs., The, recent, accession, of, the, important, state, of, North, Carolina, to, the, Constitution, of, the, United, States, (of, which, official, information, has, been, received),, the, rising, credit, and, respectability, of, our, country,, the, general, and, increasing, good, will, toward, the, government, of, the, Union,, and, the, concord,, peace,, and, plenty, with, which, we, are, blessed, are, circumstances, auspicious, in, an, eminent, degree, to)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="naive-word-count"><a class="header" href="#naive-word-count">Naive word count</a></h3>
+<p>At a first glace, to do a word count of George Washingtons SoU address, we are templed to do the following:</p>
+<ul>
+<li>just break each line by the whitespace character &quot; &quot; and find the words using a <code>flatMap</code></li>
+<li>then do the <code>map</code> with the closure <code>word =&gt; (word, 1)</code> to initialize each <code>word</code> with a integer count of <code>1</code>
+<ul>
+<li>ie., transform each word to a <em>(key, value)</em> pair or <code>Tuple</code> such as <code>(word, 1)</code></li>
+</ul>
+</li>
+<li>then count all <em>value</em>s with the same <em>key</em> (<code>word</code> is the Key in our case) by doing a
+<ul>
+<li><code>reduceByKey(_+_)</code></li>
+</ul>
+</li>
+<li>and finally <code>collect()</code> to display the results.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">sou
+.flatMap( line =&gt; line.split(&quot; &quot;) )
+.map( word =&gt; (word, 1) )
+.reduceByKey(_+_)
+.collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res22: Array[(String, Int)] = Array((rebuttal.,1), (supplied.,5), (delinquents.,1), (undecaying,1), (successions,1), (Victims',1), (meets,,2), (42,427,1), (tough,44), (briefly,,2), (hemisphere.&quot;,1), (chart.,1), (fairness,,12), ($47,673,756,1), (TAX,5), (&quot;quarantined&quot;.,1), (execute,52), (relieves,4), (afterward,1), (fight;,2), (entitlements,1), (Enjoying,,1), (unfelt,2), (requested--and,1), (8,,31), (insurrection,72), (homeland;,1), (Employees,1), (Biddle,,1), (bankruptcies,4), (178,1), (cynics,,1), (demands--problems,1), (underscored,2), (savages,,6), (Exactly,5), (47,650.00,1), (dangers,122), (pacified,1), (prohibited.,3), (disposed.,1), (Chihuahua,,1), (constant,,4), (Commerce,107), ($15,739,871,1), (edible,1), (instantaneous,1), (Level,1), ($6,879,300.93.,1), (cottons,1), (consist,,1), (unacceptable,5), (me.&quot;,2), (goods.,17), (used,,18), (Juarez,,3), (Stockton,1), (tyrant,,1), (Convention--this,1), (regulator,4), ($30-billion,1), (Pago-Pago,1), (problems.,50), (matron,2), (defiance,36), (ceased.,8), (viewed,24), (trade&quot;,1), (deservedly,2), (unforeseen,19), (ravages.,1), (1961--from,1), (1932,8), (Hills,5), (tradition--American,1), (Abusing,1), (Andrade,1), ($700,000,000,2), (Reward,1), (Clay,,2), (week--28,1), (set-tier,,1), (Congressmen.,1), (325,000.,1), (dollar's,4), (Congo's,1), ($458,544,233.03,,1), (policing.,3), (1835-36,1), (animating,3), (cities,162), (alternative,60), (strut,1), (demoralization.,3), (commodities--changes,1), (consent,,19), (workplace.,4), (comprehensiveness.,1), (renders,,2), (reiterating,1), (Accomplishing,1), (sequence,2), (panels;,1), (visible,,1), (logically,8), (Conflicts,2), ($33,784,417.95.,1), (slackness,1), (right,992), (belated,1), (insurer,1), (Saxe-Coburg,,1), (well-regulated,4), (polluters,4), (12,000,000,5), (breakwaters,1), (uninjured,1), (sham,1), (Bosphorus,2), (motor-car,1), (perpetuation,,1), (bite,,1), (degrades,1), (constructing,23), (reductions,,3), (photograph,2), (SOUTH,2), (Improved,1), (hydrogen-powered,1), (spelled,3), (impute,3), (Knowledge,3), (advance.,13), (incomparable,1), (seeing,28), ($88,922.10.,1), (Undistributed,1), (1998,4), (Palmer's,1), (organization.,27), (strangely,2), (east,39), (Mustering-out,1), (accede,,1), (anti-terrorism,1), (lines,238), (Regency.,1), (to-day;,3), (fails,19), (attributing,1), (morality.,1), (POLLUTION,1), (unimpaired,15), (Services,,2), (reestablished;,1), (veto.,9), (vessels.&quot;,1), (volcanic,1), (Truman's,1), ($10,000,000;,2), (Laws,8), (Hezbollah,,2), (tired,,1), (align,1), (archipelago,7), (beloved,34), (How,62), ((say,1), (deadweight,1), (ask--is,1), (praised,,1), (Y.--are,1), (marred,5), (11907,,1), (calamitously.,1), (affairs),,1), ($529,692,460.50.,1), (inviting,24), (small-arms,1), (hour,49), (twentieth,8), (peace--including,2), (mortal,6), (1,492,907.41,1), (conquest;,1), (sires,1), (instituted.,6), ($404,878.53,,1), (disturbed.&quot;,1), (obedience,,1), (devices,11), (Castro.,1), (anachronistic,1), (firm.,1), (Tanner,2), (modus,12), (entrance,,1), (interested?,1), (civilian,,1), (sober,,1), (interfere,60), (million.,27), (surprised,6), (nowadays,1), (cultivated.,1), (hit.,2), (murdering,4), (learnt,2), (exhausting,8), (1,154,471,762,1), (discernible,1), (excitement,,11), (devalued,,1), (strives,2), (probation.,2), (request,118), (systematically,15), (living.,32), (de-Baathification,1), (literally,,1), (roaming,1), (abstract,16), (benefactions,3), (&quot;commitments&quot;,1), (easy.&quot;,1), ($11,000,000;,1), (154,745,782,1), (overland,,1), (Fascist,3), (gratify,5), (22,083,1), (defer,,1), (Asia;,2), (wrapped,1), (enemy.&quot;,2), (Jamestown,,2), (geographically,,1), (laboratories,7), (26,487,795.67,1), (basin.,1), (support:,1), (warms,1), (adjournment,,2), (to-day's,1), (Atlantic;,1), (Jack,,1), ($1,095,440.33,1), (wide-sweeping,1), (namely,,19), (1846.,6), (Regents,1), (Fifth,3), (waters;,2), (heightened,7), (10,240,2), (offending,10), (DISCOUNT,1), (perpetuates,1), (brotherly,3), (rations,6), (cards,4), (insurgents.,9), (arrived,55), (impromptu,1), ($2,684,220.89,,1), (soldiery,,4), (demoralization,,1), (AGRICULTURE,14), (Italian,25), (1896--more,1), (trusts.,6), (self-defeating.,1), (legally.,1), (protection.,53), (Sacramento,3), (floor,14), (order--for,1), (fourth-class,11), ($165,000,000,1), (talent,,2), (column.,1), (Coast,36), (funded,37), ($2,481,000,1), (1,464;,1), (liberated,19), (Martens,,1), (canal.,15), (renown,2), (USES,1), (throng,1), (cherish,,3), (capacities,,4), (dislike,4), (birds,6), (placing,50), (extinguishment,,2), (WOMEN,2), (people--calling,1), (Former,2), (education--at,1), (enactments,27), (&quot;hereafter,1), (Go,4), (grew,,2), (Mount,8), (customers,10), (factor,65), (cuts,87), (turnabout,,1), (Secretly,1), (peace--making,1), ($40,000,000,6), ($27,036,389.41.,1), (equally.,2), (sue,1), (pathos,1), (deplores,1), (stabilize,15), (commerce--it,1), (asthma,,1), (mark.,2), (1823,,3), (cell.,3), (Ecuador,16), (exult,1), (robber,1), (Adversity,1), (grown,,3), (Except,6), ($100,000,000,,2), (liberalize,3), (outstripped,1), (stationary,,2), (doorways--on,1), (concern;,1), (Carolina),1), (affirmative,,2), (Lisa,1), (offer--$1.25,1), (Servia,4), (rabble-rousing,1), (commented,5), ($92,546,999;,1), (1930's--at,1), (160,000,1), ($74,065,896.99,,1), (outworn,,1), (Holland.,4), (prescriptions.,1), ($104,000,000.,1), (10?,1), (park--it's,1), (consulates,8), (inequities--then,1), (accommodations,,1), (California,,40), (untold,8), (might,,19), (prayer,13), (crises.,6), ($192,000,000,,1), (sell;,1), (wing,2), (Kyi,1), (marching,,1), (melted,1), (.outside,1), (2nd,,3), (happy,161), (converting,12), (procurement.,1), (sooner.,1), (reductions,76), (what.,1), (likened,1), (types--the,1), (agencies;,4), (inordinate,5), (712.,1), (unofficial,7), (plane.,1), (appurtenances,2), (surplus--until,1), (neglected;,1), (defined,40), (horrors,15), (country.&quot;,8), (journeyed,1), (unchallenged,2), (assuredly,12), (loyal.,1), (North-West,1), (broadcast,,1), (valor,11), ($134,178,756.96,,1), (ocean-going,2), (2001.,8), (war--in,1), (Augustine.,1), (saps,2), (consultation,,3), (forgotten;,1), (statesmen.,1), (sexual,3), (Nation--if,1), (Kosovo,,1), (weeks.,5), (wide;,1), (aggressor,,2), (Rensselaer,,1), (block,10), (unconsciously,,1), (potholes.&quot;,1), (scales,5), (Creation,1), (enormous.,1), (urgency.,4), (owners;,2), (resource&quot;--of,1), ($2,000,000,000,1), (Allen,5), (discreditable.,1), (networks,,4), (Versailles,1), (products;,1), (Endive.,1), (tends,40), ($160,000,000.,2), (masons,,1), (entrepreneurs.,2), (below,,3), (manager,2), (to,59686), (sewer,1), (1811.,2), (sustains,6), (surely,83), (subsidies.,5), (towering,4), (reactions,1), (caution.,7), (Syria,4), (because:,1), (apples--and,1), (missionaries,,3), (Bosnia's,1), (Objections,1), (Contracts,6), (propagation,2), (quadrupled,2), ($720,039,039.79,1), (quasi-judicial,1), (wrought,,1), (BILATERAL,1), (1987,,1), (about--challenging,1), (run--free,1), (speeding,7), (fixity,3), (he,1068), (skins.,1), (democracies.&quot;,1), (embedded,1), (Emory,2), (mercantile,15), (responses,4), ($907,500,000.,1), (shortcomings,12), (subserviency,2), (families,,58), (woman.,2), (uniqueness,1), (rapidly,213), (protectorate,7), (selfishness,10), (release,59), (despair,,2), (formidable,,3), ($250,5), (1975,8), (men's,5), (qualified.,1), (dispositions,28), (mat,1), (M,2), (agriculture;,1), (projects--navigation,,1), (notes--a,2), (Blessed,3), (Monterey,2), (Shan-tung,,1), (occupants,5), (crests,1), ($6,285,294.55,1), (practices;,2), (situations--the,1), (widowers,1), ((5),6), (toils,6), ($42,818,000.,1), (facie,2), (experimenting,1), (murdered,9), (News,,1), (aviation.,2), (construction,,51), (succumbing,1), (Brandeis,1), ($3,600,1), (ARMY,5), (comprehensive,188), (seek,,5), (indefinitely,14), (town,25), (person,136), (Rudy,1), (bankrupting,1), (Ukraine's,1), ($4.128,1), (Carefully,1), (Judeo-Christian,1), (effacement,1), (charities.,1), (tight-knit,5), ($36,394,976.92,1), (Prompt,6), (aliens,34), (manual.,1), (Thirty-eighth,2), (asserted,45), (children,394), (We,3437), (Democratic,,1), (crusiers,1), (guaranteed,34), (audit,,1), (Tejeda,,2), (ill,,6), ($52,964,887.36,1), (Governors,13), (Peiping,1), (Certainly,,1), (Proliferation,1), (associates.,5), (limiting,37), (shop-worn,1), (here--not,1), (customhouses,5), (intense,14), (florins,2), (Consumer,4), ($720,000,1), (vindicated,11), (threatened,122), (deputed,6), (contention,19), (confiscation,8), (rarely,,1), (thing--the,1), (seizures,,2), (centralization.,2), (accountable.&quot;,1), (Children.,1), (defaulting,2), (gallon.,2), (thanking,1), (compete.,6), (&quot;give,3), (29th,,7), (questions:,2), (IMPACT,1), (worry.,2), (Exemptions,,1), (ultraconservatives,1), (disturbance.,8), (House--as,1), (brotherhood,,2), (engagement.,1), (chair.,1), (cherished,32), (progrowth,1), (TRIDENT,2), (homelands,1), (satisfactory.,35), (affecting,,1), (cited,3), (safely,,3), (undisputed,,1), (prejudices,,7), (hydroelectric,5), (Conger,2), (prop,3), (Representatives.,30), (resident,,1), (10,000,000,,1), (1849,12), (motivate,1), (proprietorship,1), (Polynesian,1), (doing,192), (buses,1), (wounded,,10), ($742,000,000,,1), (decision-making.,4), (vindicate,16), (Peninsula,5), ($28,1), (DC,,1), (unforeseeable,1), (foretell,5), (unadjudicated.,1), (1947,40), (valuesthat's,1), (Experiment,2), (sectarian,7), (outcry,2), (preposition,1), (Pvt.,1), (freight,,7), (attracted,18), (Elihu,2), (disclosed,23), (fine,,5), (abroad--to,1), (territory.&quot;,1), (vague,11), (Comonfort,3), (there,2024), (4.5,5), ($9,500,000,000.,1), (computations,1), (1967,2), (easy-going,,1), (disfranchisement,2), ($247,354,1), (municipal,73), (ethic,,1), (portion,,5), (seconds.,1), (retooled.,1), (O'Neill,3), (discusses,1), ($409,967,470,,1), (expenditure.,24), (objectionable.,2), (verifying,,1), (dedicated.,2), (kindest,6), (defrayed,10), (Welland,2), (1985.,7), (exchanged,47), (prejudices,15), (1813,2), (independence.,54), (navigation.,19), (mulberry,3), (propelled,1), (append,1), ($7,000,000,000,2), (detected,7), (Protestant,,2), (verified.,3), (lengthy,6), (laws--strengthening,1), (bestowal,5), (Convention,48), (income--that,1), (organs&quot;,1), (contributed,60), (opinion;,3), ($55,402,465.46.,2), (Hubert,2), ($3,473,922,055,,1), (leadership;,1), (speedier,2), (coins,,3), (purposes--the,1), (multitude,17), (unsoundness,1), (historian,,1), (hemisphere;,1), (crafty,1), (ores,,1), (rounds.,1), (probable,99), (revealed,16), (Connecting,2), (bribe-giver,,1), (reclamation,,2), (helpfulness,2), (Clean,5), (discriminating,,1), (tribute.,2), (credence,1), ($79,333,966.,1), (efficacious,,1), (stems,1), (definite.,2), (computation,1), (Producers,1), (Third.,11), (styling,1), ($23,747,864.66,,1), (contribution.,3), ((except,5), (parliamentary,6), (anyplace,1), (extraordinaries,1), (warmly,6), (rectification,2), (purification,2), (rule-making,1), (militia;,1), (inspire,34), (articles,226), (136,2), (monarchy,,1), (&amp;,6), (transformations,1), (intimidation,,3), (Coinciding,1), (pay--so,1), (Justices,3), (whereby,,2), (Empire.,22), (resisted;,1), (betterments,2), (heavy.,2), (four-point,2), (compel,41), (allotting,2), (Low,,1), (Peace,55), (natural.,2), (charitable,14), (unscrupulously,1), (tree,3), (permits,31), (prohibited.&quot;,1), (archives,14), (annuities,,2), (fancied,,1), (animosities.,1), (subjection.,1), (respected,29), (Kickapoo,,1), (offensive,,8), (LAWS,4), (research,,32), (writer,1), (Forty-Five,1), (workload,2), (chances,19), (21,000,1), (preventable,9), (towards,47), (carefully-phased,1), (Contreras,1), (composite,1), (convey,12), (safety--these,,1), (exclusion.,2), (commander,,7), (24,557,409,1), (gelatine,1), (modicum,1), (plants,45), (defensible.,1), (Board;,1), ($8,967,609,1), (fetters.&quot;,1), (gunnery,3), (inward.,1), (five-sixths,1), (world?,2), (nation--an,1), (AMPHITHEATER,1), (entering.,1), (reaffirmations,1), (J.M.,1), (caps,2), (4o67,1), (restoration,,3), (launch,23), (brow.&quot;,1), (reminiscent,1), (originated.&quot;,1), (rents.,1), (navigate,3), ($110,000,000,1), (podium,,4), (1977:,1), (permissible,,1), (14,410,1), (penalizes,2), (couch,1), (ends:,2), (Optimistic,1), (slightest,51), (sped,1), (Republics.&quot;,1), (advance;,2), (rebuilds,1), (compelling,16), (militia,,28), (reconsideration.,2), (truly,92), (bestowed,36), (hastened,7), (locally,,1), (residence.,3), (hedge,1), (shortness,2), (promiscuous,1), (sum,,21), (Policy&quot;,1), (wool,,2), (harshest,1), (symbolically,1), (&quot;accepted&quot;,1), (testament,2), (prepare,91), (undecided,3), (Pa.,,1), (Charlotte,,2), (admission,106), (confirms,9), (unseeing,1), (valuation,,6), (truthful,3), (self-examination,1), ($24,829,163.54,1), ($215,725,995,,1), (governments--it,1), (Danish,11), (772,700,000,1), (1956.,1), (splendidly,2), (firearms,2), (mobile,5), (loving,5), (Treasure,1), (ministrations,1), (outposts,3), (obligations.&quot;,1), (inspecting,,1), (Apprehending,,1), (expatriation,,8), (idealism,8), (accounts.,11), (confessions,3), (temples,1), (unmodified.,1), (expediency,,3), (Hill,2), (longevity,1), ($800,000,000,1), (philosophy,11), (instrumental.,1), (genuine.,1), (barred,,1), (today,189), (Hay-Pauncefote,1), (braking,1), (7,000,000.,1), (75,000.,1), (Liverpool,4), (Strategically,,1), (Tokugawa,,1), (autos,,1), (254,550.00,1), (money,611), ($1,431,565.78.,1), (chieftain,1), (But--I,1), (denatured,2), (mailing,2), (1,297.,1), (patriotic,115), (universal,85), (1954,,4), (rededicate,5), (utterance,1), (work--two,1), (myself,,14), (monarchy.,2), (uneasy,3), (online,2), (upper,16), (patrolling,3), (30,000,000,2), (disappeared.,3), (depredations,36), (oppressors,,1), (vigorously,43), (Sandinistas,5), ($27,4), (begging,1), (dreary,,1), (deeds,22), (examination,,18), (CONDITION,2), (rocket,4), ($71,226,846,,1), (subjects--there,1), (asked:,1), (appropriating,21), (&quot;states,1), (0111,,1), (perspective,7), (wits,1), (deposit.,3), (them--we,1), (shooting,,1), (rub.,1), (badly.&quot;,1), (Leasing,2), (1767,1), (Leonard,3), (FBI,9), (154,747,1), (Hoods,1), (lofty,,1), (anti-recessionary,1), (problem;,1), (Massachusetts,11), (nicest,1), (1787.,3), (believe.,3), (OUR,19), (unify.,1), (graduation,21), (choices,,12), (&quot;unconstitutional,&quot;,1), (opinions,,14), (materialistic,,1), (midshipman,2), (pictures,2), (Sackville,1), (best-prepared,2), (twenty.,1), (fields,,9), (expedients,16), (1923,,1), (complied,33), (astronomical,6), (seize.,1), (careful.,1), (secession;,1), (Majority,5), (matters.,10), (premises,16), (happy,,7), (handle,20), (strange,,2), (believed,,72), (sites,26), (&quot;because,1), (incursion,,1), (&quot;Her,1), (rabbits,,1), (fishermen.,2), (independent-treasury,1), (recognized,174), (sloops,6), (Pupils,1), (terrorism.,10), (flag,,30), (auxiliary.,1), (alliances,29), (80,500,000,1), (1,074,974.35,,1), (larger,239), ($18,000,000,,1), (Fewer,1), (incompleteness,1), (style,,2), (Yakutsk,1), (Arenas,1), (instructs,1), (test,,2), (blasting,1), (Durango,1), (stress,,1), (success.,91), (calm,,4), ($11,507,670.,1), (year--to,1), (long,918), (modified.,6), (happier?,1), (loading,1), (reduced--and,1), (predominate,1), (armistice.,1), (availing,7), (sailing,17), (at,6519))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Unfortunately, as you can see from the <code>collect</code> above:</p>
+<ul>
+<li>the words have punctuations at the end which means that the same words are being counted as different words. Eg: importance</li>
+<li>empty words are being counted</li>
+</ul>
+<p>So we need a bit of <code>regex</code>'ing or regular-expression matching (all readily available from Scala via Java String types).</p>
+<p>We will cover the three things we want to do with a simple example from Middle Earth!</p>
+<ul>
+<li>replace all multiple whitespace characters with one white space character &quot; &quot;</li>
+<li>replace all punction characters we specify within <code>[</code> and <code>]</code> such as <code>[,?.!:;]</code> by the empty string <code>&quot;&quot;</code> (i.e., remove these punctuation characters)</li>
+<li>convert everything to lower-case.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val example = &quot;Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>example: String = Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">example
+  .replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+  .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+  .toLowerCase() // converting to lower-case
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res23: String = master master it's me sméagol mhrhm*%* but they took away our precious they wronged us gollum will protect us master it's me sméagol
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="more-sophisticated-word-count"><a class="header" href="#more-sophisticated-word-count">More sophisticated word count</a></h3>
+<p>We are now ready to do a word count of George Washington's SoU on January 8th 1790 as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wordCount_sou = 
+ sou.flatMap(line =&gt; 
+              line.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+                  .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+                  .toLowerCase() // converting to lower-case
+                  .split(&quot; &quot;)
+            ).map(x =&gt; (x, 1))
+             .reduceByKey(_+_)
+    
+wordCount_sou.count // there are 34812 distinct words
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wordCount_sou: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[19] at reduceByKey at command-4088905069026032:8
+res24: Long = 34812
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">wordCount_sou.take(30) // some of the counts are
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res25: Array[(String, Int)] = Array((reunion,9), ($654137907-89,1), (divisional,1), (devices--except,1), (successions,1), (undecaying,1), (instant--in,1), ($668000000,1), (subdivided,1), (b-1b,1), (american-british,1), (fuller,24), (leeway,1), (instrumentality,20), (tough,52), (countervail,3), (crying,12), (governments--or,1), (snatch,2), (breath,5), (boldest,1), (delusion,14), (execute,53), (relieves,4), (nonunion,2), (minorities,20), (afterward,2), (ignore,32), (entitlements,5), (eventuality,1))
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCount_sou.sortBy(_._2, false).take(10) // sorted by most frequent words limited to top 10
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>top10: Array[(String, Int)] = Array((the,150091), (of,97090), (and,60810), (to,60725), (in,38660), (a,27935), (that,21657), (for,19014), (be,18727), (our,17440))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="doing-it-all-together-for-the-sou-addresses-of-george-washington-and-donald-trump"><a class="header" href="#doing-it-all-together-for-the-sou-addresses-of-george-washington-and-donald-trump">Doing it all together for the SOU Addresses of George Washington and Donald Trump</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">souWithIndices
+    .filter(lineWithIndex =&gt; (22258-148 &lt; lineWithIndex._2 &amp;&amp; lineWithIndex._2 &lt;= 22258) // line numbers for Donlad Trump's 2017 SOU
+                               || lineWithIndex._2 &lt; 30  // line numbers for George Washington's first SoU
+           )
+    .map( lineWithIndex =&gt; lineWithIndex._1 )
+    .flatMap(line =&gt; 
+         line.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+             .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+             .toLowerCase() // converting to lower-case
+             .split(&quot; &quot;))
+    .map(x =&gt; (x,1))
+    .reduceByKey(_+_)
+    .sortBy(_._2, false)
+    .collect()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res26: Array[(String, Int)] = Array((the,344), (and,260), (of,230), (to,211), (our,129), (a,121), (we,104), (in,103), (that,81), (is,71), (will,71), (for,66), (have,57), (i,52), (be,48), (with,47), (as,39), (by,39), (are,38), (from,35), (all,35), (you,35), (on,34), (american,33), (this,32), (they,32), (not,32), (but,30), (it,28), (america,27), (their,27), (country,26), (an,24), (us,22), (at,22), (which,22), (so,21), (new,20), (who,20), (great,20), (must,20), (one,18), (united,18), (world,17), (people,17), (has,17), (should,17), (was,16), (states,16), (very,16), (my,15), (am,15), (those,15), (americans,15), (more,15), (citizens,14), (just,14), (your,14), (&quot;&quot;,14), (been,13), (them,13), (tonight,13), (now,13), (nation,13), (many,13), (national,13), (can,13), (other,12), (government,12), (every,12), (time,11), (his,11), (work,11), (across,10), (also,10), (thank,10), (year,10), (do,10), (public,10), (down,10), (it's,10), (its,9), (free,9), (much,9), (want,9), (health,9), (when,9), (home,9), (jobs,9), (than,9), (right,8), (immigration,8), (made,8), (good,8), (congress,8), (last,8), (out,8), (believe,8), (children,8), (or,8), (system,8), (first,8), (since,8), (state,8), (future,8), (support,8), (we've,8), (foreign,7), (he,7), (long,7), (need,7), (nations,7), (create,7), (companies,7), (know,7), (where,7), (were,7), (justice,7), (help,7), (years,7), (only,7), (what,7), (billions,6), (high,6), (if,6), (allies,6), (millions,6), (even,6), (may,6), (no,6), (trade,6), (workers,6), (care,6), (rights,6), (asking,6), (then,6), (get,6), (dollars,6), (too,6), (into,6), (never,6), (keep,6), (tax,6), (finally,6), (respect,6), (same,6), (security,6), (members,6), (life,6), (she,6), (friends,6), (infrastructure,6), (make,6), (me,6), (past,6), (administration,6), (better,6), (against,6), (military,6), (find,5), (community,5), (department,5), (further,5), (access,5), (had,5), (interests,5), (able,5), (school,5), (safe,5), (credit,5), (law,5), (peace,5), (there,5), (obamacare,5), (protect,5), (choice,5), (child,5), (history,5), (laws,5), (would,5), (men,5), (house,5), (up,5), (today,5), (like,5), (going,5), (middle,5), (families,5), (such,5), (fair,5), (plan,5), (because,5), (war,5), (measures,5), (over,5), (these,5), (rate,5), (women,5), (love,5), (insurance,5), (hope,5), (own,5), (provide,5), (dreams,5), (greater,4), (end,4), (megan,4), (proper,4), (megan's,4), (bring,4), (stop,4), (throughout,4), (big,4), (trillion,4), (well,4), (spirit,4), (affairs,4), (regard,4), (joining,4), (representatives,4), (countries,4), (ought,4), (wages,4), (increase,4), (while,4), (250th,4), (terrorism,4), (oliver,4), (means,4), (recent,4), (allow,4), (leave,4), (become,4), (family,4), (jenna,4), (truly,4), (said,4), (drug,4), (jamiel,4), (best,4), (way,4), (senate,4), (resources,4), (blessed,4), (look,4), (program,4), (incredible,4), (job,4), (general,4), (defense,4), (require,4), (both,4), (save,4), (two,4), (another,4), (uniform,4), (could,4), (come,4), (ryan,4), (directed,4), (costs,4), (together,4), (borders,4), (her,4), (rule,4), (susan,4), (take,4), (they're,4), (old,3), (republicans,3), (price,3), (veterans,3), (cities,3), (jessica,3), (defend,3), (everyone,3), (creating,3), (regulations,3), (celebrate,3), (taxpayers,3), (business,3), (president,3), (seen,3), (thousands,3), (victims,3), (immigrant,3), (tens,3), (serve,3), (ensure,3), (calling,3), (done,3), (importance,3), (confidence,3), (others,3), (nothing,3), (any,3), (task,3), (million,3), (circumstances,3), (duty,3), (day,3), (record,3), (render,3), (working,3), (back,3), (far,3), (grow,3), (disease,3), (drugs,3), (information,3), (direct,3), (poverty,3), (session,3), (common,3), (force,3), (financial,3), (democrats,3), (deserve,3), (learning,3), (private,3), (davis,3), (expect,3), (current,3), (constitution,3), (ones,3), (cycle,3), (including,3), (promises,3), (necessary,3), (object,3), (class,3), (give,3), (friend,3), (nearly,3), (here,3), (rebuilding,3), (present,3), (policy,3), (brave,3), (loved,3), (before,3), (vision,3), (gallery,3), (8,3), (break,3), (whether,3), (satisfaction,3), (freedom,3), (share,3), (cannot,3), (important,3), (saved,3), (through,3), (historic,3), (guided,3), (honor,3), (cooperation,3), (between,3), (strong,3), (enforcement,3), (center,3), (union,3), (again,3), (college,3), (according,3), (fact,3), (decades,3), (achieve,3), (denisha,3), (abroad,3), (terrible,3), (god,3), (ban,3), (crime,3), (rare,3), (young,3), (shot,2), (behind,2), (less,2), (part,2), (we're,2), (toward,2), (disasters,2), (small,2), (trillions,2), (torch,2), (vetting,2), (washington,2), (third,2), (inherited,2), (east,2), (meeting,2), (poorest,2), (enter,2), (integrity,2), (things,2), (lay,2), (came,2), (george,2), (twice,2), (largest,2), (left,2), (illegal,2), (civil,2), (souls,2), (buy,2), (spoke,2), (office,2), (equal,2), (greatness,2), (inside,2), (persuaded,2), (showed,2), (fight,2), (lawless,2), (let,2), (mr,2), (goods,2), (due,2), (jewish,2), (nato,2), (welfare,2), (themselves,2), (message,2), (&quot;how,2), (essential,2), (happy,2), (communities,2), (off,2), (reason,2), (anniversary,2), (capital,2), (develop,2), (moment,2), (one's,2), (course,2), (within,2), (displayed,2), (ready,2), (bridges,2), (everything,2), (43,2), (embrace,2), (plenty,2), (add,2), (beginning,2), (threaten,2), (shaw,2), (consideration,2), (miracles,2), (parts,2), (given,2), (budget,2), (taxed,2), (branch,2), (form,2), (gentlemen,2), (leaving,2), (neighbors,2), (lincoln,2), (border,2), (spent,2), (mothers,2), (promised,2), (wanted,2), (reach,2), (strongly,2), (ignored,2), (joined,2), (upon,2), (think,2), (opportunity,2), (approve,2), (threats,2), (opinion,2), (doing,2), (250,2), (america's,2), (drive,2), (chicago,2), (former,2), (value,2), (canada,2), (delivered,2), (prepared,2), (almost,2), (celebration,2), (legal,2), (losing,2), (derive,2), (along,2), (immediately,2), (wars,2), (longer,2), (chapter,2), (slow,2), (lost,2), (learn,2), (crumbling,2), (badly,2), (kentucky,2), (man,2), (fantastic,2), (food,2), (invest,2), (intelligence,2), (attention,2), (based,2), (principles,2), (legislature,2), (large,2), (republican,2), (father,2), (lifetime,2), (goals,2), (told,2), (youth,2), (conflict,2), (month,2), (economy,2), (alone,2), (process,2), (most,2), (raise,2), (skill,2), (degree,2), (persons,2), (places,2), (motorcycles,2), (intercourse,2), (broken,2), (answered,2), (encouragement,2), (election,2), (percent,2), (represent,2), (asked,2), (effectual,2), (begin,2), (meaningful,2), (society,2), (i've,2), (fought,2), (provision,2), (electric,2), (laid,2), (currently,2), (commerce,2), (quiet,2), (scalia,2), (afford,2), (audience,2), (hopes,2), (chorus,2), ($6,2), (lead,2), (collapsing,2), (solution,2), (prime,2), (land,2), (engagement,2), (voice,2), (products,2), (clean,2), (distinguish,2), (about,2), (favorable,2), (distant,2), (ask,2), (live,2), (shall,2), (special,2), (southern,2), (bless,2), (1790,2), (coverage,2), (pacific,2), (still,2), (once,2), (pleasing,2), (fill,2), (particularly,2), (advantage,2), (patriotism,2), (officers,2), (financed,2), (restore,2), (pouring,2), (expand,2), (promote,2), (overseas,2), (owens,2), (among,2), (speak,2), (various,2), (fast,2), (partners,2), (construction,2), (failed,2), (merit-based,2), (papers,2), (steps,2), (parties,2), (blessings,2), (pay,2), (pipelines,2), (fellow-citizens,2), (effort,2), (anyone,2), (fulfill,2), (deliver,2), (see,2), (ordered,2), (why,2), (renewal,2), (inner,2), (prosperity,2), (stock,2), (vital,2), (hero,2), (murder,2), (cost,2), (officials,2), (act,2), (maureen,2), (20,2), (attacks,2), (reform,2), (action,2), (trust,2), (reforms,2), (nation's,2), (ship,2), (gang,2), (taken,2), (join,2), (education,2), (viciously,2), (reduce,2), (deeply,2), (calls,2), (company,2), (ever,2), (division,2), (kind,2), (purchase,2), (light,2), (respectability,2), (anywhere,2), (criminal,2), (imposing,2), (individuals,2), (use,2), (safety,2), (conditions,2), (daughter,2), (five,2), (homeland,2), (alliance,2), (placed,2), (court,2), (put,2), (progress,2), (path,2), (woman,2), (mistakes,2), (enforce,2), (prospects,2), (liberty,2), (providing,2), (always,2), (lower,2), (became,2), (justin,1), (accession,1), (surge,1), (desirable,1), (secure,1), (dismantle,1), (germany,1), (federal,1), (unveiled,1), (weights,1), (looking,1), (inevitable,1), (supporting,1), (discriminate,1), (entry,1), (partnership,1), (bears,1), (well-being,1), (safely,1), (bad,1), (eight,1), (punish,1), (son,1), (swamp,1), (strength,1), (tragic,1), (chosen,1), (heroic,1), (official,1), (series,1), (received),1), (fourth,1), (lived,1), (increases,1), (satisfactory,1), (footprints,1), (sciences,1), (unnecessary,1), (found,1), (commonwealth,1), (totally,1), (builders,1), (latter,1), (savages,1), (shrink,1), (china,1), (discussions,1), (graduate,1), (uniting,1), (divided,1), (produces,1), (foe,1), (trans-pacific,1), (antonin,1), (giving,1), (project,1), (networks,1), (win,1), (names,1), (exigencies,1), (months,1), (keystone,1), (firmly,1), (weren't,1), (approval,1), (undertaken,1), (blood,1), (fighter,1), (went,1), (insurer,1), (post-roads,1), (pentagon,1), (field,1), (entirely,1), (truth,1), (husband,1), (refused,1), (lobbyists,1), (bravery,1), (genius,1), (legacy,1), (go,1), (harm,1), (agency,1), (repeal,1), (daring,1), (precious,1), (lines,1), (eliminates,1), (congratulating,1), (country's,1), (accounts,1), (vehicle,1), (endeavors,1), (richly,1), (exertions,1), (detroit,1), (outcome,1), (align,1), (released,1), (muslims,1), (efforts,1), (supplies,1), (unemployed,1), (confirmed,1), (senior,1), (city,1), (developing,1), (compensation,1), (adopted,1), (carolina,1), (declaration,1), (obviously,1), (worlds,1), (recommendation,1), (reminded,1), (enemies,1), (open,1), (ford,1), (defeated,1), (facilitated,1), (forged,1), (taking,1), (forgotten,1), (raid,1), (coordinate,1), (perceive,1), (marine,1), (hands,1), (choose,1), (struggled,1), (doubts,1), (father's,1), (attended,1), (rebirth,1), (judge,1), (formed,1), (bible,1), (globe,1), (belgium,1), (muslim,1), (watching,1), (flexibility,1), (john,1), (pressure,1), (sequester,1), (last--and,1), (ravaged,1), (little,1), (speedily,1), (inventors,1), (d,1), (pour,1), (deficit,1), (enemy,1), (jr,1), (african-american,1), (considerations,1), (entire,1), (2016,1), (creations,1), (tariffs,1), (institutions,1), (dakota,1), (salute,1), (markets,1), (jamiel's,1), (engagements,1), (forget,1), (earth,1), (placing,1), (unanimously,1), (extremists,1), (appoint,1), (level,1), (protective,1), (dream,1), (perfect,1), (social,1), (impressions,1), (j,1), (question,1), (produce,1), (forces,1), (quote,1), (he's,1), (circumstance,1), (sales&quot;,1), (conducive,1), (obligation,1), (say,1), (basis,1), (defended,1), (investment,1), (tools,1), (cures,1), (fellow,1), (job-crushing,1), (saw,1), (crucial,1), (consultations,1), (countless,1), (cherishing,1), (protecting,1), (water,1), (experienced,1), (navy,1), (religious,1), (manufacturing,1), (side,1), (survivor,1), (ground,1), (faith,1), (teaching,1), (worthy,1), (cleared,1), (they've,1), (france,1), (fda,1), (pleasure,1), (resuming,1), (stamps,1), (extinguish,1), (glorious,1), (nice,1), (operations,1), (optimism,1), (strategy,1), (proud,1), (abandonment,1), (defined,1), (inviolable,1), (philadelphia,1), (inspired,1), (fighting,1), (illnesses,1), (helped,1), (return,1), (burdened,1), (novelty,1), (advances,1), (replace,1), (reconfirmed,1), (girl,1), (later,1), (global,1), (data,1), (slain,1), (died,1), (sheriffs,1), (destruction,1), (1876,1), (rely,1), (expected,1), (100th,1), (easier,1), (council,1), (dethroned,1), (boston,1), (close,1), (manner,1), (rebellion,1), (role,1), (ago,1), (governors,1), (they'll,1), (affording,1), (adequate,1), (deep,1), (declared,1), (restart,1), (sanctions,1), (turned,1), (loud,1), (core,1), (debt,1), (list,1), (provisions,1), (kansas,1), (specify,1), (unadulterated,1), (credits,1), (uphold,1), (wonder,1), (call,1), (beliefs,1), (2017,1), (fund,1), (protection,1), (improve,1), (campaign,1), (unlimited,1), (restraints,1), (ways--by,1), (recommended,1), (mercantile,1), (thirdly,1), (double,1), (speedy,1), (wherever,1), (funding,1), (silenced,1), (2015,1), (hard,1), (vandalism,1), (introduction,1), (dealers,1), (thomas,1), (colors,1), (contained,1), (flag,1), (intel,1), (story,1), (terrorism-related,1), (murdered,1), (vice,1), (slash,1), (tap,1), (trudeau,1), (rebuilt,1), (january,1), (bold,1), (violence,1), (israel,1), (ability,1), (founded,1), (ballistic,1))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h2 id="youtry-homework"><a class="header" href="#youtry-homework">YouTry: HOMEWORK</a></h2>
+<ul>
+<li>HOWEWORK WordCount 1: <code>sortBy</code></li>
+<li>HOMEWORK WordCount 2: <code>dbutils.fs</code>
+<ul>
+<li>for databricks environment only; won't work in zeppelin which may use hdfs or local file system or another</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h5 id="homework-wordcount-1-sortby"><a class="header" href="#homework-wordcount-1-sortby">HOMEWORK WordCount 1. <code>sortBy</code></a></h5>
+<p>Let's understand <code>sortBy</code> a bit more carefully.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val example = &quot;Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.&quot;
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>example: String = Master, Master!   It's me, Sméagol... mhrhm*%* But they took away our precious, they wronged us. Gollum will protect us..., Master, it's me Sméagol.
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val sou = sc.textFile(&quot;/datasets/sds/souall.txt.gz&quot;)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>sou: org.apache.spark.rdd.RDD[String] = /datasets/sds/souall.txt.gz MapPartitionsRDD[32] at textFile at command-4088905069026050:1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val rddWords = sou
+    .flatMap(line =&gt; 
+         line.replaceAll(&quot;\\s+&quot;, &quot; &quot;) //replace multiple whitespace characters (including space, tab, new line, etc.) with one whitespace &quot; &quot;
+             .replaceAll(&quot;&quot;&quot;([,?.!:;])&quot;&quot;&quot;, &quot;&quot;) // replace the following punctions characters: , ? . ! : ; . with the empty string &quot;&quot;
+             .toLowerCase() // converting to lower-case
+             .split(&quot; &quot;)) // split by single whitespace
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rddWords: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[33] at flatMap at command-4088905069026051:2
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddWords.take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res27: Array[String] = Array(george, washington, &quot;&quot;, january, 8, 1790, fellow-citizens, of, the, senate)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val wordCounts = rddWords
+                  .map(x =&gt; (x,1))
+                  .reduceByKey(_+_)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>wordCounts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[35] at reduceByKey at command-4088905069026053:3
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCounts.sortBy(_._2, false).take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>top10: Array[(String, Int)] = Array((the,150091), (of,97090), (and,60810), (to,60725), (in,38660), (a,27935), (that,21657), (for,19014), (be,18727), (our,17440))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Make your code easy to read for other developers ;)
+Use 'case classes' with well defined variable names that everyone can understand</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val top10 = wordCounts.sortBy(
+  {
+  case (word, count) =&gt; count
+  }, false) // here false says the order is not ascending
+.take(10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>top10: Array[(String, Int)] = Array((the,150091), (of,97090), (and,60810), (to,60725), (in,38660), (a,27935), (that,21657), (for,19014), (be,18727), (our,17440))
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>If you just want a total count of all words in the file</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">rddWords.count
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res28: Long = 1778012
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h5 id="youttry-homework-wordcount-2-dbutilsfs"><a class="header" href="#youttry-homework-wordcount-2-dbutilsfs">YoutTry: HOMEWORK WordCount 2: <code>dbutils.fs</code></a></h5>
+<p>Have a brief look at what other commands dbutils.fs supports. We will introduce them as needed in databricks</p>
+<ul>
+<li>This is for databricks environment only; <code>dbutils.fs</code> won't work in zeppelin which may use hdfs or local file system or another</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">dbutils.fs.help // some of these were used to ETL this data into /datasets/sds/sou 
+</code></pre>
+<div class="output execute_result html_result" execution_count="1">
+<div class = "ansiout"><b>dbutils.fs</b> provides utilities for working with FileSystems. Most methods in
+this package can take either a DBFS path (e.g., "/foo" or "dbfs:/foo"), or
+another FileSystem URI.
+<p>For more info about a method, use <b>dbutils.fs.help(&quot;methodName&quot;)</b>.</p>
+<p>In notebooks, you can also use the %fs shorthand to access DBFS. The %fs shorthand maps
+straightforwardly onto dbutils calls. For example, &quot;%fs head --maxBytes=10000 /file/path&quot;
+translates into &quot;dbutils.fs.head(&quot;/file/path&quot;, maxBytes = 10000)&quot;.
+<h3 id="mount"><a class="header" href="#mount">mount</a></h3><b>mount(source: String, mountPoint: String, encryptionType: String = &quot;&quot;, owner: String = null, extraConfigs: Map = Map.empty[String, String]): boolean</b> -&gt; Mounts the given source directory into DBFS at the given mount point<br /><b>mounts: Seq</b> -&gt; Displays information about what is mounted within DBFS<br /><b>refreshMounts: boolean</b> -&gt; Forces all machines in this cluster to refresh their mount cache, ensuring they receive the most recent information<br /><b>unmount(mountPoint: String): boolean</b> -&gt; Deletes a DBFS mount point<br /><b>updateMount(source: String, mountPoint: String, encryptionType: String = &quot;&quot;, owner: String = null, extraConfigs: Map = Map.empty[String, String]): boolean</b> -&gt; Similar to mount(), but updates an existing mount point (if present) instead of creating a new one<br /><br /><h3 id="fsutils"><a class="header" href="#fsutils">fsutils</a></h3><b>cp(from: String, to: String, recurse: boolean = false): boolean</b> -&gt; Copies a file or directory, possibly across FileSystems<br /><b>head(file: String, maxBytes: int = 65536): String</b> -&gt; Returns up to the first 'maxBytes' bytes of the given file as a String encoded in UTF-8<br /><b>ls(dir: String): Seq</b> -&gt; Lists the contents of a directory<br /><b>mkdirs(dir: String): boolean</b> -&gt; Creates the given directory if it does not exist, also creating any necessary parent directories<br /><b>mv(from: String, to: String, recurse: boolean = false): boolean</b> -&gt; Moves a file or directory, possibly across FileSystems<br /><b>put(file: String, contents: String, overwrite: boolean = false): boolean</b> -&gt; Writes the given String out to a file, encoded in UTF-8<br /><b>rm(dir: String, recurse: boolean = false): boolean</b> -&gt; Removes a file or directory<br /><br /></div></p>
+</div>
+</div>
+<div class="cell markdown">
+<p>Feel free to explore syntax by writing your own codes in your notebooks.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

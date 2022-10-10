@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>001_whySpark - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html" class="active">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="why-apache-spark"><a class="header" href="#why-apache-spark">Why Apache Spark?</a></h1>
+<ul>
+<li><a href="https://cacm.acm.org/magazines/2016/11/209116-apache-spark/fulltext/">Apache Spark: A Unified Engine for Big Data Processing</a> By Matei Zaharia, Reynold S. Xin, Patrick Wendell, Tathagata Das, Michael Armbrust, Ankur Dave, Xiangrui Meng, Josh Rosen, Shivaram Venkataraman, Michael J. Franklin, Ali Ghodsi, Joseph Gonzalez, Scott Shenker, Ion Stoica Communications of the ACM, Vol. 59 No. 11, Pages 56-65 10.1145/2934664</li>
+</ul>
+<p><a href="https://player.vimeo.com/video/185645796"><img src="https://i.vimeocdn.com/video/597494216-6f494f2fb4efb90efe6bb3206f3892bec6b202352951512dbde44c976549dd87-d.jpg?mw=240&amp;q=255" alt="Apache Spark ACM Video" /></a></p>
+<p>Right-click the above image-link, open in a new tab and watch the video (4 minutes) or read about it in the Communications of the ACM in the frame below or from the link above.</p>
+<p>Key Insights from <a href="https://cacm.acm.org/magazines/2016/11/209116-apache-spark/fulltext">Apache Spark: A Unified Engine for Big Data Processing</a></p>
+<ul>
+<li>A simple programming model can capture streaming, batch, and interactive workloads and enable new applications that combine them.</li>
+<li>Apache Spark applications range from finance to scientific data processing and combine libraries for SQL, machine learning, and graphs.</li>
+<li>In six years, Apache Spark has grown to 1,000 contributors and thousands of deployments.</li>
+</ul>
+<p><img src="https://dl.acm.org/cms/attachment/6f54b222-fe96-497a-8bfc-0e6ea250b05d/ins01.gif" alt="Key Insights" /></p>
+</div>
+<div class="cell markdown">
+<p>Spark 3.0 is the latest version now (20200918) and it should be seen as the latest step in the evolution of tools in the big data ecosystem as summarized in <a href="https://towardsdatascience.com/what-is-big-data-understanding-the-history-32078f3b53ce">https://towardsdatascience.com/what-is-big-data-understanding-the-history-32078f3b53ce</a>:</p>
+<p><img src="https://miro.medium.com/max/1200/1*0bWwqlOfjRqoUDqrH62GbQ.png" alt="Spark in context" /></p>
+</div>
+<div class="cell markdown">
+<h2 id="alternatives-to-apache-spark"><a class="header" href="#alternatives-to-apache-spark">Alternatives to Apache Spark</a></h2>
+<p>There are several alternatives to Apache Spark, but none of them have the penetration and community of Spark as of 2021.</p>
+<p>For real-time streaming operations <a href="https://flink.apache.org/">Apache Flink</a> is competitive. See <a href="https://www.projectpro.io/article/apache-flink-vs-spark-will-one-overtake-the-other/282#toc-7">Apache Flink vs Spark – Will one overtake the other?</a> for a July 2021 comparison. Most scalable data science and engineering problems faced by several major industries in Sweden today are routinely solved using tools in the ecosystem around Apache Spark. Therefore, we will focus on Apache Spark here which still holds <a href="https://www.tpc.org/tpcds/results/tpcds_perf_results5.asp?spm=a2c65.11461447.0.0.626f184fy7PwOU&amp;resulttype=all">the world record for 10TB or 10,000 GB sort</a> by <a href="https://www.alibabacloud.com/blog/alibaba-cloud-e-mapreduce-sets-world-record-again-on-tpc-ds-benchmark_596195">Alibaba cloud</a> in 06/17/2020.</p>
+<p>Several alternatives to Apache Spark exist. See the following for verious commercial options: - <a href="https://sourceforge.net/software/product/Apache-Spark/alternatives">https://sourceforge.net/software/product/Apache-Spark/alternatives</a></p>
+<p>Read the following for a comparison of three popular frameworks in 2022 for distributed computing:</p>
+<ul>
+<li><a href="https://www.dominodatalab.com/blog/spark-dask-ray-choosing-the-right-framework">https://www.dominodatalab.com/blog/spark-dask-ray-choosing-the-right-framework</a></li>
+</ul>
+<p>Here, we will focus on Apache Spark as it is still a popular framework for distributed computing with a rich ecosystem around it.</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-big-data-problem"><a class="header" href="#the-big-data-problem">The big data problem</a></h2>
+<p><strong>Hardware, distributing work, handling failed and slow machines</strong></p>
+<p>Let us recall and appreciate the following:</p>
+<ul>
+<li>The Big Data Problem
+<ul>
+<li>Many routine problems today involve dealing with &quot;big data&quot;, operationally, this is a dataset that is larger than a few TBs and thus won't fit into a single commodity computer like a powerful desktop or laptop computer.</li>
+</ul>
+</li>
+<li>Hardware for Big Data</li>
+<li>The best single commodity computer can not handle big data as it has limited hard-disk and memory</li>
+<li>Thus, we need to break the data up into lots of commodity computers that are networked together via cables to communicate instructions and data between them - this can be thought of as <em>a cloud</em></li>
+<li>How to distribute work across a cluster of commodity machines?
+<ul>
+<li>We need a software-level framework for this.</li>
+</ul>
+</li>
+<li>How to deal with failures or slow machines?
+<ul>
+<li>We also need a software-level framework for this.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="key-papers"><a class="header" href="#key-papers">Key Papers</a></h2>
+<ul>
+<li>Key Historical Milestones
+<ul>
+<li>1956-1979: <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Stanford, MIT, CMU, and other universities develop set/list operations in LISP, Prolog, and other languages for parallel processing</a></li>
+<li>2004: <strong>READ</strong>: <a href="https://research.google/pubs/pub62/">Google's MapReduce: Simplified Data Processing on Large Clusters, by Jeffrey Dean and Sanjay Ghemawat</a></li>
+<li>2006: <a href="https://en.wikipedia.org/wiki/Apache_Hadoop">Yahoo!'s Apache Hadoop, originating from the Yahoo!’s Nutch Project, Doug Cutting - wikipedia</a></li>
+<li>2009: <a href="https://aws.amazon.com/emr/">Cloud computing with Amazon Web Services Elastic MapReduce</a>, a Hadoop version modified for Amazon Elastic Cloud Computing (EC2) and Amazon Simple Storage System (S3), including support for Apache Hive and Pig.</li>
+<li>2010: <strong>READ</strong>: <a href="http://ieeexplore.ieee.org/document/5496972/">The Hadoop Distributed File System, by Konstantin Shvachko, Hairong Kuang, Sanjay Radia, and Robert Chansler. IEEE MSST</a></li>
+</ul>
+</li>
+<li>Apache Spark Core Papers
+<ul>
+<li>2012: <strong>READ</strong>: <a href="https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf">Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing, Matei Zaharia, Mosharaf Chowdhury, Tathagata Das, Ankur Dave, Justin Ma, Murphy McCauley, Michael J. Franklin, Scott Shenker and Ion Stoica. NSDI</a></li>
+<li>2016: <a href="https://cacm.acm.org/magazines/2016/11/209116-apache-spark/fulltext">Apache Spark: A Unified Engine for Big Data Processing</a> By Matei Zaharia, Reynold S. Xin, Patrick Wendell, Tathagata Das, Michael Armbrust, Ankur Dave, Xiangrui Meng, Josh Rosen, Shivaram Venkataraman, Michael J. Franklin, Ali Ghodsi, Joseph Gonzalez, Scott Shenker, Ion Stoica , Communications of the ACM, Vol. 59 No. 11, Pages 56-65, 10.1145/2934664</li>
+</ul>
+</li>
+<li>A lot has happened since 2016 to improve efficiency of Spark and embed more into the big data ecosystem
+<ul>
+<li>See <a href="https://www.youtube.com/watch?v=p4PkA2huzVc">Introducing Apache Spark 3.0 | Matei Zaharia and Brooke Wenig | Keynote Spark + AI Summit 2020</a>.</li>
+</ul>
+</li>
+<li>More research papers on Spark are available from here and we will refer to them in the sequel as needed:
+<ul>
+<li><a href="https://databricks.com/resources?_sft_resource_type=research-papers">https://databricks.com/resources?<em>sft</em>resource_type=research-papers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="mapreduce-and-apache-spark"><a class="header" href="#mapreduce-and-apache-spark">MapReduce and Apache Spark.</a></h2>
+<p>MapReduce as we will see shortly in action is a framework for distributed fault-tolerant computing over a fault-tolerant distributed file-system, such as Google File System or open-source Hadoop for storage.</p>
+<ul>
+<li>Unfortunately, Map Reduce is bounded by Disk I/O and can be slow
+<ul>
+<li>especially when doing a sequence of MapReduce operations requirinr multiple Disk I/O operations</li>
+</ul>
+</li>
+<li>Apache Spark can use Memory instead of Disk to speed-up MapReduce Operations
+<ul>
+<li>Spark Versus MapReduce - the speed-up is orders of magnitude faster</li>
+</ul>
+</li>
+<li>SUMMARY
+<ul>
+<li>Spark uses memory instead of disk alone and is thus fater than Hadoop MapReduce</li>
+<li>Spark's resilience abstraction is by RDD (resilient distributed dataset)</li>
+<li>RDDs can be recovered upon failures from their <em>lineage graphs</em>, the recipes to make them starting from raw data</li>
+<li>Spark supports a lot more than MapReduce, including streaming, interactive in-memory querying, etc.</li>
+<li>Spark demonstrated an unprecedented sort of 1 petabyte (1,000 terabytes) worth of data in 234 minutes running on 190 Amazon EC2 instances (in 2015).</li>
+<li>Spark expertise corresponds to the highest Median Salary in the US (~ 150K)</li>
+</ul>
+</li>
+</ul>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

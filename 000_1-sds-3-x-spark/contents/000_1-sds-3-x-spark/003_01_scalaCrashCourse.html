@@ -1,0 +1,827 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>003_01_scalaCrashCourse - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html" class="active">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="scala-crash-course-continued"><a class="header" href="#scala-crash-course-continued">Scala Crash Course Continued</a></h1>
+<p>Recall!</p>
+<h2 id="scala-resources"><a class="header" href="#scala-resources">Scala Resources</a></h2>
+<p>You will not be learning scala systematically and thoroughly in this course. You will learn <em>to use</em> Scala by doing various Spark jobs.</p>
+<p>If you are interested in learning scala properly, then there are various resources, including:</p>
+<ul>
+<li><a href="http://www.scala-lang.org/">scala-lang.org</a> is the <strong>core Scala resource</strong>. Bookmark the following three links:
+<ul>
+<li><a href="https://docs.scala-lang.org/tour/tour-of-scala.html">tour-of-scala</a> - Bite-sized introductions to core language features.
+<ul>
+<li>we will go through the tour in a hurry now as some Scala familiarity is needed immediately.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/overviews/scala-book/introduction.html">scala-book</a> - An online book introducing the main language features
+<ul>
+<li>you are expected to use this resource to figure out Scala as needed.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/cheatsheets/index.html">scala-cheatsheet</a> - A handy cheatsheet covering the basics of Scala syntax.</li>
+<li><a href="https://superruzafa.github.io/visual-scala-reference/">visual-scala-reference</a> - This guide collects some of the most common functions of the Scala Programming Language and explain them conceptual and graphically in a simple way.</li>
+</ul>
+</li>
+<li><a href="https://docs.scala-lang.org/learn.html">Online Resources</a>, including:
+<ul>
+<li><a href="https://www.coursera.org/course/progfun">courseera: Functional Programming Principles in Scala</a></li>
+</ul>
+</li>
+<li><a href="http://www.scala-lang.org/documentation/books.html">Books</a>
+<ul>
+<li><a href="http://www.artima.com/pins1ed/">Programming in Scala, 1st Edition, Free Online Reading</a></li>
+</ul>
+</li>
+</ul>
+<p>The main sources for the following content are (you are encouraged to read them for more background):</p>
+<ul>
+<li><a href="https://www.scala-lang.org/old/sites/default/files/linuxsoft_archives/docu/files/ScalaByExample.pdf">Martin Oderski's Scala by example</a></li>
+<li><a href="http://lintool.github.io/SparkTutorial/slides/day1_Scala_crash_course.pdf">Scala crash course by Holden Karau</a></li>
+<li><a href="https://darrenjw.wordpress.com/2013/12/30/brief-introduction-to-scala-and-breeze-for-statistical-computing/">Darren's brief introduction to scala and breeze for statistical computing</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="lets-continue-getting-our-hands-dirty-in-scala"><a class="header" href="#lets-continue-getting-our-hands-dirty-in-scala">Let's continue getting our hands dirty in Scala</a></h2>
+<p>We will go through the <strong>remaining</strong> programming concepts and tasks by building on <a href="https://docs.scala-lang.org/tour/basics.html">https://docs.scala-lang.org/tour/basics.html</a>.</p>
+<ul>
+<li>Scala Types</li>
+<li>Expressions and Printing</li>
+<li>Naming and Assignments</li>
+<li>Functions and Methods in Scala</li>
+<li>Classes and Case Classes</li>
+<li>Methods and Tab-completion</li>
+<li>Objects and Traits</li>
+<li><strong>Collections in Scala and Type Hierarchy</strong></li>
+<li><strong>Functional Programming and MapReduce</strong></li>
+<li><strong>Lazy Evaluations and Recursions</strong></li>
+</ul>
+<p><strong>Remark</strong>: You need to take a computer science course (from CourseEra, for example) to properly learn Scala. Here, we will learn to use Scala by example to accomplish our data science tasks at hand. You can learn more Scala as needed from various sources pointed out above in <strong>Scala Resources</strong>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="scala-type-hierarchy"><a class="header" href="#scala-type-hierarchy">Scala Type Hierarchy</a></h3>
+<p>In Scala, all values have a type, including numerical values and functions. The diagram below illustrates a subset of the type hierarchy.</p>
+<p><img src="https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg" alt="" /></p>
+<p>For now, notice some common types we will be usinf including <code>Int</code>, <code>String</code>, <code>Double</code>, <code>Unit</code>, <code>Boolean</code>, <code>List</code>, etc.</p>
+<p>Let us take a closer look at Scala Type Hierarchy now here:</p>
+<ul>
+<li><a href="https://docs.scala-lang.org/tour/unified-types.html">https://docs.scala-lang.org/tour/unified-types.html</a>.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="scala-collections"><a class="header" href="#scala-collections">Scala Collections</a></h3>
+<p>Familiarize yourself with the main Scala collections classes here:</p>
+<ul>
+<li><a href="https://docs.scala-lang.org/overviews/scala-book/collections-101.html">https://docs.scala-lang.org/overviews/scala-book/collections-101.html</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h4 id="list"><a class="header" href="#list">List</a></h4>
+<p>Lists are one of the most basic data structures.</p>
+<p>There are several other Scala collections and we will introduce them as needed. The other most common ones are <code>Vector</code>, <code>Array</code> and <code>Seq</code> and the <code>ArrayBuffer</code>.</p>
+<p>For details on list see: - <a href="https://docs.scala-lang.org/overviews/scala-book/list-class.html">https://docs.scala-lang.org/overviews/scala-book/list-class.html</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Ctrl+Enter&gt; to declare (an immutable) val lst as List of Int's 1,2,3
+val lst = List(1, 2, 3)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>lst: List[Int] = List(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="vectors"><a class="header" href="#vectors">Vectors</a></h4>
+<blockquote>
+<p>The Vector class is an indexed, immutable sequence. The “indexed” part of the description means that you can access Vector elements very rapidly by their index value, such as accessing listOfPeople(999999).</p>
+</blockquote>
+<p>In general, except for the difference that Vector is indexed and List is not, the two classes work the same, so we’ll run through these examples quickly.</p>
+<p>For details see: - <a href="https://docs.scala-lang.org/overviews/scala-book/vector-class.html">https://docs.scala-lang.org/overviews/scala-book/vector-class.html</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val vec = Vector(1,2,3)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>vec: scala.collection.immutable.Vector[Int] = Vector(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">vec(0) // access first element with index 0
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res0: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="arrays-sequences-and-tuples"><a class="header" href="#arrays-sequences-and-tuples">Arrays, Sequences and Tuples</a></h4>
+<p>See <a href="https://www.scala-lang.org/api/current/scala/collection/index.html">https://www.scala-lang.org/api/current/scala/collection/index.html</a> for docs.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val arr = Array(1,2,3) // &lt;Shift-Enter&gt; to declare an Array
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>arr: Array[Int] = Array(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val seq = Seq(1,2,3)    // &lt;Shift-Enter&gt; to declare a Seq
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>seq: Seq[Int] = List(1, 2, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<blockquote>
+<p>A tuple is a neat class that gives you a simple way to store heterogeneous (different) items in the same container. We will use tuples for key-value pairs in Spark.</p>
+</blockquote>
+<p>See <a href="https://docs.scala-lang.org/overviews/scala-book/tuples.html">https://docs.scala-lang.org/overviews/scala-book/tuples.html</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val myTuple = ('a',1) // a 2-tuple
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>myTuple: (Char, Int) = (a,1)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myTuple._1 // accessing the first element of the tuple. NOTE index starts at 1 not 0 for tuples
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res1: Char = a
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">myTuple._2 // accessing the second element of the tuple
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res2: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="functional-programming-and-mapreduce"><a class="header" href="#functional-programming-and-mapreduce">Functional Programming and MapReduce</a></h3>
+<p><em>&quot;Functional programming is a style of programming that emphasizes writing applications using only pure functions and immutable values. As Alvin Alexander wrote in Functional Programming, Simplified, rather than using that description, it can be helpful to say that functional programmers have an extremely strong desire to see their code as math — to see the combination of their functions as a series of algebraic equations. In that regard, you could say that functional programmers like to think of themselves as mathematicians. That’s the driving desire that leads them to use only pure functions and immutable values, because that’s what you use in algebra and other forms of math.&quot;</em></p>
+<p>See <a href="https://docs.scala-lang.org/overviews/scala-book/functional-programming.html">https://docs.scala-lang.org/overviews/scala-book/functional-programming.html</a> for short lessons in functional programming.</p>
+<p>We will apply functions for processing elements of a scala collection to quickly demonstrate functional programming.</p>
+<h4 id="five-ways-of-adding-1"><a class="header" href="#five-ways-of-adding-1">Five ways of adding 1</a></h4>
+<p>The first four use anonymous functions and the last one uses a named method.</p>
+<ol>
+<li>explicit version:</li>
+</ol>
+<pre><code class="language-%scala">(x: Int) =&gt; x + 1  
+</code></pre>
+<ol>
+<li>type-inferred more intuitive version:</li>
+</ol>
+<pre><code class="language-%scala">x =&gt; x + 1   
+</code></pre>
+<ol>
+<li>placeholder syntax (each argument must be used exactly once):</li>
+</ol>
+<pre><code class="language-%scala">_ + 1 
+</code></pre>
+<ol>
+<li>type-inferred more intuitive version with code-block for larger function body:</li>
+</ol>
+<pre><code class="language-%scala">x =&gt; { 
+      // body is a block of code
+      val integerToAdd = 1
+      x + integerToAdd
+}
+</code></pre>
+<ol>
+<li>as methods using <code>def</code>:</li>
+</ol>
+<pre><code class="language-%scala">def addOne(x: Int): Int = x + 1
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now, let's do some functional programming over scala collection (<code>List</code>) using some of their methods: <code>map</code>, <code>filter</code> and <code>reduce</code>. In the end we will write our first mapReduce program!</p>
+<p>For more details see:</p>
+<ul>
+<li><a href="https://docs.scala-lang.org/overviews/scala-book/collections-methods.html">https://docs.scala-lang.org/overviews/scala-book/collections-methods.html</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h4 id="map"><a class="header" href="#map">map</a></h4>
+<p>See: <a href="https://superruzafa.github.io/visual-scala-reference/map/">https://superruzafa.github.io/visual-scala-reference/map/</a></p>
+<pre><code>trait Collection[A] {
+  def map[B](f: (A) =&gt; B): Collection[B]
+}
+</code></pre>
+<p>map creates a collection using as elements the results obtained from applying the function f to each element of this collection.</p>
+<p><img src="https://superruzafa.github.io/visual-scala-reference/images/functions/map.svg" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; to map each value x of lst with x+10 to return a new List(11, 12, 13)
+lst.map(x =&gt; x + 10)  
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res3: List[Int] = List(11, 12, 13)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; for the same as above using place-holder syntax
+lst.map( _ + 10)  
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res4: List[Int] = List(11, 12, 13)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="filter"><a class="header" href="#filter">filter</a></h4>
+<p>See: <a href="https://superruzafa.github.io/visual-scala-reference/filter/">https://superruzafa.github.io/visual-scala-reference/filter/</a></p>
+<pre><code>trait Collection[A] {
+  def filter(p: (A) =&gt; Boolean): Collection[A]
+}
+</code></pre>
+<p>filter creates a collection with those elements that satisfy the predicate p and discarding the rest.</p>
+<p><img src="https://superruzafa.github.io/visual-scala-reference/images/functions/filter.svg" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; to return a new List(1, 3) after filtering x's from lst if (x % 2 == 1) is true
+lst.filter(x =&gt; (x % 2 == 1) )
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res5: List[Int] = List(1, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; for the same as above using place-holder syntax
+lst.filter( _ % 2 == 1 )
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res6: List[Int] = List(1, 3)
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="reduce"><a class="header" href="#reduce">reduce</a></h4>
+<p>See: <a href="https://superruzafa.github.io/visual-scala-reference/reduce/">https://superruzafa.github.io/visual-scala-reference/reduce/</a></p>
+<pre><code>trait Collection[A] {
+  def reduce(op: (A, A) =&gt; A): A
+}
+</code></pre>
+<p><code>reduce</code> applies the binary operator <code>op</code> to pairs of elements in this collection until the final result is calculated.</p>
+<p><img src="https://superruzafa.github.io/visual-scala-reference/images/functions/reduce.svg" alt="" /></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Shift+Enter&gt; to use reduce to add elements of lst two at a time to return Int 6
+lst.reduce( (x, y) =&gt; x + y )
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res7: Int = 6
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// &lt;Ctrl+Enter&gt; for the same as above but using place-holder syntax
+lst.reduce( _ + _ )
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res8: Int = 6
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's combine <code>map</code> and <code>reduce</code> programs above to find the sum of after 10 has been added to every element of the original List <code>lst</code> as follows:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lst.map(x =&gt; x+10)
+   .reduce((x,y) =&gt; x+y) // &lt;Ctrl-Enter&gt; to get Int 36 = sum(1+10,2+10,3+10)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res9: Int = 36
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="exercise-in-functional-programming"><a class="header" href="#exercise-in-functional-programming">Exercise in Functional Programming</a></h4>
+<p>You should spend an hour or so going through the Functional Programming Section of the Scala Book:</p>
+<ul>
+<li><a href="https://docs.scala-lang.org/overviews/scala-book/functional-programming.html">https://docs.scala-lang.org/overviews/scala-book/functional-programming.html</a></li>
+</ul>
+<blockquote>
+<p>Scala lets you write code in an object-oriented programming (OOP) style, a functional programming (FP) style, and even in a hybrid style, using both approaches in combination. This book assumes that you’re coming to Scala from an OOP language like Java, C++, or C#, so outside of covering Scala classes, there aren’t any special sections about OOP in this book. But because the FP style is still relatively new to many developers, we’ll provide a brief introduction to Scala’s support for FP in the next several lessons.</p>
+</blockquote>
+<blockquote>
+<p>Functional programming is a style of programming that emphasizes writing applications using only pure functions and immutable values. As Alvin Alexander wrote in <a href="https://alvinalexander.com/scala/functional-programming-simplified-book">Functional Programming, Simplified</a>, rather than using that description, it can be helpful to say that functional programmers have an extremely strong desire to see their code as math — to see the combination of their functions as a series of algebraic equations. In that regard, you could say that functional programmers like to think of themselves as mathematicians. That’s the driving desire that leads them to use only pure functions and immutable values, because that’s what you use in algebra and other forms of math.</p>
+</blockquote>
+<blockquote>
+<p>Functional programming is a large topic, and there’s no simple way to condense the entire topic into this little book, but in the following lessons we’ll give you a taste of FP, and show some of the tools Scala provides for developers to write functional code.</p>
+</blockquote>
+</div>
+<div class="cell markdown">
+<p>There are lots of methods in Scala Collections. And much more in this <em>scalable language</em>. See for example <a href="http://docs.scala-lang.org/cheatsheets/index.html">http://docs.scala-lang.org/cheatsheets/index.html</a>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="lazy-evaluation"><a class="header" href="#lazy-evaluation">Lazy Evaluation</a></h3>
+<p>Another powerful programming concept we will need is <em>lazy evaluation</em> -- a form of delayed evaluation. So the value of an expression that is lazily evaluated is only available when it is actually needed.</p>
+<p>This is to be contrasted with <em>eager evaluation</em> that we have seen so far -- an expression is immediately evaluated.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val eagerImmutableInt = 1 // eagerly evaluated as 1
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>eagerImmutableInt: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">var eagerMutableInt = 2 // eagerly evaluated as 2
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>eagerMutableInt: Int = 2
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's demonstrate lazy evaluation using a <code>getTime</code> method and the keyword <code>lazy</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import java.util.Calendar
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import java.util.Calendar
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lazy val lazyImmutableTime = Calendar.getInstance.getTime // lazily defined and not evaluated immediately
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>lazyImmutableTime: java.util.Date = &lt;lazy&gt;
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val eagerImmutableTime = Calendar.getInstance.getTime // egaerly evaluated immediately
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>eagerImmutableTime: java.util.Date = Tue Sep 27 09:49:49 UTC 2022
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(lazyImmutableTime) // evaluated when actully needed by println
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Tue Sep 27 09:49:49 UTC 2022
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">println(eagerImmutableTime) // prints what was already evaluated eagerly
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Tue Sep 27 09:49:49 UTC 2022
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def lazyDefinedInt = 5 // you can also use method to lazily define 
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>lazyDefinedInt: Int
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lazyDefinedInt // only evaluated now
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res12: Int = 5
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>See https://www.scala-exercises.org/scala<em>tutorial/lazy</em>evaluation for more details including the following example with <code>StringBuilder</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val builder = new StringBuilder //built-in
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>builder: StringBuilder =
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">builder.result()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res13: String = &quot;&quot;
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val x = { builder += 'x'; 1 } // eagerly evaluates x as 1 after appending 'x' to builder. NOTE: ';' is used to separate multiple expressions on the same line
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>x: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">builder.result()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res14: String = x
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">x
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res15: Int = 1
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">builder.result() // calling x again should not append x again to builder
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res16: String = x
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">lazy val y = { builder += 'y'; 2 } // lazily evaluate y later when it is called
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>y: Int = &lt;lazy&gt;
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">builder.result() // builder should remain unchanged
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res17: String = x
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def z = { builder += 'z'; 3 } // lazily evaluate z later when the method is called
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>z: Int
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">builder.result() // builder should remain unchanged
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res18: String = x
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>What should <code>builder.result()</code> be after the following arithmetic expression involving <code>x</code>,<code>y</code> and <code>z</code> is evaluated?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">z + y + x + z + y + x
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res19: Int = 12
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h4 id="lazy-evaluation-exercise---you-try-now"><a class="header" href="#lazy-evaluation-exercise---you-try-now">Lazy Evaluation Exercise - You try Now!</a></h4>
+<p>Understand why the output above is what it is!</p>
+<ul>
+<li>Why is <code>z</code> different in its appearance in the final <code>builder</code> string when compared to <code>x</code> and <code>y</code> as we evaluated?</li>
+</ul>
+<!-- -->
+<pre><code>z + y + x + z + y + x
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// putting it all together
+val builder = new StringBuilder
+
+val x = { builder += 'x'; 1 }
+lazy val y = { builder += 'y'; 2 }
+def z = { builder += 'z'; 3 }
+
+// comment next line after different summands to understand difference between val, lazy val and def
+z + y + x  + z + y + x 
+
+builder.result()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>builder: StringBuilder = xzyz
+x: Int = 1
+y: Int = &lt;lazy&gt;
+z: Int
+res20: String = xzyz
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h3 id="why-lazy"><a class="header" href="#why-lazy">Why Lazy?</a></h3>
+<p>Imagine a more complex expression involving the evaluation of millions of values. Lazy evaluation will allow us to actually compute with big data when it may become impossible to hold all the values in memory. This is exactly what Apache Spark does as we will see.</p>
+</div>
+<div class="cell markdown">
+<h3 id="recursions"><a class="header" href="#recursions">Recursions</a></h3>
+<p>Recursion is a powerful framework when a function calls another function, including itself, until some terminal condition is reached.</p>
+<p>Here we want to distinguish between two ways of implementing a recursion using a simple example of factorial.</p>
+<p>Recall that for any natural number \(n\), its factorial is denoted and defined as follows:</p>
+<p>\[
+n!  :=  n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1 
+\]</p>
+<p>which has the following recursive expression:</p>
+<p>\[
+n! = n*(n-1)! , , \qquad  0! = 1
+\]</p>
+<p>Let us implement it using two approaches: a naive approach that can run out of memory and another tail-recursive approach that uses constant memory. Read <a href="https://www.scala-exercises.org/scala_tutorial/tail_recursion">https://www.scala-exercises.org/scala<em>tutorial/tail</em>recursion</a> for details.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">def factorialNaive(n: Int): Int =
+  if (n == 0) 1 else n * factorialNaive(n - 1)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>factorialNaive: (n: Int)Int
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">factorialNaive(4)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>res21: Int = 24
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>When <code>factorialNaive(4)</code> was evaluated above the following steps were actually done:</p>
+<pre><code>factorial(4)
+if (4 == 0) 1 else 4 * factorial(4 - 1)
+4 * factorial(3)
+4 * (3 * factorial(2))
+4 * (3 * (2 * factorial(1)))
+4 * (3 * (2 * (1 * factorial(0)))
+4 * (3 * (2 * (1 * 1)))
+24
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Notice how we add one more element to our expression at each recursive call. Our expressions becomes bigger and bigger until we end by reducing it to the final value. So the final expression given by a directed acyclic graph (DAG) of the pairwise multiplications given by the right-branching binary tree, whose leaves are input integers and internal nodes are the bianry <code>*</code> operator, can get very large when the input <code>n</code> is large.</p>
+<p><em>Tail recursion</em> is a sophisticated way of implementing certain recursions so that memory requirements can be kept constant, as opposed to naive recursions.</p>
+<blockquote>
+<p><a href="https://www.scala-exercises.org/scala_tutorial/tail_recursion">Tail Recursion</a></p>
+</blockquote>
+<blockquote>
+<p>That difference in the rewriting rules actually translates directly to a difference in the actual execution on a computer. In fact, it turns out that <strong>if you have a recursive function that calls itself as its last action, then you can reuse the stack frame of that function. This is called tail recursion.</strong></p>
+</blockquote>
+<blockquote>
+<p>And by applying that trick, a tail recursive function can execute in constant stack space, so it's really just another formulation of an iterative process. We could say a tail recursive function is the functional form of a loop, and it executes just as efficiently as a loop.</p>
+</blockquote>
+<p>Implementation of tail recursion in the Exercise below uses Scala <a href="https://docs.scala-lang.org/tour/annotations.html">annotation</a>, which is a way to associate meta-information with definitions. In our case, the annotation <code>@tailrec</code> ensures that a method is indeed <a href="https://en.wikipedia.org/wiki/Tail_call">tail-recursive</a>. See the last link to understand how memory requirements can be kept constant in tail recursions.</p>
+<p>We mainly want you to know that tail recursions are an important functional programming concept.</p>
+</div>
+<div class="cell markdown">
+<h4 id="tail-recursion-exercise---you-try-now"><a class="header" href="#tail-recursion-exercise---you-try-now">Tail Recursion Exercise - You Try Now</a></h4>
+<ul>
+<li>Uncomment the next three cells</li>
+<li>Replace <code>???</code> in the next cell with the correct values to make this a tail recursion for factorial.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">/*
+import scala.annotation.tailrec
+
+// replace ??? with the right values to make this a tail recursion for factorial
+def factorialTail(n: Int): Int = {
+  @tailrec
+  def iter(x: Int, result: Int): Int =
+    if ( x == ???) result
+    else iter(x - 1, result * x)
+
+  iter( n, ??? )
+}
+*/
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//factorialTail(3) //shouldBe 6
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">//factorialTail(4) //shouldBe 24
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Functional Programming is a vast subject and we are merely covering the fewest core ideas to get started with Apache Spark asap.</p>
+<p>We will return to more concepts as we need them in the sequel.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

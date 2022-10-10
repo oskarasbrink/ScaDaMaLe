@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>002_00_loginToDatabricks - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/000_ScaDaMaLe.html">000_ScaDaMaLe</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/001_whySpark.html">001_whySpark</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_00_loginToDatabricks.html" class="active">002_00_loginToDatabricks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html">002_01_multiLingualNotebooks</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/002_02_dbcCEdataLoader.html">002_02_dbcCEdataLoader</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_00_scalaCrashCourse.html">003_00_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/003_01_scalaCrashCourse.html">003_01_scalaCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/004_RDDsTransformationsActions.html">004_RDDsTransformationsActions</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/005_RDDsTransformationsActionsHOMEWORK.html">005_RDDsTransformationsActionsHOMEWORK</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006_WordCount.html">006_WordCount</a></li><li class="chapter-item expanded affix "><a href="../../contents/000_1-sds-3-x-spark/006a_PipedRDD.html">006a_PipedRDD</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="login-to-databricks"><a class="header" href="#login-to-databricks">Login to databricks</a></h1>
+<p>We will use databricks community edition and later on the databricks project shard granted for this course under the <strong>databricks university alliance</strong> with cloud computing grants from databricks for waived DBU units and AWS.</p>
+<p>Please go here for a relaxed and detailed-enough tour (later):</p>
+<ul>
+<li><a href="https://docs.databricks.com/index.html">https://docs.databricks.com/index.html</a></li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="databricks-community-edition"><a class="header" href="#databricks-community-edition">databricks community edition</a></h2>
+<p>First obtain a free Obtain a databricks community edition account at <a href="https://community.cloud.databricks.com">https://community.cloud.databricks.com</a> by following these instructions: <a href="https://youtu.be/FH2KDhaFkZg">https://youtu.be/FH2KDhaFkZg</a>.</p>
+<p>Let's get an overview of the databricks managed cloud for processing big data with Apache Spark.</p>
+</div>
+<div class="cell markdown">
+<h2 id="dbc-essentials-what-is-databricks-cloud"><a class="header" href="#dbc-essentials-what-is-databricks-cloud">DBC Essentials: What is Databricks Cloud?</a></h2>
+<p><img src="https://raw.githubusercontent.com/raazesh-sainudiin/scalable-data-science/master/images/week1/dbTrImg_WorkspaceSparkPlatform700x.png" alt="DB workspace, spark, platform" /></p>
+</div>
+<div class="cell markdown">
+<h2 id="dbc-essentials-shard-cluster-notebook-and-dashboard"><a class="header" href="#dbc-essentials-shard-cluster-notebook-and-dashboard">DBC Essentials: Shard, Cluster, Notebook and Dashboard</a></h2>
+<p><img src="https://raw.githubusercontent.com/raazesh-sainudiin/scalable-data-science/master/images/week1/dbTrImg_ShardClusterNotebookDashboard700x.png" alt="DB workspace, spark, platform" /></p>
+</div>
+<div class="cell markdown">
+<p><strong>DBC Essentials: Team, State, Collaboration, Elastic Resources in one picture</strong></p>
+<p><img src="https://raw.githubusercontent.com/raazesh-sainudiin/scalable-data-science/master/images/week1/dbTrImg_TeamStateCollaborationElasticResources700x.png" alt="DB workspace, spark, platform" /></p>
+</div>
+<div class="cell markdown">
+<p><strong>You Should All Have databricks community edition account by now!</strong> and have successfully logged in to it.</p>
+</div>
+<div class="cell markdown">
+<h1 id="import-course-content-now"><a class="header" href="#import-course-content-now">Import Course Content Now!</a></h1>
+<p>Two Steps:</p>
+<ol>
+<li>Create a folder named <code>scalable-data-science</code> in your <code>Workspace</code> (NO Typos due to hard-coding of paths in the sequel!)</li>
+</ol>
+<ul>
+<li>Import the following <code>.dbc</code> archives from the following URL into <code>Workspace/scalable-data-science</code> folder you just created:
+<ul>
+<li><a href="https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/latest/">https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/latest/</a></li>
+<li>start with the first file for now and import more as needed:
+<ul>
+<li><a href="https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/latest/000_1-sds-3-x-spark.dbc">https://github.com/lamastex/scalable-data-science/raw/master/dbcArchives/latest/000_1-sds-3-x-spark.dbc</a></li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="open-source-computing-environment"><a class="header" href="#open-source-computing-environment">Open-Source Computing Environment</a></h1>
+<p>We will mainly use docker for local development on our own infrastructure, such as a laptop.</p>
+<h2 id="docker"><a class="header" href="#docker">docker</a></h2>
+<p>You can install and learn <a href="https://www.docker.com/">docker</a> on your laptop; <a href="https://docs.docker.com/get-started/">https://docs.docker.com/get-started/</a>.</p>
+<p>In a Terminal, after installing docker, type:</p>
+<pre><code>$ docker run --rm -it lamastex/dockerdev:latest
+</code></pre>
+<p>The above docker container has already downloaded the needed sources for a very basic Spark developer environment using this <a href="https://github.com/lamastex/dockerDev/blob/master/Dockerfile">Dockerfile</a> which builds on this <a href="https://github.com/lamastex/dockerDev/blob/master/spark3x.Dockerfile">spark3x.Dockerfile</a>. Having the source for a dockerfile is helpful when one needs to adapt it for the future.</p>
+<p>You can test your docker installation by launching the <code>spark-shell</code> inside the docker container, compute <code>1+1</code> and <code>:quit</code> from spark-shell and <code>exit</code> from docker.</p>
+<pre><code>root@7715366c86a4:~# spark-shell
+22/08/18 12:24:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to &quot;WARN&quot;.
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Spark context Web UI available at http://7715366c86a4:4040
+Spark context available as 'sc' (master = local[*], app id = local-1660825477089).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 3.1.2
+      /_/
+         
+Using Scala version 2.12.10 (OpenJDK 64-Bit Server VM, Java 1.8.0_312)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala&gt; 1+1
+res0: Int = 2
+
+scala&gt; :quit
+root@c6ced3348c97:~# exit
+</code></pre>
+<h2 id="zeppelin"><a class="header" href="#zeppelin">zeppelin</a></h2>
+<p>You may also use the open source project <a href="https://zeppelin.apache.org/">https://zeppelin.apache.org/</a> through the provided zeppelin spark docker container <a href="https://hub.docker.com/r/lamastex/zeppelin-spark">lamastex/zeppelin-spark</a> after successfully installing docker in your laptop.</p>
+<p>Several companies use databricks notebooks but several others use zeppelin or jupyter or other notebook servers. Therefore, it is good to be familiar with a couple notebook servers and formats.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/000_1-sds-3-x-spark/001_whySpark.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/000_1-sds-3-x-spark/001_whySpark.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/000_1-sds-3-x-spark/002_01_multiLingualNotebooks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
