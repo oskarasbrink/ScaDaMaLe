@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>007b_SparkSQLProgGuide_HW</title>
+        <title>007b_SparkSQLProgGuide_HW - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -197,7 +200,7 @@ val sqlContext = spark.sqlContext
 spark
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@4415780f
+<pre><code>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@7f57ef36
 </code></pre>
 </div>
 </div>
@@ -208,7 +211,7 @@ spark
 </div>
 <div class="cell markdown">
 <h2 id="creating-dataframes"><a class="header" href="#creating-dataframes">Creating DataFrames</a></h2>
-<p>With a <code>SparkSessions</code>, applications can create <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Dataset</a> or <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame"><code>DataFrame</code></a> from an <a href="https://spark.apache.org/docs/latest/sql-getting-started.html#interoperating-with-rdds">existing <code>RDD</code></a>, from a Hive table, or from various <a href="https://spark.apache.org/docs/latest/sql-data-sources.html">datasources</a>.</p>
+<p>With a <code>SparkSessions</code>, applications can create <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset">Dataset</a> or <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame"><code>DataFrame</code></a> from an <a href="https://spark.apache.org/docs/latest/sql-getting-started.html#interoperating-with-rdds">existing <code>RDD</code></a>, from a Hive table, or from various <a href="https://spark.apache.org/docs/latest/sql-data-sources.html">datasources</a>.</p>
 <p>Just to recap, a DataFrame is a distributed collection of data organized into named columns. You can think of it as an organized into table RDD of case class <code>Row</code> (which is not exactly true). DataFrames, in comparison to RDDs, are backed by rich optimizations, including tracking their own schema, adaptive query execution, code generation including whole stage codegen, extensible Catalyst optimizer, and project <a href="https://databricks.com/blog/2015/04/28/project-tungsten-bringing-spark-closer-to-bare-metal.html">Tungsten</a>.</p>
 <p>Dataset provides type-safety when working with SQL, since <code>Row</code> is mapped to a case class, so that each column can be referenced by property of that class.</p>
 <blockquote>
@@ -233,19 +236,21 @@ df.show()
 <p>To be able to try this example in databricks we need to load the <code>people.json</code> file into <code>dbfs</code>. Let us do this programmatically next.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// the following lines merely fetch the file from the URL and load it into the dbfs for us to try in databricks
+<pre><code class="language-scala">// you should not have to uncomment the block below as we already loaded data from 002_02_dbcCEdataLoader notebook
+/*
+// the following lines merely fetch the file from the URL and load it into the dbfs for us to try in databricks
 // getLines from the file at the URL
 val peopleJsonLinesFromURL = scala.io.Source.fromURL(&quot;https://raw.githubusercontent.com/apache/spark/master/examples/src/main/resources/people.json&quot;).getLines
 // remove any pre-existing file at the dbfs location
-dbutils.fs.rm(&quot;dbfs:///datasets/spark-examples/people.json&quot;,recurse=true)
+dbutils.fs.rm(&quot;/datasets/sds/spark-examples/people.json&quot;,recurse=true)
 // convert the lines fetched from the URL to a Seq, then make it a RDD of String and finally save it as textfile to dbfs
-sc.parallelize(peopleJsonLinesFromURL.toSeq).saveAsTextFile(&quot;dbfs:///datasets/spark-examples/people.json&quot;)
-// read the text file we just saved and see what it has
-sc.textFile(&quot;dbfs:///datasets/spark-examples/people.json&quot;).collect.mkString(&quot;\n&quot;)
+sc.parallelize(peopleJsonLinesFromURL.toSeq).saveAsTextFile(&quot;/datasets/sds/spark-examples/people.json&quot;)
+*/
+// read the text file we just saved or already loaded and see what it has
+sc.textFile(&quot;/datasets/sds/spark-examples/people.json&quot;).collect.mkString(&quot;\n&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>peopleJsonLinesFromURL: Iterator[String] = &lt;iterator&gt;
-res1: String =
+<pre><code>res1: String =
 {&quot;name&quot;:&quot;Michael&quot;}
 {&quot;name&quot;:&quot;Andy&quot;, &quot;age&quot;:30}
 {&quot;name&quot;:&quot;Justin&quot;, &quot;age&quot;:19}
@@ -253,7 +258,7 @@ res1: String =
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val df = spark.read.json(&quot;dbfs:///datasets/spark-examples/people.json&quot;)
+<pre><code class="language-scala">val df = spark.read.json(&quot;/datasets/sds/spark-examples/people.json&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
@@ -261,8 +266,8 @@ res1: String =
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// you can also read into df like this
-val df = spark.read.format(&quot;json&quot;).load(&quot;dbfs:///datasets/spark-examples/people.json&quot;)
+<pre><code class="language-scala">// you can also read into df like this - makes the same dataframe as the above call
+val df = spark.read.format(&quot;json&quot;).load(&quot;/datasets/sds/spark-examples/people.json&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
@@ -285,7 +290,7 @@ val df = spark.read.format(&quot;json&quot;).load(&quot;dbfs:///datasets/spark-e
 </div>
 <div class="cell markdown">
 <h2 id="untyped-dataset-operations-aka-dataframe-operations"><a class="header" href="#untyped-dataset-operations-aka-dataframe-operations">Untyped Dataset Operations (aka DataFrame Operations)</a></h2>
-<p>DataFrames provide a domain-specific language for structured data manipulation in <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Scala</a>, <a href="https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>, <a href="https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a> and <a href="https://spark.apache.org/docs/latest/api/R/SparkDataFrame.html">R</a>.</p>
+<p>DataFrames provide a domain-specific language for structured data manipulation in <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Scala</a>, <a href="https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>, <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html">Python</a> and <a href="https://spark.apache.org/docs/latest/api/R/reference/SparkDataFrame.html">R</a>.</p>
 <p>As mentioned above, in Spark 2.0 or higher, DataFrames are just Dataset of <code>Row</code>s in Scala and Java API. These operations are also referred as “untyped transformations” in contrast to “typed transformations” come with strongly typed Scala/Java Datasets.</p>
 <p>Here we include some basic examples of structured data processing using Datasets:</p>
 </div>
@@ -463,13 +468,13 @@ primitiveDS.map(_ + 1).collect() // Returns: Array(2, 3, 4)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>primitiveDS: org.apache.spark.sql.Dataset[Int] = [value: int]
-res19: Array[Int] = Array(2, 3, 4)
+res18: Array[Int] = Array(2, 3, 4)
 </code></pre>
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// DataFrames can be converted to a Dataset by providing a class. Mapping will be done by name
-val path = &quot;dbfs:///datasets/spark-examples/people.json&quot;
+val path = &quot;/datasets/sds/spark-examples/people.json&quot;
 val peopleDS = spark.read.json(path).as[Person]
 peopleDS.show()
 </code></pre>
@@ -482,7 +487,7 @@ peopleDS.show()
 |null|Michael|
 +----+-------+
 
-path: String = dbfs:///datasets/spark-examples/people.json
+path: String = /datasets/sds/spark-examples/people.json
 peopleDS: org.apache.spark.sql.Dataset[Person] = [age: bigint, name: string]
 </code></pre>
 </div>
@@ -496,30 +501,10 @@ peopleDS: org.apache.spark.sql.Dataset[Person] = [age: bigint, name: string]
 <p>The Scala interface for Spark SQL supports automatically converting an RDD containing case classes to a DataFrame. The case class defines the schema of the table. The names of the arguments to the case class are read using reflection and become the names of the columns. Case classes can also be nested or contain complex types such as <code>Seq</code>s or <code>Array</code>s. This RDD can be implicitly converted to a DataFrame and then be registered as a table. Tables can be used in subsequent SQL statements.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// the following lines merely fetch the file from the URL and load it into the dbfs for us to try in databricks
-// getLines from the file at the URL
-val peopleTxtLinesFromURL = scala.io.Source.fromURL(&quot;https://raw.githubusercontent.com/apache/spark/master/examples/src/main/resources/people.txt&quot;).getLines
-// remove any pre-existing file at the dbfs location
-dbutils.fs.rm(&quot;dbfs:///datasets/spark-examples/people.txt&quot;,recurse=true)
-// convert the lines fetched from the URL to a Seq, then make it a RDD of String and finally save it as textfile to dbfs
-sc.parallelize(peopleTxtLinesFromURL.toSeq).saveAsTextFile(&quot;dbfs:///datasets/spark-examples/people.txt&quot;)
-// read the text file we just saved and see what it has
-sc.textFile(&quot;dbfs:///datasets/spark-examples/people.txt&quot;).collect.mkString(&quot;\n&quot;)
+<pre><code class="language-scala">sc.textFile(&quot;/datasets/sds/spark-examples/people.txt&quot;).collect.mkString(&quot;\n&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>peopleTxtLinesFromURL: Iterator[String] = &lt;iterator&gt;
-res23: String =
-Michael, 29
-Andy, 30
-Justin, 19
-</code></pre>
-</div>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">sc.textFile(&quot;dbfs:///datasets/spark-examples/people.txt&quot;).collect.mkString(&quot;\n&quot;)
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>res24: String =
+<pre><code>res22: String =
 Michael, 29
 Andy, 30
 Justin, 19
@@ -535,7 +520,7 @@ case class Person(name: String, age: Long)
 
 // Create an RDD of Person objects from a text file, convert it to a Dataframe
 val peopleDF = spark.sparkContext
-  .textFile(&quot;dbfs:///datasets/spark-examples/people.txt&quot;)
+  .textFile(&quot;/datasets/sds/spark-examples/people.txt&quot;)
   .map(_.split(&quot;,&quot;))
   .map(attributes =&gt; Person(attributes(0), attributes(1).trim.toLong))
   .toDF()
@@ -646,12 +631,12 @@ teenagersDF.map(teenager =&gt; &quot;Name: &quot; + teenager.getAs[String](&quot
 import org.apache.spark.sql.types._
 
 // Create an RDD
-val peopleRDD = spark.sparkContext.textFile(&quot;dbfs:///datasets/spark-examples/people.txt&quot;)
+val peopleRDD = spark.sparkContext.textFile(&quot;/datasets/sds/spark-examples/people.txt&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>import org.apache.spark.sql.Row
 import org.apache.spark.sql.types._
-peopleRDD: org.apache.spark.rdd.RDD[String] = dbfs:///datasets/spark-examples/people.txt MapPartitionsRDD[474] at textFile at command-2971213210278122:6
+peopleRDD: org.apache.spark.rdd.RDD[String] = /datasets/sds/spark-examples/people.txt MapPartitionsRDD[236] at textFile at command-2971213210278122:6
 </code></pre>
 </div>
 </div>
@@ -678,7 +663,7 @@ val fields = schemaString.split(&quot; &quot;)
 <pre><code class="language-scala">val schema = StructType(fields)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>schema: org.apache.spark.sql.types.StructType = StructType(StructField(name,StringType,true), StructField(age,StringType,true))
+<pre><code>schema: org.apache.spark.sql.types.StructType = StructType(StructField(name,StringType,true),StructField(age,StringType,true))
 </code></pre>
 </div>
 </div>
@@ -689,7 +674,7 @@ val rowRDD = peopleRDD
   .map(attributes =&gt; Row(attributes(0), attributes(1).trim))
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>rowRDD: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[476] at map at command-2971213210278126:4
+<pre><code>rowRDD: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[238] at map at command-2971213210278126:4
 </code></pre>
 </div>
 </div>

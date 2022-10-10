@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>007a_SparkSQLProgGuide_HW</title>
+        <title>007a_SparkSQLProgGuide_HW - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -234,23 +237,6 @@
 </ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
-<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
-//Example usage:
-// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
-def frameIt( u:String, h:Int ) : String = {
-      &quot;&quot;&quot;&lt;iframe 
- src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
- width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
- sandbox&gt;
-  &lt;p&gt;
-    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
-      Fallback link for browsers that, unlikely, don't support frames
-    &lt;/a&gt;
-  &lt;/p&gt;
-&lt;/iframe&gt;&quot;&quot;&quot;
-   }
-displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/sql-programming-guide.html&quot;,750))
-</code></pre>
 <div class="output execute_result html_result" execution_count="1">
 <iframe 
  src="https://spark.apache.org/docs/latest/sql-programming-guide.html"
@@ -271,10 +257,10 @@ displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/sql-programming-g
 <p>Spark SQL is a Spark module for structured data processing. Unlike the basic Spark RDD API, the interfaces provided by Spark SQL provide Spark with more information about the structure of both the data and the computation being performed. Internally, Spark SQL uses this extra information to perform extra optimizations. There are several ways to interact with Spark SQL including SQL and the Dataset API. When computing a result, the same execution engine is used, independent of which API/language you are using to express the computation. This unification means that developers can easily switch back and forth between different APIs based on which provides the most natural way to express a given transformation.</p>
 <p>All of the examples on this page use sample data included in the Spark distribution and can be run in the <code>spark-shell</code>, <code>pyspark</code> shell, or <code>sparkR</code> shell.</p>
 <h2 id="sql"><a class="header" href="#sql">SQL</a></h2>
-<p>One use of Spark SQL is to execute SQL queries. Spark SQL can also be used to read data from an existing Hive installation. For more on how to configure this feature, please refer to the <a href="https://spark.apache.org/docs/latest/sql-data-sources-hive-tables.html">Hive Tables</a> section. When running SQL from within another programming language the results will be returned as a <a href="sql-programming-guide.html#datasets-and-dataframes">Dataset/DataFrame</a>. You can also interact with the SQL interface using the <a href="https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html#running-the-spark-sql-cli">command-line</a> or over <a href="https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html#running-the-thrift-jdbcodbc-server">JDBC/ODBC</a>.</p>
+<p>One use of Spark SQL is to execute SQL queries. Spark SQL can also be used to read data from an existing Hive installation. For more on how to configure this feature, please refer to the <a href="https://spark.apache.org/docs/latest/sql-data-sources-hive-tables.html">Hive Tables</a> section. When running SQL from within another programming language the results will be returned as a <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Dataset/DataFrame</a>. You can also interact with the SQL interface using the <a href="https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html#running-the-spark-sql-cli">command-line</a> or over <a href="https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html#running-the-thrift-jdbcodbc-server">JDBC/ODBC</a>.</p>
 <h2 id="datasets-and-dataframes"><a class="header" href="#datasets-and-dataframes">Datasets and DataFrames</a></h2>
 <p>A Dataset is a distributed collection of data. Dataset is a new interface added in Spark 1.6 that provides the benefits of RDDs (strong typing, ability to use powerful lambda functions) with the benefits of Spark SQL’s optimized execution engine. A Dataset can be <a href="https://spark.apache.org/docs/latest/sql-getting-started.html#creating-datasets">constructed</a> from JVM objects and then manipulated using functional transformations (<code>map</code>, <code>flatMap</code>, <code>filter</code>, etc.). The Dataset API is available in <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Scala</a> and <a href="https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>. Python does not have the support for the Dataset API. But due to Python’s dynamic nature, many of the benefits of the Dataset API are already available (i.e. you can access the field of a row by name naturally <code>row.columnName</code>). The case for R is similar.</p>
-<p>A DataFrame is a <em>Dataset</em> organized into named columns. It is conceptually equivalent to a table in a relational database or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of <a href="https://spark.apache.org/docs/latest/sql-data-sources.html">sources</a> such as: structured data files, tables in Hive, external databases, or existing RDDs. The DataFrame API is available in Scala, Java, <a href="https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a>, and <a href="https://spark.apache.org/docs/latest/api/R/index.html">R</a>. In Scala and Java, a DataFrame is represented by a Dataset of <code>Row</code>s. In <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">the Scala API</a>, <code>DataFrame</code> is simply a type alias of <code>Dataset[Row]</code>. While, in <a href="https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java API</a>, users need to use <code>Dataset&lt;Row&gt;</code> to represent a <code>DataFrame</code>.</p>
+<p>A DataFrame is a <em>Dataset</em> organized into named columns. It is conceptually equivalent to a table in a relational database or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of <a href="https://spark.apache.org/docs/latest/sql-data-sources.html">sources</a> such as: structured data files, tables in Hive, external databases, or existing RDDs. The DataFrame API is available in Scala, Java, <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/dataframe.html">Python</a>, and <a href="https://spark.apache.org/docs/latest/api/R/reference/SparkDataFrame.html">R</a>. In Scala and Java, a DataFrame is represented by a Dataset of <code>Row</code>s. In <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">the Scala API</a>, <code>DataFrame</code> is simply a type alias of <code>Dataset[Row]</code>. While, in <a href="https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java API</a>, users need to use <code>Dataset&lt;Row&gt;</code> to represent a <code>DataFrame</code>.</p>
 <p>Throughout this document, we will often refer to Scala/Java Datasets of <code>Row</code>s as DataFrames.</p>
 </div>
 <div class="cell markdown">

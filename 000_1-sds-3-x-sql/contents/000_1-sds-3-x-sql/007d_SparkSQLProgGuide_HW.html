@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>007d_SparkSQLProgGuide_HW</title>
+        <title>007d_SparkSQLProgGuide_HW - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -198,7 +201,7 @@
 </div>
 <div class="cell markdown">
 <h2 id="generic-loadsave-functions"><a class="header" href="#generic-loadsave-functions">Generic Load/Save functions</a></h2>
-<p>In order to load or save DataFrame you have to call either <code>read</code> or <code>write</code>. This will return <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameReader">DataFrameReader</a> or <a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameWriter">DataFrameWriter</a> depending on what you are trying to achieve. Essentially these classes are entry points to the reading / writing actions. They allow you to specify writing mode or provide additional options to read data source.</p>
+<p>In order to load or save DataFrame you have to call either <code>read</code> or <code>write</code>. This will return <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/DataFrameReader">DataFrameReader</a> or <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/DataFrameWriter">DataFrameWriter</a> depending on what you are trying to achieve. Essentially these classes are entry points to the reading / writing actions. They allow you to specify writing mode or provide additional options to read data source.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// This will return DataFrameReader to read data source
@@ -210,8 +213,8 @@ val df = spark.range(0, 10)
 println(df.write)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>org.apache.spark.sql.DataFrameReader@dd54d1
-org.apache.spark.sql.DataFrameWriter@75fc277a
+<pre><code>org.apache.spark.sql.DataFrameReader@52275b1e
+org.apache.spark.sql.DataFrameWriter@3bdaf3ae
 df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
 </code></pre>
 </div>
@@ -220,43 +223,42 @@ df: org.apache.spark.sql.Dataset[Long] = [id: bigint]
 <pre><code class="language-scala">// Saving Parquet table in Scala
 // DataFrames and tables can be saved as Parquet files, maintaining the schema information
 val df_save = spark.table(&quot;social_media_usage&quot;).select(&quot;platform&quot;, &quot;visits&quot;) // assuming you made the social_media_usage table permanent in previous notebook
-df_save.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/platforms.parquet&quot;)
+df_save.write.mode(&quot;overwrite&quot;).parquet(&quot;/datasets/sds/tmp/platforms.parquet&quot;)
 
 // Read in the parquet file created above
 // Parquet files are self-describing so the schema is preserved
 // The result of loading a Parquet file is also a DataFrame
-val df = spark.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+val df = spark.read.parquet(&quot;/datasets/sds/tmp//platforms.parquet&quot;)
 df.show(5)
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// in databricks '/tmp/...' is the same as 'dbfs:///tmp/...'
-display(dbutils.fs.ls(&quot;/tmp/&quot;))
+<pre><code class="language-fs">ls /datasets/sds/tmp/platforms.parquet
 </code></pre>
 </div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/tmp/platforms.parquet/&quot;)) // note this is a directory with many files in it... files beginning with part have content in possibly many partitions
-</code></pre>
+<div class="cell markdown">
+<p>Note <code>/datasets/sds/tmp/platforms.parquet/</code> is a directory with many files in it... and files beginning with part have content in possibly many partitions.</p>
+<p>We will take a brief look at Parquet very soon below.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># Loading Parquet table in Python
-dfPy = spark.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+dfPy = spark.read.parquet(&quot;/datasets/sds/tmp/platforms.parquet&quot;)
 dfPy.show(5)
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Saving JSON dataset in Scala
 val df_save = spark.table(&quot;social_media_usage&quot;).select(&quot;platform&quot;, &quot;visits&quot;)
-df_save.write.mode(&quot;overwrite&quot;).json(&quot;/tmp/platforms.json&quot;)
+df_save.write.mode(&quot;overwrite&quot;).json(&quot;/datasets/sds/tmp/platforms.json&quot;)
 
 // Loading JSON dataset in Scala
-val df = spark.read.json(&quot;/tmp/platforms.json&quot;)
+val df = spark.read.json(&quot;/datasets/sds/tmp/platforms.json&quot;)
 df.show(5)
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># Loading JSON dataset in Python
-dfPy = spark.read.json(&quot;/tmp/platforms.json&quot;)
+dfPy = spark.read.json(&quot;/datasets/sds/tmp/platforms.json&quot;)
 dfPy.show(5)
 </code></pre>
 </div>
@@ -265,10 +267,10 @@ dfPy.show(5)
 <p>You can also manually specify the data source that will be used along with any extra options that you would like to pass to the data source. Data sources are specified by their fully qualified name (i.e., <code>org.apache.spark.sql.parquet</code>), but for built-in sources you can also use their short names (<code>json</code>, <code>parquet</code>, <code>jdbc</code>). DataFrames of any type can be converted into other types using this syntax.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val json = sqlContext.read.format(&quot;json&quot;).load(&quot;/tmp/platforms.json&quot;)
+<pre><code class="language-scala">val json = sqlContext.read.format(&quot;json&quot;).load(&quot;/datasets/sds/tmp/platforms.json&quot;)
 json.select(&quot;platform&quot;).show(10)
 
-val parquet = sqlContext.read.format(&quot;parquet&quot;).load(&quot;/tmp/platforms.parquet&quot;)
+val parquet = sqlContext.read.format(&quot;parquet&quot;).load(&quot;/datasets/sds/tmp/platforms.parquet&quot;)
 parquet.select(&quot;platform&quot;).show(10)
 </code></pre>
 </div>
@@ -277,7 +279,7 @@ parquet.select(&quot;platform&quot;).show(10)
 <p>Instead of using read API to load a file into DataFrame and query it, you can also query that file directly with SQL.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val df = sqlContext.sql(&quot;SELECT * FROM parquet.`/tmp/platforms.parquet`&quot;)
+<pre><code class="language-scala">val df = sqlContext.sql(&quot;SELECT * FROM parquet.`/datasets/sds/tmp/platforms.parquet`&quot;)
 df.printSchema()
 </code></pre>
 </div>
@@ -298,7 +300,7 @@ df.printSchema()
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// First of all list tables to see that table we are about to create does not exist
-spark.catalog.listTables.show()
+spark.catalog.listTables.where($&quot;name&quot; startsWith &quot;social&quot;).show(false)
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -307,10 +309,10 @@ spark.catalog.listTables.show()
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val df = spark.range(0, 100)
-df.write.saveAsTable(&quot;simple_range&quot;)
+df.write.mode(SaveMode.Overwrite).saveAsTable(&quot;simple_range&quot;)
 
 // Verify that table is saved and it is marked as persistent (&quot;isTemporary&quot; value should be &quot;false&quot;)
-spark.catalog.listTables.show()
+spark.catalog.listTables.where($&quot;name&quot; startsWith &quot;s&quot;).show(false)
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -329,24 +331,6 @@ spark.catalog.listTables.show()
 </ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
-//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
-//Example usage:
-// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
-def frameIt( u:String, h:Int ) : String = {
-      &quot;&quot;&quot;&lt;iframe 
- src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
- width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
- sandbox&gt;
-  &lt;p&gt;
-    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
-      Fallback link for browsers that, unlikely, don't support frames
-    &lt;/a&gt;
-  &lt;/p&gt;
-&lt;/iframe&gt;&quot;&quot;&quot;
-   }
-displayHTML(frameIt(&quot;https://parquet.apache.org/documentation/latest/&quot;,500))
-</code></pre>
 </div>
 <div class="cell markdown">
 <h3 id="loading-data-programmatically"><a class="header" href="#loading-data-programmatically">Loading Data Programmatically</a></h3>
@@ -354,7 +338,7 @@ displayHTML(frameIt(&quot;https://parquet.apache.org/documentation/latest/&quot;
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Read in the parquet file created above. Parquet files are self-describing so the schema is preserved.
 // The result of loading a Parquet file is also a DataFrame.
-val parquetFile = sqlContext.read.parquet(&quot;/tmp/platforms.parquet&quot;)
+val parquetFile = sqlContext.read.parquet(&quot;/datasets/sds/tmp/platforms.parquet&quot;)
 
 // Parquet files can also be registered as tables and then used in SQL statements.
 parquetFile.createOrReplaceTempView(&quot;parquetFile&quot;)
@@ -367,7 +351,7 @@ platforms.distinct.map(t =&gt; &quot;Name: &quot; + t(0)).collect().foreach(prin
 <p>For file-based data source, it is also possible to bucket and sort or partition the output. Bucketing and sorting are applicable only to persistent tables:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val social_media_usage_DF = spark.table(&quot;social_media_usage&quot;)
+<pre><code class="language-scala">val social_media_usage_DF = spark.table(&quot;social_media_usage&quot;) // DF from table
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -376,15 +360,15 @@ platforms.distinct.map(t =&gt; &quot;Name: &quot; + t(0)).collect().foreach(prin
 <p><code>partitionBy</code> creates a directory structure as described in the Partition Discovery section. Thus, it has limited applicability to columns with high cardinality. In contrast <code>bucketBy</code> distributes data across a fixed number of buckets and can be used when the number of unique values is unbounded. One can use <code>partitionBy</code> by itself or along with `bucketBy.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">social_media_usage_DF.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/social_media_usage.parquet&quot;) // write to parquet
+<pre><code class="language-scala">social_media_usage_DF.write.mode(&quot;overwrite&quot;).parquet(&quot;/datasets/sds/tmp/social_media_usage.parquet&quot;) // write to parquet
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/tmp/social_media_usage.parquet&quot;)) // there is one part-00000 file inside the parquet folder
+<pre><code class="language-fs">ls /datasets/sds/tmp/social_media_usage.parquet
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val social_media_usage_readFromParquet_DF = spark.read.parquet(&quot;/tmp/social_media_usage.parquet&quot;)
+<pre><code class="language-scala">val social_media_usage_readFromParquet_DF = spark.read.parquet(&quot;/datasets/sds/tmp/social_media_usage.parquet&quot;) // read it back as DF
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -406,46 +390,47 @@ platforms.distinct.map(t =&gt; &quot;Name: &quot; + t(0)).collect().foreach(prin
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">social_media_usage_readFromParquet_DF
   .write
-  .partitionBy(&quot;platform&quot;)
-  .mode(&quot;overwrite&quot;).parquet(&quot;/tmp/social_media_usage_partitionedByPlatform.parquet&quot;) 
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/tmp/social_media_usage_partitionedByPlatform.parquet&quot;)) // there are many platform=* folders inside the parquet folder
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/tmp/social_media_usage_partitionedByPlatform.parquet/platform=Android&quot;)) // threre are part-00000- files with contents inside each platform=* folder in the parquet folder
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">spark.read.parquet(&quot;/tmp/social_media_usage_partitionedByPlatform.parquet&quot;).rdd.getNumPartitions
+  .partitionBy(&quot;platform&quot;) // now we are partitioning by &quot;platform&quot;
+  .mode(&quot;overwrite&quot;).parquet(&quot;/datasets/sds/tmp/social_media_usage_partitionedByPlatform.parquet&quot;) 
 </code></pre>
 </div>
 <div class="cell markdown">
+<p>Understand the directory structure of the parquet files we wrote.</p>
+<p>There are many <code>/platform=*/</code> folders inside the parquet folder.</p>
+<p>In zeppelin use hdfs or local fs to view the same.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">ls /datasets/sds/tmp/social_media_usage_partitionedByPlatform.parquet
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>There are <code>part-0000*-</code> files with contents inside each <code>platform=*</code> folder in the parquet folder.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-fs">ls /datasets/sds/tmp/social_media_usage_partitionedByPlatform.parquet/platform=Android
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">spark.read.parquet(&quot;/datasets/sds/tmp/social_media_usage_partitionedByPlatform.parquet&quot;).rdd.getNumPartitions
+</code></pre>
+</div>
+<div class="cell markdown">
+<ul>
+<li>Why does partitioning by a column name matter?</li>
+<li>This is a standard way to distribute the dataset into partitions according to the ideal column
+<ul>
+<li>want to make sure that all partitions are roughly of the same size, otherwise we have to wait for the largest partition to be processed before moving to the next stage (this is called partition skew)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
 <p>We can also use a fixed number of buckets and sort by a column within each partition. Such finer control of the dataframe written as a parquet file can help with optimizing downstream operations on the dataframe.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">social_media_usage_readFromParquet_DF
-  .write
-  .partitionBy(&quot;platform&quot;)
-  .bucketBy(10, &quot;date&quot;)
-  .sortBy(&quot;date&quot;)
-  .mode(&quot;overwrite&quot;)
-  .saveAsTable(&quot;social_media_usage_table_partitionedByPlatformBucketedByDate&quot;) 
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">spark.catalog.listTables.show()
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val df = spark.table(&quot;social_media_usage_table_partitionedByPlatformBucketedByDate&quot;)
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">df.rdd.getNumPartitions
-</code></pre>
+<ul>
+<li>https://jaceklaskowski.gitbooks.io/mastering-spark-sql/content/spark-sql-bucketing.html</li>
+<li>https://spark.apache.org/docs/latest/sql-data-sources-load-save-functions.html#bucketing-sorting-and-partitioning</li>
+</ul>
 </div>
 <div class="cell markdown">
 <h3 id="partition-discovery"><a class="header" href="#partition-discovery">Partition Discovery</a></h3>
@@ -492,14 +477,14 @@ platforms.distinct.map(t =&gt; &quot;Name: &quot; + t(0)).collect().foreach(prin
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Create a simple DataFrame, stored into a partition directory
 val df1 = sc.parallelize(1 to 5).map(i =&gt; (i, i * 2)).toDF(&quot;single&quot;, &quot;double&quot;)
-df1.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/data/test_table/key=1&quot;)
+df1.write.mode(&quot;overwrite&quot;).parquet(&quot;/datasets/sds/tmp/data/test_table/key=1&quot;)
 
 // Create another DataFrame in a new partition directory, adding a new column and dropping an existing column
 val df2 = sc.parallelize(6 to 10).map(i =&gt; (i, i * 3)).toDF(&quot;single&quot;, &quot;triple&quot;)
-df2.write.mode(&quot;overwrite&quot;).parquet(&quot;/tmp/data/test_table/key=2&quot;)
+df2.write.mode(&quot;overwrite&quot;).parquet(&quot;/datasets/sds/tmp/data/test_table/key=2&quot;)
 
 // Read the partitioned table
-val df3 = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;/tmp/data/test_table&quot;)
+val df3 = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;/datasets/sds/tmp/data/test_table&quot;)
 df3.printSchema()
 
 // The final schema consists of all 3 columns in the Parquet files together
@@ -549,15 +534,15 @@ REFRESH TABLE simple_range;
 <div class="cell markdown">
 <h3 id="configuration"><a class="header" href="#configuration">Configuration</a></h3>
 <p>Configuration of Parquet can be done using the <code>setConf</code> method on <code>SQLContext</code> or by running <code>SET key=value</code> commands using SQL.</p>
-<table><thead><tr><th>Property Name</th><th>Default</th><th>Meaning</th><th></th></tr></thead><tbody>
-<tr><td><code>spark.sql.parquet.binaryAsString</code></td><td>false</td><td>Some other Parquet-producing systems, in particular Impala, Hive, and older versions of Spark SQL, do not differentiate between binary data and strings when writing out the Parquet schema. This flag tells Spark SQL to interpret binary data as a string to provide compatibility with these systems.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.int96AsTimestamp</code></td><td>true</td><td>Some Parquet-producing systems, in particular Impala and Hive, store Timestamp into INT96. This flag tells Spark SQL to interpret INT96 data as a timestamp to provide compatibility with these systems.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.cacheMetadata</code></td><td>true</td><td>Turns on caching of Parquet schema metadata. Can speed up querying of static data.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.compression.codec</code></td><td>gzip</td><td>Sets the compression codec use when writing Parquet files. Acceptable values include: uncompressed, snappy, gzip, lzo.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.filterPushdown</code></td><td>true</td><td>Enables Parquet filter push-down optimization when set to true.</td><td></td></tr>
-<tr><td><code>spark.sql.hive.convertMetastoreParquet</code></td><td>true</td><td>When set to false, Spark SQL will use the Hive SerDe for parquet tables instead of the built in support.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.output.committer.class</code></td><td><code>org.apache.parquet.hadoop.ParquetOutputCommitter</code></td><td>The output committer class used by Parquet. The specified class needs to be a subclass of <code>org.apache.hadoop.mapreduce.OutputCommitter</code>. Typically, it's also a subclass of <code>org.apache.parquet.hadoop.ParquetOutputCommitter</code>. Spark SQL comes with a builtin <code>org.apache.spark.sql.parquet.DirectParquetOutputCommitter</code>, which can be more efficient then the default Parquet output committer when writing data to S3.</td><td></td></tr>
-<tr><td><code>spark.sql.parquet.mergeSchema</code></td><td><code>false</code></td><td>When true, the Parquet data source merges schemas collected from all data files, otherwise the schema is picked from the summary file or a random data file if no summary file is available.</td><td></td></tr>
+<table><thead><tr><th>Property Name</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>spark.sql.parquet.binaryAsString</code></td><td>false</td><td>Some other Parquet-producing systems, in particular Impala, Hive, and older versions of Spark SQL, do not differentiate between binary data and strings when writing out the Parquet schema. This flag tells Spark SQL to interpret binary data as a string to provide compatibility with these systems.</td></tr>
+<tr><td><code>spark.sql.parquet.int96AsTimestamp</code></td><td>true</td><td>Some Parquet-producing systems, in particular Impala and Hive, store Timestamp into INT96. This flag tells Spark SQL to interpret INT96 data as a timestamp to provide compatibility with these systems.</td></tr>
+<tr><td><code>spark.sql.parquet.cacheMetadata</code></td><td>true</td><td>Turns on caching of Parquet schema metadata. Can speed up querying of static data.</td></tr>
+<tr><td><code>spark.sql.parquet.compression.codec</code></td><td>gzip</td><td>Sets the compression codec use when writing Parquet files. Acceptable values include: uncompressed, snappy, gzip, lzo.</td></tr>
+<tr><td><code>spark.sql.parquet.filterPushdown</code></td><td>true</td><td>Enables Parquet filter push-down optimization when set to true.</td></tr>
+<tr><td><code>spark.sql.hive.convertMetastoreParquet</code></td><td>true</td><td>When set to false, Spark SQL will use the Hive SerDe for parquet tables instead of the built in support.</td></tr>
+<tr><td><code>spark.sql.parquet.output.committer.class</code></td><td><code>org.apache.parquet.hadoop.ParquetOutputCommitter</code></td><td>The output committer class used by Parquet. The specified class needs to be a subclass of <code>org.apache.hadoop.mapreduce.OutputCommitter</code>. Typically, it's also a subclass of <code>org.apache.parquet.hadoop.ParquetOutputCommitter</code>. Spark SQL comes with a builtin <code>org.apache.spark.sql.parquet.DirectParquetOutputCommitter</code>, which can be more efficient then the default Parquet output committer when writing data to S3.</td></tr>
+<tr><td><code>spark.sql.parquet.mergeSchema</code></td><td><code>false</code></td><td>When true, the Parquet data source merges schemas collected from all data files, otherwise the schema is picked from the summary file or a random data file if no summary file is available.</td></tr>
 </tbody></table>
 </div>
 <div class="cell markdown">
@@ -568,7 +553,7 @@ REFRESH TABLE simple_range;
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// A JSON dataset is pointed to by path.
 // The path can be either a single text file or a directory storing text files.
-val path = &quot;/tmp/platforms.json&quot;
+val path = &quot;/datasets/sds/tmp/platforms.json&quot;
 val platforms = spark.read.json(path)
 
 // The inferred schema can be visualized using the printSchema() method.
@@ -616,7 +601,7 @@ spark.sql(&quot;FROM src SELECT key, value&quot;).collect().foreach(println)
 </div>
 <div class="cell markdown">
 <h2 id="jdbc-to-other-databases"><a class="header" href="#jdbc-to-other-databases">JDBC To Other Databases</a></h2>
-<p>Spark SQL also includes a data source that can read data from other databases using JDBC. This functionality should be preferred over using <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.JdbcRDD">JdbcRDD</a>. This is because the results are returned as a DataFrame and they can easily be processed in Spark SQL or joined with other data sources. The JDBC data source is also easier to use from Java or Python as it does not require the user to provide a ClassTag. (Note that this is different than the Spark SQL JDBC server, which allows other applications to run queries using Spark SQL).</p>
+<p>Spark SQL also includes a data source that can read data from other databases using JDBC. This functionality should be preferred over using <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/JdbcRDD">JdbcRDD</a>. This is because the results are returned as a DataFrame and they can easily be processed in Spark SQL or joined with other data sources. The JDBC data source is also easier to use from Java or Python as it does not require the user to provide a ClassTag. (Note that this is different than the Spark SQL JDBC server, which allows other applications to run queries using Spark SQL).</p>
 <p>To get started you will need to include the JDBC driver for you particular database on the spark classpath. For example, to connect to postgres from the Spark Shell you would run the following command:</p>
 <pre><code>SPARK_CLASSPATH=postgresql-9.3-1102-jdbc41.jar bin/spark-shell
 </code></pre>

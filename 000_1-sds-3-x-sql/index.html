@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>007_SparkSQLIntroBasics</title>
+        <title>007_SparkSQLIntroBasics - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -148,42 +151,28 @@
 <div class="cell markdown">
 <h1 id="introduction-to-spark-sql"><a class="header" href="#introduction-to-spark-sql">Introduction to Spark SQL</a></h1>
 <ul>
-<li>This notebook explains the motivation behind Spark SQL</li>
+<li>This notebook explains the motivation behind Spark SQL, one of Spark's main libraries built on top of Spark Core.</li>
 <li>It introduces interactive SparkSQL queries and visualizations</li>
 <li>This notebook uses content from Databricks SparkSQL notebook and <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL programming guide</a></li>
 </ul>
 </div>
 <div class="cell markdown">
-<p><strong>Some resources on SQL</strong></p>
+<p><strong>Some core resources on Spark SQL</strong></p>
+<ul>
+<li><strong>READ</strong>: <a href="https://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf">https://people.csail.mit.edu/matei/papers/2015/sigmod<em>spark</em>sql.pdf</a></li>
+<li><strong>Bookmark</strong>: <a href="https://jaceklaskowski.gitbooks.io/mastering-spark-sql/content/spark-sql.html">https://jaceklaskowski.gitbooks.io/mastering-spark-sql/content/spark-sql.html</a></li>
+</ul>
+<p><strong>Some other resources on SQL and Spark SQL</strong></p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/SQL">https://en.wikipedia.org/wiki/SQL</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Apache_Hive">https://en.wikipedia.org/wiki/Apache_Hive</a></li>
 <li><a href="http://www.infoq.com/articles/apache-spark-sql">http://www.infoq.com/articles/apache-spark-sql</a></li>
 <li><a href="https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html">https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html</a></li>
 <li><a href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></li>
-<li><strong>READ</strong>: <a href="https://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf">https://people.csail.mit.edu/matei/papers/2015/sigmod<em>spark</em>sql.pdf</a></li>
 </ul>
 <p>Some of them are embedded below in-place for your convenience.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
-<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
-//when viewing in git-book just ignore this block - you may have to manually chase the URL in frameIt(&quot;URL&quot;).
-//Example usage:
-// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
-def frameIt( u:String, h:Int ) : String = {
-      &quot;&quot;&quot;&lt;iframe 
- src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
- width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
- sandbox&gt;
-  &lt;p&gt;
-    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
-      Fallback link for browsers that, unlikely, don't support frames
-    &lt;/a&gt;
-  &lt;/p&gt;
-&lt;/iframe&gt;&quot;&quot;&quot;
-   }
-displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/SQL&quot;,500))
-</code></pre>
 <div class="output execute_result html_result" execution_count="1">
 <iframe 
  src="https://en.wikipedia.org/wiki/SQL"
@@ -217,7 +206,7 @@ displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/SQL&quot;,500))
 <p>READ - <a href="https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html">https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html</a></p>
 </div>
 <div class="cell markdown">
-<p>This is an elaboration of the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">Apache Spark 2.2 sql-progamming-guide</a>.</p>
+<p>This is an elaboration of the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">Apache Spark latest sql-progamming-guide</a>.</p>
 <h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
 <p>Spark SQL is a Spark module for structured data processing. Unlike the basic Spark RDD API, the interfaces provided by Spark SQL provide Spark with more information about the structure of both the data and the computation being performed. Internally, Spark SQL uses this extra information to perform extra optimizations. There are several ways to interact with Spark SQL including SQL and the Dataset API. When computing a result the same execution engine is used, independent of which API/language you are using to express the computation. This unification means that developers can easily switch back and forth between different APIs based on which provides the most natural way to express a given transformation.</p>
 <p>All of the examples on this page use sample data included in the Spark distribution and can be run in the spark-shell, pyspark shell, or sparkR shell.</p>
@@ -247,7 +236,7 @@ import spark.implicits._
 <pre><code class="language-scala">spark // ready-made Spark-Session
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@37cbb5bf
+<pre><code>res2: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@cc46118
 </code></pre>
 </div>
 </div>
@@ -361,8 +350,8 @@ import spark.implicits._
 rdd1.collect() // Ctrl+Enter
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>rdd1: org.apache.spark.rdd.RDD[(Int, Int)] = MapPartitionsRDD[816] at map at command-2971213210277924:1
-res4: Array[(Int, Int)] = Array((1,2), (2,4), (3,6), (4,8), (5,10))
+<pre><code>rdd1: org.apache.spark.rdd.RDD[(Int, Int)] = MapPartitionsRDD[171] at map at command-2971213210277924:1
+res7: Array[(Int, Int)] = Array((1,2), (2,4), (3,6), (4,8), (5,10))
 </code></pre>
 </div>
 </div>
@@ -445,7 +434,7 @@ df1: org.apache.spark.sql.DataFrame = [once: int, twice: int]
 </div>
 <div class="cell markdown">
 <h3 id="4-dataframe-operations-aka-untyped-dataset-operations-1"><a class="header" href="#4-dataframe-operations-aka-untyped-dataset-operations-1">4. DataFrame Operations (aka Untyped Dataset Operations)</a></h3>
-<p>DataFrames provide a domain-specific language for structured data manipulation in <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">Scala</a>, <a href="http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/Dataset.html">Java</a>, <a href="http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame">Python</a> and <a href="http://spark.apache.org/docs/latest/api/R/SparkDataFrame.html">R</a>.</p>
+<p>DataFrames provide a domain-specific language for structured data manipulation in <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Scala</a>, <a href="https://spark.apache.org/docs/latest/api/java/org/apache/spark/sql/Dataset.html">Java</a>, <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/dataframe.html">Python</a> and <a href="https://spark.apache.org/docs/latest/api/R/reference/SparkDataFrame.html">R</a>.</p>
 <p>As mentioned above, in Spark 2.0, DataFrames are just Dataset of Rows in Scala and Java API. These operations are also referred as “untyped transformations” in contrast to “typed transformations” come with strongly typed Scala/Java Datasets.</p>
 <p>Here we include some basic examples of structured data processing using Datasets:</p>
 </div>
@@ -622,8 +611,8 @@ df111.groupBy(&quot;once&quot;).count().show()
 </div>
 </div>
 <div class="cell markdown">
-<p>For a complete list of the types of operations that can be performed on a Dataset refer to the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset">API Documentation</a>.</p>
-<p>In addition to simple column references and expressions, Datasets also have a rich library of functions including string manipulation, date arithmetic, common math operations and more. The complete list is available in the <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$">DataFrame Function Reference</a>.</p>
+<p>For a complete list of the types of operations that can be performed on a Dataset refer to the <a href="https://spark.apache.org/docs/latest/api/java/org/apache/spark/sql/Dataset.html">API Documentation</a>.</p>
+<p>In addition to simple column references and expressions, Datasets also have a rich library of functions including string manipulation, date arithmetic, common math operations and more. The complete list is available in the <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions$.html">DataFrame Function Reference</a>.</p>
 </div>
 <div class="cell markdown">
 <p><strong>You Try!</strong></p>
@@ -642,7 +631,7 @@ df111.groupBy(&quot;once&quot;).count().show()
 <pre><code class="language-scala">df1
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res23: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+<pre><code>res27: org.apache.spark.sql.DataFrame = [once: int, twice: int]
 </code></pre>
 </div>
 </div>
@@ -805,7 +794,7 @@ select * from sdtable
 <li>Creating Datasets</li>
 </ol>
 <hr />
-<p>Datasets are similar to RDDs, however, instead of using Java serialization or Kryo they use a specialized <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Encoder">Encoder</a> to serialize the objects for processing or transmitting over the network. While both encoders and standard serialization are responsible for turning an object into bytes, encoders are code generated dynamically and use a format that allows Spark to perform many operations like filtering, sorting and hashing without deserializing the bytes back into an object.</p>
+<p>Datasets are similar to RDDs, however, instead of using Java serialization or Kryo they use a specialized <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Encoder">Encoder</a> to serialize the objects for processing or transmitting over the network. While both encoders and standard serialization are responsible for turning an object into bytes, encoders are code generated dynamically and use a format that allows Spark to perform many operations like filtering, sorting and hashing without deserializing the bytes back into an object.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val rangeDS = spark.range(0, 3) // Ctrl+Enter to make DataSet with 0,1,2; Note we added '.toDF()' to this to create a DataFrame
@@ -862,7 +851,7 @@ primitiveDS.map(_ + 1).collect() // Returns: Array(2, 3, 4)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>primitiveDS: org.apache.spark.sql.Dataset[Int] = [value: int]
-res32: Array[Int] = Array(2, 3, 4)
+res36: Array[Int] = Array(2, 3, 4)
 </code></pre>
 </div>
 </div>
@@ -870,7 +859,7 @@ res32: Array[Int] = Array(2, 3, 4)
 <pre><code class="language-scala">df1
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res34: org.apache.spark.sql.DataFrame = [once: int, twice: int]
+<pre><code>res38: org.apache.spark.sql.DataFrame = [once: int, twice: int]
 </code></pre>
 </div>
 </div>
@@ -926,19 +915,12 @@ case class singleAndDoubleIntegers(once: Integer, twice: Integer)
 <div class="cell markdown">
 <h2 id="go-through-the-databricks-introductions-now"><a class="header" href="#go-through-the-databricks-introductions-now">Go through the databricks Introductions Now</a></h2>
 <ul>
-<li>
-<p><a href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html</a></p>
-</li>
-<li>
-<p><a href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-datasets.html</a></p>
-</li>
+<li><a href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html">https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html</a></li>
 </ul>
 </div>
 <div class="cell markdown">
 <h3 id="recommended-homework"><a class="header" href="#recommended-homework">Recommended Homework</a></h3>
 <p>This week's recommended homework is a deep dive into the <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">SparkSQL programming guide</a>.</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
 </div>
 
                     </main>

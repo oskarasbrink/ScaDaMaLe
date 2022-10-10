@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>009_PowerPlantPipeline_01ETLEDA</title>
+        <title>009_PowerPlantPipeline_01ETLEDA - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -30,7 +30,10 @@
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
 
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -110,7 +113,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
 
                     <div class="right-buttons">
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -195,8 +198,6 @@
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
-<pre><code class="language-scala">displayHTML(frameIt(&quot;https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant&quot;,500))
-</code></pre>
 <div class="output execute_result html_result" execution_count="1">
 <iframe 
  src="https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant"
@@ -214,7 +215,7 @@
 <pre><code class="language-scala">sc.version.replace(&quot;.&quot;, &quot;&quot;).toInt
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res0: Int = 312
+<pre><code>res24: Int = 321
 </code></pre>
 </div>
 </div>
@@ -237,7 +238,7 @@ require(sc.version.replace(&quot;.&quot;, &quot;&quot;).toInt &gt;= 140, &quot;S
 <p>Data was downloaded already as these five Tab-separated-variable or tsv files.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/databricks-datasets/power-plant/data&quot;)) // Ctrl+Enter
+<pre><code class="language-fs">ls /datasets/sds/power-plant/data
 </code></pre>
 <div class="output execute_result tabular_result" execution_count="1">
 <table>
@@ -246,55 +247,39 @@ require(sc.version.replace(&quot;.&quot;, &quot;&quot;).toInt &gt;= 140, &quot;S
 <th>path</th>
 <th>name</th>
 <th>size</th>
+<th>modificationTime</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet1.tsv</td>
+<td>dbfs:/datasets/sds/power-plant/data/Sheet1.tsv</td>
 <td>Sheet1.tsv</td>
 <td>308693.0</td>
+<td>1.664295999e12</td>
 </tr>
 <tr class="even">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet2.tsv</td>
+<td>dbfs:/datasets/sds/power-plant/data/Sheet2.tsv</td>
 <td>Sheet2.tsv</td>
 <td>308693.0</td>
+<td>1.664295998e12</td>
 </tr>
 <tr class="odd">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet3.tsv</td>
+<td>dbfs:/datasets/sds/power-plant/data/Sheet3.tsv</td>
 <td>Sheet3.tsv</td>
 <td>308693.0</td>
+<td>1.664295999e12</td>
 </tr>
 <tr class="even">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet4.tsv</td>
+<td>dbfs:/datasets/sds/power-plant/data/Sheet4.tsv</td>
 <td>Sheet4.tsv</td>
 <td>308693.0</td>
+<td>1.664295998e12</td>
 </tr>
 <tr class="odd">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet5.tsv</td>
+<td>dbfs:/datasets/sds/power-plant/data/Sheet5.tsv</td>
 <td>Sheet5.tsv</td>
 <td>308693.0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">display(dbutils.fs.ls(&quot;/databricks-datasets/power-plant/data/Sheet1.tsv&quot;)) // Ctrl+Enter
-</code></pre>
-<div class="output execute_result tabular_result" execution_count="1">
-<table>
-<thead>
-<tr class="header">
-<th>path</th>
-<th>name</th>
-<th>size</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>dbfs:/databricks-datasets/power-plant/data/Sheet1.tsv</td>
-<td>Sheet1.tsv</td>
-<td>308693.0</td>
+<td>1.664295998e12</td>
 </tr>
 </tbody>
 </table>
@@ -304,10 +289,10 @@ require(sc.version.replace(&quot;.&quot;, &quot;&quot;).toInt &gt;= 140, &quot;S
 <p>Now let us load the data from the Tab-separated-variable or tsv text file into an <code>RDD[String]</code> using the familiar <code>textFile</code> method.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val powerPlantRDD = sc.textFile(&quot;/databricks-datasets/power-plant/data/Sheet1.tsv&quot;) // Ctrl+Enter
+<pre><code class="language-scala">val powerPlantRDD = sc.textFile(&quot;/datasets/sds/power-plant/data/Sheet1.tsv&quot;) // Ctrl+Enter
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>powerPlantRDD: org.apache.spark.rdd.RDD[String] = /databricks-datasets/power-plant/data/Sheet1.tsv MapPartitionsRDD[286] at textFile at command-2971213210277530:1
+<pre><code>powerPlantRDD: org.apache.spark.rdd.RDD[String] = /datasets/sds/power-plant/data/Sheet1.tsv MapPartitionsRDD[778] at textFile at command-2971213210277530:1
 </code></pre>
 </div>
 </div>
@@ -335,7 +320,7 @@ val powerPlantDF = spark.read // use 'sqlContext.read' instead if you want to us
     .option(&quot;header&quot;, &quot;true&quot;) // Use first line of all files as header
     .option(&quot;inferSchema&quot;, &quot;true&quot;) // Automatically infer data types
     .option(&quot;delimiter&quot;, &quot;\t&quot;) // Specify the delimiter as Tab or '\t'
-    .load(&quot;/databricks-datasets/power-plant/data/Sheet1.tsv&quot;)
+    .load(&quot;/datasets/sds/power-plant/data/Sheet1.tsv&quot;)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>powerPlantDF: org.apache.spark.sql.DataFrame = [AT: double, V: double ... 3 more fields]
@@ -359,28 +344,19 @@ val powerPlantDF = spark.read // use 'sqlContext.read' instead if you want to us
 <pre><code class="language-scala">powerPlantDF.count
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res21: Long = 9568
+<pre><code>res31: Long = 9568
 </code></pre>
 </div>
 </div>
 <div class="cell markdown">
 <h3 id="21-alternatively-load-data-via-the-upload-gui-feature-in-databricks"><a class="header" href="#21-alternatively-load-data-via-the-upload-gui-feature-in-databricks">2.1. Alternatively, load data via the upload GUI feature in databricks</a></h3>
-<h2 id="use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce"><a class="header" href="#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">USE THIS FOR OTHER SMALLish DataSets you want to import to your CE</a></h2>
-<p>Since the dataset is relatively small, we will use the upload feature in Databricks to upload the data as a table.</p>
+<h4 id="use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce"><a class="header" href="#use-this-for-other-smallish-datasets-you-want-to-import-to-your-ce">USE THIS FOR OTHER SMALLish DataSets you want to import to your CE</a></h4>
+<p>Since the dataset is relatively small, we can also use the upload feature in Databricks to upload the data as a table.</p>
 <p>First download the Data Folder from <a href="https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant">UCI Machine Learning Repository Combined Cycle Power Plant Data Set</a></p>
 <p>The file is a multi-tab Excel document so you will need to save each tab as a Text file export.</p>
 <p>I prefer exporting as a Tab-Separated-Values (TSV) since it is more consistent than CSV.</p>
 <p>Call each file Folds5x2_pp&lt;Sheet 1..5&gt;.tsv and save to your machine.</p>
-<p>Go to the Databricks Menu &gt; Tables &gt; Create Table</p>
-<p>Select Datasource as &quot;File&quot;</p>
-<p>Upload <em>ALL</em> 5 files at once.</p>
-<p>See screenshots below (but refer <a href="https://docs.databricks.com/user-guide/importing-data.html">https://docs.databricks.com/user-guide/importing-data.html</a> for latest methods to import data):</p>
-<p><strong>2.1.1. Create Table</strong> _________________</p>
-<p>When you import your data, name your table <code>power_plant</code>, specify all of the columns with the datatype <code>Double</code> and make sure you check the <code>First row is header</code> box.</p>
-<p><img src="http://training.databricks.com/databricks_guide/1_4_ML_Power_Plant_Import_Table.png" alt="alt text" /></p>
-<p><strong>2.1.2. Review Schema</strong> __________________</p>
-<p>Your table schema and preview should look like this after you click <code>Create Table</code>:</p>
-<p><img src="http://training.databricks.com/databricks_guide/1_4_ML_Power_Plant_Import_Table_Schema.png" alt="alt text" /></p>
+<p>Refer to <a href="https://docs.databricks.com/user-guide/importing-data.html">https://docs.databricks.com/user-guide/importing-data.html</a> for latest methods to import data.</p>
 </div>
 <div class="cell markdown">
 <p>Now that your data is loaded let's explore it.</p>
@@ -7444,75 +7420,7 @@ only showing top 10 rows
 <pre><code class="language-scala">powerPlantDF.count() // count the number of rows in DF
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res13: Long = 9568
-</code></pre>
-</div>
-</div>
-<div class="cell markdown">
-<h4 id="viewing-as-table-via-sql"><a class="header" href="#viewing-as-table-via-sql">Viewing as Table via SQL</a></h4>
-<p>Let us look at what tables are already available, as follows:</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">sqlContext.tables.show() // Ctrl+Enter to see available tables
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>+--------+--------------------+-----------+
-|database|           tableName|isTemporary|
-+--------+--------------------+-----------+
-| default|        countrycodes|      false|
-| default|ltcar_locations_2...|      false|
-| default|            magellan|      false|
-| default|       mobile_sample|      false|
-| default|    over300all_2_txt|      false|
-| default|              person|      false|
-| default|             persons|      false|
-| default|  social_media_usage|      false|
-| default|social_media_usag...|      false|
-| default|voronoi20191213up...|      false|
-| default|voronoi20191213up...|      false|
-| default|voronoi20191213up...|      false|
-+--------+--------------------+-----------+
-</code></pre>
-</div>
-</div>
-<div class="cell markdown">
-<p>We can also access the list of tables and databases using <code>spark.catalog</code> methods as explained here:</p>
-<ul>
-<li><a href="https://databricks.com/blog/2016/08/15/how-to-use-sparksession-in-apache-spark-2-0.html">https://databricks.com/blog/2016/08/15/how-to-use-sparksession-in-apache-spark-2-0.html</a></li>
-</ul>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">spark.catalog.listTables.show(false)
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>+----------------------------+--------+-----------+---------+-----------+
-|name                        |database|description|tableType|isTemporary|
-+----------------------------+--------+-----------+---------+-----------+
-|countrycodes                |default |null       |EXTERNAL |false      |
-|ltcar_locations_2_csv       |default |null       |MANAGED  |false      |
-|magellan                    |default |null       |MANAGED  |false      |
-|mobile_sample               |default |null       |EXTERNAL |false      |
-|over300all_2_txt            |default |null       |MANAGED  |false      |
-|person                      |default |null       |MANAGED  |false      |
-|persons                     |default |null       |MANAGED  |false      |
-|social_media_usage          |default |null       |MANAGED  |false      |
-|social_media_usage_csv_gui  |default |null       |MANAGED  |false      |
-|voronoi20191213uppsla1st_txt|default |null       |MANAGED  |false      |
-|voronoi20191213uppsla2d_txt |default |null       |MANAGED  |false      |
-|voronoi20191213uppsla3d_txt |default |null       |MANAGED  |false      |
-+----------------------------+--------+-----------+---------+-----------+
-</code></pre>
-</div>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">spark.catalog.listDatabases.show(false)
-</code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>+-------+---------------------+-------------------------+
-|name   |description          |locationUri              |
-+-------+---------------------+-------------------------+
-|default|Default Hive database|dbfs:/user/hive/warehouse|
-+-------+---------------------+-------------------------+
+<pre><code>res34: Long = 9568
 </code></pre>
 </div>
 </div>
@@ -7524,26 +7432,14 @@ only showing top 10 rows
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">sqlContext.tables.show() 
+<pre><code class="language-scala">spark.catalog.listTables.where($&quot;name&quot; startsWith &quot;power&quot;).show()
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>+--------+--------------------+-----------+
-|database|           tableName|isTemporary|
-+--------+--------------------+-----------+
-| default|        countrycodes|      false|
-| default|ltcar_locations_2...|      false|
-| default|            magellan|      false|
-| default|       mobile_sample|      false|
-| default|    over300all_2_txt|      false|
-| default|              person|      false|
-| default|             persons|      false|
-| default|  social_media_usage|      false|
-| default|social_media_usag...|      false|
-| default|voronoi20191213up...|      false|
-| default|voronoi20191213up...|      false|
-| default|voronoi20191213up...|      false|
-|        |   power_plant_table|       true|
-+--------+--------------------+-----------+
+<pre><code>+-----------------+--------+-----------+---------+-----------+
+|             name|database|description|tableType|isTemporary|
++-----------------+--------+-----------+---------+-----------+
+|power_plant_table|    null|       null|TEMPORARY|       true|
++-----------------+--------+-----------+---------+-----------+
 </code></pre>
 </div>
 </div>
