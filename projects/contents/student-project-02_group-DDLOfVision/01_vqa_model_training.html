@@ -1,0 +1,479 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>01_vqa_model_training - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/student-project-02_group-DDLOfVision/00_vqa_introduction.html">00_vqa_introduction</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-02_group-DDLOfVision/01_vqa_model_training.html" class="active">01_vqa_model_training</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-02_group-DDLOfVision/02_vqa_model_inference.html">02_vqa_model_inference</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-02_group-DDLOfVision/0y_test_mnist-pytorch.html">0y_test_mnist-pytorch</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/00_ingest_data.html">00_ingest_data</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/02_load_data.html">02_load_data</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/03_data_exploration.html">03_data_exploration</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/04Motif_search_defination_code.html">04Motif_search_defination_code</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/08_pagerank.html">08_pagerank</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/10_motif_mining_WikiKGv2.html">10_motif_mining_WikiKGv2</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-03_group-WikiKG90mv2/fetch_descriptions.html">fetch_descriptions</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html">00_Notebook_Presentation</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html">01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html">02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-04_group-FedMLMedicalApp/data_upload_test.html">data_upload_test</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/00_introduction.html">00_introduction</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/01_Bayesian_optimization.html">01_Bayesian_optimization</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/02_Gaussian_processes.html">02_Gaussian_processes</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/03_acquisition_functions.html">03_acquisition_functions</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/04_TuRBO.html">04_TuRBO</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/05_deep_kernel_learning.html">05_deep_kernel_learning</a></li><li class="chapter-item expanded affix "><a href="../../contents/student-project-05_group-DistOpt/06_our_implementation.html">06_our_implementation</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-cd">/dbfs/ml/VQA
+!wget -nc https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/Questions_Train_mscoco.zip
+!wget -nc https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/Annotations_Train_mscoco.zip
+!wget -nc http://images.cocodataset.org/zips/train2014.zip
+!unzip -qqn '*.zip'
+!ls train2014 | wc -l
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-cd">/dbfs/ml/VQA
+!wget -nc https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/Questions_Val_mscoco.zip
+!wget -nc https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/Annotations_Val_mscoco.zip
+!wget -nc http://images.cocodataset.org/zips/val2014.zip
+!unzip -qqn '*Val*.zip'
+!unzip -qqn 'val*.zip'
+!ls val2014 | wc -l
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from collections import namedtuple
+from functools import partial
+import json
+from tqdm.notebook import tqdm
+import numpy as np
+import os
+from pathlib import Path
+
+import torch
+import transformers
+from torch.utils.data import Dataset, DataLoader
+from transformers import AlbertTokenizer, AlbertModel
+from transformers import ViTFeatureExtractor, ViTModel
+from torch.nn import TransformerEncoder, TransformerEncoderLayer
+from PIL import Image
+import horovod.torch as hvd
+from sparkdl import HorovodRunner
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># VQATrainingExample = namedtuple('VQATrainingExample', [
+#     'txt',
+#     'encoded_txt', 
+#     'label', 
+#     'encoded_img'
+# ])
+
+
+def collator_f(batch, txt_tokenizer):
+    txt = [ex['txt'] for ex in batch]
+    encoded_txt = txt_tokenizer(txt, padding=True, return_tensors=&quot;pt&quot;, return_attention_mask=True)
+    label = torch.FloatTensor([ex['label'] for ex in batch])
+    encoded_img = {'pixel_values': torch.stack([ex['encoded_img']['pixel_values'][0] for ex in batch])}
+    
+    return {'txt': txt, 'encoded_txt': encoded_txt, 'label': label, 'encoded_img': encoded_img}
+
+
+class VQADatset(Dataset):
+    def __init__(self, txt_tokenizer, data_split=&quot;train&quot;):
+        # Loading the tokenizer and image feature extractor
+        self.txt_tokenizer = txt_tokenizer 
+        self.img_feat_extractor = ViTFeatureExtractor.from_pretrained('facebook/dino-vits16')
+        self.data_split = data_split
+        
+        # Get ready the text
+        if self.data_split==&quot;train&quot;:
+            self.questions = json.load(open('/dbfs/ml/VQA/MultipleChoice_mscoco_train2014_questions.json'))['questions']
+            self.answers = json.load(open('/dbfs/ml/VQA/mscoco_train2014_annotations.json'))['annotations']
+        else:
+            self.questions = json.load(open('/dbfs/ml/VQA/MultipleChoice_mscoco_val2014_questions.json'))['questions']
+            self.answers = json.load(open('/dbfs/ml/VQA/mscoco_val2014_annotations.json'))['annotations']
+        self.yesno_indices = [i for i, a in enumerate(self.answers) if a[&quot;answer_type&quot;] == &quot;yes/no&quot;]
+        self.questions = [self.questions[i] for i in self.yesno_indices]
+        self.answers = [self.answers[i] for i in self.yesno_indices]
+        
+    def __len__(self):
+        return len(self.questions)
+    
+    def __getitem__(self, idx):
+        question = self.questions[idx]
+        answer = self.answers[idx]
+        
+        assert question['question_id'] == answer['question_id']
+        
+        txt = question['question']
+        assert len(question['multiple_choices']) == 18
+        label = 1 if answer['multiple_choice_answer'] == &quot;yes&quot; else 0
+        img_id = question['image_id']
+        img = Image.open(f'/dbfs/ml/VQA/{self.data_split}2014/COCO_{self.data_split}2014_{img_id:012}.jpg')
+
+        try:
+            encoded_img = self.img_feat_extractor(images=img, return_tensors=&quot;pt&quot;)
+        except:
+            encoded_img = self.img_feat_extractor(images=img.convert('RGB'), return_tensors=&quot;pt&quot;)
+        
+        return {'txt': txt, 'encoded_txt': '', 'label': label, 'encoded_img': encoded_img}
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">class VQAModel(torch.nn.Module):
+    def __init__(self, d_model: int=384, nhead: int=6, d_hid: int=384, nlayers: int=1, n_class: int=1):
+        super(VQAModel, self).__init__()
+        
+        # Loading the encoders
+        self.albert = AlbertModel.from_pretrained(&quot;albert-base-v2&quot;)
+        self.vit = ViTModel.from_pretrained('facebook/dino-vits16', add_pooling_layer=False)
+        
+        # Freeze them
+        self.vit.eval()
+        self.albert.eval()
+        for param in self.albert.parameters():
+            param.requires_grad = False
+        
+        for param in self.vit.parameters():
+            param.requires_grad = False
+
+        # A linear layer to map Albert to ViT size
+        self.linear_map = torch.nn.Sequential(torch.nn.Linear(768, d_hid), torch.nn.GELU())
+        self.linear_map_img = torch.nn.Sequential(torch.nn.Linear(d_hid, d_hid), torch.nn.GELU())
+  
+        # The multimodal transformer block
+        encoder_layer = TransformerEncoderLayer(d_model, nhead, d_hid)
+        self.transformer_encoder = TransformerEncoder(encoder_layer, nlayers)
+
+        # A linear layer for classification
+        self.linear_cls = torch.nn.Sequential(torch.nn.Linear(4*d_hid, d_hid//4), torch.nn.GELU(), torch.nn.Linear(d_hid//4, n_class), torch.nn.GELU())
+
+    def set_eval(self):
+        self.linear_map.eval()
+        self.linear_map_img.eval()
+        self.transformer_encoder.eval()
+        self.linear_cls.eval()
+
+    def set_train(self):
+        self.linear_map.train()
+        self.linear_map_img.train()
+        self.transformer_encoder.train()
+        self.linear_cls.train()
+        
+    def forward(self, encoded_txt, encoded_img):
+        txt_out = self.albert(**encoded_txt).last_hidden_state
+        txt_out = self.linear_map(txt_out)
+        img_out = self.vit(**encoded_img).last_hidden_state
+        img_out = self.linear_map_img(img_out)
+        txt_img = torch.cat((txt_out, img_out), dim=-2)
+        txt_img = self.transformer_encoder(txt_img)
+        attention_mask = encoded_txt.attention_mask[:, 1:].unsqueeze(-1)
+        txt_img_features = torch.cat([txt_img[:,0], txt_img[:,txt_out.shape[1]], 
+                                      torch.sum(txt_img[:, 1:txt_out.shape[1]] * attention_mask, dim=-2) / torch.sum(attention_mask, dim=-2), 
+                                      torch.mean(txt_img[:, txt_out.shape[1]:], dim=-2)], dim=-1)
+        pred = self.linear_cls(txt_img_features)
+        return pred
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def train_one_epoch(model, optimizer, criterion, data_loader, epoch, device):
+    losses = []
+    pred_labels = []
+    true_labels = []
+    for i, batch in enumerate(data_loader):
+        if i % 25 == 0:
+            print(f'Train: {int(i*100/len(data_loader))}%')
+        encoded_txt = batch['encoded_txt'].to(device)
+        encoded_img = {'pixel_values': batch['encoded_img']['pixel_values'].to(device)}
+        optimizer.zero_grad()
+        pred = model(encoded_txt, encoded_img)
+        pred_labels.append((pred.reshape(-1).detach().cpu() &gt; 0.0).long())
+        true_labels.append(batch['label'])
+        loss = criterion(pred.reshape(-1), batch['label'].to(device))
+        loss.backward()
+        optimizer.step()
+        losses.append(loss.item())
+    accuracy = np.mean(torch.cat(pred_labels).numpy() == torch.cat(true_labels).numpy())
+    return np.mean(losses), accuracy
+        
+    
+def validate(model, data_loader, device):
+    pred_labels = []
+    true_labels = []
+    with torch.no_grad():
+        for i, batch in enumerate(data_loader):
+            if i % 25 == 0:
+                print(f'Val: {int(i*100/len(data_loader))}%')
+            encoded_txt = batch['encoded_txt'].to(device)
+            encoded_img = {'pixel_values': batch['encoded_img']['pixel_values'].to(device)}
+            pred = model(encoded_txt, encoded_img)
+            pred_labels.append((pred.reshape(-1).detach().cpu() &gt; 0.0).long())
+            true_labels.append(batch['label'])
+    accuracy = np.mean(torch.cat(pred_labels).numpy() == torch.cat(true_labels).numpy())
+    return accuracy
+
+
+def train(use_horovod=True):
+         
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(device)
+    
+    if use_horovod:
+        hvd.init()
+        if torch.cuda.is_available():
+            torch.cuda.set_device(hvd.local_rank())
+
+    txt_tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')
+    train_vqa_ds = VQADatset(txt_tokenizer, data_split=&quot;train&quot;)
+    val_vqa_ds = VQADatset(txt_tokenizer, data_split=&quot;val&quot;)
+    collator = partial(collator_f, txt_tokenizer=txt_tokenizer)
+    
+    output_dir = &quot;/dbfs/ml/VQA/outputs/&quot;
+    resume_from_checkpoint = os.path.join(output_dir, &quot;checkpoint_19.pth&quot;)
+    
+    model = VQAModel()
+    if os.path.exists(resume_from_checkpoint):
+        state_dict = torch.load(resume_from_checkpoint, map_location=&quot;cpu&quot;)
+        model.load_state_dict()
+    
+    model.to(device)
+
+    n_epochs = 50
+
+    if use_horovod:
+        from torch.utils.data.distributed import DistributedSampler
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-5 * hvd.size())
+        optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters())
+        train_sampler = DistributedSampler(train_vqa_ds, num_replicas=hvd.size(), rank=hvd.rank())
+        train_vqa_dl = DataLoader(train_vqa_ds, batch_size=256, shuffle=False, collate_fn=collator, num_workers=4, sampler=train_sampler)
+        val_sampler = DistributedSampler(val_vqa_ds, num_replicas=hvd.size(), rank=hvd.rank())
+        val_vqa_dl = DataLoader(val_vqa_ds, batch_size=256, shuffle=False, collate_fn=collator, num_workers=4, sampler=val_sampler)
+        hvd.broadcast_parameters(model.state_dict(), root_rank=0)
+    else:
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+        train_vqa_dl = DataLoader(train_vqa_ds, batch_size=1024, shuffle=True, collate_fn=collator, num_workers=8)
+        val_vqa_dl = DataLoader(val_vqa_ds, batch_size=1024, shuffle=False, collate_fn=collator, num_workers=8)
+        
+    criterion = torch.nn.BCEWithLogitsLoss()
+
+    for epoch in range(n_epochs):
+        print(f'Epoch: {epoch+1}')
+        model.set_train()
+        epoch_loss, epoch_accuracy = train_one_epoch(model, optimizer, criterion, train_vqa_dl, epoch, device)
+        model.set_eval()
+        train_accuracy = epoch_accuracy
+        val_accuracy = validate(model, val_vqa_dl, device)
+        log_stats = {&quot;train_loss&quot;: epoch_loss, &quot;train_accuracy&quot;: train_accuracy, &quot;val_accuracy&quot;: val_accuracy}
+    
+        if (use_horovod and hvd.rank() == 0) or not use_horovod:
+
+            save_dict = {
+                &quot;epoch&quot;: epoch + 1,
+                &quot;state_dict&quot;: model.state_dict(),
+                &quot;optimizer&quot;: optimizer.state_dict(), 
+                &quot;train_accuracy&quot;: train_accuracy, 
+                &quot;val_accuracy&quot;: val_accuracy,
+                &quot;loss&quot;: epoch_loss
+            }
+
+            torch.save(save_dict, os.path.join(output_dir, f&quot;checkpoint_{epoch}.pth&quot;))
+            print(f&quot;Epoch={epoch}, Loss={epoch_loss}, Train Accuracy={train_accuracy}, Val Accuracy={val_accuracy}&quot;)
+            
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def main(use_horovod=True, np=1):
+    if use_horovod:
+        hr = HorovodRunner(np=np, driver_log_verbosity='all') 
+        hr.run(train)
+    else:
+        train(use_horovod=False)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">main(use_horovod=True)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#%cd /dbfs/ml/VQA
+
+!ls /dbfs/ml/VQA/outputs
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/student-project-02_group-DDLOfVision/00_vqa_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/student-project-02_group-DDLOfVision/02_vqa_model_inference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/student-project-02_group-DDLOfVision/00_vqa_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/student-project-02_group-DDLOfVision/02_vqa_model_inference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
