@@ -243,9 +243,6 @@ class VQADatset(Dataset):
         return {'txt': txt, 'encoded_txt': '', 'label': label, 'encoded_img': encoded_img}
 </code></pre>
 </div>
-<div class="cell markdown">
-<h2 id="model"><a class="header" href="#model">Model</a></h2>
-</div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">class VQAModel(torch.nn.Module):
     def __init__(self, d_model: int=384, nhead: int=6, d_hid: int=384, nlayers: int=1, n_class: int=1):
@@ -301,6 +298,11 @@ class VQADatset(Dataset):
         pred = self.linear_cls(txt_img_features)
         return pred
 </code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="training"><a class="header" href="#training">Training</a></h2>
+<p>We train the model with a batch size of 256 and learning rate of 1e-5 (Aadam) for 40 epochs.</p>
+<p>We use Horovod to distribute the training on multiple GPUs. Using Horovod we can train on single-GPU, multiple-GPUs, or even multiple hosts without any further code changes.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">def train_one_epoch(model, optimizer, criterion, data_loader, epoch, device):
