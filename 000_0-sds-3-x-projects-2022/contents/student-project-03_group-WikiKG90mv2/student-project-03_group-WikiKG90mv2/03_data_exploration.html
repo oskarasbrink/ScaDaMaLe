@@ -25399,37 +25399,6 @@ topTenTypes.printSchema()
   }
 
   // run user code
-val instanceRels = graph.edges.filter(&quot;rel == 'instance of'&quot;)
-val joined = degrees.join(instanceRels, degrees(&quot;id&quot;) === instanceRels(&quot;src&quot;), &quot;leftouter&quot;).select($&quot;id&quot;, $&quot;inDegree&quot;, $&quot;outDegree&quot;, ($&quot;dst&quot;).as(&quot;type&quot;))
-display(joined)
-
-  if (dfs.length &gt; 0) {
-    val userGenerateDf = dfs(0).asInstanceOf[org.apache.spark.sql.DataFrame]
-    userGenerateDf.createOrReplaceTempView(&quot;DatabricksView507cfd9&quot;)
-  }
-  dfsLen = dfs.length
-}
-if (dfsLen &gt; 0) {
-  try {
-    display(sql(&quot;&quot;&quot;WITH q AS (select * from DatabricksView507cfd9) SELECT `inDegree`,`outDegree`,`type` FROM q&quot;&quot;&quot;))
-   } finally {
-  // cleaning up the view helps us not pollute the name space
-   spark.sql(&quot;drop view if exists DatabricksView507cfd9&quot;)
-  }
-} else {
-  displayHTML(&quot;dataframe no longer exists. If you're using dataframe.display(), use display(dataframe) instead.&quot;)
-}
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">var dfsLen = 0;
-{
-  var dfs = Array[Any]()
-  implicit def display(df: Any) {
-    dfs = dfs :+ df
-  }
-
-  // run user code
 val inDegrees = graph.inDegrees
 val outDegrees = graph.outDegrees
 
