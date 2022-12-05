@@ -199,7 +199,8 @@
 <p>First we load the two <code>.npz</code> files with the 2D and 3D keypoints of the HumanEva dataset, respectively.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-sh">pip install gdown
+<pre><code class="language-sh">pip install pip --upgrade --quiet
+pip install gdown --quiet
 cd /dbfs/VideoPose3D/humaneva
 gdown 1EngBymOjXWPntjfNVaGZhBX7sNCNg9pu # data_2d_humaneva15_gt.npz
 gdown 1ErTRudqF8ugAwopL3ieral0YMEtE28Dd # data_3d_humaneva15.npz
@@ -318,9 +319,8 @@ np.savez(f'{ROOTDIR}/humaneva/humaneva_skeleton.npz', data=humaneva_skeleton)
 <div class="cell markdown">
 <h3 id="visualization"><a class="header" href="#visualization">Visualization</a></h3>
 </div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-matplotlib">off
-</code></pre>
+<div class="cell markdown">
+<p>Let's plot the first 1000 frames of the video sequence in our dataset to understand, what kind of input the neural network will expect (more details on that in the next noteook).</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">from IPython.display import HTML
@@ -338,19 +338,23 @@ pos2d_list = np.array(pos2d_list)
 figure, ax = plt.subplots()
 xmin, xmax = pos2d_list[:,:,0].min(), pos2d_list[:,:,0].max()
 ymin, ymax = pos2d_list[:,:,1].min(), pos2d_list[:,:,1].max()
+
 def animation_function(i):
-    # print(desc_list[i])
-    x = pos2d_list[i,:,0]
-    y = pos2d_list[i,:,1]
     ax.clear()
-    # Setting limits for x and y axis
+    # Setting title as subject + action + camera
     ax.set_title(desc_list[i])
+    # Setting limits for x and y axis
     ax.set_xlim(xmin, xmax)
     ax.set_ylim(ymin, ymax)
     ax.invert_yaxis()
+    # Plotting the 2D keypoints
+    indices = humaneva_skeleton['joints_left']
+    x = pos2d_list[i,indices,0]
+    y = pos2d_list[i,indices,1]
     plt.scatter(x, y)
-animation = FuncAnimation(figure, animation_function, interval=0.1, frames=pos2d_list.shape[0])
-HTML(animation.to_jshtml())
+
+animation = FuncAnimation(figure, animation_function, interval=10, frames=10)
+HTML(animation.to_jshtml());
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -646,11 +650,11 @@ h36m_skeleton = {
 }
 np.savez('./data/h36m/h36m_skeleton.npz', data=h36m_skeleton)
 
-cd /dbfs/VideoPose3D
-mkdir checkpoint
-cd checkpoint
-wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
-wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectron.bin
+#cd /dbfs/VideoPose3D
+#mkdir checkpoint
+#cd checkpoint
+#wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
+#wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectron.bin
 </code></pre>
 </div>
 

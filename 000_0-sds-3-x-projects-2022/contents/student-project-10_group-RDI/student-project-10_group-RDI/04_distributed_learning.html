@@ -359,11 +359,10 @@ checkpoint_dir = dir1 + os.listdir(dir1)[-2] + '/'
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">hvd_model_lstm = get_model_lstm(x_test.shape[1], x_test.shape[2], x_aux_test.shape[1])
-</code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># Evaluate the LSTM model
+hvd_model_lstm = get_model_lstm(x_test.shape[1], x_test.shape[2], x_aux_test.shape[1])
 hvd_model_lstm = get_model_lstm(x_test.shape[1], x_test.shape[2], x_aux_test.shape[1])
 hvd_model_lstm.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
                 loss='mean_squared_error',
@@ -404,6 +403,10 @@ print(&quot;loaded model loss and accuracy:&quot;, loss_deep, accuracy_deep)
 <h2 id="plots"><a class="header" href="#plots">Plots</a></h2>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">load_m = mm_coeff[-3][1]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import matplotlib.pyplot as plt
 </code></pre>
 </div>
@@ -415,7 +418,7 @@ plt.show()
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># 45 minutes back
-plt.bar(['LSTM', 'GRU', 'Deep_GRU'], [loss_lstm, loss_gru, loss_deep])
+plt.bar(['LSTM', 'GRU', 'Deep_GRU'], [load_m*loss_lstm, load_m*loss_gru, load_m*loss_deep])
 plt.ylabel('MSE loss')
 plt.show()
 </code></pre>
@@ -432,12 +435,12 @@ yhatg1 = hvd_model_gru_deep.predict([x_test_1, x_aux_test_1])
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">plt.plot(y_test_1, label='True')
-plt.plot(yhatl, label='LSTM')
-plt.plot(yhatg, label='GRU')
-plt.plot(yhatg1, label='GRU1')
-plt.axis([min_plot, max_plot, -0.01, 0.15])
-#plt.xlim([0,100])
+<pre><code class="language-python">plt.plot(load_m*y_test_1, label='True')
+plt.plot(load_m*yhatl, label='LSTM')
+plt.plot(load_m*yhatg, label='GRU')
+plt.plot(load_m*yhatg1, label='GRU1')
+#plt.axis([min_plot, max_plot, -0.01, 0.15])
+plt.xlim([0,100])
 plt.legend()
 plt.show()
 </code></pre>

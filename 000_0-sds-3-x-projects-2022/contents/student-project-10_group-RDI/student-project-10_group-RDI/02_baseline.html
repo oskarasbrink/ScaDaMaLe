@@ -224,7 +224,6 @@ print(&quot;RMSE on test data: %g&quot; % test_result.rootMeanSquaredError)
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 import pandas as pd
 
 import warnings
@@ -242,41 +241,18 @@ df_plot['rdiTimeStamp'] = pd.to_datetime(df_plot.rdiTimeStamp)
 fig, ax = plt.subplots()
 ax.plot(df_plot['rdiTimeStamp'], df_plot['pmRadioThpVolDl'], label='True')
 ax.plot(df_plot['rdiTimeStamp'], df_plot['prediction'], label='Prediction')
-# sns.lineplot(ax = ax, data=df_plot, x='rdiTimeStamp', y='pmRadioThpVolDl', label='True')
-# sns.lineplot(ax = ax, data=df_plot, x='rdiTimeStamp', y='prediction', label='Prediction')
 
-ax.set_xlabel('Time [mm-dd HH]')
+ax.set_xlabel('Time')
 ax.set_ylabel('Downlink volume [MB]')
-ax.set_xticklabels(ax.get_xticklabels(), rotation=25)
+ax.set_xticks(df_plot['rdiTimeStamp'])
+ax.set_xticklabels(df_plot['rdiTimeStamp'], rotation=45)
 
 plt.tight_layout()
 plt.show()
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">df_c = df_train_lr.where(df_train_lr.cellId == 1).toPandas()
-
-df_d = df_c[df_c['rdiTimeStamp']&lt;'2022-09-03']
-df_d = df_d[df_d['rdiTimeStamp']&gt;'2022-08-30']
-df_d = df_d.sort_values(['rdiTimeStamp'])
-df_d['pmRadioThpVolDl'] = df_d['normalized_pmRadioThpVolDl']/8000
-df_d['rdiTimeStamp'] = pd.to_datetime(df_d.rdiTimeStamp)
-
-fig, ax = plt.subplots()
-sns.lineplot(ax = ax, data=df_d, x='rdiTimeStamp', y='pmRadioThpVolDl', label='Volume')
-
-ax.set_xlabel('Time [mm-dd HH]')
-ax.set_ylabel('Downlink volume [MB]')
-ax.set_xticklabels(ax.get_xticklabels(), rotation=25)
-ax.legend(loc=&quot;upper left&quot;)
-
-ax1 = ax.twinx()
-ax1.plot(df_d['rdiTimeStamp'], df_d['pmRadioThpVolDl'], color='black', label='Users')
-# ax1.legend(loc=&quot;upper right&quot;)
-# ax1.set_ylabel('Number of users')
-
-plt.tight_layout()
-plt.show()
+<pre><code class="language-python">[df_plot.iloc[0*12]['rdiTimeStamp'], df_plot.iloc[1*12]['rdiTimeStamp'], df_plot.iloc[2*12]['rdiTimeStamp'], df_plot.iloc[3*12]['rdiTimeStamp'],df_plot.iloc[42]['rdiTimeStamp']]
 </code></pre>
 </div>
 

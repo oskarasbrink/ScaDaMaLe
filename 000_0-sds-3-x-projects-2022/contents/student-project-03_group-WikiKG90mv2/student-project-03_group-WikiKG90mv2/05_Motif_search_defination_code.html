@@ -6292,7 +6292,7 @@ graph: org.graphframes.GraphFrame = GraphFrame(v:[id: string], e:[src: string, d
 </div>
 </div>
 <div class="cell markdown">
-<h3 id="case-study--motif-7"><a class="header" href="#case-study--motif-7">Case Study ： Motif 7</a></h3>
+<h3 id="case-study--motif-7-and-its-super-motifs"><a class="header" href="#case-study--motif-7-and-its-super-motifs">Case Study ： Motif 7 and its super motifs</a></h3>
 <p>Now we focus on motif 7 and its corresponding super motif set. To be specific, we have \(T_7^{(2)}\) and \(T'^{(3)} = [T_0^{(3)}, T_1^{(3)}, T_2^{(3)}, T_3^{(3)} ]\). - We find motifs in graph and use count to see most significant motifs in super-motif set. In this phase, we ignore relationship typpe and only look at graph structure information defined by motifs. - Then we dive in different motifs by limiting edge relationship. For example, given motif <code>[&quot;(a)-[spouse]-&gt;(b); (b)-[child]-&gt;(c)&quot;]</code>, What kind of relationship should we write for <code>r3</code> in <code>[a-[r3]-&gt;c]</code>？ It is natual to say that <code>r3</code> is <code>child</code>. Based on the statistic information that we get from motif counting. We could get the probability distribution of super motifs conditioning on relationship. And give us relable guess for missing nodes.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -6324,21 +6324,29 @@ motif_7_super_motif_3: org.apache.spark.sql.DataFrame = [a: struct&lt;id: string
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">// get motif count for motif and corresponding super motif set.
-val motif_7_count = motif_7_result.cache().count()
-// val motif_7_super_motif_0_count = motif_7_super_motif_0.cache().count()
-// val motif_7_super_motif_1_count = motif_7_super_motif_1.cache().count()
-// val motif_7_super_motif_2_count = motif_7_super_motif_2.cache().count()
-// val motif_7_super_motif_3_count = motif_7_super_motif_3.cache().count()
-
-//println(motif_7_count,&quot; &quot;,motif_7_super_motif_0_count, &quot; &quot;, motif_7_super_motif_1_count,&quot; &quot;, motif_7_super_motif_2_count, &quot; &quot;,motif_7_super_motif_3_count)
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">display(motif_7_result)
 </code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">// get motif count for motif and corresponding super motif set.
+val motif_7_count = motif_7_result.count()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>motif_7_count: Long = 461186877
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">val motif_7_super_motif_0_count = motif_7_super_motif_0.cache().count()
+val motif_7_super_motif_1_count = motif_7_super_motif_1.cache().count()
+val motif_7_super_motif_2_count = motif_7_super_motif_2.cache().count()
+val motif_7_super_motif_3_count = motif_7_super_motif_3.cache().count()
+
+println(motif_7_count,&quot; &quot;,motif_7_super_motif_0_count, &quot; &quot;, motif_7_super_motif_1_count,&quot; &quot;, motif_7_super_motif_2_count, &quot; &quot;,motif_7_super_motif_3_count)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="section-2"><a class="header" href="#section-2">section 2</a></h3>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">val motif_7_r1 = motif_7_result.filter(&quot;r1.rel=='child'&quot;)
@@ -6487,20 +6495,31 @@ val test = test.unionByName(graph.find(&quot;(a)-[r1]-&gt;(b); (b)-[r2]-&gt;(c)&
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">{
+<pre><code class="language-scala">var dfsLen = 0;
+{
   var dfs = Array[Any]()
   implicit def display(df: Any) {
     dfs = dfs :+ df
   }
 
+  // run user code
 display(motif_7_result)
 
   if (dfs.length &gt; 0) {
-    dbutils.data.summarize(dfs(0))
-  } else {
-    displayHTML(&quot;dataframe no longer exists. If you're using dataframe.display(), use display(dataframe) instead.&quot;)
+    val userGenerateDf = dfs(0).asInstanceOf[org.apache.spark.sql.DataFrame]
+    userGenerateDf.createOrReplaceTempView(&quot;DatabricksView54870da&quot;)
   }
-
+  dfsLen = dfs.length
+}
+if (dfsLen &gt; 0) {
+  try {
+    display(sql(&quot;&quot;&quot;WITH q AS (select * from DatabricksView54870da) SELECT 1 FROM q GROUP BY GROUPING SETS (())&quot;&quot;&quot;))
+   } finally {
+  // cleaning up the view helps us not pollute the name space
+   spark.sql(&quot;drop view if exists DatabricksView54870da&quot;)
+  }
+} else {
+  displayHTML(&quot;dataframe no longer exists. If you're using dataframe.display(), use display(dataframe) instead.&quot;)
 }
 </code></pre>
 </div>

@@ -561,18 +561,38 @@ plt.show()
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">from random import choices
-def eval_last_iteration(test_preds)
-    n_samples = 10
-    sizes = list(range(11)+1)
+
+def eval_last_iteration(test_preds):
+    n_samples = 30
+    sizes = np.arange(11)+1
+    avg_test_errors = []
+    test_stdvs = []
     for size in sizes:
-        preds_subset = choices(test_preds, n_samples)
-        test_error = []
-        for m in models:
-            
         
+        ensemble_errors = []
+        
+        for s in n_samples:
+            preds_subset = choices(test_preds, k=size)
+            test_error = []
+            for t in preds_subset:
+                error = mpjpe(pos3D_test, t).item()
+                test_error.append(error)
+                
+            ensemble_errors = 
+            
+            
+        avg_test_errors.append(sum(test_error)/len(test_error))
+        test_stdvs.append(np.std(test_error))
+        
+    return avg_test_errors, test_stdvs
+            
     
 
-print(test_preds[0].shape)
+            
+        
+mean_error, stdvs  = eval_last_iteration(test_preds)
+print(mean_error)
+print(stdvs)
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="true">
