@@ -1,0 +1,659 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>03_Implementations - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/00_Introduction.html"><strong aria-hidden="true">1.</strong> student-project-01_group-GraphOfWiki_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/01_DataLoading_redirectsTable.html"><strong aria-hidden="true">1.1.</strong> 01_DataLoading_redirectsTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/02_DataLoading_pagesTable.html"><strong aria-hidden="true">1.2.</strong> 02_DataLoading_pagesTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/03_DataLoading_pagelinksTable.html"><strong aria-hidden="true">1.3.</strong> 03_DataLoading_pagelinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/04_DataLoading_categorylinksTable.html"><strong aria-hidden="true">1.4.</strong> 04_DataLoading_categorylinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/05_DataLoading_categoryTable.html"><strong aria-hidden="true">1.5.</strong> 05_DataLoading_categoryTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/06_redirectRemoval.html"><strong aria-hidden="true">1.6.</strong> 06_redirectRemoval</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/07_createArticleGraph.html"><strong aria-hidden="true">1.7.</strong> 07_createArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/08_explorationArticleGraph.html"><strong aria-hidden="true">1.8.</strong> 08_explorationArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/09_fullGraphAnalysis.html"><strong aria-hidden="true">1.9.</strong> 09_fullGraphAnalysis</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/10_explorativeMotifs.html"><strong aria-hidden="true">1.10.</strong> 10_explorativeMotifs</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/11_conclusionDiscussionAndFutureWork.html"><strong aria-hidden="true">1.11.</strong> 11_conclusionDiscussionAndFutureWork</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/12_gameNotebookSetup.html"><strong aria-hidden="true">1.12.</strong> 12_gameNotebookSetup</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/13_gameNotebook.html"><strong aria-hidden="true">1.13.</strong> 13_gameNotebook</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/00_vqa_introduction.html"><strong aria-hidden="true">2.</strong> student-project-02_group-DDLOfVision_00_vqa_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/01_vqa_model_training.html"><strong aria-hidden="true">2.1.</strong> 01_vqa_model_training</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/00_ingest_data.html"><strong aria-hidden="true">3.</strong> student-project-03_group-WikiKG2_00_ingest_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/01_fetch_descriptions.html"><strong aria-hidden="true">3.1.</strong> 01_fetch_descriptions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/02_load_data.html"><strong aria-hidden="true">3.2.</strong> 02_load_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/03_data_exploration.html"><strong aria-hidden="true">3.3.</strong> 03_data_exploration</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/04_analysing_relation_types.html"><strong aria-hidden="true">3.4.</strong> 04_analysing_relation_types</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/05_motif_search.html"><strong aria-hidden="true">3.5.</strong> 05_motif_search</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html"><strong aria-hidden="true">3.6.</strong> 06_produce_pagerank_vectors</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/07_pagerank_for_classification.html"><strong aria-hidden="true">3.7.</strong> 07_pagerank_for_classification</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html"><strong aria-hidden="true">4.</strong> student-project-04_group-FedMLMedicalApp_00_Notebook_Presentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html"><strong aria-hidden="true">4.1.</strong> 01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html"><strong aria-hidden="true">4.2.</strong> 02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/data_upload_test.html"><strong aria-hidden="true">4.3.</strong> data_upload_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/00_introduction.html"><strong aria-hidden="true">5.</strong> student-project-05_group-DistOpt_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/01_Bayesian_optimization.html"><strong aria-hidden="true">5.1.</strong> 01_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/02_Gaussian_processes.html"><strong aria-hidden="true">5.2.</strong> 02_Gaussian_processes</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/03_acquisition_functions.html"><strong aria-hidden="true">5.3.</strong> 03_acquisition_functions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/04_scalable_Bayesian_optimization.html"><strong aria-hidden="true">5.4.</strong> 04_scalable_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/05_implementation_documentation.html"><strong aria-hidden="true">5.5.</strong> 05_implementation_documentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/06_our_implementation.html"><strong aria-hidden="true">5.6.</strong> 06_our_implementation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/07_additional_code.html"><strong aria-hidden="true">5.7.</strong> 07_additional_code</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/00_introduction_resnet.html"><strong aria-hidden="true">6.</strong> student-project-07_group-ExpsZerOInit_00_introduction_resnet</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html"><strong aria-hidden="true">6.1.</strong> 01_transformer</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/02_ddpm.html"><strong aria-hidden="true">6.2.</strong> 02_ddpm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html"><strong aria-hidden="true">7.</strong> student-project-08_group-WikiSearch_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/01_InputParsing.html"><strong aria-hidden="true">7.1.</strong> 01_InputParsing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/02_PageRank.html"><strong aria-hidden="true">7.2.</strong> 02_PageRank</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/03_QuerySearch.html"><strong aria-hidden="true">7.3.</strong> 03_QuerySearch</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/00_Introduction.html"><strong aria-hidden="true">8.</strong> student-project-09_group-DistEnsembles_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Ensemble_Training.html"><strong aria-hidden="true">8.1.</strong> 02_Ensemble_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/03_Ensemble_Evaluation.html"><strong aria-hidden="true">8.2.</strong> 03_Ensemble_Evaluation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Ensemble.html"><strong aria-hidden="true">8.3.</strong> 099_extra_Ensemble</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/00_introduction.html"><strong aria-hidden="true">9.</strong> student-project-10_group-RDI_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/01_prepare_data.html"><strong aria-hidden="true">9.1.</strong> 01_prepare_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/02_baseline.html"><strong aria-hidden="true">9.2.</strong> 02_baseline</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/03_single_machine.html"><strong aria-hidden="true">9.3.</strong> 03_single_machine</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/04_distributed_learning.html"><strong aria-hidden="true">9.4.</strong> 04_distributed_learning</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/01_Introduction.html"><strong aria-hidden="true">10.</strong> student-project-11_group-CollaborativeFiltering_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html"><strong aria-hidden="true">10.1.</strong> 02_AlgorithmsBeyondALS</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/03_Implementation.html"><strong aria-hidden="true">10.2.</strong> 03_Implementation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html"><strong aria-hidden="true">11.</strong> student-project-12_group-FedLearnOpt_01_Federated_Learning_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html"><strong aria-hidden="true">11.1.</strong> 02_Horovod_Introduction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/03_Implementations.html" class="active"><strong aria-hidden="true">11.2.</strong> 03_Implementations</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html"><strong aria-hidden="true">12.</strong> student-project-13_group-DRL_00_DistributedRL</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/00_Introduction.html"><strong aria-hidden="true">13.</strong> student-project-14_group-EarthObs_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/01_Download_data.html"><strong aria-hidden="true">13.1.</strong> 01_Download_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/02_Image_preprocessing.html"><strong aria-hidden="true">13.2.</strong> 02_Image_preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/03_Model_Architecture_and_Training.html"><strong aria-hidden="true">13.3.</strong> 03_Model_Architecture_and_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/04_Prediction_And_Visualisation.html"><strong aria-hidden="true">13.4.</strong> 04_Prediction_And_Visualisation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/05_Conclusions.html"><strong aria-hidden="true">13.5.</strong> 05_Conclusions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-projects-BrIntSuSvConclusion/student-projects-BrIntSuSvConclusion/BrIntSuSv.html"><strong aria-hidden="true">14.</strong> student-projects-BrIntSuSvConclusion_BrIntSuSv</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../editors.html"><strong aria-hidden="true">15.</strong> Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h2 id="federated-deep-learning-training-using-pytorch-with-horovodrunner-for-cifar10"><a class="header" href="#federated-deep-learning-training-using-pytorch-with-horovodrunner-for-cifar10">Federated deep learning training using PyTorch with HorovodRunner for CIFAR10</a></h2>
+<p>This notebook illustrates the use of HorovodRunner for Federated training using PyTorch. It first shows how to train a model on a single node, and then shows how to adapt the code using HorovodRunner for federated training. The notebook runs on CPU and GPU clusters.</p>
+<h3 id="requirements"><a class="header" href="#requirements">Requirements</a></h3>
+<p>Databricks Runtime 9.1 ML or above with long term support.
+HorovodRunner is designed to improve model training performance on clusters with multiple processors.</p>
+<p>Workers according to the number of resources. Here we used up to 8 workers for parallel computation in CPU cluster and 2 workers in our GPU cluster.</p>
+<p>CPU: Databricks 9.1x-cpu-ml-scala2.12 (max 9 workers 72GB-18 cores)</p>
+<p>GPU: Databricks 11.3.x-gpu-ml-scala2.12 (max 3 workers 48GB-12 cores)</p>
+</div>
+<div class="cell markdown">
+<h3 id="set-up-checkpoint-location"><a class="header" href="#set-up-checkpoint-location">Set up checkpoint location</a></h3>
+<p>The next cell creates a directory for saved checkpoint models. Databricks recommends saving training data under <code>dbfs:/ml</code>, which maps to <code>file:/dbfs/ml</code> on driver and worker nodes.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">PYTORCH_DIR = '/dbfs/ml/horovod_pytorch'
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="prepare-single-node-code"><a class="header" href="#prepare-single-node-code">Prepare single node code</a></h3>
+<p>First, create single-node PyTorch code. This is modified from the <a href="https://github.com/horovod/horovod/blob/master/examples/pytorch/pytorch_mnist.py">Horovod PyTorch MNIST Example</a>.</p>
+</div>
+<div class="cell markdown">
+<h3 id="define-a-simple-convolutional-network"><a class="header" href="#define-a-simple-convolutional-network">Define a simple convolutional network</a></h3>
+<p>Here below a vanilla CCN architecture in order to illustrate our problem. First, we will study federated learning for one node. We tried two differents datasets on the same architecture. We only changed the input size and update the NN according to the pictures size.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.nn.functional as F
+      
+#CIFAR10[100, 3, 32, 32]
+class Net_CIFAR10(nn.Module):
+    def __init__(self):
+        super(Net_CIFAR10, self).__init__()
+        self.conv1 = nn.Conv2d(3, 10, kernel_size=5) #convolutional layer 1
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=5) # convolutional layer 2
+        self.conv2_drop = nn.Dropout2d() # dropout - layer 3
+        self.fc1 = nn.Linear(500, 50) # fully connected layer 4
+        self.fc2 = nn.Linear(50, 10) # fully connected layer 5
+    def forward(self, x):
+        #convolution + max pool + activation function with Relu function for layer 1
+        x = F.relu(F.max_pool2d(self.conv1(x), 2))#dimout=15*15
+        # convolution + max pool + activation function with Relu function for layer 2
+        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))#dimout=5*5
+        # Returns a new tensor with the same data as the self tensor but of a different shape
+        x = x.view(-1, 500)#25*20=500
+        # conv + activation function with Relu function for layer 3
+        x = F.relu(self.fc1(x))
+        # dropout
+        x = F.dropout(x, training=self.training)
+        # final fully connected layer
+        x = self.fc2(x)
+        return F.log_softmax(x) # activation function with logarithmic soft max function for layer 5
+      
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="configure-single-node-training"><a class="header" href="#configure-single-node-training">Configure single node training</a></h3>
+<p>Elocal si the number of local updates. If Elocal = 1 it is equivalent to distributate learning.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Specify training parameters
+batch_size = 100 
+num_epochs = 3 # number of global epoch
+momentum = 0.5 # used for the optimizer
+log_interval = 100 # used to print the parameters every 100 samples
+Elocal = 5 # number of local epoch
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Here below the inner loop training for one node.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def train_one_epoch(model, device, data_loader, optimizer, epoch,Elocal):
+    model.train()
+    for batch_idx, (data, target) in enumerate(data_loader):
+        for idx in range(Elocal):
+          data, target = data.to(device), target.to(device)
+          optimizer.zero_grad()
+          output = model(data)
+          loss = F.nll_loss(output, target) # The negative log likelihood loss, used for classification problem
+          loss.backward()
+          optimizer.step()
+          
+        # Printing the training
+        if batch_idx % log_interval == 0:
+            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                epoch, batch_idx * len(data), len(data_loader) * len(data),
+                100. * batch_idx / len(data_loader), loss.item()))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="create-methods-for-saving-and-loading-model-checkpoints"><a class="header" href="#create-methods-for-saving-and-loading-model-checkpoints">Create methods for saving and loading model checkpoints</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Save checkpoint in a filed
+def save_checkpoint(log_dir, model, optimizer, epoch):
+  filepath = log_dir+ '/checkpoint-{epoch}.pth.tar'.format(epoch=epoch)
+  state = {
+    'model': model.state_dict(),
+    'optimizer': optimizer.state_dict(),
+  }
+  torch.save(state, filepath)
+
+# Load checkpoint saved from the filed 
+def load_checkpoint(log_dir, epoch=num_epochs):
+  filepath = log_dir+ '/checkpoint-{epoch}.pth.tar'.format(epoch=epoch)
+  return torch.load(filepath)
+
+# Creating the directory for saving the checkpoint
+def create_log_dir():
+  log_dir = os.path.join(PYTORCH_DIR, str(time()), 'CIFAR10')
+  os.makedirs(log_dir)
+  return log_dir
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="run-single-node-training-with-pytorch"><a class="header" href="#run-single-node-training-with-pytorch">Run single node training with PyTorch</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import torch.optim as optim
+from torchvision import datasets, transforms
+from time import time
+import os
+
+# Creation of the directory to save the parameters
+single_node_log_dir = create_log_dir()
+print(&quot;Log directory:&quot;, single_node_log_dir)
+
+def train(learning_rate, Elocal, model1):
+  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+  # Downloading + preparation of the dataset
+  train_dataset = datasets.CIFAR10(
+    'CIFAR10', 
+    train=True,
+    download=True,
+    # Normalization + conversion of the dataset to tensor since we use pytorch the input has to be a tensor
+    transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]))
+  
+  data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+  
+  # architecture importation
+  model = model1.to(device)
+  #stochatic gradient descent optimizer
+  optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum) 
+  # Evaluation of the training time
+  time_start=time()
+  # Training
+  for epoch in range(1, num_epochs + 1):
+    train_one_epoch(model, device, data_loader, optimizer, epoch,Elocal)
+    save_checkpoint(single_node_log_dir, model, optimizer, epoch)
+  print(&quot;---It took %s seconds ---&quot; % (time() - time_start))
+  
+# Test phase  
+def test(log_dir,model1):
+  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+  loaded_model = model1.to(device) # architecture importation
+  checkpoint = load_checkpoint(log_dir) # checkpoint importation
+  #Loading model for Inference
+  loaded_model.load_state_dict(checkpoint['model']) # state_dict is a Python dictionary object that maps each layer to its parameter tensor
+  loaded_model.eval() # set dropout and batch normalization layers to evaluation mode
+  # loading + preparing the dataset test
+  test_dataset = datasets.CIFAR10(
+    'CIFAR10', 
+    train=False,
+    download=True,
+    transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]))
+  data_loader = torch.utils.data.DataLoader(test_dataset)
+  
+  test_loss = 0
+  for data, target in data_loader:
+      data, target = data.to(device), target.to(device)
+      output = loaded_model(data)
+      test_loss += F.nll_loss(output, target)
+  
+  test_loss /= len(data_loader.dataset)
+  print(&quot;Average test loss: {}&quot;.format(test_loss.item()))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Run the <code>train</code> function you just created to train a model on the driver node. For comparison, we train both on WASP Cluster 2 and the 11.3 LSTML gpu cluster.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#I (Hoomaan) mistakenly removed the output and then the gpu clusters were unavailable. The good news is that I saved the execution time :).(remove the previous 'dot' to see my lips) It was 60.721 s.
+#GPU tiny-debug-cluster-gpu
+train(learning_rate=0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#CPU WASP Cluster 3-current log is for another cluster thus the executed time is different from previous result.
+train(learning_rate=0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Load and use the model</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(single_node_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell markdown">
+<h5 id="thus-our-gpu-cluster-is-much-faster-than-our-cpu-cluster"><a class="header" href="#thus-our-gpu-cluster-is-much-faster-than-our-cpu-cluster">Thus our GPU cluster is much faster than our CPU cluster.</a></h5>
+<p>Note that in these simulations we are not concentrating on average loss and only scalability is of our interest.</p>
+</div>
+<div class="cell markdown">
+<h2 id="introduction-to-horovod"><a class="header" href="#introduction-to-horovod">Introduction to Horovod</a></h2>
+<p>Horovod is a distributed deep learning training framework for TensorFlow, Keras, PyTorch, and Apache MXNet. Using Horovod allows us to make distributed deep learning fast and easy to use.</p>
+<p>The Horovod goal is to make it easy to take a single-GPU training script and successfully scale it to train across many GPUs in parallel.</p>
+<p>This pakage has two important aspects to take in to account. Firstly, we can make our projract or program to be runed in distrbuted manner by adding a minimum modification into the code. Secondly, this modifications can aid the program to be runed way faster because of using distributed resouces. Below is a chart representing the benchmark( we borrowed from link <a href="href=%22https://horovod.readthedocs.io/en/stable/summary_include.html%22">here</a>) that was done on 128 servers with 4 Pascal GPUs each connected by RoCE-capable 25 Gbit/s network:</p>
+<center><img src="https://user-images.githubusercontent.com/16640218/38965607-bf5c46ca-4332-11e8-895a-b9c137e86013.png" /></center>
+<p>Horovd supports some of the collective operations in both (Message Passing Interface )MPI and (NVIDIA Collective Communications Library)NCCL. Indeed, Horovod core principles are based on MPI concepts such as size, rank, local rank, allreduce, allgather, broadcast, and alltoall. To better understand theses, consider the following example where training script on 4 servers, each having 4 GPUs. If we run one copy of the program per GPU:</p>
+<ul>
+<li>
+<p>Size would be the number of processes, in this case, 16.</p>
+</li>
+<li>
+<p>Rank would be the unique process ID from 0 to 15 (size - 1).</p>
+</li>
+<li>
+<p>Local rank would be the unique process ID within the server from 0 to 3.</p>
+</li>
+</ul>
+<p>Then, we have</p>
+<ul>
+<li><b>Allreduce : </b> aggregates data among multiple processes and distributes results back to them. Allreduce is oftentimes used to average dense tensors.</li>
+</ul>
+<center><img src = "http://mpitutorial.com/tutorials/mpi-reduce-and-allreduce/mpi_allreduce_1.png" /></center>
+<p><code>horovod.torch.allreduce(tensor, average=None, name=None, compression=&lt;class 'horovod.torch.compression.NoneCompressor'&gt;, op=None, prescale_factor=1.0, postscale_factor=1.0, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
+<p>A function that performs asynchronous in-place averaging or summation of the input tensor over all the Horovod processes.</p>
+<p>The reduction operation is keyed by the name. If name is not provided, an incremented auto-generated name is used. The tensor type and shape must be the same on all Horovod processes for a given name. The reduction will not start until all processes are ready to send and receive the tensor.</p>
+<ul>
+<li>
+<p><b>Allgather : </b> gathers data from all processes on every process. Allgather is usually used to collect values of sparse tensors.</p>
+<center><img src = "http://mpitutorial.com/tutorials/mpi-scatter-gather-and-allgather/allgather.png" /></center>
+</li>
+</ul>
+<p><code>horovod.torch.allgather(tensor, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
+<p>A function that concatenates the input tensor with the same input tensor on all other Horovod processes. The input tensor is not modified.</p>
+<p>The concatenation is done on the first dimension, so the corresponding input tensors on the different processes must have the same rank and shape, except for the first dimension, which is allowed to be different.</p>
+<ul>
+<li><b> Broadcast: </b> broadcasts data from one process, identified by root rank, onto every other process. <center><img src = "http://mpitutorial.com/tutorials/mpi-broadcast-and-collective-communication/broadcast_pattern.png" /></center></li>
+</ul>
+<p><code>horovod.torch.broadcast(tensor, root_rank, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
+<p>A function that broadcasts the input tensor on root rank to the same input tensor on all other Horovod processes. The input tensor is not modified. The broadcast operation is keyed by the name. If name is not provided, an incremented auto-generated name is used. The tensor type and shape must be the same on all Horovod processes for a given name. The broadcast will not start until all processes are ready to send and receive the tensor.</p>
+<ul>
+<li><b> Reducescatter: </b> aggregates data among multiple processes and scatters the data across them. Reducescatter is used to average dense tensors then split them across processes.</li>
+</ul>
+<center><img src = "https://docs.nvidia.com/deeplearning/sdk/nccl-developer-guide/docs/_images/reducescatter.png" /></center>
+<p><code>horovod.torch.reducescatter(tensor, name=None, compression=&lt;class 'horovod.torch.compression.NoneCompressor'&gt;, op=&lt;MagicMock name='mock().horovod_reduce_op_average()' id='140066922214416'&gt;, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
+<p>A function that performs reduction of the input tensor over all the Horovod processes, then scatters the results across all Horovod processes. The input tensor is not modified.</p>
+<ul>
+<li><b> Alltoall </b> is an operation to exchange data between all processes. Alltoall may be useful to implement neural networks with advanced architectures that span multiple devices.</li>
+</ul>
+<p><code>horovod.torch.alltoall(tensor, splits=None, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
+<p>A function that scatters slices of the input tensor to all other Horovod processes and returns a tensor of gathered slices from all other Horovod processes. The input tensor is not modified.</p>
+<p><b> Other collective operators </b></p>
+<p>Unfortuntaley, the other existing collective operations are not implemented in Horovod, e.g., <b> Redcue </b> or <b> Ghather</b> which are defined as follows</p>
+<center><img src = "https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/_images/reduce.png" /></center>
+<p><b> AdaSum </b> The Adaptive Summation, or AdaSum, is an algorithm for improving distributed data parallel training of Deep Learning models. This improvement can be seen in many ways: reducing the number steps to reach the same accuracy and allowing scale to more training workers without penalizing learning rate and convergence stability. AdaSum can be used with Horovod and PyTorch/TensorFlow. To illustrate, suppose there are two almost-parallel gradients from two different GPUs, g1 and g2, and they need to be reduced as shown in the figure below. The two common practices for reductions are g1+g2, the gray vector, or (g1+g2)/2, the green vector. g1+g2 may cause divergence of the model since it is effectively moving in the direction of g1 or g2 by two times the magnitude of g1 or g2. Therefore, generally (g1+g2)/2 is safer and more desired. Note that (g1+g2)/2 penalizes both the components g1 and g2 equally.</p>
+<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/abc4d31f19a315321553564e2225615b.png" /></center>
+<p>Now consider the two orthogonal gradients g1 and g2 in the figure below. Since g1 and g2 are in two different dimensions and independent of each other, g1+g2 may not cause divergence.</p>
+<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/173cffdbdc89620287996ac28ca4a9ae.png" /></center>
+<p>Finally, consider the third scenario where g1 and g2 are neither parallel nor orthogonal as shown in the figure below. In such a case, where taking the sum might cause a divergence, AdaSum controls the effect of the overall gradient update by subtracting half of g1’s projection on g2(pink vector) from g2, subtracting half of g2’s projection on g1 (orange vector) from g1, and summing the two components together.</p>
+<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/d9b318cc2d8c16fe4ade2fa73ad83ec6.png" /></center>
+<p>In a communication system consists nodes having worker GPUs, the communication happens through the CPU because GPUs are not connected by a high speed interconnect like NVLink. In this cases, AdaSum through MPI can be used for both intra-node and inter-node communication.</p>
+<center><img src ="https://horovod.readthedocs.io/en/stable/_images/7220c70747b40ab58fce2dc246958218.png" /></center>
+<p>modification in code is as follows:</p>
+<p><code>optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)</code> <code>optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters(), compression=compression, backward_passes_per_step = 5, op=hvd.AdaSum)</code></p>
+</div>
+<div class="cell markdown">
+<h2 id="migrate-to-horovodrunner"><a class="header" href="#migrate-to-horovodrunner">Migrate to HorovodRunner</a></h2>
+<p>HorovodRunner takes a Python method that contains deep learning training code with Horovod hooks. HorovodRunner pickles the method on the driver and distributes it to Spark workers. A <a href="https://horovod.readthedocs.io/en/stable/mpi_include.html">Horovod MPI</a> job is embedded as a Spark job using <a href="https://blog.madhukaraphatak.com/barrier-execution-mode-part-1">barrier execution mode</a>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import horovod.torch as hvd
+from sparkdl import HorovodRunner
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from time import time
+import os
+hvd_log_dir = create_log_dir()
+print(&quot;Log directory:&quot;, hvd_log_dir)
+
+def train_hvd(learning_rate,Elocal,model1):
+  
+  # Initialize Horovod
+  hvd.init()  
+  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+ 
+  if device.type == 'cuda':
+    # Pin GPU to local rank
+    torch.cuda.set_device(hvd.local_rank())
+
+  train_dataset = datasets.CIFAR10(
+  # Use different root directory for each worker to avoid conflicts
+  root='data-%d'% hvd.rank(),  
+  train=True, 
+  download=True,
+  transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
+  )
+
+
+  from torch.utils.data.distributed import DistributedSampler
+  
+  # Configure the sampler so that each worker gets a distinct sample of the input dataset
+  train_sampler = DistributedSampler(train_dataset, num_replicas=hvd.size(), rank=hvd.rank())
+  # Use train_sampler to load a different sample of data on each worker
+  train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, sampler=train_sampler)
+
+  model = model1.to(device)
+  
+  # The effective batch size in synchronous distributed training is scaled by the number of workers
+  # Increase learning_rate to compensate for the increased batch size
+  optimizer = optim.SGD(model.parameters(), lr=learning_rate * hvd.size(), momentum=momentum)
+
+  # Wrap the local optimizer with hvd.DistributedOptimizer so that Horovod handles the distributed optimization
+  optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters(), op=hvd.Adasum)
+  
+  
+  #1- op=hvd.Adasum not  op=hvd.AdaSum.  
+  
+  #2- hvd.Adasum works with powers of 2 number of processors. For other numbers hvd.Sum is implementable.
+  
+  #3- Horovod can have multiple optimizers for different clients and different number of processors:
+  # Run on a single client with 4 GPUs: horovodrun -np 4 python train.py
+  # Run on 4 clients with 4 GPUs each: horovodrun -np 16 -H server1:4,server2:4,server3:4,server4:4 python train.py 
+  
+  # Broadcast initial parameters so all workers start with the same parameters
+  hvd.broadcast_parameters(model.state_dict(), root_rank=0)
+  time_start=time()
+  for epoch in range(1, num_epochs + 1):
+    train_one_epoch(model, device, train_loader, optimizer, epoch,Elocal)
+    # Save checkpoints only on worker 0 to prevent conflicts between workers
+    if hvd.rank() == 0:
+      save_checkpoint(hvd_log_dir, model, optimizer, epoch)
+  exe_time = time() - time_start    
+  print(&quot;---It took %s seconds ---&quot; % (exe_time))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="note-on-learning-rate-update"><a class="header" href="#note-on-learning-rate-update">Note on Learning rate update</a></h2>
+<p>Consider a network at iteration \(t\) with weights \(w_t\), and a sequence of \(k\) minibatches \(B_j\) for \(0 ≤ j &lt; k\) each of size \(n\). In <a href="https://arxiv.org/pdf/1706.02677.pdf">this paper</a> they compare the effect of executing \(k\) SGD iterations with small minibatches \(B_j\) and learning rate \(\eta\) versus a single iteration with a large minibatch \(\cup_j B_j\) of size \(kn\) and learning rate \(\hat{\eta}\). For the SGD update</p>
+<p>\[ w_{t+1}=w_t - \eta \frac{1}{n}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_t) \]</p>
+<p>after \(k\) iteration we have</p>
+<p>\[ w_{t+k}=w_t - \eta \frac{1}{n}\sum_{j&lt;k}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_{j+k}) \]</p>
+<p>and for the single step with the large minibatch of sie \(kn\) we have</p>
+<p>\[ \hat{w}<em>{t+1}=w_t - \hat{\eta} \frac{1}{kn}\sum</em>{j&lt;k}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_t) \]</p>
+<p>Now, if we can have \(w_{t+k} \approx \hat{w_{t+1}}\) if we have \(\nabla l(x,w_{j+k})\approx \nabla l(x,w_t)\) and \(\hat{\eta}=k\eta\). Though this assumption is strict, but they show in the paper that it does not affect the final result.</p>
+</div>
+<div class="cell markdown">
+<p>Now that you have defined a training function with Horovod, you can use HorovodRunner to distribute the work of training the model.</p>
+<p>The HorovodRunner parameter <code>np</code> sets the number of processes. This example uses a cluster with two workers, each with a single GPU, so set <code>np=2</code> (If you use <code>np=-1</code>, HorovodRunner trains using a single process on the driver node). We will perform the training for single worker CPU and GPU and compare the results. Then the number of workers are increased. Also note that</p>
+<p>1- AdaSum is not correct and Adasum works. This is in contrast to what is written on Horovod Website,\ 2- Adasum works with power of 2 workers only.</p>
+<p>In what follows, we will train our network on CPU processors.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#CPU -  WASP Cluster 3
+hr = HorovodRunner(np=1,driver_log_verbosity='all')
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(hvd_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#CPU -  WASP Cluster 3
+hr = HorovodRunner(np=2,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(hvd_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#CPU -  WASP Cluster 3
+hr = HorovodRunner(np=4,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(hvd_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># CPU - WASP Cluster 3
+hr = HorovodRunner(np=8,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(hvd_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="summary-on-cpu-execution-time"><a class="header" href="#summary-on-cpu-execution-time">Summary on CPU Execution Time</a></h2>
+<p>Execution time of \(i\)'th worker case is \((E_i)\) and therefore the execution time is \(\max(E_i)\). | Number of Workers | Execution Time(s) | | ----------- | ----------- | | 1 | 336.105 | | 2 | 207.549 | | 4 | 115.372 | | 8 | 75.987 |</p>
+<p>Next, GPU processors are considered. Due to unavailability of 4 and 8 worker GPU clusters we skip those cases.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># GPU - 11.3 LSTML - Debug Cluster 
+hr = HorovodRunner(np=1,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># GPU - 11.3 LSTML - Debug Cluster 
+hr = HorovodRunner(np=2,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># GPU - 11.3 LSTML - Debug Cluster Current run cancelled due to unavailability of workers.
+hr = HorovodRunner(np=3,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># GPU - 11.3 LSTML - Debug Cluster Current run cancelled due to unavailability of workers.
+hr = HorovodRunner(np=8,driver_log_verbosity='all') 
+hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test(hvd_log_dir,model1=Net_CIFAR10())
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="summary-on-gpu-execution-time"><a class="header" href="#summary-on-gpu-execution-time">Summary on GPU Execution Time</a></h2>
+<p>Execution time of \(i\)'th worker is \((E_i)\) and therefore the execution time is \(\max(E_i)\). | Number of Workers | Execution Time(s) | | ----------- | ----------- | | 1 | 52.84 | | 2 | 41.27 | | 4 | NA | | 8 | NA |</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#!pip install matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+Execution_time=[336.105,207.549,115.372, 75.987]
+Execution_time2=[52.84,41.27,0,0]
+num_workers=[1,2,4,8]
+plt.figure(figsize=(8, 6), dpi=120)
+colors=[1,1,1,1]
+plt.plot(num_workers,Execution_time,'--o',linewidth=4,markersize=8,label=&quot;CPU&quot;)
+plt.xlabel(&quot;Number of Workers&quot;)
+plt.ylabel(&quot;Execution Time&quot;)
+plt.plot(num_workers,Execution_time2,'--*',alpha=0.5,linewidth=4,markersize=10,label=&quot;GPU&quot;) # c=colors
+plt.legend()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="final-notes"><a class="header" href="#final-notes">Final Notes</a></h2>
+<ol>
+<li>It is obvious that GPU clusters easily outperform CPU clusters in our case.</li>
+<li>In case of data changes (specifically increase of data) we need to update our optimizer's learning rate. This scenario is already considered by Horovod and the solution is to use elastic Horovod which gives you the possibility to update hvd.size() based on the state of the network. For more information see <a href="https://horovod.readthedocs.io/en/stable/elastic_include.html">here</a></li>
+</ol>
+</div>
+<div class="cell markdown">
+<p>Under the hood, HorovodRunner takes a Python method that contains deep learning training code with Horovod hooks. HorovodRunner pickles the method on the driver and distributes it to Spark workers. A Horovod MPI job is embedded as a Spark job using the barrier execution mode. The first executor collects the IP addresses of all task executors using BarrierTaskContext and triggers a Horovod job using <code>mpirun</code>. Each Python MPI process loads the pickled user program, deserializes it, and runs it.</p>
+<p>For more information, see <a href="https://databricks.github.io/spark-deep-learning/#api-documentation">HorovodRunner API documentation</a>.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

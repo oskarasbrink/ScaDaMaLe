@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>07_pagerank_for_classification - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/00_Introduction.html"><strong aria-hidden="true">1.</strong> student-project-01_group-GraphOfWiki_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/01_DataLoading_redirectsTable.html"><strong aria-hidden="true">1.1.</strong> 01_DataLoading_redirectsTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/02_DataLoading_pagesTable.html"><strong aria-hidden="true">1.2.</strong> 02_DataLoading_pagesTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/03_DataLoading_pagelinksTable.html"><strong aria-hidden="true">1.3.</strong> 03_DataLoading_pagelinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/04_DataLoading_categorylinksTable.html"><strong aria-hidden="true">1.4.</strong> 04_DataLoading_categorylinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/05_DataLoading_categoryTable.html"><strong aria-hidden="true">1.5.</strong> 05_DataLoading_categoryTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/06_redirectRemoval.html"><strong aria-hidden="true">1.6.</strong> 06_redirectRemoval</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/07_createArticleGraph.html"><strong aria-hidden="true">1.7.</strong> 07_createArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/08_explorationArticleGraph.html"><strong aria-hidden="true">1.8.</strong> 08_explorationArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/09_fullGraphAnalysis.html"><strong aria-hidden="true">1.9.</strong> 09_fullGraphAnalysis</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/10_explorativeMotifs.html"><strong aria-hidden="true">1.10.</strong> 10_explorativeMotifs</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/11_conclusionDiscussionAndFutureWork.html"><strong aria-hidden="true">1.11.</strong> 11_conclusionDiscussionAndFutureWork</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/12_gameNotebookSetup.html"><strong aria-hidden="true">1.12.</strong> 12_gameNotebookSetup</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/13_gameNotebook.html"><strong aria-hidden="true">1.13.</strong> 13_gameNotebook</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/00_vqa_introduction.html"><strong aria-hidden="true">2.</strong> student-project-02_group-DDLOfVision_00_vqa_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/01_vqa_model_training.html"><strong aria-hidden="true">2.1.</strong> 01_vqa_model_training</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/00_ingest_data.html"><strong aria-hidden="true">3.</strong> student-project-03_group-WikiKG2_00_ingest_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/01_fetch_descriptions.html"><strong aria-hidden="true">3.1.</strong> 01_fetch_descriptions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/02_load_data.html"><strong aria-hidden="true">3.2.</strong> 02_load_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/03_data_exploration.html"><strong aria-hidden="true">3.3.</strong> 03_data_exploration</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/04_analysing_relation_types.html"><strong aria-hidden="true">3.4.</strong> 04_analysing_relation_types</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/05_motif_search.html"><strong aria-hidden="true">3.5.</strong> 05_motif_search</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html"><strong aria-hidden="true">3.6.</strong> 06_produce_pagerank_vectors</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/07_pagerank_for_classification.html" class="active"><strong aria-hidden="true">3.7.</strong> 07_pagerank_for_classification</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html"><strong aria-hidden="true">4.</strong> student-project-04_group-FedMLMedicalApp_00_Notebook_Presentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html"><strong aria-hidden="true">4.1.</strong> 01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html"><strong aria-hidden="true">4.2.</strong> 02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/data_upload_test.html"><strong aria-hidden="true">4.3.</strong> data_upload_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/00_introduction.html"><strong aria-hidden="true">5.</strong> student-project-05_group-DistOpt_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/01_Bayesian_optimization.html"><strong aria-hidden="true">5.1.</strong> 01_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/02_Gaussian_processes.html"><strong aria-hidden="true">5.2.</strong> 02_Gaussian_processes</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/03_acquisition_functions.html"><strong aria-hidden="true">5.3.</strong> 03_acquisition_functions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/04_scalable_Bayesian_optimization.html"><strong aria-hidden="true">5.4.</strong> 04_scalable_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/05_implementation_documentation.html"><strong aria-hidden="true">5.5.</strong> 05_implementation_documentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/06_our_implementation.html"><strong aria-hidden="true">5.6.</strong> 06_our_implementation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/07_additional_code.html"><strong aria-hidden="true">5.7.</strong> 07_additional_code</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/00_introduction_resnet.html"><strong aria-hidden="true">6.</strong> student-project-07_group-ExpsZerOInit_00_introduction_resnet</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html"><strong aria-hidden="true">6.1.</strong> 01_transformer</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/02_ddpm.html"><strong aria-hidden="true">6.2.</strong> 02_ddpm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html"><strong aria-hidden="true">7.</strong> student-project-08_group-WikiSearch_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/01_InputParsing.html"><strong aria-hidden="true">7.1.</strong> 01_InputParsing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/02_PageRank.html"><strong aria-hidden="true">7.2.</strong> 02_PageRank</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/03_QuerySearch.html"><strong aria-hidden="true">7.3.</strong> 03_QuerySearch</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/00_Introduction.html"><strong aria-hidden="true">8.</strong> student-project-09_group-DistEnsembles_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Ensemble_Training.html"><strong aria-hidden="true">8.1.</strong> 02_Ensemble_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/03_Ensemble_Evaluation.html"><strong aria-hidden="true">8.2.</strong> 03_Ensemble_Evaluation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Ensemble.html"><strong aria-hidden="true">8.3.</strong> 099_extra_Ensemble</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/00_introduction.html"><strong aria-hidden="true">9.</strong> student-project-10_group-RDI_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/01_prepare_data.html"><strong aria-hidden="true">9.1.</strong> 01_prepare_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/02_baseline.html"><strong aria-hidden="true">9.2.</strong> 02_baseline</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/03_single_machine.html"><strong aria-hidden="true">9.3.</strong> 03_single_machine</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/04_distributed_learning.html"><strong aria-hidden="true">9.4.</strong> 04_distributed_learning</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/01_Introduction.html"><strong aria-hidden="true">10.</strong> student-project-11_group-CollaborativeFiltering_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html"><strong aria-hidden="true">10.1.</strong> 02_AlgorithmsBeyondALS</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/03_Implementation.html"><strong aria-hidden="true">10.2.</strong> 03_Implementation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html"><strong aria-hidden="true">11.</strong> student-project-12_group-FedLearnOpt_01_Federated_Learning_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html"><strong aria-hidden="true">11.1.</strong> 02_Horovod_Introduction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/03_Implementations.html"><strong aria-hidden="true">11.2.</strong> 03_Implementations</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html"><strong aria-hidden="true">12.</strong> student-project-13_group-DRL_00_DistributedRL</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/00_Introduction.html"><strong aria-hidden="true">13.</strong> student-project-14_group-EarthObs_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/01_Download_data.html"><strong aria-hidden="true">13.1.</strong> 01_Download_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/02_Image_preprocessing.html"><strong aria-hidden="true">13.2.</strong> 02_Image_preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/03_Model_Architecture_and_Training.html"><strong aria-hidden="true">13.3.</strong> 03_Model_Architecture_and_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/04_Prediction_And_Visualisation.html"><strong aria-hidden="true">13.4.</strong> 04_Prediction_And_Visualisation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/05_Conclusions.html"><strong aria-hidden="true">13.5.</strong> 05_Conclusions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-projects-BrIntSuSvConclusion/student-projects-BrIntSuSvConclusion/BrIntSuSv.html"><strong aria-hidden="true">14.</strong> student-projects-BrIntSuSvConclusion_BrIntSuSv</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../editors.html"><strong aria-hidden="true">15.</strong> Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="entity-classification-with-personalized-pagerank-vectors"><a class="header" href="#entity-classification-with-personalized-pagerank-vectors">Entity classification with Personalized PageRank vectors</a></h1>
+<p>In this notebook, we are performing classification on the personalized pagerank vectors we created in the previous notebook.</p>
+<p>The relation <code>P31</code> in the Knowledge Graph corresponds to the entity's type. With our pagerank vectors created, we could perform a classification task to determine the predictive power of the the vectors.</p>
+<p>Our hypothesis here was that our pageRank coordinates would have a high predictive power as they describe the location of a node in the graph, and that node cluster based on their types.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import pandas as pd
+import os
+import pyspark
+import os
+import gc
+import numpy as np
+from pyspark.ml.linalg import Vectors
+from sklearn.manifold import TSNE
+from sklearn.linear_model import LogisticRegression as SKLEARNLR
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>First, read in the data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df = spark.read.format('csv').options(header='true').load(&quot;dbfs:///ppr_anchors_bidirectional.csv&quot;)# .toPandas()
+vectorColumns = [f&quot;pagerank_{i}&quot; for i in range(100)]
+sqlContext.registerDataFrameAsTable(df, &quot;pagerankdf&quot;)
+from pyspark.sql.functions import col
+
+for col_ in vectorColumns:
+    df = df.withColumn(col_, col(col_).cast(&quot;double&quot;))
+df = sqlContext.sql(&quot;&quot;&quot;SELECT t1.* FROM pagerankdf t1 WHERE t1.pagerank_0 IS NOT NULL AND t1.pagerank_1 IS NOT NULL AND t1.pagerank_2 IS NOT NULL AND t1.pagerank_3 IS NOT NULL AND t1.pagerank_4 IS NOT NULL AND t1.pagerank_5 IS NOT NULL AND t1.pagerank_6 IS NOT NULL AND t1.pagerank_7 IS NOT NULL&quot;&quot;&quot;)
+INSTANCEOFID = &quot;P31&quot;
+train = spark.read.format('csv').options(header=None).load(&quot;dbfs:///wikikg-v2/original/train_2015.csv.gz&quot;)
+valid = spark.read.format('csv').options(header=None).load(&quot;dbfs:///wikikg-v2/original/valid_2015.csv.gz&quot;)
+test = spark.read.format('csv').options(header=None).load(&quot;dbfs:///wikikg-v2/original/test_2015.csv.gz&quot;)
+reldescs = spark.read.format('csv').options(header=None).load(&quot;dbfs:/FileStore/tables/relation_descriptions.csv&quot;)
+
+gc.collect()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Next, we filter out all relations in the training data which is not the <em>instance of</em> class, since this is the only one that we are interested in. We do this for both training, validation and test.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">train_ = train.filter(train._c1 == &quot;P31&quot;)
+test_ = test.filter(test._c1 == &quot;P31&quot;)
+valid_ = valid.filter(valid._c1 == &quot;P31&quot;)
+
+test = valid_.union(test_)
+gc.collect()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">if isinstance(test, list) is True:
+    test = spark.createDataFrame(test)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>For simplicity, let's just use the top 100 classes here.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.sql import SQLContext
+
+sqlContext.registerDataFrameAsTable(test, &quot;testtable&quot;)
+
+top_100 = sqlContext.sql(sqlQuery=&quot;&quot;&quot;SELECT _c2 AS rel, COUNT(*) as freq from testtable GROUP BY _c2 ORDER BY COUNT(*) DESC LIMIT 100&quot;&quot;&quot;).collect()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">top_100 = spark.createDataFrame(top_100)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">sqlContext.registerDataFrameAsTable(train_, &quot;traintable&quot;)
+sqlContext.registerDataFrameAsTable(top_100, &quot;top100&quot;)
+
+train = sqlContext.sql(sqlQuery=&quot;&quot;&quot;SELECT t1._c0 as head, t1._c2 as enttype FROM traintable t1 JOIN top100 t2 WHERE t1._c2 = t2.rel&quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test = sqlContext.sql(sqlQuery=&quot;&quot;&quot;SELECT t1._c0 as head, t1._c2 as enttype FROM testtable t1 JOIN top100 t2 WHERE t1._c2 = t2.rel&quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># And now, the heavy part. 
+
+sqlContext.registerDataFrameAsTable(train, &quot;traintable&quot;)
+sqlContext.registerDataFrameAsTable(test, &quot;testtable&quot;)
+sqlContext.registerDataFrameAsTable(df, &quot;vectors&quot;)
+
+train_ = sqlContext.sql(&quot;&quot;&quot;
+    SELECT t1.head, t1.enttype, t2.* FROM traintable t1 JOIN vectors t2 WHERE t1.head = t2.id
+&quot;&quot;&quot;)
+test_ = sqlContext.sql(&quot;&quot;&quot;
+    SELECT t1.head, t1.enttype, t2.* FROM testtable t1 JOIN vectors t2 WHERE t1.head = t2.id
+&quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now, let's have a look by visualizing the classes and see if it makes sense. Let's take the test data and import it to pandas.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test_pandas = test_.toPandas()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test_pandas.head()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We need to process the labels and transform them into numbers. Unfortunately, we seemed to have some bug, so we had to filter out some rows in order for it to work.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from sklearn.preprocessing import OrdinalEncoder
+ordenc = OrdinalEncoder()
+test_pandas[&quot;label&quot;] = ordenc.fit_transform(test_pandas[[&quot;enttype&quot;]])
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">leakages = [' Saskatchewan']
+for leakage in leakages:
+    test_pandas = test_pandas.loc[((test_pandas[&quot;pagerank_0&quot;] != leakage) &amp; (test_pandas[&quot;pagerank_1&quot;] != leakage))]
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">to_drop = [325, 1509, 9254] # Some bug that some entities experienced inexplicable array shifting. 
+tsne = TSNE()
+vectorColumns = [f&quot;pagerank_{i}&quot; for i in range(1,100)]
+vecs = tsne.fit_transform(test_pandas[vectorColumns].drop(to_drop,axis=0))
+pd.DataFrame({&quot;x&quot; : vecs[:,0],&quot;y&quot; : vecs[:,1], &quot;c&quot; : test_pandas.drop(to_drop,axis=0)[&quot;label&quot;]}).plot.scatter(x=&quot;x&quot;, y=&quot;y&quot;, c=&quot;c&quot;, cmap=&quot;viridis&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<img src="files/tables/tsnevis.png" width="500"/>
+</div>
+<div class="cell markdown">
+<p>Now, let's use spark for this, and perform classification with Logistic Regression.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">for col_ in vectorColumns:
+    train_ = train_.withColumn(col_, col(col_).cast(&quot;double&quot;))
+    test_ = test_.withColumn(col_, col(col_).cast(&quot;double&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">sqlContext.registerDataFrameAsTable(train_, &quot;pagerankdf&quot;)
+train_ = sqlContext.sql(&quot;&quot;&quot;SELECT t1.* FROM pagerankdf t1 WHERE t1.pagerank_0 IS NOT NULL AND t1.pagerank_1 IS NOT NULL AND t1.pagerank_2 IS NOT NULL AND t1.pagerank_3 IS NOT NULL AND t1.pagerank_4 IS NOT NULL AND t1.pagerank_5 IS NOT NULL AND t1.pagerank_6 IS NOT NULL AND t1.pagerank_7 IS NOT NULL&quot;&quot;&quot;)
+sqlContext.registerDataFrameAsTable(test_, &quot;pagerankdf&quot;)
+test_ = sqlContext.sql(&quot;&quot;&quot;SELECT t1.* FROM pagerankdf t1 WHERE t1.pagerank_0 IS NOT NULL AND t1.pagerank_1 IS NOT NULL AND t1.pagerank_2 IS NOT NULL AND t1.pagerank_3 IS NOT NULL AND t1.pagerank_4 IS NOT NULL AND t1.pagerank_5 IS NOT NULL AND t1.pagerank_6 IS NOT NULL AND t1.pagerank_7 IS NOT NULL&quot;&quot;&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">train_.show(5)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">train_ = train_.select(*([&quot;enttype&quot;]+vectorColumns)).withColumnRenamed(&quot;enttype&quot;, &quot;label&quot;)
+test_ = test_.select(*([&quot;enttype&quot;]+vectorColumns)).withColumnRenamed(&quot;enttype&quot;, &quot;label&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">train_.show(5)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.ml.feature import VectorAssembler
+# Vectorize. 
+trainva = VectorAssembler(inputCols=vectorColumns, outputCol=&quot;features&quot;).transform(train_)
+testva = VectorAssembler(inputCols=vectorColumns, outputCol=&quot;features&quot;).transform(test_)
+
+trainData = trainva.select(&quot;label&quot;, &quot;features&quot;)
+testData = testva.select(&quot;label&quot;, &quot;features&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">trainData.show(5)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.feature import StringIndexer, VectorIndexer
+from pyspark.ml import Pipeline
+
+labelIndexer = StringIndexer(inputCol=&quot;label&quot;, outputCol=&quot;indexedLabel&quot;).fit(trainData)
+lr = LogisticRegression(labelCol=&quot;indexedLabel&quot;,maxIter=10, regParam=0.3, elasticNetParam=0.8)
+pipeline = Pipeline(stages=[labelIndexer, lr])
+lrModel = pipeline.fit(trainData)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">predictions = lrModel.transform(testData)
+
+predictions.select(&quot;prediction&quot;, &quot;indexedLabel&quot;, &quot;features&quot;).show(5)
+
+
+trainPredictions = lrModel.transform(trainData)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Copied from https://spark.apache.org/docs/2.2.0/ml-classification-regression.html
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+
+evaluator = MulticlassClassificationEvaluator(
+    labelCol=&quot;indexedLabel&quot;, predictionCol=&quot;prediction&quot;, metricName=&quot;accuracy&quot;)
+accuracy = evaluator.evaluate(trainPredictions)
+print(&quot;Train Error = %g &quot; % (1.0 - accuracy))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Copied from https://spark.apache.org/docs/2.2.0/ml-classification-regression.html
+testPredictions = lrModel.transform(testData)
+evaluator = MulticlassClassificationEvaluator(
+    labelCol=&quot;indexedLabel&quot;, predictionCol=&quot;prediction&quot;, metricName=&quot;accuracy&quot;)
+accuracy = evaluator.evaluate(testPredictions)
+print(&quot;Test Error = %g &quot; % (1.0 - accuracy))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Copied from https://spark.apache.org/docs/2.2.0/ml-classification-regression.html
+testPredictions = lrModel.transform(testData)
+evaluator = MulticlassClassificationEvaluator(
+    labelCol=&quot;indexedLabel&quot;, predictionCol=&quot;prediction&quot;, metricName=&quot;accuracy&quot;)
+accuracy = evaluator.evaluate(testPredictions.select(&quot;indexedLabel&quot;, &quot;prediction&quot;))
+print(&quot;Test Error = %g &quot; % (1.0 - accuracy))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">testPredictions.show(5)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Unfortunately, our method does not possess a lot of predictive power. This can be due to a multitude of factors.</p>
+<ol>
+<li>We include all the instance of edges.</li>
+<li>The structure of the graph does not cluster types of nodes together, but rather interacting nodes. This shows the strong importance of roles in a knowledge graph, rather than types being clustered together.</li>
+<li>We do not have enough anchors in our personalized pagerank vectors, leading us to not</li>
+</ol>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

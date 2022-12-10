@@ -1,0 +1,1382 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>03_Implementation - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/00_Introduction.html"><strong aria-hidden="true">1.</strong> student-project-01_group-GraphOfWiki_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/01_DataLoading_redirectsTable.html"><strong aria-hidden="true">1.1.</strong> 01_DataLoading_redirectsTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/02_DataLoading_pagesTable.html"><strong aria-hidden="true">1.2.</strong> 02_DataLoading_pagesTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/03_DataLoading_pagelinksTable.html"><strong aria-hidden="true">1.3.</strong> 03_DataLoading_pagelinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/04_DataLoading_categorylinksTable.html"><strong aria-hidden="true">1.4.</strong> 04_DataLoading_categorylinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/05_DataLoading_categoryTable.html"><strong aria-hidden="true">1.5.</strong> 05_DataLoading_categoryTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/06_redirectRemoval.html"><strong aria-hidden="true">1.6.</strong> 06_redirectRemoval</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/07_createArticleGraph.html"><strong aria-hidden="true">1.7.</strong> 07_createArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/08_explorationArticleGraph.html"><strong aria-hidden="true">1.8.</strong> 08_explorationArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/09_fullGraphAnalysis.html"><strong aria-hidden="true">1.9.</strong> 09_fullGraphAnalysis</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/10_explorativeMotifs.html"><strong aria-hidden="true">1.10.</strong> 10_explorativeMotifs</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/11_conclusionDiscussionAndFutureWork.html"><strong aria-hidden="true">1.11.</strong> 11_conclusionDiscussionAndFutureWork</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/12_gameNotebookSetup.html"><strong aria-hidden="true">1.12.</strong> 12_gameNotebookSetup</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/13_gameNotebook.html"><strong aria-hidden="true">1.13.</strong> 13_gameNotebook</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/00_vqa_introduction.html"><strong aria-hidden="true">2.</strong> student-project-02_group-DDLOfVision_00_vqa_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/01_vqa_model_training.html"><strong aria-hidden="true">2.1.</strong> 01_vqa_model_training</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/00_ingest_data.html"><strong aria-hidden="true">3.</strong> student-project-03_group-WikiKG2_00_ingest_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/01_fetch_descriptions.html"><strong aria-hidden="true">3.1.</strong> 01_fetch_descriptions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/02_load_data.html"><strong aria-hidden="true">3.2.</strong> 02_load_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/03_data_exploration.html"><strong aria-hidden="true">3.3.</strong> 03_data_exploration</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/04_analysing_relation_types.html"><strong aria-hidden="true">3.4.</strong> 04_analysing_relation_types</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/05_motif_search.html"><strong aria-hidden="true">3.5.</strong> 05_motif_search</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html"><strong aria-hidden="true">3.6.</strong> 06_produce_pagerank_vectors</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/07_pagerank_for_classification.html"><strong aria-hidden="true">3.7.</strong> 07_pagerank_for_classification</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html"><strong aria-hidden="true">4.</strong> student-project-04_group-FedMLMedicalApp_00_Notebook_Presentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html"><strong aria-hidden="true">4.1.</strong> 01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html"><strong aria-hidden="true">4.2.</strong> 02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/data_upload_test.html"><strong aria-hidden="true">4.3.</strong> data_upload_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/00_introduction.html"><strong aria-hidden="true">5.</strong> student-project-05_group-DistOpt_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/01_Bayesian_optimization.html"><strong aria-hidden="true">5.1.</strong> 01_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/02_Gaussian_processes.html"><strong aria-hidden="true">5.2.</strong> 02_Gaussian_processes</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/03_acquisition_functions.html"><strong aria-hidden="true">5.3.</strong> 03_acquisition_functions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/04_scalable_Bayesian_optimization.html"><strong aria-hidden="true">5.4.</strong> 04_scalable_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/05_implementation_documentation.html"><strong aria-hidden="true">5.5.</strong> 05_implementation_documentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/06_our_implementation.html"><strong aria-hidden="true">5.6.</strong> 06_our_implementation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/07_additional_code.html"><strong aria-hidden="true">5.7.</strong> 07_additional_code</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/00_introduction_resnet.html"><strong aria-hidden="true">6.</strong> student-project-07_group-ExpsZerOInit_00_introduction_resnet</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html"><strong aria-hidden="true">6.1.</strong> 01_transformer</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/02_ddpm.html"><strong aria-hidden="true">6.2.</strong> 02_ddpm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html"><strong aria-hidden="true">7.</strong> student-project-08_group-WikiSearch_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/01_InputParsing.html"><strong aria-hidden="true">7.1.</strong> 01_InputParsing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/02_PageRank.html"><strong aria-hidden="true">7.2.</strong> 02_PageRank</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/03_QuerySearch.html"><strong aria-hidden="true">7.3.</strong> 03_QuerySearch</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/00_Introduction.html"><strong aria-hidden="true">8.</strong> student-project-09_group-DistEnsembles_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Ensemble_Training.html"><strong aria-hidden="true">8.1.</strong> 02_Ensemble_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/03_Ensemble_Evaluation.html"><strong aria-hidden="true">8.2.</strong> 03_Ensemble_Evaluation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Ensemble.html"><strong aria-hidden="true">8.3.</strong> 099_extra_Ensemble</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/00_introduction.html"><strong aria-hidden="true">9.</strong> student-project-10_group-RDI_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/01_prepare_data.html"><strong aria-hidden="true">9.1.</strong> 01_prepare_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/02_baseline.html"><strong aria-hidden="true">9.2.</strong> 02_baseline</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/03_single_machine.html"><strong aria-hidden="true">9.3.</strong> 03_single_machine</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/04_distributed_learning.html"><strong aria-hidden="true">9.4.</strong> 04_distributed_learning</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/01_Introduction.html"><strong aria-hidden="true">10.</strong> student-project-11_group-CollaborativeFiltering_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html"><strong aria-hidden="true">10.1.</strong> 02_AlgorithmsBeyondALS</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/03_Implementation.html" class="active"><strong aria-hidden="true">10.2.</strong> 03_Implementation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html"><strong aria-hidden="true">11.</strong> student-project-12_group-FedLearnOpt_01_Federated_Learning_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html"><strong aria-hidden="true">11.1.</strong> 02_Horovod_Introduction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/03_Implementations.html"><strong aria-hidden="true">11.2.</strong> 03_Implementations</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html"><strong aria-hidden="true">12.</strong> student-project-13_group-DRL_00_DistributedRL</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/00_Introduction.html"><strong aria-hidden="true">13.</strong> student-project-14_group-EarthObs_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/01_Download_data.html"><strong aria-hidden="true">13.1.</strong> 01_Download_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/02_Image_preprocessing.html"><strong aria-hidden="true">13.2.</strong> 02_Image_preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/03_Model_Architecture_and_Training.html"><strong aria-hidden="true">13.3.</strong> 03_Model_Architecture_and_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/04_Prediction_And_Visualisation.html"><strong aria-hidden="true">13.4.</strong> 04_Prediction_And_Visualisation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/05_Conclusions.html"><strong aria-hidden="true">13.5.</strong> 05_Conclusions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-projects-BrIntSuSvConclusion/student-projects-BrIntSuSvConclusion/BrIntSuSv.html"><strong aria-hidden="true">14.</strong> student-projects-BrIntSuSvConclusion_BrIntSuSv</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../editors.html"><strong aria-hidden="true">15.</strong> Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="creating-the-collaborative-filtering-colfil-object"><a class="header" href="#creating-the-collaborative-filtering-colfil-object">Creating the Collaborative Filtering (ColFil) object</a></h1>
+<p>Almost all our code is used to define one large object. Since our code is based on the <a href="https://github.com/apache/spark/blob/v3.3.1/mllib/src/main/scala/org/apache/spark/ml/recommendation/ALS.scala">ALS-package</a>, large parts of it are well optimized but therefore also quite difficult to read. Therefore, it is best to just run the cell below, and after it we will pick out some of the more relevant parts of the code and explain how they work. To read the following block, it is strongly recommended to use the DataBricks editor that Raaz recommended <a href="https://canvas.kth.se/courses/37095/discussion_topics/280764">on Canvas</a>, as it makes it possible to collapse functions and improves readability (it's very very simple to enable).</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">package org.apache.spark.ml.collaborative_filtering
+
+import org.apache.spark.ml.recommendation._
+
+import java.{util =&gt; ju}
+import java.io.IOException
+import java.util.Locale
+
+import scala.collection.mutable
+import scala.reflect.ClassTag
+import scala.util.{Sorting, Try}
+import scala.util.hashing.byteswap64
+
+import com.google.common.collect.{Ordering =&gt; GuavaOrdering}
+import org.apache.hadoop.fs.Path
+import org.json4s.DefaultFormats
+import org.json4s.JsonDSL._
+
+import org.apache.spark.{Partitioner, SparkException}
+import org.apache.spark.annotation.Since
+import org.apache.spark.internal.Logging
+import org.apache.spark.ml.{Estimator, Model}
+import org.apache.spark.ml.linalg.BLAS
+import org.apache.spark.ml.param._
+import org.apache.spark.ml.param.shared._
+import org.apache.spark.ml.util._
+import org.apache.spark.mllib.linalg.CholeskyDecomposition
+import org.apache.spark.mllib.optimization.NNLS
+import org.apache.spark.rdd.{DeterministicLevel, RDD}
+import org.apache.spark.sql.{DataFrame, Dataset}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.util.Utils
+import org.apache.spark.util.collection.{OpenHashMap, OpenHashSet, SortDataFormat, Sorter}
+import org.apache.spark.util.random.XORShiftRandom
+import com.databricks.service.DBUtils
+
+object ColFil extends DefaultParamsReadable[ALS] with Logging {
+  
+  /**
+   * Rating class for better code readability.
+   */
+  case class Rating[@specialized(Int, Long) ID](user: ID, item: ID, rating: Float)
+  
+  override def load(path: String): ALS = super.load(path)
+
+  /**
+   * Implementation of Collaborative filtering algorithm. Similar to the implementation of the
+   * ALS algorithm from org.apache.spark.ml.recommendation, therefore the remainder of this comment
+   * is actually the same as for the train() function for the ALS object.
+   *
+   * This implementation of the ALS factorization algorithm partitions the two sets of factors among
+   * Spark workers so as to reduce network communication by only sending one copy of each factor
+   * vector to each Spark worker on each iteration, and only if needed.  This is achieved by
+   * precomputing some information about the ratings matrix to determine which users require which
+   * item factors and vice versa.  See the Scaladoc for `InBlock` for a detailed explanation of how
+   * the precomputation is done.
+   *
+   * In addition, since each iteration of calculating the factor matrices depends on the known
+   * ratings, which are spread across Spark partitions, a naive implementation would incur
+   * significant network communication overhead between Spark workers, as the ratings RDD would be
+   * repeatedly shuffled during each iteration.  This implementation reduces that overhead by
+   * performing the shuffling operation up front, precomputing each partition's ratings dependencies
+   * and duplicating those values to the appropriate workers before starting iterations to solve for
+   * the factor matrices.  See the Scaladoc for `OutBlock` for a detailed explanation of how the
+   * precomputation is done.
+   *
+   * Note that the term &quot;rating block&quot; is a bit of a misnomer, as the ratings are not partitioned by
+   * contiguous blocks from the ratings matrix but by a hash function on the rating's location in
+   * the matrix.  If it helps you to visualize the partitions, it is easier to think of the term
+   * &quot;block&quot; as referring to a subset of an RDD containing the ratings rather than a contiguous
+   * submatrix of the ratings matrix.
+   */
+  def train[ID: ClassTag](
+      ratings: RDD[Rating[ID]],
+      rank: Int = 10,
+      numUserBlocks: Int = 10,
+      numItemBlocks: Int = 10,
+      maxIter: Int = 10,
+      stepSize: Float = 0.1f,
+      regParam: Double = 0.1,   // TODO: DELETE
+      implicitPrefs: Boolean = false,   // TODO: DELETE
+      alpha: Double = 1.0,              // TODO: DELETE
+      nonnegative: Boolean = false,     // TODO: DELETE
+      intermediateRDDStorageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK,
+      finalRDDStorageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK,
+      checkpointInterval: Int = 10,
+      seed: Long = 0L)(
+        implicit ord: Ordering[ID]): (RDD[(ID, Array[Double])], RDD[(ID, Array[Double])]) = {
+
+    // ---------- The following block of code is identical to the ALS class ---------------
+    require(!ratings.isEmpty(), s&quot;No ratings available from $ratings&quot;)
+    require(intermediateRDDStorageLevel != StorageLevel.NONE,
+      &quot;Collaborative filtering is not designed to run without persisting intermediate RDDs.&quot;)
+
+    val sc = ratings.sparkContext
+
+    // Precompute the rating dependencies of each partition
+    val userPart = new ALSPartitioner(numUserBlocks)
+    val itemPart = new ALSPartitioner(numItemBlocks)
+    val blockRatings = partitionRatings(ratings, userPart, itemPart)
+      .persist(intermediateRDDStorageLevel)
+    val (userInBlocks, userOutBlocks) =
+      makeBlocks(&quot;user&quot;, blockRatings, userPart, itemPart, intermediateRDDStorageLevel)
+    userOutBlocks.count()    // materialize blockRatings and user blocks
+    val swappedBlockRatings = blockRatings.map {
+      case ((userBlockId, itemBlockId), RatingBlock(userIds, itemIds, localRatings)) =&gt;
+        ((itemBlockId, userBlockId), RatingBlock(itemIds, userIds, localRatings))
+    }
+    val (itemInBlocks, itemOutBlocks) =
+      makeBlocks(&quot;item&quot;, swappedBlockRatings, itemPart, userPart, intermediateRDDStorageLevel)
+    itemOutBlocks.count()    // materialize item blocks
+
+    // Encoders for storing each user/item's partition ID and index within its partition using a
+    // single integer; used as an optimization
+    val userLocalIndexEncoder = new LocalIndexEncoder(userPart.numPartitions)
+    val itemLocalIndexEncoder = new LocalIndexEncoder(itemPart.numPartitions)
+
+    // These are the user and item factor matrices that, once trained, are multiplied together to
+    // estimate the rating matrix.  The two matrices are stored in RDDs, partitioned by column such
+    // that each factor column resides on the same Spark worker as its corresponding user or item.
+    val seedGen = new XORShiftRandom(seed)
+    var userFactors = initialize(userInBlocks, rank, seedGen.nextLong())
+    var itemFactors = initialize(itemInBlocks, rank, seedGen.nextLong())
+
+    // val solver = if (nonnegative) new NNLSSolver else new CholeskySolver // DELETE
+
+    var previousCheckpointFile: Option[String] = None
+    var previousUserCheckpointFile: Option[String] = None
+    val shouldCheckpoint: Int =&gt; Boolean = (iter) =&gt;
+      sc.checkpointDir.isDefined &amp;&amp; checkpointInterval != -1 &amp;&amp; (iter % checkpointInterval == 0)
+    val deletePreviousCheckpointFile: () =&gt; Unit = () =&gt;
+      previousCheckpointFile.foreach { file =&gt;
+        try {
+          val checkpointFile = new Path(file)
+          checkpointFile.getFileSystem(sc.hadoopConfiguration).delete(checkpointFile, true)
+        } catch {
+          case e: IOException =&gt;
+            logWarning(s&quot;Cannot delete checkpoint file $file:&quot;, e)
+        }
+      }
+
+    // --------------- This code is different from the ALS class, in part written by us ---------------
+    
+    var previousCachedItemFactors: Option[RDD[(Int, FactorBlock)]] = None
+    var previousCachedUserFactors: Option[RDD[(Int, FactorBlock)]] = None
+    for (iter &lt;- 0 until maxIter) {
+      val factorTuple = computeFactors(userFactors, itemFactors, userOutBlocks, itemOutBlocks, 
+        userInBlocks, itemInBlocks, rank, regParam, userLocalIndexEncoder, itemLocalIndexEncoder, stepSize)
+      userFactors = factorTuple._1
+      itemFactors = factorTuple._2
+    
+      // This doesn't actually work properly in our case. We have to checkpoint both itemFactors and userFactors
+      // since we don't alternate, but we haven't managed to figure out how to set up the checkpointing for that case
+      if (shouldCheckpoint(iter)) {
+        itemFactors.setName(s&quot;itemFactors-$iter&quot;).persist(intermediateRDDStorageLevel)
+        itemFactors.checkpoint()
+        itemFactors.count() // checkpoint item factors and cut lineage
+        itemFactors.cleanShuffleDependencies()
+        deletePreviousCheckpointFile()
+
+        previousCachedItemFactors.foreach(_.unpersist())
+        previousCheckpointFile = itemFactors.getCheckpointFile
+        previousCachedItemFactors = Option(itemFactors)
+      }
+    }
+    
+    val userIdAndFactors = userInBlocks
+      .mapValues(_.srcIds)
+      .join(userFactors)
+      .mapPartitions({ items =&gt;
+        items.flatMap { case (_, (ids, factors)) =&gt;
+          ids.iterator.zip(factors.iterator)
+        }
+      // Preserve the partitioning because IDs are consistent with the partitioners in userInBlocks
+      // and userFactors.
+      }, preservesPartitioning = true)
+      .setName(&quot;userFactors&quot;)
+      .persist(finalRDDStorageLevel)
+    val itemIdAndFactors = itemInBlocks
+      .mapValues(_.srcIds)
+      .join(itemFactors)
+      .mapPartitions({ items =&gt;
+        items.flatMap { case (_, (ids, factors)) =&gt;
+          ids.iterator.zip(factors.iterator)
+        }
+      }, preservesPartitioning = true)
+      .setName(&quot;itemFactors&quot;)
+      .persist(finalRDDStorageLevel)
+
+    if (finalRDDStorageLevel != StorageLevel.NONE) {
+      userIdAndFactors.count()
+      userInBlocks.unpersist()
+      userOutBlocks.unpersist()
+      itemOutBlocks.unpersist()
+      blockRatings.unpersist()
+      itemIdAndFactors.count()
+      itemFactors.unpersist()
+      itemInBlocks.unpersist()
+    }
+
+    // ------------------------- A more modern version of the ALS interface is available in the &quot;mllib&quot; package,
+    // in contrast to the ALS train()-function which resides in the ALS object that is part of the &quot;ml&quot; pacakge.
+    // This block of code here simply transforms the output of our train()-function so that it works the same way
+    // as the ALS train()-function from the &quot;mllib&quot; package -----------------------------------------------------
+    val mllibUserFactors = userIdAndFactors
+        .mapValues(_.map(_.toDouble))
+        .setName(&quot;users&quot;)
+        .persist(finalRDDStorageLevel)
+    val mllibItemFactors = itemIdAndFactors
+        .mapValues(_.map(_.toDouble))
+        .setName(&quot;products&quot;)
+        .persist(finalRDDStorageLevel)
+    if (finalRDDStorageLevel != StorageLevel.NONE) {
+        mllibUserFactors.count()
+        mllibItemFactors.count()
+    }
+    (mllibUserFactors, mllibItemFactors)
+  }
+  
+  /**
+   * Factor block that stores factors (Array[Float]) in an Array.
+   */
+  type FactorBlock = Array[Array[Float]]
+
+  /**
+   * A mapping of the columns of the items factor matrix that are needed when calculating each row
+   * of the users factor matrix, and vice versa.
+   *
+   * Specifically, when calculating a user factor vector, since only those columns of the items
+   * factor matrix that correspond to the items that that user has rated are needed, we can avoid
+   * having to repeatedly copy the entire items factor matrix to each worker later in the algorithm
+   * by precomputing these dependencies for all users, storing them in an RDD of `OutBlock`s.  The
+   * items' dependencies on the columns of the users factor matrix is computed similarly.
+   *
+   * =Example=
+   *
+   * Using the example provided in the `InBlock` Scaladoc, `userOutBlocks` would look like the
+   * following:
+   *
+   * {{{
+   *     userOutBlocks.collect() == Seq(
+   *       0 -&gt; Array(Array(0, 1), Array(0, 1)),
+   *       1 -&gt; Array(Array(0), Array(0))
+   *     )
+   * }}}
+   *
+   * Each value in this map-like sequence is of type `Array[Array[Int]]`.  The values in the
+   * inner array are the ranks of the sorted user IDs in that partition; so in the example above,
+   * `Array(0, 1)` in partition 0 refers to user IDs 0 and 6, since when all unique user IDs in
+   * partition 0 are sorted, 0 is the first ID and 6 is the second.  The position of each inner
+   * array in its enclosing outer array denotes the partition number to which item IDs map; in the
+   * example, the first `Array(0, 1)` is in position 0 of its outer array, denoting item IDs that
+   * map to partition 0.
+   *
+   * In summary, the data structure encodes the following information:
+   *
+   *   *  There are ratings with user IDs 0 and 6 (encoded in `Array(0, 1)`, where 0 and 1 are the
+   *   indices of the user IDs 0 and 6 on partition 0) whose item IDs map to partitions 0 and 1
+   *   (represented by the fact that `Array(0, 1)` appears in both the 0th and 1st positions).
+   *
+   *   *  There are ratings with user ID 3 (encoded in `Array(0)`, where 0 is the index of the user
+   *   ID 3 on partition 1) whose item IDs map to partitions 0 and 1 (represented by the fact that
+   *   `Array(0)` appears in both the 0th and 1st positions).
+   */
+  type OutBlock = Array[Array[Int]]
+
+  /**
+   * In-link block for computing user and item factor matrices.
+   *
+   * The ALS algorithm partitions the columns of the users factor matrix evenly among Spark workers.
+   * Since each column of the factor matrix is calculated using the known ratings of the correspond-
+   * ing user, and since the ratings don't change across iterations, the ALS algorithm preshuffles
+   * the ratings to the appropriate partitions, storing them in `InBlock` objects.
+   *
+   * The ratings shuffled by item ID are computed similarly and also stored in `InBlock` objects.
+   * Note that this means every rating is stored twice, once as shuffled by user ID and once by item
+   * ID.  This is a necessary tradeoff, since in general a rating will not be on the same worker
+   * when partitioned by user as by item.
+   *
+   * =Example=
+   *
+   * Say we have a small collection of eight items to offer the seven users in our application.  We
+   * have some known ratings given by the users, as seen in the matrix below:
+   *
+   * {{{
+   *                       Items
+   *            0   1   2   3   4   5   6   7
+   *          +---+---+---+---+---+---+---+---+
+   *        0 |   |0.1|   |   |0.4|   |   |0.7|
+   *          +---+---+---+---+---+---+---+---+
+   *        1 |   |   |   |   |   |   |   |   |
+   *          +---+---+---+---+---+---+---+---+
+   *     U  2 |   |   |   |   |   |   |   |   |
+   *     s    +---+---+---+---+---+---+---+---+
+   *     e  3 |   |3.1|   |   |3.4|   |   |3.7|
+   *     r    +---+---+---+---+---+---+---+---+
+   *     s  4 |   |   |   |   |   |   |   |   |
+   *          +---+---+---+---+---+---+---+---+
+   *        5 |   |   |   |   |   |   |   |   |
+   *          +---+---+---+---+---+---+---+---+
+   *        6 |   |6.1|   |   |6.4|   |   |6.7|
+   *          +---+---+---+---+---+---+---+---+
+   * }}}
+   *
+   * The ratings are represented as an RDD, passed to the `partitionRatings` method as the `ratings`
+   * parameter:
+   *
+   * {{{
+   *     ratings.collect() == Seq(
+   *       Rating(0, 1, 0.1f),
+   *       Rating(0, 4, 0.4f),
+   *       Rating(0, 7, 0.7f),
+   *       Rating(3, 1, 3.1f),
+   *       Rating(3, 4, 3.4f),
+   *       Rating(3, 7, 3.7f),
+   *       Rating(6, 1, 6.1f),
+   *       Rating(6, 4, 6.4f),
+   *       Rating(6, 7, 6.7f)
+   *     )
+   * }}}
+   *
+   * Say that we are using two partitions to calculate each factor matrix:
+   *
+   * {{{
+   *     val userPart = new ALSPartitioner(2)
+   *     val itemPart = new ALSPartitioner(2)
+   *     val blockRatings = partitionRatings(ratings, userPart, itemPart)
+   * }}}
+   *
+   * Ratings are mapped to partitions using the user/item IDs modulo the number of partitions.  With
+   * two partitions, ratings with even-valued user IDs are shuffled to partition 0 while those with
+   * odd-valued user IDs are shuffled to partition 1:
+   *
+   * {{{
+   *     userInBlocks.collect() == Seq(
+   *       0 -&gt; Seq(
+   *              // Internally, the class stores the ratings in a more optimized format than
+   *              // a sequence of `Rating`s, but for clarity we show it as such here.
+   *              Rating(0, 1, 0.1f),
+   *              Rating(0, 4, 0.4f),
+   *              Rating(0, 7, 0.7f),
+   *              Rating(6, 1, 6.1f),
+   *              Rating(6, 4, 6.4f),
+   *              Rating(6, 7, 6.7f)
+   *            ),
+   *       1 -&gt; Seq(
+   *              Rating(3, 1, 3.1f),
+   *              Rating(3, 4, 3.4f),
+   *              Rating(3, 7, 3.7f)
+   *            )
+   *     )
+   * }}}
+   *
+   * Similarly, ratings with even-valued item IDs are shuffled to partition 0 while those with
+   * odd-valued item IDs are shuffled to partition 1:
+   *
+   * {{{
+   *     itemInBlocks.collect() == Seq(
+   *       0 -&gt; Seq(
+   *              Rating(0, 4, 0.4f),
+   *              Rating(3, 4, 3.4f),
+   *              Rating(6, 4, 6.4f)
+   *            ),
+   *       1 -&gt; Seq(
+   *              Rating(0, 1, 0.1f),
+   *              Rating(0, 7, 0.7f),
+   *              Rating(3, 1, 3.1f),
+   *              Rating(3, 7, 3.7f),
+   *              Rating(6, 1, 6.1f),
+   *              Rating(6, 7, 6.7f)
+   *            )
+   *     )
+   * }}}
+   *
+   * @param srcIds src ids (ordered)
+   * @param dstPtrs dst pointers. Elements in range [dstPtrs(i), dstPtrs(i+1)) of dst indices and
+   *                ratings are associated with srcIds(i).
+   * @param dstEncodedIndices encoded dst indices
+   * @param ratings ratings
+   * @see [[LocalIndexEncoder]]
+   */
+  case class InBlock[@specialized(Int, Long) ID: ClassTag](
+      srcIds: Array[ID],
+      dstPtrs: Array[Int],
+      dstEncodedIndices: Array[Int],
+      ratings: Array[Float]) {
+    /** Size of the block. */
+    def size: Int = ratings.length
+    require(dstEncodedIndices.length == size)
+    require(dstPtrs.length == srcIds.length + 1)
+  }
+
+  /**
+   * Initializes factors randomly given the in-link blocks.
+   *
+   * @param inBlocks in-link blocks
+   * @param rank rank
+   * @return initialized factor blocks
+   */
+  def initialize[ID](
+      inBlocks: RDD[(Int, InBlock[ID])],
+      rank: Int,
+      seed: Long): RDD[(Int, FactorBlock)] = {
+    // Choose a unit vector uniformly at random from the unit sphere. This can be done by choosing
+    // elements distributed as Normal(0,1), and then normalizing.
+    // This appears to create factorizations that have a slightly better reconstruction
+    // (&lt;1%) compared picking elements uniformly at random in [0,1].
+    inBlocks.mapPartitions({ iter =&gt;
+      iter.map {
+        case (srcBlockId, inBlock) =&gt;
+          val random = new XORShiftRandom(byteswap64(seed ^ srcBlockId))
+          val factors = Array.fill(inBlock.srcIds.length) {
+            val factor = Array.fill(rank)(random.nextGaussian().toFloat)
+            val nrm = BLAS.nativeBLAS.snrm2(rank, factor, 1)
+            BLAS.nativeBLAS.sscal(rank, 1.0f / nrm, factor, 1)
+            factor
+          }
+          (srcBlockId, factors)
+      }
+    }, preservesPartitioning = true)
+  }
+
+  /**
+   * A rating block that contains src IDs, dst IDs, and ratings, stored in primitive arrays.
+   */
+  case class RatingBlock[@specialized(Int, Long) ID: ClassTag](
+      srcIds: Array[ID],
+      dstIds: Array[ID],
+      ratings: Array[Float]) {
+    /** Size of the block. */
+    def size: Int = srcIds.length
+    require(dstIds.length == srcIds.length)
+    require(ratings.length == srcIds.length)
+  }
+
+  /**
+   * Builder for [[RatingBlock]]. `mutable.ArrayBuilder` is used to avoid boxing/unboxing.
+   */
+  class RatingBlockBuilder[@specialized(Int, Long) ID: ClassTag]
+    extends Serializable {
+
+    val srcIds = mutable.ArrayBuilder.make[ID]
+    val dstIds = mutable.ArrayBuilder.make[ID]
+    val ratings = mutable.ArrayBuilder.make[Float]
+    var size = 0
+
+    /** Adds a rating. */
+    def add(r: Rating[ID]): this.type = {
+      size += 1
+      srcIds += r.user
+      dstIds += r.item
+      ratings += r.rating
+      this
+    }
+
+    /** Merges another [[RatingBlockBuilder]]. */
+    def merge(other: RatingBlock[ID]): this.type = {
+      size += other.srcIds.length
+      srcIds ++= other.srcIds
+      dstIds ++= other.dstIds
+      ratings ++= other.ratings
+      this
+    }
+
+    /** Builds a [[RatingBlock]]. */
+    def build(): RatingBlock[ID] = {
+      RatingBlock[ID](srcIds.result(), dstIds.result(), ratings.result())
+    }
+  }
+
+  /**
+   * Groups an RDD of [[Rating]]s by the user partition and item partition to which each `Rating`
+   * maps according to the given partitioners.  The returned pair RDD holds the ratings, encoded in
+   * a memory-efficient format but otherwise unchanged, keyed by the (user partition ID, item
+   * partition ID) pair.
+   *
+   * Performance note: This is an expensive operation that performs an RDD shuffle.
+   *
+   * Implementation note: This implementation produces the same result as the following but
+   * generates fewer intermediate objects:
+   *d
+   * {{{
+   *     ratings.map { r =&gt;
+   *       ((srcPart.getPartition(r.user), dstPart.getPartition(r.item)), r)
+   *     }.aggregateByKey(new RatingBlockBuilder)(
+   *         seqOp = (b, r) =&gt; b.add(r),
+   *         combOp = (b0, b1) =&gt; b0.merge(b1.build()))
+   *       .mapValues(_.build())
+   * }}}
+   *
+   * @param ratings raw ratings
+   * @param srcPart partitioner for src IDs
+   * @param dstPart partitioner for dst IDs
+   * @return an RDD of rating blocks in the form of ((srcBlockId, dstBlockId), ratingBlock)
+   */
+  def partitionRatings[ID: ClassTag](
+      ratings: RDD[Rating[ID]],
+      srcPart: Partitioner,
+      dstPart: Partitioner): RDD[((Int, Int), RatingBlock[ID])] = {
+    val numPartitions = srcPart.numPartitions * dstPart.numPartitions
+    ratings.mapPartitions { iter =&gt;
+      val builders = Array.fill(numPartitions)(new RatingBlockBuilder[ID])
+      iter.flatMap { r =&gt;
+        val srcBlockId = srcPart.getPartition(r.user)
+        val dstBlockId = dstPart.getPartition(r.item)
+        val idx = srcBlockId + srcPart.numPartitions * dstBlockId
+        val builder = builders(idx)
+        builder.add(r)
+        if (builder.size &gt;= 2048) { // 2048 * (3 * 4) = 24k
+          builders(idx) = new RatingBlockBuilder
+          Iterator.single(((srcBlockId, dstBlockId), builder.build()))
+        } else {
+          Iterator.empty
+        }
+      } ++ {
+        builders.iterator.zipWithIndex.filter(_._1.size &gt; 0).map { case (block, idx) =&gt;
+          val srcBlockId = idx % srcPart.numPartitions
+          val dstBlockId = idx / srcPart.numPartitions
+          ((srcBlockId, dstBlockId), block.build())
+        }
+      }
+    }.groupByKey().mapValues { blocks =&gt;
+      val builder = new RatingBlockBuilder[ID]
+      blocks.foreach(builder.merge)
+      builder.build()
+    }.setName(&quot;ratingBlocks&quot;)
+  }
+
+  /**
+   * Builder for uncompressed in-blocks of (srcId, dstEncodedIndex, rating) tuples.
+   *
+   * @param encoder encoder for dst indices
+   */
+  class UncompressedInBlockBuilder[@specialized(Int, Long) ID: ClassTag](
+      encoder: LocalIndexEncoder)(
+      implicit ord: Ordering[ID]) {
+
+    val srcIds = mutable.ArrayBuilder.make[ID]
+    val dstEncodedIndices = mutable.ArrayBuilder.make[Int]
+    val ratings = mutable.ArrayBuilder.make[Float]
+
+    /**
+     * Adds a dst block of (srcId, dstLocalIndex, rating) tuples.
+     *
+     * @param dstBlockId dst block ID
+     * @param srcIds original src IDs
+     * @param dstLocalIndices dst local indices
+     * @param ratings ratings
+     */
+    def add(
+        dstBlockId: Int,
+        srcIds: Array[ID],
+        dstLocalIndices: Array[Int],
+        ratings: Array[Float]): this.type = {
+      val sz = srcIds.length
+      require(dstLocalIndices.length == sz)
+      require(ratings.length == sz)
+      this.srcIds ++= srcIds
+      this.ratings ++= ratings
+      var j = 0
+      while (j &lt; sz) {
+        this.dstEncodedIndices += encoder.encode(dstBlockId, dstLocalIndices(j))
+        j += 1
+      }
+      this
+    }
+
+    /** Builds a [[UncompressedInBlock]]. */
+    def build(): UncompressedInBlock[ID] = {
+      new UncompressedInBlock(srcIds.result(), dstEncodedIndices.result(), ratings.result())
+    }
+  }
+
+  /**
+   * A block of (srcId, dstEncodedIndex, rating) tuples stored in primitive arrays.
+   */
+  class UncompressedInBlock[@specialized(Int, Long) ID: ClassTag](
+      val srcIds: Array[ID],
+      val dstEncodedIndices: Array[Int],
+      val ratings: Array[Float])(
+      implicit ord: Ordering[ID]) {
+
+    /** Size the of block. */
+    def length: Int = srcIds.length
+
+    /**
+     * Compresses the block into an `InBlock`. The algorithm is the same as converting a sparse
+     * matrix from coordinate list (COO) format into compressed sparse column (CSC) format.
+     * Sorting is done using Spark's built-in Timsort to avoid generating too many objects.
+     */
+    def compress(): InBlock[ID] = {
+      val sz = length
+      assert(sz &gt; 0, &quot;Empty in-link block should not exist.&quot;)
+      sort()
+      val uniqueSrcIdsBuilder = mutable.ArrayBuilder.make[ID]
+      val dstCountsBuilder = mutable.ArrayBuilder.make[Int]
+      var preSrcId = srcIds(0)
+      uniqueSrcIdsBuilder += preSrcId
+      var curCount = 1
+      var i = 1
+      while (i &lt; sz) {
+        val srcId = srcIds(i)
+        if (srcId != preSrcId) {
+          uniqueSrcIdsBuilder += srcId
+          dstCountsBuilder += curCount
+          preSrcId = srcId
+          curCount = 0
+        }
+        curCount += 1
+        i += 1
+      }
+      dstCountsBuilder += curCount
+      val uniqueSrcIds = uniqueSrcIdsBuilder.result()
+      val numUniqueSrdIds = uniqueSrcIds.length
+      val dstCounts = dstCountsBuilder.result()
+      val dstPtrs = new Array[Int](numUniqueSrdIds + 1)
+      var sum = 0
+      i = 0
+      while (i &lt; numUniqueSrdIds) {
+        sum += dstCounts(i)
+        i += 1
+        dstPtrs(i) = sum
+      }
+      InBlock(uniqueSrcIds, dstPtrs, dstEncodedIndices, ratings)
+    }
+
+    def sort(): Unit = {
+      val sz = length
+      // Since there might be interleaved log messages, we insert a unique id for easy pairing.
+      val sortId = Utils.random.nextInt()
+      logDebug(s&quot;Start sorting an uncompressed in-block of size $sz. (sortId = $sortId)&quot;)
+      val start = System.nanoTime()
+      val sorter = new Sorter(new UncompressedInBlockSort[ID])
+      sorter.sort(this, 0, length, Ordering[KeyWrapper[ID]])
+      val duration = (System.nanoTime() - start) / 1e9
+      logDebug(s&quot;Sorting took $duration seconds. (sortId = $sortId)&quot;)
+    }
+  }
+
+  /**
+   * A wrapper that holds a primitive key.
+   *
+   * @see [[UncompressedInBlockSort]]
+   */
+  class KeyWrapper[@specialized(Int, Long) ID: ClassTag](
+      implicit ord: Ordering[ID]) extends Ordered[KeyWrapper[ID]] {
+
+    var key: ID = _
+
+    override def compare(that: KeyWrapper[ID]): Int = {
+      ord.compare(key, that.key)
+    }
+
+    def setKey(key: ID): this.type = {
+      this.key = key
+      this
+    }
+  }
+
+  /**
+   * [[SortDataFormat]] of [[UncompressedInBlock]] used by [[Sorter]].
+   */
+  class UncompressedInBlockSort[@specialized(Int, Long) ID: ClassTag](
+      implicit ord: Ordering[ID])
+    extends SortDataFormat[KeyWrapper[ID], UncompressedInBlock[ID]] {
+
+    override def newKey(): KeyWrapper[ID] = new KeyWrapper()
+
+    override def getKey(
+        data: UncompressedInBlock[ID],
+        pos: Int,
+        reuse: KeyWrapper[ID]): KeyWrapper[ID] = {
+      if (reuse == null) {
+        new KeyWrapper().setKey(data.srcIds(pos))
+      } else {
+        reuse.setKey(data.srcIds(pos))
+      }
+    }
+
+    override def getKey(
+        data: UncompressedInBlock[ID],
+        pos: Int): KeyWrapper[ID] = {
+      getKey(data, pos, null)
+    }
+
+    def swapElements[@specialized(Int, Float) T](
+        data: Array[T],
+        pos0: Int,
+        pos1: Int): Unit = {
+      val tmp = data(pos0)
+      data(pos0) = data(pos1)
+      data(pos1) = tmp
+    }
+
+    override def swap(data: UncompressedInBlock[ID], pos0: Int, pos1: Int): Unit = {
+      swapElements(data.srcIds, pos0, pos1)
+      swapElements(data.dstEncodedIndices, pos0, pos1)
+      swapElements(data.ratings, pos0, pos1)
+    }
+
+    override def copyRange(
+        src: UncompressedInBlock[ID],
+        srcPos: Int,
+        dst: UncompressedInBlock[ID],
+        dstPos: Int,
+        length: Int): Unit = {
+      System.arraycopy(src.srcIds, srcPos, dst.srcIds, dstPos, length)
+      System.arraycopy(src.dstEncodedIndices, srcPos, dst.dstEncodedIndices, dstPos, length)
+      System.arraycopy(src.ratings, srcPos, dst.ratings, dstPos, length)
+    }
+
+    override def allocate(length: Int): UncompressedInBlock[ID] = {
+      new UncompressedInBlock(
+        new Array[ID](length), new Array[Int](length), new Array[Float](length))
+    }
+
+    override def copyElement(
+        src: UncompressedInBlock[ID],
+        srcPos: Int,
+        dst: UncompressedInBlock[ID],
+        dstPos: Int): Unit = {
+      dst.srcIds(dstPos) = src.srcIds(srcPos)
+      dst.dstEncodedIndices(dstPos) = src.dstEncodedIndices(srcPos)
+      dst.ratings(dstPos) = src.ratings(srcPos)
+    }
+  }
+
+  /**
+   * Creates in-blocks and out-blocks from rating blocks.
+   *
+   * @param prefix prefix for in/out-block names
+   * @param ratingBlocks rating blocks
+   * @param srcPart partitioner for src IDs
+   * @param dstPart partitioner for dst IDs
+   * @return (in-blocks, out-blocks)
+   */
+  def makeBlocks[ID: ClassTag](
+      prefix: String,
+      ratingBlocks: RDD[((Int, Int), RatingBlock[ID])],
+      srcPart: Partitioner,
+      dstPart: Partitioner,
+      storageLevel: StorageLevel)(
+      implicit srcOrd: Ordering[ID]): (RDD[(Int, InBlock[ID])], RDD[(Int, OutBlock)]) = {
+    val inBlocks = ratingBlocks.map {
+      case ((srcBlockId, dstBlockId), RatingBlock(srcIds, dstIds, ratings)) =&gt;
+        // The implementation is a faster version of
+        // val dstIdToLocalIndex = dstIds.toSet.toSeq.sorted.zipWithIndex.toMap
+        val start = System.nanoTime()
+        val dstIdSet = new OpenHashSet[ID](1 &lt;&lt; 20)
+        dstIds.foreach(dstIdSet.add)
+        val sortedDstIds = new Array[ID](dstIdSet.size)
+        var i = 0
+        var pos = dstIdSet.nextPos(0)
+        while (pos != -1) {
+          sortedDstIds(i) = dstIdSet.getValue(pos)
+          pos = dstIdSet.nextPos(pos + 1)
+          i += 1
+        }
+        assert(i == dstIdSet.size)
+        Sorting.quickSort(sortedDstIds)
+        val dstIdToLocalIndex = new OpenHashMap[ID, Int](sortedDstIds.length)
+        i = 0
+        while (i &lt; sortedDstIds.length) {
+          dstIdToLocalIndex.update(sortedDstIds(i), i)
+          i += 1
+        }
+        logDebug(
+          &quot;Converting to local indices took &quot; + (System.nanoTime() - start) / 1e9 + &quot; seconds.&quot;)
+        val dstLocalIndices = dstIds.map(dstIdToLocalIndex.apply)
+        (srcBlockId, (dstBlockId, srcIds, dstLocalIndices, ratings))
+    }.groupByKey(new ALSPartitioner(srcPart.numPartitions))
+      .mapValues { iter =&gt;
+        val builder =
+          new UncompressedInBlockBuilder[ID](new LocalIndexEncoder(dstPart.numPartitions))
+        iter.foreach { case (dstBlockId, srcIds, dstLocalIndices, ratings) =&gt;
+          builder.add(dstBlockId, srcIds, dstLocalIndices, ratings)
+        }
+        builder.build().compress()
+      }.setName(prefix + &quot;InBlocks&quot;)
+      .persist(storageLevel)
+    val outBlocks = inBlocks.mapValues { case InBlock(srcIds, dstPtrs, dstEncodedIndices, _) =&gt;
+      val encoder = new LocalIndexEncoder(dstPart.numPartitions)
+      val activeIds = Array.fill(dstPart.numPartitions)(mutable.ArrayBuilder.make[Int])
+      var i = 0
+      val seen = new Array[Boolean](dstPart.numPartitions)
+      while (i &lt; srcIds.length) {
+        var j = dstPtrs(i)
+        ju.Arrays.fill(seen, false)
+        while (j &lt; dstPtrs(i + 1)) {
+          val dstBlockId = encoder.blockId(dstEncodedIndices(j))
+          if (!seen(dstBlockId)) {
+            activeIds(dstBlockId) += i // add the local index in this out-block
+            seen(dstBlockId) = true
+          }
+          j += 1
+        }
+        i += 1
+      }
+      activeIds.map { x =&gt;
+        x.result()
+      }
+    }.setName(prefix + &quot;OutBlocks&quot;)
+      .persist(storageLevel)
+    (inBlocks, outBlocks)
+  }
+
+  /**
+   * Compute dst factors by constructing and solving least square problems.
+   *
+   * @param srcFactorBlocks src factors
+   * @param srcOutBlocks src out-blocks
+   * @param dstInBlocks dst in-blocks
+   * @param rank rank
+   * @param regParam regularization constant
+   * @param srcEncoder encoder for src local indices
+   * @param implicitPrefs whether to use implicit preference
+   * @param alpha the alpha constant in the implicit preference formulation
+   * @param solver solver for least squares problems
+   * @return dst factors
+   */
+  def computeFactors[ID](
+      userFactorBlocks: RDD[(Int, FactorBlock)],
+      itemFactorBlocks: RDD[(Int, FactorBlock)],
+      userOutBlocks: RDD[(Int, OutBlock)],
+      itemOutBlocks: RDD[(Int, OutBlock)],
+      userInBlocks: RDD[(Int, InBlock[ID])],
+      itemInBlocks: RDD[(Int, InBlock[ID])],
+      rank: Int,
+      regParam: Double,
+      userEncoder: LocalIndexEncoder,
+      itemEncoder: LocalIndexEncoder,
+      stepSize: Float,
+      implicitPrefs: Boolean = false,         // TODO: DELETE every reference to implicitPrefs
+      alpha: Double = 1.0): (RDD[(Int, FactorBlock)], RDD[(Int, FactorBlock)]) = {
+    val numSrcBlocks = userFactorBlocks.partitions.length
+    val numDstBlocks = itemFactorBlocks.partitions.length
+    // val YtY = if (implicitPrefs) Some(computeYtY(userFactorBlocks, rank)) else None  // DELETE
+    val userOut = userOutBlocks.join(userFactorBlocks).flatMap {
+      case (userBlockId, (userOutBlock, userFactors)) =&gt;
+        userOutBlock.iterator.zipWithIndex.map { case (activeIndices, itemBlockId) =&gt;
+          (itemBlockId, (userBlockId, activeIndices.map(idx =&gt; userFactors(idx))))
+        }
+    }
+    val itemOut = itemOutBlocks.join(itemFactorBlocks).flatMap {
+      case (itemBlockId, (itemOutBlock, itemFactors)) =&gt;
+        itemOutBlock.iterator.zipWithIndex.map { case (activeIndices, userBlockId) =&gt;
+          (userBlockId, (itemBlockId, activeIndices.map(idx =&gt; itemFactors(idx))))
+        }
+    }
+    val mergedUser = userOut.groupByKey(new ALSPartitioner(itemInBlocks.partitions.length))
+    val mergedItem = itemOut.groupByKey(new ALSPartitioner(userInBlocks.partitions.length))
+    
+    // SPARK-28927: Nondeterministic RDDs causes inconsistent in/out blocks in case of rerun.
+    // It can cause runtime error when matching in/out user/item blocks.
+    val isBlockRDDNondeterministic =
+      itemInBlocks.outputDeterministicLevel == DeterministicLevel.INDETERMINATE ||
+        userOutBlocks.outputDeterministicLevel == DeterministicLevel.INDETERMINATE ||
+        userInBlocks.outputDeterministicLevel == DeterministicLevel.INDETERMINATE ||
+        itemOutBlocks.outputDeterministicLevel == DeterministicLevel.INDETERMINATE
+  
+    // NOTE: Potentially confusing naming, itemFactors and userFactors are names of things
+    // in the same scope as this comment, but below we define a new dummy variable
+    // userFactors which then has the same name!!!
+    val itemFactors = itemFactorBlocks.join(itemInBlocks.join(mergedUser)).mapValues {
+      case (myItemFactors, (InBlock(itemIds, userPtrs, userEncodedIndices, ratings), userFactors)) =&gt;
+        val sortedSrcFactors = new Array[FactorBlock](numSrcBlocks)
+        userFactors.foreach { case (userBlockId, factors) =&gt;
+          sortedSrcFactors(userBlockId) = factors
+        }
+        val itemFactors = new Array[Array[Float]](itemIds.length)
+        var j = 0
+        // Iterates over all destination ids (factors) in the considered partition
+        while (j &lt; itemIds.length) {
+          var i = userPtrs(j)
+          var numExplicits = 0
+          var currentItemFactor = myItemFactors(j)    // TODO: Also here probably don't need to declare a variable, can just use myItemFactors(j) directly
+          var gradient = Array.fill(rank)(0f)
+          // Iterates over all relevant source factors
+          while (i &lt; userPtrs(j + 1)) {
+            val encoded = userEncodedIndices(i)
+            val blockId = userEncoder.blockId(encoded)
+            val localIndex = userEncoder.localIndex(encoded)
+            var userFactor: Array[Float] = null
+            try {
+              userFactor = sortedSrcFactors(blockId)(localIndex)
+            } catch {
+              case a: ArrayIndexOutOfBoundsException if isBlockRDDNondeterministic =&gt;
+                val errMsg = &quot;A failure detected when matching In/Out blocks of users/items. &quot; +
+                  &quot;Because at least one In/Out block RDD is found to be nondeterministic now, &quot; +
+                  &quot;the issue is probably caused by nondeterministic input data. You can try to &quot; +
+                  &quot;checkpoint training data to make it deterministic. If you do `repartition` + &quot; +
+                  &quot;`sample` or `randomSplit`, you can also try to sort it before `sample` or &quot; +
+                  &quot;`randomSplit` to make it deterministic.&quot;
+                throw new SparkException(errMsg, a)
+            }
+            val rating = ratings(i)   // TODO: We probably don't need a variable here, since we don't store a copy of ratings(i) in the same way that ALS did, we just use it to compute coeff
+            var coeff = rating - (userFactor,currentItemFactor).zipped.map(_ * _).sum
+            var update = userFactor.map(-stepSize*coeff*_)
+            gradient = (gradient, update).zipped.map(_ + _)
+            numExplicits += 1
+            i += 1
+          }
+          itemFactors(j) = (currentItemFactor, gradient).zipped.map(_ + _)
+          j += 1
+        }
+        itemFactors
+    }
+    
+    val userFactors = userFactorBlocks.join(userInBlocks.join(mergedItem)).mapValues {
+      case (myUserFactors, (InBlock(userIds, itemPtrs, itemEncodedIndices, ratings), itemFactors)) =&gt;
+        val sortedDstFactors = new Array[FactorBlock](numDstBlocks)
+        itemFactors.foreach { case (itemBlockId, factors) =&gt;
+          sortedDstFactors(itemBlockId) = factors
+        }
+        val userFactors = new Array[Array[Float]](userIds.length)
+        var j = 0
+        while (j &lt; userIds.length) {
+          var i = itemPtrs(j)
+          var numExplicits = 0
+          var currentUserFactor = myUserFactors(j)    // TODO: Also here probably don't need to declare a variable, can just use myItemFactors(j) directly
+          var gradient = Array.fill(rank)(0f)
+          while (i &lt; itemPtrs(j + 1)) {
+            val encoded = itemEncodedIndices(i)
+            val blockId = itemEncoder.blockId(encoded)
+            val localIndex = itemEncoder.localIndex(encoded)
+            var itemFactor: Array[Float] = null
+            try {
+              itemFactor = sortedDstFactors(blockId)(localIndex)
+            } catch {
+              case a: ArrayIndexOutOfBoundsException if isBlockRDDNondeterministic =&gt;
+                val errMsg = &quot;A failure detected when matching In/Out blocks of users/items. &quot; +
+                  &quot;Because at least one In/Out block RDD is found to be nondeterministic now, &quot; +
+                  &quot;the issue is probably caused by nondeterministic input data. You can try to &quot; +
+                  &quot;checkpoint training data to make it deterministic. If you do `repartition` + &quot; +
+                  &quot;`sample` or `randomSplit`, you can also try to sort it before `sample` or &quot; +
+                  &quot;`randomSplit` to make it deterministic.&quot;
+                throw new SparkException(errMsg, a)
+            }
+            val rating = ratings(i)   // TODO: We probably don't need a variable here, since we don't store a copy of ratings(i) in the same way that ALS did, we just use it to compute coeff
+            var coeff = rating - (currentUserFactor,itemFactor).zipped.map(_ * _).sum
+            var update = itemFactor.map(-stepSize*coeff*_)
+            gradient = (gradient, update).zipped.map(_ + _)
+            numExplicits += 1
+            i += 1
+          }
+          userFactors(j) = (currentUserFactor, gradient).zipped.map(_ + _)
+          j += 1
+        }
+        userFactors
+    }
+    return (userFactors, itemFactors)
+  }
+  
+  /**
+   * Encoder for storing (blockId, localIndex) into a single integer.
+   *
+   * We use the leading bits (including the sign bit) to store the block id and the rest to store
+   * the local index. This is based on the assumption that users/items are approximately evenly
+   * partitioned. With this assumption, we should be able to encode two billion distinct values.
+   *
+   * @param numBlocks number of blocks
+   */
+  class LocalIndexEncoder(numBlocks: Int) extends Serializable {
+
+    require(numBlocks &gt; 0, s&quot;numBlocks must be positive but found $numBlocks.&quot;)
+
+    final val numLocalIndexBits =
+      math.min(java.lang.Integer.numberOfLeadingZeros(numBlocks - 1), 31)
+    final val localIndexMask = (1 &lt;&lt; numLocalIndexBits) - 1
+
+    /** Encodes a (blockId, localIndex) into a single integer. */
+    def encode(blockId: Int, localIndex: Int): Int = {
+      require(blockId &lt; numBlocks)
+      require((localIndex &amp; ~localIndexMask) == 0)
+      (blockId &lt;&lt; numLocalIndexBits) | localIndex
+    }
+
+    /** Gets the block id from an encoded index. */
+    @inline
+    def blockId(encoded: Int): Int = {
+      encoded &gt;&gt;&gt; numLocalIndexBits
+    }
+
+    /** Gets the local index from an encoded index. */
+    @inline
+    def localIndex(encoded: Int): Int = {
+      encoded &amp; localIndexMask
+    }
+  }
+
+  /**
+   * Partitioner used by ALS. We require that getPartition is a projection. That is, for any key k,
+   * we have getPartition(getPartition(k)) = getPartition(k). Since the default HashPartitioner
+   * satisfies this requirement, we simply use a type alias here.
+   */
+  type ALSPartitioner = org.apache.spark.HashPartitioner
+}
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>Warning: classes defined within packages cannot be redefined without a cluster restart.
+Compilation successful.
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h1 id="a-closer-look-at-the-colfil-object"><a class="header" href="#a-closer-look-at-the-colfil-object">A closer look at the ColFil object</a></h1>
+<p>Let's start at looking at some of the pre-amble (lines 1-3)</p>
+<pre><code>    package org.apache.spark.ml.collaborative_filtering
+    
+    import org.apache.spark.ml.recommendation._
+</code></pre>
+<p>The above code cell is a so-called <em>package cell</em>, so we defined a package called <code>collaborative_filtering</code>, part of <code>org.apache.spark.ml</code>. Since our code has a lot in common with the ALS class from the package <code>org.apache.spark.ml.recommendation</code>, we import everything from there so that we only have to change the things that are different for our method. In particular, we replace the ALS-object with an ColFil-object. The only difference between the two objects is that the ColFil object has fewer methods and similar, and a different <code>train()</code>-function and <code>computeFactors()</code>-function.</p>
+</div>
+<div class="cell markdown">
+<p>Now, let's look at (lines 99-113)</p>
+<pre><code>    // Precompute the rating dependencies of each partition
+    val userPart = new ALSPartitioner(numUserBlocks)
+    val itemPart = new ALSPartitioner(numItemBlocks)
+    val blockRatings = partitionRatings(ratings, userPart, itemPart)
+      .persist(intermediateRDDStorageLevel)
+    val (userInBlocks, userOutBlocks) =
+      makeBlocks(&quot;user&quot;, blockRatings, userPart, itemPart, intermediateRDDStorageLevel)
+    userOutBlocks.count()    // materialize blockRatings and user blocks
+    val swappedBlockRatings = blockRatings.map {
+      case ((userBlockId, itemBlockId), RatingBlock(userIds, itemIds, localRatings)) =&gt;
+        ((itemBlockId, userBlockId), RatingBlock(itemIds, userIds, localRatings))
+    }
+    val (itemInBlocks, itemOutBlocks) =
+      makeBlocks(&quot;item&quot;, swappedBlockRatings, itemPart, userPart, intermediateRDDStorageLevel)
+    itemOutBlocks.count()    // materialize item blocks
+</code></pre>
+<p>This block of code basically rearranges and partitions the data so that it will be more efficient to work this. In particular, it creates the inBlock and outBlock objects that we discussed in the presentation notebook. However, the exact implementation of the InBlock and outBlock objects is more complicated than the examples we gave, since it's more efficient that way. It's not really worth to dive deep into exactly how they are defined unless you, like us, want to extend the ALS class. If you're curious, you can see how the inBlock and outBlock objects are defined on lines 228 and 270 respectively.</p>
+</div>
+<div class="cell markdown">
+<p>The most relevant parts of our code, i.e. those that differ the most from the ALS implementation, can be found in the <code>computeFactors()</code>-function on line 824. The <code>computeFactors()</code>-function is called in every iteration of the training. The part that is notably different from the ALS implementation is the code block starting on line 867. However, let's first look at some other parts (parts of lines 841-854)</p>
+<pre><code>    val userOut = userOutBlocks.join(userFactorBlocks).flatMap {
+      case (userBlockId, (userOutBlock, userFactors)) =&gt;
+        userOutBlock.iterator.zipWithIndex.map { case (activeIndices, itemBlockId) =&gt;
+          (itemBlockId, (userBlockId, activeIndices.map(idx =&gt; userFactors(idx))))
+        }
+    }
+
+    val mergedUser = userOut.groupByKey(new ALSPartitioner(itemInBlocks.partitions.length))
+</code></pre>
+<ul>
+<li></li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>Another key component is the following <code>join</code></p>
+<pre><code>val itemFactors = itemFactorBlocks.join(itemInBlocks.join(mergedUser)).mapValues {
+      case (myItemFactors, (InBlock(itemIds, userPtrs, userEncodedIndices, ratings), userFactors)) =&gt;
+      ...
+      ... math-stuff ...
+      ...
+      
+      itemFactor
+    }
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now, let's look at part of the code deepest within all blocks and loops of the <code>computeFactors()</code>-function (lines 942-945. Note that <code>gradient</code> is initialized to zero.)</p>
+<pre><code>    val rating = ratings(i)
+    var coeff = rating - (currentUserFactor,itemFactor).zipped.map(_ * _).sum
+    var update = itemFactor.map(-stepSize*coeff*_)
+    gradient = (gradient, update).zipped.map(_ + _)
+</code></pre>
+<p>The second line sets <code>coef</code> by subtracting the inner product of the currently considered userFactor and the updated itemFactor (This inner product could probably have been done using some linear algebra functionality from BLAS or something, but at the time of writing it felt easier to do this way) from the relevant rating. This corresponds to the expression \(x_{ij}-\langle u_i, v_j \rangle\). This coefficient, scaled by the step size of the gradient descent, is then multiplied with the relevant item factor, before it's added to the currently held value of the gradient. This corresponds exactly to the formula \(\nabla_{v_i} \ell \overset{+}{=} -(x_{ij}-\langle u_i, v_j\rangle u_j\).</p>
+<p>After that, the corresponding procedure is done to the user factors. Since we do not use an alternating approach, the user factors and item factors can in fact be updated in parallel. However, the data set will have to be queried twice, just as in ALS. Therefore the computational gains might not be that significant.</p>
+</div>
+<div class="cell markdown">
+<h1 id="using-the-colfil-object"><a class="header" href="#using-the-colfil-object">Using the ColFil object</a></h1>
+<p>Now, let us use the ColFil object we have created to actually perform some collaborative filtering</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.ml.collaborative_filtering.ColFil
+import org.apache.spark.mllib.recommendation.MatrixFactorizationModel
+import org.apache.spark.ml.collaborative_filtering.ColFil.Rating
+
+val ratingsRDD = sc.textFile(&quot;/datasets/sds/cs100/lab4/data-001/ratings.dat.gz&quot;).map { line =&gt;
+      val fields = line.split(&quot;::&quot;)
+      // format: Rating(userId, movieId, rating)
+      Rating(fields(0).toInt, fields(1).toInt, fields(2).toFloat)
+    }
+
+val movies = sc.textFile(&quot;/datasets/sds/cs100/lab4/data-001/movies.dat&quot;).map { line =&gt;
+      val fields = line.split(&quot;::&quot;)
+      // format: (movieId, movieName)
+      (fields(0).toInt, fields(1))
+    }.collect.toMap
+
+val Array(trainingRDD, validationRDD, testRDD) = ratingsRDD.randomSplit(Array(0.60, 0.20, 0.20), 0L)
+/* This would be used to activate checkpointing, but we never got checkpointing to work for our implementation
+dbutils.fs.rm(&quot;dbfs:/my_checkpoints/&quot;,true)
+dbutils.fs.mkdirs(&quot;dbfs:/my_checkpoints/&quot;)
+sc.setCheckpointDir(&quot;dbfs:/my_checkpoints&quot;)*/
+
+val rank = 10       // Number of &quot;features&quot; of users and movies
+val numIterations = 20
+val stepSize = 0.0001f  // The gradient in gradient descent is scaled with this factor
+val (userFactors, itemFactors) = ColFil.train(trainingRDD, rank, 10, 10, numIterations, stepSize, 0.0025)
+
+val colFilModel = new MatrixFactorizationModel(rank, userFactors, itemFactors)
+
+// For small problems, this can be used to print out the entire factor matrices. DO NOT USE FOR LARGE PROBLEMS.
+/*
+val justUserFactors = userFactors.map({case (ind, factor) =&gt; factor})
+val justItemFactors = itemFactors.map({case (ind, factor) =&gt; factor})
+justUserFactors.collect().map(row =&gt; println(row.toArray.mkString(&quot; &quot;)))
+println(&quot;-----------------&quot;)
+justItemFactors.collect().map(row =&gt; println(row.toArray.mkString(&quot; &quot;)))
+*/
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.ml.collaborative_filtering.ColFil
+import org.apache.spark.mllib.recommendation.MatrixFactorizationModel
+import org.apache.spark.ml.collaborative_filtering.ColFil.Rating
+rank: Int = 10
+numIterations: Int = 20
+stepSize: Float = 1.0E-4
+userFactors: org.apache.spark.rdd.RDD[(Int, Array[Double])] = users MapPartitionsRDD[12463] at mapValues at &lt;notebook&gt;:209
+itemFactors: org.apache.spark.rdd.RDD[(Int, Array[Double])] = products MapPartitionsRDD[12464] at mapValues at &lt;notebook&gt;:213
+colFilModel: org.apache.spark.mllib.recommendation.MatrixFactorizationModel = org.apache.spark.mllib.recommendation.MatrixFactorizationModel@127154ff
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<p>Let's actually test our model</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.mllib.recommendation.Rating
+
+// NOTE: There is some annoyance stemming from the fact that Scala (reasonably so) treats the ColFil.Rating-class and the mllib Rating-class as separate classes.
+// In this block then, when it's written only &quot;Rating&quot;, it means the mllib version is used, while writing &quot;ColFil.Rating&quot; means the ColFil version is used
+
+// Evaluate the model on test data. TODO: Actually separate test and training data
+val usersProductsTest = testRDD.map { case ColFil.Rating(user, product, rate) =&gt;
+                                            (user, product)
+}
+
+// get the predictions on test data
+val predictions = colFilModel.predict(usersProductsTest)
+                        .map { case Rating(user, product, rate)
+                                    =&gt; ((user, product), rate)
+}
+
+// find the actual ratings and join with predictions
+val ratesAndPreds = testRDD.map { case ColFil.Rating(user, product, rate) 
+                                    =&gt; ((user, product), rate)
+                                }.join(predictions)
+
+val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) =&gt;
+val err = (r1 - r2)
+err * err
+}.mean()
+
+println(&quot;rank and Mean Squared Error for test data = &quot; +  rank + &quot; and &quot; + MSE)
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>rank and Mean Squared Error for test data = 10 and 17.142201953816162
+import org.apache.spark.mllib.recommendation.Rating
+usersProductsTest: org.apache.spark.rdd.RDD[(Int, Int)] = MapPartitionsRDD[2754] at map at command-1708846914807648:4
+predictions: org.apache.spark.rdd.RDD[((Int, Int), Double)] = MapPartitionsRDD[2764] at map at command-1708846914807648:10
+ratesAndPreds: org.apache.spark.rdd.RDD[((Int, Int), (Float, Double))] = MapPartitionsRDD[2768] at join at command-1708846914807648:17
+MSE: Double = 17.142201953816162
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
+<h1 id="ways-forward"><a class="header" href="#ways-forward">Ways forward</a></h1>
+<ul>
+<li>Make checkpointing work to cut lineage.</li>
+<li>Actually implement Bregman Proximal Gradient Descent. Possibly extend it to NNM, and models using implicit preferences.</li>
+<li>Look into novel ways to partition the data that is adapted for first-order methods.</li>
+<li>Implement accelerated versions (CoCain)</li>
+</ul>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

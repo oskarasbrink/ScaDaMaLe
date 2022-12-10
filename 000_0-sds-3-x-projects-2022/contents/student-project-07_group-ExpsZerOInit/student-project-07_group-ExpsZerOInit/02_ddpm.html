@@ -1,0 +1,648 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>02_ddpm - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/00_Introduction.html"><strong aria-hidden="true">1.</strong> student-project-01_group-GraphOfWiki_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/01_DataLoading_redirectsTable.html"><strong aria-hidden="true">1.1.</strong> 01_DataLoading_redirectsTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/02_DataLoading_pagesTable.html"><strong aria-hidden="true">1.2.</strong> 02_DataLoading_pagesTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/03_DataLoading_pagelinksTable.html"><strong aria-hidden="true">1.3.</strong> 03_DataLoading_pagelinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/04_DataLoading_categorylinksTable.html"><strong aria-hidden="true">1.4.</strong> 04_DataLoading_categorylinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/05_DataLoading_categoryTable.html"><strong aria-hidden="true">1.5.</strong> 05_DataLoading_categoryTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/06_redirectRemoval.html"><strong aria-hidden="true">1.6.</strong> 06_redirectRemoval</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/07_createArticleGraph.html"><strong aria-hidden="true">1.7.</strong> 07_createArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/08_explorationArticleGraph.html"><strong aria-hidden="true">1.8.</strong> 08_explorationArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/09_fullGraphAnalysis.html"><strong aria-hidden="true">1.9.</strong> 09_fullGraphAnalysis</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/10_explorativeMotifs.html"><strong aria-hidden="true">1.10.</strong> 10_explorativeMotifs</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/11_conclusionDiscussionAndFutureWork.html"><strong aria-hidden="true">1.11.</strong> 11_conclusionDiscussionAndFutureWork</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/12_gameNotebookSetup.html"><strong aria-hidden="true">1.12.</strong> 12_gameNotebookSetup</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/13_gameNotebook.html"><strong aria-hidden="true">1.13.</strong> 13_gameNotebook</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/00_vqa_introduction.html"><strong aria-hidden="true">2.</strong> student-project-02_group-DDLOfVision_00_vqa_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/01_vqa_model_training.html"><strong aria-hidden="true">2.1.</strong> 01_vqa_model_training</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/00_ingest_data.html"><strong aria-hidden="true">3.</strong> student-project-03_group-WikiKG2_00_ingest_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/01_fetch_descriptions.html"><strong aria-hidden="true">3.1.</strong> 01_fetch_descriptions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/02_load_data.html"><strong aria-hidden="true">3.2.</strong> 02_load_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/03_data_exploration.html"><strong aria-hidden="true">3.3.</strong> 03_data_exploration</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/04_analysing_relation_types.html"><strong aria-hidden="true">3.4.</strong> 04_analysing_relation_types</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/05_motif_search.html"><strong aria-hidden="true">3.5.</strong> 05_motif_search</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/06_produce_pagerank_vectors.html"><strong aria-hidden="true">3.6.</strong> 06_produce_pagerank_vectors</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG2/student-project-03_group-WikiKG2/07_pagerank_for_classification.html"><strong aria-hidden="true">3.7.</strong> 07_pagerank_for_classification</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html"><strong aria-hidden="true">4.</strong> student-project-04_group-FedMLMedicalApp_00_Notebook_Presentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html"><strong aria-hidden="true">4.1.</strong> 01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html"><strong aria-hidden="true">4.2.</strong> 02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/data_upload_test.html"><strong aria-hidden="true">4.3.</strong> data_upload_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/00_introduction.html"><strong aria-hidden="true">5.</strong> student-project-05_group-DistOpt_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/01_Bayesian_optimization.html"><strong aria-hidden="true">5.1.</strong> 01_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/02_Gaussian_processes.html"><strong aria-hidden="true">5.2.</strong> 02_Gaussian_processes</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/03_acquisition_functions.html"><strong aria-hidden="true">5.3.</strong> 03_acquisition_functions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/04_scalable_Bayesian_optimization.html"><strong aria-hidden="true">5.4.</strong> 04_scalable_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/05_implementation_documentation.html"><strong aria-hidden="true">5.5.</strong> 05_implementation_documentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/06_our_implementation.html"><strong aria-hidden="true">5.6.</strong> 06_our_implementation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/07_additional_code.html"><strong aria-hidden="true">5.7.</strong> 07_additional_code</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/00_introduction_resnet.html"><strong aria-hidden="true">6.</strong> student-project-07_group-ExpsZerOInit_00_introduction_resnet</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html"><strong aria-hidden="true">6.1.</strong> 01_transformer</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/02_ddpm.html" class="active"><strong aria-hidden="true">6.2.</strong> 02_ddpm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html"><strong aria-hidden="true">7.</strong> student-project-08_group-WikiSearch_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/01_InputParsing.html"><strong aria-hidden="true">7.1.</strong> 01_InputParsing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/02_PageRank.html"><strong aria-hidden="true">7.2.</strong> 02_PageRank</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/03_QuerySearch.html"><strong aria-hidden="true">7.3.</strong> 03_QuerySearch</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/00_Introduction.html"><strong aria-hidden="true">8.</strong> student-project-09_group-DistEnsembles_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Ensemble_Training.html"><strong aria-hidden="true">8.1.</strong> 02_Ensemble_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/03_Ensemble_Evaluation.html"><strong aria-hidden="true">8.2.</strong> 03_Ensemble_Evaluation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Ensemble.html"><strong aria-hidden="true">8.3.</strong> 099_extra_Ensemble</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/00_introduction.html"><strong aria-hidden="true">9.</strong> student-project-10_group-RDI_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/01_prepare_data.html"><strong aria-hidden="true">9.1.</strong> 01_prepare_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/02_baseline.html"><strong aria-hidden="true">9.2.</strong> 02_baseline</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/03_single_machine.html"><strong aria-hidden="true">9.3.</strong> 03_single_machine</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/04_distributed_learning.html"><strong aria-hidden="true">9.4.</strong> 04_distributed_learning</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/01_Introduction.html"><strong aria-hidden="true">10.</strong> student-project-11_group-CollaborativeFiltering_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_AlgorithmsBeyondALS.html"><strong aria-hidden="true">10.1.</strong> 02_AlgorithmsBeyondALS</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/03_Implementation.html"><strong aria-hidden="true">10.2.</strong> 03_Implementation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html"><strong aria-hidden="true">11.</strong> student-project-12_group-FedLearnOpt_01_Federated_Learning_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html"><strong aria-hidden="true">11.1.</strong> 02_Horovod_Introduction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/03_Implementations.html"><strong aria-hidden="true">11.2.</strong> 03_Implementations</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-13_group-DRL/student-project-13_group-DRL/00_DistributedRL.html"><strong aria-hidden="true">12.</strong> student-project-13_group-DRL_00_DistributedRL</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/00_Introduction.html"><strong aria-hidden="true">13.</strong> student-project-14_group-EarthObs_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/01_Download_data.html"><strong aria-hidden="true">13.1.</strong> 01_Download_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/02_Image_preprocessing.html"><strong aria-hidden="true">13.2.</strong> 02_Image_preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/03_Model_Architecture_and_Training.html"><strong aria-hidden="true">13.3.</strong> 03_Model_Architecture_and_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/04_Prediction_And_Visualisation.html"><strong aria-hidden="true">13.4.</strong> 04_Prediction_And_Visualisation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/05_Conclusions.html"><strong aria-hidden="true">13.5.</strong> 05_Conclusions</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-projects-BrIntSuSvConclusion/student-projects-BrIntSuSvConclusion/BrIntSuSv.html"><strong aria-hidden="true">14.</strong> student-projects-BrIntSuSvConclusion_BrIntSuSv</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../../editors.html"><strong aria-hidden="true">15.</strong> Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h2 id="applying-zero-to-a-denosiing-diffusion-model"><a class="header" href="#applying-zero-to-a-denosiing-diffusion-model">Applying ZerO to a denosiing diffusion model</a></h2>
+<p>Denoising diffusion models are a relatively recent type of deep generative models that have become extremely popular with the rapid advance of text-to-image models such as <a href="https://arxiv.org/abs/2112.10752">Stable Diffusion</a>. In this notebook, we train a diffusion model on the CIFAR-10 dataset to unconditionally generate images, closely following <a href="https://colab.research.google.com/github/huggingface/notebooks/blob/main/diffusers/training_example.ipynb">this tutorial</a> (which is for a different dataset) and adding horovod support. To fit under our time constraints, we only train for 10 epochs, which means that our models will not converge, but the trends should be clearly visible for the sake of comparison.</p>
+<p>The question we investigate here is whether ZerO generalises to this task and architecture.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-pip">install datasets diffusers accelerate
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>As usual, we define the model (CIFAR-10), load the data and set up the training script.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import tqdm
+from functools import partialmethod
+import datasets
+datasets.disable_progress_bar()
+tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># ------------------------------------------------------------------------------------------------------------
+from dataclasses import dataclass
+
+import torch
+import torch.nn.functional as F
+from datasets import load_dataset
+from torchvision import transforms
+
+NUM_WORKERS = 1
+
+@dataclass
+class TrainingConfig:
+    image_size = 32  # the generated image resolution
+    train_batch_size = 32 * NUM_WORKERS
+    eval_batch_size = 32  # how many images to sample during evaluation
+    num_epochs = 10 // NUM_WORKERS
+    gradient_accumulation_steps = 1
+    learning_rate = 1e-4 * NUM_WORKERS 
+    lr_warmup_steps = 500
+    save_image_epochs = 5 // NUM_WORKERS
+    save_model_epochs = 5 // NUM_WORKERS
+    mixed_precision = &quot;fp16&quot;  # `no` for float32, `fp16` for automatic mixed precision
+    output_dir = &quot;/dbfs/ml/Group_7/diffusion&quot;  
+
+    push_to_hub = False  # whether to upload the saved model to the HF Hub
+    hub_private_repo = False
+    overwrite_output_dir = True  # overwrite the old model when re-running the notebook
+    seed = 0
+    dataset_name = &quot;cifar10&quot;
+
+
+config = TrainingConfig()
+
+preprocess = transforms.Compose(
+    [
+        transforms.Resize((config.image_size, config.image_size)),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize([0.5], [0.5]),
+    ]
+)
+
+
+def transform(examples):
+    images = [preprocess(image.convert(&quot;RGB&quot;)) for image in examples[&quot;img&quot;]]
+    return {&quot;images&quot;: images}
+
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from diffusers import UNet2DModel
+from diffusers import DDPMScheduler
+from diffusers.optimization import get_cosine_schedule_with_warmup
+
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import os
+def seed_everything(seed: int = 42):
+    import random, os
+    import numpy as np
+    import torch
+    
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+
+from accelerate import Accelerator
+from diffusers import DDPMPipeline
+from diffusers.hub_utils import init_git_repo, push_to_hub
+from PIL import Image
+from tqdm.auto import tqdm
+import horovod as hvd
+from torch.utils.data.distributed import DistributedSampler
+from torch import distributed as dist
+
+def make_grid(images, rows, cols):
+    w, h = images[0].size
+    grid = Image.new(&quot;RGB&quot;, size=(cols * w, rows * h))
+    for i, image in enumerate(images):
+        grid.paste(image, box=(i % cols * w, i // cols * h))
+    return grid
+
+
+def evaluate(config, epoch, pipeline):
+    # Sample some images from random noise (this is the backward diffusion process).
+    # The default pipeline output type is `List[PIL.Image]`
+    images = pipeline(
+        batch_size=config.eval_batch_size,
+        generator=torch.manual_seed(config.seed),
+    ).images
+
+    # Make a grid out of the images
+    image_grid = make_grid(images, rows=8, cols=4)
+
+    # Save the images
+    test_dir = os.path.join(config.output_dir, &quot;samples&quot;)
+    os.makedirs(test_dir, exist_ok=True)
+    print(test_dir)
+    image_grid.save(f&quot;{test_dir}/{epoch:04d}.png&quot;)
+
+
+def train_loop(config, zero_init=False):
+    seed_everything()
+    print(&quot;Initialising...&quot;)
+    hvd.init()
+    torch.cuda.set_device(hvd.local_rank())
+    print(hvd.rank())
+    print(&quot;Loading dataset&quot;)
+
+    dataset = load_dataset(config.dataset_name, split=&quot;train&quot;)
+    dataset.set_transform(transform)
+    sampler = DistributedSampler(dataset, num_replicas=hvd.size(), rank=hvd.rank(), shuffle=True)
+    train_dataloader = torch.utils.data.DataLoader(dataset, batch_size=config.train_batch_size, sampler=sampler, worker_init_fn=seed_everything)
+
+    print(&quot;Creating model&quot;)
+    
+    model = UNet2DModel(
+        sample_size=config.image_size,  # the target image resolution
+        in_channels=3,  # the number of input channels, 3 for RGB images
+        out_channels=3,  # the number of output channels
+        layers_per_block=2,  # how many ResNet layers to use per UNet block
+        block_out_channels=(128, 128, 256, 256, 512, 512),  # the number of output channes for each UNet block
+        down_block_types=(
+            &quot;DownBlock2D&quot;,  # a regular ResNet downsampling block
+            &quot;DownBlock2D&quot;,
+            &quot;DownBlock2D&quot;,
+            &quot;DownBlock2D&quot;,
+            &quot;AttnDownBlock2D&quot;,  # a ResNet downsampling block with spatial self-attention
+            &quot;DownBlock2D&quot;,
+        ),
+        up_block_types=(
+            &quot;UpBlock2D&quot;,  # a regular ResNet upsampling block
+            &quot;AttnUpBlock2D&quot;,  # a ResNet upsampling block with spatial self-attention
+            &quot;UpBlock2D&quot;,
+            &quot;UpBlock2D&quot;,
+            &quot;UpBlock2D&quot;,
+            &quot;UpBlock2D&quot;,
+        ),
+    )
+    
+    if zero_init:
+        zerO_init_model_(model)
+    
+    print(&quot;Setting up training objects...&quot;)
+    noise_scheduler = DDPMScheduler(num_train_timesteps=1000)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+    optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters())
+    hvd.broadcast_parameters(model.state_dict(), root_rank=0)
+    hvd.broadcast_optimizer_state(optimizer, root_rank=0)
+    lr_scheduler = get_cosine_schedule_with_warmup(
+        optimizer=optimizer,
+        num_warmup_steps=config.lr_warmup_steps,
+        num_training_steps=(len(train_dataloader) * config.num_epochs),
+    )
+    
+     # Initialize accelerator and tensorboard logging
+    accelerator = Accelerator(
+        mixed_precision=config.mixed_precision,
+        gradient_accumulation_steps=config.gradient_accumulation_steps,
+        log_with=&quot;tensorboard&quot;,
+        logging_dir=os.path.join(config.output_dir, &quot;logs&quot;),
+    )
+    
+    if accelerator.is_main_process:
+        if config.push_to_hub:
+            repo = init_git_repo(config, at_init=True)
+        accelerator.init_trackers(&quot;train_example&quot;)
+
+
+    # Prepare everything
+    # There is no specific order to remember, you just need to unpack the
+    # objects in the same order you gave them to the prepare method.
+    model, optimizer, train_dataloader, lr_scheduler = accelerator.prepare(
+        model, optimizer, train_dataloader, lr_scheduler
+    )
+    
+
+    global_step = 0
+    print(config.output_dir)
+    # Now you train the model
+    for epoch in range(config.num_epochs):
+        sampler.set_epoch(epoch)
+        for step, batch in enumerate(train_dataloader):
+            clean_images = batch[&quot;images&quot;]
+            
+            # Sample noise to add to the images
+            noise = torch.randn(clean_images.shape).to(clean_images.device)
+            bs = clean_images.shape[0]
+
+            # Sample a random timestep for each image
+            timesteps = torch.randint(
+                0, noise_scheduler.num_train_timesteps, (bs,), device=clean_images.device
+            ).long()
+
+            # Add noise to the clean images according to the noise magnitude at each timestep
+            # (this is the forward diffusion process)
+            noisy_images = noise_scheduler.add_noise(clean_images, noise, timesteps)
+
+            with accelerator.accumulate(model):
+                # Predict the noise residual
+                noise_pred = model(noisy_images, timesteps, return_dict=False)[0]
+                loss = F.mse_loss(noise_pred, noise)
+                accelerator.backward(loss)
+
+                accelerator.clip_grad_norm_(model.parameters(), 1.0)
+                optimizer.step()
+                lr_scheduler.step()
+                optimizer.zero_grad()
+
+            logs = {&quot;loss&quot;: loss.detach().item(), &quot;lr&quot;: lr_scheduler.get_last_lr()[0], &quot;step&quot;: global_step}
+            if not step % 200 and accelerator.is_main_process:
+                print(f&quot;[Epoch {epoch}, {step}/{len(train_dataloader)} steps])&quot;, *[str(k) + &quot;: &quot; + str(v) for k,v in logs.items()])
+            accelerator.log(logs, step=global_step)
+            global_step += 1
+
+        # After each epoch you optionally sample some demo images with evaluate() and save the model
+        if accelerator.is_main_process:
+            pipeline = DDPMPipeline(unet=accelerator.unwrap_model(model), scheduler=noise_scheduler)
+
+            if (epoch + 1) % config.save_image_epochs == 0 or epoch == config.num_epochs - 1:
+                evaluate(config, epoch, pipeline)
+
+            if (epoch + 1) % config.save_model_epochs == 0 or epoch == config.num_epochs - 1:
+                if config.push_to_hub:
+                    push_to_hub(config, pipeline, repo, commit_message=f&quot;Epoch {epoch}&quot;, blocking=True)
+                else:
+                    pipeline.save_pretrained(config.output_dir)
+
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Then, we run the script in a distributed manner with HorovodRunner.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import horovod.torch as hvd
+from sparkdl import HorovodRunner
+import json
+
+
+hr = HorovodRunner(np=NUM_WORKERS, driver_log_verbosity='all') 
+
+hr.run(train_loop, config=config)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+img = mpimg.imread('/dbfs/ml/Group_7/diffusion/samples/0009.png')
+plt.figure(figsize=[10,20])
+imgplot = plt.imshow(img)
+plt.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>After this, we define ZerO initialisation for the diffusion model used. We initialise the convolutional layers, the linear layers and the attention modules by taking the corresponding functions from the previous notebooks and applying them on the task in question.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import torch
+import torch.nn.functional as F
+from datasets import load_dataset
+from torchvision import transforms
+import numpy as np
+from scipy.linalg import hadamard
+from torch import nn
+
+def zerO_init_conv_layer_(weight):
+    &quot;&quot;&quot;
+    In-place initialise the given convolutional layer with zerO-init 
+    using the following equation:
+    ---------------------------------
+    W[:,:,n,n] := c * I_p * H_m * I_p
+    ---------------------------------
+     where W:   out_dim x in_dim x n_filters
+           I_p: out_dim x m  (partial identity)
+           H_m: m x m        (Hadamard matrix)
+           I_p: m x in_dim   (partial identity)
+    &quot;&quot;&quot;
+    out_dim, in_dim, k = weight.shape[:3]
+    n = int(np.floor(k / 2))
+    
+    if out_dim == in_dim:
+        weight.data[..., n, n] = torch.eye(in_dim)
+    elif out_dim &lt; in_dim:
+        weight.data[..., n, n] = partial_identity(out_dim, in_dim).type_as(weight)
+    else:
+        m = int(np.ceil(np.log2(out_dim)))
+        c = 2 ** (-(m - 1) / 2)
+
+        H = lambda dim: torch.tensor(hadamard(dim)).type_as(weight)
+        I = lambda outd, ind: partial_identity(outd, ind).type_as(weight)
+        
+        # NOTE: scipy's hadamard function differs from the paper's definition
+        #       in that we need to pass 2^m as its size input instead of m
+        weight.data[..., n, n] = (
+            c * I(out_dim, 2**m) @ H(2**m) @ I(2**m, in_dim)
+        )
+
+def zerO_init_linear(weight):
+    &quot;&quot;&quot;
+    Algorithm 1.
+    
+    hadamard: c * I_p * H_m * I_p
+         I_p: out_dim * m
+         H_m: m * m
+         I_p: m * in_dim
+    &quot;&quot;&quot;
+    out_dim, in_dim = weight.shape
+    device = weight.device
+    
+    if out_dim == in_dim:
+        weight.data = torch.eye(in_dim)
+    elif out_dim &lt; in_dim:
+        weight.data = partial_identity(out_dim, in_dim).type_as(weight)
+    else:
+        m = int(np.ceil(np.log2(out_dim)))
+        c = 2 ** (-(m - 1) / 2)
+
+        H = lambda dim: torch.tensor(hadamard(dim)).type_as(weight)
+
+        weight.data = (
+            c * H(2**m)[:out_dim, :in_dim]
+        )
+    weight.data = weight.data.to(device)
+
+def partial_identity(out_dim, in_dim):
+    if out_dim &lt; in_dim:
+        I = torch.eye(out_dim)
+        O = torch.zeros(out_dim, (in_dim - out_dim))
+
+        return torch.cat((I, O), 1)
+
+    elif out_dim &gt; in_dim:
+        I = torch.eye(in_dim)
+        O = torch.zeros((out_dim - in_dim), in_dim)
+        return torch.cat((I, O), 0)
+
+    else:
+        return torch.eye(out_dim)
+
+
+def zerO_init_model_(model):
+    for m in model.modules():
+        # Initialize relevant matrices to zero in the beginning:
+        if isinstance(m, (nn.Conv2d, nn.Linear)):
+            nn.init.zeros_(m.weight)
+
+    for name, m in model.named_modules():
+        # Linear
+        if isinstance(m, nn.Linear):
+            if not name.endswith(&quot;.query&quot;) and not name.endswith(&quot;.key&quot;) and not name.endswith(&quot;.value&quot;):
+                zerO_init_linear(m.weight)
+        # Convolution
+        elif isinstance(m, nn.Conv2d):
+            # Ignore last conv layer in each residual block
+            if not name.endswith(&quot;.conv2&quot;):
+                zerO_init_conv_layer_(m.weight)
+        # Attention (Q, K, V); K and V are already initialized to null matrices
+        elif isinstance(m, nn.Linear):
+            if name.endswith(&quot;.query&quot;):
+                nn.init.eye_(m.weight)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We train the model with this setting as well:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import horovod.torch as hvd
+from sparkdl import HorovodRunner
+import json
+
+config.output_dir += &quot;_zero_init&quot;
+print(config.output_dir)
+
+hr = HorovodRunner(np=NUM_WORKERS, driver_log_verbosity='all') 
+
+hr.run(train_loop, config=config, zero_init=True)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="visualising-samples-halfway-through-training"><a class="header" href="#visualising-samples-halfway-through-training">Visualising samples halfway through training</a></h2>
+<p>Below we visually compare the samples from the default- and the zero-initialised models. We conclude that zero initialisation harms the model a little, as the images tend to have less contrast between the foreground and the background, and also sometimes the objects are less-developed. See the highlighted differences near the end of the notebook. <strong>NOTE that the samples are very similar only because we fix the random seed during sampling.</strong> If we had not fixed the seed, we would have got completely random samples, making visual comparison quite difficult.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+fig, axes = plt.subplots(1,2, figsize=[30,40])
+img1 = mpimg.imread('/dbfs/ml/Group_7/diffusion/samples/0004.png')
+img2 = mpimg.imread('/dbfs/ml/Group_7/diffusion_zero_init_zero_init/samples/0004.png')
+axes[0].imshow(img1)
+axes[0].set_title(&quot;default&quot;)
+axes[1].imshow(img2)
+axes[1].set_title(&quot;zero_init&quot;)
+plt.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="visualising-samples-at-the-end-of-training"><a class="header" href="#visualising-samples-at-the-end-of-training">Visualising samples at the end of training</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+fig, axes = plt.subplots(1,2, figsize=[30,40])
+img1 = mpimg.imread('/dbfs/ml/Group_7/diffusion/samples/0009.png')
+img2 = mpimg.imread('/dbfs/ml/Group_7/diffusion_zero_init_zero_init/samples/0009.png')
+axes[0].imshow(img1)
+axes[0].set_title(&quot;default&quot;)
+axes[1].imshow(img2)
+axes[1].set_title(&quot;zero_init&quot;)
+plt.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="difference-between-the-samples"><a class="header" href="#difference-between-the-samples">Difference between the samples</a></h2>
+<p>To make comparison easier, we highlight the differences between the samples.</p>
+<p><img src="https://i.imgur.com/bnRh5Nn.png" alt="" /></p>
+</div>
+<div class="cell markdown">
+<h2 id="loss-curves"><a class="header" href="#loss-curves">Loss curves</a></h2>
+<p>Below we open the tensorboard logs to inspect the training curves. We can see that ZerO is consistently worse than the default initialisation, further corroborating the finding the <strong>ZerO is not applicable as an out-of-the-box replacement</strong> for default initialisation.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-load_ext">tensorboard
+%tensorboard --logdir /dbfs/ml/Group_7/
+# To view the logs, please filter for 'diffusion' in the search bar in tensorboard!
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
