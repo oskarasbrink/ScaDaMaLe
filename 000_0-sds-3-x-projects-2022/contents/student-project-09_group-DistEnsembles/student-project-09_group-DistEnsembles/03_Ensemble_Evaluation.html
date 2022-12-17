@@ -461,7 +461,22 @@ def eval_ensemble_size(n_members, iters):
         test_score = evaluate(models, pos2D_test, pos3D_test, args)
         test_scores.append(test_score)
     return test_scores
+ 
+def eval_ensemble_size_semi_supervised(n_members, iters):
+    test_scores = []
+    for i in iters:
+        models = []
+        for j in range(n_members):
+            params_path = f'/dbfs/VideoPose3D/saved_models/humaneva/checkpoints/semi_supervised/{n_members}_members_ensemble{j}_iter{i}.ckpt'
+            params = torch.load(params_path) #, map_location=torch.device(&quot;cpu&quot;)
+            models.append(TemporalModel.from_state_dict(params, hyperparams))
+        test_score = evaluate(models, pos2D_test, pos3D_test, args)
+        test_scores.append(test_score)
+    return test_scores    
 </code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="extracting-checkpoints-of-supervised-models"><a class="header" href="#extracting-checkpoints-of-supervised-models">Extracting checkpoints of supervised models.</a></h4>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">x = list(range(0,100,5))
@@ -642,17 +657,65 @@ for batch_idx in [21, 5, 9]:
     plot_projected(pos3D_pred, pos3D_test, batch_idx)
 </code></pre>
 </div>
-<div class="cell code" execution_count="1" scrolled="false">
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
+<div class="cell markdown">
+<h2 id="additional-evaluation-for-semi-supervised-models"><a class="header" href="#additional-evaluation-for-semi-supervised-models">Additional evaluation for semi-supervised models.</a></h2>
 </div>
 <div class="cell markdown">
-<p>%md</p>
+<h4 id="extracting-checkpoints-of-semi-supervised-models"><a class="header" href="#extracting-checkpoints-of-semi-supervised-models">Extracting checkpoints of semi-supervised models.</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">x = list(range(0,100,5))
+x.append(99)
+
+ensemble_sizes = [3, 5]
+test_scores_dict = {}
+
+for size in ensemble_sizes:
+    test_scores_dict[size] = eval_ensemble_size_semi_supervised(size, x)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="test-errors-during-training-for-different-ensemble-sizes-1"><a class="header" href="#test-errors-during-training-for-different-ensemble-sizes-1">Test errors during training for different ensemble sizes</a></h4>
+<p>In our implementation, more unlabeled data is incorporated into the traninig data. It seems that using a limited number of unlabelled data helps. In our case, setting number of iteration to 40 is a proper choice. If too many unlabelled data is incorporated, the performance is degraded.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># save results
+ensemble_sizes = [3, 5]
+with open(&quot;/dbfs/VideoPose3D/semi_supervised_saved_results.txt&quot;, &quot;w&quot;) as results_file:
+    results_file.write(json.dumps(test_scores_dict))
+    
+for size, test_scores in test_scores_dict.items():
+    plt.plot(x, test_scores, label=&quot;Ensemble size: {}&quot;.format(size))
+
+plt.ylabel(&quot;Test error&quot;)
+plt.xlabel(&quot;Training iterations&quot;)    
+plt.legend()
+plt.show()
+
+ 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">x = list(range(0,100,5))
+x.append(99)
+
+test_scores_dict_loaded = json.load(open(&quot;/dbfs/VideoPose3D/semi_supervised_saved_results.txt&quot;))
+for size, test_scores in test_scores_dict_loaded.items():
+    plt.plot(x, test_scores, label=&quot;Ensemble size: {}&quot;.format(size))
+    plt. xlim([0, 40])
+
+plt.ylabel(&quot;Test error&quot;)
+plt.xlabel(&quot;Training iterations&quot;)    
+plt.legend()
+plt.show()
+</code></pre>
+</div>
+<div class="cell markdown">
 <h2 id="discussions"><a class="header" href="#discussions">Discussions</a></h2>
 <ul>
 <li>Simply averaging the prediciton from each ensemble is not good enough. Because the 3D pose predicitons of some models are quite unreasonable and should be ruled out.</li>
 <li>Normalizing the 2D key points.</li>
-<li>using broadcast.</li>
+<li>Incoporating unlabeled data to re-train the model does not always help a lot.</li>
 </ul>
 </div>
 
