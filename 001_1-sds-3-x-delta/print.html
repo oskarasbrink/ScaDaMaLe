@@ -153,10 +153,11 @@
 </ol>
 <p>These notebooks could include stuff like batch- and stream read &amp; writes, constraints, partitioning, some SQL focus. This way, people on community edition or someone not interested in the pipeline could still interact and learn a lot. Could be good to make another notebook (001b or something). Ping me on element if this is something we could do before tonight</p>
 <ul>
-<li>https://docs.delta.io/latest/delta-batch.htm</li>
-<li>https://docs.delta.io/latest/delta-streaming.html</li>
-<li>https://docs.delta.io/latest/delta-constraints.html ************************************</li>
+<li><a href="https://docs.delta.io/latest/delta-batch.htm">https://docs.delta.io/latest/delta-batch.htm</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html">https://docs.delta.io/latest/delta-streaming.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-constraints.html">https://docs.delta.io/latest/delta-constraints.html</a></li>
 </ul>
+<hr />
 <ol>
 <li>I feel like its ok to exclude the last notebook on sharing data can be excluded. Doesn't feel super relevant. You can decide, i have the module cloned in my workspace.</li>
 </ol>
@@ -167,8 +168,19 @@
 </div>
 <div class="cell markdown">
 <h1 id="introduction-to-delta-lake--delta-live-tables-dlt"><a class="header" href="#introduction-to-delta-lake--delta-live-tables-dlt">Introduction to Delta Lake &amp; Delta Live Tables (DLT)</a></h1>
-<p>This module will guide you through: - Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes - Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines - Basic operations on Delta Tables - Demonstrate a basic example of building a DLT pipeline in Databricks - Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</p>
-<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics: - https://docs.databricks.com/getting-started/dataframes-python.html - https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</p>
+<p>This module will guide you through:</p>
+<ul>
+<li>Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes</li>
+<li>Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines</li>
+<li>Basic operations on Delta Tables</li>
+<li>Demonstrate a basic example of building a DLT pipeline in Databricks</li>
+<li>Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</li>
+</ul>
+<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics:</p>
+<ul>
+<li><a href="https://docs.databricks.com/getting-started/dataframes-python.html">https://docs.databricks.com/getting-started/dataframes-python.html</a></li>
+<li><a href="https://medium.com/@r.nilon92/sql-refresher-454e90f96c46">https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</a></li>
+</ul>
 <p>Before moving on to Delta Lake and Delta Live Tables, there are some foundational Data engineering topics that we need to read or refresh upon</p>
 </div>
 <div class="cell markdown">
@@ -176,16 +188,34 @@
 <p>A <a href="https://en.wikipedia.org/wiki/Data_warehouse"><strong>Data Warehouse</strong></a> is a repository with structured data which supports Business Intelligence (BI) and analytic. Contents in a warehouse are preprocessed and organized, usually through ETL (Extract, Transform, Load) operations that feed into it. Warehouses provide <strong>reliability</strong> and <a href="https://www.databricks.com/glossary/acid-transactions">ACID transactions</a>, and have been a popular solution since the 1980's.</p>
 <p>A <a href="https://en.wikipedia.org/wiki/Data_lake"><strong>Data Lake</strong></a> is a central repository that stores all organizational data (unstructured, semistructed, or structured). A Data lake Architecture typically handles large volumes of raw data without the need to structure it first. Raw and unstructured Data stored in Data lakes can be used to build <strong>Data Pipelines</strong>, which is cover later on in the module. Data Lakes have been popular since 2011 with the availability of <a href="https://en.wikipedia.org/wiki/Apache_Hadoop#HDFS">HDFS</a> and low cost storage, including with services such as <a href="https://en.wikipedia.org/wiki/Amazon_S3">AWS S3</a>.</p>
 <h2 id="acid-guarantees"><a class="header" href="#acid-guarantees">ACID Guarantees</a></h2>
-<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties: - <strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made. - <strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction. - <strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other. - <strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</p>
+<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties:</p>
+<ul>
+<li><strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made.</li>
+<li><strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction.</li>
+<li><strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other.</li>
+<li><strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</li>
+</ul>
 <p>ACID transactions basically guarantee data validity despite errors and interruptions. In regards to Delta Lake and Lakehouses, when data is read and written simultaneously, it is important to keep data integrity. Delta Lake keeps track of all commits made to tables to keep data consistent accross multiple users.</p>
 <h2 id="etl-processes"><a class="header" href="#etl-processes">ETL processes</a></h2>
 <p><strong>ETL</strong>, which stands for <strong>Extract, Transform and Load,</strong> is a three phase process where raw data is extracted from systems, transformed (cleansed, processed to improve data quality) and loaded into an end target, which can be any data store.</p>
 <h3 id="more-foundational-reading-on-these-topics"><a class="header" href="#more-foundational-reading-on-these-topics">More foundational reading on these topics:</a></h3>
-<p>What is a Data lake? - https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</p>
-<p>Data warehouse Concepts - https://aws.amazon.com/data-warehouse/</p>
-<p>Data lake vs Data warehouse - https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</p>
-<p>Delta lake, ACID transactions for Apache Spark - https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</p>
-<p>What is ETL? - https://www.ibm.com/topics/etl</p>
+<p>What is a Data lake?</p>
+<ul>
+<li><a href="https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/">https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</a></li>
+</ul>
+<p>Data warehouse Concepts</p>
+<ul>
+<li><a href="https://aws.amazon.com/data-warehouse/">https://aws.amazon.com/data-warehouse/</a></li>
+</ul>
+<p>Data lake vs Data warehouse - <a href="https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse">https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</a></p>
+<p>Delta lake, ACID transactions for Apache Spark</p>
+<ul>
+<li><a href="https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda">https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</a></li>
+</ul>
+<p>What is ETL?</p>
+<ul>
+<li><a href="https://www.ibm.com/topics/etl">https://www.ibm.com/topics/etl</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="data-lakehouse"><a class="header" href="#data-lakehouse">Data Lakehouse</a></h2>
@@ -193,8 +223,14 @@
 <p>Lakehouse architecture aims to provide the ACID guarantees and reliability of warehouses while only requiring the cost-effectiveness, efficiency and scalability that Data Lakes provide. Companies and organisations usually rely on warehouses for BI and analytics, while also needing raw data from Data lakes for applications such as machine learning, which can result in a more complex architecture, additional ETL processes, duplicate and stale data, as well as extra costs and vendor lock-in. If we can provide the structure and reliability of warehouses on top of a Data lake, we can ommit the need for the warehouse!</p>
 <p>This can be achieved with the help of <strong>metadata layers</strong> within the Data lake, which keep track of key information such as transactions (enabling versioning and ACID capabilities), and statistics of underlying structured data, in a similar way as a .git folder saves relevant information of a Git repository. Two examples that enable this are <strong>Delta Lakes</strong> or <a href="https://en.wikipedia.org/wiki/Apache_Iceberg"><strong>Apache Iceberg</strong></a>, both of which are currently based on <a href="https://en.wikipedia.org/wiki/Apache_Parquet">Parquet files</a> to store structured information in tabular format.</p>
 <h3 id="deep-dive"><a class="header" href="#deep-dive"><strong>Deep dive:</strong></a></h3>
-<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics - https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</p>
-<p>Data Lakehouse: - https://www.databricks.com/glossary/data-lakehouse</p>
+<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</p>
+<ul>
+<li>https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</li>
+</ul>
+<p>Data Lakehouse:</p>
+<ul>
+<li>https://www.databricks.com/glossary/data-lakehouse</li>
+</ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
 <div class="output execute_result html_result" execution_count="1">
@@ -225,15 +261,27 @@
 </div>
 <div class="cell markdown">
 <h4 id="deep-dive-into-lakehouse-and-delta-lake"><a class="header" href="#deep-dive-into-lakehouse-and-delta-lake">Deep dive into Lakehouse and Delta lake:</a></h4>
-<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores - https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</p>
-<p>Delta lake: The Definitive Guide by O’Reilly (in development) - https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</p>
+<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores</p>
+<ul>
+<li><a href="https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf">https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</a></li>
+</ul>
+<p>Delta lake: The Definitive Guide by O’Reilly (in development)</p>
+<ul>
+<li><a href="https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly">https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</a></li>
+</ul>
 <h4 id="lighter-reading--video"><a class="header" href="#lighter-reading--video">Lighter reading &amp; video:</a></h4>
-<p>The Databricks Lakehouse Platform - https://www.databricks.com/product/data-lakehouse Delta Lake 2.0 Overview (38m) - https://www.youtube.com/watch?v=VWJT3JyPKvk</p>
-<p>The Data Lakehouse Platform For Dummies - https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</p>
-</div>
-<div class="cell markdown">
-<h4 id="oskar-note-131---2023"><a class="header" href="#oskar-note-131---2023">Oskar note 13/1 - 2023</a></h4>
-<p>if there is time, add some images or examples of delta lake being used in the real world, and maybe some references to its crazy performance in some use cases.</p>
+<p>The Databricks Lakehouse Platform</p>
+<ul>
+<li><a href="https://www.databricks.com/product/data-lakehouse">https://www.databricks.com/product/data-lakehouse</a></li>
+</ul>
+<p>Delta Lake 2.0 Overview (38m)</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=VWJT3JyPKvk">https://www.youtube.com/watch?v=VWJT3JyPKvk</a></li>
+</ul>
+<p>The Data Lakehouse Platform For Dummies</p>
+<ul>
+<li><a href="https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf">https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="delta-live-tables-dlt"><a class="header" href="#delta-live-tables-dlt">Delta Live Tables (DLT)</a></h2>
@@ -249,10 +297,14 @@
 <div class="cell markdown">
 <h2 id="how-to-start-using-delta-lake"><a class="header" href="#how-to-start-using-delta-lake">How to start using Delta Lake</a></h2>
 <p>Delta Lake is well integrated within the Apache Spark ecosystem, so the easiest way to start working with Delta Lake is to use it with Apache Spark. Databricks Community Edition can be a good starting point, but feel free to try Local Spark shell or Leveraging Github or Maven, which will not be covered in this series. If you have cluster creation permissions, and your account is tied to a shard with Databricks subscription, you can access DLT and the DLT pipeline.</p>
-<p>Open Source Delta lake: - https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</p>
-<p>Delta Live tables and the pipeline: - https://www.databricks.com/product/delta-live-tables</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
+<p>Open Source Delta lake:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake">https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</a></li>
+</ul>
+<p>Delta Live tables and the pipeline:</p>
+<ul>
+<li><a href="https://www.databricks.com/product/delta-live-tables">https://www.databricks.com/product/delta-live-tables</a></li>
+</ul>
 </div>
 <div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
 <p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
@@ -262,20 +314,20 @@
 <p>Before moving on to Databricks Delta Live Tables, we will cover what Delta Tables are, and explore the main features of Delta Lake. Delta lake has support for many languages, like PySpark, SQL, Scala and R, with standalone versions for Python, Java and more. This guide will showcase using Python, but see the referenced reading for SQL, Scala and Standalone.</p>
 <h4 id="programming-resources"><a class="header" href="#programming-resources">Programming resources:</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/quick-start.html</li>
-<li>https://docs.databricks.com/delta/index.html</li>
-<li>https://docs.databricks.com/delta/tutorial.html</li>
-<li>https://docs.delta.io/latest/delta-batch.html#language-python</li>
-<li>https://delta.io/blog/2022-10-25-create-delta-lake-tables/</li>
+<li><a href="https://docs.delta.io/latest/quick-start.html">https://docs.delta.io/latest/quick-start.html</a></li>
+<li><a href="https://docs.databricks.com/delta/index.html">https://docs.databricks.com/delta/index.html</a></li>
+<li><a href="https://docs.databricks.com/delta/tutorial.html">https://docs.databricks.com/delta/tutorial.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-batch.html#language-python">https://docs.delta.io/latest/delta-batch.html#language-python</a></li>
+<li><a href="https://delta.io/blog/2022-10-25-create-delta-lake-tables/">https://delta.io/blog/2022-10-25-create-delta-lake-tables/</a></li>
 </ul>
 <h4 id="delta-lake-resources--standalone-delta"><a class="header" href="#delta-lake-resources--standalone-delta">Delta Lake Resources &amp; Standalone Delta</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/delta-resources.html</li>
+<li><a href="https://docs.delta.io/latest/delta-resources.html">https://docs.delta.io/latest/delta-resources.html</a></li>
 </ul>
 <p>If you intend to setup Delta Lake with Spark on your own machine, see instructions for running Delta Lake with Spark-shell, SBT or Maven:</p>
 <h4 id="optional-set-up-apache-spark-with-delta-lake"><a class="header" href="#optional-set-up-apache-spark-with-delta-lake">(Optional) Set up Apache Spark with Delta Lake</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</li>
+<li><a href="https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake">https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</a></li>
 </ul>
 </div>
 <div class="cell markdown">
@@ -468,7 +520,10 @@ new_df.printSchema()
 <p>We get schema mismatch again! But this time, it is a Delta specific exception. This is because Delta tables have features called <em>schema enforcement</em> and <em>schema evolution</em>.</p>
 <p><em>Schema enforcement</em> (or <em>schema validation</em>) is a safeguard in Delta Lake that rejects writes to a table that do not match the table's schema. This prevents us from accidentally polluting tables with mistakes or garbage data. In cases of mismatch in schemas, no data is written and an exception is raised letting the user know about the mismatch.</p>
 <p><em>Schema evolution</em> allows us to easily change the current table schema to accomodate that data is changing over time. This is commonly used to automatically adapt the schema to include one or more new columns. It can be good to use if you intend to add the columns that were previously rejected due to schema mismatch.</p>
-<p>More on Schema enforcement and evolution: - https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</p>
+<p>More on Schema enforcement and evolution:</p>
+<ul>
+<li><a href="https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html">https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</a></li>
+</ul>
 <p>Let's try writing to the table again, with <code>overwrite</code> mode, and <code>mergeschema = true</code> to enable schema evolution:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -523,10 +578,14 @@ spark.sql(&quot;&quot;&quot;
 <div class="cell markdown">
 <h2 id="the-delta-log"><a class="header" href="#the-delta-log">The Delta Log</a></h2>
 <p>The Delta Log is the transaction log of changes to tables in the Delta Lake. Through this log, all readers and writers have access to the &quot;true&quot; state of each table, even if tables have been modified since the last time they were read. Spark will check the log to see if new transactions are posted to a table and update the end user's table with any new changes. This allows atomicity, multiple concurrent reads and writes in addition to conflict resolution. <em><strong>The Delta Log enables us to run many of the key Delta lake's properties, like ACID transactions, scalable metadata handling, time travel, and more.</strong></em></p>
-<p><strong>Deep dive:</strong> - https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html - https://books.japila.pl/delta-lake-internals/DeltaLog/</p>
+<p><strong>Deep dive:</strong></p>
+<ul>
+<li><a href="https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html">https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html</a></li>
+<li><a href="https://books.japila.pl/delta-lake-internals/DeltaLog/">https://books.japila.pl/delta-lake-internals/DeltaLog/</a></li>
+</ul>
 </div>
 <div class="cell markdown">
-<p>See the <code>_delta_log</code> for the table!</p>
+<p>See the <code>_delta_log</code> for this table!</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">dbutils.fs.ls(&quot;/tmp/delta/delta-table&quot;)
@@ -542,7 +601,15 @@ spark.sql(&quot;&quot;&quot;
 <div class="cell markdown">
 <h2 id="time-travel-query-an-older-version-of-the-table-using-the-delta-log"><a class="header" href="#time-travel-query-an-older-version-of-the-table-using-the-delta-log">Time travel: Query an older version of the table using the delta log</a></h2>
 <p>With Time travel you can access older version of a table, with either a timestamp or version</p>
-<p>timestamp<em>expression can be any one of: - '2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp - cast('2018-10-18 13:36:32 CEST' as timestamp) - '2018-10-18', that is, a date string - current</em>timestamp() - interval 12 hours - date<em>sub(current</em>date(), 1) - Any other expression that is or can be cast to a timestamp</p>
+<p>timestamp_expression can be any one of:</p>
+<ul>
+<li>'2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp</li>
+<li>cast('2018-10-18 13:36:32 CEST' as timestamp)</li>
+<li>'2018-10-18', that is, a date string</li>
+<li>current_timestamp() - interval 12 hours</li>
+<li>date<em>sub(current</em>date(), 1)</li>
+<li>Any other expression that is or can be cast to a timestamp</li>
+</ul>
 <p>version is a long value that can be obtained from the output of DESCRIBE HISTORY table_spec.</p>
 </div>
 <div class="cell markdown">
@@ -589,7 +656,10 @@ df2.show()
 </div>
 <div class="cell markdown">
 <p>Using this, for example, we can query the number of new entries from the last day or week, or since the last table version! Observe that the following code will not run since there is no history for the last week.</p>
-<p>see more: - https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</p>
+<p>see more:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel">https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</a></li>
+</ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># THIS CODE WILL NOT RUN
@@ -606,7 +676,7 @@ new_customers_count = count - last_week_count
 <p>If you intend on continue working in Databricks but still wish to write to Amazon S3, look into <a href="https://docs.databricks.com/external-data/amazon-s3.html">Working with data in Amazon S3</a>.</p>
 <p>Working on single-cluster setup on your own machine, or an instance such as Amazon EC2, you can use the following code for configuring Delta and S3 credentials for the most basic use case.</p>
 <ul>
-<li>https://docs.delta.io/latest/delta-storage.html</li>
+<li><a href="https://docs.delta.io/latest/delta-storage.html">https://docs.delta.io/latest/delta-storage.html</a></li>
 </ul>
 </div>
 <div class="cell markdown">
@@ -624,12 +694,26 @@ new_customers_count = count - last_week_count
 </div>
 <div class="cell markdown">
 <h2 id="final-remarks-on-delta-programming"><a class="header" href="#final-remarks-on-delta-programming">Final remarks on Delta programming:</a></h2>
-<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications: - https://docs.delta.io/latest/delta-batch.html - https://docs.delta.io/latest/delta-streaming.html - https://docs.delta.io/latest/delta-update.html</p>
+<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/delta-batch.html">https://docs.delta.io/latest/delta-batch.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html">https://docs.delta.io/latest/delta-streaming.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-update.html">https://docs.delta.io/latest/delta-update.html</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation"><a class="header" href="#the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation">The next notebooks will talk more about Delta Live Tables in Databricks, but if you wish to build your own open source implementation:</a></h2>
 <p>If you attain basic knowdledge of <strong>Docker, Terraform, PySpark or Scala (with SBT), Delta Lake</strong>, and any <strong>Cloud provider such as AWS,</strong> then you ready to build powerful applications for batch and streaming with your own Delta Lake!</p>
-<p>Resources: - https://delta.io - https://www.scala-sbt.org - https://www.terraform.io - https://www.docker.com - https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://delta.io">https://delta.io</a></li>
+<li><a href="https://www.scala-sbt.org">https://www.scala-sbt.org</a></li>
+<li><a href="https://www.terraform.io">https://www.terraform.io</a></li>
+<li><a href="https://www.docker.com">https://www.docker.com</a></li>
+<li><a href="https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58">https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
 </div>
 <div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
 <p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
@@ -637,9 +721,18 @@ new_customers_count = count - last_week_count
 <div class="cell markdown">
 <h1 id="delta-live-tables-crash-course"><a class="header" href="#delta-live-tables-crash-course">Delta Live Tables Crash Course</a></h1>
 <p>Delta Live Tables (DLT) is a managed workflow for loading delta tables, with easy management of dependencies and data <em>expectations</em>. This notebook will go through the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html">Delta Live Tables Python language reference</a>.</p>
-<p>Delta Live Tables Demo: Modern software engineering for ETL processing (16m) - https://www.youtube.com/watch?v=BIxwoO65ylY&amp;t=4s</p>
-<p>Advancing Spark - Databricks Delta Live Tables First Look (33m) - https://www.youtube.com/watch?v=0K_CLhwRHAM&amp;t</p>
-<p>Live Tables Python reference - https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</p>
+<p>Delta Live Tables Demo: Modern software engineering for ETL processing (16m)</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=BIxwoO65ylY&amp;t=4s">https://www.youtube.com/watch?v=BIxwoO65ylY&amp;t=4s</a></li>
+</ul>
+<p>Advancing Spark - Databricks Delta Live Tables First Look (33m)</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=0K_CLhwRHAM&amp;t">https://www.youtube.com/watch?v=0K_CLhwRHAM&amp;t</a></li>
+</ul>
+<p>Live Tables Python reference</p>
+<ul>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <p>The following code will not be able to run in cells since it will have to be run in a pipeline, but get familiar with the syntax and read the reference material.</p>
@@ -749,8 +842,8 @@ def prepared_data():
 </div>
 <div class="cell markdown">
 <h1 id="how-would-this-work-an-existing-codebase"><a class="header" href="#how-would-this-work-an-existing-codebase">How would this work an existing codebase?</a></h1>
-<p>This way of programming can seem quite rigid and strict, but you can still return predefined functions as a query when defining a table or a view. Lets say we have notebook with a bunch of predefined functions, used for ETL, and you want to try this code in a pipeline with Delta Live Tables</p>
-<p>The example function is slightly modified from this guide: https://www.sicara.fr/blog-technique/databricks-delta-live-tables-software-engineering-best-practices</p>
+<p>This way of programming can seem quite rigid and strict, but you can still return predefined functions as a query when defining a table or a view. Lets say we have notebook with a bunch of predefined functions, used for ETL, and you want to try this code in a pipeline with Delta Live Tables.</p>
+<p>The example function is slightly modified from this guide: <a href="https://www.sicara.fr/blog-technique/databricks-delta-live-tables-software-engineering-best-practices">https://www.sicara.fr/blog-technique/databricks-delta-live-tables-software-engineering-best-practices</a></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># any predefined function used for ETL
@@ -793,13 +886,13 @@ def enrich_nyc_taxi_data(nyc_taxi_df):
 </ul>
 <h2 id="reference-reading"><a class="header" href="#reference-reading">Reference Reading</a></h2>
 <ul>
-<li>https://docs.databricks.com/workflows/delta-live-tables/index.html#</li>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html</li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/index.html#">https://docs.databricks.com/workflows/delta-live-tables/index.html#</a></li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/index.html#">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html</a></li>
 </ul>
 </div>
 <div class="cell markdown">
 <h2 id="creating-a-pipeline"><a class="header" href="#creating-a-pipeline">Creating a Pipeline</a></h2>
-<p>see: https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-ui.html</p>
+<p>see: <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-ui.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-ui.html</a></p>
 <p>This quickstart guide will provide basic settings for your pipeline. For scaling and optimizing a pipeline for specific needs, read more in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-api-guide.html">the pipeline documentation</a>.</p>
 </div>
 <div class="cell markdown">
@@ -815,8 +908,9 @@ def enrich_nyc_taxi_data(nyc_taxi_df):
 <li>For <em>Target schema</em> select the target database, if you want to publish your table to the metastore. More info <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-publish.html">here</a>.</li>
 <li>For <em>Cluster mode</em> select <strong>Legacy autoscaling</strong>.</li>
 <li>Set <em>Min workers</em> and <strong>Max workers</strong> to <em>1</em> and <em>2</em>, respectively.</li>
-<li>Click create pipeline. (bleh) You can select several <em>Notebook Libraries</em> (notebooks defining your DLTs) to expand your pipeline, or having one notebook for defining your library functions, and then running the min the query of a Live table as shown in section x.z of __002_DeltaLiveTableCrashCourse__ notebook.</li>
+<li>Click create pipeline.</li>
 </ol>
+<p>You can select several <em>Notebook Libraries</em> (notebooks defining your DLTs) to expand your pipeline, or having one notebook for defining your library functions, and then running the min the query of a Live table as shown in section x.z of __002_DeltaLiveTableCrashCourse__ notebook.</p>
 </div>
 <div class="cell markdown">
 <h3 id="pipeline-updates"><a class="header" href="#pipeline-updates">Pipeline updates</a></h3>
@@ -831,7 +925,12 @@ def enrich_nyc_taxi_data(nyc_taxi_df):
 <div class="cell markdown">
 <h1 id="features-in-the-pipeline-interface"><a class="header" href="#features-in-the-pipeline-interface">Features in the pipeline interface</a></h1>
 <p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/pipeline_ui_overview.png?raw=true" alt="pipeline ui overview" /></p>
-<p>The are additional features in the pipeline that can be seen in the UI above, such as: - Scheduling pipeline runs. - Run in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html#development-and-production-modes">Production mode</a>. - Set Permissions for groups and users to run, manage and view the pipeline.</p>
+<p>The are additional features in the pipeline that can be seen in the UI above, such as:</p>
+<ul>
+<li>Scheduling pipeline runs.</li>
+<li>Run in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html#development-and-production-modes">Production mode</a>.</li>
+<li>Set Permissions for groups and users to run, manage and view the pipeline.</li>
+</ul>
 <p>There are many features and settings to explore. Start creating your own notebooks and read the docs to discover more.</p>
 </div>
 <div class="cell markdown">
@@ -873,9 +972,9 @@ def enrich_nyc_taxi_data(nyc_taxi_df):
 <p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
 <h2 id="reference-reading-1"><a class="header" href="#reference-reading-1">Reference reading</a></h2>
 <ul>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</li>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</li>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</a></li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</a></li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</a></li>
 </ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -943,9 +1042,9 @@ def top_spark_referrers():
 <p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
 <h2 id="reference-reading-2"><a class="header" href="#reference-reading-2">Reference reading</a></h2>
 <ul>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</li>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-sql-ref.html</li>
-<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</a></li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-sql-ref.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-sql-ref.html</a></li>
+<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</a></li>
 </ul>
 </div>
 <div class="cell markdown">
@@ -991,8 +1090,15 @@ LIMIT 10
 <div class="cell markdown">
 <h1 id="medallion-lakehouse-architecture"><a class="header" href="#medallion-lakehouse-architecture">Medallion Lakehouse Architecture</a></h1>
 <p>The <strong>Medallion Lakehouse Architecture</strong> aims to structure data quality amongst different levels. From Bronze, to Silver, and to Gold levels, data that is originally unstructured and uncleaned, is more structured and cleaned for higher-level tables. Even many examples of this type of architecture is shown with Delta Live Tables, this can just as well be implemented in any open source Lakehouse architecture, with Delta Tables in your own open source solution.</p>
-<p>Reading: - https://docs.databricks.com/lakehouse/medallion.html#bronze - https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca</p>
-<p>Repository with some examples: - https://github.com/databricks/delta-live-tables-notebooks</p>
+<p>Reading:</p>
+<ul>
+<li><a href="https://docs.databricks.com/lakehouse/medallion.html#bronze">https://docs.databricks.com/lakehouse/medallion.html#bronze</a></li>
+<li><a href="https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca">https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca</a></li>
+</ul>
+<p>Repository with some examples:</p>
+<ul>
+<li><a href="https://github.com/databricks/delta-live-tables-notebooks">https://github.com/databricks/delta-live-tables-notebooks</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <p><img src="https://www.databricks.com/wp-content/uploads/2022/03/delta-lake-medallion-architecture-2.jpeg" alt="medallion architecture" /></p>
@@ -1091,14 +1197,31 @@ def top_pages():
 <div class="cell markdown">
 <h1 id="working-with-data-in-external-environments"><a class="header" href="#working-with-data-in-external-environments">Working with data in external environments</a></h1>
 <p>This notebook will introduce some general ways of sharing data that you have processed so far, without specific code examples. Databricks integrates with a wide range of data sources, developer tools and partner solutions. Even when using the Databricks platform for your operations, it can be preferable to allow for access and share data for use outside of the platform for internal and external use. This guide will instruct you on how to query the <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">Databricks SQL warehouse</a> in excel, along with sharing tables with external parties through <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta sharing</a>. This can be useful for business analytics or to give restricted access to clients in more refined tables.</p>
-<p>Resources: - <a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a> - <a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a> - <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a> - <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a></li>
+<li><a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a></li>
+<li><a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h1 id="how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors"><a class="header" href="#how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors">How to setup access to SQL warehouse from Excel using ODBC connectors</a></h1>
 </div>
 <div class="cell markdown">
 <p>For general BI work, it can preferable to work with spreadsheet format in Excel, and use its features for data analysis and visualization. The SQL Warehouse will require a paid version of Databricks. Skip to the Delta Sharing section for a possible open source solution.</p>
-<p>You need: - Databricks ODBC drivers at https://www.databricks.com/spark/odbc-drivers-download - (For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs - link here: https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors - (For other OS) ODBC connector: https://dev.mysql.com/downloads/connector/odbc/ - Databricks Authentication token - Access to SQL-warehouse</p>
+<p>You need:</p>
+<ul>
+<li>Databricks ODBC drivers at <a href="https://www.databricks.com/spark/odbc-drivers-download">https://www.databricks.com/spark/odbc-drivers-download</a></li>
+<li>(For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs
+<ul>
+<li>link here: <a href="https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors">https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors</a></li>
+</ul>
+</li>
+<li>(For other OS) ODBC connector: <a href="https://dev.mysql.com/downloads/connector/odbc/">https://dev.mysql.com/downloads/connector/odbc/</a></li>
+<li>Databricks Authentication token</li>
+<li>Access to SQL-warehouse</li>
+</ul>
 <p><strong>IMPORTANT</strong>: Even if you have the latest updates for Excel and Microsoft 365, you might have to <strong>reinstall</strong> Microsoft Excel to be able to run database queries.</p>
 </div>
 <div class="cell markdown">
@@ -1124,8 +1247,12 @@ def top_pages():
 </div>
 <div class="cell markdown">
 <h1 id="delta-sharing"><a class="header" href="#delta-sharing">Delta Sharing</a></h1>
-<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="contents/001_1-sds-3-x-delta/">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
-<p>Resources: - https://docs.databricks.com/data-sharing/index.html - https://github.com/delta-io/delta-sharing</p>
+<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="https://www.databricks.com/product/unity-catalog">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://docs.databricks.com/data-sharing/index.html">https://docs.databricks.com/data-sharing/index.html</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing">https://github.com/delta-io/delta-sharing</a></li>
+</ul>
 <p>The following code example is from the <a href="https://github.com/delta-io/delta-sharing">Delta sharing github</a>. Through a generated and shared profile file, you access a &quot;delta share&quot; which consists of a selected number of tables with read only access to them.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">

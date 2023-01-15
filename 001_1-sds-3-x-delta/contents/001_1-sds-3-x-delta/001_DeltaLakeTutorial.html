@@ -153,20 +153,20 @@
 <p>Before moving on to Databricks Delta Live Tables, we will cover what Delta Tables are, and explore the main features of Delta Lake. Delta lake has support for many languages, like PySpark, SQL, Scala and R, with standalone versions for Python, Java and more. This guide will showcase using Python, but see the referenced reading for SQL, Scala and Standalone.</p>
 <h4 id="programming-resources"><a class="header" href="#programming-resources">Programming resources:</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/quick-start.html</li>
-<li>https://docs.databricks.com/delta/index.html</li>
-<li>https://docs.databricks.com/delta/tutorial.html</li>
-<li>https://docs.delta.io/latest/delta-batch.html#language-python</li>
-<li>https://delta.io/blog/2022-10-25-create-delta-lake-tables/</li>
+<li><a href="https://docs.delta.io/latest/quick-start.html">https://docs.delta.io/latest/quick-start.html</a></li>
+<li><a href="https://docs.databricks.com/delta/index.html">https://docs.databricks.com/delta/index.html</a></li>
+<li><a href="https://docs.databricks.com/delta/tutorial.html">https://docs.databricks.com/delta/tutorial.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-batch.html#language-python">https://docs.delta.io/latest/delta-batch.html#language-python</a></li>
+<li><a href="https://delta.io/blog/2022-10-25-create-delta-lake-tables/">https://delta.io/blog/2022-10-25-create-delta-lake-tables/</a></li>
 </ul>
 <h4 id="delta-lake-resources--standalone-delta"><a class="header" href="#delta-lake-resources--standalone-delta">Delta Lake Resources &amp; Standalone Delta</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/delta-resources.html</li>
+<li><a href="https://docs.delta.io/latest/delta-resources.html">https://docs.delta.io/latest/delta-resources.html</a></li>
 </ul>
 <p>If you intend to setup Delta Lake with Spark on your own machine, see instructions for running Delta Lake with Spark-shell, SBT or Maven:</p>
 <h4 id="optional-set-up-apache-spark-with-delta-lake"><a class="header" href="#optional-set-up-apache-spark-with-delta-lake">(Optional) Set up Apache Spark with Delta Lake</a></h4>
 <ul>
-<li>https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</li>
+<li><a href="https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake">https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</a></li>
 </ul>
 </div>
 <div class="cell markdown">
@@ -359,7 +359,10 @@ new_df.printSchema()
 <p>We get schema mismatch again! But this time, it is a Delta specific exception. This is because Delta tables have features called <em>schema enforcement</em> and <em>schema evolution</em>.</p>
 <p><em>Schema enforcement</em> (or <em>schema validation</em>) is a safeguard in Delta Lake that rejects writes to a table that do not match the table's schema. This prevents us from accidentally polluting tables with mistakes or garbage data. In cases of mismatch in schemas, no data is written and an exception is raised letting the user know about the mismatch.</p>
 <p><em>Schema evolution</em> allows us to easily change the current table schema to accomodate that data is changing over time. This is commonly used to automatically adapt the schema to include one or more new columns. It can be good to use if you intend to add the columns that were previously rejected due to schema mismatch.</p>
-<p>More on Schema enforcement and evolution: - https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</p>
+<p>More on Schema enforcement and evolution:</p>
+<ul>
+<li><a href="https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html">https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</a></li>
+</ul>
 <p>Let's try writing to the table again, with <code>overwrite</code> mode, and <code>mergeschema = true</code> to enable schema evolution:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -414,10 +417,14 @@ spark.sql(&quot;&quot;&quot;
 <div class="cell markdown">
 <h2 id="the-delta-log"><a class="header" href="#the-delta-log">The Delta Log</a></h2>
 <p>The Delta Log is the transaction log of changes to tables in the Delta Lake. Through this log, all readers and writers have access to the &quot;true&quot; state of each table, even if tables have been modified since the last time they were read. Spark will check the log to see if new transactions are posted to a table and update the end user's table with any new changes. This allows atomicity, multiple concurrent reads and writes in addition to conflict resolution. <em><strong>The Delta Log enables us to run many of the key Delta lake's properties, like ACID transactions, scalable metadata handling, time travel, and more.</strong></em></p>
-<p><strong>Deep dive:</strong> - https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html - https://books.japila.pl/delta-lake-internals/DeltaLog/</p>
+<p><strong>Deep dive:</strong></p>
+<ul>
+<li><a href="https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html">https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html</a></li>
+<li><a href="https://books.japila.pl/delta-lake-internals/DeltaLog/">https://books.japila.pl/delta-lake-internals/DeltaLog/</a></li>
+</ul>
 </div>
 <div class="cell markdown">
-<p>See the <code>_delta_log</code> for the table!</p>
+<p>See the <code>_delta_log</code> for this table!</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">dbutils.fs.ls(&quot;/tmp/delta/delta-table&quot;)
@@ -433,7 +440,15 @@ spark.sql(&quot;&quot;&quot;
 <div class="cell markdown">
 <h2 id="time-travel-query-an-older-version-of-the-table-using-the-delta-log"><a class="header" href="#time-travel-query-an-older-version-of-the-table-using-the-delta-log">Time travel: Query an older version of the table using the delta log</a></h2>
 <p>With Time travel you can access older version of a table, with either a timestamp or version</p>
-<p>timestamp<em>expression can be any one of: - '2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp - cast('2018-10-18 13:36:32 CEST' as timestamp) - '2018-10-18', that is, a date string - current</em>timestamp() - interval 12 hours - date<em>sub(current</em>date(), 1) - Any other expression that is or can be cast to a timestamp</p>
+<p>timestamp_expression can be any one of:</p>
+<ul>
+<li>'2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp</li>
+<li>cast('2018-10-18 13:36:32 CEST' as timestamp)</li>
+<li>'2018-10-18', that is, a date string</li>
+<li>current_timestamp() - interval 12 hours</li>
+<li>date<em>sub(current</em>date(), 1)</li>
+<li>Any other expression that is or can be cast to a timestamp</li>
+</ul>
 <p>version is a long value that can be obtained from the output of DESCRIBE HISTORY table_spec.</p>
 </div>
 <div class="cell markdown">
@@ -480,7 +495,10 @@ df2.show()
 </div>
 <div class="cell markdown">
 <p>Using this, for example, we can query the number of new entries from the last day or week, or since the last table version! Observe that the following code will not run since there is no history for the last week.</p>
-<p>see more: - https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</p>
+<p>see more:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel">https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</a></li>
+</ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># THIS CODE WILL NOT RUN
@@ -497,7 +515,7 @@ new_customers_count = count - last_week_count
 <p>If you intend on continue working in Databricks but still wish to write to Amazon S3, look into <a href="https://docs.databricks.com/external-data/amazon-s3.html">Working with data in Amazon S3</a>.</p>
 <p>Working on single-cluster setup on your own machine, or an instance such as Amazon EC2, you can use the following code for configuring Delta and S3 credentials for the most basic use case.</p>
 <ul>
-<li>https://docs.delta.io/latest/delta-storage.html</li>
+<li><a href="https://docs.delta.io/latest/delta-storage.html">https://docs.delta.io/latest/delta-storage.html</a></li>
 </ul>
 </div>
 <div class="cell markdown">
@@ -515,12 +533,26 @@ new_customers_count = count - last_week_count
 </div>
 <div class="cell markdown">
 <h2 id="final-remarks-on-delta-programming"><a class="header" href="#final-remarks-on-delta-programming">Final remarks on Delta programming:</a></h2>
-<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications: - https://docs.delta.io/latest/delta-batch.html - https://docs.delta.io/latest/delta-streaming.html - https://docs.delta.io/latest/delta-update.html</p>
+<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/delta-batch.html">https://docs.delta.io/latest/delta-batch.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html">https://docs.delta.io/latest/delta-streaming.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-update.html">https://docs.delta.io/latest/delta-update.html</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation"><a class="header" href="#the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation">The next notebooks will talk more about Delta Live Tables in Databricks, but if you wish to build your own open source implementation:</a></h2>
 <p>If you attain basic knowdledge of <strong>Docker, Terraform, PySpark or Scala (with SBT), Delta Lake</strong>, and any <strong>Cloud provider such as AWS,</strong> then you ready to build powerful applications for batch and streaming with your own Delta Lake!</p>
-<p>Resources: - https://delta.io - https://www.scala-sbt.org - https://www.terraform.io - https://www.docker.com - https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://delta.io">https://delta.io</a></li>
+<li><a href="https://www.scala-sbt.org">https://www.scala-sbt.org</a></li>
+<li><a href="https://www.terraform.io">https://www.terraform.io</a></li>
+<li><a href="https://www.docker.com">https://www.docker.com</a></li>
+<li><a href="https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58">https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</a></li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
 </div>
 
                     </main>

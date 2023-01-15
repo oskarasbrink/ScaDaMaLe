@@ -152,10 +152,11 @@
 </ol>
 <p>These notebooks could include stuff like batch- and stream read &amp; writes, constraints, partitioning, some SQL focus. This way, people on community edition or someone not interested in the pipeline could still interact and learn a lot. Could be good to make another notebook (001b or something). Ping me on element if this is something we could do before tonight</p>
 <ul>
-<li>https://docs.delta.io/latest/delta-batch.htm</li>
-<li>https://docs.delta.io/latest/delta-streaming.html</li>
-<li>https://docs.delta.io/latest/delta-constraints.html ************************************</li>
+<li><a href="https://docs.delta.io/latest/delta-batch.htm">https://docs.delta.io/latest/delta-batch.htm</a></li>
+<li><a href="https://docs.delta.io/latest/delta-streaming.html">https://docs.delta.io/latest/delta-streaming.html</a></li>
+<li><a href="https://docs.delta.io/latest/delta-constraints.html">https://docs.delta.io/latest/delta-constraints.html</a></li>
 </ul>
+<hr />
 <ol>
 <li>I feel like its ok to exclude the last notebook on sharing data can be excluded. Doesn't feel super relevant. You can decide, i have the module cloned in my workspace.</li>
 </ol>
@@ -166,8 +167,19 @@
 </div>
 <div class="cell markdown">
 <h1 id="introduction-to-delta-lake--delta-live-tables-dlt"><a class="header" href="#introduction-to-delta-lake--delta-live-tables-dlt">Introduction to Delta Lake &amp; Delta Live Tables (DLT)</a></h1>
-<p>This module will guide you through: - Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes - Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines - Basic operations on Delta Tables - Demonstrate a basic example of building a DLT pipeline in Databricks - Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</p>
-<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics: - https://docs.databricks.com/getting-started/dataframes-python.html - https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</p>
+<p>This module will guide you through:</p>
+<ul>
+<li>Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes</li>
+<li>Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines</li>
+<li>Basic operations on Delta Tables</li>
+<li>Demonstrate a basic example of building a DLT pipeline in Databricks</li>
+<li>Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</li>
+</ul>
+<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics:</p>
+<ul>
+<li><a href="https://docs.databricks.com/getting-started/dataframes-python.html">https://docs.databricks.com/getting-started/dataframes-python.html</a></li>
+<li><a href="https://medium.com/@r.nilon92/sql-refresher-454e90f96c46">https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</a></li>
+</ul>
 <p>Before moving on to Delta Lake and Delta Live Tables, there are some foundational Data engineering topics that we need to read or refresh upon</p>
 </div>
 <div class="cell markdown">
@@ -175,16 +187,34 @@
 <p>A <a href="https://en.wikipedia.org/wiki/Data_warehouse"><strong>Data Warehouse</strong></a> is a repository with structured data which supports Business Intelligence (BI) and analytic. Contents in a warehouse are preprocessed and organized, usually through ETL (Extract, Transform, Load) operations that feed into it. Warehouses provide <strong>reliability</strong> and <a href="https://www.databricks.com/glossary/acid-transactions">ACID transactions</a>, and have been a popular solution since the 1980's.</p>
 <p>A <a href="https://en.wikipedia.org/wiki/Data_lake"><strong>Data Lake</strong></a> is a central repository that stores all organizational data (unstructured, semistructed, or structured). A Data lake Architecture typically handles large volumes of raw data without the need to structure it first. Raw and unstructured Data stored in Data lakes can be used to build <strong>Data Pipelines</strong>, which is cover later on in the module. Data Lakes have been popular since 2011 with the availability of <a href="https://en.wikipedia.org/wiki/Apache_Hadoop#HDFS">HDFS</a> and low cost storage, including with services such as <a href="https://en.wikipedia.org/wiki/Amazon_S3">AWS S3</a>.</p>
 <h2 id="acid-guarantees"><a class="header" href="#acid-guarantees">ACID Guarantees</a></h2>
-<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties: - <strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made. - <strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction. - <strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other. - <strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</p>
+<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties:</p>
+<ul>
+<li><strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made.</li>
+<li><strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction.</li>
+<li><strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other.</li>
+<li><strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</li>
+</ul>
 <p>ACID transactions basically guarantee data validity despite errors and interruptions. In regards to Delta Lake and Lakehouses, when data is read and written simultaneously, it is important to keep data integrity. Delta Lake keeps track of all commits made to tables to keep data consistent accross multiple users.</p>
 <h2 id="etl-processes"><a class="header" href="#etl-processes">ETL processes</a></h2>
 <p><strong>ETL</strong>, which stands for <strong>Extract, Transform and Load,</strong> is a three phase process where raw data is extracted from systems, transformed (cleansed, processed to improve data quality) and loaded into an end target, which can be any data store.</p>
 <h3 id="more-foundational-reading-on-these-topics"><a class="header" href="#more-foundational-reading-on-these-topics">More foundational reading on these topics:</a></h3>
-<p>What is a Data lake? - https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</p>
-<p>Data warehouse Concepts - https://aws.amazon.com/data-warehouse/</p>
-<p>Data lake vs Data warehouse - https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</p>
-<p>Delta lake, ACID transactions for Apache Spark - https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</p>
-<p>What is ETL? - https://www.ibm.com/topics/etl</p>
+<p>What is a Data lake?</p>
+<ul>
+<li><a href="https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/">https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</a></li>
+</ul>
+<p>Data warehouse Concepts</p>
+<ul>
+<li><a href="https://aws.amazon.com/data-warehouse/">https://aws.amazon.com/data-warehouse/</a></li>
+</ul>
+<p>Data lake vs Data warehouse - <a href="https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse">https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</a></p>
+<p>Delta lake, ACID transactions for Apache Spark</p>
+<ul>
+<li><a href="https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda">https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</a></li>
+</ul>
+<p>What is ETL?</p>
+<ul>
+<li><a href="https://www.ibm.com/topics/etl">https://www.ibm.com/topics/etl</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="data-lakehouse"><a class="header" href="#data-lakehouse">Data Lakehouse</a></h2>
@@ -192,8 +222,14 @@
 <p>Lakehouse architecture aims to provide the ACID guarantees and reliability of warehouses while only requiring the cost-effectiveness, efficiency and scalability that Data Lakes provide. Companies and organisations usually rely on warehouses for BI and analytics, while also needing raw data from Data lakes for applications such as machine learning, which can result in a more complex architecture, additional ETL processes, duplicate and stale data, as well as extra costs and vendor lock-in. If we can provide the structure and reliability of warehouses on top of a Data lake, we can ommit the need for the warehouse!</p>
 <p>This can be achieved with the help of <strong>metadata layers</strong> within the Data lake, which keep track of key information such as transactions (enabling versioning and ACID capabilities), and statistics of underlying structured data, in a similar way as a .git folder saves relevant information of a Git repository. Two examples that enable this are <strong>Delta Lakes</strong> or <a href="https://en.wikipedia.org/wiki/Apache_Iceberg"><strong>Apache Iceberg</strong></a>, both of which are currently based on <a href="https://en.wikipedia.org/wiki/Apache_Parquet">Parquet files</a> to store structured information in tabular format.</p>
 <h3 id="deep-dive"><a class="header" href="#deep-dive"><strong>Deep dive:</strong></a></h3>
-<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics - https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</p>
-<p>Data Lakehouse: - https://www.databricks.com/glossary/data-lakehouse</p>
+<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</p>
+<ul>
+<li>https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</li>
+</ul>
+<p>Data Lakehouse:</p>
+<ul>
+<li>https://www.databricks.com/glossary/data-lakehouse</li>
+</ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
 <div class="output execute_result html_result" execution_count="1">
@@ -224,15 +260,27 @@
 </div>
 <div class="cell markdown">
 <h4 id="deep-dive-into-lakehouse-and-delta-lake"><a class="header" href="#deep-dive-into-lakehouse-and-delta-lake">Deep dive into Lakehouse and Delta lake:</a></h4>
-<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores - https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</p>
-<p>Delta lake: The Definitive Guide by O’Reilly (in development) - https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</p>
+<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores</p>
+<ul>
+<li><a href="https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf">https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</a></li>
+</ul>
+<p>Delta lake: The Definitive Guide by O’Reilly (in development)</p>
+<ul>
+<li><a href="https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly">https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</a></li>
+</ul>
 <h4 id="lighter-reading--video"><a class="header" href="#lighter-reading--video">Lighter reading &amp; video:</a></h4>
-<p>The Databricks Lakehouse Platform - https://www.databricks.com/product/data-lakehouse Delta Lake 2.0 Overview (38m) - https://www.youtube.com/watch?v=VWJT3JyPKvk</p>
-<p>The Data Lakehouse Platform For Dummies - https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</p>
-</div>
-<div class="cell markdown">
-<h4 id="oskar-note-131---2023"><a class="header" href="#oskar-note-131---2023">Oskar note 13/1 - 2023</a></h4>
-<p>if there is time, add some images or examples of delta lake being used in the real world, and maybe some references to its crazy performance in some use cases.</p>
+<p>The Databricks Lakehouse Platform</p>
+<ul>
+<li><a href="https://www.databricks.com/product/data-lakehouse">https://www.databricks.com/product/data-lakehouse</a></li>
+</ul>
+<p>Delta Lake 2.0 Overview (38m)</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=VWJT3JyPKvk">https://www.youtube.com/watch?v=VWJT3JyPKvk</a></li>
+</ul>
+<p>The Data Lakehouse Platform For Dummies</p>
+<ul>
+<li><a href="https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf">https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h2 id="delta-live-tables-dlt"><a class="header" href="#delta-live-tables-dlt">Delta Live Tables (DLT)</a></h2>
@@ -248,10 +296,14 @@
 <div class="cell markdown">
 <h2 id="how-to-start-using-delta-lake"><a class="header" href="#how-to-start-using-delta-lake">How to start using Delta Lake</a></h2>
 <p>Delta Lake is well integrated within the Apache Spark ecosystem, so the easiest way to start working with Delta Lake is to use it with Apache Spark. Databricks Community Edition can be a good starting point, but feel free to try Local Spark shell or Leveraging Github or Maven, which will not be covered in this series. If you have cluster creation permissions, and your account is tied to a shard with Databricks subscription, you can access DLT and the DLT pipeline.</p>
-<p>Open Source Delta lake: - https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</p>
-<p>Delta Live tables and the pipeline: - https://www.databricks.com/product/delta-live-tables</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
+<p>Open Source Delta lake:</p>
+<ul>
+<li><a href="https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake">https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</a></li>
+</ul>
+<p>Delta Live tables and the pipeline:</p>
+<ul>
+<li><a href="https://www.databricks.com/product/delta-live-tables">https://www.databricks.com/product/delta-live-tables</a></li>
+</ul>
 </div>
 
                     </main>

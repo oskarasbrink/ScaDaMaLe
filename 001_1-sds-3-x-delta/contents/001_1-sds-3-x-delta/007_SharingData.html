@@ -151,14 +151,31 @@
 <div class="cell markdown">
 <h1 id="working-with-data-in-external-environments"><a class="header" href="#working-with-data-in-external-environments">Working with data in external environments</a></h1>
 <p>This notebook will introduce some general ways of sharing data that you have processed so far, without specific code examples. Databricks integrates with a wide range of data sources, developer tools and partner solutions. Even when using the Databricks platform for your operations, it can be preferable to allow for access and share data for use outside of the platform for internal and external use. This guide will instruct you on how to query the <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">Databricks SQL warehouse</a> in excel, along with sharing tables with external parties through <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta sharing</a>. This can be useful for business analytics or to give restricted access to clients in more refined tables.</p>
-<p>Resources: - <a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a> - <a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a> - <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a> - <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a></li>
+<li><a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a></li>
+<li><a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></li>
+</ul>
 </div>
 <div class="cell markdown">
 <h1 id="how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors"><a class="header" href="#how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors">How to setup access to SQL warehouse from Excel using ODBC connectors</a></h1>
 </div>
 <div class="cell markdown">
 <p>For general BI work, it can preferable to work with spreadsheet format in Excel, and use its features for data analysis and visualization. The SQL Warehouse will require a paid version of Databricks. Skip to the Delta Sharing section for a possible open source solution.</p>
-<p>You need: - Databricks ODBC drivers at https://www.databricks.com/spark/odbc-drivers-download - (For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs - link here: https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors - (For other OS) ODBC connector: https://dev.mysql.com/downloads/connector/odbc/ - Databricks Authentication token - Access to SQL-warehouse</p>
+<p>You need:</p>
+<ul>
+<li>Databricks ODBC drivers at <a href="https://www.databricks.com/spark/odbc-drivers-download">https://www.databricks.com/spark/odbc-drivers-download</a></li>
+<li>(For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs
+<ul>
+<li>link here: <a href="https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors">https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors</a></li>
+</ul>
+</li>
+<li>(For other OS) ODBC connector: <a href="https://dev.mysql.com/downloads/connector/odbc/">https://dev.mysql.com/downloads/connector/odbc/</a></li>
+<li>Databricks Authentication token</li>
+<li>Access to SQL-warehouse</li>
+</ul>
 <p><strong>IMPORTANT</strong>: Even if you have the latest updates for Excel and Microsoft 365, you might have to <strong>reinstall</strong> Microsoft Excel to be able to run database queries.</p>
 </div>
 <div class="cell markdown">
@@ -184,8 +201,12 @@
 </div>
 <div class="cell markdown">
 <h1 id="delta-sharing"><a class="header" href="#delta-sharing">Delta Sharing</a></h1>
-<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
-<p>Resources: - https://docs.databricks.com/data-sharing/index.html - https://github.com/delta-io/delta-sharing</p>
+<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="https://www.databricks.com/product/unity-catalog">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
+<p>Resources:</p>
+<ul>
+<li><a href="https://docs.databricks.com/data-sharing/index.html">https://docs.databricks.com/data-sharing/index.html</a></li>
+<li><a href="https://github.com/delta-io/delta-sharing">https://github.com/delta-io/delta-sharing</a></li>
+</ul>
 <p>The following code example is from the <a href="https://github.com/delta-io/delta-sharing">Delta sharing github</a>. Through a generated and shared profile file, you access a &quot;delta share&quot; which consists of a selected number of tables with read only access to them.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
