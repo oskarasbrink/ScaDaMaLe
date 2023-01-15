@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html" class="active">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html" class="active">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html">001a_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html">006_BronzeSilverGoldArchitecture</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,14 +149,19 @@
 <p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
 </div>
 <div class="cell markdown">
+<p>Oskar Åsbrink (<a href="https://www.linkedin.com/in/oskar-%C3%A5sbrink-847a76231/">LinkedIn</a>), Nicolás Martín Bekier (<a href="https://www.linkedin.com/in/nicolasmartinj/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2023, Uppsala, Sweden</p>
+<p>This project was partly supported by Combient Mix AB through the Masters-level Data Science Project Course at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+</div>
+<div class="cell markdown">
 <h1 id="delta-lake-tutorial"><a class="header" href="#delta-lake-tutorial">Delta Lake Tutorial</a></h1>
 <p>Before moving on to Databricks Delta Live Tables, we will cover what Delta Tables are, and explore the main features of Delta Lake. Delta lake has support for many languages, like PySpark, SQL, Scala and R, with standalone versions for Python, Java and more. This guide will showcase using Python, but see the referenced reading for SQL, Scala and Standalone.</p>
-<h4 id="programming-resources"><a class="header" href="#programming-resources">Programming resources:</a></h4>
+<h4 id="programming-resources-used-in-this-notebook"><a class="header" href="#programming-resources-used-in-this-notebook">Programming resources used in this notebook:</a></h4>
 <ul>
 <li><a href="https://docs.delta.io/latest/quick-start.html">https://docs.delta.io/latest/quick-start.html</a></li>
 <li><a href="https://docs.databricks.com/delta/index.html">https://docs.databricks.com/delta/index.html</a></li>
 <li><a href="https://docs.databricks.com/delta/tutorial.html">https://docs.databricks.com/delta/tutorial.html</a></li>
-<li><a href="https://docs.delta.io/latest/delta-batch.html#language-python">https://docs.delta.io/latest/delta-batch.html#language-python</a></li>
 <li><a href="https://delta.io/blog/2022-10-25-create-delta-lake-tables/">https://delta.io/blog/2022-10-25-create-delta-lake-tables/</a></li>
 </ul>
 <h4 id="delta-lake-resources--standalone-delta"><a class="header" href="#delta-lake-resources--standalone-delta">Delta Lake Resources &amp; Standalone Delta</a></h4>
@@ -199,7 +204,7 @@
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># uncomment to delete the table
-dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+#dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
 </code></pre>
 </div>
 <div class="cell markdown">
@@ -400,6 +405,11 @@ display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&q
 <p>Sometimes it can make sense to write in SQL. Run the following to create a Delta table with SQL:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">/* If the table already exists, uncomment and run the following line:*/
+/*DROP TABLE IF EXISTS delta_table_sql;*/
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">spark.sql(&quot;&quot;&quot;
   CREATE TABLE delta_table_sql (country STRING, continent STRING) USING delta
 &quot;&quot;&quot;)
@@ -473,7 +483,7 @@ temp_df.show()
 <p>Copy one of the earlier entries in the <code>timestamps</code> column of the output of the last code cell and put it in <code>timestamp_string</code>. We will use it to read the corresponding data.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">timestamp_string = &quot;2023-01-15T10:34:12.000+0000&quot;  #PUT YOUR TIMESTAMP HERE
+<pre><code class="language-python">timestamp_string = &quot;2023-01-15T19:34:19.000+0000&quot;  #PUT YOUR TIMESTAMP HERE
 df1 = spark.read.format(&quot;delta&quot;).option(&quot;timestampAsOf&quot;, timestamp_string).load(&quot;/tmp/delta/delta-table&quot;)
 
 df1.show()
@@ -552,8 +562,6 @@ new_customers_count = count - last_week_count
 <li><a href="https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58">https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</a></li>
 </ul>
 </div>
-<div class="cell code" execution_count="1" scrolled="false">
-</div>
 
                     </main>
 
@@ -563,7 +571,7 @@ new_customers_count = count - last_week_count
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -577,7 +585,7 @@ new_customers_count = count - last_week_count
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

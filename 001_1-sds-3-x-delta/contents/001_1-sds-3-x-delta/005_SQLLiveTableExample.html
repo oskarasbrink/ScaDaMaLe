@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="active">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html">001a_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="active">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html">006_BronzeSilverGoldArchitecture</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,6 +149,12 @@
 <p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
 </div>
 <div class="cell markdown">
+<p>Oskar Åsbrink (<a href="https://www.linkedin.com/in/oskar-%C3%A5sbrink-847a76231/">LinkedIn</a>), Nicolás Martín Bekier (<a href="https://www.linkedin.com/in/nicolasmartinj/">LinkedIn</a>) and Raazesh Sainudiin (<a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">LinkedIn</a>)</p>
+<p>2023, Uppsala, Sweden</p>
+<p>This project was partly supported by Combient Mix AB through the Masters-level Data Science Project Course at:</p>
+<p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
+</div>
+<div class="cell markdown">
 <h1 id="example-delta-live-tables-quickstart-sql"><a class="header" href="#example-delta-live-tables-quickstart-sql">Example Delta Live Tables quickstart (SQL)</a></h1>
 <p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
 <h2 id="reference-reading"><a class="header" href="#reference-reading">Reference reading</a></h2>
@@ -162,13 +168,16 @@
 <p>This notebook demonstrates using Delta Live Tables <strong>Quickstart Pipeline</strong> on a dataset containing <em>Wikipedia clickstream</em> Databricks dataset.</p>
 </div>
 <div class="cell markdown">
-<p>To create our initial live table called <code>clickstream_raw</code>:</p>
+<p>To create our initial live table called <code>clickstream_raw</code> we start by ingesting data as follows:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-sql">CREATE LIVE TABLE clickstream_raw
 COMMENT &quot;The raw wikipedia click stream dataset, ingested from /databricks-datasets.&quot;
 AS SELECT * FROM json.`/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json`
 </code></pre>
+</div>
+<div class="cell markdown">
+<p>Next we clean and prepare the data as follows:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-sql">CREATE LIVE TABLE clickstream_clean(
@@ -182,6 +191,9 @@ AS SELECT
   prev_title AS previous_page_title
 FROM live.clickstream_raw
 </code></pre>
+</div>
+<div class="cell markdown">
+<p>Finally, we can gain some insights by finding the top referring pages as follows:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-sql">CREATE LIVE TABLE top_spark_referers
@@ -204,7 +216,7 @@ LIMIT 10
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -218,7 +230,7 @@ LIMIT 10
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

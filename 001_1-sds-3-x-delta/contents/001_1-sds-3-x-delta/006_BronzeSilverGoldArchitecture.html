@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>004_PythonLiveTableExample - sds-3.x/ScaDaMaLe</title>
+        <title>006_BronzeSilverGoldArchitecture - sds-3.x/ScaDaMaLe</title>
 
 
         <!-- Custom HTML head -->
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html">001a_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html" class="active">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html">006_BronzeSilverGoldArchitecture</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001a_DeltaLakeTutorial.html">001a_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldArchitecture.html" class="active">006_BronzeSilverGoldArchitecture</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -155,70 +155,107 @@
 <p>Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden</p>
 </div>
 <div class="cell markdown">
-<h1 id="example-delta-live-tables-quickstart-python"><a class="header" href="#example-delta-live-tables-quickstart-python">Example Delta Live Tables quickstart (Python)</a></h1>
-<p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
-<h2 id="reference-reading"><a class="header" href="#reference-reading">Reference reading</a></h2>
+<h1 id="medallion-lakehouse-architecture"><a class="header" href="#medallion-lakehouse-architecture">Medallion Lakehouse Architecture</a></h1>
+<p>The <strong>Medallion Lakehouse Architecture</strong> aims to structure data quality amongst different levels. From Bronze, to Silver, and to Gold levels, data that is originally unstructured and uncleaned, is more structured and cleaned for higher-level tables. Even many examples of this type of architecture is shown with Delta Live Tables, this can just as well be implemented in any open source Lakehouse architecture, with Delta Tables in your own open source solution.</p>
+<p>Reading:</p>
 <ul>
-<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</a></li>
-<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</a></li>
-<li><a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html">https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</a></li>
+<li><a href="https://docs.databricks.com/lakehouse/medallion.html#bronze">https://docs.databricks.com/lakehouse/medallion.html#bronze</a></li>
+<li><a href="https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca">https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca</a></li>
+</ul>
+<p>Repository with some examples:</p>
+<ul>
+<li><a href="https://github.com/databricks/delta-live-tables-notebooks">https://github.com/databricks/delta-live-tables-notebooks</a></li>
 </ul>
 </div>
+<div class="cell markdown">
+<p><img src="https://www.databricks.com/wp-content/uploads/2022/03/delta-lake-medallion-architecture-2.jpeg" alt="medallion architecture" /></p>
+</div>
+<div class="cell markdown">
+<p><img src="https://miro.medium.com/max/640/0*tNOy5w9Wvqmlg-AK" alt="Bronze layer" /></p>
+<p>The <strong>Bronze Layer</strong> contains the raw data that is ingested from batch or streaming. The data in this layer can be of various formats, from different sources and preferably stored in a file store that can hold high volumes of unstructured data.</p>
+<p><img src="https://miro.medium.com/max/640/0*X6b_mO0jNUqxdav7" alt="Silver layer" /></p>
+<p>In the <strong>Silver Layer</strong> of the lakehouse, data is validated, prepared and cleaned for general business use. Null values are replaced, joins with lookup tables, filters etc to give data that can be trusted for analytics, machine learning and business logic.</p>
+<p><img src="https://miro.medium.com/max/640/1*hY85AeQWXpLNNuuJe9U4rQ.webp" alt="Gold layer" /></p>
+<p><strong>Gold Layer</strong> is refined and structured data that is ready for consumption in specific projects. It can be ready for use in Business Intelligence and Machine Learning.</p>
+</div>
+<div class="cell markdown">
+<p>Here is a minimal code example showing the medallion architecture in Delta Live Tables, taken from the <a href="https://github.com/databricks/delta-live-tables-notebooks/blob/main/python/Wikipedia.py">Databricks Delta Live Tables notebooks repository</a>. Observe the transormations made to each of the queries defining each table.</p>
+<p>For the bronze <code>clickstream_raw</code> table, data is simlpy ingested in JSON format. In the (silver) <code>clickstream_clean</code> table, bronze data is cleansed and selected to produce data that it has &quot;just enough&quot; properties for analytics and ML. Lastly, the two gold tables (<code>top_spark_referrers</code>and <code>top_pages</code>) are filtered, aggregated, sorted for &quot;project specific&quot; Business Intelligence use.</p>
+</div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">import dlt
-from pyspark.sql.functions import *
+<pre><code class="language-python">from pyspark.sql.functions import *
 from pyspark.sql.types import *
-</code></pre>
-</div>
-<div class="cell markdown">
-<p>To create our initial live table called <code>clickstream_raw</code> we start by ingesting data as follows:</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">json_path = &quot;/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json&quot;
+import dlt
+
+json_path = &quot;/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json&quot;
+
+# Bronze
 @dlt.create_table(
-  comment=&quot;The raw wikipedia clickstream dataset, ingested from /databricks-datasets.&quot;
+  comment=&quot;The raw wikipedia click stream dataset, ingested from /databricks-datasets.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;bronze&quot;
+  }
 )
-def clickstream_raw():          
+def clickstream_raw():
     return (
-    spark.read.json(json_path)
+    spark.read.option(&quot;inferSchema&quot;, &quot;true&quot;).json(json_path)
   )
-</code></pre>
-</div>
-<div class="cell markdown">
-<p>Next we clean and prepare the data as follows:</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">@dlt.table(
-  comment=&quot;Wikipedia clickstream data cleaned and prepared for analysis.&quot;
+
+
+# Silver
+@dlt.create_table(
+  comment=&quot;Wikipedia clickstream dataset with cleaned-up datatypes / column names and quality expectations.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;silver&quot;
+  }
 )
-@dlt.expect(&quot;valid_current_page_title&quot;, &quot;current_page_title IS NOT NULL&quot;)
+@dlt.expect(&quot;valid_current_page&quot;, &quot;current_page_id IS NOT NULL AND current_page_title IS NOT NULL&quot;)
 @dlt.expect_or_fail(&quot;valid_count&quot;, &quot;click_count &gt; 0&quot;)
-def clickstream_prepared():
+def clickstream_clean():
     return (
-    dlt.read(&quot;clickstream_raw&quot;)
-      .withColumn(&quot;click_count&quot;, expr(&quot;CAST(n AS INT)&quot;))
-      .withColumnRenamed(&quot;curr_title&quot;, &quot;current_page_title&quot;)
-      .withColumnRenamed(&quot;prev_title&quot;, &quot;previous_page_title&quot;)
-      .select(&quot;current_page_title&quot;, &quot;click_count&quot;, &quot;previous_page_title&quot;)
-  )
-</code></pre>
-</div>
-<div class="cell markdown">
-<p>Finally, we can gain some insights by finding the top referring pages as follows:</p>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">@dlt.table(
-  comment=&quot;A table containing the top pages linking to the Apache Spark page.&quot;
+        dlt.read(&quot;clickstream_raw&quot;)
+          .withColumn(&quot;current_page_id&quot;, expr(&quot;CAST(curr_id AS INT)&quot;))
+          .withColumn(&quot;click_count&quot;, expr(&quot;CAST(n AS INT)&quot;))
+          .withColumn(&quot;previous_page_id&quot;, expr(&quot;CAST(prev_id AS INT)&quot;))
+          .withColumnRenamed(&quot;curr_title&quot;, &quot;current_page_title&quot;)
+          .withColumnRenamed(&quot;prev_title&quot;, &quot;previous_page_title&quot;)
+          .select(&quot;current_page_id&quot;, &quot;current_page_title&quot;, &quot;click_count&quot;, &quot;previous_page_id&quot;, &quot;previous_page_title&quot;)
+      )
+
+
+# Gold
+@dlt.create_table(
+  comment=&quot;A table of the most common pages that link to the Apache Spark page.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;gold&quot;  
+  }  
 )
 def top_spark_referrers():
     return (
-    dlt.read(&quot;clickstream_prepared&quot;)
-      .filter(expr(&quot;current_page_title == 'Apache_Spark'&quot;))
-      .withColumnRenamed(&quot;previous_page_title&quot;, &quot;referrer&quot;)
-      .sort(desc(&quot;click_count&quot;))
-      .select(&quot;referrer&quot;, &quot;click_count&quot;)
-      .limit(10)
-  )
+        dlt.read(&quot;clickstream_clean&quot;)
+          .filter(expr(&quot;current_page_title == 'Apache_Spark'&quot;))
+          .withColumnRenamed(&quot;previous_page_title&quot;, &quot;referrer&quot;)
+          .sort(desc(&quot;click_count&quot;))
+          .select(&quot;referrer&quot;, &quot;click_count&quot;)
+          .limit(10)
+        )
+
+
+# Gold
+@dlt.create_table(
+  comment=&quot;A list of the top 50 pages by number of clicks.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;gold&quot;  
+  }  
+)
+def top_pages():
+    return (
+        dlt.read(&quot;clickstream_clean&quot;)
+          .groupBy(&quot;current_page_title&quot;)
+          .agg(sum(&quot;click_count&quot;).alias(&quot;total_clicks&quot;))
+          .sort(desc(&quot;total_clicks&quot;))
+          .limit(50)
+        )
 </code></pre>
 </div>
 
@@ -226,11 +263,11 @@ def top_spark_referrers():
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/007_SharingData.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -240,11 +277,11 @@ def top_spark_referrers():
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/007_SharingData.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
