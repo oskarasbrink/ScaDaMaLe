@@ -1,0 +1,1215 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>sds-3.x/ScaDaMaLe</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="notes-for-raaz"><a class="header" href="#notes-for-raaz">Notes for Raaz:</a></h1>
+<ol>
+<li>I think it's too much DLT and pipeline, and not enough from the <a href="https://docs.delta.io/latest/index.html">open source docs</a>. Most of this module is effectively an ad for databricks paid versions.</li>
+</ol>
+<p>These notebooks could include stuff like batch- and stream read &amp; writes, constraints, partitioning, some SQL focus. This way, people on community edition or someone not interested in the pipeline could still interact and learn a lot. Could be good to make another notebook (001b or something). Ping me on element if this is something we could do before tonight</p>
+<ul>
+<li>https://docs.delta.io/latest/delta-batch.htm</li>
+<li>https://docs.delta.io/latest/delta-streaming.html</li>
+<li>https://docs.delta.io/latest/delta-constraints.html ************************************</li>
+</ul>
+<ol>
+<li>I feel like its ok to exclude the last notebook on sharing data can be excluded. Doesn't feel super relevant. You can decide, i have the module cloned in my workspace.</li>
+</ol>
+<hr />
+</div>
+<div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="introduction-to-delta-lake--delta-live-tables-dlt"><a class="header" href="#introduction-to-delta-lake--delta-live-tables-dlt">Introduction to Delta Lake &amp; Delta Live Tables (DLT)</a></h1>
+<p>This module will guide you through: - Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes - Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines - Basic operations on Delta Tables - Demonstrate a basic example of building a DLT pipeline in Databricks - Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</p>
+<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics: - https://docs.databricks.com/getting-started/dataframes-python.html - https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</p>
+<p>Before moving on to Delta Lake and Delta Live Tables, there are some foundational Data engineering topics that we need to read or refresh upon</p>
+</div>
+<div class="cell markdown">
+<h2 id="data-warehouse-vs-data-lake"><a class="header" href="#data-warehouse-vs-data-lake">Data Warehouse vs Data Lake</a></h2>
+<p>A <a href="https://en.wikipedia.org/wiki/Data_warehouse"><strong>Data Warehouse</strong></a> is a repository with structured data which supports Business Intelligence (BI) and analytic. Contents in a warehouse are preprocessed and organized, usually through ETL (Extract, Transform, Load) operations that feed into it. Warehouses provide <strong>reliability</strong> and <a href="https://www.databricks.com/glossary/acid-transactions">ACID transactions</a>, and have been a popular solution since the 1980's.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Data_lake"><strong>Data Lake</strong></a> is a central repository that stores all organizational data (unstructured, semistructed, or structured). A Data lake Architecture typically handles large volumes of raw data without the need to structure it first. Raw and unstructured Data stored in Data lakes can be used to build <strong>Data Pipelines</strong>, which is cover later on in the module. Data Lakes have been popular since 2011 with the availability of <a href="https://en.wikipedia.org/wiki/Apache_Hadoop#HDFS">HDFS</a> and low cost storage, including with services such as <a href="https://en.wikipedia.org/wiki/Amazon_S3">AWS S3</a>.</p>
+<h2 id="acid-guarantees"><a class="header" href="#acid-guarantees">ACID Guarantees</a></h2>
+<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties: - <strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made. - <strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction. - <strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other. - <strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</p>
+<p>ACID transactions basically guarantee data validity despite errors and interruptions. In regards to Delta Lake and Lakehouses, when data is read and written simultaneously, it is important to keep data integrity. Delta Lake keeps track of all commits made to tables to keep data consistent accross multiple users.</p>
+<h2 id="etl-processes"><a class="header" href="#etl-processes">ETL processes</a></h2>
+<p><strong>ETL</strong>, which stands for <strong>Extract, Transform and Load,</strong> is a three phase process where raw data is extracted from systems, transformed (cleansed, processed to improve data quality) and loaded into an end target, which can be any data store.</p>
+<h3 id="more-foundational-reading-on-these-topics"><a class="header" href="#more-foundational-reading-on-these-topics">More foundational reading on these topics:</a></h3>
+<p>What is a Data lake? - https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</p>
+<p>Data warehouse Concepts - https://aws.amazon.com/data-warehouse/</p>
+<p>Data lake vs Data warehouse - https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</p>
+<p>Delta lake, ACID transactions for Apache Spark - https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</p>
+<p>What is ETL? - https://www.ibm.com/topics/etl</p>
+</div>
+<div class="cell markdown">
+<h2 id="data-lakehouse"><a class="header" href="#data-lakehouse">Data Lakehouse</a></h2>
+<p><img src="https://www.databricks.com/wp-content/uploads/2020/01/data-lakehouse-new.png" alt="" /></p>
+<p>Lakehouse architecture aims to provide the ACID guarantees and reliability of warehouses while only requiring the cost-effectiveness, efficiency and scalability that Data Lakes provide. Companies and organisations usually rely on warehouses for BI and analytics, while also needing raw data from Data lakes for applications such as machine learning, which can result in a more complex architecture, additional ETL processes, duplicate and stale data, as well as extra costs and vendor lock-in. If we can provide the structure and reliability of warehouses on top of a Data lake, we can ommit the need for the warehouse!</p>
+<p>This can be achieved with the help of <strong>metadata layers</strong> within the Data lake, which keep track of key information such as transactions (enabling versioning and ACID capabilities), and statistics of underlying structured data, in a similar way as a .git folder saves relevant information of a Git repository. Two examples that enable this are <strong>Delta Lakes</strong> or <a href="https://en.wikipedia.org/wiki/Apache_Iceberg"><strong>Apache Iceberg</strong></a>, both of which are currently based on <a href="https://en.wikipedia.org/wiki/Apache_Parquet">Parquet files</a> to store structured information in tabular format.</p>
+<h3 id="deep-dive"><a class="header" href="#deep-dive"><strong>Deep dive:</strong></a></h3>
+<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics - https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</p>
+<p>Data Lakehouse: - https://www.databricks.com/glossary/data-lakehouse</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://www.databricks.com/blog/2020/01/30/what-is-a-data-lakehouse.html"
+ width="95%" height="700"
+ sandbox>
+  <p>
+    <a href="https://en.wikipedia.org/wiki/Data_lake">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h1 id="delta-lake-overview"><a class="header" href="#delta-lake-overview">Delta Lake Overview</a></h1>
+<p>Delta Lake is an open-source table storage layer over cloud object stores initially developed at Databricks, and is designed to run on top of an existing Data Lake. It serves an integral part in the Databricks Lakehouse, and enables the following:</p>
+<ul>
+<li>ACID guarantees: as mentioned earlier, ACID guarantees is a higly regarded property. Data lakes typically have multiple data pipelines reading and writing concurrently.</li>
+<li>Scalable data and metadata handling: Metadata itself can grow to huge sizes within a Data lake.</li>
+<li>Audit history and time travel: Logs of transactions and audit history enables access to revert to earlier versions of data for audits or to reproduce experiments.</li>
+<li>Schema enforcement and schema evolution: This provides ability to both enforce schemas and allows changing schemas when needed</li>
+<li>Open format: All data in a Delta Lake is stored in <a href="https://www.upsolver.com/blog/apache-parquet-why-use">Apache Parquet format</a>, a file format designed to support fast data processing, with columnar based formats, allowing for higher performance when selecting and filtering data. <a href="https://towardsdatascience.com/demystifying-the-parquet-file-format-13adb0206705">More on parquet file format</a>.</li>
+<li>Streaming and batch unification: Delta tables is both a batch table and a streaming source and sink. We can write both batch and streaming data into the same table.</li>
+</ul>
+<p>Note that Delta Lake (Delta.io) is open source, but the pipeline that will be run in later notebooks utilizes Databricks Delta Live Tables (DLT) that makes it easy to declaratively build and manage whole data pipelines on a Delta Lake.</p>
+</div>
+<div class="cell markdown">
+<h4 id="deep-dive-into-lakehouse-and-delta-lake"><a class="header" href="#deep-dive-into-lakehouse-and-delta-lake">Deep dive into Lakehouse and Delta lake:</a></h4>
+<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores - https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</p>
+<p>Delta lake: The Definitive Guide by O’Reilly (in development) - https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</p>
+<h4 id="lighter-reading--video"><a class="header" href="#lighter-reading--video">Lighter reading &amp; video:</a></h4>
+<p>The Databricks Lakehouse Platform - https://www.databricks.com/product/data-lakehouse Delta Lake 2.0 Overview (38m) - https://www.youtube.com/watch?v=VWJT3JyPKvk</p>
+<p>The Data Lakehouse Platform For Dummies - https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</p>
+</div>
+<div class="cell markdown">
+<h4 id="oskar-note-131---2023"><a class="header" href="#oskar-note-131---2023">Oskar note 13/1 - 2023</a></h4>
+<p>if there is time, add some images or examples of delta lake being used in the real world, and maybe some references to its crazy performance in some use cases.</p>
+</div>
+<div class="cell markdown">
+<h2 id="delta-live-tables-dlt"><a class="header" href="#delta-live-tables-dlt">Delta Live Tables (DLT)</a></h2>
+<p>Delta Live Tables is an extension of delta tables in Databricks with extra functionalities, so its important not to remember the differences of Delta Lake, Delta Table and Delta Live Table. DLT is covered in its own notebooks, but for now, keep in mind that Delta Live Tables and the databricks pipeline they run in basically adds or simplifies some moments of setting up a data management pipeline, such as:</p>
+<ul>
+<li>Managed workflow for loading delta tables</li>
+<li>Dependency management</li>
+<li>Managing data expectations on data quality</li>
+<li>Visual interface for data lineage and analysis</li>
+</ul>
+<p>The next notebook will go specifically into Delta Lake and Delta Tables to set up some foundational knowledge on these topics. Later, we will delve more into Databricks Delta Live Tables and the Pipeline.</p>
+</div>
+<div class="cell markdown">
+<h2 id="how-to-start-using-delta-lake"><a class="header" href="#how-to-start-using-delta-lake">How to start using Delta Lake</a></h2>
+<p>Delta Lake is well integrated within the Apache Spark ecosystem, so the easiest way to start working with Delta Lake is to use it with Apache Spark. Databricks Community Edition can be a good starting point, but feel free to try Local Spark shell or Leveraging Github or Maven, which will not be covered in this series. If you have cluster creation permissions, and your account is tied to a shard with Databricks subscription, you can access DLT and the DLT pipeline.</p>
+<p>Open Source Delta lake: - https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</p>
+<p>Delta Live tables and the pipeline: - https://www.databricks.com/product/delta-live-tables</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="delta-lake-tutorial"><a class="header" href="#delta-lake-tutorial">Delta Lake Tutorial</a></h1>
+<p>Before moving on to Databricks Delta Live Tables, we will cover what Delta Tables are, and explore the main features of Delta Lake. Delta lake has support for many languages, like PySpark, SQL, Scala and R, with standalone versions for Python, Java and more. This guide will showcase using Python, but see the referenced reading for SQL, Scala and Standalone.</p>
+<h4 id="programming-resources"><a class="header" href="#programming-resources">Programming resources:</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/quick-start.html</li>
+<li>https://docs.databricks.com/delta/index.html</li>
+<li>https://docs.databricks.com/delta/tutorial.html</li>
+<li>https://docs.delta.io/latest/delta-batch.html#language-python</li>
+<li>https://delta.io/blog/2022-10-25-create-delta-lake-tables/</li>
+</ul>
+<h4 id="delta-lake-resources--standalone-delta"><a class="header" href="#delta-lake-resources--standalone-delta">Delta Lake Resources &amp; Standalone Delta</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/delta-resources.html</li>
+</ul>
+<p>If you intend to setup Delta Lake with Spark on your own machine, see instructions for running Delta Lake with Spark-shell, SBT or Maven:</p>
+<h4 id="optional-set-up-apache-spark-with-delta-lake"><a class="header" href="#optional-set-up-apache-spark-with-delta-lake">(Optional) Set up Apache Spark with Delta Lake</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>Lets go through some parts of the python tutorial from <a href="https://docs.delta.io/latest/quick-start.html#language-python">https://docs.delta.io/latest/quick-start.html#language-python</a>.</p>
+<h2 id="basic-delta-lake-operations-covered-in-this-notebook"><a class="header" href="#basic-delta-lake-operations-covered-in-this-notebook">Basic Delta Lake operations covered in this notebook:</a></h2>
+<ul>
+<li>
+<h4 id="create-and-save-delta-table"><a class="header" href="#create-and-save-delta-table">Create and Save Delta table</a></h4>
+</li>
+<li>
+<h4 id="append-and-overwrite"><a class="header" href="#append-and-overwrite">Append and overwrite</a></h4>
+</li>
+<li>
+<h4 id="time-travel"><a class="header" href="#time-travel">Time travel</a></h4>
+</li>
+<li>
+<h4 id="schema-enforcement-and-validation"><a class="header" href="#schema-enforcement-and-validation">Schema enforcement and validation</a></h4>
+</li>
+<li>
+<h4 id="delta-log--time-travel"><a class="header" href="#delta-log--time-travel">Delta Log &amp; Time travel</a></h4>
+</li>
+<li>
+<h4 id="write-to-s3-object-storage"><a class="header" href="#write-to-s3-object-storage">Write to S3 object storage</a></h4>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>At any time while testing the code, you can delete a delta table using the the following command:</p>
+<p><code>dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)</code></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># uncomment to delete the table
+dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="create-a-dataframe-and-save-it-as-a-delta-table"><a class="header" href="#create-a-dataframe-and-save-it-as-a-delta-table">Create a DataFrame and save it as a Delta Table</a></h2>
+<p>first, let's load a <code>DataFrame</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Import data types
+from pyspark.sql.types import *
+
+# Define the schema, or let it be inferred when loading your data.
+schema = StructType(
+   [StructField('instant',IntegerType(), True),
+    StructField('dteday', TimestampType(), True),
+    StructField('season', IntegerType(), True),
+    StructField('yr', IntegerType(), True),
+    StructField('mnth', IntegerType(), True),
+    StructField('holiday', IntegerType(), True),
+    StructField('weekday', IntegerType(), True),
+    StructField('workingday', IntegerType(), True),
+    StructField('weathersit', IntegerType(), True),
+    StructField('temp', DoubleType(), True),
+    StructField('atemp', DoubleType(), True),
+    StructField('hum', DoubleType(), True),
+    StructField('windspeed', DoubleType(), True),
+    StructField('casual', IntegerType(), True),
+    StructField('registered', IntegerType(), True),
+    StructField('cnt', IntegerType(), True)
+    
+    
+   ]
+  )
+
+infer_schema = &quot;false&quot;
+file_format = &quot;csv&quot;
+delimiter = &quot;,&quot;
+file = '/databricks-datasets/bikeSharing/data-001/day.csv'
+df = spark.read.format(file_format) \
+    .option(&quot;inferShema&quot;, infer_schema) \
+    .option(&quot;sep&quot;,delimiter) \
+    .option(&quot;header&quot;, True) \
+    .schema(schema) \
+    .load(file)
+
+
+df.printSchema()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's see the contents of the dataframe to be written to a delta table:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Run to save this DataFrame as a Delta table to <code>/tmp/delta/</code> with the name <code>delta-table</code>:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">try:
+    df.write.format(&quot;delta&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+except:
+    print(&quot;table already exists!&quot;) # if it exists, you uncomment the next line and run again to delete it
+    #dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+    
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># let's take a look at the table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We can run a simple command to make sure that the table is indeed a Delta table:</p>
+<p><strong>Note:</strong> make sure to import <code>delta.tables</code>!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from delta.tables import *
+DeltaTable.isDeltaTable(spark, &quot;/tmp/delta/delta-table&quot;) # True
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If the table already exists, you can <strong>overwrite</strong> or <strong>append to</strong> the table.</p>
+<p><code>append</code> will add any <strong>non-mathcing records</strong> while <code>overwrite</code> <strong>replaces all data in the table</strong>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>However, you can still not <strong>overwrite or append to a table with a different schema</strong>.</p>
+<p>Lets change the schema of the DataFrame and try it!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Define the schema, or let it be inferred when loading your data.
+schema = StructType(
+   [StructField('instant',IntegerType(), True),
+    StructField('dteday', TimestampType(), True),
+    
+    #Lets define season as String instead of Int!
+    StructField('season', StringType(), True),
+    StructField('yr', IntegerType(), True),
+    StructField('mnth', IntegerType(), True),
+    StructField('holiday', IntegerType(), True),
+    StructField('weekday', IntegerType(), True),
+    StructField('workingday', IntegerType(), True),
+    StructField('weathersit', IntegerType(), True),
+    StructField('temp', DoubleType(), True),
+    StructField('atemp', DoubleType(), True),
+    StructField('hum', DoubleType(), True),
+    StructField('windspeed', DoubleType(), True),
+    StructField('casual', IntegerType(), True),
+    StructField('registered', IntegerType(), True),
+    StructField('cnt', IntegerType(), True)   
+    
+   ]
+  )
+
+infer_schema = &quot;false&quot;
+file_format = &quot;csv&quot;
+delimiter = &quot;,&quot;
+file = '/databricks-datasets/bikeSharing/data-001/day.csv'
+df_newschema = spark.read.format(file_format) \
+    .option(&quot;inferShema&quot;, infer_schema) \
+    .option(&quot;sep&quot;,delimiter) \
+    .option(&quot;header&quot;, True) \
+    .schema(schema) \
+    .load(file)
+
+
+df_newschema.printSchema()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df_newschema.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>This is just standard practice when writing tables. You should not be able to mix and match schemas. However, what happens if we encounter the case where the data capture changes, and a new column is added?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#create a new dataframe with an additional column
+from pyspark.sql.functions import lit
+new_df = df.withColumn(&quot;bonus_column&quot;, lit(0.3))
+new_df.printSchema()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We get schema mismatch again! But this time, it is a Delta specific exception. This is because Delta tables have features called <em>schema enforcement</em> and <em>schema evolution</em>.</p>
+<p><em>Schema enforcement</em> (or <em>schema validation</em>) is a safeguard in Delta Lake that rejects writes to a table that do not match the table's schema. This prevents us from accidentally polluting tables with mistakes or garbage data. In cases of mismatch in schemas, no data is written and an exception is raised letting the user know about the mismatch.</p>
+<p><em>Schema evolution</em> allows us to easily change the current table schema to accomodate that data is changing over time. This is commonly used to automatically adapt the schema to include one or more new columns. It can be good to use if you intend to add the columns that were previously rejected due to schema mismatch.</p>
+<p>More on Schema enforcement and evolution: - https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</p>
+<p>Let's try writing to the table again, with <code>overwrite</code> mode, and <code>mergeschema = true</code> to enable schema evolution:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).option(&quot;mergeSchema&quot;,&quot;true&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#display the new table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Notice that we have just overwritten the data, now with the <code>bonus column</code>. What happens if we configure <code>append</code> instead of <code>overwrite</code>?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># for the sake of learning, reset the table to initial dataframe state first
+dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+df.write.format(&quot;delta&quot;).save(&quot;/tmp/delta/delta-table&quot;) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).option(&quot;mergeSchema&quot;,&quot;true&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now observe the results using <code>display</code>. Scroll down to the earlier entries to see that all of the earlier entries have value <code>null</code> for the new column <code>bonus column</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#display the current state of the table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="creating-a-table-in-sql"><a class="header" href="#creating-a-table-in-sql">Creating a table in SQL:</a></h4>
+<p>Sometimes it can make sense to write in SQL. Run the following to create a Delta table with SQL:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">spark.sql(&quot;&quot;&quot;
+  CREATE TABLE delta_table_sql (country STRING, continent STRING) USING delta
+&quot;&quot;&quot;)
+
+spark.sql(&quot;&quot;&quot;
+  INSERT INTO delta_table_sql VALUES
+      ('china', 'asia'),
+      ('argentina', 'south america')
+&quot;&quot;&quot;).show
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>You can continue programming in an SQL fashion, with a delta table instead of a table, but this tutorial will continue with Python.</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-delta-log"><a class="header" href="#the-delta-log">The Delta Log</a></h2>
+<p>The Delta Log is the transaction log of changes to tables in the Delta Lake. Through this log, all readers and writers have access to the &quot;true&quot; state of each table, even if tables have been modified since the last time they were read. Spark will check the log to see if new transactions are posted to a table and update the end user's table with any new changes. This allows atomicity, multiple concurrent reads and writes in addition to conflict resolution. <em><strong>The Delta Log enables us to run many of the key Delta lake's properties, like ACID transactions, scalable metadata handling, time travel, and more.</strong></em></p>
+<p><strong>Deep dive:</strong> - https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html - https://books.japila.pl/delta-lake-internals/DeltaLog/</p>
+</div>
+<div class="cell markdown">
+<p>See the <code>_delta_log</code> for the table!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">dbutils.fs.ls(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="display-history-of-the-table"><a class="header" href="#display-history-of-the-table">Display history of the table:</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="time-travel-query-an-older-version-of-the-table-using-the-delta-log"><a class="header" href="#time-travel-query-an-older-version-of-the-table-using-the-delta-log">Time travel: Query an older version of the table using the delta log</a></h2>
+<p>With Time travel you can access older version of a table, with either a timestamp or version</p>
+<p>timestamp<em>expression can be any one of: - '2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp - cast('2018-10-18 13:36:32 CEST' as timestamp) - '2018-10-18', that is, a date string - current</em>timestamp() - interval 12 hours - date<em>sub(current</em>date(), 1) - Any other expression that is or can be cast to a timestamp</p>
+<p>version is a long value that can be obtained from the output of DESCRIBE HISTORY table_spec.</p>
+</div>
+<div class="cell markdown">
+<p>Lets mess with the table. We will select <code>windspeed</code> and multiply all values with 100.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">temp_df = spark.read.format(&quot;delta&quot;).option(&quot;inferSchema&quot;,&quot;true&quot;).load(&quot;/tmp/delta/delta-table&quot;)
+
+temp_df = temp_df.withColumn(&quot;windspeed&quot;, temp_df.windspeed*100)
+temp_df.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+temp_df.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Again, we look at the history of the delta table. Notice the new entry:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Copy one of the earlier entries in the <code>timestamps</code> column of the output of the last code cell and put it in <code>timestamp_string</code>. We will use it to read the corresponding data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">timestamp_string = &quot;2023-01-15T10:34:12.000+0000&quot;  #PUT YOUR TIMESTAMP HERE
+df1 = spark.read.format(&quot;delta&quot;).option(&quot;timestampAsOf&quot;, timestamp_string).load(&quot;/tmp/delta/delta-table&quot;)
+
+df1.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>we accessed the version where <code>Windspeed</code> still had its original value!</p>
+<p>Now do the same but we use the first <code>version</code> of the table:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">version = &quot;0&quot; 
+df2 = spark.read.format(&quot;delta&quot;).option(&quot;versionAsOf&quot;, version).load(&quot;/tmp/delta/delta-table&quot;)
+df2.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Using this, for example, we can query the number of new entries from the last day or week, or since the last table version! Observe that the following code will not run since there is no history for the last week.</p>
+<p>see more: - https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># THIS CODE WILL NOT RUN
+last_week = spark.sql(&quot;SELECT CAST(date_sub(current_date(), 7) AS STRING)&quot;).collect()[0][0]
+df = spark.read.format(&quot;delta&quot;).option(&quot;timestampAsOf&quot;, last_week).load(&quot;/tmp/delta/delta-table&quot;)
+last_week_count = df.select(&quot;instant&quot;).distinct().count()
+count = spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/events&quot;).select(&quot;instant&quot;).distinct().count()
+new_customers_count = count - last_week_count
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="write-to-s3-object-storage-1"><a class="header" href="#write-to-s3-object-storage-1">Write to S3 object storage</a></h3>
+<p>When Delta Lake into production as part of your Delta Lakehouse, many choose to work with Cloud object storage such as Amazon S3.</p>
+<p>If you intend on continue working in Databricks but still wish to write to Amazon S3, look into <a href="https://docs.databricks.com/external-data/amazon-s3.html">Working with data in Amazon S3</a>.</p>
+<p>Working on single-cluster setup on your own machine, or an instance such as Amazon EC2, you can use the following code for configuring Delta and S3 credentials for the most basic use case.</p>
+<ul>
+<li>https://docs.delta.io/latest/delta-storage.html</li>
+</ul>
+</div>
+<div class="cell markdown">
+<pre><code>spark = SparkSession.builder() \
+    .appName(&quot;AppName&quot;) \
+    .master(&quot;local[*]&quot;) \
+    .config(&quot;spark.sql.extensions&quot;, &quot;io.delta.sql.DeltaSparkSessionExtension&quot;) \
+    .config(&quot;spark.sql.catalog.spark_catalog&quot;, &quot;org.apache.spark.sql.delta.catalog.DeltaCatalog&quot;) \
+    .config(&quot;spark.hadoop.fs.s3a.access.key&quot;,&quot;your_access_key&quot;).config(&quot;spark.hadoop.fs.s3a.secret.key&quot;,&quot;your_secret_access_key&quot;) \
+    .getOrCreate()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>AWS keys can be very valueable, and this configuration can be done in more secure ways that storing the key inside your code. For more advanced use cases, see <a href="https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Warning_.234:_Your_AWS_credentials_are_very.2C_very_valuable">other S3 connectors.</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="final-remarks-on-delta-programming"><a class="header" href="#final-remarks-on-delta-programming">Final remarks on Delta programming:</a></h2>
+<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications: - https://docs.delta.io/latest/delta-batch.html - https://docs.delta.io/latest/delta-streaming.html - https://docs.delta.io/latest/delta-update.html</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation"><a class="header" href="#the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation">The next notebooks will talk more about Delta Live Tables in Databricks, but if you wish to build your own open source implementation:</a></h2>
+<p>If you attain basic knowdledge of <strong>Docker, Terraform, PySpark or Scala (with SBT), Delta Lake</strong>, and any <strong>Cloud provider such as AWS,</strong> then you ready to build powerful applications for batch and streaming with your own Delta Lake!</p>
+<p>Resources: - https://delta.io - https://www.scala-sbt.org - https://www.terraform.io - https://www.docker.com - https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="delta-live-tables-crash-course"><a class="header" href="#delta-live-tables-crash-course">Delta Live Tables Crash Course</a></h1>
+<p>Delta Live Tables (DLT) is a managed workflow for loading delta tables, with easy management of dependencies and data <em>expectations</em>. This notebook will go through the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html">Delta Live Tables Python language reference</a>.</p>
+<p>Delta Live Tables Demo: Modern software engineering for ETL processing (16m) - https://www.youtube.com/watch?v=BIxwoO65ylY&amp;t=4s</p>
+<p>Advancing Spark - Databricks Delta Live Tables First Look (33m) - https://www.youtube.com/watch?v=0K_CLhwRHAM&amp;t</p>
+<p>Live Tables Python reference - https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</p>
+</div>
+<div class="cell markdown">
+<p>The following code will not be able to run in cells since it will have to be run in a pipeline, but get familiar with the syntax and read the reference material.</p>
+</div>
+<div class="cell markdown">
+<h2 id="dlt-datasets"><a class="header" href="#dlt-datasets">DLT datasets</a></h2>
+<p>There are two types of datasets in Delta Live Tables, <em><strong>Tables</strong></em> and <em><strong>Views</strong></em>.</p>
+<p>At runtime, <code>Tables</code> are automatically created into Delta format and ensures that those tables are updated with the latest result of the query that creates that tables.</p>
+<p><code>Views</code> are an alias to some computation, and allow you to break long queries into smaller subqueries. Views will only exist within the pipeline, and can therefore not be accessed and queried interactively`</p>
+</div>
+<div class="cell markdown">
+<h2 id="creating-a-live-table-in-python"><a class="header" href="#creating-a-live-table-in-python">Creating a Live table in Python</a></h2>
+<p>The python <code>table</code> and <code>view</code> functions must return a table or a dataframe. To create a table you must use the <code>@dlt.table</code> syntax, followed by <strong>defining a function</strong> that returns a <strong>DataFrame</strong> or a <strong>Pyspark Pandas DataFrame</strong>.</p>
+<p>The general way to create tables and views is the following:</p>
+<pre><code>@dlt.table or view(name=&quot;name&quot;, comment = &quot;comment&quot;)
+def function_name():
+  return &lt;query&gt;
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(name = &quot;first table&quot;)
+def data_raw():
+    return spark.read.format(&quot;json&quot;).load(&quot;/databricks-datasets/nyctaxi/sample/json/&quot;)
+
+
+@dlt.table(name = &quot;second table&quot;,
+          comment = &quot;second table, loading the first table in the pipeline.&quot;)
+def filtered_data():
+    return dlt.read(&quot;data_raw&quot;).where(...).merge(...).select(...)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="creating-a-view"><a class="header" href="#creating-a-view">Creating a view</a></h3>
+<p>Views are created in the same way as tables, but with <code>@dlt.view</code> syntax.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.view(name = &quot;what a nice view&quot;)
+def taxi_raw():
+    return spark.read.format(&quot;json&quot;).load(&quot;/databricks-datasets/nyctaxi/sample/json/&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="creating-a-live-table-in-sql"><a class="header" href="#creating-a-live-table-in-sql">Creating a Live table in SQL</a></h2>
+<p>Sometimes it can be preferable to code in SQL. Just use the <code>%sql</code> magic and run your queries as usual.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">CREATE OR REFRESH LIVE TABLE data_raw
+AS SELECT * FROM json.`/databricks-datasets/nyctaxi/sample/json/`
+
+CREATE OR REFRESH LIVE TABLE filtered_data
+AS SELECT
+  ...
+MERGE ... 
+FROM LIVE.data_raw
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="define-the-schema-when-loading-data"><a class="header" href="#define-the-schema-when-loading-data">Define the schema when loading data:</a></h2>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(name=&quot;first table&quot;,schema=
+    StructType(
+     [
+        StructField('Name', StringType()),
+        StructField('Age', IntegerType()),
+        StructField('Weight', DoubleType())
+      ]
+    ))
+def data_raw():
+    return spark.read.format(&quot;json&quot;).load(&quot;/databricks-datasets/nyctaxi/sample/json/&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="live--and-streaming-live-tables"><a class="header" href="#live--and-streaming-live-tables">Live- and streaming Live tables</a></h3>
+<p>You can define <em>Live</em> and <em>streaming live</em> views and tables. A <em>Live</em> table reflects the results of the query that defines it. These are usually used for batch processing. A <em>streaming live</em> table or view process data that have only been added since the last pipeline update. This can be preferable</p>
+</div>
+<div class="cell markdown">
+<h2 id="expectations"><a class="header" href="#expectations">Expectations</a></h2>
+<p>You use expectations to define constraints of the quality of a dateset. An example of an expectation is the following:</p>
+</div>
+<div class="cell markdown">
+<h3 id="expectation-operators"><a class="header" href="#expectation-operators">Expectation operators</a></h3>
+<ul>
+<li>The <code>expect</code> operator will keep records that violate the expectation.</li>
+<li>The <code>expect_or_drop</code> operator will drop records that fails validation.</li>
+<li>The <code>expect_or_fail</code> will halt execution when any record fails validation.</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(name=&quot;test_table&quot;,comment=&quot;a nice first table for your pipeline, with a column for dates&quot;)
+@dlt.expect(&quot;valid timestamp&quot;, &quot;col(“timestamp”) &gt; '2012-01-01'&quot;)
+def prepared_data():
+    return dlt.read(&quot;raw_table&quot;).filter(&quot;timestamp &gt; '2012-01-01'&quot;).where(...)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="multiple-expectations"><a class="header" href="#multiple-expectations">Multiple Expectations</a></h3>
+<p>use <code>expect_all</code> to specify multiple quality constraints. The same goes for <code>expect_all_or_drop</code> and <code>expect_all_or_fail</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(name=&quot;test_table&quot;,comment=&quot;a nice first table for your pipeline, with a column for dates&quot;)
+@dlt.expect_all({&quot;valid_count&quot;: &quot;count &gt; 0&quot;, &quot;valid_current_page&quot;: &quot;current_page_id IS NOT NULL AND current_page_title IS NOT NULL&quot;})
+def prepared_data():
+    dlt.read(&quot;raw_table&quot;).filter(&quot;timestamp &gt; '2012-01-01')
+    return query to create an additional table
+</code></pre>
+</div>
+<div class="cell markdown">
+<h1 id="how-would-this-work-an-existing-codebase"><a class="header" href="#how-would-this-work-an-existing-codebase">How would this work an existing codebase?</a></h1>
+<p>This way of programming can seem quite rigid and strict, but you can still return predefined functions as a query when defining a table or a view. Lets say we have notebook with a bunch of predefined functions, used for ETL, and you want to try this code in a pipeline with Delta Live Tables</p>
+<p>The example function is slightly modified from this guide: https://www.sicara.fr/blog-technique/databricks-delta-live-tables-software-engineering-best-practices</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># any predefined function used for ETL
+def enrich_nyc_taxi_data(nyc_taxi_df):
+    return nyc_taxi_df.withColumn(
+        &quot;short_ride&quot;, F.when(F.col(&quot;trip_distance&quot;) &lt; 1, True).otherwise(False)
+    )
+    
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We can create a new notebook that uses a function defined earlier, <code>enrich_nyc_taxi_data</code> to create a delta live table</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(name = &quot;taxi raw&quot;)
+    def load_data()
+        return spark.read.format(&quot;json&quot;).load(&quot;/databricks-datasets/nyctaxi/sample/json/&quot;)
+    
+@dlt.table(comment=&quot;Enriched NYC Taxi data&quot;)
+    def enriched_data():
+        return enrich_nyc_taxi_data(dlt.read(&quot;taxi raw&quot;)) #dlt.read will return a dataframe, passed as argument to 'enrich_nyc_taxi_data()'
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Remeber to include both notebooks when configuring the pipeline. How to this is done will be demonstrated in the next notebook.</p>
+</div>
+<div class="cell markdown">
+<p>Creating Delta Live Tables is very simple. But with clever programming they can help perform advanced tasks. See the Databricks <a href="https://github.com/databricks/delta-live-tables-notebooks">Delta Live Table Example Notebooks repository</a> for more elaborate applications. How we can use Delta Live Tables will be demonstrated in the coming notebooks.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="setting-up-pipeline-for-delta-live-tables"><a class="header" href="#setting-up-pipeline-for-delta-live-tables">Setting up Pipeline for Delta Live tables</a></h1>
+<p>To be able to run your scripts for Delta Live tables in a Pipeline, first we need to create and setup a pipeline.</p>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>If you are on Databricks Community edition, you do not have support for DLT or running the pipeline, but you can <a href="https://www.databricks.com/try-databricks">sign up for a 14-day free trial</a>.</li>
+<li>You need <a href="https://docs.databricks.com/clusters/clusters-manage.html#cluster-permissions">cluster creation permission</a>. The DLT runtime creates a cluster before it runs your pipeline and fails if you don’t have the correct permission. If you don't meet these requirements, feel free to continue reading throught the rest of the Live Tables notebooks, or jump to notebook __006_BronzeSilverGoldProductionizing__.</li>
+</ul>
+<h2 id="reference-reading"><a class="header" href="#reference-reading">Reference Reading</a></h2>
+<ul>
+<li>https://docs.databricks.com/workflows/delta-live-tables/index.html#</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="creating-a-pipeline"><a class="header" href="#creating-a-pipeline">Creating a Pipeline</a></h2>
+<p>see: https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-ui.html</p>
+<p>This quickstart guide will provide basic settings for your pipeline. For scaling and optimizing a pipeline for specific needs, read more in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-api-guide.html">the pipeline documentation</a>.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Quickstart:</strong></p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/pipeline_setup.png?raw=true" alt="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/0011-sds-3-x-delta/pipelinesetup.png?raw=true" /></p>
+<ol>
+<li>From you Databricks homepage, go to <strong>Workflows</strong> and <strong>Delta Live Tables</strong>. Click <strong>Create pipeline</strong>. Fill in <strong>Name</strong> to <code>Quickstart Pipeline</code>. If this already exists, choose another name or run the already created pipeline.</li>
+<li>For <em>product edition</em> Select <strong>Advanced</strong>. This is necessary for the <em>expectations</em> used in the two example notebooks. More info on pricing <a href="https://www.databricks.com/product/pricing/delta-live">here</a>.</li>
+<li>Set <em>Pipeline mode</em> to <strong>Triggered</strong>.</li>
+<li><em>Cluster policy</em> can be left blank for this tutorial.</li>
+<li>For <em>Notebook libraries</em> find and select the __004_PythonLiveTableExample__ notebook in this module.</li>
+<li>For <em>Storage location</em> leave it blank to automatically be assigned a DBFS location, or specify to your preference.</li>
+<li>For <em>Target schema</em> select the target database, if you want to publish your table to the metastore. More info <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-publish.html">here</a>.</li>
+<li>For <em>Cluster mode</em> select <strong>Legacy autoscaling</strong>.</li>
+<li>Set <em>Min workers</em> and <strong>Max workers</strong> to <em>1</em> and <em>2</em>, respectively.</li>
+<li>Click create pipeline. (bleh) You can select several <em>Notebook Libraries</em> (notebooks defining your DLTs) to expand your pipeline, or having one notebook for defining your library functions, and then running the min the query of a Live table as shown in section x.z of __002_DeltaLiveTableCrashCourse__ notebook.</li>
+</ol>
+</div>
+<div class="cell markdown">
+<h3 id="pipeline-updates"><a class="header" href="#pipeline-updates">Pipeline updates</a></h3>
+<p>After the pipeline has been created and configured, you start an <em>update</em>. This will start the cluster, check for invalid table properties, syntax errors and missing dependencies. Then tables and views are updated. How tables and view are updated depends on the type of update:</p>
+<ul>
+<li><em>Refresh all</em> will update all tables to the current state of their input data sources. For <em>streaming live tables, only new rows are appended to the table</em>.</li>
+<li><em>Full refresh all</em> will do the same, except for streaming live tables, Delta Live Tables attempts to clear all data from each table then load all data from the streaming source.</li>
+<li><em>Refresh selection</em> option is identical to refresh all, except it allows to refresh only selected tables, and other tables downstream in the pipeline will be updated in the process.</li>
+<li><em>Full refresh selection</em> is identical to <em>full refresh all</em> on a selection of tables. This means that all data is refreshed, and streaming live tables will clear all data and load from the streaming source again.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="features-in-the-pipeline-interface"><a class="header" href="#features-in-the-pipeline-interface">Features in the pipeline interface</a></h1>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/pipeline_ui_overview.png?raw=true" alt="pipeline ui overview" /></p>
+<p>The are additional features in the pipeline that can be seen in the UI above, such as: - Scheduling pipeline runs. - Run in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html#development-and-production-modes">Production mode</a>. - Set Permissions for groups and users to run, manage and view the pipeline.</p>
+<p>There are many features and settings to explore. Start creating your own notebooks and read the docs to discover more.</p>
+</div>
+<div class="cell markdown">
+<h2 id="debugging-pipeline-code"><a class="header" href="#debugging-pipeline-code">Debugging pipeline code</a></h2>
+<p>Since you cant interact with DLT code cell by cell in notebooks, it can be hard to debug, and error messages can be hard to comprehend. In case of errors, it can be useful to click <strong>logs</strong> under the <strong>Compute</strong> section of the UI to open the logs in a new window. Any I/O (from print statements, asserts) will be shown in the <strong>standard output</strong> window.</p>
+</div>
+<div class="cell markdown">
+<h1 id="running-the-pipeline"><a class="header" href="#running-the-pipeline">Running the pipeline</a></h1>
+<p>The next two notebooks are ready to run in the pipeline as instructed above. Go through them at first, understand the code and then go to the created pipeline and press <strong>run</strong>. After successfully running the python notebook, you can again go into pipeline settings and change notebook library to the SQL notebook and re-run the pipeline.</p>
+<h3 id="after-running-the-two-example-notebooks"><a class="header" href="#after-running-the-two-example-notebooks">After running the two example notebooks:</a></h3>
+<p>To see an example of a pipeline running streaming tables, navigate to <strong>Workflows</strong>, <strong>Delta Live Tables</strong> and select <em>Create pipeline from sample data</em> under the dropdown menu of the <em>create pipeline</em> button. A new custom pipeline will be created, and the notebook to run in the pipeline will be created in your user workspace.</p>
+</div>
+<div class="cell markdown">
+<p><strong>If you haven't already watched the <a href="https://www.youtube.com/watch?v=BIxwoO65ylY">Delta Live Tables Demo</a>, do so now!</strong></p>
+<p><a href="https://www.youtube.com/watch?v=BIxwoO65ylY"><img src="http://img.youtube.com/vi/BIxwoO65ylY/0.jpg" alt="Delta Live Tables Demo: Modern software engineering for ETL processing" /></a></p>
+</div>
+<div class="cell markdown">
+<h3 id="sidenote-on-cluster-policy-for-users-who-intend-to-load-data-from-mounted-s3-buckets"><a class="header" href="#sidenote-on-cluster-policy-for-users-who-intend-to-load-data-from-mounted-s3-buckets">Sidenote on cluster policy for users who intend to load data from mounted S3 buckets</a></h3>
+<p>If you intent to load data from an external S3 bucket, you need to create a new <strong>Cluster policy</strong>. This does not apply for users running the example notebooks.</p>
+<p>In the databricks UI sidebar, navigate to <strong>Compute</strong>, <strong>Policies</strong>, and click <strong>Create Cluster Policy</strong>. Under <strong>Definitions</strong>, and the following code with the correct instance profile information and create the policy. Then choose this policy when configuring the pipeline.</p>
+<pre><code>{
+  &quot;cluster_type&quot;: {
+    &quot;type&quot;: &quot;fixed&quot;,
+    &quot;value&quot;: &quot;dlt&quot;
+  },
+  &quot;aws_attributes.instance_profile_arn&quot;: {
+    &quot;type&quot;: &quot;fixed&quot;,
+    &quot;value&quot;: &quot;arn:aws:iam::xxxxxxxxxxxx:instance-profile/instanceprofilename&quot;
+  }
+}
+</code></pre>
+<p>This assumes that you have correctly <a href="https://docs.databricks.com/aws/iam/instance-profile-tutorial.html">Configured S3 access with instance profiles</a>.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="example-delta-live-tables-quickstart-python"><a class="header" href="#example-delta-live-tables-quickstart-python">Example Delta Live Tables quickstart (Python)</a></h1>
+<p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
+<h2 id="reference-reading-1"><a class="header" href="#reference-reading-1">Reference reading</a></h2>
+<ul>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-python-ref.html</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</li>
+</ul>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import dlt
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="read-raw-json-clickstream-data-into-table"><a class="header" href="#read-raw-json-clickstream-data-into-table">Read raw JSON clickstream data into table</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">json_path = &quot;/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json&quot;
+@dlt.create_table(
+  comment=&quot;The raw wikipedia clickstream dataset, ingested from /databricks-datasets.&quot;
+)
+def clickstream_raw():          
+    return (
+    spark.read.json(json_path)
+  )
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="create-a-new-table-with-clean-and-prepared-data"><a class="header" href="#create-a-new-table-with-clean-and-prepared-data">Create a new table with clean and prepared data</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(
+  comment=&quot;Wikipedia clickstream data cleaned and prepared for analysis.&quot;
+)
+@dlt.expect(&quot;valid_current_page_title&quot;, &quot;current_page_title IS NOT NULL&quot;)
+@dlt.expect_or_fail(&quot;valid_count&quot;, &quot;click_count &gt; 0&quot;)
+def clickstream_prepared():
+    return (
+    dlt.read(&quot;clickstream_raw&quot;)
+      .withColumn(&quot;click_count&quot;, expr(&quot;CAST(n AS INT)&quot;))
+      .withColumnRenamed(&quot;curr_title&quot;, &quot;current_page_title&quot;)
+      .withColumnRenamed(&quot;prev_title&quot;, &quot;previous_page_title&quot;)
+      .select(&quot;current_page_title&quot;, &quot;click_count&quot;, &quot;previous_page_title&quot;)
+  )
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="example-query-for-table-containing-links-to-the-apache-spark-page"><a class="header" href="#example-query-for-table-containing-links-to-the-apache-spark-page">Example query for table containing links to the Apache Spark page</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">@dlt.table(
+  comment=&quot;A table containing the top pages linking to the Apache Spark page.&quot;
+)
+def top_spark_referrers():
+    return (
+    dlt.read(&quot;clickstream_prepared&quot;)
+      .filter(expr(&quot;current_page_title == 'Apache_Spark'&quot;))
+      .withColumnRenamed(&quot;previous_page_title&quot;, &quot;referrer&quot;)
+      .sort(desc(&quot;click_count&quot;))
+      .select(&quot;referrer&quot;, &quot;click_count&quot;)
+      .limit(10)
+  )
+</code></pre>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="example-delta-live-tables-quickstart-sql"><a class="header" href="#example-delta-live-tables-quickstart-sql">Example Delta Live Tables quickstart (SQL)</a></h1>
+<p>The code from this notebook is from the <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html">Delta Live Tables quickstart</a>. Feel free to run this in the pipeline if you have the correct permissions mentioned earlier.</p>
+<h2 id="reference-reading-2"><a class="header" href="#reference-reading-2">Reference reading</a></h2>
+<ul>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-quickstart.html</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-sql-ref.html</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-data-sources.html</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>This notebook demonstrates using Delta Live Tables <strong>Quickstart Pipeline</strong> on a dataset containing <em>Wikipedia clickstream</em> Databricks dataset.</p>
+</div>
+<div class="cell markdown">
+<p>To create our initial live table called <code>clickstream_raw</code>:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">CREATE LIVE TABLE clickstream_raw
+COMMENT &quot;The raw wikipedia click stream dataset, ingested from /databricks-datasets.&quot;
+AS SELECT * FROM json.`/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json`
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">CREATE LIVE TABLE clickstream_clean(
+  CONSTRAINT valid_current_page EXPECT (current_page_title IS NOT NULL),
+  CONSTRAINT valid_count EXPECT (click_count &gt; 0) ON VIOLATION FAIL UPDATE
+)
+COMMENT &quot;Wikipedia clickstream data cleaned and prepared for analysis.&quot;
+AS SELECT
+  curr_title AS current_page_title,
+  CAST(n AS INT) AS click_count,
+  prev_title AS previous_page_title
+FROM live.clickstream_raw
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-sql">CREATE LIVE TABLE top_spark_referers
+COMMENT &quot;A table containing the top pages linking to the Apache Spark page.&quot;
+AS SELECT
+  previous_page_title as referrer,
+  click_count
+FROM live.clickstream_clean
+WHERE current_page_title = 'Apache_Spark'
+ORDER BY click_count DESC
+LIMIT 10
+</code></pre>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="medallion-lakehouse-architecture"><a class="header" href="#medallion-lakehouse-architecture">Medallion Lakehouse Architecture</a></h1>
+<p>The <strong>Medallion Lakehouse Architecture</strong> aims to structure data quality amongst different levels. From Bronze, to Silver, and to Gold levels, data that is originally unstructured and uncleaned, is more structured and cleaned for higher-level tables. Even many examples of this type of architecture is shown with Delta Live Tables, this can just as well be implemented in any open source Lakehouse architecture, with Delta Tables in your own open source solution.</p>
+<p>Reading: - https://docs.databricks.com/lakehouse/medallion.html#bronze - https://medium.com/@omarlaraqui/the-medallion-architecture-21fe878d1aca</p>
+<p>Repository with some examples: - https://github.com/databricks/delta-live-tables-notebooks</p>
+</div>
+<div class="cell markdown">
+<p><img src="https://www.databricks.com/wp-content/uploads/2022/03/delta-lake-medallion-architecture-2.jpeg" alt="medallion architecture" /></p>
+</div>
+<div class="cell markdown">
+<p><img src="https://miro.medium.com/max/640/0*tNOy5w9Wvqmlg-AK" alt="Bronze layer" /></p>
+<p>The <strong>Bronze Layer</strong> contains the raw data that is ingested from batch or streaming. The data in this layer can be of various formats, from different sources and preferably stored in a file store that can hold high volumes of unstructured data.</p>
+<p><img src="https://miro.medium.com/max/640/0*X6b_mO0jNUqxdav7" alt="Silver layer" /></p>
+<p>In the <strong>Silver Layer</strong> of the lakehouse, data is validated, prepared and cleaned for general business use. Null values are replaced, joins with lookup tables, filters etc to give data that can be trusted for analytics, machine learning and business logic.</p>
+<p><img src="https://miro.medium.com/max/640/1*hY85AeQWXpLNNuuJe9U4rQ.webp" alt="Gold layer" /></p>
+<p><strong>Gold Layer</strong> is refined and structured data that is ready for consumption in specific projects. It can be ready for use in Business Intelligence and Machine Learning.</p>
+</div>
+<div class="cell markdown">
+<p>Here is a minimal code example showing the medallion architecture in Delta Live Tables, taken from the <a href="https://github.com/databricks/delta-live-tables-notebooks/blob/main/python/Wikipedia.py">Databricks Delta Live Tables notebooks repository</a>. Observe the transormations made to each of the queries defining each table.</p>
+<p>For the bronze <code>clickstream_raw</code> table, data is simlpy ingested in JSON format. In the (silver) <code>clickstream_clean</code> table, bronze data is cleansed and selected to produce data that it has &quot;just enough&quot; properties for analytics and ML. Lastly, the two gold tables (<code>top_spark_referrers</code>and <code>top_pages</code>) are filtered, aggregated, sorted for &quot;project specific&quot; Business Intelligence use.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from pyspark.sql.functions import *
+from pyspark.sql.types import *
+import dlt
+
+json_path = &quot;/databricks-datasets/wikipedia-datasets/data-001/clickstream/raw-uncompressed-json/2015_2_clickstream.json&quot;
+
+# Bronze
+@dlt.create_table(
+  comment=&quot;The raw wikipedia click stream dataset, ingested from /databricks-datasets.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;bronze&quot;
+  }
+)
+def clickstream_raw():
+    return (
+    spark.read.option(&quot;inferSchema&quot;, &quot;true&quot;).json(json_path)
+  )
+
+
+# Silver
+@dlt.create_table(
+  comment=&quot;Wikipedia clickstream dataset with cleaned-up datatypes / column names and quality expectations.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;silver&quot;
+  }
+)
+@dlt.expect(&quot;valid_current_page&quot;, &quot;current_page_id IS NOT NULL AND current_page_title IS NOT NULL&quot;)
+@dlt.expect_or_fail(&quot;valid_count&quot;, &quot;click_count &gt; 0&quot;)
+def clickstream_clean():
+    return (
+        dlt.read(&quot;clickstream_raw&quot;)
+          .withColumn(&quot;current_page_id&quot;, expr(&quot;CAST(curr_id AS INT)&quot;))
+          .withColumn(&quot;click_count&quot;, expr(&quot;CAST(n AS INT)&quot;))
+          .withColumn(&quot;previous_page_id&quot;, expr(&quot;CAST(prev_id AS INT)&quot;))
+          .withColumnRenamed(&quot;curr_title&quot;, &quot;current_page_title&quot;)
+          .withColumnRenamed(&quot;prev_title&quot;, &quot;previous_page_title&quot;)
+          .select(&quot;current_page_id&quot;, &quot;current_page_title&quot;, &quot;click_count&quot;, &quot;previous_page_id&quot;, &quot;previous_page_title&quot;)
+      )
+
+
+# Gold
+@dlt.create_table(
+  comment=&quot;A table of the most common pages that link to the Apache Spark page.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;gold&quot;  
+  }  
+)
+def top_spark_referrers():
+    return (
+        dlt.read(&quot;clickstream_clean&quot;)
+          .filter(expr(&quot;current_page_title == 'Apache_Spark'&quot;))
+          .withColumnRenamed(&quot;previous_page_title&quot;, &quot;referrer&quot;)
+          .sort(desc(&quot;click_count&quot;))
+          .select(&quot;referrer&quot;, &quot;click_count&quot;)
+          .limit(10)
+        )
+
+
+# Gold
+@dlt.create_table(
+  comment=&quot;A list of the top 50 pages by number of clicks.&quot;,
+  table_properties={
+    &quot;quality&quot;: &quot;gold&quot;  
+  }  
+)
+def top_pages():
+    return (
+        dlt.read(&quot;clickstream_clean&quot;)
+          .groupBy(&quot;current_page_title&quot;)
+          .agg(sum(&quot;click_count&quot;).alias(&quot;total_clicks&quot;))
+          .sort(desc(&quot;total_clicks&quot;))
+          .limit(50)
+        )
+</code></pre>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="working-with-data-in-external-environments"><a class="header" href="#working-with-data-in-external-environments">Working with data in external environments</a></h1>
+<p>This notebook will introduce some general ways of sharing data that you have processed so far, without specific code examples. Databricks integrates with a wide range of data sources, developer tools and partner solutions. Even when using the Databricks platform for your operations, it can be preferable to allow for access and share data for use outside of the platform for internal and external use. This guide will instruct you on how to query the <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">Databricks SQL warehouse</a> in excel, along with sharing tables with external parties through <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta sharing</a>. This can be useful for business analytics or to give restricted access to clients in more refined tables.</p>
+<p>Resources: - <a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a> - <a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a> - <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a> - <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors"><a class="header" href="#how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors">How to setup access to SQL warehouse from Excel using ODBC connectors</a></h1>
+</div>
+<div class="cell markdown">
+<p>For general BI work, it can preferable to work with spreadsheet format in Excel, and use its features for data analysis and visualization. The SQL Warehouse will require a paid version of Databricks. Skip to the Delta Sharing section for a possible open source solution.</p>
+<p>You need: - Databricks ODBC drivers at https://www.databricks.com/spark/odbc-drivers-download - (For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs - link here: https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors - (For other OS) ODBC connector: https://dev.mysql.com/downloads/connector/odbc/ - Databricks Authentication token - Access to SQL-warehouse</p>
+<p><strong>IMPORTANT</strong>: Even if you have the latest updates for Excel and Microsoft 365, you might have to <strong>reinstall</strong> Microsoft Excel to be able to run database queries.</p>
+</div>
+<div class="cell markdown">
+<h3 id="install-iodbc-or-odbc-manager"><a class="header" href="#install-iodbc-or-odbc-manager">Install iODBC or ODBC manager</a></h3>
+</div>
+<div class="cell markdown">
+<p>After you have installed iODBC or ODBC from the links above, you need to create a DSN. In either iODBC or ODBC manager, create a DSN with the information provided below:</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/dsn_setup.png?raw=true" alt="dsn_setup" /></p>
+<p>You can get your <strong>Host and HTTPPath</strong> from the SQL warehouse settings, and put your authentication token as <strong>PWD</strong>. This token can be generated from the user settings page.</p>
+<p>With iODBC, you can optionally test the ODBC connection before connecting to Excel. Open <strong>iODBC Demo (Unicode)</strong>. In the toolbar, go to <strong>Environment</strong> and <strong>Open Connection</strong>. Choose the DSN we just created. Again, enter &quot;token&quot; as username and your databricks authentication token as password. In the toolbar, click <strong>SQL</strong> and then <strong>Execute SQL</strong>. Now we can try to query the database. We will query the <strong>china*matches</strong> table in the <strong>trase*pipelines</strong> schema.</p>
+<p>Using the following command: <code>select * from default.countrycodes</code> (or any other table in the metastore)</p>
+<p>you should now see the query result in the iODBC demo window, and can import it to the Excel sheet.</p>
+</div>
+<div class="cell markdown">
+<h3 id="query-the-database-from-excel"><a class="header" href="#query-the-database-from-excel">Query the Database from Excel</a></h3>
+<p>In an Excel document, as in the picture below, choose data, Press the dropdown arrow and choose <strong>From Database (Microsoft Query)</strong>.</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/excelquery.png?raw=true" alt="databasequery" /></p>
+<p>You should see your User or system defined DSN in the list. Choose it and press <strong>ok</strong>. Again enter &quot;token&quot; as username and your databricks authentication token as password. You can now see the tables that you have access to.</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/query.png?raw=true" alt="query" /></p>
+<p>Try to query a table with <code>select * from default.countrycodes</code> (or any other table in the hive metastore). The warehouse might take a few minutes to start if it's not running already.</p>
+<h3 id="if-your-layout-in-excel-is-different-from-this-and-you-can-not-see-the-microsoft-query-option"><a class="header" href="#if-your-layout-in-excel-is-different-from-this-and-you-can-not-see-the-microsoft-query-option">If your layout in excel is different from this, and you can not see the Microsoft Query option:</a></h3>
+<p>In this case, try the Query Wizard option, or check for updates in Excel. If you already have the latest version, you might have to reinstall Excel.</p>
+</div>
+<div class="cell markdown">
+<h1 id="delta-sharing"><a class="header" href="#delta-sharing">Delta Sharing</a></h1>
+<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="contents/001_1-sds-3-x-delta/">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
+<p>Resources: - https://docs.databricks.com/data-sharing/index.html - https://github.com/delta-io/delta-sharing</p>
+<p>The following code example is from the <a href="https://github.com/delta-io/delta-sharing">Delta sharing github</a>. Through a generated and shared profile file, you access a &quot;delta share&quot; which consists of a selected number of tables with read only access to them.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import delta_sharing
+
+# install with pip 'install delta-sharing'
+
+# Point to the profile file. It can be a file on the local file system or a file on a remote storage.
+profile_file = &quot;&lt;profile-file-path&gt;&quot;
+
+# Create a SharingClient.
+client = delta_sharing.SharingClient(profile_file)
+
+# List all shared tables.
+client.list_all_tables()
+
+# Create a url to access a shared table.
+# A table path is the profile file path following with `#` and the fully qualified name of a table 
+# (`&lt;share-name&gt;.&lt;schema-name&gt;.&lt;table-name&gt;`).
+table_url = profile_file + &quot;#&lt;share-name&gt;.&lt;schema-name&gt;.&lt;table-name&gt;&quot;
+
+# Fetch 10 rows from a table and convert it to a Pandas DataFrame. This can be used to read sample data 
+# from a table that cannot fit in the memory.
+delta_sharing.load_as_pandas(table_url, limit=10)
+
+# Load a table as a Pandas DataFrame. This can be used to process tables that can fit in the memory.
+delta_sharing.load_as_pandas(table_url)
+
+# If the code is running with PySpark, you can use `load_as_spark` to load the table as a Spark DataFrame.
+delta_sharing.load_as_spark(table_url)
+</code></pre>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="editors"><a class="header" href="#editors">Editors</a></h1>
+<p>Here is a list of the editors who have helped improve this book</p>
+<ul>
+<li><a href="https://www.linkedin.com/in/raazesh-sainudiin-45955845/">Raazesh Sainudiin</a></li>
+<li><a href="https://github.com/kTorp">Kristoffer Torp</a></li>
+<li><a href="https://www.linkedin.com/in/oskar-%C3%A5sbrink-847a76231/">Oskar Åsbrink</a></li>
+<li><a href="https://www.linkedin.com/in/tilo-wiklund-682aa496/">Tilo Wiklund</a></li>
+<li><a href="https://www.linkedin.com/in/dan-lilja-a2ab8096/">Dan Lilja</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </body>
+</html>

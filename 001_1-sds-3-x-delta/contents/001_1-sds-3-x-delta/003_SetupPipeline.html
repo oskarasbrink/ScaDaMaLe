@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>003_SetupPipeline - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html" class="active">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="setting-up-pipeline-for-delta-live-tables"><a class="header" href="#setting-up-pipeline-for-delta-live-tables">Setting up Pipeline for Delta Live tables</a></h1>
+<p>To be able to run your scripts for Delta Live tables in a Pipeline, first we need to create and setup a pipeline.</p>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>If you are on Databricks Community edition, you do not have support for DLT or running the pipeline, but you can <a href="https://www.databricks.com/try-databricks">sign up for a 14-day free trial</a>.</li>
+<li>You need <a href="https://docs.databricks.com/clusters/clusters-manage.html#cluster-permissions">cluster creation permission</a>. The DLT runtime creates a cluster before it runs your pipeline and fails if you don’t have the correct permission. If you don't meet these requirements, feel free to continue reading throught the rest of the Live Tables notebooks, or jump to notebook __006_BronzeSilverGoldProductionizing__.</li>
+</ul>
+<h2 id="reference-reading"><a class="header" href="#reference-reading">Reference Reading</a></h2>
+<ul>
+<li>https://docs.databricks.com/workflows/delta-live-tables/index.html#</li>
+<li>https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h2 id="creating-a-pipeline"><a class="header" href="#creating-a-pipeline">Creating a Pipeline</a></h2>
+<p>see: https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-ui.html</p>
+<p>This quickstart guide will provide basic settings for your pipeline. For scaling and optimizing a pipeline for specific needs, read more in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-api-guide.html">the pipeline documentation</a>.</p>
+</div>
+<div class="cell markdown">
+<p><strong>Quickstart:</strong></p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/pipeline_setup.png?raw=true" alt="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/0011-sds-3-x-delta/pipelinesetup.png?raw=true" /></p>
+<ol>
+<li>From you Databricks homepage, go to <strong>Workflows</strong> and <strong>Delta Live Tables</strong>. Click <strong>Create pipeline</strong>. Fill in <strong>Name</strong> to <code>Quickstart Pipeline</code>. If this already exists, choose another name or run the already created pipeline.</li>
+<li>For <em>product edition</em> Select <strong>Advanced</strong>. This is necessary for the <em>expectations</em> used in the two example notebooks. More info on pricing <a href="https://www.databricks.com/product/pricing/delta-live">here</a>.</li>
+<li>Set <em>Pipeline mode</em> to <strong>Triggered</strong>.</li>
+<li><em>Cluster policy</em> can be left blank for this tutorial.</li>
+<li>For <em>Notebook libraries</em> find and select the __004_PythonLiveTableExample__ notebook in this module.</li>
+<li>For <em>Storage location</em> leave it blank to automatically be assigned a DBFS location, or specify to your preference.</li>
+<li>For <em>Target schema</em> select the target database, if you want to publish your table to the metastore. More info <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-publish.html">here</a>.</li>
+<li>For <em>Cluster mode</em> select <strong>Legacy autoscaling</strong>.</li>
+<li>Set <em>Min workers</em> and <strong>Max workers</strong> to <em>1</em> and <em>2</em>, respectively.</li>
+<li>Click create pipeline. (bleh) You can select several <em>Notebook Libraries</em> (notebooks defining your DLTs) to expand your pipeline, or having one notebook for defining your library functions, and then running the min the query of a Live table as shown in section x.z of __002_DeltaLiveTableCrashCourse__ notebook.</li>
+</ol>
+</div>
+<div class="cell markdown">
+<h3 id="pipeline-updates"><a class="header" href="#pipeline-updates">Pipeline updates</a></h3>
+<p>After the pipeline has been created and configured, you start an <em>update</em>. This will start the cluster, check for invalid table properties, syntax errors and missing dependencies. Then tables and views are updated. How tables and view are updated depends on the type of update:</p>
+<ul>
+<li><em>Refresh all</em> will update all tables to the current state of their input data sources. For <em>streaming live tables, only new rows are appended to the table</em>.</li>
+<li><em>Full refresh all</em> will do the same, except for streaming live tables, Delta Live Tables attempts to clear all data from each table then load all data from the streaming source.</li>
+<li><em>Refresh selection</em> option is identical to refresh all, except it allows to refresh only selected tables, and other tables downstream in the pipeline will be updated in the process.</li>
+<li><em>Full refresh selection</em> is identical to <em>full refresh all</em> on a selection of tables. This means that all data is refreshed, and streaming live tables will clear all data and load from the streaming source again.</li>
+</ul>
+</div>
+<div class="cell markdown">
+<h1 id="features-in-the-pipeline-interface"><a class="header" href="#features-in-the-pipeline-interface">Features in the pipeline interface</a></h1>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/pipeline_ui_overview.png?raw=true" alt="pipeline ui overview" /></p>
+<p>The are additional features in the pipeline that can be seen in the UI above, such as: - Scheduling pipeline runs. - Run in <a href="https://docs.databricks.com/workflows/delta-live-tables/delta-live-tables-concepts.html#development-and-production-modes">Production mode</a>. - Set Permissions for groups and users to run, manage and view the pipeline.</p>
+<p>There are many features and settings to explore. Start creating your own notebooks and read the docs to discover more.</p>
+</div>
+<div class="cell markdown">
+<h2 id="debugging-pipeline-code"><a class="header" href="#debugging-pipeline-code">Debugging pipeline code</a></h2>
+<p>Since you cant interact with DLT code cell by cell in notebooks, it can be hard to debug, and error messages can be hard to comprehend. In case of errors, it can be useful to click <strong>logs</strong> under the <strong>Compute</strong> section of the UI to open the logs in a new window. Any I/O (from print statements, asserts) will be shown in the <strong>standard output</strong> window.</p>
+</div>
+<div class="cell markdown">
+<h1 id="running-the-pipeline"><a class="header" href="#running-the-pipeline">Running the pipeline</a></h1>
+<p>The next two notebooks are ready to run in the pipeline as instructed above. Go through them at first, understand the code and then go to the created pipeline and press <strong>run</strong>. After successfully running the python notebook, you can again go into pipeline settings and change notebook library to the SQL notebook and re-run the pipeline.</p>
+<h3 id="after-running-the-two-example-notebooks"><a class="header" href="#after-running-the-two-example-notebooks">After running the two example notebooks:</a></h3>
+<p>To see an example of a pipeline running streaming tables, navigate to <strong>Workflows</strong>, <strong>Delta Live Tables</strong> and select <em>Create pipeline from sample data</em> under the dropdown menu of the <em>create pipeline</em> button. A new custom pipeline will be created, and the notebook to run in the pipeline will be created in your user workspace.</p>
+</div>
+<div class="cell markdown">
+<p><strong>If you haven't already watched the <a href="https://www.youtube.com/watch?v=BIxwoO65ylY">Delta Live Tables Demo</a>, do so now!</strong></p>
+<p><a href="https://www.youtube.com/watch?v=BIxwoO65ylY"><img src="http://img.youtube.com/vi/BIxwoO65ylY/0.jpg" alt="Delta Live Tables Demo: Modern software engineering for ETL processing" /></a></p>
+</div>
+<div class="cell markdown">
+<h3 id="sidenote-on-cluster-policy-for-users-who-intend-to-load-data-from-mounted-s3-buckets"><a class="header" href="#sidenote-on-cluster-policy-for-users-who-intend-to-load-data-from-mounted-s3-buckets">Sidenote on cluster policy for users who intend to load data from mounted S3 buckets</a></h3>
+<p>If you intent to load data from an external S3 bucket, you need to create a new <strong>Cluster policy</strong>. This does not apply for users running the example notebooks.</p>
+<p>In the databricks UI sidebar, navigate to <strong>Compute</strong>, <strong>Policies</strong>, and click <strong>Create Cluster Policy</strong>. Under <strong>Definitions</strong>, and the following code with the correct instance profile information and create the policy. Then choose this policy when configuring the pipeline.</p>
+<pre><code>{
+  &quot;cluster_type&quot;: {
+    &quot;type&quot;: &quot;fixed&quot;,
+    &quot;value&quot;: &quot;dlt&quot;
+  },
+  &quot;aws_attributes.instance_profile_arn&quot;: {
+    &quot;type&quot;: &quot;fixed&quot;,
+    &quot;value&quot;: &quot;arn:aws:iam::xxxxxxxxxxxx:instance-profile/instanceprofilename&quot;
+  }
+}
+</code></pre>
+<p>This assumes that you have correctly <a href="https://docs.databricks.com/aws/iam/instance-profile-tutorial.html">Configured S3 access with instance profiles</a>.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

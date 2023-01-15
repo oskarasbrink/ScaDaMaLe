@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>001_DeltaLakeTutorial - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html" class="active">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="delta-lake-tutorial"><a class="header" href="#delta-lake-tutorial">Delta Lake Tutorial</a></h1>
+<p>Before moving on to Databricks Delta Live Tables, we will cover what Delta Tables are, and explore the main features of Delta Lake. Delta lake has support for many languages, like PySpark, SQL, Scala and R, with standalone versions for Python, Java and more. This guide will showcase using Python, but see the referenced reading for SQL, Scala and Standalone.</p>
+<h4 id="programming-resources"><a class="header" href="#programming-resources">Programming resources:</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/quick-start.html</li>
+<li>https://docs.databricks.com/delta/index.html</li>
+<li>https://docs.databricks.com/delta/tutorial.html</li>
+<li>https://docs.delta.io/latest/delta-batch.html#language-python</li>
+<li>https://delta.io/blog/2022-10-25-create-delta-lake-tables/</li>
+</ul>
+<h4 id="delta-lake-resources--standalone-delta"><a class="header" href="#delta-lake-resources--standalone-delta">Delta Lake Resources &amp; Standalone Delta</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/delta-resources.html</li>
+</ul>
+<p>If you intend to setup Delta Lake with Spark on your own machine, see instructions for running Delta Lake with Spark-shell, SBT or Maven:</p>
+<h4 id="optional-set-up-apache-spark-with-delta-lake"><a class="header" href="#optional-set-up-apache-spark-with-delta-lake">(Optional) Set up Apache Spark with Delta Lake</a></h4>
+<ul>
+<li>https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>Lets go through some parts of the python tutorial from <a href="https://docs.delta.io/latest/quick-start.html#language-python">https://docs.delta.io/latest/quick-start.html#language-python</a>.</p>
+<h2 id="basic-delta-lake-operations-covered-in-this-notebook"><a class="header" href="#basic-delta-lake-operations-covered-in-this-notebook">Basic Delta Lake operations covered in this notebook:</a></h2>
+<ul>
+<li>
+<h4 id="create-and-save-delta-table"><a class="header" href="#create-and-save-delta-table">Create and Save Delta table</a></h4>
+</li>
+<li>
+<h4 id="append-and-overwrite"><a class="header" href="#append-and-overwrite">Append and overwrite</a></h4>
+</li>
+<li>
+<h4 id="time-travel"><a class="header" href="#time-travel">Time travel</a></h4>
+</li>
+<li>
+<h4 id="schema-enforcement-and-validation"><a class="header" href="#schema-enforcement-and-validation">Schema enforcement and validation</a></h4>
+</li>
+<li>
+<h4 id="delta-log--time-travel"><a class="header" href="#delta-log--time-travel">Delta Log &amp; Time travel</a></h4>
+</li>
+<li>
+<h4 id="write-to-s3-object-storage"><a class="header" href="#write-to-s3-object-storage">Write to S3 object storage</a></h4>
+</li>
+</ul>
+</div>
+<div class="cell markdown">
+<p>At any time while testing the code, you can delete a delta table using the the following command:</p>
+<p><code>dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)</code></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># uncomment to delete the table
+dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="create-a-dataframe-and-save-it-as-a-delta-table"><a class="header" href="#create-a-dataframe-and-save-it-as-a-delta-table">Create a DataFrame and save it as a Delta Table</a></h2>
+<p>first, let's load a <code>DataFrame</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Import data types
+from pyspark.sql.types import *
+
+# Define the schema, or let it be inferred when loading your data.
+schema = StructType(
+   [StructField('instant',IntegerType(), True),
+    StructField('dteday', TimestampType(), True),
+    StructField('season', IntegerType(), True),
+    StructField('yr', IntegerType(), True),
+    StructField('mnth', IntegerType(), True),
+    StructField('holiday', IntegerType(), True),
+    StructField('weekday', IntegerType(), True),
+    StructField('workingday', IntegerType(), True),
+    StructField('weathersit', IntegerType(), True),
+    StructField('temp', DoubleType(), True),
+    StructField('atemp', DoubleType(), True),
+    StructField('hum', DoubleType(), True),
+    StructField('windspeed', DoubleType(), True),
+    StructField('casual', IntegerType(), True),
+    StructField('registered', IntegerType(), True),
+    StructField('cnt', IntegerType(), True)
+    
+    
+   ]
+  )
+
+infer_schema = &quot;false&quot;
+file_format = &quot;csv&quot;
+delimiter = &quot;,&quot;
+file = '/databricks-datasets/bikeSharing/data-001/day.csv'
+df = spark.read.format(file_format) \
+    .option(&quot;inferShema&quot;, infer_schema) \
+    .option(&quot;sep&quot;,delimiter) \
+    .option(&quot;header&quot;, True) \
+    .schema(schema) \
+    .load(file)
+
+
+df.printSchema()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Let's see the contents of the dataframe to be written to a delta table:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Run to save this DataFrame as a Delta table to <code>/tmp/delta/</code> with the name <code>delta-table</code>:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">try:
+    df.write.format(&quot;delta&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+except:
+    print(&quot;table already exists!&quot;) # if it exists, you uncomment the next line and run again to delete it
+    #dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+    
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># let's take a look at the table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We can run a simple command to make sure that the table is indeed a Delta table:</p>
+<p><strong>Note:</strong> make sure to import <code>delta.tables</code>!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from delta.tables import *
+DeltaTable.isDeltaTable(spark, &quot;/tmp/delta/delta-table&quot;) # True
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>If the table already exists, you can <strong>overwrite</strong> or <strong>append to</strong> the table.</p>
+<p><code>append</code> will add any <strong>non-mathcing records</strong> while <code>overwrite</code> <strong>replaces all data in the table</strong>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>However, you can still not <strong>overwrite or append to a table with a different schema</strong>.</p>
+<p>Lets change the schema of the DataFrame and try it!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># Define the schema, or let it be inferred when loading your data.
+schema = StructType(
+   [StructField('instant',IntegerType(), True),
+    StructField('dteday', TimestampType(), True),
+    
+    #Lets define season as String instead of Int!
+    StructField('season', StringType(), True),
+    StructField('yr', IntegerType(), True),
+    StructField('mnth', IntegerType(), True),
+    StructField('holiday', IntegerType(), True),
+    StructField('weekday', IntegerType(), True),
+    StructField('workingday', IntegerType(), True),
+    StructField('weathersit', IntegerType(), True),
+    StructField('temp', DoubleType(), True),
+    StructField('atemp', DoubleType(), True),
+    StructField('hum', DoubleType(), True),
+    StructField('windspeed', DoubleType(), True),
+    StructField('casual', IntegerType(), True),
+    StructField('registered', IntegerType(), True),
+    StructField('cnt', IntegerType(), True)   
+    
+   ]
+  )
+
+infer_schema = &quot;false&quot;
+file_format = &quot;csv&quot;
+delimiter = &quot;,&quot;
+file = '/databricks-datasets/bikeSharing/data-001/day.csv'
+df_newschema = spark.read.format(file_format) \
+    .option(&quot;inferShema&quot;, infer_schema) \
+    .option(&quot;sep&quot;,delimiter) \
+    .option(&quot;header&quot;, True) \
+    .schema(schema) \
+    .load(file)
+
+
+df_newschema.printSchema()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">df_newschema.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>This is just standard practice when writing tables. You should not be able to mix and match schemas. However, what happens if we encounter the case where the data capture changes, and a new column is added?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#create a new dataframe with an additional column
+from pyspark.sql.functions import lit
+new_df = df.withColumn(&quot;bonus_column&quot;, lit(0.3))
+new_df.printSchema()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>We get schema mismatch again! But this time, it is a Delta specific exception. This is because Delta tables have features called <em>schema enforcement</em> and <em>schema evolution</em>.</p>
+<p><em>Schema enforcement</em> (or <em>schema validation</em>) is a safeguard in Delta Lake that rejects writes to a table that do not match the table's schema. This prevents us from accidentally polluting tables with mistakes or garbage data. In cases of mismatch in schemas, no data is written and an exception is raised letting the user know about the mismatch.</p>
+<p><em>Schema evolution</em> allows us to easily change the current table schema to accomodate that data is changing over time. This is commonly used to automatically adapt the schema to include one or more new columns. It can be good to use if you intend to add the columns that were previously rejected due to schema mismatch.</p>
+<p>More on Schema enforcement and evolution: - https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html</p>
+<p>Let's try writing to the table again, with <code>overwrite</code> mode, and <code>mergeschema = true</code> to enable schema evolution:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).option(&quot;mergeSchema&quot;,&quot;true&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#display the new table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Notice that we have just overwritten the data, now with the <code>bonus column</code>. What happens if we configure <code>append</code> instead of <code>overwrite</code>?</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># for the sake of learning, reset the table to initial dataframe state first
+dbutils.fs.rm('/tmp/delta/delta-table',recurse=True)
+df.write.format(&quot;delta&quot;).save(&quot;/tmp/delta/delta-table&quot;) 
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">new_df.write.format(&quot;delta&quot;).option(&quot;mergeSchema&quot;,&quot;true&quot;).mode(&quot;append&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Now observe the results using <code>display</code>. Scroll down to the earlier entries to see that all of the earlier entries have value <code>null</code> for the new column <code>bonus column</code>.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">#display the current state of the table
+display(spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/delta-table&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="creating-a-table-in-sql"><a class="header" href="#creating-a-table-in-sql">Creating a table in SQL:</a></h4>
+<p>Sometimes it can make sense to write in SQL. Run the following to create a Delta table with SQL:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">spark.sql(&quot;&quot;&quot;
+  CREATE TABLE delta_table_sql (country STRING, continent STRING) USING delta
+&quot;&quot;&quot;)
+
+spark.sql(&quot;&quot;&quot;
+  INSERT INTO delta_table_sql VALUES
+      ('china', 'asia'),
+      ('argentina', 'south america')
+&quot;&quot;&quot;).show
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>You can continue programming in an SQL fashion, with a delta table instead of a table, but this tutorial will continue with Python.</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-delta-log"><a class="header" href="#the-delta-log">The Delta Log</a></h2>
+<p>The Delta Log is the transaction log of changes to tables in the Delta Lake. Through this log, all readers and writers have access to the &quot;true&quot; state of each table, even if tables have been modified since the last time they were read. Spark will check the log to see if new transactions are posted to a table and update the end user's table with any new changes. This allows atomicity, multiple concurrent reads and writes in addition to conflict resolution. <em><strong>The Delta Log enables us to run many of the key Delta lake's properties, like ACID transactions, scalable metadata handling, time travel, and more.</strong></em></p>
+<p><strong>Deep dive:</strong> - https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html - https://books.japila.pl/delta-lake-internals/DeltaLog/</p>
+</div>
+<div class="cell markdown">
+<p>See the <code>_delta_log</code> for the table!</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">dbutils.fs.ls(&quot;/tmp/delta/delta-table&quot;)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="display-history-of-the-table"><a class="header" href="#display-history-of-the-table">Display history of the table:</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<h2 id="time-travel-query-an-older-version-of-the-table-using-the-delta-log"><a class="header" href="#time-travel-query-an-older-version-of-the-table-using-the-delta-log">Time travel: Query an older version of the table using the delta log</a></h2>
+<p>With Time travel you can access older version of a table, with either a timestamp or version</p>
+<p>timestamp<em>expression can be any one of: - '2018-10-18T22:15:12.013Z', that is, a string that can be cast to a timestamp - cast('2018-10-18 13:36:32 CEST' as timestamp) - '2018-10-18', that is, a date string - current</em>timestamp() - interval 12 hours - date<em>sub(current</em>date(), 1) - Any other expression that is or can be cast to a timestamp</p>
+<p>version is a long value that can be obtained from the output of DESCRIBE HISTORY table_spec.</p>
+</div>
+<div class="cell markdown">
+<p>Lets mess with the table. We will select <code>windspeed</code> and multiply all values with 100.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">temp_df = spark.read.format(&quot;delta&quot;).option(&quot;inferSchema&quot;,&quot;true&quot;).load(&quot;/tmp/delta/delta-table&quot;)
+
+temp_df = temp_df.withColumn(&quot;windspeed&quot;, temp_df.windspeed*100)
+temp_df.write.format(&quot;delta&quot;).mode(&quot;overwrite&quot;).save(&quot;/tmp/delta/delta-table&quot;)
+temp_df.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Again, we look at the history of the delta table. Notice the new entry:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Copy one of the earlier entries in the <code>timestamps</code> column of the output of the last code cell and put it in <code>timestamp_string</code>. We will use it to read the corresponding data.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">timestamp_string = &quot;2023-01-15T10:34:12.000+0000&quot;  #PUT YOUR TIMESTAMP HERE
+df1 = spark.read.format(&quot;delta&quot;).option(&quot;timestampAsOf&quot;, timestamp_string).load(&quot;/tmp/delta/delta-table&quot;)
+
+df1.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>we accessed the version where <code>Windspeed</code> still had its original value!</p>
+<p>Now do the same but we use the first <code>version</code> of the table:</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">display(spark.sql(&quot;DESCRIBE HISTORY delta.`/tmp/delta/delta-table`&quot;))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">version = &quot;0&quot; 
+df2 = spark.read.format(&quot;delta&quot;).option(&quot;versionAsOf&quot;, version).load(&quot;/tmp/delta/delta-table&quot;)
+df2.show()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>Using this, for example, we can query the number of new entries from the last day or week, or since the last table version! Observe that the following code will not run since there is no history for the last week.</p>
+<p>see more: - https://docs.delta.io/latest/delta-batch.html#query-an-older-snapshot-of-a-table-time-travel</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python"># THIS CODE WILL NOT RUN
+last_week = spark.sql(&quot;SELECT CAST(date_sub(current_date(), 7) AS STRING)&quot;).collect()[0][0]
+df = spark.read.format(&quot;delta&quot;).option(&quot;timestampAsOf&quot;, last_week).load(&quot;/tmp/delta/delta-table&quot;)
+last_week_count = df.select(&quot;instant&quot;).distinct().count()
+count = spark.read.format(&quot;delta&quot;).load(&quot;/tmp/delta/events&quot;).select(&quot;instant&quot;).distinct().count()
+new_customers_count = count - last_week_count
+</code></pre>
+</div>
+<div class="cell markdown">
+<h3 id="write-to-s3-object-storage-1"><a class="header" href="#write-to-s3-object-storage-1">Write to S3 object storage</a></h3>
+<p>When Delta Lake into production as part of your Delta Lakehouse, many choose to work with Cloud object storage such as Amazon S3.</p>
+<p>If you intend on continue working in Databricks but still wish to write to Amazon S3, look into <a href="https://docs.databricks.com/external-data/amazon-s3.html">Working with data in Amazon S3</a>.</p>
+<p>Working on single-cluster setup on your own machine, or an instance such as Amazon EC2, you can use the following code for configuring Delta and S3 credentials for the most basic use case.</p>
+<ul>
+<li>https://docs.delta.io/latest/delta-storage.html</li>
+</ul>
+</div>
+<div class="cell markdown">
+<pre><code>spark = SparkSession.builder() \
+    .appName(&quot;AppName&quot;) \
+    .master(&quot;local[*]&quot;) \
+    .config(&quot;spark.sql.extensions&quot;, &quot;io.delta.sql.DeltaSparkSessionExtension&quot;) \
+    .config(&quot;spark.sql.catalog.spark_catalog&quot;, &quot;org.apache.spark.sql.delta.catalog.DeltaCatalog&quot;) \
+    .config(&quot;spark.hadoop.fs.s3a.access.key&quot;,&quot;your_access_key&quot;).config(&quot;spark.hadoop.fs.s3a.secret.key&quot;,&quot;your_secret_access_key&quot;) \
+    .getOrCreate()
+</code></pre>
+</div>
+<div class="cell markdown">
+<p>AWS keys can be very valueable, and this configuration can be done in more secure ways that storing the key inside your code. For more advanced use cases, see <a href="https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Warning_.234:_Your_AWS_credentials_are_very.2C_very_valuable">other S3 connectors.</a></p>
+</div>
+<div class="cell markdown">
+<h2 id="final-remarks-on-delta-programming"><a class="header" href="#final-remarks-on-delta-programming">Final remarks on Delta programming:</a></h2>
+<p>This notebook gives simple instructions on the very basics of Delta Lake programming. Some appropriate resources for building your advanced applications: - https://docs.delta.io/latest/delta-batch.html - https://docs.delta.io/latest/delta-streaming.html - https://docs.delta.io/latest/delta-update.html</p>
+</div>
+<div class="cell markdown">
+<h2 id="the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation"><a class="header" href="#the-next-notebooks-will-talk-more-about-delta-live-tables-in-databricks-but-if-you-wish-to-build-your-own-open-source-implementation">The next notebooks will talk more about Delta Live Tables in Databricks, but if you wish to build your own open source implementation:</a></h2>
+<p>If you attain basic knowdledge of <strong>Docker, Terraform, PySpark or Scala (with SBT), Delta Lake</strong>, and any <strong>Cloud provider such as AWS,</strong> then you ready to build powerful applications for batch and streaming with your own Delta Lake!</p>
+<p>Resources: - https://delta.io - https://www.scala-sbt.org - https://www.terraform.io - https://www.docker.com - https://towardsdatascience.com/getting-started-with-delta-lake-spark-in-aws-the-easy-way-9215f2970c58</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

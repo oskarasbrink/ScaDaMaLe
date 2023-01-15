@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>000_DeltaLakesAndLiveTablesIntro - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html" class="active">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h1 id="notes-for-raaz"><a class="header" href="#notes-for-raaz">Notes for Raaz:</a></h1>
+<ol>
+<li>I think it's too much DLT and pipeline, and not enough from the <a href="https://docs.delta.io/latest/index.html">open source docs</a>. Most of this module is effectively an ad for databricks paid versions.</li>
+</ol>
+<p>These notebooks could include stuff like batch- and stream read &amp; writes, constraints, partitioning, some SQL focus. This way, people on community edition or someone not interested in the pipeline could still interact and learn a lot. Could be good to make another notebook (001b or something). Ping me on element if this is something we could do before tonight</p>
+<ul>
+<li>https://docs.delta.io/latest/delta-batch.htm</li>
+<li>https://docs.delta.io/latest/delta-streaming.html</li>
+<li>https://docs.delta.io/latest/delta-constraints.html ************************************</li>
+</ul>
+<ol>
+<li>I feel like its ok to exclude the last notebook on sharing data can be excluded. Doesn't feel super relevant. You can decide, i have the module cloned in my workspace.</li>
+</ol>
+<hr />
+</div>
+<div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="introduction-to-delta-lake--delta-live-tables-dlt"><a class="header" href="#introduction-to-delta-lake--delta-live-tables-dlt">Introduction to Delta Lake &amp; Delta Live Tables (DLT)</a></h1>
+<p>This module will guide you through: - Foundational knowledge and terminologhy of Data Engineering, such as Data Lakehouse architecture, ACID transactions and ETL processes - Delta Lakes and the motivation behind using Databricks Delta Live Tables to more easily build and manage data pipelines - Basic operations on Delta Tables - Demonstrate a basic example of building a DLT pipeline in Databricks - Provide resources for further reading and application of Delta Live Tables &amp; Open Source Delta Lake</p>
+<p>This module assumes basic knowledge of PySpark and SQL. Go through the older modules on Spark Intro, or refresh the basics: - https://docs.databricks.com/getting-started/dataframes-python.html - https://medium.com/@r.nilon92/sql-refresher-454e90f96c46</p>
+<p>Before moving on to Delta Lake and Delta Live Tables, there are some foundational Data engineering topics that we need to read or refresh upon</p>
+</div>
+<div class="cell markdown">
+<h2 id="data-warehouse-vs-data-lake"><a class="header" href="#data-warehouse-vs-data-lake">Data Warehouse vs Data Lake</a></h2>
+<p>A <a href="https://en.wikipedia.org/wiki/Data_warehouse"><strong>Data Warehouse</strong></a> is a repository with structured data which supports Business Intelligence (BI) and analytic. Contents in a warehouse are preprocessed and organized, usually through ETL (Extract, Transform, Load) operations that feed into it. Warehouses provide <strong>reliability</strong> and <a href="https://www.databricks.com/glossary/acid-transactions">ACID transactions</a>, and have been a popular solution since the 1980's.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Data_lake"><strong>Data Lake</strong></a> is a central repository that stores all organizational data (unstructured, semistructed, or structured). A Data lake Architecture typically handles large volumes of raw data without the need to structure it first. Raw and unstructured Data stored in Data lakes can be used to build <strong>Data Pipelines</strong>, which is cover later on in the module. Data Lakes have been popular since 2011 with the availability of <a href="https://en.wikipedia.org/wiki/Apache_Hadoop#HDFS">HDFS</a> and low cost storage, including with services such as <a href="https://en.wikipedia.org/wiki/Amazon_S3">AWS S3</a>.</p>
+<h2 id="acid-guarantees"><a class="header" href="#acid-guarantees">ACID Guarantees</a></h2>
+<p>Another important property of Delta Lake and Lakehouse Architecture is <strong>ACID guarantees</strong>. The term ACID stands for four key properties: - <strong>Atomicity</strong>: Means that all transactions (a single unit of work that accesses or modifies contents of a database) either succeed or fail completely. An action is either committed and changes are made visible, or a transaction is aborted and no changes are made. - <strong>Consistency</strong>: Data is in a consistent state when a transaction starts and ends. If there is a constraint in a database that bank balances must remain positive, a consistent transaction mantains this state if positive bank balances occur before and after the transaction. - <strong>Isolation</strong>: This property ensures that multiple transactions can occur concurrently without leading to inconsistency of the database state. Transactions should be run in an isolated environment without interfering with each other. - <strong>Durability</strong>: This property guarantees that changes are permitted once a transaction is completed. This ensures that data within a system persits in the case of failures and crashes.</p>
+<p>ACID transactions basically guarantee data validity despite errors and interruptions. In regards to Delta Lake and Lakehouses, when data is read and written simultaneously, it is important to keep data integrity. Delta Lake keeps track of all commits made to tables to keep data consistent accross multiple users.</p>
+<h2 id="etl-processes"><a class="header" href="#etl-processes">ETL processes</a></h2>
+<p><strong>ETL</strong>, which stands for <strong>Extract, Transform and Load,</strong> is a three phase process where raw data is extracted from systems, transformed (cleansed, processed to improve data quality) and loaded into an end target, which can be any data store.</p>
+<h3 id="more-foundational-reading-on-these-topics"><a class="header" href="#more-foundational-reading-on-these-topics">More foundational reading on these topics:</a></h3>
+<p>What is a Data lake? - https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/</p>
+<p>Data warehouse Concepts - https://aws.amazon.com/data-warehouse/</p>
+<p>Data lake vs Data warehouse - https://www.qlik.com/us/data-lake/data-lake-vs-data-warehouse</p>
+<p>Delta lake, ACID transactions for Apache Spark - https://medium.com/@achilleus/delta-lake-acid-transactions-for-apache-spark-2bf3d919cda</p>
+<p>What is ETL? - https://www.ibm.com/topics/etl</p>
+</div>
+<div class="cell markdown">
+<h2 id="data-lakehouse"><a class="header" href="#data-lakehouse">Data Lakehouse</a></h2>
+<p><img src="https://www.databricks.com/wp-content/uploads/2020/01/data-lakehouse-new.png" alt="" /></p>
+<p>Lakehouse architecture aims to provide the ACID guarantees and reliability of warehouses while only requiring the cost-effectiveness, efficiency and scalability that Data Lakes provide. Companies and organisations usually rely on warehouses for BI and analytics, while also needing raw data from Data lakes for applications such as machine learning, which can result in a more complex architecture, additional ETL processes, duplicate and stale data, as well as extra costs and vendor lock-in. If we can provide the structure and reliability of warehouses on top of a Data lake, we can ommit the need for the warehouse!</p>
+<p>This can be achieved with the help of <strong>metadata layers</strong> within the Data lake, which keep track of key information such as transactions (enabling versioning and ACID capabilities), and statistics of underlying structured data, in a similar way as a .git folder saves relevant information of a Git repository. Two examples that enable this are <strong>Delta Lakes</strong> or <a href="https://en.wikipedia.org/wiki/Apache_Iceberg"><strong>Apache Iceberg</strong></a>, both of which are currently based on <a href="https://en.wikipedia.org/wiki/Apache_Parquet">Parquet files</a> to store structured information in tabular format.</p>
+<h3 id="deep-dive"><a class="header" href="#deep-dive"><strong>Deep dive:</strong></a></h3>
+<p>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics - https://www.databricks.com/wp-content/uploads/2020/12/cidr_lakehouse.pdf</p>
+<p>Data Lakehouse: - https://www.databricks.com/glossary/data-lakehouse</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="auto">
+<div class="output execute_result html_result" execution_count="1">
+<iframe 
+ src="https://www.databricks.com/blog/2020/01/30/what-is-a-data-lakehouse.html"
+ width="95%" height="700"
+ sandbox>
+  <p>
+    <a href="https://en.wikipedia.org/wiki/Data_lake">
+      Fallback link for browsers that, unlikely, don't support frames
+    </a>
+  </p>
+</iframe>
+</div>
+</div>
+<div class="cell markdown">
+<h1 id="delta-lake-overview"><a class="header" href="#delta-lake-overview">Delta Lake Overview</a></h1>
+<p>Delta Lake is an open-source table storage layer over cloud object stores initially developed at Databricks, and is designed to run on top of an existing Data Lake. It serves an integral part in the Databricks Lakehouse, and enables the following:</p>
+<ul>
+<li>ACID guarantees: as mentioned earlier, ACID guarantees is a higly regarded property. Data lakes typically have multiple data pipelines reading and writing concurrently.</li>
+<li>Scalable data and metadata handling: Metadata itself can grow to huge sizes within a Data lake.</li>
+<li>Audit history and time travel: Logs of transactions and audit history enables access to revert to earlier versions of data for audits or to reproduce experiments.</li>
+<li>Schema enforcement and schema evolution: This provides ability to both enforce schemas and allows changing schemas when needed</li>
+<li>Open format: All data in a Delta Lake is stored in <a href="https://www.upsolver.com/blog/apache-parquet-why-use">Apache Parquet format</a>, a file format designed to support fast data processing, with columnar based formats, allowing for higher performance when selecting and filtering data. <a href="https://towardsdatascience.com/demystifying-the-parquet-file-format-13adb0206705">More on parquet file format</a>.</li>
+<li>Streaming and batch unification: Delta tables is both a batch table and a streaming source and sink. We can write both batch and streaming data into the same table.</li>
+</ul>
+<p>Note that Delta Lake (Delta.io) is open source, but the pipeline that will be run in later notebooks utilizes Databricks Delta Live Tables (DLT) that makes it easy to declaratively build and manage whole data pipelines on a Delta Lake.</p>
+</div>
+<div class="cell markdown">
+<h4 id="deep-dive-into-lakehouse-and-delta-lake"><a class="header" href="#deep-dive-into-lakehouse-and-delta-lake">Deep dive into Lakehouse and Delta lake:</a></h4>
+<p>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores - https://www.databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf</p>
+<p>Delta lake: The Definitive Guide by O’Reilly (in development) - https://www.databricks.com/p/ebook/delta-lake-the-definitive-guide-by-oreilly</p>
+<h4 id="lighter-reading--video"><a class="header" href="#lighter-reading--video">Lighter reading &amp; video:</a></h4>
+<p>The Databricks Lakehouse Platform - https://www.databricks.com/product/data-lakehouse Delta Lake 2.0 Overview (38m) - https://www.youtube.com/watch?v=VWJT3JyPKvk</p>
+<p>The Data Lakehouse Platform For Dummies - https://www.databricks.com/wp-content/uploads/2021/11/The-Data-Lakehouse-Platform-For-Dummies-1.pdf</p>
+</div>
+<div class="cell markdown">
+<h4 id="oskar-note-131---2023"><a class="header" href="#oskar-note-131---2023">Oskar note 13/1 - 2023</a></h4>
+<p>if there is time, add some images or examples of delta lake being used in the real world, and maybe some references to its crazy performance in some use cases.</p>
+</div>
+<div class="cell markdown">
+<h2 id="delta-live-tables-dlt"><a class="header" href="#delta-live-tables-dlt">Delta Live Tables (DLT)</a></h2>
+<p>Delta Live Tables is an extension of delta tables in Databricks with extra functionalities, so its important not to remember the differences of Delta Lake, Delta Table and Delta Live Table. DLT is covered in its own notebooks, but for now, keep in mind that Delta Live Tables and the databricks pipeline they run in basically adds or simplifies some moments of setting up a data management pipeline, such as:</p>
+<ul>
+<li>Managed workflow for loading delta tables</li>
+<li>Dependency management</li>
+<li>Managing data expectations on data quality</li>
+<li>Visual interface for data lineage and analysis</li>
+</ul>
+<p>The next notebook will go specifically into Delta Lake and Delta Tables to set up some foundational knowledge on these topics. Later, we will delve more into Databricks Delta Live Tables and the Pipeline.</p>
+</div>
+<div class="cell markdown">
+<h2 id="how-to-start-using-delta-lake"><a class="header" href="#how-to-start-using-delta-lake">How to start using Delta Lake</a></h2>
+<p>Delta Lake is well integrated within the Apache Spark ecosystem, so the easiest way to start working with Delta Lake is to use it with Apache Spark. Databricks Community Edition can be a good starting point, but feel free to try Local Spark shell or Leveraging Github or Maven, which will not be covered in this series. If you have cluster creation permissions, and your account is tied to a shard with Databricks subscription, you can access DLT and the DLT pipeline.</p>
+<p>Open Source Delta lake: - https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake</p>
+<p>Delta Live tables and the pipeline: - https://www.databricks.com/product/delta-live-tables</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next" href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next" href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

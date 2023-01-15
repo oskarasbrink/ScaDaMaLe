@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>007_SharingData - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/000_DeltaLakesAndLiveTablesIntro.html">000_DeltaLakesAndLiveTablesIntro</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/001_DeltaLakeTutorial.html">001_DeltaLakeTutorial</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/002_DeltaLiveTableCrashCourse.html">002_DeltaLiveTableCrashCourse</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/003_SetupPipeline.html">003_SetupPipeline</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/004_PythonLiveTableExample.html">004_PythonLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/005_SQLLiveTableExample.html">005_SQLLiveTableExample</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html">006_BronzeSilverGoldProductionizing</a></li><li class="chapter-item expanded affix "><a href="../../contents/001_1-sds-3-x-delta/007_SharingData.html" class="active">007_SharingData</a></li><li class="chapter-item expanded affix "><a href="../../editors.html">Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="working-with-data-in-external-environments"><a class="header" href="#working-with-data-in-external-environments">Working with data in external environments</a></h1>
+<p>This notebook will introduce some general ways of sharing data that you have processed so far, without specific code examples. Databricks integrates with a wide range of data sources, developer tools and partner solutions. Even when using the Databricks platform for your operations, it can be preferable to allow for access and share data for use outside of the platform for internal and external use. This guide will instruct you on how to query the <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">Databricks SQL warehouse</a> in excel, along with sharing tables with external parties through <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta sharing</a>. This can be useful for business analytics or to give restricted access to clients in more refined tables.</p>
+<p>Resources: - <a href="https://support.microsoft.com/en-us/topic/what-is-a-dsn-data-source-name-ae9a0c76-22fc-8a30-606e-2436fe26e89f">What is a DSN(Data source name)?</a> - <a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC (Open Database Connectivity)</a> - <a href="https://docs.databricks.com/sql/admin/warehouse-type.html">What are SQL warehouses?</a> - <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Introducing Delta Sharing: An Open Protocol for Secure Data Sharing</a></p>
+</div>
+<div class="cell markdown">
+<h1 id="how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors"><a class="header" href="#how-to-setup-access-to-sql-warehouse-from-excel-using-odbc-connectors">How to setup access to SQL warehouse from Excel using ODBC connectors</a></h1>
+</div>
+<div class="cell markdown">
+<p>For general BI work, it can preferable to work with spreadsheet format in Excel, and use its features for data analysis and visualization. The SQL Warehouse will require a paid version of Databricks. Skip to the Delta Sharing section for a possible open source solution.</p>
+<p>You need: - Databricks ODBC drivers at https://www.databricks.com/spark/odbc-drivers-download - (For mac, Optional) iODBC to set up User DSN. Otherwise do it the hacker way, not in this guide yet but can link docs - link here: https://www.iodbc.org/dataspace/doc/iodbc/wiki/iodbcWiki/WelcomeVisitors - (For other OS) ODBC connector: https://dev.mysql.com/downloads/connector/odbc/ - Databricks Authentication token - Access to SQL-warehouse</p>
+<p><strong>IMPORTANT</strong>: Even if you have the latest updates for Excel and Microsoft 365, you might have to <strong>reinstall</strong> Microsoft Excel to be able to run database queries.</p>
+</div>
+<div class="cell markdown">
+<h3 id="install-iodbc-or-odbc-manager"><a class="header" href="#install-iodbc-or-odbc-manager">Install iODBC or ODBC manager</a></h3>
+</div>
+<div class="cell markdown">
+<p>After you have installed iODBC or ODBC from the links above, you need to create a DSN. In either iODBC or ODBC manager, create a DSN with the information provided below:</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/dsn_setup.png?raw=true" alt="dsn_setup" /></p>
+<p>You can get your <strong>Host and HTTPPath</strong> from the SQL warehouse settings, and put your authentication token as <strong>PWD</strong>. This token can be generated from the user settings page.</p>
+<p>With iODBC, you can optionally test the ODBC connection before connecting to Excel. Open <strong>iODBC Demo (Unicode)</strong>. In the toolbar, go to <strong>Environment</strong> and <strong>Open Connection</strong>. Choose the DSN we just created. Again, enter &quot;token&quot; as username and your databricks authentication token as password. In the toolbar, click <strong>SQL</strong> and then <strong>Execute SQL</strong>. Now we can try to query the database. We will query the <strong>china*matches</strong> table in the <strong>trase*pipelines</strong> schema.</p>
+<p>Using the following command: <code>select * from default.countrycodes</code> (or any other table in the metastore)</p>
+<p>you should now see the query result in the iODBC demo window, and can import it to the Excel sheet.</p>
+</div>
+<div class="cell markdown">
+<h3 id="query-the-database-from-excel"><a class="header" href="#query-the-database-from-excel">Query the Database from Excel</a></h3>
+<p>In an Excel document, as in the picture below, choose data, Press the dropdown arrow and choose <strong>From Database (Microsoft Query)</strong>.</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/excelquery.png?raw=true" alt="databasequery" /></p>
+<p>You should see your User or system defined DSN in the list. Choose it and press <strong>ok</strong>. Again enter &quot;token&quot; as username and your databricks authentication token as password. You can now see the tables that you have access to.</p>
+<p><img src="https://github.com/oskarasbrink/scalable-data-science/blob/master/images/ScaDaMaLe/001_1-sds-3-x-delta/query.png?raw=true" alt="query" /></p>
+<p>Try to query a table with <code>select * from default.countrycodes</code> (or any other table in the hive metastore). The warehouse might take a few minutes to start if it's not running already.</p>
+<h3 id="if-your-layout-in-excel-is-different-from-this-and-you-can-not-see-the-microsoft-query-option"><a class="header" href="#if-your-layout-in-excel-is-different-from-this-and-you-can-not-see-the-microsoft-query-option">If your layout in excel is different from this, and you can not see the Microsoft Query option:</a></h3>
+<p>In this case, try the Query Wizard option, or check for updates in Excel. If you already have the latest version, you might have to reinstall Excel.</p>
+</div>
+<div class="cell markdown">
+<h1 id="delta-sharing"><a class="header" href="#delta-sharing">Delta Sharing</a></h1>
+<p>Delta sharing is useful for provides secure sharing of data with external parties. This is available in Databricks through the <a href="">Unity Catalog</a>, as well as in open source <a href="https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html">Delta.io</a>.</p>
+<p>Resources: - https://docs.databricks.com/data-sharing/index.html - https://github.com/delta-io/delta-sharing</p>
+<p>The following code example is from the <a href="https://github.com/delta-io/delta-sharing">Delta sharing github</a>. Through a generated and shared profile file, you access a &quot;delta share&quot; which consists of a selected number of tables with read only access to them.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import delta_sharing
+
+# install with pip 'install delta-sharing'
+
+# Point to the profile file. It can be a file on the local file system or a file on a remote storage.
+profile_file = &quot;&lt;profile-file-path&gt;&quot;
+
+# Create a SharingClient.
+client = delta_sharing.SharingClient(profile_file)
+
+# List all shared tables.
+client.list_all_tables()
+
+# Create a url to access a shared table.
+# A table path is the profile file path following with `#` and the fully qualified name of a table 
+# (`&lt;share-name&gt;.&lt;schema-name&gt;.&lt;table-name&gt;`).
+table_url = profile_file + &quot;#&lt;share-name&gt;.&lt;schema-name&gt;.&lt;table-name&gt;&quot;
+
+# Fetch 10 rows from a table and convert it to a Pandas DataFrame. This can be used to read sample data 
+# from a table that cannot fit in the memory.
+delta_sharing.load_as_pandas(table_url, limit=10)
+
+# Load a table as a Pandas DataFrame. This can be used to process tables that can fit in the memory.
+delta_sharing.load_as_pandas(table_url)
+
+# If the code is running with PySpark, you can use `load_as_spark` to load the table as a Spark DataFrame.
+delta_sharing.load_as_spark(table_url)
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../editors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../contents/001_1-sds-3-x-delta/006_BronzeSilverGoldProductionizing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../editors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
